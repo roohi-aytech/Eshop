@@ -1,0 +1,243 @@
+package eshop
+
+import org.springframework.dao.DataIntegrityViolationException
+import grails.converters.JSON
+import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
+import java.awt.Image
+import grails.plugins.springsecurity.Secured
+import org.springframework.http.HttpStatus
+
+@Secured(RoleHelper.ROLE_PRODUCT_ADMIN)
+class ProductController {
+
+    def imageService
+    def productService
+
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def index() {
+        redirect(action: "list", params: params)
+    }
+
+    def list() {
+    }
+
+    def create() {
+        [productInstance: new Product(params)]
+    }
+
+    def form() {
+        def productInstance
+        if (params.id)
+            productInstance = Product.findById(params.id)
+        else
+            productInstance = new Product()
+        def productTypeIds = [];
+        productInstance.productTypes.each {
+            productTypeIds << it.id
+        }
+        render(template: "form", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(",")])
+    }
+
+    def productDetails() {
+        def productInstance = Product.findById(params.id)
+        [productInstance: productInstance, baseProductInstance: productInstance, curtab: params.curtab]
+    }
+
+    def saveProductDescription() {
+        def productInstance = Product.findById(params.id)
+        productInstance.details = params.detail_description;
+        productInstance.save()
+        redirect(action: "productDetails", params: params)
+    }
+
+    def saveAttributeValues() {
+        def productInstance = Product.findById(params.id)
+        def attributeTypes = productInstance.productTypes.collect {attributeTypes(it)}.flatten()
+
+        Attribute.withTransaction {
+            attributeTypes.each { AttributeType attributeType ->
+                def attribute = productInstance.attributes.find { it.attributeType.id == attributeType.id }
+                if (!attribute)
+                    attribute = new Attribute(attributeType: attributeType, product: productInstance)
+                attribute.attributeValue = params."at_${attributeType.id}"
+                attribute.save()
+            }
+        }
+        redirect(action: "productDetails", params: params)
+    }
+
+    private def attributeTypes(ProductType productType) {
+        def attributeTypes = productType.children.collect {attributeTypes(it)}.flatten()
+        attributeTypes << productType.attributeTypes
+    }
+
+    def image() {
+        def product = Product.get(params.id)
+        product.images.each {
+            if (it.name == params.name) {
+                response.contentType = 'image/png'
+                response.outputStream << it.fileContent
+                response.outputStream.flush()
+            }
+        }
+    }
+
+    def deleteImage() {
+        def success = productService.deleteProductImage(params.id, params.name)
+        def result = [success: success]
+        render result as JSON
+    }
+
+    def uploadImage() {
+
+        switch (request.method) {
+            case "GET":
+                def product = Product.get(params.id)
+                def results = []
+                product.images.each {
+
+                    results << [
+                            name: it.name,
+                            size: it.fileContent.length,
+//                            url: createLink( action:'image', pa: params.id),
+                            thumbnail_url: createLink(action: 'image', params: [id: params.id, name: it.name]),
+                            delete_url: createLink(action: 'deleteImage', params: [id: params.id, name: it.name]),
+                            delete_type: "GET"
+                    ]
+                }
+                render results as JSON
+                break;
+            case "POST":
+                Collection result = []
+                def images = new HashSet<Content>()
+                request.getFileNames().each {
+                    def file = request.getFile(it)
+                    def bytes = file.bytes
+                    bytes = imageService.saveAndScaleImages(bytes, file.originalFilename, params.id)
+                    def content = new Content(contentType: "image", name: file.originalFilename, fileContent: bytes)
+                    content.save()
+                    images << content
+                    result << [name: file.originalFilename,
+                            size: file.size,
+                            thumbnail_url: createLink(action: 'image', params: [id: params.id, name: file.originalFilename]),
+                            delete_url: createLink(action: 'deleteImage', params: [id: params.id, name: file.originalFilename]),
+                            delete_type: "GET"]
+                }
+
+//                synchronized (this.getClass()) {
+                productService.addImageToProduct(params.id, images)
+
+                render result as JSON
+                break;
+            default: render status: HttpStatus.METHOD_NOT_ALLOWED.value()
+        }
+    }
+
+    def save() {
+        def productInstance
+        if (params.id) {
+            productInstance = Product.get(params.id)
+            productInstance.properties = params
+        }
+        else
+            productInstance = new Product(params)
+        def tmp = []
+        productInstance.productTypes.each {
+            tmp << it
+        }
+        tmp.each {
+            productInstance.removeFromProductTypes(it)
+        }
+        params.producttypes.split(",").each {
+            if (it) {
+                def productType = ProductType.get(it)
+                productInstance.addToProductTypes(productType);
+            }
+        }
+        if (!productInstance.save(flush: true)) {
+            render(view: "create", model: [productInstance: productInstance])
+            return
+        }
+
+        render productInstance as JSON
+    }
+
+    def show() {
+        def productInstance = Product.get(params.id)
+        if (!productInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [productInstance: productInstance]
+    }
+
+    def edit() {
+        def productInstance = Product.get(params.id)
+        if (!productInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [productInstance: productInstance]
+    }
+
+    def update() {
+        def productInstance = Product.get(params.id)
+        if (!productInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        if (params.version) {
+            def version = params.version.toLong()
+            if (productInstance.version > version) {
+                productInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'product.label', default: 'Product')] as Object[],
+                        "Another user has updated this Product while you were editing")
+                render(view: "edit", model: [productInstance: productInstance])
+                return
+            }
+        }
+
+        productInstance.properties = params
+
+        if (!productInstance.save(flush: true)) {
+            render(view: "edit", model: [productInstance: productInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])
+        redirect(action: "show", id: productInstance.id)
+    }
+
+    def delete() {
+        def productInstance = Product.get(params.id)
+        if (!productInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
+            render 1
+        }
+
+        try {
+            def tmp = []
+            productInstance.productTypes.each {
+                tmp << it
+            }
+            tmp.each {
+                productInstance.removeFromProductTypes(it)
+            }
+            productInstance.delete(flush: true)
+            render 0;
+        }
+        catch (DataIntegrityViolationException e) {
+            render 1;
+        }
+    }
+
+
+}

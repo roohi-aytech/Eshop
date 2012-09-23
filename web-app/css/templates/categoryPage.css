@@ -1,0 +1,72 @@
+body{
+    display: "aa" / 20
+    "zz" / 50
+    "hi" / 600
+    200 *;
+    width: 100%;
+
+}
+.status-bar{
+    position: z;
+    display: "gfedcqb"
+    100px 100px 100px 100px 100px * 100px
+}
+
+#header{
+    position: a;
+    background: #AAD;
+    text-align: center;
+}
+.menu-bar{
+    position: b;
+
+}
+.search-bar{
+    position: q;
+    background-image: url("../../images/site/search.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.support{
+    position: c;
+    background-image: url("../../images/site/support.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.login{
+    position: d;
+    background-image: url("../../images/site/login.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.buy-list{
+    position: e;
+    background-image: url("../../images/site/buy-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.compare-list{
+    position: f;
+    background-image: url("../../images/site/compare-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.wish-list{
+    position: g;
+    background-image: url("../../images/site/wish-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.filters{
+    position: h;
+}
+.contents{
+    position: i;
+}
+

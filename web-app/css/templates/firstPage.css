@@ -1,0 +1,137 @@
+body{
+    display: "a" / 20
+             "z" / 50
+             "h" /300
+             "i" /100
+             "j" /120
+             "k" /120
+             "l" /120
+             "m" /120
+             "y" /200;
+    width: 100%;
+
+}
+.status-bar{
+    position: z;
+    display: "gfedcqb"
+              100px 100px 100px 100px 100px * 100px
+}
+.bottom-bar{
+    position: y;
+    display: "nnoopp"
+}
+#header{
+    position: a;
+    background: #AAD;
+    text-align: center;
+}
+.menu-bar{
+    position: b;
+
+}
+.search-bar{
+    position: q;
+    background-image: url("../../images/site/search.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.support{
+    position: c;
+    background-image: url("../../images/site/support.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.login{
+    position: d;
+    background-image: url("../../images/site/login.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.buy-list{
+    position: e;
+    background-image: url("../../images/site/buy-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.compare-list{
+    position: f;
+    background-image: url("../../images/site/compare-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.wish-list{
+    position: g;
+    background-image: url("../../images/site/wish-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+.slide-show{
+    position: h;
+    background-image: url("../../images/site/slide-show.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 300px;
+
+}
+.off-list{
+    position: i;
+    background-image: url("../../images/site/off-list.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100px;
+}
+.new-products{
+    position: j;
+    background-image: url("../../images/site/new-products.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100px;
+}
+.recent-products{
+    position: k;
+    background-image: url("../../images/site/last-viewed.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100px;
+}
+.most-viewed-products{
+    position: l;
+    background-image: url("../../images/site/popular.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100px;
+}
+.recomanded-products{
+    position: m;
+    background-image: url("../../images/site/recomanded.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100px;
+}
+.help{
+    position: n;
+    background-image: url("../../images/site/help.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 200px;
+}
+.know-us{
+    position: o;
+    background-image: url("../../images/site/know-us.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 200px;
+}
+.contact-us{
+    position: p;
+    background-image: url("../../images/site/contact-us.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 200px;
+}
