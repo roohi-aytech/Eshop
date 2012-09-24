@@ -1,7 +1,7 @@
 import grails.util.GrailsUtil
 import eshop.*
 
-import static RoleHelper.*
+import static eshop.RoleHelper.*
 
 class BootStrap {
 

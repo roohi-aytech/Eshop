@@ -80,6 +80,7 @@ class VariationGroupController {
         }
         else
             variationGroup = new VariationGroup(params)
+        bindComposites(variationGroup, params)
         variationGroup.save()
         render 0
     }
