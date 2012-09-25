@@ -15,13 +15,13 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
     <div style="margin: 10px;">
-    <rg:grid
-            domainClass="${ProductType}"
-            maxColumns="5"
-            tree="parentProduct"
-            showFirstColumn="false"
-            onSelectRow="loadProducts">
-    </rg:grid>
+        <rg:grid
+                domainClass="${ProductType}"
+                maxColumns="5"
+                tree="parentProduct"
+                showFirstColumn="false"
+                onSelectRow="loadProducts">
+        </rg:grid>
     </div>
     <g:javascript>
         var loadProducts = function (rowId) {
@@ -30,13 +30,25 @@
         }
     </g:javascript>
     <div style="margin: 10px;">
-    <rg:grid domainClass="${Product}"
-             maxColumns="5"
-             showCommand="false"
-             firstColumnWidth="30"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}",loadCallback:"addTree", icon: "application_edit"], [controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
-    </rg:grid>
+        <div class="criteria-div">
+            <rg:criteria>
+                <rg:like name="name" label='product.name'/>
+                <rg:filterGrid grid="ProductGrid" label='search'/>
+            </rg:criteria>
+        </div>
+        <script type="text/javascript">
+            $(".criteria-div")
+                    .find('div,label,input')
+                    .css('display','inline')
+                    .css('margin','3px');
+        </script>
+        <rg:grid domainClass="${Product}"
+                 maxColumns="5"
+                 showCommand="false"
+                 firstColumnWidth="30"
+                 toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
+                 commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#", saveAction: "${g.createLink(action: "save")}", loadCallback: "addTree", icon: "application_edit"], [controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+        </rg:grid>
     </div>
 </div>
 <g:javascript>
@@ -58,6 +70,32 @@
         }
     }
     function addTree(){
+        var buttons=$(".ui-dialog-content").dialog('option','buttons')
+        var newButtons={'<g:message code="save-and-edit-details"/>':function(){
+            var r= $(".ui-dialog-content")
+            r.ajaxSubmit({
+                url:r.attr('action'),
+                type:"post",
+                success:function(resp){
+                    if(resp==0 || typeof resp == 'object'){
+                        var r=$(".ui-dialog-content")
+                        r.dialog("destroy");
+                        r.remove()
+                        window.location='<g:createLink controller="product" action="productDetails"/>/'+resp.id;
+                    }else{
+                        var r=$(".ui-dialog-content")
+                        r.html(resp);
+                        r.dialog("open");
+                    }
+                }
+            })
+            $(this).dialog("close");
+        }}
+        for(var button in buttons){
+            newButtons[button]=buttons[button]
+        }
+        $(".ui-dialog-content").dialog('option','buttons',newButtons)
+
         var productTypeTree = $("#productTypes").jstree({
                 plugins : ["themes","json_data","checkbox"],
                 core : {
@@ -100,7 +138,7 @@
 
     }
     function addToProductGrid(){
-        loadOverlay('<g:createLink action="form"/>','<g:createLink action="save" />',function(){
+        loadOverlay('<g:createLink action="form"/>','<g:createLink action="save"/>',function(){
             $("#ProductGrid").trigger("reloadGrid")
         },addTree);
     }
