@@ -67,8 +67,8 @@ input:-moz-placeholder {
 
 .initialList {
     display: inline-block;
-    min-width: 900px;
-    min-height: 250px;
+    /*min-width: 90px;*/
+    /*min-height: 100px;*/
 }
 
 .compositionField {
@@ -820,4 +820,17 @@ a.skip {
 .jstree-undetermined > a > .jstree-radio:hover { background-position:-20px -37px; }
 #details-tabs{
     clear: both;
+}
+
+.variationValues-div div{
+    display: inline;
+}
+.variationValues-div .fieldcontain input{
+    display: inline;
+}
+.variationValues-div .fieldcontain label{
+    display: inline;
+}
+.variationValues-div span{
+    display: inline;
 }

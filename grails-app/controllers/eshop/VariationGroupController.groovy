@@ -48,8 +48,10 @@ class VariationGroupController {
             variationValue = VariationValue.findById(params.id)
             variationValue.properties = params
         }
-        else
+        else {
             variationValue = new VariationValue(params)
+            variationValue.indx=0
+        }
         variationValue.save()
         render 0
     }
