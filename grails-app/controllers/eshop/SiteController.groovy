@@ -29,7 +29,7 @@ class SiteController {
             def product=Product.get(params.id)
             if(product.images && product.images.size()>0){
                 response.contentType = 'image/png'
-                response.outputStream << product.images[0].fileContent
+                response.outputStream << product.images.find().fileContent
                 response.outputStream.flush()
 
             }

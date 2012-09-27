@@ -1,6 +1,6 @@
 
     <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}" />
-    <h2><g:message code="product.attributeValues.label" default="Product Attribute Values" /> q${productInstance}</h2>
+    <h2><g:message code="product.attributeValues.label" default="Product Attribute Values" /> ${productInstance}</h2>
 
     <div id="list-product" class="content scaffold-list" role="main">
         <g:if test="${flash.message}">
