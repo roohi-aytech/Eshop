@@ -4,7 +4,9 @@ class SiteController {
 
     def index() {
         def productTypes = ProductType.findAllByParentProductIsNull()
-        [productTypes: productTypes]
+		def newProducts = Product.findAll()
+        [productTypes: productTypes,newProducts:newProducts]
+		
     }
 
     def category() {

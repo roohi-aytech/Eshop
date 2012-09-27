@@ -35,7 +35,9 @@
 
 <div class="off-list"></div>
 
-<div class="new-products"></div>
+<div class="new-products">
+	<g:render template="newProduct"/>
+</div>
 
 <div class="most-viewed-products"></div>
 
