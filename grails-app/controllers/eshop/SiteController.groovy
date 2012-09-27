@@ -13,7 +13,26 @@ class SiteController {
         def productType = ProductType.get(params.id)
         def filterProductTypes = ProductType.findAllByParentProduct(productType)
 
-        Brand.findAll("from Brand as b where exists (from Product as p where p.)")
+        Brand.findAll("from Brand as b where exists (from Product as p )")
         [productTypes: productTypes, filterProductTypes: filterProductTypes]
+    }
+
+    def product() {
+        def product = Product.get(params.id)
+        [product: product]
+    }
+
+    def image(){
+        if (params.id){
+            def product=Product.get(params.id)
+            if(product.images && product.images.size()>0){
+                response.contentType = 'image/png'
+                response.outputStream << product.images[0].fileContent
+                response.outputStream.flush()
+
+            }
+
+
+        }
     }
 }
