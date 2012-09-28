@@ -1,147 +1,132 @@
-html{
-	background-color:#F6F9FD;
-}
-body{
-    width: 1085px;
-	margin:0 auto 0 auto;
-	background-color:white;
-}
-.memu li.has-children > a  {
-	line-height:37px !important;
-}
-ul.children{
-	top:40px !important;
+﻿body{
+    display: /*"a" / 20 */
+             "z" / 54
+             "h" /300
+             "i" /100
+             "j" /120
+             "k" /120
+             "l" /120
+             "m" /120
+             "y" /200;
+    width: 100%;
+
 }
 /*XXXXXX Status Bar XXXXX*/
 .status-bar{
-    height:54px;
-	width:100%;
+    position: z;
 	background-image:url("../../images/site/statusbarBG.jpg");
 	background-repeat:repeat-x;
+    display: "gfedcqb"
+              100px 100px 100px 100px 100px * 100px
 }
 .bottom-bar{
-    height:200px;
-	width:100%;
-	text-align:center;
-	color:#FF9B01;
-	font-family:tahoma;
-	font-weight:bold;
-	vertical-align:middle;
-	line-height:114px;
+    position: y;
+    display: "nnoopp"
 }
 
+#header{
+/*    position: a;*/
+	display:none;
+    background: #AAD;
+    text-align: center;
+}
 .menu-bar{
-    width:185px;
-	float:right;
+    position: b;
+
 }
 .search-bar{
-    width:300px;
-    background-image: url("../../images/site/searchImage.png");
+    position: q;
+    background-image: url("../../images/site/search.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
-	float:right;
 }
 .support{
-    width:100px;	
+    position: c;
     background-image: url("../../images/site/support.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
-	float:right;
 }
 .login{
-    width:100px;
+    position: d;
     background-image: url("../../images/site/login.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
-	float:right;
 }
 .buy-list{
-	width:100px;
+    position: e;
     background-image: url("../../images/site/buy-list.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
-	float:right;
 }
 .compare-list{
-    width:100px;
+    position: f;
     background-image: url("../../images/site/compare-list.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
-	float:right;
 }
 .wish-list{
-    width:100px;
+    position: g;
     background-image: url("../../images/site/wish-list.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
-	float:right;
 }
-.logo{
-    width:100px;
-    background: url("../../images/site/logo.png") no-repeat;
-    height: 67px;
-	float:right;
-	z-index:10;
-}
+
 /*XXXXXX BodyContent XXXXX*/
 .bodyContent{
-	width:100%;
-	height:auto;
-	z-index:0;
-	min-height:900px;
+	width: 980px;
+	height:800px;
 }
 .rightContent{
-	height:100%;
-	width:80%;
+	width: 70%;
 	float:right;
-	margin-top:25px;
 }
 .leftContent{
-	height:100%;
-	width:20%;
-	float:left;
-	margin-top:-10px;
+	width: 30%;
 }
 .slide-show{
-    /*background-image: url("../../images/site/slide-show.png");*/
+    position: h;
+    background-image: url("../../images/site/slide-show.png");
     background-position: center center;
     background-repeat: no-repeat;
-    height: 350px;
+    height: 300px;
 
 }
 .off-list{
-  /*  background-image: url("../../images/site/off-list.png");*/
+    position: i;
+    background-image: url("../../images/site/off-list.png");
     background-position: center center;
     background-repeat: no-repeat;
-    height: 250px;
-	padding-right:20px;
+    height: 300px;
 }
 .new-products{
+    position: j;
   /*  background-image: url("../../images/site/new-products.png");*/
     background-position: center center;
     background-repeat: no-repeat;
-    height: 250px;
-	padding-right:20px;
+    height: 300px;
 }
 .recent-products{
+    position: k;
     background-image: url("../../images/site/last-viewed.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 100px;
 }
 .most-viewed-products{
+    position: l;
     background-image: url("../../images/site/popular.png");
     background-position: center center;
     background-repeat: no-repeat;
     height: 100px;
 }
 .recomanded-products{
+    position: m;
     background-image: url("../../images/site/recomanded.png");
     background-position: center center;
     background-repeat: no-repeat;
@@ -150,36 +135,23 @@ ul.children{
 
 /*XXXXXX Footer XXXXX*/
 .help{
-   /* background-image: url("../../images/site/help.png");*/
-	border:4px solid #DAE8F1;
+    position: n;
+    background-image: url("../../images/site/help.png");
     background-position: center center;
     background-repeat: no-repeat;
-    width: 300px;
-	height:60%;
-	float:right;
-	margin-left:85px;
-	display:block-inline;
-	margin-right:50px;
-	
+    height: 200px;
 }
 .know-us{
-    /*background-image: url("../../images/site/know-us.png");*/
-	border:4px solid #DAE8F1;
+    position: o;
+    background-image: url("../../images/site/know-us.png");
     background-position: center center;
     background-repeat: no-repeat;
-    width: 250px;
-	float:right;
-	margin-left:85px;
-	display:block;
-	height:60%;
+    height: 200px;
 }
 .contact-us{
-    /*background-image: url("../../images/site/contact-us.png");*/
-	border:4px solid #DAE8F1;
+    position: p;
+    background-image: url("../../images/site/contact-us.png");
     background-position: center center;
     background-repeat: no-repeat;
-    width: 250px;
-	float:right;
-	height:60%;
-	display:block;
+    height: 200px;
 }

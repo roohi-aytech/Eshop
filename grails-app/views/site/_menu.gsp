@@ -4,7 +4,7 @@
 <div class="black">
     <ul id="menu" class="memu js-enabled">
         <li><a href="#" class="memu-root"><g:message code="category"/></a>
-        <ul>
+        <ul class="children">
             <g:each in="${productTypes}">
                 <li><a href="<g:createLink action="category" params="[id:it.id]"/>">${it}</a>
                 <g:if test="${it.children}">
