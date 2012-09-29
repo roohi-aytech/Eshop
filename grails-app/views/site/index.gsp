@@ -18,7 +18,9 @@
 <div class="status-bar">
     <div class="menu-bar"><g:render template="menu"/></div>
 
-    <div class="search-bar"></div>
+    <div class="search-bar">
+		<input id="search">
+	</div>
 
     <div class="login"></div>
 
