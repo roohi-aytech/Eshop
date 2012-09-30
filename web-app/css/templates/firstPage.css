@@ -6,6 +6,9 @@ body{
 	margin:0 auto 0 auto;
 	background-color:white;
 }
+a img{
+	border:none;
+}
 .memu li.has-children > a  {
 	line-height:33px !important;
 }
@@ -50,14 +53,15 @@ ul.children{
     height: 50px;
 	float:right;
 }
-.login{
+.login {
     width:100px;
-    background-image: url("../../images/site/login.png");
+  /*  background-image: url("../../images/site/login.png");*/
     background-position: center center;
     background-repeat: no-repeat;
     height: 50px;
 	float:right;
 }
+
 .buy-list{
 	width:100px;
     background-image: url("../../images/site/buy-list.png");

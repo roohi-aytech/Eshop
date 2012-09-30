@@ -15,9 +15,39 @@
     opacity: 1;
     width: 207px;
 }
-
+#topLink{
+	text-align:center;
+	margin-top:13px;
+}
 /*XXXXXXXXrightDivBody*/
+.module{
+	padding:2px;
+}
+	/*XXXXXXX offList XXXXX*/
+.offListList{
+	display:inline;
+}
+.offList{
+	float:right;
+	width:90px;
+	margin-left:50px;
+}
+.offListImage{
+	width:106px;
+	height:141px;
+}
+.offListImage img{
+	width:106px;
+	height:141px;
+}
+.offListDesc{
+
+}
+.offListPrice{
+
+}
 	/*XXXXXXX NewProduct XXXXX*/
+	
 .newProductList{
 	display:inline;
 }
@@ -61,6 +91,32 @@
 .slideShowImage img{
 	width:600px;
 	height:300px;
+}
+
+/*XXXXXXXMostSoldXXXXX*/
+.mostSold{
+	float:right;
+	width:200px;
+	padding-bottom:20px;
+}
+.mostSoldImage{
+	width:83px;
+	height:93px;
+	float:right;
+}
+.mostSoldImage img{
+	width:83px;
+	height:93px;
+}
+.mostSoldDesc{
+
+}
+.mostSoldPrice{
+
+}
+.mostSoldinfo{
+	float:right;
+	padding-right:3px;
 }
 /*XXXXXXXXLeftDivBody*/
 .namadeEtemadeMeli{

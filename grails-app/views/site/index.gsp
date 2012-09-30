@@ -22,29 +22,29 @@
 		<input id="search">
 	</div>
 
-    <div class="login"></div>
+    <div class="login"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'login.png')}" /></a></div>
 
-    <div class="buy-list"></div>
+    <div class="buy-list"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'buy-list.png')}" /></a></div>
 
-    <div class="compare-list"></div>
+    <div class="compare-list"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'compare-list.png')}" /></a></div>
 
-    <div class="wish-list"></div>
+    <div class="wish-list"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'wish-list.png')}" /></a></div>
 
-    <div class="support"></div>
+    <div class="support"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'support.png')}" /></a></div>
 	
 	<div class="logo"></div>
 </div>
 <div class="bodyContent">
 	<div class="rightContent">
-		<div class="slide-show">
+		<div class="slide-show module">
 			<g:render template="slideShow"/>
 		</div>
 
-		<div class="off-list">
-			<g:render template="newProduct"/>
+		<div class="off-list module">
+			<g:render template="offList"/>
 		</div>
 
-		<div class="new-products">
+		<div class="new-products module">
 			<g:render template="newProduct"/>
 		</div>
 <!--
@@ -57,6 +57,12 @@
 	</div>
 	<div class="leftContent">
 		<div class="namadeEtemadeMeli"><a href="#"><img src="${resource(dir: 'images/site', file: 'namadeEtemadeMelii.png')}"/></a>
+		</div>
+		<div class="advertisement module">
+			<img src="${resource(dir: 'images/site', file: 'advertise.png')}" style="width:200px;margin:0 auto 0 auto;"/>
+		</div>
+		<div class="most-sold module">
+			<g:render template="mostsold"/>
 		</div>
 	</div>
 
