@@ -9,17 +9,40 @@
 }
 /*XXXXXXXXStatusbar*/
 #search{
-    height: 26px;
-    margin-right: 39px;
-    margin-top: 10px;
+    height: 29px;
+    margin-right: 40px;
+    margin-top: 9px;
     opacity: 1;
-    width: 207px;
+    /*min-width: 253px;*/
+	width:100%;
 }
 #topLink{
 	text-align:center;
 	margin-top:13px;
 }
+.topLinks  a{
+	color:#004B91;
+	font-family:tahoma;
+	font-size:15px;
+	border-left:1px solid #DDDDDD;
+	text-decoration:none;
+}
+
 /*XXXXXXXXrightDivBody*/
+/*******Slideshow*/
+.bx-wrapper{
+	width:100% !important;
+}
+.bx-window{
+	float:left;
+}
+.bx-prev,.bx-next{
+
+}
+
+/*********/
+
+
 .module{
 	padding:2px;
 }

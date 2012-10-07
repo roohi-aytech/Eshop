@@ -1,6 +1,12 @@
+
+<script type="text/javascript">
+	  $(document).ready(function(){
+		$('#slider1').bxSlider();
+	  });
+</script>
 <div class="moduleHeader"></div>
 <div class="moduleConetnt">	
-	<div class="slideShowDiv" >
+	<div class="slideShowDiv" id="slider1" >
 		<g:each in="${newProducts}">
 			<div class="slideShowItem">
 				<div class="slideShowImage">

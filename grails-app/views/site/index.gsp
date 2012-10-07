@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+<script src="${resource(dir: 'js', file: 'jquery-latest.js')}" type="text/javascript"></script>
+<script src="${resource(dir: 'js', file: 'jquery.bxSlider.min.js')}" type="text/javascript"></script>
     <meta name="layout" content="site">
     <script type="text/javascript">
         $.templateLayoutShowOnReady();
@@ -8,35 +10,37 @@
             $.setTemplateLayout('${resource(dir: 'css/templates', file: 'firstPage.css')}', '')
         })
     </script>
+
     <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
-    <title>salam</title>
+    <title>Zanbil Eshop</title>
 </head>
 
 <body>
 
 
-<div class="status-bar">
+<div class="status-bar" style="z-index:10;">
     <div class="menu-bar"><g:render template="menu"/></div>
 
     <div class="search-bar">
 		<input id="search">
 	</div>
+<div class="topLinks">
+    <div class="login"><a href="#" style="display:block;" id="topLink">پروفایل</a></div>
 
-    <div class="login"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'login.png')}" /></a></div>
+    <div class="buy-list"><a href="#" style="display:block;" id="topLink">زنبیل خرید</a></div>
 
-    <div class="buy-list"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'buy-list.png')}" /></a></div>
+    <div class="compare-list"><a href="#" style="display:block;" id="topLink">زنبیل مقایسه</a></div>
 
-    <div class="compare-list"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'compare-list.png')}" /></a></div>
+    <div class="wish-list"><a href="#" style="display:block;" id="topLink">زنبیل آرزو</a></div>
 
-    <div class="wish-list"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'wish-list.png')}" /></a></div>
-
-    <div class="support"><a href="#" style="display:block;" id="topLink"><img src="${resource(dir: 'images/site', file: 'support.png')}" /></a></div>
+    <div class="support"><a href="#" style="display:block;" id="topLink">پشتیبانی</a></div>
 	
 	<div class="logo"></div>
+</div>	
 </div>
 <div class="bodyContent">
 	<div class="rightContent">
-		<div class="slide-show module">
+		<div class="slide-show module" >
 			<g:render template="slideShow"/>
 		</div>
 
