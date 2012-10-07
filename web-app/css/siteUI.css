@@ -30,11 +30,16 @@
 
 /*XXXXXXXXrightDivBody*/
 /*******Slideshow*/
+.slideModuleConetnt{
+	direction:ltr;
+}
 .bx-wrapper{
-	width:100% !important;
+	/*width:100% !important;*/
+	/*direction:ltr;*/
+	text-align:right;
 }
 .bx-window{
-	float:left;
+/*	float:left;*/
 }
 .bx-prev,.bx-next{
 

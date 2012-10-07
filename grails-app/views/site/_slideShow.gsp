@@ -5,7 +5,7 @@
 	  });
 </script>
 <div class="moduleHeader"></div>
-<div class="moduleConetnt">	
+<div class="slideModuleConetnt">	
 	<div class="slideShowDiv" id="slider1" >
 		<g:each in="${newProducts}">
 			<div class="slideShowItem">
