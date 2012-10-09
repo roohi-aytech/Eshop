@@ -14,6 +14,7 @@
     <ul>
         <li><a href="#godFathers"><g:message code="godFathers"/></a></li>
         <li><a href="#variations"><g:message code="variations"/></a></li>
+        <li><a href="#articles"><g:message code="articles"/></a></li>
     </ul>
 
     <div id="godFathers" style="width: 98%">
@@ -22,6 +23,9 @@
 
     <div id="variations" style="width: 98%">
         <g:render template="../variationGroup/variations"/>
+    </div>
+    <div id="articles" style="width: 98%">
+        <g:render template="../journalArticle/list"/>
     </div>
 
 </div>

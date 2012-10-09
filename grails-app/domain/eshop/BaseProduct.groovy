@@ -8,7 +8,7 @@ package eshop
  * To change this template use File | Settings | File Templates.
  */
 class BaseProduct {
-    static hasMany = [variations:Variation]
+    static hasMany = [variations: Variation, articles: JournalArticle]
     static constraints = {
     }
 }
