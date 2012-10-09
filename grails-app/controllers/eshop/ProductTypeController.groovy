@@ -319,4 +319,15 @@ class ProductTypeController {
         def productTypeInstance = ProductType.get(params.id)
         [productTypeInstance: productTypeInstance, baseProductInstance: productTypeInstance]
     }
+
+    def saveGodFathers() {
+        def productType = ProductType.get(params.id)
+        params.godFathers.split(",").each {
+            if (it) {
+                productType.addToGodFathers(ProductType.get(it))
+            }
+        }
+        productType.save()
+        render(view: "details", model: [productTypeInstance: productType, baseProductInstance: productType])
+    }
 }

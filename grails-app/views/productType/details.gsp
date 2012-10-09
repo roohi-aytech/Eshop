@@ -12,8 +12,13 @@
 
 <div id="details-tabs">
     <ul>
+        <li><a href="#godFathers"><g:message code="godFathers"/></a></li>
         <li><a href="#variations"><g:message code="variations"/></a></li>
     </ul>
+
+    <div id="godFathers" style="width: 98%">
+        <g:render template="godFathers"/>
+    </div>
 
     <div id="variations" style="width: 98%">
         <g:render template="../variationGroup/variations"/>

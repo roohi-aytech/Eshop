@@ -1,13 +1,13 @@
 package eshop
 
-class ProductType extends BaseProduct{
+class ProductType extends BaseProduct {
     String name
     String description
     ProductType parentProduct
     ProductType rootProductType
     Long assetcategoryId
 
-    static hasMany = [children:ProductType,products:Product,attributeTypes:AttributeType]
+    static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType]
 
     static mapping = {
         children cascade: 'all'
@@ -15,7 +15,7 @@ class ProductType extends BaseProduct{
         attributeTypes cascade: 'all'
         variations cascade: 'all'
     }
-    static mappedBy = [children: 'parentProduct']
+    static mappedBy = [children: 'parentProduct', godFathers: 'godFathers']
     static constraints = {
         name()
         description(nullable: true)
