@@ -7,7 +7,7 @@
             <div class="message" role="status">${flash.message}</div>
         </g:if>
 
-        <g:form action="saveAttributeValues" params="${[curtab:0]}">
+        <g:form method="post" action="saveAttributeValues" params="${[curtab:1]}">
             <g:hiddenField name="id" value="${params.id}"/>
             <eshop:renderProductAttributes product="${productInstance}"/>
 

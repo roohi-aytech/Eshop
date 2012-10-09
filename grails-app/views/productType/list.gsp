@@ -13,9 +13,9 @@
 <div class="form" id="edit-form-productType">
     <g:render template="form_ProductType"/>
 </div>
-<div class="form" id="edit-form-attributeType">
-    <g:render template="form_Attribute"/>
-</div>
+%{--<div class="form" id="edit-form-attributeType">--}%
+    %{--<g:render template="form_Attribute"/>--}%
+%{--</div>--}%
 <div class="form" id="move-product-type-form"></div>
 
 <div id="list-productType" class="content scaffold-list" role="main">
@@ -64,54 +64,54 @@
                 }
             });
         });
-        jQuery(document).ready(function () {
-            var allFields = $("#edit-form-attributeType input[type!=button]");
-            $("#edit-form-attributeType").dialog({
-                autoOpen:false,
-                modal:true,
-                width:350,
-                resizable:false,
-                title:"${message(code: "attributetype.definition")}",
-                buttons:{
-                    "${message(code: "save")}":function () {
-                        $.ajax({
-                            type:"POST",
-                            url:$("#edit-form-attributeType").attr('url'),
-                            data:{
-                                name: $("#edit-form-attributeType input[name=name]").val(),
-                                attributeType: $("#edit-form-attributeType select[name=attributeType]").val(),
-                                defaultValue: $("#edit-form-attributeType input[name=defaultValue]").val(),
-                                values: $("#edit-form-attributeType input[name=values]")
-                                        .map(function(){return this.value})
-                                        .get()
-                                        .join(),
-                                "productType.id": $("#edit-form-attributeType").attr('productTypeId')
-                            }
-                        }).done(function (response) {
-                                    if (response == "0") {
-                                        var grid = $("#AttributeTypeGrid");
-                                        grid.trigger('reloadGrid');
-                                    }
-                                    else {
-                                    }
-                                });
-                        allFields.removeClass("ui-state-error");
-                        $(this).dialog("close");
-                    },
-                    "${message(code: "cancel")}":function () {
-                        $(this).dialog("close");
-                    }
-                },
-                close:function () {
-                    allFields.val("").removeClass("ui-state-error");
-                    $("#edit-form-attributeType .attributeTypeValue").remove()
-                    $(".valueslabel")
-                            .html("")
-                            .first()
-                            .html("<g:message code="attributeType.values.label" default="Values" />");
-                }
-            });
-        });
+        %{--jQuery(document).ready(function () {--}%
+            %{--var allFields = $("#edit-form-attributeType input[type!=button]");--}%
+            %{--$("#edit-form-attributeType").dialog({--}%
+                %{--autoOpen:false,--}%
+                %{--modal:true,--}%
+                %{--width:350,--}%
+                %{--resizable:false,--}%
+                %{--title:"${message(code: "attributetype.definition")}",--}%
+                %{--buttons:{--}%
+                    %{--"${message(code: "save")}":function () {--}%
+                        %{--$.ajax({--}%
+                            %{--type:"POST",--}%
+                            %{--url:$("#edit-form-attributeType").attr('url'),--}%
+                            %{--data:{--}%
+                                %{--name: $("#edit-form-attributeType input[name=name]").val(),--}%
+                                %{--attributeType: $("#edit-form-attributeType select[name=attributeType]").val(),--}%
+                                %{--defaultValue: $("#edit-form-attributeType input[name=defaultValue]").val(),--}%
+                                %{--values: $("#edit-form-attributeType input[name=values]")--}%
+                                        %{--.map(function(){return this.value})--}%
+                                        %{--.get()--}%
+                                        %{--.join(),--}%
+                                %{--"productType.id": $("#edit-form-attributeType").attr('productTypeId')--}%
+                            %{--}--}%
+                        %{--}).done(function (response) {--}%
+                                    %{--if (response == "0") {--}%
+                                        %{--var grid = $("#AttributeTypeGrid");--}%
+                                        %{--grid.trigger('reloadGrid');--}%
+                                    %{--}--}%
+                                    %{--else {--}%
+                                    %{--}--}%
+                                %{--});--}%
+                        %{--allFields.removeClass("ui-state-error");--}%
+                        %{--$(this).dialog("close");--}%
+                    %{--},--}%
+                    %{--"${message(code: "cancel")}":function () {--}%
+                        %{--$(this).dialog("close");--}%
+                    %{--}--}%
+                %{--},--}%
+                %{--close:function () {--}%
+                    %{--allFields.val("").removeClass("ui-state-error");--}%
+                    %{--$("#edit-form-attributeType .attributeTypeValue").remove()--}%
+                    %{--$(".valueslabel")--}%
+                            %{--.html("")--}%
+                            %{--.first()--}%
+                            %{--.html("<g:message code="attributeType.values.label" default="Values" />");--}%
+                %{--}--}%
+            %{--});--}%
+        %{--});--}%
         jQuery(document).ready(function () {
             var productTypeTree = $("#move-product-type-form").jstree({
                 plugins : ["themes","json_data","radio"],
@@ -149,9 +149,10 @@
             $("#move-product-type-form").dialog({
                 autoOpen:false,
                 modal:true,
+                title:'${message(code: "move-product-type")}',
                 resizable:false,
                 buttons:{
-                    "Save":function () {
+                    "${message(code: "save")}":function () {
                         $.ajax({
                             type:"POST",
                             url:'<g:createLink action="moveProductType"/>',
@@ -172,7 +173,7 @@
 
                         $(this).dialog("close");
                     },
-                    Cancel:function () {
+                    "${message(code: "cancel")}":function () {
                         $(this).dialog("close");
                     }
                 },
@@ -195,12 +196,12 @@
             $("#edit-form-productType").attr("url", url);
             $("#edit-form-productType").dialog("open");
         }
-        function addToAttributeGrid(parentId) {
-            var url = '<g:createLink action="saveAttributeType"/>';
-            $("#edit-form-attributeType").attr("url", url);
-            $("#edit-form-attributeType").attr("productTypeId", parentId);
-            $("#edit-form-attributeType").dialog("open");
-        }
+        %{--function addToAttributeGrid(parentId) {--}%
+            %{--var url = '<g:createLink action="saveAttributeType"/>';--}%
+            %{--$("#edit-form-attributeType").attr("url", url);--}%
+            %{--$("#edit-form-attributeType").attr("productTypeId", parentId);--}%
+            %{--$("#edit-form-attributeType").dialog("open");--}%
+        %{--}--}%
 
 
         function editProductTypeGrid(id) {
@@ -216,31 +217,31 @@
             $("#edit-form-productType").attr("url", url)
             $("#edit-form-productType").dialog("open")
         }
-        function editAttributeGrid(id) {
-            var url = '<g:createLink action="saveAttributeType"/>';
-            if (id)
-                url += '?id=' + id;
-            var grid = jQuery("#AttributeTypeGrid")
-            var row = grid.getRowData(id)
-            $("#edit-form-attributeType input[name=name]").val(row.name)
-            $("#edit-form-attributeType select[name=attributeType]").val(row.attributeType)
-            $("#edit-form-attributeType input[name=defaultValue]").val(row.defaultValue)
-//            $("#edit-form-attributeType input[name=values]").val(row.values)
+        %{--function editAttributeGrid(id) {--}%
+            %{--var url = '<g:createLink action="saveAttributeType"/>';--}%
+            %{--if (id)--}%
+                %{--url += '?id=' + id;--}%
+            %{--var grid = jQuery("#AttributeTypeGrid")--}%
+            %{--var row = grid.getRowData(id)--}%
+            %{--$("#edit-form-attributeType input[name=name]").val(row.name)--}%
+            %{--$("#edit-form-attributeType select[name=attributeType]").val(row.attributeType)--}%
+            %{--$("#edit-form-attributeType input[name=defaultValue]").val(row.defaultValue)--}%
+            %{--$("#edit-form-attributeType select[name=category]").val(row.category)--}%
 
-            $.ajax({
-                type:"POST",
-                url:'<g:createLink action="getAttributeTypeValues"/>',
-                data:{
-                    id: id
-                }
-            }).done(function (response) {
-                $(response).each(function(index){
-                    addattributeTypeValueTemplate(response[index])
-                })
-            });
-            $("#edit-form-attributeType").attr("url", url)
-            $("#edit-form-attributeType").dialog("open")
-        }
+            %{--$.ajax({--}%
+                %{--type:"POST",--}%
+                %{--url:'<g:createLink action="getAttributeTypeValues"/>',--}%
+                %{--data:{--}%
+                    %{--id: id--}%
+                %{--}--}%
+            %{--}).done(function (response) {--}%
+                %{--$(response).each(function(index){--}%
+                    %{--addattributeTypeValueTemplate(response[index])--}%
+                %{--})--}%
+            %{--});--}%
+            %{--$("#edit-form-attributeType").attr("url", url)--}%
+            %{--$("#edit-form-attributeType").dialog("open")--}%
+        %{--}--}%
         %{--function editProductGrid(id) {--}%
             %{--var url = '<g:createLink action="saveProduct"/>';--}%
             %{--if (id)--}%
@@ -314,6 +315,25 @@
                         });
             }
         }
+        function deleteAttributeCategory(id) {
+            if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
+
+                var url = "<g:createLink action="deleteAttributeCategory"/>";
+                $.ajax({
+                    type:"POST",
+                    url:url,
+                    data:{ id:id }
+                }).done(function (response) {
+                            if (response == "0") {
+                                var grid = $("#AttributeCategoryGrid");
+                                grid.trigger('reloadGrid');
+                            }
+                            else {
+                                alert(response)
+                            }
+                        });
+            }
+        }
         function moveProductType(id){
             var grid = jQuery("#ProductTypeGrid")
             var row = grid.getRowData(id)
@@ -321,22 +341,52 @@
             $("#move-product-type-form").attr("curProductTypeId",id)
             $("#move-product-type-form").dialog("open")
         }
+        function attributeCategorySaved(attributeCategory){
+            if(attributeCategory.parentCategory)
+                reloadAttributeCategoryGridNode(attributeCategory.parentCategory.id)
+            else{
+                var grid = jQuery("#AttributeCategoryGrid")
+                grid.trigger('reloadGrid');
+            }
+        }
+        function attributeSaved(attribute){
+            var grid = $("#AttributeTypeGrid");
+            grid.trigger('reloadGrid');
+        }
 
     </script>
 
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProductType}" maxColumns="2"
-                 firstColumnWidth="25" showCommand="false"
+                 firstColumnWidth="30" showCommand="false"
                  tree="parentProduct"
-                 childGrid="AttributeType" fieldInChild="productType"
+                 childGrid="${["AttributeType":"productType","AttributeCategory":"productType"]}"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductTypeGrid", icon: "plus"]]}"
-                 commands="${[[handler: "addToProductTypeGrid(#id#)", icon: "application_add"], [handler: "addToAttributeGrid(#id#)", icon: "application_put"], [handler: "editProductTypeGrid(#id#)", icon: "application_edit"], [controller: "productType", action: "details", param: "id=#id#", icon: "application_form"], [handler: "deleteProductTypeGrid(#id#)", icon: "application_delete"],[handler: "moveProductType(#id#)", icon: "cut"]]}"/>
+                 commands="${[[handler: "addToProductTypeGrid(#id#)", icon: "application_add" ,title:"${message(code: "add-sub-product-type")}"],
+                         [loadOverlay: "${g.createLink(action: "attributeCategoryForm")}?productType.id=#id#",saveAction:"${g.createLink(action: "saveAttributeCategory")}",saveCallback:"attributeCategorySaved", icon: "application_link",title:"${message(code: "add-category")}"],
+                         [loadOverlay: "${g.createLink(action: "attributeForm")}?productType.id=#id#",saveAction:"${g.createLink(action: "saveAttributeType")}",saveCallback:"attributeSaved", icon: "application_put",title:"${message(code: "add-attribute")}"],
+                         [handler: "editProductTypeGrid(#id#)", icon: "application_edit",title:"${message(code: "edit-product-type")}"],
+                         [controller: "productType", action: "details", param: "id=#id#", icon: "application_form",title:"${message(code: "product-type-details")}"],
+                         [handler: "deleteProductTypeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-product-type")}"],
+                         [handler: "moveProductType(#id#)", icon: "cut",title:"${message(code: "move-product-type")}"]]}"/>
     </div>
-
+    <div style="margin: 10px;">
+        <rg:grid domainClass="${eshop.AttributeCategory}" maxColumns="1"
+                 firstColumnWidth="10" showCommand="false"
+                 tree="parentCategory"
+                 commands="${[[loadOverlay: "${g.createLink(action: "attributeCategoryForm")}?parentCategory.id=#id#",saveCallback: "attributeCategorySaved",saveAction:"${g.createLink(action: "saveAttributeCategory")}", icon: "application_add",title:"${message(code: "add-sub-category")}"],
+                         [loadOverlay: "${g.createLink(action: "attributeCategoryForm")}/#id#",saveAction:"${g.createLink(action: "saveAttributeCategory")}", icon: "application_edit",title:"${message(code: "edit-category")}"],
+                         [handler: "deleteAttributeCategory(#id#)", icon: "application_delete",title:"${message(code: "delete-category")}"]]}">
+            <rg:criteria>
+                <rg:eq name="productType.id" value="0"/>
+            </rg:criteria>
+        </rg:grid>
+    </div>
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.AttributeType}" maxColumns="4"
                  firstColumnWidth="15" showCommand="false"
-                 commands="${[[handler: "editAttributeGrid(#id#)", icon: "application_edit"], [handler: "deleteAttributeGrid(#id#)", icon: "application_delete"]]}">
+                 commands="${[[loadOverlay: "${g.createLink(action: "attributeForm")}/#id#",saveAction:"${g.createLink(action: "saveAttributeType")}",saveCallback:"attributeSaved", icon: "application_edit",title:"${message(code: "edit-attribute")}"],
+                         [handler: "deleteAttributeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-attribute")}"]]}">
             <rg:criteria>
                 <rg:eq name="productType.id" value="0"/>
             </rg:criteria>

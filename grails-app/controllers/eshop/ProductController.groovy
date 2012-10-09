@@ -41,15 +41,26 @@ class ProductController {
     }
 
     def productDetails() {
-        def productInstance = Product.findById(params.id)
-        [productInstance: productInstance, baseProductInstance: productInstance, curtab: params.curtab]
+        def productInstance
+        def productTypeIds = []
+        if (params.id) {
+            productInstance = Product.get(params.id)
+            productInstance.productTypes.each {
+                productTypeIds << it.id
+            }
+        }
+        else {
+            productInstance = new Product()
+        }
+
+        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab]
     }
 
     def saveProductDescription() {
         def productInstance = Product.findById(params.id)
         productInstance.details = params.detail_description;
         productInstance.save()
-        redirect(action: "productDetails", params: params)
+        redirect(action: "productDetails", params: [id: params.id,curtab: params.curtab])
     }
 
     def saveAttributeValues() {
@@ -65,7 +76,7 @@ class ProductController {
                 attribute.save()
             }
         }
-        redirect(action: "productDetails", params: params)
+        redirect(action: "productDetails", params: [id: params.id,curtab: params.curtab])
     }
 
     private def attributeTypes(ProductType productType) {
@@ -162,6 +173,38 @@ class ProductController {
         }
 
         render productInstance as JSON
+    }
+
+    def saveProductAndReturnToDetailsPage() {
+        def productInstance
+        if (params.id) {
+            productInstance = Product.get(params.id)
+            productInstance.properties = params
+        }
+        else
+            productInstance = new Product(params)
+        def tmp = []
+        productInstance.productTypes.each {
+            tmp << it
+        }
+        tmp.each {
+            productInstance.removeFromProductTypes(it)
+        }
+        params.producttypes.split(",").each {
+            if (it) {
+                def productType = ProductType.get(it)
+                productInstance.addToProductTypes(productType);
+            }
+        }
+        if (!productInstance.save(flush: true)) {
+        }
+
+        def productTypeIds = []
+        productInstance.productTypes.each {
+            productTypeIds << it.id
+        }
+        render(view: "productDetails", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab])
+
     }
 
     def show() {

@@ -94,6 +94,8 @@ log4j = {
 }
 
 eshop.messages.file = new File("messageCodes")
+eshop.messages.boundle=new File("grails-app/i18n/messages.properties")
+
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'eshop.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'eshop.UserRole'

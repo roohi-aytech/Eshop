@@ -35,6 +35,11 @@
                             src="images/brand.png"/><span><g:message
                             code="brand.label"
                             default="Brand"/></span></g:link></li>
+                <li>
+                    <g:link controller="currency" action="list"><img
+                            src="images/currency.png"/><span><g:message
+                            code="currency.label"
+                            default="Currency"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">

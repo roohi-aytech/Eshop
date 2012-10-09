@@ -47,7 +47,7 @@
                  showCommand="false"
                  firstColumnWidth="30"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-                 commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#", saveAction: "${g.createLink(action: "save")}", loadCallback: "addTree", icon: "application_edit"], [controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+                 commands="${[ [controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
         </rg:grid>
     </div>
 </div>
@@ -138,9 +138,10 @@
 
     }
     function addToProductGrid(){
-        loadOverlay('<g:createLink action="form"/>','<g:createLink action="save"/>',function(){
-            $("#ProductGrid").trigger("reloadGrid")
-        },addTree);
+        window.location='<g:createLink action="productDetails"/>'
+        %{--loadOverlay('<g:createLink action="form"/>','<g:createLink action="save"/>',function(){--}%
+            %{--$("#ProductGrid").trigger("reloadGrid")--}%
+        %{--},addTree);--}%
     }
 </g:javascript>
 </body>

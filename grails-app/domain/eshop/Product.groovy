@@ -1,12 +1,13 @@
 package eshop
 
-class Product extends BaseProduct{
+class Product extends BaseProduct {
     String name
     String description
     String details
     Date manufactureDate
     String manufactureCountry
     String otherAtributes
+    Double weight = 0D
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -32,6 +33,7 @@ class Product extends BaseProduct{
         attributes()
         otherAtributes(nullable: true)
         details(nullable: true)
+        weight()
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)

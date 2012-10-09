@@ -13,9 +13,12 @@ class AttributeType {
     String attributeType
     String defaultValue
     ProductType productType
+    AttributeCategory category
 
-    static hasMany = [attributes: Attribute, values: String]
-    static belongsTo = [ProductType]
+    static final def showPositionValues=["filter","productList","compare","productDetails","productFullDetails"]
+
+    static hasMany = [attributes: Attribute, values: String,showPositions:String]
+    static belongsTo = [ProductType,AttributeCategory]
 
     static mapping = {
         attributes cascade: 'delete'
@@ -25,6 +28,7 @@ class AttributeType {
         name(nullable: false)
         attributeType(inList: ["String", "Date", "Number"])
         defaultValue(nullable: true)
+        category(nullable: true)
         values()
         productType()
     }

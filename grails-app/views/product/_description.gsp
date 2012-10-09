@@ -1,4 +1,4 @@
-<g:form action="saveProductDescription" params="${[curtab:1]}">
+<g:form method="post" action="saveProductDescription" params="${[curtab:4]}">
     <g:hiddenField name="id" value="${params.id}"/>
 
         <ckeditor:editor name="detail_description" width="100%" height="200px">

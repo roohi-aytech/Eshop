@@ -87,6 +87,45 @@ class ProductTypeController {
         redirect(action: "show", id: productTypeInstance.id)
     }
 
+    def attributeCategoryForm() {
+        def attributeCategory
+        if (params.id)
+            attributeCategory = AttributeCategory.get(params.id)
+        else {
+            attributeCategory = new AttributeCategory(params)
+            if (!attributeCategory.productType)
+                attributeCategory.productType = attributeCategory.parentCategory.productType
+        }
+        render(template: "form_AttributeCategory", model: [attributeCategory: attributeCategory])
+    }
+
+    def saveAttributeCategory() {
+        def attributeCategory
+        if (params.id) {
+            attributeCategory = AttributeCategory.get(params.id)
+            attributeCategory.properties = params
+        }
+        else
+            attributeCategory = new AttributeCategory(params)
+        if (attributeCategory.validate() && attributeCategory.save()) {
+            render attributeCategory as JSON
+        }
+        else {
+            render(template: "form_AttributeCategory", model: [attributeCategory: attributeCategory])
+        }
+    }
+
+    def deleteAttributeCategory() {
+        try {
+            def attributecategory = AttributeCategory.get(params.id)
+            attributecategory.delete()
+            render 0
+        } catch (x) {
+            x.printStackTrace()
+            render(message(code: "cannot.delete"))
+        }
+    }
+
     def delete(Long id) {
         def productTypeInstance = ProductType.get(id)
         if (!productTypeInstance) {
@@ -204,6 +243,18 @@ class ProductTypeController {
         result as JSON;
     }
 
+
+    def attributeForm() {
+        def attribute
+        if (params.id)
+            attribute = AttributeType.get(params.id)
+        else {
+            attribute = new AttributeType(params)
+        }
+        def attributeCategories = AttributeCategory.findAllByProductType(attribute.productType)
+        render(template: "form_Attribute", model: [attributeTypeInstance: attribute, attributeCategories: attributeCategories])
+    }
+
     def saveAttribute() {
         def attribute;
         if (params.id) {
@@ -223,8 +274,8 @@ class ProductTypeController {
         }
         else
             attributeType = new AttributeType(params);
-        if (params.values)
-            attributeType.values = params.values.split(",")
+        //if (params.values)
+        //    attributeType.values = params.values.split(",")
         attributeType.save()
         render "0"
     }
