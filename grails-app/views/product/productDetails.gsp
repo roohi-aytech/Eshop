@@ -15,6 +15,7 @@
         <li><a href="#attributes"><g:message code="attributes"/></a></li>
         <li><a href="#variations"><g:message code="variations"/></a></li>
         <li><a href="#price"><g:message code="price"/></a></li>
+        <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
         <li><a href="#product_description"><g:message code="description"/></a></li>
         <li><a href="#images"><g:message code="images"/></a></li>
         <li><a href="#videos"><g:message code="videos"/></a></li>
@@ -30,6 +31,9 @@
     </div>
     <div id="price" style="width: 98%">
         <g:render template="../price/prices"/>
+    </div>
+    <div id="addedValue" style="width: 98%">
+        <g:render template="../addedValue/list"/>
     </div>
     <div id="product_description">
         <g:render template="description"/>
