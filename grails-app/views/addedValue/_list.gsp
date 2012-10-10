@@ -1,3 +1,4 @@
+<%@ page import="eshop.AddedValue" %>
 
 
 <div class="content scaffold-list" role="main">
