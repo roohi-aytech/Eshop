@@ -13,23 +13,8 @@
 </head>
 
 <body>
-<div id="header">header</div>
 
-<div class="status-bar">
-    <div class="menu-bar"><g:render template="menu"/></div>
-
-    <div class="search-bar"></div>
-
-    <div class="login"></div>
-
-    <div class="buy-list"></div>
-
-    <div class="compare-list"></div>
-
-    <div class="wish-list"></div>
-
-    <div class="support"></div>
-</div>
+<g:render template="status_bar"/>
 
 <div class="slide-show"></div>
 
