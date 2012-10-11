@@ -35,6 +35,14 @@
     <g:select name="category.id" from="${attributeCategories}" optionKey="id" value="${attributeTypeInstance?.category?.id}"  noSelection="['': '']"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: attributeTypeInstance, field: 'showPositions', 'error')} ">
+    <label for="showPositions">
+        <g:message code="showPositions.label" default="Show Positions" />
+
+    </label>
+    <rg:checkBoxList name="showPositions" from="${AttributeType.showPositionValues}"  value="${attributeTypeInstance?.showPositions}" translate="true"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: attributeTypeInstance, field: 'defaultValue', 'error')} ">
     <label for="defaultValue">
         <g:message code="attributeType.defaultValue.label" default="Default Value" />

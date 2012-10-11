@@ -13,7 +13,11 @@ class SiteController {
         def productTypes = ProductType.findAllByParentProductIsNull()
 
         def productType = ProductType.get(params.id)
-        def filterProductTypes = ProductType.findAllByParentProduct(productType)
+        def filterProductTypes
+        if(productType)
+            filterProductTypes= ProductType.findAllByParentProduct(productType)
+        else
+            filterProductTypes=ProductType.findAllByParentProductIsNull()
 
         Brand.findAll("from Brand as b where exists (from Product as p )")
         [productTypes: productTypes, filterProductTypes: filterProductTypes]
