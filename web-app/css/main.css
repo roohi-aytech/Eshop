@@ -834,3 +834,6 @@ a.skip {
 .variationValues-div span{
     display: inline;
 }
+.word-counter{
+    padding: 5px;
+}

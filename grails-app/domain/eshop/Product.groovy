@@ -1,6 +1,6 @@
 package eshop
 
-class Product extends BaseProduct {
+class Product extends BaseProduct implements Comparable{
     String name
     String description
     String details
@@ -8,6 +8,8 @@ class Product extends BaseProduct {
     String manufactureCountry
     String otherAtributes
     Double weight = 0D
+    String keywords
+    String pageTitle
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -25,7 +27,7 @@ class Product extends BaseProduct {
 
     static constraints = {
         name()
-        description(nullable: true)
+        description(nullable: true,maxSize: 1000)
         brand(nullable: true)
         manufactureCountry(nullable: true)
         manufactureDate(nullable: true)
@@ -33,10 +35,17 @@ class Product extends BaseProduct {
         attributes()
         otherAtributes(nullable: true)
         details(nullable: true)
-        weight()
+        weight(nullable: true)
+        keywords(nullable: true)
+        pageTitle(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)
+    }
+
+    @Override
+    int compareTo(def t) {
+        name <=>t?.name
     }
 
     @Override

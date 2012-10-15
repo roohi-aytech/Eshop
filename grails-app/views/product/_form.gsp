@@ -7,7 +7,14 @@
         <g:message code="product.name.label" default="Name"/>
 
     </label>
-    <g:textField name="name" value="${productInstance?.name}"/>
+    <g:textField name="name" value="${productInstance?.name}" class="count-words"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'pageTitle', 'error')} ">
+    <label for="pageTitle">
+        <g:message code="product.pageTitle.label" default="Page Title"/>
+
+    </label>
+    <g:textField name="pageTitle" value="${productInstance?.pageTitle}" class="count-words"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'description', 'error')} ">
@@ -15,7 +22,14 @@
         <g:message code="product.description.label" default="Description"/>
 
     </label>
-    <g:textField name="description" value="${productInstance?.description}"/>
+    <g:textArea name="description" value="${productInstance?.description}" cols="20" rows="5" class="count-words"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'keywords', 'error')} ">
+    <label for="keywords">
+        <g:message code="product.keywords.label" default="Keywords"/>
+
+    </label>
+    <g:textArea name="keywords" value="${productInstance?.keywords}" cols="20" rows="5" class="count-words"/>
 </div>
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'manufactureDate', 'error')} ">
     <label for="manufactureDate">
@@ -30,6 +44,13 @@
 
     </label>
     <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'weight', 'error')} ">
+    <label for="manufactureCountry">
+        <g:message code="product.weight.label" default="Weight"/>
+
+    </label>
+    <g:field type="number" name="weight" value="${productInstance?.weight}"/>
 </div>
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'brand', 'error')} ">
     <label for="brand">
@@ -56,5 +77,16 @@
                     $("#brand.id").val(r.id)
                 })
     }
+    $(function(){
+
+        $(".count-words").keypress(function(){
+            var inp=$(this)
+            inp.parent().find(".word-counter").html(inp.val().length)
+        }).each(function(){
+            $("<span class='word-counter'></span>").insertAfter($(this))
+            $(this).keypress()
+
+        })
+    })
 </script>
 

@@ -6,6 +6,7 @@ body{
 	margin:0 auto 0 auto;
 	background-color:white;
 	height:100%;
+    font-family: tahoma;
 }
 a img{
 	border:none;
@@ -208,4 +209,52 @@ ul.children{
 	float:right;
 	height:60%;
 	display:block;
+}
+.product-images{
+    border: 1px solid;
+    float: right;
+    height: 400px;
+    margin: 2px;
+    width: 500px;
+}
+.product-name{
+    font-size: 16pt;
+}
+
+.variation-value-color {
+    border: 1px solid gray;
+    padding: 0px 3px;
+    display: inline-block;
+    font-family: tahoma;
+    font-size: 9pt;
+    height: 30px;
+    line-height: 25px;
+    text-align: center;
+    min-width: 30px;
+}
+.variation-value-color:hover {
+    border-color: #E47911;
+    background-color: #EBF3FE;
+    cursor: pointer;
+}
+.variation-value{
+    margin-top: 3px;
+}
+.cur-variation{
+    display: inline-block;
+}
+.hover-variation{
+    display: inline-block;
+}
+.image-additional{
+    width:50px;
+    float: right;
+}
+.image-zoomable{
+    float: left;
+    width: 400px;
+}
+.image-zoomable img{
+    width: 100%;
+    height: 100%;
 }

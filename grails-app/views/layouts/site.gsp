@@ -51,5 +51,6 @@
 
 <body dir="rtl">
 <g:layoutBody/>
+<r:layoutResources/>
 </body>
 </html>

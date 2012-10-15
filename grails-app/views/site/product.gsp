@@ -2,38 +2,26 @@
 <html>
 <head>
     <meta name="layout" content="site">
-    <script type="text/javascript">
-        $.templateLayoutShowOnReady();
-        $(function () {
-            $.setTemplateLayout('${resource(dir: 'css/templates', file: 'firstPage.css')}', '')
-        })
-    </script>
+
     <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
-    <title>salam</title>
+    <title>${product?.name}</title>
 </head>
 
 <body>
 
 <g:render template="status_bar"/>
+<div class="bodyContent">
+    <div class="product-images"><g:render template="product/zoom"/></div>
 
-<div class="slide-show"></div>
+    <div class="product-info">
+        <div class="product-name">${product?.name}</div>
 
-<div class="off-list"></div>
+        <g:render template="price"/>
 
-<div class="new-products"></div>
+        <div class="product-description">${product?.description}</div>
 
-<div class="most-viewed-products"></div>
-
-<div class="recomanded-products"></div>
-
-<div class="recent-products"></div>
-
-<div class="bottom-bar">
-    <div class="help"></div>
-
-    <div class="know-us"></div>
-
-    <div class="contact-us"></div>
+        <g:render template="product/variation"/>
+    </div>
 </div>
 </body>
 </html>

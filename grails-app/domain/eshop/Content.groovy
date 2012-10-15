@@ -5,6 +5,10 @@ class Content {
     String contentType
     byte[] fileContent
 
+    static mapping = {
+        sort 'name'
+    }
+
     static constraints = {
         name(blank: false)
         contentType(inList: ["image", "video"])

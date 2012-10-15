@@ -60,7 +60,7 @@ class ProductController {
         def productInstance = Product.findById(params.id)
         productInstance.details = params.detail_description;
         productInstance.save()
-        redirect(action: "productDetails", params: [id: params.id,curtab: params.curtab])
+        redirect(action: "productDetails", params: [id: params.id, curtab: params.curtab])
     }
 
     def saveAttributeValues() {
@@ -76,7 +76,7 @@ class ProductController {
                 attribute.save()
             }
         }
-        redirect(action: "productDetails", params: [id: params.id,curtab: params.curtab])
+        redirect(action: "productDetails", params: [id: params.id, curtab: params.curtab])
     }
 
     private def attributeTypes(ProductType productType) {
@@ -85,14 +85,7 @@ class ProductController {
     }
 
     def image() {
-        def product = Product.get(params.id)
-        product.images.each {
-            if (it.name == params.name) {
-                response.contentType = 'image/png'
-                response.outputStream << it.fileContent
-                response.outputStream.flush()
-            }
-        }
+        redirect(controller: "image",action: "index",params: params)
     }
 
     def deleteImage() {

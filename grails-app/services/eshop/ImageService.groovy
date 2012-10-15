@@ -9,10 +9,21 @@ class ImageService {
     def size = [
             [width: 400, height: 400],
             [width: 300, height: 300],
-            [width: 200, height: 200] ,
-            [width: 100, height: 100] ,
+            [width: 200, height: 200],
+            [width: 100, height: 100],
             [width: 50, height: 50]
     ]
+
+    def getImage(Content img, String wh, String parent) {
+        if (wh?.toBoolean()) {
+            return fileService.getFileContent(img.name, "images", parent)
+        }
+        else if (wh)
+            return fileService.getFileContent(img.name + "-" + wh, "images", parent)
+        else
+            return new byte[0]
+
+    }
 
     def saveAndScaleImages(byte[] content, String name, String parent) {
 

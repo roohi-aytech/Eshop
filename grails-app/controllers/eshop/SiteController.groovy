@@ -19,13 +19,15 @@ class SiteController {
         else
             filterProductTypes=ProductType.findAllByParentProductIsNull()
 
-        Brand.findAll("from Brand as b where exists (from Product as p )")
+//        Brand.findAll("from Brand as b where exists (from Product as p )")
+
         [productTypes: productTypes, filterProductTypes: filterProductTypes]
     }
 
     def product() {
+        def productTypes = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
-        [product: product]
+        [productTypes: productTypes, product: product]
     }
 
     def image(){
