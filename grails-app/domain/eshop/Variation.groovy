@@ -8,6 +8,11 @@ class Variation {
 
     static belongsTo = [VariationGroup]
 
+
+    static mapping = {
+        sort 'name'
+    }
+
     static constraints = {
         name()
         variationGroup()

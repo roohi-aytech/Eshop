@@ -13,7 +13,7 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${Price}"
              showCommand="false"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
+             toolbarCommands="${[[caption: message(code: "add"), function: "addToPriceGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "price", params: ['product.id': productInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "price")}", icon: "application_edit"], [handler: "deletePrice(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
             <rg:eq name="product.id" value="${productInstance.id}"/>
@@ -37,7 +37,7 @@
                 });
             }
         }
-        function addToGrid(){
+        function addToPriceGrid(){
             loadOverlay('<g:createLink controller="price" action="form" params="['product.id': productInstance.id]"/>','<g:createLink action="save" controller="price"/>',function(){
                 $("#PriceGrid").trigger("reloadGrid")
             });

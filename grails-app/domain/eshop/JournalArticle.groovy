@@ -7,6 +7,7 @@ class JournalArticle {
     BaseProduct baseProduct
     static belongsTo = [BaseProduct]
     static mapping = {
+        sort 'name'
         text type: "text"
     }
     static constraints = {

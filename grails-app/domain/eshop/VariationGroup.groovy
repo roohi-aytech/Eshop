@@ -11,6 +11,7 @@ class VariationGroup {
     static composites = ["variationValues"]
     List variationValues = LazyList.decorate(new ArrayList(), FactoryUtils.instantiateFactory(VariationValue.class))
     static mapping = {
+        sort 'name'
         variationValues cascade: "all-delete-orphan"
     }
 

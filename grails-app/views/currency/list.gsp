@@ -14,7 +14,7 @@
     <rg:grid domainClass="${Currency}"
              maxColumns="2"
              showCommand="false"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
+             toolbarCommands="${[[caption: message(code: "add"), function: "addToCurrencyGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteCurrency(#id#)", icon: "application_delete"]]}"
     />
     <g:javascript>
@@ -36,7 +36,7 @@
                 });
             }
         }
-        function addToGrid(){
+        function addToCurrencyGrid(){
             loadOverlay('<g:createLink action="form"/>','<g:createLink action="save" />',function(){
                 $("#CurrencyGrid").trigger("reloadGrid")
             });

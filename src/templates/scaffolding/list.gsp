@@ -13,7 +13,7 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="\${${className}}"
              showCommand="false"
-             toolbarCommands="\${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
+             toolbarCommands="\${[[caption: message(code: "add"), function: "addTo${className}Grid", icon: "plus"]]}"
              commands="\${[[loadOverlay: "\${g.createLink(action: "form")}/#id#",saveAction:"\${g.createLink(action: "save")}", icon: "application_edit"], [handler: "delete${className}(#id#)", icon: "application_delete"]]}"
     />
     <g:javascript>
@@ -34,7 +34,7 @@
                 });
             }
         }
-        function addToGrid(){
+        function addTo${className}Grid(){
             loadOverlay('<g:createLink action="form"/>','<g:createLink action="save" />',function(){
                 \$("#${className}Grid").trigger("reloadGrid")
             });

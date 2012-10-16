@@ -35,6 +35,7 @@
         <g:message code="journalArticle.text.label" default="Text"/>
 
     </label>
+
     <ckeditor:editor name="text" width="99%" height="200px">
         ${journalArticleInstance?.text}
     </ckeditor:editor>

@@ -14,7 +14,7 @@
     <rg:grid domainClass="${VariationGroup}"
              maxColumns="3"
              showCommand="false"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
+             toolbarCommands="${[[caption: message(code: "add"), function: "addToVariationGroupGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteVariationGroup(#id#)", icon: "application_delete"]]}"
     />
     <g:javascript>
@@ -35,7 +35,7 @@
                 });
             }
         }
-        function addToGrid(){
+        function addToVariationGroupGrid(){
             loadOverlay('<g:createLink action="form"/>','<g:createLink action="save" />',function(){
                 $("#VariationGroupGrid").trigger("reloadGrid")
             });

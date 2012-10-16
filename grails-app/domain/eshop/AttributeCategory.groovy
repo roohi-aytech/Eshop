@@ -5,6 +5,9 @@ class AttributeCategory {
     AttributeCategory parentCategory
     ProductType productType
 
+    static mapping = {
+        sort 'name'
+    }
     static constraints = {
     }
     String toString()

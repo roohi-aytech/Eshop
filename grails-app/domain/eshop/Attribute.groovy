@@ -7,6 +7,10 @@ class Attribute {
 
     static belongsTo = [AttributeType]
 
+    static mapping = {
+        sort 'attributeValue'
+    }
+
     static constraints = {
         attributeValue(nullable: true)
         product()

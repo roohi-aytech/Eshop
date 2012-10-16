@@ -1,5 +1,8 @@
 package eshop
 
+import org.springframework.context.ApplicationContext
+import org.codehaus.groovy.grails.web.context.ServletContextHolder
+
 /**
  * Created with IntelliJ IDEA.
  * User: roohi
@@ -8,7 +11,7 @@ package eshop
  * To change this template use File | Settings | File Templates.
  */
 class FileService {
-    def baseLoc = System.getProperty("catalina.base") + "/../content"
+    def baseLoc = ServletContextHolder.servletContext.getRealPath("/uploads/Image")
 
     def getFileContent(String name,String type,String parent){
         def path = baseLoc + "/" + parent + "/" + type+"/"+name

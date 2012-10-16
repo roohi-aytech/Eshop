@@ -8,7 +8,9 @@ class Price {
     Date startDate
     Date endDate
 
-
+    static mapping = {
+        sort 'startDate'
+    }
 
     static constraints = {
         price(min: 0D)

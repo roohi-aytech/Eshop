@@ -8,6 +8,10 @@ class AddedValue {
     String processTime
     static hasMany = [variationValues: VariationValue]
 
+    static mapping = {
+        sort 'name'
+    }
+
     static constraints = {
         name()
         type(inList: ["percent", "fixed"])

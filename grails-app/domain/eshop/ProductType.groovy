@@ -10,6 +10,7 @@ class ProductType extends BaseProduct {
     static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType]
 
     static mapping = {
+        sort 'name'
         children cascade: 'all'
         products cascade: 'all'
         attributeTypes cascade: 'all'

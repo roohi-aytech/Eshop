@@ -6,8 +6,8 @@
     <rg:grid domainClass="${JournalArticle}"
              showCommand="false"
              maxColumns="2"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
-             commands="${[[handler: "addToGrid(#id#)", icon: "application_edit"], [handler: "deleteJournalArticle(#id#)", icon: "application_delete"]]}">
+             toolbarCommands="${[[caption: message(code: "add"), function: "addToJournalGrid", icon: "plus"]]}"
+             commands="${[[handler: "addToJournalGrid(#id#)", icon: "application_edit"], [handler: "deleteJournalArticle(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
             <rg:eq name="baseProduct.id" value="${baseProductInstance.id}"/>
         </rg:criteria>
@@ -30,7 +30,7 @@
                 });
             }
         }
-        function addToGrid(id){
+        function addToJournalGrid(id){
             if(CKEDITOR.instances['text']){
                 CKEDITOR.remove(CKEDITOR.instances['text'])
             }

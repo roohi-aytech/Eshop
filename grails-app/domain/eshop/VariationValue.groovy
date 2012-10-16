@@ -12,6 +12,9 @@ class VariationValue {
 
     static transients = ['deleted']
 
+    static mapping = {
+        sort 'value'
+    }
 
     static constraints = {
     }

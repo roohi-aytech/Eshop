@@ -5,7 +5,7 @@
     <rg:grid domainClass="${AddedValue}"
              showCommand="false"
              maxColumns="5"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
+             toolbarCommands="${[[caption: message(code: "add"), function: "addToAddedValueGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "addedValue")}/#id#",saveAction:"${g.createLink(action: "save",controller: "addedValue")}", icon: "application_edit"], [handler: "deleteAddedValue(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
             <rg:eq name="baseProduct.id" value="${baseProductInstance?.id}"/>
@@ -29,7 +29,7 @@
                 });
             }
         }
-        function addToGrid(){
+        function addToAddedValueGrid(){
             loadOverlay('<g:createLink action="form" controller="addedValue" params="['baseProduct.id':baseProductInstance?.id]"/>','<g:createLink action="save"  controller="addedValue"/>',function(){
                 $("#AddedValueGrid").trigger("reloadGrid")
             });
