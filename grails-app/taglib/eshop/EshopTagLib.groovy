@@ -29,31 +29,20 @@ class EshopTagLib {
         out << "</legend>"
         out << "</fieldset>"
 
-        if (productType.parentProduct)
-        {
+        if (productType.parentProduct) {
             request.setAttribute("productType", productType.parentProduct)
             out << renderProductTypeAttributes()
             request.removeAttribute("productType")
         }
     }
 
-    def renderAttribute = {attrs, body->
+    def renderAttribute = {attrs, body ->
         AttributeType attributeType = request.getAttribute("attribute")
         Product product = request.getAttribute("product")
         def attribute = product.attributes.find { it.attributeType.id == attributeType.id }
-
-        out << "<div class='fieldcontain'>"
-        out << "<label for='at_${attributeType.id}'>"
-        out << attributeType.name
-        out << "</label>"
         def attributeValue = attribute?.attributeValue
         if (!attributeValue && attributeType.defaultValue)
             attributeValue = attributeType.defaultValue
-        if (attributeType.values)
-            out << g.select(name: "at_${attributeType.id}", value: attributeValue, from: attributeType.values)
-        else
-            out << g.textField(name: "at_${attributeType.id}", value: attributeValue)
-
-        out << "</div>"
+        out << render(template: "attr", model: [attributeType: attributeType, product: product, attribute: attribute, attributeValue: attributeValue]);
     }
 }

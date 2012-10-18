@@ -40,6 +40,23 @@ class ProductController {
         render(template: "form", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(",")])
     }
 
+    def attrValueForm() {
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId])
+    }
+
+    def addAttributeValue() {
+        def attributeType = AttributeType.get(params.attributeTypeId)
+        if (params.values) {
+            if (attributeType.values && attributeType.defaultValue)
+                attributeType.addToValues(attributeType.defaultValue)
+            attributeType.addToValues(params.values)
+            attributeType.save()
+            render ([values:params.values] as JSON)
+        }
+        else
+            render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId])
+    }
+
     def productDetails() {
         def productInstance
         def productTypeIds = []
@@ -80,12 +97,14 @@ class ProductController {
     }
 
     private def attributeTypes(ProductType productType) {
-        def attributeTypes = productType.children.collect {attributeTypes(it)}.flatten()
-        attributeTypes << productType.attributeTypes
+        def res=productType.attributeTypes.flatten()
+        if(productType.parentProduct)
+            res<<attributeTypes(productType.parentProduct)
+        return res
     }
 
     def image() {
-        redirect(controller: "image",action: "index",params: params)
+        redirect(controller: "image", action: "index", params: params)
     }
 
     def deleteImage() {
