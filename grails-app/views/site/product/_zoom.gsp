@@ -6,8 +6,9 @@
                            params="[id: product?.id, name: product?.images?.find()?.name, wh: true]"/>"
        class="cloud-zoom" id='zoom1'
        rel="adjustX: -10, adjustY:-4, zoomWidth:500, zoomHeight:400">
+
         <img src="<g:createLink controller="image"
-                                params="[id: product?.id, name: product?.images?.find()?.name, wh: '400x400']"/>"/>
+                                params="[id: product?.id, wh: '400x400']"/>"/>
     </a>
 </div>
 </div>
