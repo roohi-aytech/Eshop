@@ -14,6 +14,7 @@ class Product extends BaseProduct implements Comparable{
 //    Long dlFolderId
 //    Long igFolderId
     Brand brand
+    Content mainImage
 
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content]
 
@@ -39,6 +40,7 @@ class Product extends BaseProduct implements Comparable{
         weight(nullable: true)
         keywords(nullable: true)
         pageTitle(nullable: true)
+        mainImage(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)

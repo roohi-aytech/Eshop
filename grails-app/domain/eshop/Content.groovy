@@ -5,6 +5,8 @@ class Content {
     String contentType
     byte[] fileContent
 
+    static hasMany = [variationValues:VariationValue]
+
     static mapping = {
         sort 'name'
     }
@@ -13,6 +15,7 @@ class Content {
         name(blank: false)
         contentType(inList: ["image", "video"])
         fileContent(nullable: false,maxSize: 20000000)
+        variationValues()
     }
 
     String toString() {
