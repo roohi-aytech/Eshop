@@ -31,17 +31,6 @@ class SiteController {
     }
 
     def image(){
-        if (params.id){
-            def product=Product.get(params.id)
-            def image = product.mainImage?:product.images.find()
-            if(image){
-                response.contentType = 'image/png'
-                response.outputStream << product.images.find().fileContent
-                response.outputStream.flush()
-
-            }
-
-
-        }
+        redirect(controller: "image",params:params)
     }
 }

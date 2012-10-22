@@ -2,7 +2,7 @@
     <div class="mostSold">
         <div class="mostSoldImage">
             <a href="<g:createLink action="category" params="[id:product.id]"/>">
-                <img src="<g:createLink action="image" params="[id:product.id]"/>" />
+                <img src="<g:createLink action="image" params="[id:product.id,wh: '200x200']"/>" />
             </a>
         </div>
         <div class="mostSoldinfo">
@@ -19,7 +19,7 @@
     <div class="newProduct">
         <div class="newProductImage">
             <a href="<g:createLink action="product" params="[id:product.id]"/>">
-                <img src="<g:createLink action="image" params="[id:product.id]"/>" />
+                <img src="<g:createLink action="image" params="[id:product.id,wh: '200x200']"/>" />
             </a>
         </div>
         <div class="newProductDesc">
