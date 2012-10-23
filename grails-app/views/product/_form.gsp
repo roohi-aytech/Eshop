@@ -7,14 +7,14 @@
         <g:message code="product.name.label" default="Name"/>
 
     </label>
-    <g:textField name="name" value="${productInstance?.name}" class="count-words"/>
+    <g:textField name="name" value="${productInstance?.name}" class="count-words" size="70"/>
 </div>
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'pageTitle', 'error')} ">
     <label for="pageTitle">
         <g:message code="product.pageTitle.label" default="Page Title"/>
 
     </label>
-    <g:textField name="pageTitle" value="${productInstance?.pageTitle}" class="count-words"/>
+    <g:textField name="pageTitle" value="${productInstance?.pageTitle}" class="count-words" size="70" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'description', 'error')} ">
