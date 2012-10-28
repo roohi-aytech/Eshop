@@ -1,0 +1,149 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <title>Bootstrap, from Twitter</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
+    <style>
+    body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+    </style>
+    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    %{--<link rel="shortcut icon" href="../assets/ico/favicon.ico">--}%
+    %{--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">--}%
+    %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
+    %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
+    %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
+</head>
+
+<body>
+<g:javascript src="browse.js"></g:javascript>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Zanbil</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Support</a></li>
+                    <li><a href="#about">Wish List</a></li>
+                    <li><a href="#contact">Compare List</a></li>
+                    <li><a href="#contact">Basket</a></li>
+                    <li><a href="#contact">Profile</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+            %{--<ul class="nav pull-right">--}%
+                %{--<li class="dropdown">--}%
+                    %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}%
+                        %{--Account--}%
+                        %{--<b class="caret"></b>--}%
+                    %{--</a>--}%
+                    %{--<ul class="dropdown-menu">--}%
+                        %{--<li><a href="#">a</a></li>--}%
+                        %{--<li><a href="#">b</a></li>--}%
+                        %{--<li><a href="#">c</a></li>--}%
+                        %{--<li class="dropdown-submenu">--}%
+                            %{--<a tabindex="-1" href="#">More options</a>--}%
+                            %{--<ul class="dropdown-menu">--}%
+                                %{--<li><a href="#">a</a></li>--}%
+                                %{--<li><a href="#">b</a></li>--}%
+                                %{--<li><a href="#">c</a></li>--}%
+                                %{--<li class="dropdown-submenu">--}%
+                                    %{--<a tabindex="-1" href="#">More options</a>--}%
+                                    %{--<ul class="dropdown-menu">--}%
+                                        %{--<li><a href="#">a</a></li>--}%
+                                        %{--<li><a href="#">b</a></li>--}%
+                                        %{--<li><a href="#">c</a></li>--}%
+                                    %{--</ul>--}%
+                                %{--</li>--}%
+                            %{--</ul>--}%
+                        %{--</li>--}%
+                    %{--</ul>--}%
+                %{--</li>--}%
+            %{--</ul>--}%
+            <div class="btn-group pull-right" style="margin-right: 0px; margin-left: 10px;">
+                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                    <g:message code="site.selectCategory"></g:message>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <g:each in="${rootProductTypes}" var="rootProductType">
+                        %{--<li><a href="#">${rootProductType.name}</a></li>--}%
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">${rootProductType.name}</a>
+                            <ul class="dropdown-menu">
+                                <g:each in="${rootProductType.children}" var="secondLevelProductType">
+                                    <li><a href="javascript:topProductTypeSelect(${secondLevelProductType.id})">${secondLevelProductType.name}</a></li>
+                                </g:each>
+                            </ul>
+                        </li>
+                    </g:each>
+                </ul>
+            </div>
+            <form class="navbar-search pull-right">
+                <input type="text" class="input-large search-query" placeholder="Search">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="span2">
+            <div class="well">
+            </div>
+        </div>
+        <div class="span8">
+            <div class="well"></div>
+        </div>
+        <div class="span2">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header"><g:message code="site.selectSubcategory"></g:message></li>
+                    <select id="subProductType" style="width: 100%;">
+                    </select>
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-header">Sidebar</li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-header">Sidebar</li>
+                    <li><a href="#">Link</a></li>
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- /container -->
+
+<g:javascript library="jquery"/>
+<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
+</body>
+</html>

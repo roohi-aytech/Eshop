@@ -5,7 +5,7 @@ class Role {
     String authority
 
     static mapping = {
-        sort 'name'
+//        sort 'name'
         cache true
     }
 
