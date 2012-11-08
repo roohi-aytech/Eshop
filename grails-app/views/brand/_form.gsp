@@ -25,6 +25,22 @@
     <g:textField name="description" value="${brandInstance?.description}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'pageTitle', 'error')} ">
+    <label for="pageTitle">
+        <g:message code="brand.pageTitle.label" default="Page Title"/>
+
+    </label>
+    <g:textField name="pageTitle" value="${brandInstance?.pageTitle}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'keywords', 'error')} ">
+    <label for="keywords">
+        <g:message code="brand.keywords.label" default="keywords"/>
+
+    </label>
+    <g:textField name="keywords" value="${brandInstance?.keywords}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'logo', 'error')} required">
     <label for="logo">
         <g:message code="brand.logo.label" default="Logo"/>
