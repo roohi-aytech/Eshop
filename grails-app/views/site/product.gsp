@@ -22,6 +22,9 @@
 
         <g:render template="product/variation"/>
     </div>
+    <div>
+        <g:render template="product/description"/>
+    </div>
 </div>
 </body>
 </html>

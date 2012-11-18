@@ -3,6 +3,8 @@ package eshop
 class ProductType extends BaseProduct {
     String name
     String description
+    String keywords
+    String pageTitle
     ProductType parentProduct
     ProductType rootProductType
     Long assetcategoryId
@@ -20,10 +22,13 @@ class ProductType extends BaseProduct {
     static constraints = {
         name()
         description(nullable: true)
+        keywords(nullable: true)
+        pageTitle(nullable: true)
         parentProduct(nullable: true)
         rootProductType(nullable: false)
         attributeTypes()
         assetcategoryId(nullable: true)
+
     }
 
     @Override

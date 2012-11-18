@@ -24,7 +24,7 @@
         </script>
     </div>
     <rg:grid domainClass="${Brand}"
-             maxColumns="2"
+             maxColumns="4"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToBrandGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteBrand(#id#)", icon: "application_delete"]]}"
