@@ -33,4 +33,8 @@ class SiteController {
     def image(){
         redirect(controller: "image",params:params)
     }
+
+    def searchRow(){
+
+    }
 }

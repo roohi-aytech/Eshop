@@ -10,6 +10,7 @@ class ImageService {
             [width: 400, height: 400],
             [width: 300, height: 300],
             [width: 200, height: 200],
+            [width: 150, height: 150],
             [width: 100, height: 100],
             [width: 50, height: 50]
     ]
