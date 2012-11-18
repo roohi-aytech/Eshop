@@ -135,9 +135,6 @@
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/webxml-1.4.1">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/webxml-1.4.1/src/groovy" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/src/groovy" isTestSource="false" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
@@ -151,13 +148,11 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.4.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.4.jar!/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/lib" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.3/lib" recursive="false" />
-        <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>
