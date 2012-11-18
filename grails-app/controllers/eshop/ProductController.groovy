@@ -51,11 +51,43 @@ class ProductController {
                 attributeType.addToValues(attributeType.defaultValue)
             attributeType.addToValues(params.values)
             attributeType.save()
-            render ([values:params.values] as JSON)
+            render([values: params.values] as JSON)
         }
         else
             render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId])
     }
+
+    def imageVariations() {
+        def content=Content.get(params.id)
+        def product=Product.get(params.productId)
+        render(template: "content/variations_form", model: [content: content, productInstance: product])
+    }
+
+    def imageVariation() {
+        def baseProductInstance = BaseProduct.get(params.productId)
+        def variations = baseProductInstance.variations
+        render(template: "content/variation", model: [variations: variations])
+    }
+    def imageVariationValue() {
+        def variation = Variation.get(params.variation)
+        if (variation) {
+            def values = variation.variationValues
+            render(template: "content/variation_values", model: [variationValues: values])
+        }
+        else
+            render ""
+    }
+    def saveImageVariations(){
+        def image=Content.get(params.id)
+        if (image){
+            image.properties=params;
+            image.save()
+            render image.variationValues as JSON
+        }
+        else
+            render 0
+    }
+
 
     def productDetails() {
         def productInstance
@@ -70,7 +102,7 @@ class ProductController {
             productInstance = new Product()
         }
 
-        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab]
+        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2]
     }
 
     def saveProductDescription() {
@@ -96,10 +128,30 @@ class ProductController {
         redirect(action: "productDetails", params: [id: params.id, curtab: params.curtab])
     }
 
+    def editImageDetails() {
+        def product = Product.get(params.product.id)
+        def defaultImage = Content.get(params.mainImage)
+        if (defaultImage) {
+            product.mainImage = defaultImage
+            product.save()
+        }
+        redirect(action: "productDetails", params: [id: params.product.id, curtab: params.curtab, curtab2: params.curtab2])
+    }
+
+    def variationValue() {
+        def variation = Variation.get(params.variation)
+        if (variation) {
+            def values = variation.variationValues
+            render(template: "variation_values", model: [variationValues: values])
+        }
+        else
+            render ""
+    }
+
     private def attributeTypes(ProductType productType) {
-        def res=productType.attributeTypes.flatten()
-        if(productType.parentProduct)
-            res<<attributeTypes(productType.parentProduct)
+        def res = productType.attributeTypes.flatten()
+        if (productType.parentProduct)
+            res << attributeTypes(productType.parentProduct)
         return res
     }
 

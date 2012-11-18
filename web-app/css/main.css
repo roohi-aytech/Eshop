@@ -837,3 +837,15 @@ a.skip {
 .word-counter{
     padding: 5px;
 }
+.product-image-details-img{
+    min-width: 50px;
+    display: inline-block;
+}
+.product-image-details-variations{
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+.product-image-details{
+    margin: 5px;
+}

@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 class SiteController {
     def browseService
+    def olapService
 
     def index2() {
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -11,24 +12,18 @@ class SiteController {
     }
 
     def sidebar() {
-        def productType = ProductType.findById(params.id)
-        def subProductTypes = productType.children.collect {[id: it.id, name: it.name]}
-        def resp = [subProductTypes: subProductTypes]
+        def subProductTypes = olapService.productTypes(params)
+        def brands = olapService.brands(params)
+        def breadCrumb = browseService.breadCrumb(params)
+        def resp = [subProductTypes: subProductTypes, brands: brands, breadCrumb: breadCrumb, browsingProductTypeId: params.browsingProductTypeId, browsingBrandId: params.browsingBrandId]
 
-        def allSubProducts = browseService.getAllSubProductTypes(productType)
-        def allSubProductIds = allSubProducts.collect {it.id}
-        def brandCritiera = Product.withCriteria {
-            createAlias("productTypes", "productType")
-            'in'("productType.id", allSubProductIds)
-        }
         render resp as JSON
     }
 
     def index() {
         def productTypes = ProductType.findAllByParentProductIsNull()
-		def newProducts = Product.findAll()k
-        [productTypes: productTypes, newProducts:newProducts]
-		
+		def newProducts = Product.findAll()
+        [productTypes: productTypes, newProducts: newProducts]
     }
 
     def category() {
@@ -53,16 +48,6 @@ class SiteController {
     }
 
     def image(){
-        if (params.id){
-            def product=Product.get(params.id)
-            if(product.images && product.images.size()>0){
-                response.contentType = 'image/png'
-                response.outputStream << product.images.find().fileContent
-                response.outputStream.flush()
-
-            }
-
-
-        }
+        redirect(controller: "image",params:params)
     }
 }

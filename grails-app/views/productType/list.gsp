@@ -22,11 +22,12 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            var allFields = $("#edit-form-productType input");
+            var allFields = $("#edit-form-productType [name]");
             $("#edit-form-productType").dialog({
                 autoOpen:false,
                 modal:true,
                 resizable:false,
+                width:400,
                 title:'${message(code: "producttype.definition")}',
                 buttons:{
                     "${message(code: "save")}":function () {
@@ -34,8 +35,10 @@
                             type:"POST",
                             url:$("#edit-form-productType").attr('url'),
                             data:{
-                                name: $("#edit-form-productType input[name=name]").val(),
-                                description: $("#edit-form-productType input[name=description]").val()
+                                name: $("#edit-form-productType [name=name]").val(),
+                                description: $("#edit-form-productType [name=description]").val() ,
+                                pageTitle: $("#edit-form-productType [name=pageTitle]").val(),
+                                keywords: $("#edit-form-productType [name=keywords]").val()
                             }
                         }).done(function (response) {
                             if (response == "0") {
@@ -61,9 +64,21 @@
                 },
                 close:function () {
                     allFields.val("").removeClass("ui-state-error");
+                    $(".count-words").keypress()
                 }
             });
         });
+        $(function(){
+
+            $(".count-words").keypress(function(){
+                var inp=$(this)
+                inp.parent().find(".word-counter").html(inp.val().length)
+            }).each(function(){
+                        $("<span class='word-counter'></span>").insertAfter($(this))
+                        $(this).keypress()
+
+                    })
+        })
         %{--jQuery(document).ready(function () {--}%
             %{--var allFields = $("#edit-form-attributeType input[type!=button]");--}%
             %{--$("#edit-form-attributeType").dialog({--}%
@@ -195,6 +210,7 @@
                 $("#edit-form-productType").attr("parentId", "");
             $("#edit-form-productType").attr("url", url);
             $("#edit-form-productType").dialog("open");
+
         }
         %{--function addToAttributeGrid(parentId) {--}%
             %{--var url = '<g:createLink action="saveAttributeType"/>';--}%
@@ -211,11 +227,14 @@
             var grid = jQuery("#ProductTypeGrid")
             var row = grid.getRowData(id)
             $("#edit-form-productType").attr("parentId", row.parent);
-            $("#edit-form-productType input[name=name]").val(row.name)
-            $("#edit-form-productType input[name=description]").val(row.description)
+            $("#edit-form-productType [name=name]").val(row.name)
+            $("#edit-form-productType [name=description]").val(row.description)
+            $("#edit-form-productType [name=pageTitle]").val(row.pageTitle)
+            $("#edit-form-productType [name=keywords]").val(row.keywords)
 
             $("#edit-form-productType").attr("url", url)
             $("#edit-form-productType").dialog("open")
+            $(".count-words").keypress()
         }
         %{--function editAttributeGrid(id) {--}%
             %{--var url = '<g:createLink action="saveAttributeType"/>';--}%
@@ -357,8 +376,8 @@
     </script>
 
     <div style="margin: 10px;">
-        <rg:grid domainClass="${eshop.ProductType}" maxColumns="2"
-                 firstColumnWidth="30" showCommand="false"
+        <rg:grid domainClass="${eshop.ProductType}" maxColumns="4"
+                 firstColumnWidth="60" showCommand="false"
                  tree="parentProduct"
                  childGrid="${["AttributeType":"productType","AttributeCategory":"productType"]}"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductTypeGrid", icon: "plus"]]}"

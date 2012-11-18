@@ -114,29 +114,22 @@
             </div>
         </div>
         <div class="span8">
-            <div class="well"></div>
-        </div>
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a> <span class="divider">/</span></li>
+                <li><a href="#">Library</a> <span class="divider">/</span></li>
+                <li class="active">Data</li>
+            </ul>
+            <div class="well">
+            </div>
+            </div>
         <div class="span2">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><g:message code="site.selectSubcategory"></g:message></li>
                     <select id="subProductType" style="width: 100%;">
                     </select>
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Sidebar</li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Sidebar</li>
-                    <li><a href="#">Link</a></li>
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
+
+                    <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand" default="Select Brand"></g:message></li>
                 </ul>
             </div>
         </div>

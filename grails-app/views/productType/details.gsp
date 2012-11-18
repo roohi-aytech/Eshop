@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<h2><g:message code="product.details.label" default="Product Details"/> q${productInstance}</h2>
+<h2><g:message code="product.type.details.label" default="Product Type Details"/> ${productTypeInstance}</h2>
 
 <div id="details-tabs">
     <ul>
