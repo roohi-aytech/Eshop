@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<Schema name="eshop">
+    <!-- Products -->
+    <!--<Cube name="Products" defaultMeasure="Product Count">-->
+        <!--&lt;!&ndash;<Table name="base_product"></Table>&ndash;&gt;-->
+        <!--<View alias="products">-->
+            <!--<SQL dialect="mysql">-->
+                <!--select * from base_product where class='eshop.Product'-->
+            <!--</SQL>-->
+        <!--</View>-->
+
+        <!--<Dimension name="Brand" foreignKey="brand_id">-->
+            <!--<Hierarchy hasAll="true" allMemberName="All Brands" primaryKey="id">-->
+                <!--<Table name="brand"/>-->
+                <!--<Level name="Brand Name" uniqueMembers="true" column="name"/>-->
+            <!--</Hierarchy>-->
+        <!--</Dimension>-->
+
+        <!--<Measure name="Product Count" column="id" aggregator="count" formatString="Standard"/>-->
+    <!--</Cube>-->
+
+    <Cube name="Products" defaultMeasure="Product Count">
+        <View alias="productTypes">
+            <SQL dialect="mysql">
+                select product_type.id as product_type_id,
+                    product_type.name as product_type_name,
+                    product.id as product_id,
+                    product.name as product_name,
+                    product.brand_id as product_brand_id
+                from base_product product_type
+                    inner join product_type_products bridge on product_type.id=bridge.product_type_id
+                    inner join base_product product on bridge.product_id=product.id
+            </SQL>
+        </View>
+
+        <Dimension name="Product Type" foreignKey="product_type_id">
+            <Hierarchy hasAll="true" allMemberName="All Product Types" primaryKey="id">
+                <View alias="product_types">
+                    <SQL dialect="mysql">
+                        select * from base_product where class='eshop.ProductType'
+                    </SQL>
+                </View>
+                <Level name="Product Type Id" uniqueMembers="true" column="id" nameColumn="name" parentColumn="parent_product_id">
+                </Level>
+            </Hierarchy>
+        </Dimension>
+
+        <Dimension name="Brand" foreignKey="product_brand_id">
+            <Hierarchy hasAll="true" allMemberName="All Brands" primaryKey="id">
+                <Table name="brand"/>
+                <Level name="Brand Name" uniqueMembers="true" column="id" nameColumn="name"/>
+            </Hierarchy>
+        </Dimension>
+
+        <Measure name="Product Count" column="product_id" aggregator="count" formatString="Standard"/>
+    </Cube>
+</Schema>

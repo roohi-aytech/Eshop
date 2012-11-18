@@ -1,12 +1,29 @@
 package eshop
 
+import grails.converters.JSON
+
 class SiteController {
+    def browseService
+    def olapService
+
+    def index2() {
+        def rootProductTypes = ProductType.findAllByParentProductIsNull()
+        [rootProductTypes: rootProductTypes]
+    }
+
+    def sidebar() {
+        def subProductTypes = olapService.productTypes(params)
+        def brands = olapService.brands(params)
+        def breadCrumb = browseService.breadCrumb(params)
+        def resp = [subProductTypes: subProductTypes, brands: brands, breadCrumb: breadCrumb, browsingProductTypeId: params.browsingProductTypeId, browsingBrandId: params.browsingBrandId]
+
+        render resp as JSON
+    }
 
     def index() {
         def productTypes = ProductType.findAllByParentProductIsNull()
 		def newProducts = Product.findAll()
-        [productTypes: productTypes,newProducts:newProducts]
-		
+        [productTypes: productTypes, newProducts: newProducts]
     }
 
     def category() {
