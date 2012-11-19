@@ -66,10 +66,18 @@ var buildSidebar = function(resp) {
 var recalcSidebar = function(productTypeId, brandId) {
     var data = {browsingProductTypeId: productTypeId, browsingBrandId: brandId};
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "sidebar",
         data: data
     }).done(function(resp) {
             buildSidebar(resp);
-        });
+    });
+
+    $.ajax({
+        type: "GET",
+        url: "products",
+        data: data
+    }).done(function(resp) {
+        $(".thumbnails").html(resp);
+    })
 }

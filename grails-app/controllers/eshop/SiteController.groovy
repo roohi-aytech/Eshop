@@ -1,11 +1,13 @@
 package eshop
 
 import grails.converters.JSON
+import groovy.sql.Sql
 
 class SiteController {
     def browseService
     def priceService
     def olapService
+    def dataSource
 
     def index2() {
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -19,6 +21,21 @@ class SiteController {
         def resp = [subProductTypes: subProductTypes, brands: brands, breadCrumb: breadCrumb, browsingProductTypeId: params.browsingProductTypeId, browsingBrandId: params.browsingBrandId]
 
         render resp as JSON
+    }
+
+    def products() {
+        def query = {
+            if (Long.parseLong(params.browsingProductTypeId) > 0)
+                eq("productType", ProductType.get(params.browsingProductTypeId))
+            if (Long.parseLong(params.browsingBrandId) > 0)
+                eq("brand", Brand.get(params.browsingBrandId))
+        }
+        def list = ProductClosure.createCriteria().list(query)
+        list*.product.each {
+            def model=[product: it]
+            model << priceService.calcProductPrice(it.id)
+            render (template: "product_search", model: model)
+        }
     }
 
     def index() {
@@ -57,12 +74,17 @@ class SiteController {
     }
 
     def productAbstract(){
-        def productId=82
+        def productId=3
         def product=Product.get(productId)
         def model=[product:product]
         model << priceService.calcProductPrice(productId)
 
-
         render (template: "product_search", model: model)
+    }
+
+    def flushChanges() {
+        def sql = new Sql(dataSource)
+        sql.execute("CALL `populate_product_closure`()")
+        render "OK"
     }
 }

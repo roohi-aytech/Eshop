@@ -8,12 +8,12 @@ class PriceService {
         def price = Price.findByProductAndStartDateLessThanEqualsAndEndDateIsNull(product, now)
         def addedValues = []
         addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(product, "everyWhere"))
-        product.productTypes.each {
+        product?.productTypes?.each {
             addedValues.addAll(getAddedvalues(it))
         }
         def priceVal = price?.rialPrice
         def mainVal = price?.rialPrice
-        addedValues.each {
+        addedValues?.each {
             if (!it.variationValues) {
                 def val
                 if (it.type == "percent")
