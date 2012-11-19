@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 class SiteController {
     def browseService
+    def priceService
     def olapService
 
     def index2() {
@@ -53,5 +54,15 @@ class SiteController {
 
     def searchRow(){
 
+    }
+
+    def productAbstract(){
+        def productId=82
+        def product=Product.get(productId)
+        def model=[product:product]
+        model << priceService.calcProductPrice(productId)
+
+
+        render (template: "product_search", model: model)
     }
 }

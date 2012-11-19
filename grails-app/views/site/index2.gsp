@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
+    <r:require module="bootstrap"/>
     <title>Bootstrap, from Twitter</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,6 +121,9 @@
                 <li class="active">Data</li>
             </ul>
             <div class="well">
+                <ul class="thumbnails">
+                    <g:include action="productAbstract"/>
+                </ul>
             </div>
             </div>
         <div class="span2">

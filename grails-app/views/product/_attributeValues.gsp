@@ -8,7 +8,7 @@
         </g:if>
 
         <g:form method="post" action="saveAttributeValues" params="${[curtab:1]}">
-            <g:hiddenField name="id" value="${params.id}"/>
+            <g:hiddenField name="id" value="${productInstance?.id}"/>
             <eshop:renderProductAttributes product="${productInstance}"/>
 
             <fieldset class="buttons">

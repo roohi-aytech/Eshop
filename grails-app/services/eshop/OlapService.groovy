@@ -18,7 +18,7 @@ class OlapService {
         def result = []
         Class.forName("mondrian.olap4j.MondrianOlap4jDriver")
 
-        OlapWrapper rConnection = (OlapWrapper) DriverManager.getConnection("jdbc:mondrian:JdbcDrivers=com.mysql.jdbc.Driver;Jdbc=jdbc:mysql://localhost/eshop?user=root&password=Salam123;Catalog=file:EShopOlap.xml;")
+        OlapWrapper rConnection = (OlapWrapper) DriverManager.getConnection("jdbc:mondrian:JdbcDrivers=com.mysql.jdbc.Driver;Jdbc=jdbc:mysql://localhost/eshop?user=root;Catalog=file:EShopOlap.xml;")
         OlapConnection oConnection = rConnection.unwrap(OlapConnection.class)
 
         def productType = ProductType.get(productTypeId)
@@ -55,7 +55,7 @@ class OlapService {
         def result = []
         Class.forName("mondrian.olap4j.MondrianOlap4jDriver")
 
-        OlapWrapper rConnection = (OlapWrapper) DriverManager.getConnection("jdbc:mondrian:JdbcDrivers=com.mysql.jdbc.Driver;Jdbc=jdbc:mysql://localhost/eshop?user=root&password=Salam123;Catalog=file:EShopOlap.xml;")
+        OlapWrapper rConnection = (OlapWrapper) DriverManager.getConnection("jdbc:mondrian:JdbcDrivers=com.mysql.jdbc.Driver;Jdbc=jdbc:mysql://localhost/eshop?user=root;Catalog=file:EShopOlap.xml;")
         OlapConnection oConnection = rConnection.unwrap(OlapConnection.class)
 
         def productType = ProductType.get(params.browsingProductTypeId)

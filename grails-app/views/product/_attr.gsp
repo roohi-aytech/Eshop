@@ -1,7 +1,7 @@
 <div class='fieldcontain'>
     <label for='at_${attributeType.id}'>${attributeType.name}</label>
     <g:if test="${attributeType.values}">
-        <g:select name="at_${attributeType.id}" from="${attributeType.values}" value="${attributeValue}" noSelection="['':'']"/>
+        <g:select name="at_${attributeType.id}" from="${attributeType?.values?.sort()}" value="${attributeValue}" noSelection="['':'']"/>
     </g:if>
     <g:else>
         <g:textField name="at_${attributeType.id}" value="${attributeValue}"/>

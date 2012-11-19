@@ -13,6 +13,7 @@ class ProductController {
 
     def imageService
     def productService
+//    def dataSource
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -114,7 +115,7 @@ class ProductController {
 
     def saveAttributeValues() {
         def productInstance = Product.findById(params.id)
-        def attributeTypes = productInstance.productTypes.collect {attributeTypes(it)}.flatten()
+        def attributeTypes = productInstance?.productTypes.collect {attributeTypes(it)}.flatten()
 
         Attribute.withTransaction {
             attributeTypes.each { AttributeType attributeType ->
@@ -267,6 +268,11 @@ class ProductController {
         productInstance.productTypes.each {
             productTypeIds << it.id
         }
+//        try{
+//            dataSource.getc
+//        }catch(x){
+//
+//        }
         render(view: "productDetails", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab])
 
     }
@@ -345,6 +351,7 @@ class ProductController {
             render 1;
         }
     }
+
 
 
 }

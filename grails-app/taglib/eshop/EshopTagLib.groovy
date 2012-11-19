@@ -6,7 +6,7 @@ class EshopTagLib {
     def renderProductAttributes = {attrs, body ->
         Product product = attrs.product
         request.setAttribute("product", product)
-        product.productTypes.each {
+        product.productTypes?.sort{it.name}?.each {
             request.setAttribute("productType", it)
             out << renderProductTypeAttributes()
             request.removeAttribute("productType")
@@ -21,7 +21,7 @@ class EshopTagLib {
         out << "<fieldset class='form'>"
         out << "<legend>${productType.name}</legend>"
 
-        productType.attributeTypes.each {
+        productType.attributeTypes?.sort{it.name}?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
             request.removeAttribute("attribute")

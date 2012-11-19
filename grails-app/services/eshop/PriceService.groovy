@@ -11,8 +11,8 @@ class PriceService {
         product.productTypes.each {
             addedValues.addAll(getAddedvalues(it))
         }
-        def priceVal = price.rialPrice
-        def mainVal = price.rialPrice
+        def priceVal = price?.rialPrice
+        def mainVal = price?.rialPrice
         addedValues.each {
             if (!it.variationValues) {
                 def val
