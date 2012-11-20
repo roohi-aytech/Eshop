@@ -24,23 +24,22 @@ class SiteController {
     }
 
     def products() {
-        def query = {
-            if (Long.parseLong(params.browsingProductTypeId) > 0)
+        def list = ProductClosure.createCriteria().listDistinct {
+            if ((params.browsingProductTypeId as Long) > 0)
                 eq("productType", ProductType.get(params.browsingProductTypeId))
-            if (Long.parseLong(params.browsingBrandId) > 0)
+            if ((params.browsingBrandId as Long) > 0)
                 eq("brand", Brand.get(params.browsingBrandId))
         }
-        def list = ProductClosure.createCriteria().list(query)
         list*.product.each {
-            def model=[product: it]
+            def model = [product: it]
             model << priceService.calcProductPrice(it.id)
-            render (template: "product_search", model: model)
+            render(template: "product_search", model: model)
         }
     }
 
     def index() {
         def productTypes = ProductType.findAllByParentProductIsNull()
-		def newProducts = Product.findAll()
+        def newProducts = Product.findAll()
         [productTypes: productTypes, newProducts: newProducts]
     }
 
@@ -49,10 +48,10 @@ class SiteController {
 
         def productType = ProductType.get(params.id)
         def filterProductTypes
-        if(productType)
-            filterProductTypes= ProductType.findAllByParentProduct(productType)
+        if (productType)
+            filterProductTypes = ProductType.findAllByParentProduct(productType)
         else
-            filterProductTypes=ProductType.findAllByParentProductIsNull()
+            filterProductTypes = ProductType.findAllByParentProductIsNull()
 
 //        Brand.findAll("from Brand as b where exists (from Product as p )")
 
@@ -62,24 +61,26 @@ class SiteController {
     def product() {
         def productTypes = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
-        [productTypes: productTypes, product: product]
+        def model = [productTypes: productTypes, product: product]
+        model<<priceService.calcProductPrice(product?.id)
+        model
     }
 
-    def image(){
-        redirect(controller: "image",params:params)
+    def image() {
+        redirect(controller: "image", params: params)
     }
 
-    def searchRow(){
+    def searchRow() {
 
     }
 
-    def productAbstract(){
-        def productId=3
-        def product=Product.get(productId)
-        def model=[product:product]
+    def productAbstract() {
+        def productId = 3
+        def product = Product.get(productId)
+        def model = [product: product]
         model << priceService.calcProductPrice(productId)
 
-        render (template: "product_search", model: model)
+        render(template: "product_search", model: model)
     }
 
     def flushChanges() {

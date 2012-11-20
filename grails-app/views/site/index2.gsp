@@ -45,11 +45,11 @@
             <a class="brand" href="#">Zanbil</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li class="active"><a href="#">Support</a></li>
-                    <li><a href="#about">Wish List</a></li>
-                    <li><a href="#contact">Compare List</a></li>
-                    <li><a href="#contact">Basket</a></li>
-                    <li><a href="#contact">Profile</a></li>
+                    <li><a href="#"><g:message code="support" /></a></li>
+                    <li><a href="#"><g:message code="wishList" /></a></li>
+                    <li><a href="#"><g:message code="compareList" /></a></li>
+                    <li><a href="#"><g:message code="basket" /></a></li>
+                    <li><a href="#"><g:message code="profile-title" /></a></li>
                 </ul>
             </div><!--/.nav-collapse -->
             %{--<ul class="nav pull-right">--}%
@@ -101,7 +101,7 @@
                 </ul>
             </div>
             <form class="navbar-search pull-right">
-                <input type="text" class="input-large search-query" placeholder="Search">
+                <input type="text" class="input-large search-query" placeholder="<g:message code="search" />">
             </form>
         </div>
     </div>
@@ -115,9 +115,7 @@
         </div>
         <div class="span8">
             <ul class="breadcrumb">
-                <li><a href="#">Home</a> <span class="divider">/</span></li>
-                <li><a href="#">Library</a> <span class="divider">/</span></li>
-                <li class="active">Data</li>
+                <li><a href="#"><g:message code="home" /></a></li>
             </ul>
             <div class="well">
                 <ul class="thumbnails">

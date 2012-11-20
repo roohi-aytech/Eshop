@@ -294,8 +294,16 @@
                 }
                 if (opts.softFocus) {
                     lens.css('background', 'url("' + sImg.attr('src') + '")');
+                    lens.css('background-repeat', 'no-repeat');
+                    var zzz=zoomImage.height/zoomImage.width*100;
+                    if(zzz>100){
+                        zzz=zoomDiv.width()/cw*100
+                        lens.css('background-size',zzz+'% auto');
+                    }
                     softFocus = jWin.append(format('<div style="position:absolute;display:none;top:2px; left:2px; width:%0px; height:%1px;" />', sImg.outerWidth() - 2, sImg.outerHeight() - 2, opts.tint)).find(':last');
                     softFocus.css('background', 'url("' + sImg.attr('src') + '")');
+                    softFocus.css('background-repeat', 'no-repeat');
+                    softFocus.css('background-size', 'cover');
                     softFocus.css('opacity', 0.5);
                     noTrans = true;
                     softFocus.fadeIn(500);

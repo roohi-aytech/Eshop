@@ -25,8 +25,6 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cache-headers-1.1.5/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/zipped-resources-1.0/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/zipped-resources-1.0/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-file-upload-0.2/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-file-upload-0.2/grails-app/views" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -71,10 +69,6 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/database-migration-1.1/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/database-migration-1.1/grails-app/controllers" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/datasources-0.5">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/datasources-0.5/src/java" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/datasources-0.5/src/groovy" isTestSource="false" />
-    </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/grails-app/i18n" isTestSource="false" />
@@ -94,9 +88,6 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-1.7.2/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-1.7.2/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-1.7.2/grails-app/taglib" isTestSource="false" />
-    </content>
-    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-file-upload-0.2">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-file-upload-0.2/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15/grails-app/i18n" isTestSource="false" />

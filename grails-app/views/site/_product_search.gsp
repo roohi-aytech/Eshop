@@ -1,5 +1,5 @@
 <%@ page import="eshop.Product" %>
-<li class="span2">
+<li class="span3">
     <div class="thumbnail">
         <img src="<g:createLink action="image" params="[id: product?.id, wh: '150x150']"/>"/>
 

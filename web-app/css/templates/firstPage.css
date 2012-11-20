@@ -213,7 +213,7 @@ ul.children{
 .product-images{
     border: 1px solid;
     float: right;
-    height: 400px;
+    /*height: 400px;*/
     margin: 2px;
     width: 500px;
 }

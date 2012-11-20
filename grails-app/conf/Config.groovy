@@ -133,3 +133,5 @@ ckeditor {
         }
     }
 }
+//grails.commentable.poster.evaluator = { request.user }
+grails.rateable.rater.evaluator = { request.user }

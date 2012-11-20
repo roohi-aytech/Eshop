@@ -7,6 +7,7 @@ import java.awt.Image
 class ImageService {
     def fileService
     def size = [
+            [width: 500, height: 500],
             [width: 400, height: 400],
             [width: 300, height: 300],
             [width: 200, height: 200],
@@ -43,8 +44,9 @@ class ImageService {
                 thumbnail = sourceImage.getScaledInstance(-1, it.height, Image.SCALE_SMOOTH);
 
             BufferedImage bufferedThumbnail = new BufferedImage(thumbnail.getWidth(null),
-                    thumbnail.getHeight(null), BufferedImage.TYPE_INT_RGB);
+                    thumbnail.getHeight(null), sourceImage.type);
             bufferedThumbnail.getGraphics().drawImage(thumbnail, 0, 0, null);
+            bufferedThumbnail.getGraphics().dispose()
             def tfname = name + "-" + fname
             def baos = new ByteArrayOutputStream()
             ImageIO.write(bufferedThumbnail, 'png', baos)

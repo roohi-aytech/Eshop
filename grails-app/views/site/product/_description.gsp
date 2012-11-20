@@ -1,1 +1,1 @@
-${product.details}
+${product?.details}
