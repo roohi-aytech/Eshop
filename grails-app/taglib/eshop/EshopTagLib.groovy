@@ -6,7 +6,7 @@ class EshopTagLib {
     def renderProductAttributes = {attrs, body ->
         Product product = attrs.product
         request.setAttribute("product", product)
-        product.productTypes?.sort{it.name}?.each {
+        product.productTypes?.sort {it.name}?.each {
             request.setAttribute("productType", it)
             out << renderProductTypeAttributes()
             request.removeAttribute("productType")
@@ -21,10 +21,18 @@ class EshopTagLib {
         out << "<fieldset class='form'>"
         out << "<legend>${productType.name}</legend>"
 
-        productType.attributeTypes?.sort{it.name}?.each {
+        def attributeTypes = AttributeType.findAllByProductTypeAndCategoryIsNull(productType)
+        attributeTypes?.sort {it.name}?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
             request.removeAttribute("attribute")
+        }
+
+        def categories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType)
+        categories?.sort {it.name}.each {
+            request.setAttribute("attributeCategory", it)
+            out << renderAttributeCategory()
+            request.removeAttribute("attributeCategory")
         }
         out << "</legend>"
         out << "</fieldset>"
@@ -35,7 +43,30 @@ class EshopTagLib {
             request.removeAttribute("productType")
         }
     }
+    def renderAttributeCategory = {attrs, body ->
+        AttributeCategory attributeCategory = request.getAttribute("attributeCategory") ?: attrs.attributeCategory
 
+        out << "<fieldset class='form'>"
+        out << "<legend>${attributeCategory?.name}</legend>"
+
+        def attributeTypes = AttributeType.findAllByCategory(attributeCategory)
+        attributeTypes?.sort {it.name}?.each {
+            request.setAttribute("attribute", it)
+            out << renderAttribute()
+            request.removeAttribute("attribute")
+        }
+
+        def attributeCategories = AttributeCategory.findAllByParentCategory(attributeCategory)
+        attributeCategories.sort {it.name}.each {
+            request.setAttribute("attributeCategory", it)
+            out << renderAttributeCategory()
+            request.removeAttribute("attributeCategory")
+        }
+
+        out << "</legend>"
+        out << "</fieldset>"
+
+    }
     def renderAttribute = {attrs, body ->
         AttributeType attributeType = request.getAttribute("attribute")
         Product product = request.getAttribute("product")

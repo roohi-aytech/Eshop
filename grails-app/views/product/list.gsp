@@ -25,15 +25,16 @@
     </div>
     <g:javascript>
         var loadProducts = function (rowId) {
-            var criteria = '[{\'op\':\'createAlias\', \'field\':\'productTypes\', \'val\':\'pt\'}, {\'op\':\'eq\', \'field\':\'pt.id\', \'val\':\'' + rowId + '\'}]'
-            loadGridWithCriteria("ProductGrid", criteria)
+            var criteria = '[{\'op\':\'eq\', \'field\':\'productType.id\', \'val\':\'' + rowId + '\'}]'
+            loadGridWithCriteria("ProductClosureGrid", criteria)
         }
     </g:javascript>
     <div style="margin: 10px;">
         <div class="criteria-div">
             <rg:criteria>
-                <rg:like name="name" label='product.name'/>
-                <rg:filterGrid grid="ProductGrid" label='search'/>
+                %{--<rg:alias name="product" value="pt"/>--}%
+                <rg:like name="product.name" label='product.name'/>
+                <rg:filterGrid grid="ProductClosureGrid" label='search'/>
             </rg:criteria>
         </div>
         <script type="text/javascript">
@@ -42,12 +43,15 @@
                     .css('display','inline')
                     .css('margin','3px');
         </script>
-        <rg:grid domainClass="${Product}"
-                 maxColumns="5"
+        <rg:grid domainClass="${eshop.ProductClosure}"
+                 maxColumns="6"
                  showCommand="false"
                  firstColumnWidth="30"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
                  commands="${[ [controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+            <rg:criteria>
+                <rg:eq name="productType.id" value="${eshop.ProductType.findByParentProductIsNull()?.id}"/>
+            </rg:criteria>
         </rg:grid>
     </div>
 </div>

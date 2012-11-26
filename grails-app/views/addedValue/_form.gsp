@@ -29,12 +29,14 @@
     <g:select name="type" from="${addedValueInstance.constraints.type.inList}" value="${addedValueInstance?.type}"
               valueMessagePrefix="addedValue.type" noSelection="['': '']"/>
 </div>
+
 <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'processTime', 'error')} ">
     <label for="processTime">
         <g:message code="addedValue.processTime.label" default="Type"/>
 
     </label>
-    <g:select name="processTime" from="${addedValueInstance.constraints.processTime.inList}" value="${addedValueInstance?.processTime}"
+    <g:select name="processTime" from="${addedValueInstance.constraints.processTime.inList}"
+              value="${addedValueInstance?.processTime}"
               valueMessagePrefix="addedValue.processTime" noSelection="['': '']"/>
 </div>
 
@@ -53,10 +55,8 @@
 
     <div id="addValueVariations">
         <g:each in="${addedValueInstance?.variationValues}" var="variationValue">
-            <g:render template="variation"
-                      model="[variations: addedValueInstance?.baseProduct.variations,
-                              variationValue: variationValue,
-                              variation:addedValueInstance?.baseProduct?.variations?.find{it.variationValues.contains(variationValue)}]"/>
+            <g:include action="variation" controller="addedValue"
+                       params="['addedValueId': addedValueInstance?.id, 'variationValueId': variationValue?.id]"/>
         </g:each>
     </div>
     <input type="button" value="${message(code: "add")}" onclick="addVariation()"/>

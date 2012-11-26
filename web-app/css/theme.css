@@ -3,7 +3,8 @@ html, body {
 
 fieldset.form{
     padding-right: 30px;
-    width:97%;
+    /*width:97%;*/
+    display: block;
 }
 
 body {

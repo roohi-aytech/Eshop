@@ -42,7 +42,7 @@ class ProductController {
     }
 
     def attrValueForm() {
-        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId])
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.value])
     }
 
     def addAttributeValue() {
@@ -58,9 +58,26 @@ class ProductController {
             render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId])
     }
 
+    def editAttributeValue() {
+        def attributeType = AttributeType.get(params.attributeTypeId)
+        if (params.values && params.values != params.oldValues) {
+            attributeType.removeFromValues(params.oldValues)
+            attributeType.addToValues(params.values)
+            attributeType = attributeType.save()
+            def attributes = Attribute.findAllByAttributeTypeAndAttributeValue(attributeType, params.oldValues)
+            attributes.each {
+                it.attributeValue = params.values
+                it.save()
+            }
+            render([values: params.values] as JSON)
+        }
+        else
+            render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.values])
+    }
+
     def imageVariations() {
-        def content=Content.get(params.id)
-        def product=Product.get(params.productId)
+        def content = Content.get(params.id)
+        def product = Product.get(params.productId)
         render(template: "content/variations_form", model: [content: content, productInstance: product])
     }
 
@@ -69,6 +86,7 @@ class ProductController {
         def variations = baseProductInstance.variations
         render(template: "content/variation", model: [variations: variations])
     }
+
     def imageVariationValue() {
         def variation = Variation.get(params.variation)
         if (variation) {
@@ -78,10 +96,11 @@ class ProductController {
         else
             render ""
     }
-    def saveImageVariations(){
-        def image=Content.get(params.id)
-        if (image){
-            image.properties=params;
+
+    def saveImageVariations() {
+        def image = Content.get(params.id)
+        if (image) {
+            image.properties = params;
             image.save()
             render image.variationValues as JSON
         }
@@ -94,7 +113,7 @@ class ProductController {
         def productInstance
         def productTypeIds = []
         if (params.id) {
-            productInstance = Product.get(params.id)
+            productInstance = ProductClosure.get(params.id).product
             productInstance.productTypes.each {
                 productTypeIds << it.id
             }
@@ -330,28 +349,28 @@ class ProductController {
     }
 
     def delete() {
-        def productInstance = Product.get(params.id)
-        if (!productInstance) {
+
+        def productClosureInstance = ProductClosure.get(params.id)
+        if (!productClosureInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
             render 1
         }
 
         try {
             def tmp = []
-            productInstance.productTypes.each {
+            productClosureInstance.product.productTypes.each {
                 tmp << it
             }
             tmp.each {
-                productInstance.removeFromProductTypes(it)
+                productClosureInstance.product.removeFromProductTypes(it)
             }
-            productInstance.delete(flush: true)
+            productClosureInstance.delete(flush: true)
             render 0;
         }
         catch (DataIntegrityViolationException e) {
             render 1;
         }
     }
-
 
 
 }

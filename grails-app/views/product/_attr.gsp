@@ -1,7 +1,8 @@
 <div class='fieldcontain'>
     <label for='at_${attributeType.id}'>${attributeType.name}</label>
     <g:if test="${attributeType.values}">
-        <g:select name="at_${attributeType.id}" from="${attributeType?.values?.sort()}" value="${attributeValue}" noSelection="['':'']"/>
+        <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values?.sort()}" value="${attributeValue}" noSelection="['':'']"/>
+        <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">
     </g:if>
     <g:else>
         <g:textField name="at_${attributeType.id}" value="${attributeValue}"/>
@@ -30,6 +31,17 @@
                     }
                 }
             });
+        }
+        function editAttributeTypeValue${attributeType.id}(){
+            var val=$("#at_${attributeType.id}").val()
+            if(val){
+                loadOverlay('<g:createLink controller="product" action="attrValueForm" params="['attributeTypeId': attributeType.id]"/>&value='+val,'<g:createLink action="editAttributeValue" controller="product"/>',function(obj){
+                    $("#at_${attributeType.id}").find("option:contains('"+val+"')").val(obj.values).html(obj.values)
+                })
+            }else{
+                alert("<g:message code="please-select-value" />")
+            }
+
         }
     </script>
 </div>

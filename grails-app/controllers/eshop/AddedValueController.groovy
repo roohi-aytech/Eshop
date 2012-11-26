@@ -21,9 +21,37 @@ class AddedValueController {
     }
 
     def variation() {
-        def baseProductInstance = BaseProduct.get(params.baseProduct.id)
-        def variations = baseProductInstance.variations
-        render(template: "variation", model: [variations: variations])
+        def variations
+        def variationValue
+        def variation
+        if (params.addedValueId) {
+            def addedValueInstance = AddedValue.get(params.addedValueId)
+            variations = collectVariations(addedValueInstance?.baseProduct)
+            variationValue = VariationValue.get(params.variationValueId)
+            variation = addedValueInstance?.baseProduct?.variations?.find {it.variationValues.contains(variationValue)}
+        }
+        else {
+            def baseProductInstance = BaseProduct.get(params.baseProduct.id)
+            variations = collectVariations(baseProductInstance)
+        }
+        def model = [variations: variations, variationValue: variationValue,
+                variation: variation]
+
+        render(template: "variation", model: model)
+    }
+
+    private def collectVariations(baseProduct) {
+        def variations = baseProduct.variations
+        if (baseProduct instanceof Product) {
+            baseProduct.productTypes.each {
+                variations.addAll(collectVariations(it))
+            }
+        }
+        else if(baseProduct instanceof ProductType){
+            if (baseProduct.parentProduct)
+                variations.addAll(collectVariations(baseProduct.parentProduct))
+        }
+        return variations
     }
 
     def variationValue() {
