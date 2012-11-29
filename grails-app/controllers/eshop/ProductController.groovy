@@ -112,8 +112,15 @@ class ProductController {
     def productDetails() {
         def productInstance
         def productTypeIds = []
+
         if (params.id) {
             productInstance = ProductClosure.get(params.id).product
+        }
+        if(params.pid){
+            productInstance = Product.get(params.pid)
+        }
+
+        if (productInstance) {
             productInstance.productTypes.each {
                 productTypeIds << it.id
             }
@@ -129,7 +136,7 @@ class ProductController {
         def productInstance = Product.findById(params.id)
         productInstance.details = params.detail_description;
         productInstance.save()
-        redirect(action: "productDetails", params: [id: params.id, curtab: params.curtab])
+        redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab])
     }
 
     def saveAttributeValues() {
@@ -145,7 +152,7 @@ class ProductController {
                 attribute.save()
             }
         }
-        redirect(action: "productDetails", params: [id: params.id, curtab: params.curtab])
+        redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab])
     }
 
     def editImageDetails() {
@@ -155,7 +162,7 @@ class ProductController {
             product.mainImage = defaultImage
             product.save()
         }
-        redirect(action: "productDetails", params: [id: params.product.id, curtab: params.curtab, curtab2: params.curtab2])
+        redirect(action: "productDetails", params: [pid: params.product.id, curtab: params.curtab, curtab2: params.curtab2])
     }
 
     def variationValue() {

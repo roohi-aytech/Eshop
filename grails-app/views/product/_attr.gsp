@@ -5,7 +5,12 @@
         <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">
     </g:if>
     <g:else>
-        <g:textField name="at_${attributeType.id}" value="${attributeValue}"/>
+        <g:if test="${attributeType?.attributeType=='Text'}">
+            <g:textArea cols="50" rows="10" name="at_${attributeType.id}" value="${attributeValue}"/>
+        </g:if>
+        <g:else>
+            <g:textField name="at_${attributeType.id}" value="${attributeValue}"/>
+        </g:else>
     </g:else>
     <input type="button" id="valuesBtn" value="${message(code: "add")}" onclick="addAttributeTypeValue${attributeType.id}()">
     <script type="text/javascript">

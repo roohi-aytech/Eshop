@@ -6,6 +6,8 @@ class EshopTagLib {
     def renderProductAttributes = {attrs, body ->
         Product product = attrs.product
         request.setAttribute("product", product)
+        HashSet definedProductTypes=new HashSet()
+        request.setAttribute("definedProductTypes",definedProductTypes)
         product.productTypes?.sort {it.name}?.each {
             request.setAttribute("productType", it)
             out << renderProductTypeAttributes()
@@ -16,6 +18,10 @@ class EshopTagLib {
 
     def renderProductTypeAttributes = {attrs, body ->
         ProductType productType = request.getAttribute("productType") ?: attrs.productType
+
+        if(request.getAttribute("definedProductTypes").contains(productType))
+            return
+        request.getAttribute("definedProductTypes").add(productType)
 
         //out << "${productType.name}"
         out << "<fieldset class='form'>"

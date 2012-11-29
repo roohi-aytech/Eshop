@@ -33,7 +33,9 @@
         <div class="criteria-div">
             <rg:criteria>
                 %{--<rg:alias name="product" value="pt"/>--}%
-                <rg:like name="product.name" label='product.name'/>
+                <rg:nest name="product">
+                    <rg:like name="name" label='product.name'/>
+                </rg:nest>
                 <rg:filterGrid grid="ProductClosureGrid" label='search'/>
             </rg:criteria>
         </div>
@@ -44,7 +46,7 @@
                     .css('margin','3px');
         </script>
         <rg:grid domainClass="${eshop.ProductClosure}"
-                 maxColumns="6"
+                 maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"

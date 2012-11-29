@@ -34,10 +34,10 @@ class ProductClosure {
 
     static constraints = {
         name()
-        description()
         brand()
         productTypes()
         manufactureCountry()
         manufactureDate()
+        description()
     }
 }

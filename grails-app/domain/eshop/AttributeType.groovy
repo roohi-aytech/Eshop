@@ -27,7 +27,7 @@ class AttributeType {
 
     static constraints = {
         name(nullable: false)
-        attributeType(inList: ["String", "Date", "Number"])
+        attributeType(inList: ["String", "Text", "Date", "Number"])
         defaultValue(nullable: true)
         category(nullable: true)
         values()
