@@ -11,7 +11,7 @@ import org.codehaus.groovy.grails.web.context.ServletContextHolder
  * To change this template use File | Settings | File Templates.
  */
 class FileService {
-    def baseLoc = ServletContextHolder.servletContext.getRealPath("/uploads/Image")
+    def baseLoc = ServletContextHolder.servletContext.getRealPath("../../uploads/Image")
 
     def getFileContent(String name,String type,String parent){
         def path = baseLoc + "/" + parent + "/" + type+"/"+name
