@@ -274,8 +274,16 @@ class ProductTypeController {
         }
         else
             attributeType = new AttributeType(params);
-        //if (params.values)
-        //    attributeType.values = params.values.split(",")
+        if (params.values_old && attributeType.id) {
+            params.values_old.eachWithIndex {oldVal, idx ->
+                def attributes = Attribute.findAllByAttributeTypeAndAttributeValue(attributeType, oldVal)
+                attributes.each {
+                    it.attributeValue = params.values[idx]
+                    it.save()
+                }
+            }
+        }
+
         attributeType.save()
         render "0"
     }

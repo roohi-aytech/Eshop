@@ -6,7 +6,7 @@ import groovy.sql.Sql
 class SiteController {
     def browseService
     def priceService
-    def olapService
+//    def olapService
     def dataSource
 
     def index2() {
@@ -38,9 +38,10 @@ class SiteController {
     }
 
     def index() {
-        def productTypes = ProductType.findAllByParentProductIsNull()
-        def newProducts = Product.findAll()
-        [productTypes: productTypes, newProducts: newProducts]
+        redirect(action: "index2")
+//        def productTypes = ProductType.findAllByParentProductIsNull()
+//        def newProducts = Product.findAll()
+//        [productTypes: productTypes, newProducts: newProducts]
     }
 
     def category() {
@@ -62,7 +63,7 @@ class SiteController {
         def productTypes = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         def model = [productTypes: productTypes, product: product]
-        model<<priceService.calcProductPrice(product?.id)
+        model << priceService.calcProductPrice(product?.id)
         model
     }
 

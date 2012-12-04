@@ -25,35 +25,36 @@
     </div>
     <g:javascript>
         var loadProducts = function (rowId) {
-            var criteria = '[{\'op\':\'eq\', \'field\':\'productType.id\', \'val\':\'' + rowId + '\'}]'
-            loadGridWithCriteria("ProductClosureGrid", criteria)
+            var criteria = "[{'op':'in', 'field':'productTypeIds', 'val':" + rowId + "}]"
+            loadGridWithCriteria("MongoProductGrid", criteria)
         }
     </g:javascript>
     <div style="margin: 10px;">
         <div class="criteria-div">
             <rg:criteria>
-                %{--<rg:alias name="product" value="pt"/>--}%
-                <rg:nest name="product">
-                    <rg:like name="name" label='product.name'/>
-                </rg:nest>
-                <rg:filterGrid grid="ProductClosureGrid" label='search'/>
+            %{--<rg:alias name="product" value="pt"/>--}%
+            %{--<rg:nest name="product">--}%
+                <rg:like name="name" label='product.name'/>
+            %{--</rg:nest>--}%
+                <rg:filterGrid grid="MongoProductGrid" label='search'/>
             </rg:criteria>
         </div>
         <script type="text/javascript">
             $(".criteria-div")
                     .find('div,label,input')
-                    .css('display','inline')
-                    .css('margin','3px');
+                    .css('display', 'inline')
+                    .css('margin', '3px');
         </script>
-        <rg:grid domainClass="${eshop.ProductClosure}"
+        <rg:grid domainClass="${eshop.mongo.MongoProduct}"
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
+                 columns="[[name: 'name'], [name: 'brand'], [name: 'productTypes'], [name: 'manufactureCountry']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-                 commands="${[ [controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
-            <rg:criteria>
-                <rg:eq name="productType.id" value="${eshop.ProductType.findByParentProductIsNull()?.id}"/>
-            </rg:criteria>
+                 commands="${[[controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+        %{--<rg:criteria>--}%
+        %{--<rg:eq name="productType.id" value="${eshop.ProductType.findByParentProductIsNull()?.id}"/>--}%
+        %{--</rg:criteria>--}%
         </rg:grid>
     </div>
 </div>
@@ -145,9 +146,9 @@
     }
     function addToProductGrid(){
         window.location='<g:createLink action="productDetails"/>'
-        %{--loadOverlay('<g:createLink action="form"/>','<g:createLink action="save"/>',function(){--}%
-            %{--$("#ProductGrid").trigger("reloadGrid")--}%
-        %{--},addTree);--}%
+%{--loadOverlay('<g:createLink action="form"/>','<g:createLink action="save"/>',function(){--}%
+%{--$("#ProductGrid").trigger("reloadGrid")--}%
+%{--},addTree);--}%
     }
 </g:javascript>
 </body>

@@ -72,9 +72,10 @@
     <label for="values" class="valueslabel">
         <g:message code="attributeType.values.label" default="Values"/>
     </label>
-    <g:each in="${attributeTypeInstance?.values}">
+    <g:each in="${attributeTypeInstance?.values?.sort()}">
         <div>
             <g:textField name="values" value="${it}" onkeydown="updateDefaultValue()"/>
+            <g:hiddenField name="values_old" value="${it}" />
             <input type='button' value='${message(code: "remove")}' onclick="removeValues(this)">
         </div>
     </g:each>
@@ -113,6 +114,7 @@
             removeValues(this)
         })
         div.append(input)
+        div.append($('<input type="hidden" name="values_old">'))
         div.append(del)
         div.insertBefore($(obj))
 

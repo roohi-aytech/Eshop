@@ -2,17 +2,17 @@ package eshop
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
-import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
-import java.awt.Image
+
 import grails.plugins.springsecurity.Secured
 import org.springframework.http.HttpStatus
+import eshop.mongo.MongoProduct
 
 @Secured(RoleHelper.ROLE_PRODUCT_ADMIN)
 class ProductController {
 
     def imageService
     def productService
+    def mongoService
 //    def dataSource
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -42,7 +42,8 @@ class ProductController {
     }
 
     def attrValueForm() {
-        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.value])
+        def attr = AttributeType.get(params.attributeTypeId)
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.value, attributeType: attr?.attributeType])
     }
 
     def addAttributeValue() {
@@ -114,9 +115,10 @@ class ProductController {
         def productTypeIds = []
 
         if (params.id) {
-            productInstance = ProductClosure.get(params.id).product
+            def mongoProduct = MongoProduct.get(params.id)
+            productInstance = Product.get(mongoProduct.baseProductId)
         }
-        if(params.pid){
+        if (params.pid) {
             productInstance = Product.get(params.pid)
         }
 
@@ -152,6 +154,7 @@ class ProductController {
                 attribute.save()
             }
         }
+        mongoService.storeProduct(productInstance)
         redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab])
     }
 
@@ -245,6 +248,8 @@ class ProductController {
         }
         else
             productInstance = new Product(params)
+
+
         def tmp = []
         productInstance.productTypes.each {
             tmp << it
@@ -299,6 +304,8 @@ class ProductController {
 //        }catch(x){
 //
 //        }
+        mongoService.storeProduct(productInstance)
+
         render(view: "productDetails", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab])
 
     }
@@ -357,26 +364,35 @@ class ProductController {
 
     def delete() {
 
-        def productClosureInstance = ProductClosure.get(params.id)
-        if (!productClosureInstance) {
+        def mongoProductInstance = MongoProduct.get(params.id)
+        if (!mongoProductInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
             render 1
         }
 
         try {
             def tmp = []
-            productClosureInstance.product.productTypes.each {
+            def product = Product.get(mongoProductInstance.baseProductId)
+            product.productTypes.each {
                 tmp << it
             }
             tmp.each {
-                productClosureInstance.product.removeFromProductTypes(it)
+                product.removeFromProductTypes(it)
             }
-            productClosureInstance.delete(flush: true)
+            mongoProductInstance.delete(flush: true)
             render 0;
         }
         catch (DataIntegrityViolationException e) {
             render 1;
         }
+    }
+
+    def synchMongo() {
+        Product.findAll().each {
+            mongoService.storeProduct(it)
+            println it
+        }
+        render "Synch OK"
     }
 
 
