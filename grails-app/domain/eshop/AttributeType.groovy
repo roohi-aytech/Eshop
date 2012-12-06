@@ -15,10 +15,10 @@ class AttributeType {
     ProductType productType
     AttributeCategory category
 
-    static final def showPositionValues=["filter","productList","compare","productDetails","productFullDetails"]
+    static final def showPositionValues = ["filter", "productList", "compare", "productDetails", "productFullDetails"]
 
-    static hasMany = [attributes: Attribute, values: String,showPositions:String]
-    static belongsTo = [ProductType,AttributeCategory]
+    static hasMany = [attributes: Attribute, values: String, showPositions: String]
+    static belongsTo = [ProductType, AttributeCategory]
 
     static mapping = {
         sort 'name'
@@ -32,6 +32,15 @@ class AttributeType {
         category(nullable: true)
         values()
         productType()
+    }
+
+    transient def getOptionValues() {
+        values?.sort()?.collect { val ->
+            return [
+                key: val.replace("\n", "\\n"),
+                val: val
+            ]
+        }
     }
 
     @Override

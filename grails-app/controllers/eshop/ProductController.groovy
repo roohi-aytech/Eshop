@@ -43,7 +43,8 @@ class ProductController {
 
     def attrValueForm() {
         def attr = AttributeType.get(params.attributeTypeId)
-        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.value, attributeType: attr?.attributeType])
+        def vals = attr?.values?.sort()?.toArray()
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: vals[Integer.parseInt(params.valueIndex)], attributeType: attr?.attributeType])
     }
 
     def addAttributeValue() {
@@ -70,6 +71,7 @@ class ProductController {
                 it.attributeValue = params.values
                 it.save()
             }
+
             render([values: params.values] as JSON)
         }
         else
