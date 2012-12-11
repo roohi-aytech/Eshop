@@ -22,6 +22,7 @@ class ProductController {
     }
 
     def list() {
+        [ptid: params.ptid]
     }
 
     def create() {
@@ -133,7 +134,7 @@ class ProductController {
             productInstance = new Product()
         }
 
-        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2]
+        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid]
     }
 
     def saveProductDescription() {

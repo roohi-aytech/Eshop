@@ -2,9 +2,16 @@ package eshop
 
 class BrowseService {
     def mongo
-    def db=mongo.getDB("EShop")
-    def products=db.mongoProducts
+    def db
+    def products
 
+    def getProducts(){
+        if(!products){
+            db=mongo.getDB("EShop")
+            products=db.mongoProducts
+        }
+        return products
+    }
     def brands(){
         products.aggregate(
                 []

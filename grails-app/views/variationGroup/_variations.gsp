@@ -39,7 +39,7 @@ function addToVariationGrid(){
 <fieldset class="buttons">
 
     <g:if test="${baseProductInstance instanceof eshop.Product}">
-        <g:link class="list" controller="product" action="list"><g:message code="default.product.list" default="Product List"/></g:link>
+        <g:link class="list" controller="product" action="list"  params="[ptid:ptid]"><g:message code="default.product.list" default="Product List"/></g:link>
     </g:if>
     <g:else>
         <g:link class="list" controller="productType" action="list"><g:message code="productType.list" default="Product List"/></g:link>
