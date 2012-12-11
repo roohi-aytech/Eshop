@@ -16,7 +16,7 @@ class SiteController {
 
     def sidebar() {
         def subProductTypes = []//olapService.productTypes(params)
-        def brands = []//olapService.brands(params)
+        def brands = browseService.brands(params)//olapService.brands(params)
         def breadCrumb = browseService.breadCrumb(params)
         def resp = [subProductTypes: subProductTypes, brands: brands, breadCrumb: breadCrumb, browsingProductTypeId: params.browsingProductTypeId, browsingBrandId: params.browsingBrandId]
 

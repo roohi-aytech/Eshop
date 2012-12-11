@@ -12,10 +12,11 @@ class BrowseService {
         }
         return products
     }
-    def brands(){
-        products.aggregate(
-                []
-        )
+    def brands(params){
+        def rs=getProducts().aggregate(
+                [$project:[name:'baseProductId']]
+        ).results()
+        def i=0
     }
     def breadCrumb(params) {
         def productType = ProductType.get(params.browsingProductTypeId)
