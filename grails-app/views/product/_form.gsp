@@ -9,34 +9,34 @@
     </label>
     <g:textField name="name" value="${productInstance?.name}" class="count-words" size="70"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'pageTitle', 'error')} ">
-    <label for="pageTitle">
-        <g:message code="product.pageTitle.label" default="Page Title"/>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'type', 'error')} ">
+    <label for="type">
+        <g:message code="product.type.label" default="Type"/>
 
     </label>
-    <g:textField name="pageTitle" value="${productInstance?.pageTitle}" class="count-words" size="70" />
+    <g:textField name="type" value="${productInstance?.type}" class="count-words" size="70" />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'description', 'error')} ">
-    <label for="description">
-        <g:message code="product.description.label" default="Description"/>
+%{--<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'description', 'error')} ">--}%
+    %{--<label for="description">--}%
+        %{--<g:message code="product.description.label" default="Description"/>--}%
 
-    </label>
-    <g:textArea name="description" value="${productInstance?.description}" cols="20" rows="5" class="count-words"/>
-</div>
-<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'keywords', 'error')} ">
-    <label for="keywords">
-        <g:message code="product.keywords.label" default="Keywords"/>
+    %{--</label>--}%
+    %{--<g:textArea name="description" value="${productInstance?.description}" cols="20" rows="5" class="count-words"/>--}%
+%{--</div>--}%
+%{--<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'keywords', 'error')} ">--}%
+    %{--<label for="keywords">--}%
+        %{--<g:message code="product.keywords.label" default="Keywords"/>--}%
 
-    </label>
-    <g:textArea name="keywords" value="${productInstance?.keywords}" cols="20" rows="5" class="count-words"/>
-</div>
+    %{--</label>--}%
+    %{--<g:textArea name="keywords" value="${productInstance?.keywords}" cols="20" rows="5" class="count-words"/>--}%
+%{--</div>--}%
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'manufactureDate', 'error')} ">
     <label for="manufactureDate">
         <g:message code="product.manufactureDate.label" default="Manufacture Date"/>
 
     </label>
-    <rg:datePicker name="manufactureDate" value="${productInstance?.manufactureDate}"/>
+    <g:textField name="manufactureDate" value="${productInstance?.manufactureDate}"/>
 </div>
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'manufactureCountry', 'error')} ">
     <label for="manufactureCountry">

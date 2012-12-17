@@ -1,9 +1,10 @@
 package eshop
 class Product extends BaseProduct implements Comparable{
     String name
+    String type
     String description
     String details
-    Date manufactureDate
+    String manufactureDate
     String manufactureCountry
     String otherAtributes
     Double weight = 0D
@@ -27,7 +28,8 @@ class Product extends BaseProduct implements Comparable{
     }
 
     static constraints = {
-        name()
+        name(nullable: true)
+        type(nullable: true)
         description(nullable: true,maxSize: 1000)
         brand(nullable: true)
         manufactureCountry(nullable: true)

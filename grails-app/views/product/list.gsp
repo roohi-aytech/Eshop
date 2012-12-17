@@ -25,7 +25,9 @@
         </rg:grid>
     </div>
     <g:javascript>
+        var curSelectedProductType=${ptid?:0}
         var loadProducts = function (rowId) {
+            curSelectedProductType = rowId
             var criteria = "[{'op':'in', 'field':'productTypeIds', 'val':" + rowId + "}]"
             loadGridWithCriteria("MongoProductGrid", criteria)
         }
@@ -50,9 +52,9 @@
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'name'], [name: 'brand'], [name: 'productTypes'], [name: 'manufactureCountry']]"
+                 columns="[[name: 'name'],[name: 'type'], [name: 'brand'], [name: 'productTypes'], [name: 'manufactureCountry']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-                 commands="${[[controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+                 commands="${[[handler:'editProduct(#id#)', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">
                 <rg:criteria>
                     <rg:inCrit name="productTypeIds" value="${ptid as Long}"/>
@@ -62,6 +64,9 @@
     </div>
 </div>
 <g:javascript>
+    function editProduct(id){
+        window.location='<g:createLink action="productDetails" controller="product"/>?id='+id+"&ptid="+curSelectedProductType
+    }
     function deleteProduct(id){
          if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
             var url = "<g:createLink action="delete"/>";
@@ -71,7 +76,7 @@
                 data:{ id:id }
             }).done(function (response) {
                 if (response == "0") {
-                    var grid = $("#ProductGrid");
+                    var grid = $("#MongoProductGrid");
                     grid.trigger('reloadGrid');
                 }
                 else {

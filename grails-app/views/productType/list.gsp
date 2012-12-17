@@ -11,7 +11,9 @@
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <div class="form" id="edit-form-productType">
-    <g:render template="form_ProductType"/>
+    <g:form enctype='multipart/form-data'>
+        <g:render template="form_ProductType"/>
+    </g:form>
 </div>
 %{--<div class="form" id="edit-form-attributeType">--}%
     %{--<g:render template="form_Attribute"/>--}%
@@ -31,30 +33,35 @@
                 title:'${message(code: "producttype.definition")}',
                 buttons:{
                     "${message(code: "save")}":function () {
-                        $.ajax({
+                        $("#edit-form-productType").find("form").ajaxSubmit({
                             type:"POST",
                             url:$("#edit-form-productType").attr('url'),
-                            data:{
-                                name: $("#edit-form-productType [name=name]").val(),
-                                description: $("#edit-form-productType [name=description]").val() ,
-                                pageTitle: $("#edit-form-productType [name=pageTitle]").val(),
-                                keywords: $("#edit-form-productType [name=keywords]").val()
-                            }
-                        }).done(function (response) {
-                            if (response == "0") {
-                                var parent = $("#edit-form-productType").attr('parentId');
-                                if(parent)
-                                    reloadProductTypeGridNode(parent)
-                                else{
-                                    var grid = $("#ProductTypeGrid");
+                            success:function (response) {
+                                if (response == "0") {
+                                    var parent = $("#edit-form-productType").attr('parentId');
+                                    if(parent)
+                                        reloadProductTypeGridNode(parent)
+                                    else{
+                                        var grid = $("#ProductTypeGrid");
+                                        grid.trigger('reloadGrid');
+                                    }
+                                    var grid = $("#AttributeTypeGrid");
                                     grid.trigger('reloadGrid');
                                 }
-                                var grid = $("#AttributeTypeGrid");
-                                grid.trigger('reloadGrid');
+                                else {
+                                }
                             }
-                            else {
-                            }
-                        });
+                        })
+//                        $.ajax({
+//                            type:"POST",
+//                            url:$("#edit-form-productType").attr('url'),
+//                            data:{
+//                                name: $("#edit-form-productType [name=name]").val(),
+//                                description: $("#edit-form-productType [name=description]").val() ,
+//                                pageTitle: $("#edit-form-productType [name=pageTitle]").val(),
+//                                keywords: $("#edit-form-productType [name=keywords]").val()
+//                            }
+//                        }).done();
                         allFields.removeClass("ui-state-error");
                         $(this).dialog("close");
                     },
@@ -231,7 +238,7 @@
             $("#edit-form-productType [name=description]").val(row.description)
             $("#edit-form-productType [name=pageTitle]").val(row.pageTitle)
             $("#edit-form-productType [name=keywords]").val(row.keywords)
-
+            $("#edit-form-productType img").attr("src",'<g:createLink controller="productType" action="getImage"/>?id='+id)
             $("#edit-form-productType").attr("url", url)
             $("#edit-form-productType").dialog("open")
             $(".count-words").keypress()

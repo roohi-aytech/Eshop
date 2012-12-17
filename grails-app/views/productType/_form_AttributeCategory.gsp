@@ -1,3 +1,4 @@
+<%@ page import="eshop.AttributeCategory" %>
 <g:hasErrors bean="${attributeCategory}">
     <ul class="errors" role="alert">
         <g:eachError bean="${attributeCategory}" var="error">
@@ -17,5 +18,13 @@
 
     </label>
     <g:textField name="name" value="${attributeCategory?.name}"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'showPositions', 'error')} ">
+    <label for="showPositions">
+        <g:message code="showPositions.label" default="Show Positions"/>
+
+    </label>
+    <rg:checkBoxList name="showPositions" from="${AttributeCategory.showPositionValues}"
+                     value="${attributeCategory?.showPositions}" translate="true"/>
 </div>
 

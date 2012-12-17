@@ -31,6 +31,15 @@
     </label>
     <g:textArea name="keywords" value="${productTypeInstance?.keywords}" cols="50" rows="5" class="count-words"/>
 </div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'image', 'error')} ">
+    <label for="image">
+        <g:message code="productType.image.label" default="image" />
+
+    </label>
+    <input type="file" id="image" name="image" />
+    <img src="<g:createLink controller="productType" action="getImage" id="${productTypeInstance?.id}"/>" style="max-width: 100px"/>
+
+</div>
 
 <g:hiddenField name="parentProduct.id" value="${parentProduct?.id}" />
 

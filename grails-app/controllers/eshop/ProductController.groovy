@@ -45,7 +45,7 @@ class ProductController {
     def attrValueForm() {
         def attr = AttributeType.get(params.attributeTypeId)
         def vals = attr?.values?.sort()?.toArray()
-        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: vals[Integer.parseInt(params.valueIndex)], attributeType: attr?.attributeType])
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.valueIndex?vals[Integer.parseInt(params.valueIndex)]:'', attributeType: attr?.attributeType])
     }
 
     def addAttributeValue() {
@@ -145,6 +145,21 @@ class ProductController {
     }
 
     def saveAttributeValues() {
+        saveAttributeValuesInternal(params)
+        redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid])
+    }
+
+    def saveAttributeValuesAndExit() {
+        saveAttributeValuesInternal(params)
+        redirect(action: "list", params: [ptid: params.ptid])
+    }
+
+    def saveAttributeValuesAndNew() {
+        saveAttributeValuesInternal(params)
+        redirect(action: "productDetails", params: [ptid: params.ptid])
+    }
+
+    private void saveAttributeValuesInternal(params) {
         def productInstance = Product.findById(params.id)
         def attributeTypes = productInstance?.productTypes.collect {attributeTypes(it)}.flatten()
 
@@ -158,7 +173,6 @@ class ProductController {
             }
         }
         mongoService.storeProduct(productInstance)
-        redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab])
     }
 
     def editImageDetails() {
@@ -275,6 +289,22 @@ class ProductController {
     }
 
     def saveProductAndReturnToDetailsPage() {
+        def res = saveProduct(params)
+        render(view: "productDetails", model: [productInstance: res.productInstance, productTypeIds: res.productTypeIds.join(","), baseProductInstance: res.productInstance, curtab: params.curtab])
+
+    }
+
+    def saveProductAndExit() {
+        saveProduct(params)
+        redirect(action: "list", params: [ptid: params.ptid])
+    }
+
+    def saveProductAndNew() {
+        saveProduct(params)
+        redirect(action: "productDetails")
+    }
+
+    private def saveProduct(params) {
         def productInstance
         if (params.id) {
             productInstance = Product.get(params.id)
@@ -308,9 +338,7 @@ class ProductController {
 //
 //        }
         mongoService.storeProduct(productInstance)
-
-        render(view: "productDetails", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab])
-
+        return [productInstance: productInstance, productTypeIds: productTypeIds]
     }
 
     def show() {
@@ -383,6 +411,16 @@ class ProductController {
                 product.removeFromProductTypes(it)
             }
             mongoProductInstance.delete(flush: true)
+            product.mainImage?.delete()
+            product.images.each {it.delete()}
+            product.videos.each {it.delete()}
+
+            product.attributes.each {it.delete()}
+            AddedValue.findAllByBaseProduct(product).each {it.delete()}
+            Price.findAllByProduct(product).each {it.delete()}
+
+            Variation.findAllByBaseProduct(product).each {it.delete()}
+            product.delete()
             render 0;
         }
         catch (DataIntegrityViolationException e) {

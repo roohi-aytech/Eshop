@@ -6,6 +6,7 @@ import grails.plugins.springsecurity.Secured
 
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class ProductTypeController {
+    def imageService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -117,7 +118,12 @@ class ProductTypeController {
 
     def deleteAttributeCategory() {
         try {
+
             def attributecategory = AttributeCategory.get(params.id)
+            AttributeType.findAllByCategory(attributecategory).each {
+                it.category = null
+                it.save()
+            }
             attributecategory.delete()
             render 0
         } catch (x) {
@@ -164,6 +170,10 @@ class ProductTypeController {
 //                productTypeInstance.rootProductType = null
 //                productTypeInstance.save(flush: true)
 //            }
+            productTypeInstance.products.each {
+                it.removeFromProductTypes(productTypeInstance)
+                it.save()
+            }
             productTypeInstance.delete(flush: true)
             render 0;
         }
@@ -180,6 +190,7 @@ class ProductTypeController {
         }
 
         try {
+            attributeTypeInstance.attributes.each {it.delete()}
             attributeTypeInstance.delete(flush: true)
             render 0;
         }
@@ -213,13 +224,33 @@ class ProductTypeController {
             }
             else
                 productType = new ProductType(params)
+            def image=productType.image
+            productType.image=null
+
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
-            productType.save()
+            productType = productType.save()
+            if(image){
+                productType.image=imageService.saveAndScaleImages(image,"image","pt${productType.id}")
+                productType.save()
+            }
             render 0;
         }
         catch (x) {
             render 1;
         }
+    }
+    def getImage() {
+        def productType = ProductType.get(params.id)
+        if (productType && productType.image) {
+            response.addHeader("content-disposition", "attachment;filename=$productType.name")
+            response.contentLength = productType.image.length
+            response.outputStream << productType.image
+        }
+        else {
+            response.contentLength = 0
+            response.outputStream << []
+        }
+
     }
 
     def saveProduct() {

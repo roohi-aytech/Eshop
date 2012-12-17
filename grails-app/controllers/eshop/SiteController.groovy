@@ -24,17 +24,17 @@ class SiteController {
     }
 
     def products() {
-        def list = ProductClosure.createCriteria().listDistinct {
-            if ((params.browsingProductTypeId as Long) > 0)
-                eq("productType", ProductType.get(params.browsingProductTypeId))
-            if ((params.browsingBrandId as Long) > 0)
-                eq("brand", Brand.get(params.browsingBrandId))
-        }
-        list*.product.each {
-            def model = [product: it]
-            model << priceService.calcProductPrice(it.id)
-            render(template: "product_search", model: model)
-        }
+//        def list = ProductClosure.createCriteria().listDistinct {
+//            if ((params.browsingProductTypeId as Long) > 0)
+//                eq("productType", ProductType.get(params.browsingProductTypeId))
+//            if ((params.browsingBrandId as Long) > 0)
+//                eq("brand", Brand.get(params.browsingBrandId))
+//        }
+//        list*.product.each {
+//            def model = [product: it]
+//            model << priceService.calcProductPrice(it.id)
+//            render(template: "product_search", model: model)
+//        }
     }
 
     def index() {
