@@ -16,15 +16,14 @@ class MongoService {
         }
         mongoProduct['brand'] = product?.brand?.name
         def productTypes=collectProductTypes(product)
-        mongoProduct['productTypes'] = productTypes.collect {it.name}
-        mongoProduct['productTypeIds'] = productTypes.collect {it.id}
-        mongoProduct['attributes'] = [:]
+        mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name]}
+        //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
 
-        product.attributes.each {
+        product.attributes.find {it.attributeType.showPositions.contains("filter")}.each {
             if (it.attributeValue)
-                mongoProduct['attributes'][it.attributeType.name] = it.attributeValue
+                mongoProduct[it.attributeType.name] = it.attributeValue
             else if (it.attributeType.defaultValue)
-                mongoProduct['attributes'][it.attributeType.name] = it.attributeType.defaultValue
+                mongoProduct[it.attributeType.name] = it.attributeType.defaultValue
         }
         mongoProduct.save(flush: true)
     }

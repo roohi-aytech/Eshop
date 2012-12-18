@@ -33,7 +33,6 @@
 </head>
 
 <body>
-<g:javascript src="browse.js"></g:javascript>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -52,35 +51,6 @@
                     <li><a href="#"><g:message code="profile-title" /></a></li>
                 </ul>
             </div><!--/.nav-collapse -->
-            %{--<ul class="nav pull-right">--}%
-                %{--<li class="dropdown">--}%
-                    %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}%
-                        %{--Account--}%
-                        %{--<b class="caret"></b>--}%
-                    %{--</a>--}%
-                    %{--<ul class="dropdown-menu">--}%
-                        %{--<li><a href="#">a</a></li>--}%
-                        %{--<li><a href="#">b</a></li>--}%
-                        %{--<li><a href="#">c</a></li>--}%
-                        %{--<li class="dropdown-submenu">--}%
-                            %{--<a tabindex="-1" href="#">More options</a>--}%
-                            %{--<ul class="dropdown-menu">--}%
-                                %{--<li><a href="#">a</a></li>--}%
-                                %{--<li><a href="#">b</a></li>--}%
-                                %{--<li><a href="#">c</a></li>--}%
-                                %{--<li class="dropdown-submenu">--}%
-                                    %{--<a tabindex="-1" href="#">More options</a>--}%
-                                    %{--<ul class="dropdown-menu">--}%
-                                        %{--<li><a href="#">a</a></li>--}%
-                                        %{--<li><a href="#">b</a></li>--}%
-                                        %{--<li><a href="#">c</a></li>--}%
-                                    %{--</ul>--}%
-                                %{--</li>--}%
-                            %{--</ul>--}%
-                        %{--</li>--}%
-                    %{--</ul>--}%
-                %{--</li>--}%
-            %{--</ul>--}%
             <div class="btn-group pull-right" style="margin-right: 0px; margin-left: 10px;">
                 <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
                     <g:message code="site.selectCategory"></g:message>
@@ -88,12 +58,15 @@
                 </a>
                 <ul class="dropdown-menu">
                     <g:each in="${rootProductTypes}" var="rootProductType">
-                        %{--<li><a href="#">${rootProductType.name}</a></li>--}%
+                    %{--<li><a href="#">${rootProductType.name}</a></li>--}%
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">${rootProductType.name}</a>
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                    <li><a href="javascript:topProductTypeSelect(${secondLevelProductType.id})">${secondLevelProductType.name}</a></li>
+                                    <li>
+                                        <g:link action="browse" params="${[productTypeId:secondLevelProductType.id]}">
+                                            ${secondLevelProductType.name}
+                                        </g:link>
                                 </g:each>
                             </ul>
                         </li>
@@ -112,9 +85,12 @@
         <div class="span2">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><g:message code="site.selectSubcategory"></g:message></li>
-                    <select id="subProductType" style="width: 100%;">
-                    </select>
+                    <g:if test="${subProductTypes}">
+                        <li class="nav-header"><g:message code="site.selectSubcategory" default="Select SubProductType"></g:message></li>
+                    </g:if>
+                    <g:each in="${subProductTypes}" var="subProductType">
+                        <li><g:link action="browse" params="${pageParams + ["productTypeId":subProductType.id]}">${subProductType.name}</g:link></li>
+                    </g:each>
 
                     <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand" default="Select Brand"></g:message></li>
                 </ul>
@@ -128,7 +104,7 @@
                 <ul class="thumbnails">
                 </ul>
             </div>
-            </div>
+        </div>
         <div class="span2">
             <div class="well">
             </div>
