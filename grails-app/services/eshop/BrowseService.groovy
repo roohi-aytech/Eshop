@@ -5,19 +5,24 @@ class BrowseService {
     def db
     def products
 
-    def getProducts(){
-        if(!products){
-            db=mongo.getDB("EShop")
-            products=db.mongoProducts
+    def getProducts() {
+        if (!products) {
+            db = mongo.getDB("EShop")
+            products = db.getCollection("mongoProduct")
         }
         return products
     }
-    def brands(params){
-        def rs=getProducts().aggregate(
-                [$project:[name:'baseProductId']]
+
+    def brands(params) {
+        def products = getProducts()
+        def rs = products.aggregate(
+                //[$unwind: '$productTypes'],
+                [$match: ['productTypes.id': 47]],
+                //[$group: [_id: '$brand', brandCount: [$sum: 1]]],
+                [$group: [_id: '$سیستم', systemCount: [$sum: 1]]]
         ).results()
-        def i=0
     }
+
     def breadCrumb(params) {
         def productType = ProductType.get(params.browsingProductTypeId)
         def result = []

@@ -397,6 +397,4 @@ class ProductController {
         }
         render "Synch OK"
     }
-
-
 }

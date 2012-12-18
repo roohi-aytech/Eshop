@@ -9,6 +9,31 @@ class SiteController {
 //    def olapService
     def dataSource
 
+    def findProducts(params) {
+
+    }
+
+    def findFilters(params) {
+
+    }
+
+    def browse() {
+        def x = browseService.brands(params)
+
+        def rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+        def pageParams = [:]
+        //def products = browseService.findProducts(params)
+        //def filters = browseService.findFilters(params)
+        def subProductTypes = []
+        if (params.productTypeId) {
+            subProductTypes = ProductType.findByParentProduct(ProductType.findById(params.productTypeId))
+            pageParams["productTypeId"] = params.productTypeId
+        }
+
+        [rootProductTypes: rootProductTypes, subProductTypes: subProductTypes, pageParams: pageParams]
+    }
+
     def index2() {
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
         [rootProductTypes: rootProductTypes]
