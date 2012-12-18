@@ -14,9 +14,9 @@ class MongoService {
             if (it.value instanceof String)
                 mongoProduct[it.key] = it.value
         }
-        mongoProduct['brand'] = product?.brand?.name
-        def productTypes=collectProductTypes(product)
-        mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name]}
+        mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
+        def productTypes = collectProductTypes(product)
+        mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
         //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
 
         product.attributes.find {it.attributeType.showPositions.contains("filter")}.each {
@@ -37,7 +37,7 @@ class MongoService {
     }
 
     private def collectProductTypes(ProductType productType) {
-        def res = [[name: productType?.name, id: productType?.id]]
+        def res = [[name: productType?.name, id: productType?.id,parentId: productType?.parentProduct?.id]]
 
         if (productType.parentProduct)
             res.addAll(collectProductTypes(productType.parentProduct))

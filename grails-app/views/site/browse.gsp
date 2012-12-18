@@ -16,7 +16,8 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
     }
     </style>
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet"
+          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -42,13 +43,14 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="#">Zanbil</a>
+
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li><a href="#"><g:message code="support" /></a></li>
-                    <li><a href="#"><g:message code="wishList" /></a></li>
-                    <li><a href="#"><g:message code="compareList" /></a></li>
-                    <li><a href="#"><g:message code="basket" /></a></li>
-                    <li><a href="#"><g:message code="profile-title" /></a></li>
+                    <li><a href="#"><g:message code="support"/></a></li>
+                    <li><a href="#"><g:message code="wishList"/></a></li>
+                    <li><a href="#"><g:message code="compareList"/></a></li>
+                    <li><a href="#"><g:message code="basket"/></a></li>
+                    <li><a href="#"><g:message code="profile-title"/></a></li>
                 </ul>
             </div><!--/.nav-collapse -->
             <div class="btn-group pull-right" style="margin-right: 0px; margin-left: 10px;">
@@ -64,17 +66,18 @@
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
                                     <li>
-                                        <g:link action="browse" params="${[productTypeId:secondLevelProductType.id]}">
-                                            ${secondLevelProductType.name}
-                                        </g:link>
+                                    <g:link action="browse" params="${[productTypeId: secondLevelProductType.id]}">
+                                        ${secondLevelProductType.name}
+                                    </g:link>
                                 </g:each>
                             </ul>
                         </li>
                     </g:each>
                 </ul>
             </div>
+
             <form class="navbar-search pull-right">
-                <input type="text" class="input-large search-query" placeholder="<g:message code="search" />">
+                <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
             </form>
         </div>
     </div>
@@ -86,25 +89,58 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <g:if test="${subProductTypes}">
-                        <li class="nav-header"><g:message code="site.selectSubcategory" default="Select SubProductType"></g:message></li>
+                        <li class="nav-header"><g:message code="site.selectSubcategory"
+                                                          default="Select SubProductType"></g:message></li>
                     </g:if>
                     <g:each in="${subProductTypes}" var="subProductType">
-                        <li><g:link action="browse" params="${pageParams + ["productTypeId":subProductType.id]}">${subProductType.name}</g:link></li>
+                        <li><g:link action="browse"
+                                    params="${pageParams + ["productTypeId": subProductType.id]}">${subProductType.name}</g:link></li>
                     </g:each>
 
-                    <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand" default="Select Brand"></g:message></li>
+                    <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand"
+                                                                        default="Select Brand"></g:message></li>
+                    <g:each in="${brands}" var="brand">
+                        <li><g:link action="browse"
+                                    params="${pageParams + ["brandId": brand?.id]}">${brand?.name}</g:link></li>
+                    </g:each>
+                    <g:each in="${attrs}" var="attr">
+                        <li class="nav-header sidebarAttributeGroup">${attr.key}</li>
+                        <g:each in="${attrs[attr.key]}" var="attrVal">
+
+                            <li><g:link action="browse"
+                                        params="${pageParams + [("ATT"+attr.key): attrVal]}">${attrVal}</g:link></li>
+                        </g:each>
+                    </g:each>
                 </ul>
             </div>
         </div>
+
         <div class="span8">
             <ul class="breadcrumb">
-                <li><a href="#"><g:message code="home" /></a></li>
+                <li><a href="#"><g:message code="home"/></a></li>
             </ul>
+
             <div class="well">
                 <ul class="thumbnails">
+                    <g:each in="${products}" var="product">
+                        <g:if test="${product}">
+                            <g:render template="product_search" model="[product: product]"/>
+                        </g:if>
+                    </g:each>
                 </ul>
+                <g:if test="${totalPages > 1}">
+                    <div class="pagination pagination-centered">
+                        <ul>
+                            <g:each in="${(0..<totalPages + 1)}">
+                                <li ${page==it?'class="active"':''}><g:link action="browse"
+                                            params="${pageParams + [page: it]}">${it + 1}</g:link></li>
+                            </g:each>
+                        </ul>
+                    </div>
+                </g:if>
             </div>
         </div>
+
         <div class="span2">
             <div class="well">
             </div>

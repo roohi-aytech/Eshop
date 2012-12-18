@@ -2,6 +2,7 @@ package eshop
 
 import grails.converters.JSON
 import groovy.sql.Sql
+import eshop.mongo.MongoProduct
 
 class SiteController {
     def browseService
@@ -18,20 +19,25 @@ class SiteController {
     }
 
     def browse() {
-        def x = browseService.brands(params)
+        def x = browseService.search(params)
 
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
 
-        def pageParams = [:]
-        //def products = browseService.findProducts(params)
-        //def filters = browseService.findFilters(params)
-        def subProductTypes = []
-        if (params.productTypeId) {
-            subProductTypes = ProductType.findByParentProduct(ProductType.findById(params.productTypeId))
-            pageParams["productTypeId"] = params.productTypeId
-        }
+        params.remove("page")
+        def pageParams = params
 
-        [rootProductTypes: rootProductTypes, subProductTypes: subProductTypes, pageParams: pageParams]
+        def subProductTypes = x.productTypes.collect {ProductType.get(it)}
+        def brands = x.brands.collect {Brand.get(it)}
+        def products = x.productIds.collect {Product.get(it)}
+        def totalPages = x.totalPages
+        def attrs = x.attrs
+        def attrgroups = x.attrGroups
+        def page = (params.page as Integer) ?: 0
+        [rootProductTypes: rootProductTypes, subProductTypes: subProductTypes,
+                brands: brands, products: products,
+                attrs: attrs, attrGroups: attrgroups,
+                totalPages: totalPages, page: page,
+                pageParams: pageParams]
     }
 
     def index2() {
