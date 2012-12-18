@@ -20,6 +20,7 @@
                 maxColumns="5"
                 tree="parentProduct"
                 showFirstColumn="false"
+                gridComplete="productTypeGridComplete"
                 onSelectRow="loadProducts">
         </rg:grid>
     </div>
@@ -52,9 +53,11 @@
                  columns="[[name: 'name'], [name: 'brand'], [name: 'productTypes'], [name: 'manufactureCountry']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
                  commands="${[[controller: "product", action: "productDetails", param: "id=#id#", icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
-        %{--<rg:criteria>--}%
-        %{--<rg:eq name="productType.id" value="${eshop.ProductType.findByParentProductIsNull()?.id}"/>--}%
-        %{--</rg:criteria>--}%
+            <g:if test="${ptid}">
+                <rg:criteria>
+                    <rg:inCrit name="productTypeIds" value="${ptid as Long}"/>
+                </rg:criteria>
+            </g:if>
         </rg:grid>
     </div>
 </div>
@@ -150,6 +153,34 @@
 %{--$("#ProductGrid").trigger("reloadGrid")--}%
 %{--},addTree);--}%
     }
+    <g:set var="pt" value="${eshop.ProductType.get(ptid)}"/>
+    <g:set var="curptidx" value="${0}"/>
+    function expandProductTypeNode(id){
+        var g = $("#ProductTypeGrid")[0]
+        var d = g.p.data[g.p._index[id]]
+        $("#ProductTypeGrid").expandNode(d)
+    }
+    function productTypeLoadComplete(){
+    <g:while test="${pt}">
+        if(curProductTypeGridNodeReload==${curptidx}){
+        <g:if test="${curptidx == 0}">
+            $("#${pt.id}").click()
+        </g:if>
+        <g:else>
+            expandProductTypeNode(${pt.id})
+        </g:else>
+        }
+        <g:set var="pt" value="${pt.parentProduct}"/>
+        <g:set var="curptidx" value="${curptidx + 1}"/>
+    </g:while>
+    curProductTypeGridNodeReload--;
+    if(curProductTypeGridNodeReload>-1)
+        setTimeout(productTypeLoadComplete,2000)
+   }
+   function productTypeGridComplete(){
+        setTimeout(productTypeLoadComplete,2000)
+   }
+   var curProductTypeGridNodeReload=${curptidx - 1}
 </g:javascript>
 </body>
 </html>
