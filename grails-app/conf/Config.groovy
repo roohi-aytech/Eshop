@@ -64,6 +64,17 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
+
+        //grails.resources.debug = true
+        grails.resources.processing.enabled = false
+        grails.resources.adhoc.excludes = ['**/*.*']
+
+        // cached-resources
+        grails.resources.mappers.hashandcache.excludes = ['**/*.*']
+        // resource bundling
+        grails.resources.mappers.bundle.excludes = ['**/*.*']
+        // zipped-resources
+        grails.resources.mappers.zip.excludes = ['**/*.*']
     }
     production {
         grails.logging.jul.usebridge = false
