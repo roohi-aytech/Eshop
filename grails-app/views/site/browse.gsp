@@ -9,6 +9,9 @@
     <meta name="author" content="">
 
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet"
+          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
@@ -16,9 +19,6 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
     }
     </style>
-    <link rel="stylesheet"
-          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -120,9 +120,11 @@
                 <li><a href="#"><g:message code="home"/></a></li>
             </ul>
 
-            <div class="well">
+            %{--<div class="well">--}%
+            <div>
                 <ul class="thumbnails">
-                    <g:each in="${products}" var="product">
+                    %{--<div class="span" style="display: none;"></div>--}%
+                    <g:each in="${products}" status="i" var="product">
                         <g:if test="${product}">
                             <g:render template="product_search" model="[product: product]"/>
                         </g:if>
@@ -150,5 +152,12 @@
 
 <g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
+<script type="text/javascript">
+    (function($){
+        $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right','0px');
+        $('.row-fluid ul.thumbnails li.span4:nth-child(3n + 4)').css('margin-right','0px');
+        $('.row-fluid ul.thumbnails li.span3:nth-child(4n + 5)').css('margin-right','0px');
+    })(jQuery);
+</script>
 </body>
 </html>
