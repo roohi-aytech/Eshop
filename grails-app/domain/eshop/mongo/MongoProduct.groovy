@@ -8,6 +8,12 @@ class MongoProduct {
 
     static mapWith = "mongo"
 
+    transient def getBrandName(){
+        this['brand']['name']
+    }
+    transient def getProductTypesName(){
+        this['productTypes']?.collect{it?.name}
+    }
     static constraints = {
     }
 }
