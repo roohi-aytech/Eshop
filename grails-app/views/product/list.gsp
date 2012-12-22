@@ -52,7 +52,7 @@
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'name'],[name: 'type'], [name: 'brand'], [name: 'productTypes'], [name: 'manufactureCountry']]"
+                 columns="[[name: 'name'],[name: 'type'], [name: 'brand.name'], [name: 'productTypes.name'], [name: 'manufactureCountry']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
                  commands="${[[handler:'editProduct(#id#)', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">
