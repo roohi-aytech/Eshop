@@ -19,16 +19,95 @@ class SiteController {
     }
 
     def browse() {
-        def x = browseService.search(params)
+        String first = params.first
+        String second = params.second
 
+        def productType = null
+        def brand = null
+
+        def startByProductType = false
+        def startByBrand = false
+        def onlyProductType = true
+        def onlyBrand = true
+
+        if (first) {
+            productType = ProductType.findByName(first)
+            if (productType) {
+                startByProductType = true
+            } else {
+                brand = Brand.findByName(first)
+                if (brand)
+                    startByBrand = true
+            }
+
+            if (second) {
+                if (productType) {
+                    brand = Brand.findByName(second)
+                    if (brand)
+                        onlyProductType = false
+                    else
+                        onlyProductType = true
+                }
+                else if (brand) {
+                    productType = ProductType.findByName(second)
+                    if (productType)
+                        onlyBrand = false
+                    else
+                        onlyBrand = true
+                }
+            }
+        }
+        def endByBrand = (startByProductType && !onlyProductType) || onlyBrand
+        def endByProductType = (startByBrand && !onlyBrand) || onlyProductType
+
+        def commonLink = createLink(action: "browse")
+
+        def productTypeChain = []
+        def productTypeNavigator = productType
+        while (productTypeNavigator) {
+            productTypeChain << productTypeNavigator
+            productTypeNavigator = productTypeNavigator.parentProduct
+        }
+        productTypeChain = productTypeChain.reverse()
+
+        def breadCrumb = []
+
+        if (startByProductType) {
+            productTypeChain.each {
+                breadCrumb << [name: it.name, href: "${commonLink}/${it.name}/"]
+            }
+            if (!onlyProductType)
+                breadCrumb << [name: brand.name, href: "${commonLink}/${productType.name}/${brand.name}/"]
+        }
+        else if (startByBrand) {
+            breadCrumb << [name: brand.name, href: "${commonLink}/${brand.name}/"]
+            productTypeChain.each {
+                breadCrumb << [name: it.name, href: "${commonLink}/${brand.name}/${it.name}/"]
+            }
+        }
+
+        def subProductTypeLinks = []
+        if (endByProductType) {
+            def base = "${commonLink}/"
+            if (startByBrand)
+                base += "${brand.name}/"
+            productType.children.each {
+                subProductTypeLinks << [name: it.name, href: base + it.name]
+            }
+        }
+        [productType: productType, brand: brand, breadCrumb: breadCrumb, subProductTypeLinks: subProductTypeLinks]
+    }
+
+    def filter() {
+        def x = browseService.search(params)
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         params.remove("page")
         def pageParams = params
 
-        def subProductTypes = x.productTypes.collect {ProductType.get(it)}
-        def brands = x.brands.collect {Brand.get(it)}
-        def products = x.productIds.collect {Product.get(it)}
+        def subProductTypes = x.productTypes.collect { ProductType.get(it) }
+        def brands = x.brands.collect { Brand.get(it) }
+        def products = x.productIds.collect { Product.get(it) }
         def totalPages = x.totalPages
         def attrs = x.attrs
         def attrgroups = x.attrGroups
