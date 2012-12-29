@@ -1,3 +1,5 @@
+import org.codehaus.groovy.grails.web.context.ServletContextHolder
+
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -119,7 +121,8 @@ ckeditor {
     skipAllowedItemsCheck = false
     defaultFileBrowser = "ofm"
     upload {
-        basedir = "/uploads/"
+        basedir = "${System.getProperty("base.dir")}/uploads/"
+        baseurl = "/image/get?path="
         overwrite = false
         link {
             browser = true
