@@ -37,6 +37,10 @@ class ProductTypeController {
         redirect(action: "show", id: productTypeInstance.id)
     }
 
+    def getProductType() {
+        render ProductType.get(params.id) as JSON
+    }
+
     def show(Long id) {
         def productTypeInstance = ProductType.get(id)
         if (!productTypeInstance) {
@@ -224,13 +228,13 @@ class ProductTypeController {
             }
             else
                 productType = new ProductType(params)
-            def image=productType.image
-            productType.image=null
+            def image = productType.image
+            productType.image = null
 
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
             productType = productType.save()
-            if(image){
-                productType.image=imageService.saveAndScaleImages(image,"image","pt${productType.id}")
+            if (image) {
+                productType.image = imageService.saveAndScaleImages(image, "image", "pt${productType.id}")
                 productType.save()
             }
             render 0;
@@ -239,6 +243,7 @@ class ProductTypeController {
             render 1;
         }
     }
+
     def getImage() {
         def productType = ProductType.get(params.id)
         if (productType && productType.image) {

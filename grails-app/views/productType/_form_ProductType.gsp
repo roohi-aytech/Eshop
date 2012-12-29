@@ -9,6 +9,21 @@
     </label>
     <g:textField name="name" value="${productTypeInstance?.name}" class="count-words" size="52"/>
 </div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'seoFriendlyName', 'error')} ">
+    <label for="pageTitle">
+        <g:message code="product.seoFriendlyName.label" default="seoFriendlyName" />
+
+    </label>
+    <g:textField name="seoFriendlyName" value="${productTypeInstance?.seoFriendlyName}" class="count-words" size="52"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'seoFriendlyAlternativeName', 'error')} ">
+    <label for="pageTitle">
+        <g:message code="product.seoFriendlyAlternativeName.label" default="seoFriendlyAlternativeName" />
+
+    </label>
+    <g:textField name="seoFriendlyAlternativeName" value="${productTypeInstance?.seoFriendlyAlternativeName}" class="count-words" size="52"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'pageTitle', 'error')} ">
     <label for="pageTitle">
         <g:message code="product.pageTitle.label" default="Page Title" />

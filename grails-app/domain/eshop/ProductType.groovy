@@ -5,6 +5,9 @@ class ProductType extends BaseProduct {
     String description
     String keywords
     String pageTitle
+    String seoFriendlyName
+    String seoFriendlyAlternativeName
+
     ProductType parentProduct
     ProductType rootProductType
     Long assetcategoryId
@@ -31,6 +34,8 @@ class ProductType extends BaseProduct {
         rootProductType(nullable: false)
         attributeTypes()
         assetcategoryId(nullable: true)
+        seoFriendlyAlternativeName(nullable: true)
+        seoFriendlyName(nullable: true)
         image(nullable: true, maxSize: 1000000000)
 
     }
