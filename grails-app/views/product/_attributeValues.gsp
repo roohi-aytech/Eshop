@@ -8,6 +8,8 @@
 
     <g:form method="post" action="saveAttributeValues" params="${[curtab: 1, ptid: ptid]}">
         <g:hiddenField name="id" value="${productInstance?.id}"/>
+        <g:render template="product_type_type"
+                  model="[productInstance: productInstance, productTypeTypes: productTypeTypes]"/>
         <eshop:renderProductAttributes product="${productInstance}"/>
 
         <fieldset class="buttons">

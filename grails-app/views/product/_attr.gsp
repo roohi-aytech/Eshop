@@ -1,5 +1,8 @@
 <div class='fieldcontain'>
     <label for='at_${attributeType.id}'>${attributeType.name}</label>
+    <span>
+        <g:checkBox name="notAvailable_${attributeType.id}" checked="${attributeValue=='N/A'}"/>N/A
+    </span>
     <g:if test="${attributeType.values}">
         <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.optionValues}" optionKey="key" optionValue="val" noSelection="['':'']" value="${attributeValue}"/>
         <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">

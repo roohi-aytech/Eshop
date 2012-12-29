@@ -37,11 +37,11 @@ class AttributeType {
     transient def getOptionValues() {
         def vals = values?.sort()?.collect { val ->
             return [
-                    key: val.replace("\n", "\\n"),
+                    key: val?.replace("\n", "\\n").replace("\r",""),
                     val: val
             ]
         }
-        vals << [key: 'N/A', val: 'N/A']
+//        vals << [key: 'N/A', val: 'N/A']
         vals
     }
 

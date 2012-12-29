@@ -1,7 +1,7 @@
 package eshop
 class Product extends BaseProduct implements Comparable{
     String name
-    String type
+    ProductTypeType type
     String description
     String details
     String manufactureDate

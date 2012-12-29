@@ -10,7 +10,9 @@ class ProductType extends BaseProduct {
     Long assetcategoryId
     byte[] image
 
-    static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType]
+    static searchable = true
+
+    static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType]
 
     static mapping = {
         sort 'name'
@@ -29,7 +31,7 @@ class ProductType extends BaseProduct {
         rootProductType(nullable: false)
         attributeTypes()
         assetcategoryId(nullable: true)
-        image(nullable: true,maxSize: 1000000000)
+        image(nullable: true, maxSize: 1000000000)
 
     }
 

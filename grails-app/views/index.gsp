@@ -36,6 +36,11 @@
                             code="brand.label"
                             default="Brand"/></span></g:link></li>
                 <li>
+                    <g:link controller="pageDetails" action="list"><img
+                            src="images/pageDetails.png"/><span><g:message
+                            code="pageDetails.label"
+                            default="Page Details"/></span></g:link></li>
+                <li>
                     <g:link controller="currency" action="list"><img
                             src="images/currency.png"/><span><g:message
                             code="currency.label"

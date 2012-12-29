@@ -36,16 +36,48 @@ class ProductController {
         else
             productInstance = new Product()
         def productTypeIds = [];
+        def productTypeTypes = []
         productInstance.productTypes.each {
             productTypeIds << it.id
+            productTypeTypes.addAll(it.types)
         }
-        render(template: "form", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(",")])
+
+
+        render(template: "form", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(","), productTypeTypes: productTypeTypes])
+    }
+
+    def typeForm() {
+        def productTypeType
+        if (params.id)
+            productTypeType = ProductTypeType.get(params.id)
+        else
+            productTypeType = new ProductTypeType()
+        render(template: "typeValue", model: [productTypeType: productTypeType])
+    }
+
+    def saveType() {
+        def productTypeType
+        if (params.id) {
+            productTypeType = ProductTypeType.get(params.id)
+            productTypeType.properties = params
+        }
+        else
+            productTypeType = new ProductTypeType(params)
+        productTypeType = productTypeType.save()
+        if (params.productInstanceId) {
+            def productInstance = Product.get(params.productInstanceId)
+            productInstance.productTypes.each {
+                it.addToTypes(productTypeType)
+                it.save()
+            }
+        }
+        render productTypeType as JSON
     }
 
     def attrValueForm() {
         def attr = AttributeType.get(params.attributeTypeId)
         def vals = attr?.values?.sort()?.toArray()
-        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.valueIndex?vals[Integer.parseInt(params.valueIndex)]:'', attributeType: attr?.attributeType])
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.valueIndex ? vals[Integer.parseInt(params.valueIndex)] : '', attributeType: attr?.attributeType])
     }
 
     def addAttributeValue() {
@@ -116,6 +148,7 @@ class ProductController {
     def productDetails() {
         def productInstance
         def productTypeIds = []
+        def productTypeTypes = []
 
         if (params.id) {
             def mongoProduct = MongoProduct.get(params.id)
@@ -128,13 +161,14 @@ class ProductController {
         if (productInstance) {
             productInstance.productTypes.each {
                 productTypeIds << it.id
+                productTypeTypes.addAll(it.types)
             }
         }
         else {
             productInstance = new Product()
         }
 
-        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid]
+        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid, productTypeTypes: productTypeTypes]
     }
 
     def saveProductDescription() {
@@ -162,13 +196,20 @@ class ProductController {
     private void saveAttributeValuesInternal(params) {
         def productInstance = Product.findById(params.id)
         def attributeTypes = productInstance?.productTypes.collect {attributeTypes(it)}.flatten()
-
+        if (params.type?.id) {
+            def type = ProductTypeType.get(params.type.id)
+            productInstance.type = type
+            productInstance.save()
+        }
         Attribute.withTransaction {
             attributeTypes.each { AttributeType attributeType ->
                 def attribute = productInstance.attributes.find { it.attributeType.id == attributeType.id }
                 if (!attribute)
                     attribute = new Attribute(attributeType: attributeType, product: productInstance)
-                attribute.attributeValue = params."at_${attributeType.id}"
+                if (params."notAvailable_${attributeType.id}")
+                    attribute.attributeValue = 'N/A'
+                else
+                    attribute.attributeValue = params."at_${attributeType.id}"
                 attribute.save()
             }
         }
