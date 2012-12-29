@@ -80,7 +80,7 @@ class EshopTagLib {
         def attributeValue = attribute?.attributeValue
         if (!attributeValue && attributeType.defaultValue)
             attributeValue = attributeType.defaultValue
-        attributeValue=attributeValue?.replace("\r","").replace("\n","\\n")
+        attributeValue=attributeValue?.replace("\r","")?.replace("\n","\\n")
         out << render(template: "attr", model: [attributeType: attributeType, product: product, attribute: attribute, attributeValue: attributeValue]);
     }
 }
