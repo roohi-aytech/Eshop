@@ -28,7 +28,7 @@
         var curSelectedProductType=${ptid?:0}
         var loadProducts = function (rowId) {
             curSelectedProductType = rowId
-            var criteria = "[{'op':'in', 'field':'productTypeIds', 'val':" + rowId + "}]"
+            var criteria = "[{'op':'in', 'field':'productTypes.id', 'val':" + rowId + "}]"
             loadGridWithCriteria("MongoProductGrid", criteria)
         }
     </g:javascript>
@@ -57,7 +57,7 @@
                  commands="${[[handler:'editProduct(#id#)', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">
                 <rg:criteria>
-                    <rg:inCrit name="productTypeIds" value="${ptid as Long}"/>
+                    <rg:inCrit name="productTypes.id" value="${ptid as Long}"/>
                 </rg:criteria>
             </g:if>
         </rg:grid>
