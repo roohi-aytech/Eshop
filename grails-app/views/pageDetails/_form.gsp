@@ -36,7 +36,7 @@
         <g:message code="pageDetails.title.label" default="Title"/>
 
     </label>
-    <g:textField name="title" value="${pageDetailsInstance?.title}" class="count-words"/>
+    <g:textField name="title" value="${pageDetailsInstance?.title}" class="count-words" size="52"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: pageDetailsInstance, field: 'keywords', 'error')} ">
@@ -44,7 +44,7 @@
         <g:message code="pageDetails.keywords.label" default="Keywords"/>
 
     </label>
-    <g:textArea cols="20" rows="4" name="keywords" value="${pageDetailsInstance?.keywords}" class="count-words"/>
+    <g:textArea cols="50" rows="4" name="keywords" value="${pageDetailsInstance?.keywords}" class="count-words"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: pageDetailsInstance, field: 'description', 'error')} ">
@@ -52,7 +52,7 @@
         <g:message code="pageDetails.description.label" default="Description"/>
 
     </label>
-    <g:textArea cols="20" rows="4" name="description" value="${pageDetailsInstance?.description}" class="count-words"/>
+    <g:textArea cols="50" rows="4" name="description" value="${pageDetailsInstance?.description}" class="count-words"/>
 </div>
 
 <script type="text/javascript">

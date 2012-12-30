@@ -14,7 +14,7 @@
     <rg:grid domainClass="${PageDetails}"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToPageDetailsGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deletePageDetails(#id#)", icon: "application_delete"]]}"
+             commands="${[[handler:'addToPageDetailsGrid(#id#)', icon: "application_edit"], [handler: "deletePageDetails(#id#)", icon: "application_delete"]]}"
     />
     <g:javascript>
         function deletePageDetails(id){
@@ -34,9 +34,14 @@
                 });
             }
         }
-        function addToPageDetailsGrid(){
-            loadOverlay('<g:createLink action="form"/>','<g:createLink action="save" />',function(){
+        function addToPageDetailsGrid(id){
+            var url='<g:createLink action="form"/>'
+             if(id)
+                url+="/"+id
+            loadOverlay(url,'<g:createLink action="save" />',function(){
                 $("#PageDetailsGrid").trigger("reloadGrid")
+            },undefined,{
+                width:400
             });
         }
     </g:javascript>
