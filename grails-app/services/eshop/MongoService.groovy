@@ -21,9 +21,9 @@ class MongoService {
 
         product.attributes.find {it.attributeType.showPositions.contains("filter")}.each {
             if (it.attributeValue)
-                mongoProduct[it.attributeType.name] = it.attributeValue
+                mongoProduct[it.attributeType.name] = it.attributeValue?.value
             else if (it.attributeType.defaultValue)
-                mongoProduct[it.attributeType.name] = it.attributeType.defaultValue
+                mongoProduct[it.attributeType.name] = it.attributeType.defaultValue?.value
         }
         mongoProduct.save(flush: true)
     }

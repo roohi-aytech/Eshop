@@ -52,9 +52,9 @@
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'name'],[name: 'type'], [name: 'brandName'], [name: 'productTypesName'], [name: 'manufactureCountry']]"
+                 columns="[[name: 'name'],[name: 'type'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'], [name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.collect{it?.name}']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-                 commands="${[[handler:'editProduct(#id#)', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+                 commands="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">
                 <rg:criteria>
                     <rg:inCrit name="productTypes.id" value="${ptid as Long}"/>
@@ -180,10 +180,10 @@
     </g:while>
     curProductTypeGridNodeReload--;
     if(curProductTypeGridNodeReload>-1)
-        setTimeout(productTypeLoadComplete,2000)
+        setTimeout(productTypeLoadComplete,400)
    }
    function productTypeGridComplete(){
-        setTimeout(productTypeLoadComplete,2000)
+        setTimeout(productTypeLoadComplete,400)
    }
    var curProductTypeGridNodeReload=${curptidx - 1}
 </g:javascript>

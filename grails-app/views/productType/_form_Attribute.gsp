@@ -54,13 +54,14 @@
         <g:message code="attributeType.defaultValue.label" default="Default Value"/>
 
     </label>
-    <g:if test="${attributeTypeInstance?.values}">
-        <g:select name="defaultValue" from="${attributeTypeInstance?.values}"
-                  value="${attributeTypeInstance?.defaultValue}" noSelection="['': '']"/>
-    </g:if>
-    <g:else>
-        <g:textField name="defaultValue" value="${attributeTypeInstance?.defaultValue}"/>
-    </g:else>
+    %{--<g:if test="${attributeTypeInstance?.values}">--}%
+        <g:select name="defaultValue.id" from="${attributeTypeInstance?.values}"
+                    optionKey="id" optionValue="value"
+                  value="${attributeTypeInstance?.defaultValue?.id}" noSelection="['': '']"/>
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+        %{--<g:textField name="defaultValue" value="${attributeTypeInstance?.defaultValue}"/>--}%
+    %{--</g:else>--}%
 </div>
 
 
@@ -74,59 +75,31 @@
     </label>
     <g:each in="${attributeTypeInstance?.values?.sort()}">
         <div>
-            <g:textField name="values" value="${it}" onkeydown="updateDefaultValue()"/>
-            <g:hiddenField name="values_old" value="${it}" />
-            <input type='button' value='${message(code: "remove")}' onclick="removeValues(this)">
+            <g:textField name="values_${it?.id}" value="${it?.value}" onkeydown="updateDefaultValue(${it?.id})"/>
+            <input attrid="${it?.id}" type='button' value='${message(code: "remove")}' onclick="removeValues(this)">
         </div>
     </g:each>
     <input type="button" id="valuesBtn" value="${message(code: "add")}" onclick="addattributeTypeValueTemplate(this)">
 </div>
 <script type="text/javascript">
-    function updateDefaultValue() {
-
-        var val = $("#defaultValue").val()
-        $("#defaultValue").html("<OPTION/>")
-        $("[name=values]").each(function () {
-            $("#defaultValue").append($("<option>" + $(this).val() + "</option>"))
-        })
-        $("#defaultValue").val(val)
+    function updateDefaultValue(id) {
+        $("#defaultValue option[value="+id+"]").html($("[name=values_"+id+"]").val())
     }
     function removeValues(t) {
         $(t).parent().remove()
-        updateDefaultValue()
-        if($("[name=values]").length==0)
-        {
-            var olddv=$("#defaultValue")
-            var dv=$("<input name='defaultValue' id='defaultValue'>")
-            dv.insertAfter(olddv)
-            olddv.remove()
-        }
+        $("option[value="+$(t).attr("attrid")+"]").remove()
+
     }
     function addattributeTypeValueTemplate(obj) {
-        var defaultValue = ''
-        if ($("[name=values]").length == 0)
-            defaultValue = $("#defaultValue").val()
+
         var div = $("<div></div>")
-        var input = $("<input type='text' name='values'>")
-        input.val(defaultValue)
+        var input = $("<input type='text' name='values_'>")
         var del = $("<input type='button' value='${message(code: "remove")}'>")
         del.click(function () {
             removeValues(this)
         })
         div.append(input)
-        div.append($('<input type="hidden" name="values_old">'))
         div.append(del)
         div.insertBefore($(obj))
-
-        if ($("#defaultValue").is("input")) {
-            var sel = $("<select name='defaultValue' id='defaultValue'></select>")
-            sel.insertAfter($("#defaultValue"))
-            $("#defaultValue").remove()
-        }
-        else
-            defaultValue = $("#defaultValue").val()
-        input.keyup(updateDefaultValue())
-        updateDefaultValue()
-        $("#defaultValue").val(defaultValue)
     }
 </script>

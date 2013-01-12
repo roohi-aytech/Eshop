@@ -310,16 +310,41 @@ class ProductTypeController {
         }
         else
             attributeType = new AttributeType(params);
-        if (params.values_old && attributeType.id) {
-            params.values_old.eachWithIndex {oldVal, idx ->
-                def attributes = Attribute.findAllByAttributeTypeAndAttributeValue(attributeType, oldVal)
-                attributes.each {
-                    it.attributeValue = params.values[idx]
-                    it.save()
-                }
+//        if (params.values_old && attributeType.id) {
+//            params.values_old.eachWithIndex {oldVal, idx ->
+//                def attributes = Attribute.findAllByAttributeTypeAndAttributeValue(attributeType, oldVal)
+//                attributes.each {
+//                    it.attributeValue = params.values[idx]
+//                    it.save()
+//                }
+//            }
+//        }
+        def mustRemove = []
+        attributeType.values?.each {
+            if (params["values_${it.id}"]) {
+                it.value = params["values_${it.id}"]
+                it.save()
+            }
+            else {
+                mustRemove << it
             }
         }
-
+        mustRemove.each {
+            attributeType.removeFromValues(it)
+            Attribute.findAllByValue(it).each {
+                it.value=null
+                it.save()
+            }
+            it.delete()
+        }
+        if (params.values_ instanceof String) {
+            attributeType.addToValues(new AttributeValue(value: params.values_).save())
+        }
+        else {
+            params.values_.each {
+                attributeType.addToValues(new AttributeValue(value: it).save())
+            }
+        }
         attributeType.save()
         render "0"
     }

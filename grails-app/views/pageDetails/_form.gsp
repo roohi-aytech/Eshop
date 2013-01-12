@@ -12,7 +12,9 @@
 <g:hiddenField name="id" value="${pageDetailsInstance?.id}"/>
 <g:hiddenField name="version" value="${pageDetailsInstance?.version}"/>
 
-
+<span>
+    <g:message code="wildcard-for-page-details"/>
+</span>
 <div class="fieldcontain ${hasErrors(bean: pageDetailsInstance, field: 'productType', 'error')} ">
     <label for="productType">
         <g:message code="pageDetails.productType.label" default="Product Type"/>
