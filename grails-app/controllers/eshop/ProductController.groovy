@@ -269,7 +269,7 @@ class ProductController {
                 request.getFileNames().each {
                     def file = request.getFile(it)
                     def bytes = file.bytes
-                    bytes = imageService.saveAndScaleImages(bytes, file.originalFilename, params.id)
+                    bytes = imageService.saveAndScaleImages(bytes, file.originalFilename, imageService.imagePath(Product.get(params.id)))
                     def content = new Content(contentType: "image", name: file.originalFilename, fileContent: bytes)
                     content.save()
                     images << content
@@ -280,9 +280,7 @@ class ProductController {
                             delete_type: "GET"]
                 }
 
-//                synchronized (this.getClass()) {
                 productService.addImageToProduct(params.id, images)
-
                 render result as JSON
                 break;
             default: render status: HttpStatus.METHOD_NOT_ALLOWED.value()
@@ -470,5 +468,16 @@ class ProductController {
             }
         }
         render "Synch OK"
+    }
+
+    def findDuplicates(){
+        Product.findAll().each { mp->
+            def ps=Product.findAllByNameLikeAndNameNotEqual("%${mp.name}%",mp.name)
+            ps.each {
+                render " ${it} -------> ${mp} ____________________  ${it.id} -------> ${mp.id}"
+                render "<br>"
+            }
+        }
+        render "OK"
     }
 }

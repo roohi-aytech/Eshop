@@ -52,7 +52,7 @@
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'name'],[name: 'type'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'], [name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.collect{it?.name}']]"
+                 columns="[[name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.find{true}?.name'],[name: 'type',expression:'obj[\\\'type\\\'][\\\'name\\\']'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'],[name: 'name']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
                  commands="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">

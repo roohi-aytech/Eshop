@@ -40,7 +40,8 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
+        runtime "net.sf.jasperreports:jasperreports:3.7.6"
+        compile "net.sf.jasperreports:jasperreports:3.7.6"
         // runtime 'mysql:mysql-connector-java:5.1.20'
         runtime "org.mongodb:mongo-java-driver:2.9.1"
         compile "org.mongodb:mongo-java-driver:2.9.1"

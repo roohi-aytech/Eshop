@@ -27,6 +27,14 @@ class ImageService {
 
     }
 
+    def imagePath(BaseProduct baseProduct) {
+        if (baseProduct instanceof Product)
+            return imagePath(baseProduct.productTypes?.find {true}) + "/" + baseProduct
+        else if (baseProduct instanceof ProductType)
+            return imagePath(baseProduct.parentProduct) + "/" + baseProduct
+        return baseProduct ?: ""
+    }
+
     def saveAndScaleImages(byte[] content, String name, String parent) {
 
         fileService.saveFile(content, name, "images", parent)
@@ -47,7 +55,7 @@ class ImageService {
                     thumbnail.getHeight(null), sourceImage.type);
             bufferedThumbnail.getGraphics().drawImage(thumbnail, 0, 0, null);
             bufferedThumbnail.getGraphics().dispose()
-            def tfname = name + "-" + fname
+            def tfname = fname + "-" + name
             def baos = new ByteArrayOutputStream()
             ImageIO.write(bufferedThumbnail, 'png', baos)
             thumb = baos.toByteArray()

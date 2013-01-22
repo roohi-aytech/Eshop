@@ -234,7 +234,7 @@ class ProductTypeController {
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
             productType = productType.save()
             if (image) {
-                productType.image = imageService.saveAndScaleImages(image, "image", "pt${productType.id}")
+                productType.image = imageService.saveAndScaleImages(image, "image", imageService.imagePath(productType))
                 productType.save()
             }
             render 0;

@@ -9,7 +9,7 @@
     </div>
     <div dir="ltr" id="upload">
         <g:if test="${productInstance.id}">
-            <bsfu:fileUpload action="uploadImage" controller="Product" params="${[id: productInstance.id]}"/>
+            <bsfu:fileUpload sequentialUploads="true" action="uploadImage" controller="Product" params="${[id: productInstance.id]}"/>
         </g:if>
     </div>
 </div>

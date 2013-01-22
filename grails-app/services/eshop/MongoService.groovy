@@ -15,6 +15,7 @@ class MongoService {
                 mongoProduct[it.key] = it.value
         }
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
+        mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
         def productTypes = collectProductTypes(product)
         mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
         //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
