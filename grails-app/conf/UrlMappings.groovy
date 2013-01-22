@@ -1,7 +1,7 @@
 class UrlMappings {
 
 	static mappings = {
-		"/site/browse/$first?/$second?/" {
+		"/site/browse/$productType/" {
             controller = "site"
             action = "browse"
         }

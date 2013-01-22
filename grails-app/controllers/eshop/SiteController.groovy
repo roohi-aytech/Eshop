@@ -19,48 +19,16 @@ class SiteController {
     }
 
     def browse() {
-        String first = params.first
-        String second = params.second
-
-        def productType = null
-        def brand = null
-
-        def startByProductType = false
-        def startByBrand = false
-        def onlyProductType = true
-        def onlyBrand = true
-
-        if (first) {
-            productType = ProductType.findByName(first)
-            if (productType) {
-                startByProductType = true
-            } else {
-                brand = Brand.findByName(first)
-                if (brand)
-                    startByBrand = true
-            }
-
-            if (second) {
-                if (productType) {
-                    brand = Brand.findByName(second)
-                    if (brand)
-                        onlyProductType = false
-                    else
-                        onlyProductType = true
-                }
-                else if (brand) {
-                    productType = ProductType.findByName(second)
-                    if (productType)
-                        onlyBrand = false
-                    else
-                        onlyBrand = true
-                }
-            }
+        def productType = params.productType ? ProductType.findByName(params.productType) : null
+        if (!productType)
+        {
+            flash.message = message(code: "productType.not.found")
+            redirect(action: "index")
         }
-        def endByBrand = (startByProductType && !onlyProductType) || onlyBrand
-        def endByProductType = (startByBrand && !onlyBrand) || onlyProductType
 
-        def commonLink = createLink(action: "browse")
+        def model = [productType: productType]
+
+        model.commonLink = createLink(action: "browse")
 
         def productTypeChain = []
         def productTypeNavigator = productType
@@ -70,35 +38,38 @@ class SiteController {
         }
         productTypeChain = productTypeChain.reverse()
 
-        def breadCrumb = []
+        model.breadCrumb = []
 
-        if (startByProductType) {
-            productTypeChain.each {
-                breadCrumb << [name: it.name, href: "${commonLink}/${it.name}/"]
-            }
-            if (!onlyProductType)
-                breadCrumb << [name: brand.name, href: "${commonLink}/${productType.name}/${brand.name}/"]
-        }
-        else if (startByBrand) {
-            breadCrumb << [name: brand.name, href: "${commonLink}/${brand.name}/"]
-            productTypeChain.each {
-                breadCrumb << [name: it.name, href: "${commonLink}/${brand.name}/${it.name}/"]
-            }
+        productTypeChain.each {
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
         }
 
-        def subProductTypeLinks = []
-        if (endByProductType) {
-            def base = "${commonLink}/"
-            if (startByBrand)
-                base += "${brand.name}/"
-            productType.children.each {
-                subProductTypeLinks << [name: it.name, href: base + it.name]
-            }
+        model.subProductTypeLinks = []
+        def base = "${model.commonLink}/"
+
+        productType.children.each {
+            model.subProductTypeLinks << [name: it.name, href: base + it.name]
         }
-        [productType: productType, brand: brand, breadCrumb: breadCrumb, subProductTypeLinks: subProductTypeLinks]
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+        model.filters = browseService.findProductTypeFilters(model.productType, params.page?:0)
+
+        model.pageContext = [:]
+        model.pageContext["productTypes.id"] = [productType.id]
+
+        model
     }
 
     def filter() {
+        def model = [:]
+        model.filters = browseService.findFilteredPageFilters(params.f, params.page?:0)
+        model.commonLink = createLink(controller: "site").replace("/index", "")
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+        model
+    }
+
+    def filter1() {
         def x = browseService.search(params)
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
 

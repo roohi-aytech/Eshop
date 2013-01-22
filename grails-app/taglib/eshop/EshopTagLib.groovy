@@ -1,5 +1,7 @@
 package eshop
 
+import rapidgrails.TaglibHelper
+
 class EshopTagLib {
     static namespace = "eshop"
 
@@ -81,5 +83,69 @@ class EshopTagLib {
         if (!attributeValue && attributeType.defaultValue)
             attributeValue = attributeType.defaultValue
         out << render(template: "attr", model: [attributeType: attributeType, product: product, attribute: attribute, attributeValue: attributeValue]);
+    }
+
+    def filterStart = {attrs, body ->
+        def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
+        def link = g.createLink(controller: "site", action: "filter", params: [f : f])
+        out << "<a href='${link}'>${attrs.value}</a>"
+    }
+
+    def filterStartBrand = {attrs, body ->
+        def f = "p${attrs.productType.id},b${attrs.brandId}"
+        def link = g.createLink(controller: "site", action: "filter", params: [f : f])
+        out << "<a href='${link}'>${attrs.brandName}</a>"
+    }
+
+    def filterAddProductType = {attrs, body ->
+        def f = "${attrs.f},p${attrs.id}"
+        def link = g.createLink(controller: "site", action: "filter", params: [f : f])
+        out << "<a href='${link}'>${attrs.name}</a>"
+    }
+
+    def filterAddBrand = {attrs, body ->
+        def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
+        def f
+        if (remove)
+            f = attrs.f.replace(",b${attrs.id}", "")
+        else
+            f = "${attrs.f},b${attrs.id}"
+        def link = g.createLink(controller: "site", action: "filter", params: [f : f])
+        out << "<a href='${link}'>${attrs.name}</a>"
+    }
+
+    def filterAddAttribute = {attrs, body ->
+        def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
+        def f
+        if (remove) {
+            f = attrs.f.replace(",${attrs.id}|${attrs.value},", ",")
+            f = f.replaceFirst(/,/ + attrs.id + /\|/ + attrs.value + /$/, "")
+        } else
+            f = "${attrs.f},${attrs.id}|${attrs.value}"
+        def link = g.createLink(controller: "site", action: "filter", params: [f : f])
+        out << "<a href='${link}'>${attrs.value}</a>"
+    }
+
+    def filter = { attrs, body ->
+        def pageContext = [:] + attrs.pageContext
+        def add = attrs.add
+        add.each { key, value ->
+            if (pageContext.containsKey(key)) {
+                pageContext[key] << value
+                pageContext[key].flatten()
+            } else {
+                pageContext[key] = [value].flatten()
+            }
+        }
+        def queryParams = []
+        pageContext.each { key, value ->
+            queryParams << "${key}=${value.join("|")}"
+        }
+        def queryString = queryParams.join(",")
+
+        def link = g.createLink(controller: "site", action: "filter", params: [ct: queryString])
+        out << "<a href='${link}'>"
+        out << body()
+        out << "</a>"
     }
 }

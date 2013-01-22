@@ -13,6 +13,10 @@ class ImageController {
                 img = product.mainImage
             else
                 img = product.images.find()
+            if (!img) {
+                img = new Content(name: "no-image.png", contentType: "", fileContent: new File("no-image.png").bytes)
+                params.wh = ""
+            }
 
             if (img) {
                 def content

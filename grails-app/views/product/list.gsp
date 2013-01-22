@@ -57,6 +57,7 @@
                  commands="${[[handler:'editProduct(#id#)', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">
                 <rg:criteria>
+                    <rg:alias name="productTypes" value="productTypes"/>
                     <rg:inCrit name="productTypeIds" value="${ptid as Long}"/>
                 </rg:criteria>
             </g:if>
