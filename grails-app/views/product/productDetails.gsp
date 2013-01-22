@@ -4,7 +4,7 @@
 <head>
     <r:require modules="bootstrap-file-upload"/>
     <meta name="layout" content="main">
-    <title><g:message code="product.attributeValues.label" default="Product Details" /></title>
+    <title>${productInstance}</title>
 
 </head>
 <body>

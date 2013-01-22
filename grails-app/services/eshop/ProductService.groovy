@@ -31,4 +31,31 @@ class ProductService {
             return false
         }
     }
+    @Transactional()
+    synchronized void addVideoToProduct(productId, Set<Content> images) {
+        synchronized (this) {
+            def product = Product.lock(productId)
+            product.videos.addAll(images)
+            product.merge(flush: true)
+        }
+    }
+
+    @Transactional()
+    synchronized boolean deleteProductVideo(productId, imagename) {
+        synchronized (this) {
+            def product = Product.lock(productId)
+            def image
+            product.videos.each {
+                if (it.name == imagename) {
+                    image = it
+                }
+            }
+            if (image) {
+                product.removeFromVideos(image)
+                product.merge(flush: true)
+                return true
+            }
+            return false
+        }
+    }
 }

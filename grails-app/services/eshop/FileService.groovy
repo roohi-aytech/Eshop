@@ -13,6 +13,15 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
  */
 class FileService {
     def grailsApplication
+
+    def filePath(BaseProduct baseProduct) {
+        if (baseProduct instanceof Product)
+            return filePath(baseProduct.productTypes?.find {true}) + "/" + baseProduct
+        else if (baseProduct instanceof ProductType)
+            return filePath(baseProduct.parentProduct) + "/" + baseProduct
+        return baseProduct ?: ""
+    }
+
     def getFileContent(String path) {
         def p = "${grailsApplication.config.ckeditor.upload.basedir}${path}"
         def file = new File(p)
@@ -38,7 +47,7 @@ class FileService {
     }
 
     def saveFile(byte[] content, String name, String type, String parent) {
-        def basePath = "${grailsApplication.config.ckeditor.upload.basedir}Image" + "/" + parent + "/" + type
+        def basePath = "${grailsApplication.config.ckeditor.upload.basedir}"+type + "/" + parent
         def base = new File(basePath)
         if (!base.exists() && !base.mkdirs()) {
             return false

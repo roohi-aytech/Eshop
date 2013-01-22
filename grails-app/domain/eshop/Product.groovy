@@ -54,6 +54,6 @@ class Product extends BaseProduct implements Comparable{
 
     @Override
     String toString() {
-        name
+        "${productTypes?.find {true}.name?:""} ${type?.title?:""} ${brand?.name?:""} مدل ${name}"
     }
 }

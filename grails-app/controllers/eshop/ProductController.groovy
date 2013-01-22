@@ -11,6 +11,7 @@ import eshop.mongo.MongoProduct
 class ProductController {
 
     def imageService
+    def fileService
     def productService
     def mongoService
 //    def dataSource
@@ -237,27 +238,43 @@ class ProductController {
     def image() {
         redirect(controller: "image", action: "index", params: params)
     }
+    def video() {
+        render 0
+    }
 
-    def deleteImage() {
+    def deleteimage() {
         def success = productService.deleteProductImage(params.id, params.name)
+        def result = [success: success]
+        render result as JSON
+    }
+    def deletevideo() {
+        def success = productService.deleteProductVideo(params.id, params.name)
         def result = [success: success]
         render result as JSON
     }
 
     def uploadImage() {
+        upload("image")
+    }
+
+    def uploadVideo() {
+        upload("video")
+    }
+
+    private def upload(contentType) {
 
         switch (request.method) {
             case "GET":
                 def product = Product.get(params.id)
                 def results = []
-                product.images.each {
+                product[contentType+"s"].each {
 
                     results << [
                             name: it.name,
                             size: it.fileContent.length,
 //                            url: createLink( action:'image', pa: params.id),
-                            thumbnail_url: createLink(action: 'image', params: [id: params.id, name: it.name]),
-                            delete_url: createLink(action: 'deleteImage', params: [id: params.id, name: it.name]),
+                            thumbnail_url: contentType=="image"?createLink(action: contentType, params: [id: params.id, name: it.name]):resource(dir: 'images', file: 'video.png'),
+                            delete_url: createLink(action: "delete${contentType}", params: [id: params.id, name: it.name]),
                             delete_type: "GET"
                     ]
                 }
@@ -269,18 +286,25 @@ class ProductController {
                 request.getFileNames().each {
                     def file = request.getFile(it)
                     def bytes = file.bytes
-                    bytes = imageService.saveAndScaleImages(bytes, file.originalFilename, imageService.imagePath(Product.get(params.id)))
-                    def content = new Content(contentType: "image", name: file.originalFilename, fileContent: bytes)
+                    if(contentType=="image")
+                        bytes = imageService.saveAndScaleImages(bytes, file.originalFilename, fileService.filePath(Product.get(params.id)))
+                    else if(contentType=="video"){
+                        fileService.saveFile(bytes, file.originalFilename,"video", fileService.filePath(Product.get(params.id)))
+                        bytes=[0]
+                    }
+                    def content = new Content(contentType: contentType, name: file.originalFilename, fileContent: bytes)
                     content.save()
                     images << content
                     result << [name: file.originalFilename,
                             size: file.size,
-                            thumbnail_url: createLink(action: 'image', params: [id: params.id, name: file.originalFilename]),
-                            delete_url: createLink(action: 'deleteImage', params: [id: params.id, name: file.originalFilename]),
+                            thumbnail_url: contentType=="image"?createLink(action: contentType, params: [id: params.id, name: it.name]):resource(dir: 'images', file: 'video.png'),
+                            delete_url: createLink(action: "delete${contentType}", params: [id: params.id, name: file.originalFilename]),
                             delete_type: "GET"]
                 }
-
-                productService.addImageToProduct(params.id, images)
+                if(contentType=="image")
+                    productService.addImageToProduct(params.id, images)
+                else if (contentType == "video")
+                    productService.addVideoToProduct(params.id, images)
                 render result as JSON
                 break;
             default: render status: HttpStatus.METHOD_NOT_ALLOWED.value()
@@ -470,9 +494,9 @@ class ProductController {
         render "Synch OK"
     }
 
-    def findDuplicates(){
-        Product.findAll().each { mp->
-            def ps=Product.findAllByNameLikeAndNameNotEqual("%${mp.name}%",mp.name)
+    def findDuplicates() {
+        Product.findAll().each { mp ->
+            def ps = Product.findAllByNameLikeAndNameNotEqual("%${mp.name}%", mp.name)
             ps.each {
                 render " ${it} -------> ${mp} ____________________  ${it.id} -------> ${mp.id}"
                 render "<br>"

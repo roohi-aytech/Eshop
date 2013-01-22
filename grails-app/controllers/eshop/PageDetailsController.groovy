@@ -27,7 +27,12 @@ class PageDetailsController {
         def pageDetailsInstance
         if (params.id) {
             pageDetailsInstance = PageDetails.get(params.id)
-            pageDetailsInstance.properties = params
+            if (pageDetailsInstance.brand && !params.brand.id || pageDetailsInstance.productType && !params.productType.id)
+            {
+                pageDetailsInstance.delete()
+                pageDetailsInstance=new PageDetails(params)
+            }else
+                pageDetailsInstance.properties = params
         }
         else
             pageDetailsInstance = new PageDetails(params)

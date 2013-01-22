@@ -18,26 +18,20 @@ class ImageService {
 
     def getImage(Content img, String wh, String parent) {
         if (wh?.toBoolean()) {
-            return fileService.getFileContent(img.name, "images", parent)
+            return fileService.getFileContent(img.name, "image", parent)
         }
         else if (wh)
-            return fileService.getFileContent(img.name + "-" + wh, "images", parent)
+            return fileService.getFileContent(img.name + "-" + wh, "image", parent)
         else
             return new byte[0]
 
     }
 
-    def imagePath(BaseProduct baseProduct) {
-        if (baseProduct instanceof Product)
-            return imagePath(baseProduct.productTypes?.find {true}) + "/" + baseProduct
-        else if (baseProduct instanceof ProductType)
-            return imagePath(baseProduct.parentProduct) + "/" + baseProduct
-        return baseProduct ?: ""
-    }
+
 
     def saveAndScaleImages(byte[] content, String name, String parent) {
 
-        fileService.saveFile(content, name, "images", parent)
+        fileService.saveFile(content, name, "image", parent)
         BufferedImage sourceImage = ImageIO.read(new ByteArrayInputStream(content))
         def w = sourceImage.width
         def h = sourceImage.height
@@ -59,7 +53,7 @@ class ImageService {
             def baos = new ByteArrayOutputStream()
             ImageIO.write(bufferedThumbnail, 'png', baos)
             thumb = baos.toByteArray()
-            fileService.saveFile(thumb, tfname, "images", parent)
+            fileService.saveFile(thumb, tfname, "image", parent)
         }
         return thumb
     }

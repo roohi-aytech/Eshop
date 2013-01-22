@@ -21,8 +21,8 @@ class MongoService {
         //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
 
         product.attributes.findAll {it.attributeType.showPositions.contains("filter")}.each {
-            if (it.attributeValue)
-                mongoProduct["a${it.attributeType.id}"] = it.attributeValue
+            if (it.value)
+                mongoProduct["a${it.attributeType.id}"] = it.value?.value
             else if (it.attributeType.defaultValue)
                 mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
         }
