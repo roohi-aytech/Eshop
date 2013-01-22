@@ -20,11 +20,11 @@ class MongoService {
         mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
         //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
 
-        product.attributes.find {it.attributeType.showPositions.contains("filter")}.each {
+        product.attributes.findAll {it.attributeType.showPositions.contains("filter")}.each {
             if (it.attributeValue)
-                mongoProduct[it.attributeType.name] = it.attributeValue?.value
+                mongoProduct["a${it.attributeType.id}"] = it.attributeValue
             else if (it.attributeType.defaultValue)
-                mongoProduct[it.attributeType.name] = it.attributeType.defaultValue?.value
+                mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
         }
         mongoProduct.save(flush: true)
     }

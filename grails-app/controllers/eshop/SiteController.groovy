@@ -19,16 +19,66 @@ class SiteController {
     }
 
     def browse() {
-        def x = browseService.search(params)
+        def productType = params.productType ? ProductType.findByName(params.productType) : null
+        if (!productType)
+        {
+            flash.message = message(code: "productType.not.found")
+            redirect(action: "index")
+        }
 
+        def model = [productType: productType]
+
+        model.commonLink = createLink(action: "browse")
+
+        def productTypeChain = []
+        def productTypeNavigator = productType
+        while (productTypeNavigator) {
+            productTypeChain << productTypeNavigator
+            productTypeNavigator = productTypeNavigator.parentProduct
+        }
+        productTypeChain = productTypeChain.reverse()
+
+        model.breadCrumb = []
+
+        productTypeChain.each {
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
+        }
+
+        model.subProductTypeLinks = []
+        def base = "${model.commonLink}/"
+
+        productType.children.each {
+            model.subProductTypeLinks << [name: it.name, href: base + it.name]
+        }
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+        model.filters = browseService.findProductTypeFilters(model.productType, params.page?:0)
+
+        model.pageContext = [:]
+        model.pageContext["productTypes.id"] = [productType.id]
+
+        model
+    }
+
+    def filter() {
+        def model = [:]
+        model.filters = browseService.findFilteredPageFilters(params.f, params.page?:0)
+        model.commonLink = createLink(controller: "site").replace("/index", "")
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+        model
+    }
+
+    def filter1() {
+        def x = browseService.search(params)
         def rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         params.remove("page")
         def pageParams = params
 
-        def subProductTypes = x.productTypes.collect {ProductType.get(it)}
-        def brands = x.brands.collect {Brand.get(it)}
-        def products = x.productIds.collect {Product.get(it)}
+        def subProductTypes = x.productTypes.collect { ProductType.get(it) }
+        def brands = x.brands.collect { Brand.get(it) }
+        def products = x.productIds.collect { Product.get(it) }
         def totalPages = x.totalPages
         def attrs = x.attrs
         def attrgroups = x.attrGroups

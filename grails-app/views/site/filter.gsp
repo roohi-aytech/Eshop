@@ -31,7 +31,6 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
-
     <g:javascript src="thumbnails.js"></g:javascript>
 </head>
 
@@ -64,11 +63,11 @@
                     <g:each in="${rootProductTypes}" var="rootProductType">
                     %{--<li><a href="#">${rootProductType.name}</a></li>--}%
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="${commonLink}/${rootProductType.name}/">${rootProductType.name}</a>
+                            <a tabindex="-1" href="${commonLink}/browse/${rootProductType.name}/">${rootProductType.name}</a>
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
                                     <li>
-                                    <a href="${commonLink}/${secondLevelProductType.name}/">${secondLevelProductType.name}</a>
+                                    <a href="${commonLink}/browse/${secondLevelProductType.name}/">${secondLevelProductType.name}</a>
                                 </g:each>
                             </ul>
                         </li>
@@ -88,31 +87,46 @@
         <div class="span2">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <g:if test="${productType.children}">
+                    <g:if test="${filters.productTypes}">
                         <li class="nav-header"><g:message code="site.selectSubcategory" default="Select SubProductType"></g:message></li>
+                        <g:each in="${filters.productTypes}" var="productType">
+                            <li>
+                                <eshop:filterAddProductType id="${productType._id.id}" name="${productType._id.name}" f="${params.f}"/>
+                            </li>
+                        </g:each>
+                        <li class="divider"></li>
                     </g:if>
-                    <g:each in="${subProductTypeLinks}" var="subProductTypeLink">
-                        <li><a href="${subProductTypeLink.href}">${subProductTypeLink.name}</a></li>
-                    </g:each>
-
                     %{--Brands Filters--}%
                     <g:if test="${filters?.brands}">
                         <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand" default="Select Brand"></g:message></li>
                         <g:each in="${filters.brands}" var="brand">
-                            <li>
-                                <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}" brandName="${brand._id?.name}"></eshop:filterStartBrand>
-                            </li>
+                            <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
+                                <li class="active">
+                                    <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}" remove="true"></eshop:filterAddBrand>
+                                </li>
+                            </g:if>
+                            <g:else>
+                                <li>
+                                    <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"></eshop:filterAddBrand>
+                                </li>
+                            </g:else>
                         </g:each>
                     </g:if>
-
+                    <li class="divider"></li>
                     %{--Attribute Filters--}%
                     <g:if test="${filters?.attributes}">
                         <g:each in="${filters.attributes}" var="attribute">
                             <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
                             <g:each in="${attribute.value.countsByValue}" var="attributeValueCount">
-                                <li>
-                                    <eshop:filterStart productType="${productType}" attribute="${attribute.key}" value="${attributeValueCount._id}"></eshop:filterStart>
-                                </li>
+                                <g:if test="${filters.selecteds[attribute.key]?.contains(attributeValueCount._id)}">
+                                    <li class="active">
+                                        <eshop:filterAddAttribute id="${attribute.key}" value="${attributeValueCount._id}" f="${params.f}" remove="true"></eshop:filterAddAttribute>
+                                    </li>
+                                </g:if>
+                                <g:else>
+                                    <li>
+                                        <eshop:filterAddAttribute id="${attribute.key}" value="${attributeValueCount._id}" f="${params.f}"></eshop:filterAddAttribute>                                    </li>
+                                </g:else>
                             </g:each>
                         </g:each>
                     </g:if>
@@ -126,15 +140,15 @@
                     <a href="#"><g:message code="home"/></a>
                     <span class="divider">${">"}</span>
                 </li>
-                <g:if test="${breadCrumb.size() > 1}">
-                    <g:each in="${breadCrumb[0..-2]}">
+                <g:if test="${filters.breadcrumb.size() > 1}">
+                    <g:each in="${filters.breadcrumb[0..-2]}">
                         <li>
-                            <a href="${it.href}">${it.name}</a>
+                            <a href="${commonLink}/${it.linkTail}">${it.linkTitle}</a>
                             <span class="divider">${">"}</span>
                         </li>
                     </g:each>
                 </g:if>
-                <li class="active">${breadCrumb[-1].name}</li>
+                <li class="active">${filters.breadcrumb[-1].linkTitle}</li>
             </ul>
 
             <div>
@@ -152,7 +166,7 @@
                         <ul>
                             <g:each in="${(0..<filters.products.totalPages + 1)}">
                                 <li ${(params.page?:"0") == it.toString() ? 'class="active"' : ''}>
-                                    <g:link action="browse" params="${params + [page: it]}">${it + 1}</g:link></li>
+                                    <g:link action="filter" params="${params + [page: it]}">${it + 1}</g:link></li>
                             </g:each>
                         </ul>
                     </div>
