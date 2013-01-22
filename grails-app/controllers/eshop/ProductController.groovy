@@ -297,7 +297,7 @@ class ProductController {
                     images << content
                     result << [name: file.originalFilename,
                             size: file.size,
-                            thumbnail_url: contentType=="image"?createLink(action: contentType, params: [id: params.id, name: it.name]):resource(dir: 'images', file: 'video.png'),
+                            thumbnail_url: contentType=="image"?createLink(action: 'image', params: [id: params.id, name: file.originalFilename]):resource(dir: 'images', file: 'video.png'),
                             delete_url: createLink(action: "delete${contentType}", params: [id: params.id, name: file.originalFilename]),
                             delete_type: "GET"]
                 }
