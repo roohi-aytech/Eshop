@@ -20,7 +20,7 @@ class BootStrap {
     def init = { servletContext ->
 
         roles.each {
-            def authority=it
+            def authority = it
             def role = Role.findByAuthority(authority) ?: new Role(authority: authority).save(failOnError: true)
         }
         def adminRole = Role.findByAuthority(RoleHelper.ROLE_USER_ADMIN)
@@ -36,15 +36,34 @@ class BootStrap {
             UserRole.create adminUser, adminRole
         }
 
+        def attrs = Attribute.findAllByAttributeValueIsNotNull()
+        attrs.each { attr ->
+            def val = attr.attributeType.values.find {it.value == attr.attributeValue}
+            if (!val) {
+                val = new AttributeValue(value: attr.attributeValue).save()
+                if(attr.attributeValue!='N/A')
+                {
+                    attr.attributeType.addToValues(val)
+                    attr.attributeType.save()
+                }
+            }
+            attr.value = val
+            attr.attributeValue = null
+            attr.save()
 
+        }
+        AttributeValue.findAllByValueLike('%\\n%').each {
+            it.value=it.value.replace("\\n","\n")
+            it.save()
+        }
         if (GrailsUtil.environment == "development") {
             def validationTagLib = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib')
-            Closure messageClosure = { attrs ->
+            Closure messageClosure = { vals ->
                 //println "${attrs.code}"
                 def messagesFile = grailsApplication.config.eshop.messages.file
-                messagesFile.append("${attrs.code}\n")
+                messagesFile.append("${vals.code}\n")
 
-                messageImpl(attrs)
+                messageImpl(vals)
             }
             messageClosure.setResolveStrategy(Closure.DELEGATE_ONLY)
             messageClosure.setDelegate(validationTagLib)

@@ -22,7 +22,7 @@ class ProductController {
     }
 
     def list() {
-        [ptid: params.ptid]
+        [ptid: params.ptid ?: 0]
     }
 
     def create() {
@@ -36,47 +36,70 @@ class ProductController {
         else
             productInstance = new Product()
         def productTypeIds = [];
+        def productTypeTypes = []
         productInstance.productTypes.each {
             productTypeIds << it.id
+            productTypeTypes.addAll(it.types)
         }
-        render(template: "form", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(",")])
+
+
+        render(template: "form", model: [productInstance: productInstance, productTypeIds: productTypeIds.join(","), productTypeTypes: productTypeTypes])
+    }
+
+    def typeForm() {
+        def productTypeType
+        if (params.id)
+            productTypeType = ProductTypeType.get(params.id)
+        else
+            productTypeType = new ProductTypeType()
+        render(template: "typeValue", model: [productTypeType: productTypeType])
+    }
+
+    def saveType() {
+        def productTypeType
+        if (params.id) {
+            productTypeType = ProductTypeType.get(params.id)
+            productTypeType.properties = params
+        }
+        else
+            productTypeType = new ProductTypeType(params)
+        productTypeType = productTypeType.save()
+        if (params.productInstanceId) {
+            def productInstance = Product.get(params.productInstanceId)
+            productInstance.productTypes.each {
+                it.addToTypes(productTypeType)
+                it.save()
+            }
+        }
+        render productTypeType as JSON
     }
 
     def attrValueForm() {
         def attr = AttributeType.get(params.attributeTypeId)
-        def vals = attr?.values?.sort()?.toArray()
-        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.valueIndex?vals[Integer.parseInt(params.valueIndex)]:'', attributeType: attr?.attributeType])
+        def attributeValue
+        if (params.id)
+            attributeValue = AttributeValue.get(params.id)
+        else
+            attributeValue = new AttributeValue()
+
+        render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, attributeType: attr?.attributeType, attributeValue: attributeValue])
     }
 
-    def addAttributeValue() {
-        def attributeType = AttributeType.get(params.attributeTypeId)
-        if (params.values) {
-            if (attributeType.values && attributeType.defaultValue)
-                attributeType.addToValues(attributeType.defaultValue)
-            attributeType.addToValues(params.values)
+    def saveAttributeValue() {
+
+        def attributeValue
+        if (params.id) {
+            attributeValue = AttributeValue.get(params.id)
+            attributeValue.properties = params
+            attributeValue.save()
+        }
+        else {
+            def attributeType = AttributeType.get(params.attributeTypeId)
+            attributeValue = new AttributeValue(params).save()
+            attributeType.addToValues(attributeValue)
             attributeType.save()
-            render([values: params.values] as JSON)
         }
-        else
-            render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId])
-    }
-
-    def editAttributeValue() {
-        def attributeType = AttributeType.get(params.attributeTypeId)
-        if (params.values && params.values != params.oldValues) {
-            attributeType.removeFromValues(params.oldValues)
-            attributeType.addToValues(params.values)
-            attributeType = attributeType.save()
-            def attributes = Attribute.findAllByAttributeTypeAndAttributeValue(attributeType, params.oldValues)
-            attributes.each {
-                it.attributeValue = params.values
-                it.save()
-            }
-
-            render([values: params.values] as JSON)
-        }
-        else
-            render(template: "attrValue", model: [attributeTypeId: params.attributeTypeId, value: params.values])
+        render(attributeValue as JSON)
     }
 
     def imageVariations() {
@@ -116,6 +139,7 @@ class ProductController {
     def productDetails() {
         def productInstance
         def productTypeIds = []
+        def productTypeTypes = []
 
         if (params.id) {
             def mongoProduct = MongoProduct.get(params.id)
@@ -128,13 +152,14 @@ class ProductController {
         if (productInstance) {
             productInstance.productTypes.each {
                 productTypeIds << it.id
+                productTypeTypes.addAll(it.types)
             }
         }
         else {
             productInstance = new Product()
         }
 
-        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid]
+        [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid ?: productInstance?.productTypes?.find()?.id, productTypeTypes: productTypeTypes]
     }
 
     def saveProductDescription() {
@@ -162,13 +187,20 @@ class ProductController {
     private void saveAttributeValuesInternal(params) {
         def productInstance = Product.findById(params.id)
         def attributeTypes = productInstance?.productTypes.collect {attributeTypes(it)}.flatten()
-
+        if (params.type?.id) {
+            def type = ProductTypeType.get(params.type.id)
+            productInstance.type = type
+            productInstance.save()
+        }
         Attribute.withTransaction {
             attributeTypes.each { AttributeType attributeType ->
                 def attribute = productInstance.attributes.find { it.attributeType.id == attributeType.id }
                 if (!attribute)
                     attribute = new Attribute(attributeType: attributeType, product: productInstance)
-                attribute.attributeValue = params."at_${attributeType.id}"
+                if (params."notAvailable_${attributeType.id}")
+                    attribute.value = AttributeValue.findByValue('N/A') ?: new AttributeValue(value: "N/A").save()
+                else
+                    attribute.value = AttributeValue.get(params."at_${attributeType.id}")
                 attribute.save()
             }
         }
@@ -290,7 +322,7 @@ class ProductController {
 
     def saveProductAndReturnToDetailsPage() {
         def res = saveProduct(params)
-        render(view: "productDetails", model: [productInstance: res.productInstance, productTypeIds: res.productTypeIds.join(","), baseProductInstance: res.productInstance, curtab: params.curtab])
+        redirect(action: "productDetails", params: [curtab: params.curtab, pid: res.productInstance?.id, ptid: params.ptid])
 
     }
 
@@ -430,8 +462,12 @@ class ProductController {
 
     def synchMongo() {
         Product.findAll().each {
-            mongoService.storeProduct(it)
-            println it
+            try {
+                mongoService.storeProduct(it)
+                println it
+            } catch (e) {
+                println(e)
+            }
         }
         render "Synch OK"
     }

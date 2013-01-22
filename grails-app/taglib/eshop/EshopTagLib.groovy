@@ -79,7 +79,7 @@ class EshopTagLib {
         AttributeType attributeType = request.getAttribute("attribute")
         Product product = request.getAttribute("product")
         def attribute = product.attributes.find { it.attributeType.id == attributeType.id }
-        def attributeValue = attribute?.attributeValue
+        def attributeValue = attribute?.value
         if (!attributeValue && attributeType.defaultValue)
             attributeValue = attributeType.defaultValue
         out << render(template: "attr", model: [attributeType: attributeType, product: product, attribute: attribute, attributeValue: attributeValue]);

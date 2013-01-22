@@ -9,13 +9,7 @@
     </label>
     <g:textField name="name" value="${productInstance?.name}" class="count-words" size="70"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'type', 'error')} ">
-    <label for="type">
-        <g:message code="product.type.label" default="Type"/>
 
-    </label>
-    <g:textField name="type" value="${productInstance?.type}" class="count-words" size="70" />
-</div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'description', 'error')} ">--}%
     %{--<label for="description">--}%

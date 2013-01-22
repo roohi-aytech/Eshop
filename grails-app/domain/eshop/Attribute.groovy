@@ -1,6 +1,7 @@
 package eshop
 
 class Attribute {
+    AttributeValue value
     String attributeValue
     Product product
     AttributeType attributeType
@@ -12,6 +13,7 @@ class Attribute {
     }
 
     static constraints = {
+        value(nullable: true)
         attributeValue(nullable: true)
         product()
         attributeType()
@@ -19,6 +21,6 @@ class Attribute {
 
     @Override
     String toString() {
-        attributeType.name + ": " + attributeValue
+        attributeType.name + ": " + value
     }
 }

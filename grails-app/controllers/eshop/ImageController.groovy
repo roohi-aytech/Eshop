@@ -2,14 +2,23 @@ package eshop
 
 class ImageController {
     def imageService
+    def fileService
+
+    def get() {
+        def path=params.path
+        def content = fileService.getFileContent(path)
+        response.contentType = 'image/png'
+        response.outputStream << content
+        response.outputStream.flush()
+    }
 
     def index() {
         def product = Product.get(params.id)
         if (product) {
             def img
-            if(params.name)
+            if (params.name)
                 img = product.images.find {it.name == params.name}
-            else if(product.mainImage)
+            else if (product.mainImage)
                 img = product.mainImage
             else
                 img = product.images.find()

@@ -27,7 +27,7 @@
              maxColumns="4"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToBrandGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteBrand(#id#)", icon: "application_delete"]]}"
+             commands="${[[handler: "addToBrandGrid(#id#)", icon: "application_edit"], [handler: "deleteBrand(#id#)", icon: "application_delete"]]}"
     />
     <g:javascript>
         function deleteBrand(id){
@@ -47,10 +47,22 @@
                 });
             }
         }
-        function addToBrandGrid(){
-            loadOverlay('<g:createLink action="form"/>','<g:createLink action="save" />',function(){
+        function addToBrandGrid(id){
+            var url='<g:createLink action="form"/>'
+             if(id)
+                url+="/"+id
+            loadOverlay(url,'<g:createLink action="save" />',function(){
                 $("#BrandGrid").trigger("reloadGrid")
-            });
+            },function(){
+                $(".count-words").keypress(function(){
+                    var inp=$(this)
+                    inp.parent().find(".word-counter").html(inp.val().length)
+                }).each(function(){
+                    $("<span class='word-counter'></span>").insertAfter($(this))
+                    $(this).keypress()
+
+                })
+            },{width:400});
         }
     </g:javascript>
 </div>

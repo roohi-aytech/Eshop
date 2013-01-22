@@ -14,7 +14,7 @@
         <g:message code="brand.name.label" default="Name"/>
 
     </label>
-    <g:textField name="name" value="${brandInstance?.name}"/>
+    <g:textField name="name" value="${brandInstance?.name}" class="count-words" size="52"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'description', 'error')} ">
@@ -22,7 +22,7 @@
         <g:message code="brand.description.label" default="Description"/>
 
     </label>
-    <g:textField name="description" value="${brandInstance?.description}"/>
+    <g:textArea cols="50" rows="5" name="description" value="${brandInstance?.description}" class="count-words"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'pageTitle', 'error')} ">
@@ -30,7 +30,7 @@
         <g:message code="brand.pageTitle.label" default="Page Title"/>
 
     </label>
-    <g:textField name="pageTitle" value="${brandInstance?.pageTitle}"/>
+    <g:textField name="pageTitle" value="${brandInstance?.pageTitle}" class="count-words" size="52"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'keywords', 'error')} ">
@@ -38,7 +38,7 @@
         <g:message code="brand.keywords.label" default="keywords"/>
 
     </label>
-    <g:textField name="keywords" value="${brandInstance?.keywords}"/>
+    <g:textArea rows="5" cols="50" name="keywords" value="${brandInstance?.keywords}" class="count-words"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'logo', 'error')} required">

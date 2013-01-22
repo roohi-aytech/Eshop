@@ -28,7 +28,7 @@
         var curSelectedProductType=${ptid?:0}
         var loadProducts = function (rowId) {
             curSelectedProductType = rowId
-            var criteria = "[{'op':'in', 'field':'productTypeIds', 'val':" + rowId + "}]"
+            var criteria = "[{'op':'in', 'field':'productTypes.id', 'val':" + rowId + "}]"
             loadGridWithCriteria("MongoProductGrid", criteria)
         }
     </g:javascript>
@@ -52,13 +52,12 @@
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'name'],[name: 'type'], [name: 'brand'], [name: 'productTypes'], [name: 'manufactureCountry']]"
+                 columns="[[name: 'name'],[name: 'type'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'], [name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.collect{it?.name}']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-                 commands="${[[handler:'editProduct(#id#)', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+                 commands="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
             <g:if test="${ptid}">
                 <rg:criteria>
-                    <rg:alias name="productTypes" value="productTypes"/>
-                    <rg:inCrit name="productTypeIds" value="${ptid as Long}"/>
+                    <rg:inCrit name="productTypes.id" value="${ptid as Long}"/>
                 </rg:criteria>
             </g:if>
         </rg:grid>
@@ -181,10 +180,10 @@
     </g:while>
     curProductTypeGridNodeReload--;
     if(curProductTypeGridNodeReload>-1)
-        setTimeout(productTypeLoadComplete,2000)
+        setTimeout(productTypeLoadComplete,400)
    }
    function productTypeGridComplete(){
-        setTimeout(productTypeLoadComplete,2000)
+        setTimeout(productTypeLoadComplete,400)
    }
    var curProductTypeGridNodeReload=${curptidx - 1}
 </g:javascript>

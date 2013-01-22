@@ -232,16 +232,23 @@
             if (id)
                 url += '?id=' + id;
             var grid = jQuery("#ProductTypeGrid")
-            var row = grid.getRowData(id)
-            $("#edit-form-productType").attr("parentId", row.parent);
-            $("#edit-form-productType [name=name]").val(row.name)
-            $("#edit-form-productType [name=description]").val(row.description)
-            $("#edit-form-productType [name=pageTitle]").val(row.pageTitle)
-            $("#edit-form-productType [name=keywords]").val(row.keywords)
-            $("#edit-form-productType img").attr("src",'<g:createLink controller="productType" action="getImage"/>?id='+id)
-            $("#edit-form-productType").attr("url", url)
-            $("#edit-form-productType").dialog("open")
-            $(".count-words").keypress()
+            $.ajax({
+                url:'<g:createLink controller="productType" action="getProductType" />/'+id,
+                success:function(row){
+                    $("#edit-form-productType").attr("parentId", row.parent);
+                    $("#edit-form-productType [name=name]").val(row.name)
+                    $("#edit-form-productType [name=description]").val(row.description)
+                    $("#edit-form-productType [name=pageTitle]").val(row.pageTitle)
+                    $("#edit-form-productType [name=keywords]").val(row.keywords)
+                    $("#edit-form-productType [name=seoFriendlyAlternativeName]").val(row.seoFriendlyAlternativeName)
+                    $("#edit-form-productType [name=seoFriendlyName]").val(row.seoFriendlyName)
+                    $("#edit-form-productType img").attr("src",'<g:createLink controller="productType" action="getImage"/>?id='+id)
+                    $("#edit-form-productType").attr("url", url)
+                    $("#edit-form-productType").dialog("open")
+                    $(".count-words").keypress()
+                }
+            })
+
         }
         %{--function editAttributeGrid(id) {--}%
             %{--var url = '<g:createLink action="saveAttributeType"/>';--}%
