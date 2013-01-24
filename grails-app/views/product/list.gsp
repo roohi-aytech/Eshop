@@ -9,7 +9,11 @@
 
 <body>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
-
+<script type="text/javascript">
+    function productTypeGridComplete(){
+        setTimeout(productTypeLoadComplete,400)
+    }
+</script>
 <div id="list-product" class="content scaffold-list" role="main">
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
@@ -35,10 +39,10 @@
     <div style="margin: 10px;">
         <div class="criteria-div">
             <rg:criteria>
-            %{--<rg:alias name="product" value="pt"/>--}%
-            %{--<rg:nest name="product">--}%
-                <rg:like name="name" label='product.name'/>
-            %{--</rg:nest>--}%
+                <rg:ilike name="productTypes.name" label="product.productType"/>
+                <rg:ilike name="type.name" label="product.type"/>
+                <rg:ilike name="brand.name" label="product.brand"/>
+                <rg:ilike name="name" label='product.name'/>
                 <rg:filterGrid grid="MongoProductGrid" label='search'/>
             </rg:criteria>
         </div>
@@ -182,9 +186,7 @@
     if(curProductTypeGridNodeReload>-1)
         setTimeout(productTypeLoadComplete,400)
    }
-   function productTypeGridComplete(){
-        setTimeout(productTypeLoadComplete,400)
-   }
+
    var curProductTypeGridNodeReload=${curptidx - 1}
 </g:javascript>
 </body>
