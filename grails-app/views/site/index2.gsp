@@ -93,7 +93,7 @@
                             <a tabindex="-1" href="#">${rootProductType.name}</a>
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                    <li><a href="javascript:topProductTypeSelect(${secondLevelProductType.id})">${secondLevelProductType.name}</a></li>
+                                    <li><a href="<g:createLink controller="site" action="browse" id="${secondLevelProductType.name}"/>">${secondLevelProductType.name}</a></li>
                                 </g:each>
                             </ul>
                         </li>
