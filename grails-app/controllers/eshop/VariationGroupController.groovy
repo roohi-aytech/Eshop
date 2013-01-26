@@ -2,6 +2,7 @@ package eshop
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import grails.converters.JSON
 
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class VariationGroupController {
@@ -50,28 +51,49 @@ class VariationGroupController {
         }
         else {
             variationValue = new VariationValue(params)
-            variationValue.indx=0
+            variationValue.indx = 0
         }
         variationValue.save()
-        render 0
+        render variationValue as JSON
     }
 
     def variationValues() {
         def variationGroup
         def variation
+        def variationValues
         if (params.id)
             variationGroup = VariationGroup.findById(params.id)
 
         if (params.baseProductId && variationGroup) {
             def baseProduct = BaseProduct.get(params.baseProductId)
             variation = Variation.findByBaseProductAndVariationGroup(baseProduct, variationGroup)
+            if (baseProduct instanceof ProductType) {
+                if (baseProduct.parentProduct) {
+                    def parentproductvariation = baseProduct.parentProduct.variations.find {it.variationGroup == variationGroup}
+                    variationValues = parentproductvariation?.variationValues
+                }
+            }
+            if (baseProduct instanceof Product) {
+                def parentproductvariation = baseProduct.productTypes.find {true}?.variations?.find {it.variationGroup == variationGroup}
+                variationValues = parentproductvariation?.variationValues
+            }
         }
         if (!variationGroup)
             variationGroup = new VariationGroup()
         if (!variation)
             variation = new Variation()
 
-        render(template: "variation_values", model: [variationGroupInstance: variationGroup, variationInstance: variation])
+
+        render(template: "variation_values", model: [variationGroupInstance: variationGroup, variationInstance: variation, variationValues: variationValues])
+    }
+
+    def searchVariationValues() {
+        def variationGroup = VariationGroup.get(params.variationGroupId)
+        def values = VariationValue.findAllByVariationGroupAndValueIlike(variationGroup, "%${params.term}%")
+        def map = values.collect {
+            [id: it.id, label: it.toString(), value: it.toString()]
+        }
+        render map as JSON
     }
 
     def save() {
@@ -102,7 +124,7 @@ class VariationGroupController {
     }
 
     def saveVariation() {
-        def variation
+        Variation variation
         if (params.id) {
             variation = Variation.get(params.id)
             variation.properties = params
@@ -111,8 +133,25 @@ class VariationGroupController {
             variation = new Variation(params)
 
         variation.variationValues = request.getParameterValues('variationValues').collect {VariationValue.findById(it.toLong())}
-
         variation.save()
+        def baseProduct = variation.baseProduct
+        def productType
+        if (baseProduct instanceof Product)
+            productType = baseProduct.productTypes.find {true}
+        else if (baseProduct instanceof ProductType)
+            productType = baseProduct.parentProduct
+        while (productType) {
+            def pvariation = productType.variations.find {it.variationGroup = variation.variationGroup}
+            if (!pvariation)
+                pvariation = new Variation(name: variation.variationGroup.name, baseProduct: productType, variationGroup: variation.variationGroup)
+            variation.variationValues.each {
+                if (!pvariation.variationValues || !pvariation.variationValues.contains(it))
+                    pvariation.addToVariationValues(it)
+            }
+            pvariation.save()
+            productType = productType.parentProduct
+        }
+
         render 0
     }
 
