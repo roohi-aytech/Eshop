@@ -1,4 +1,4 @@
-<%@ page import="eshop.AddedValue" %>
+<%@ page import="org.grails.plugin.resource.ResourceProcessor; eshop.AddedValue" %>
 
 <g:hasErrors bean="${addedValueInstance}">
     <ul class="errors" role="alert">
@@ -47,6 +47,28 @@
     <g:field type="number" style="direction: ltr;" name="value" step="any" required=""
              value="${addedValueInstance.value}"/>
 </div>
+<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'startDate', 'error')} ">
+    <label for="startDate">
+        <g:message code="addedValue.startDate.label" default="startDate"/>
+    </label>
+    <rg:datePicker name="startDate" value="${addedValueInstance.startDate}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'endDate', 'error')} ">
+    <label for="endDate">
+        <g:message code="addedValue.endDate.label" default="endDate"/>
+    </label>
+    <rg:datePicker name="endDate" value="${addedValueInstance.endDate}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'remainCount', 'error')}">
+    <label for="remainCount">
+        <g:message code="addedValue.remainCount.label" default="count"/>
+    </label>
+    <g:field type="number" style="direction: ltr;" name="remainCount" step="any" required=""
+             value="${addedValueInstance.remainCount?:0}"/>
+</div>
+
 
 <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'value', 'error')} required">
     <label for="value">
