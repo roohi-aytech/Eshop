@@ -10,6 +10,8 @@ class Product extends BaseProduct implements Comparable{
     Double weight = 0D
     String keywords
     String pageTitle
+    String iranCode
+    String shabnamCode
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -42,6 +44,8 @@ class Product extends BaseProduct implements Comparable{
         keywords(nullable: true)
         pageTitle(nullable: true)
         mainImage(nullable: true)
+        iranCode(nullable: true)
+        shabnamCode(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)

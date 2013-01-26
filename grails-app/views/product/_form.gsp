@@ -40,6 +40,27 @@
     <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'iranCode', 'error')} ">
+    <label for="iranCode">
+        <g:message code="product.iranCode.label" default="Iran Code"/>
+
+    </label>
+    <g:textField name="iranCode" value="${productInstance?.iranCode}"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'shabnamCode', 'error')} ">
+    <label for="shabnamCode">
+        <g:message code="product.shabnamCode.label" default="Shabnam Code"/>
+
+    </label>
+    <g:textField name="shabnamCode" value="${productInstance?.shabnamCode}"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'manufactureCountry', 'error')} ">
+    <label for="manufactureCountry">
+        <g:message code="product.manufactureCountry.label" default="Manufacture Country"/>
+
+    </label>
+    <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>
+</div>
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'weight', 'error')} ">
     <label for="manufactureCountry">
         <g:message code="product.weight.label" default="Weight"/>
