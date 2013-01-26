@@ -30,7 +30,7 @@ class ImageController {
             if (img) {
                 def content
                 if (params.wh) {
-                    content = imageService.getImage(img, params.wh, params.id)
+                    content = imageService.getImage(img, params.wh, fileService.filePath(product))
                 } else {
                     content = img.fileContent
                 }

@@ -21,7 +21,7 @@ class ImageService {
             return fileService.getFileContent(img.name, "image", parent)
         }
         else if (wh)
-            return fileService.getFileContent(img.name + "-" + wh, "image", parent)
+            return fileService.getFileContent(wh+"-"+img.name , "image", parent)
         else
             return new byte[0]
 
