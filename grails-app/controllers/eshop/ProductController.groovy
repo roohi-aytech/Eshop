@@ -509,4 +509,9 @@ class ProductController {
         }
         render "OK"
     }
+
+    def searchCountryValues() {
+        def res = Product.executeQuery("select distinct manufactureCountry from Product where manufactureCountry like ? ", ["%${params.term}%"])
+        render res.collect {[id: it, label: it, value: it]} as JSON
+    }
 }

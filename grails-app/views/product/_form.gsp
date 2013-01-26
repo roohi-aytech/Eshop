@@ -39,6 +39,7 @@
     </label>
     <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>
 </div>
+
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'weight', 'error')} ">
     <label for="manufactureCountry">
         <g:message code="product.weight.label" default="Weight"/>
@@ -81,6 +82,10 @@
             $(this).keypress()
 
         })
+    })
+    jQuery("#manufactureCountry").autocomplete({
+        source:'${g.createLink(controller:"product", action:"searchCountryValues")}',
+        minLength:1
     })
 </script>
 
