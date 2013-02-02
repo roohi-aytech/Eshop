@@ -56,7 +56,7 @@
 
 </div>
 
-<g:hiddenField name="parentProduct.id" value="${parentProduct?.id}" />
+%{--<g:hiddenField name="parentProduct.id" value="${parentProduct?.id}" />--}%
 
 
 %{--<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'parentProduct', 'error')} required">--}%
