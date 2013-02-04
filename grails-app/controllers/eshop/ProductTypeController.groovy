@@ -192,10 +192,16 @@ class ProductTypeController {
             render 1;
             return
         }
-
+        attributeTypeInstance.productType.attributeTypes
+                .findAll {it.sortIndex>attributeTypeInstance.sortIndex}
+                .each {
+            it.sortIndex--
+            it.save()
+        }
         try {
             attributeTypeInstance.attributes.each {it.delete()}
-            attributeTypeInstance.delete(flush: true)
+            attributeTypeInstance.productType.removeFromAttributeTypes(attributeTypeInstance)
+            attributeTypeInstance.delete()
             render 0;
         }
         catch (DataIntegrityViolationException e) {
@@ -308,8 +314,10 @@ class ProductTypeController {
             attributeType = AttributeType.get(params.id)
             attributeType.properties = params;
         }
-        else
+        else{
             attributeType = new AttributeType(params);
+            attributeType.sortIndex=(attributeType.productType.attributeTypes.max{it.sortIndex}?.sortIndex?:0)+1
+        }
 //        if (params.values_old && attributeType.id) {
 //            params.values_old.eachWithIndex {oldVal, idx ->
 //                def attributes = Attribute.findAllByAttributeTypeAndAttributeValue(attributeType, oldVal)
@@ -398,5 +406,39 @@ class ProductTypeController {
         }
         productType.save()
         render(view: "details", model: [productTypeInstance: productType, baseProductInstance: productType])
+    }
+    def moveDown(){
+        def attributeType = AttributeType.get(params.id)
+        def otherAttType = attributeType.productType.attributeTypes.find {it.sortIndex==attributeType.sortIndex+1}
+        if(otherAttType){
+            attributeType.sortIndex++
+            attributeType.save()
+            otherAttType.sortIndex--
+            otherAttType.save()
+        }
+        render 0
+    }
+    def moveUp(){
+        def attributeType = AttributeType.get(params.id)
+        def otherAttType = attributeType.productType.attributeTypes.find {it.sortIndex==attributeType.sortIndex-1}
+        if(otherAttType){
+            attributeType.sortIndex--
+            attributeType.save()
+            otherAttType.sortIndex++
+            otherAttType.save()
+        }
+        render 0
+    }
+    def calcSortIndex(){
+        ProductType.findAll().each { productType ->
+            def attrs=AttributeType.findAllByProductType(productType)
+            def maxindex=(attrs.max {it.sortIndex}?.sortIndex) ?:0
+            maxindex++
+            attrs.findAll {it.sortIndex == 0}.each {
+                it.sortIndex= maxindex++
+                it.save()
+            }
+        }
+        render "OK"
     }
 }

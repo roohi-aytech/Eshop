@@ -14,6 +14,7 @@ class AttributeType {
     AttributeValue defaultValue
     ProductType productType
     AttributeCategory category
+    int sortIndex
 
     static final def showPositionValues = ["filter", "productList", "compare", "productDetails", "productFullDetails"]
 
@@ -26,12 +27,14 @@ class AttributeType {
     }
 
     static constraints = {
+        sortIndex(nullable:true)
         name(nullable: false)
         attributeType(inList: ["String", "Text", "Date", "Number"])
         defaultValue(nullable: true)
         category(nullable: true)
         values()
         productType()
+
     }
 
 //    transient def getOptionValues() {

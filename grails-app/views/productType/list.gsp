@@ -386,6 +386,26 @@
             var grid = $("#AttributeTypeGrid");
             grid.trigger('reloadGrid');
         }
+        function moveup(id){
+            $.ajax({
+                url:'<g:createLink action="moveUp"/> ',
+                data:{
+                    id:id
+                }
+            }).success(function(){
+                $("#AttributeTypeGrid").trigger("reloadGrid")
+            })
+        }
+        function movedown(id){
+            $.ajax({
+                url:'<g:createLink action="moveDown"/> ',
+                data:{
+                    id:id
+                }
+            }).success(function(){
+                        $("#AttributeTypeGrid").trigger("reloadGrid")
+                    })
+        }
 
     </script>
 
@@ -416,10 +436,13 @@
         </rg:grid>
     </div>
     <div style="margin: 10px;">
-        <rg:grid domainClass="${eshop.AttributeType}" maxColumns="4"
-                 firstColumnWidth="15" showCommand="false"
+        <rg:grid domainClass="${eshop.AttributeType}" maxColumns="5"
+                 firstColumnWidth="45" showCommand="false"
+                 sortname="sortIndex"
                  commands="${[[loadOverlay: "${g.createLink(action: "attributeForm")}/#id#",saveAction:"${g.createLink(action: "saveAttributeType")}",saveCallback:"attributeSaved", icon: "application_edit",title:"${message(code: "edit-attribute")}"],
-                         [handler: "deleteAttributeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-attribute")}"]]}">
+                         [handler: "deleteAttributeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-attribute")}"],
+                         [handler: "moveup(#id#)", icon: "arrow_up",title:"${message(code: "move-up")}"],
+                         [handler: "movedown(#id#)", icon: "arrow_down",title:"${message(code: "move-down")}"]]}">
             <rg:criteria>
                 <rg:eq name="productType.id" value="0"/>
             </rg:criteria>
