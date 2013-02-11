@@ -365,8 +365,8 @@ class ProductTypeController {
 
     def getProductTypes() {
         def json = []
-
-        ProductType.findAllByParentProductIsNull().each {
+        def productTypes=ProductType.findAllByParentProductIsNull()
+        productTypes.each {
             json << fillJson(it, params.curProductTypeId as Integer)
         }
         render json as JSON
@@ -428,6 +428,21 @@ class ProductTypeController {
             otherAttType.save()
         }
         render 0
+    }
+    def countProductsForAttributeValue(){
+        def attType=AttributeType.get(params.atid)
+        def attValue=AttributeValue.get(params.id)
+        def count = Product.createCriteria().count{
+            productTypes{
+                eq("id",attType.productType?.id)
+            }
+            attributes{
+                value{
+                    eq("id",attValue?.id)
+                }
+            }
+        }
+        render count
     }
     def calcSortIndex(){
         ProductType.findAll().each { productType ->

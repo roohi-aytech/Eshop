@@ -406,6 +406,12 @@
                         $("#AttributeTypeGrid").trigger("reloadGrid")
                     })
         }
+    function editAttributeType(id){
+        loadOverlay('<g:createLink action="attributeForm"/>/'+id,
+                '<g:createLink action="saveAttributeType"/>',
+                attributeSaved,
+                undefined,{width:600})
+    }
 
     </script>
 
@@ -439,7 +445,7 @@
         <rg:grid domainClass="${eshop.AttributeType}" maxColumns="5"
                  firstColumnWidth="45" showCommand="false"
                  sortname="sortIndex"
-                 commands="${[[loadOverlay: "${g.createLink(action: "attributeForm")}/#id#",saveAction:"${g.createLink(action: "saveAttributeType")}",saveCallback:"attributeSaved", icon: "application_edit",title:"${message(code: "edit-attribute")}"],
+                 commands="${[[handler: 'editAttributeType(#id#)', icon: "application_edit",title:"${message(code: "edit-attribute")}"],
                          [handler: "deleteAttributeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-attribute")}"],
                          [handler: "moveup(#id#)", icon: "arrow_up",title:"${message(code: "move-up")}"],
                          [handler: "movedown(#id#)", icon: "arrow_down",title:"${message(code: "move-down")}"]]}">

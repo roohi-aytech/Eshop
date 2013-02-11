@@ -11,13 +11,28 @@
 </div>
 
 
-%{--<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'description', 'error')} ">--}%
-    %{--<label for="description">--}%
-        %{--<g:message code="product.description.label" default="Description"/>--}%
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'pageTitle', 'error')} ">
+    <label for="pageTitle">
+        <g:message code="product.pageTitle.label" default="Page Title"/>
 
-    %{--</label>--}%
-    %{--<g:textArea name="description" value="${productInstance?.description}" cols="20" rows="5" class="count-words"/>--}%
-%{--</div>--}%
+    </label>
+    <g:checkBox name="manualTitle" value="${productInstance?.manualTitle}"/>
+    <g:textField name="pageTitle" value="${productInstance?.pageTitle}" class="count-words"/>
+    <script type="text/javascript">
+        $(function(){
+            $("#manualTitle").change(function(){
+                if($(this).attr("checked"))
+                    $("#pageTitle").removeAttr("disabled")
+                else
+                    $("#pageTitle").attr("disabled","disabled")
+            })
+            if($("#manualTitle").attr("checked"))
+                $("#pageTitle").removeAttr("disabled")
+            else
+                $("#pageTitle").attr("disabled","disabled")
+        })
+    </script>
+</div>
 %{--<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'keywords', 'error')} ">--}%
     %{--<label for="keywords">--}%
         %{--<g:message code="product.keywords.label" default="Keywords"/>--}%

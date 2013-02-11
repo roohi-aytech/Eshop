@@ -56,6 +56,25 @@ class ProductController {
         render(template: "typeValue", model: [productTypeType: productTypeType])
     }
 
+    def deleteType() {
+        try {
+            def type = ProductTypeType.get(params.id)
+            if (type) {
+                Product.findAllByType(type).each {
+                    it.type = null
+                    it.save()
+                }
+                def productType=ProductType.get(params.ptid)
+                productType?.removeFromTypes(type)
+                productType?.save()
+                type.delete()
+                render 0
+            }
+        } catch (e) {
+            render e
+        }
+    }
+
     def saveType() {
         def productTypeType
         if (params.id) {
