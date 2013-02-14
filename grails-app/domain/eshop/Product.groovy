@@ -10,6 +10,9 @@ class Product extends BaseProduct implements Comparable{
     Double weight = 0D
     String keywords
     String pageTitle
+    Boolean manualTitle
+    String iranCode
+    String shabnamCode
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -42,6 +45,10 @@ class Product extends BaseProduct implements Comparable{
         keywords(nullable: true)
         pageTitle(nullable: true)
         mainImage(nullable: true)
+        iranCode(nullable: true)
+        shabnamCode(nullable: true)
+        manualTitle(nullable:true)
+
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)
@@ -54,6 +61,6 @@ class Product extends BaseProduct implements Comparable{
 
     @Override
     String toString() {
-        name
+        "${productTypes?.find {true}?.name?:""} ${type?.title?:""} ${brand?.name?:""} مدل ${name?:""}"
     }
 }

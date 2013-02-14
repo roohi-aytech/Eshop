@@ -6,6 +6,9 @@ class AddedValue {
     Double value = 0D
     String type
     String processTime
+    Date startDate
+    Date endDate
+    int remainCount
     static hasMany = [variationValues: VariationValue]
 
     static mapping = {
@@ -19,5 +22,9 @@ class AddedValue {
         value()
         processTime()
         variationValues()
+        startDate(nullable: true)
+        endDate(nullable: true)
+        remainCount(nullable: true)
+
     }
 }

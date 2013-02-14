@@ -73,11 +73,31 @@
     <label for="values" class="valueslabel">
         <g:message code="attributeType.values.label" default="Values"/>
     </label>
-    <g:each in="${attributeTypeInstance?.values?.sort()}">
+    <g:each in="${attributeTypeInstance?.values?.sort{it.id}}">
         <div>
-            <g:textField name="values_${it?.id}" value="${it?.value}" onkeydown="updateDefaultValue(${it?.id})"/>
+
+            <g:if test="${attributeTypeInstance?.attributeType=="Text"}">
+                <g:textArea name="values_${it?.id}" value="${it?.value}" onkeydown="updateDefaultValue(${it?.id})" rows="5" cols="70"/>
+            </g:if>
+            <g:else>
+                <g:textField name="values_${it?.id}" value="${it?.value}" onkeydown="updateDefaultValue(${it?.id})"/>
+            </g:else>
             <input attrid="${it?.id}" type='button' value='${message(code: "remove")}' onclick="removeValues(this)">
+            <span id="val_${it?.id}"></span>
         </div>
+        <script type="text/javascript">
+            $(function(){
+                $.ajax({
+                    url:'<g:createLink action="countProductsForAttributeValue" />',
+                    data:{
+                        id:${it?.id},
+                        atid:${attributeTypeInstance?.id}
+                    }
+                }).success(function(res){
+                    $("#val_${it?.id}").html('<g:message code="count" />: '+res)
+                })
+            })
+        </script>
     </g:each>
     <input type="button" id="valuesBtn" value="${message(code: "add")}" onclick="addattributeTypeValueTemplate(this)">
 </div>

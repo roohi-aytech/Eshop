@@ -116,12 +116,13 @@ grails.plugins.springsecurity.userLookup.userDomainClassName = 'eshop.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'eshop.UserRole'
 grails.plugins.springsecurity.authority.className = 'eshop.Role'
 
+
 ckeditor {
     config = "/js/myckconfig.js"
     skipAllowedItemsCheck = false
     defaultFileBrowser = "ofm"
     upload {
-        basedir = "${System.getProperty("base.dir")}/uploads/"
+        basedir = "/home/uploads/"
         baseurl = "/image/get?path="
         overwrite = false
         link {

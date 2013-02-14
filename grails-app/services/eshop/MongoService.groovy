@@ -15,13 +15,14 @@ class MongoService {
                 mongoProduct[it.key] = it.value
         }
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
+        mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
         def productTypes = collectProductTypes(product)
         mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
         //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
 
         product.attributes.findAll {it.attributeType.showPositions.contains("filter")}.each {
-            if (it.attributeValue)
-                mongoProduct["a${it.attributeType.id}"] = it.attributeValue
+            if (it.value)
+                mongoProduct["a${it.attributeType.id}"] = it.value?.value
             else if (it.attributeType.defaultValue)
                 mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
         }
