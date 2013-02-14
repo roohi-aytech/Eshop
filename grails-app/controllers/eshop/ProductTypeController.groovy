@@ -193,7 +193,7 @@ class ProductTypeController {
             return
         }
         attributeTypeInstance.productType.attributeTypes
-                .findAll {it.sortIndex>attributeTypeInstance.sortIndex}
+                .findAll {it.sortIndex > attributeTypeInstance.sortIndex}
                 .each {
             it.sortIndex--
             it.save()
@@ -314,9 +314,9 @@ class ProductTypeController {
             attributeType = AttributeType.get(params.id)
             attributeType.properties = params;
         }
-        else{
+        else {
             attributeType = new AttributeType(params);
-            attributeType.sortIndex=(attributeType.productType.attributeTypes.max{it.sortIndex}?.sortIndex?:0)+1
+            attributeType.sortIndex = (attributeType.productType.attributeTypes.max {it.sortIndex}?.sortIndex ?: 0) + 1
         }
 //        if (params.values_old && attributeType.id) {
 //            params.values_old.eachWithIndex {oldVal, idx ->
@@ -340,7 +340,7 @@ class ProductTypeController {
         mustRemove.each {
             attributeType.removeFromValues(it)
             Attribute.findAllByValue(it).each {
-                it.value=null
+                it.value = null
                 it.save()
             }
             it.delete()
@@ -365,7 +365,7 @@ class ProductTypeController {
 
     def getProductTypes() {
         def json = []
-        def productTypes=ProductType.findAllByParentProductIsNull()
+        def productTypes = ProductType.findAllByParentProductIsNull()
         productTypes.each {
             json << fillJson(it, params.curProductTypeId as Integer)
         }
@@ -394,7 +394,8 @@ class ProductTypeController {
 
     def details() {
         def productTypeInstance = ProductType.get(params.id)
-        [productTypeInstance: productTypeInstance, baseProductInstance: productTypeInstance]
+        def giftInformation = GiftInformation.findByProductType(productTypeInstance)
+        [productTypeInstance: productTypeInstance, baseProductInstance: productTypeInstance, giftInformation: giftInformation]
     }
 
     def saveGodFathers() {
@@ -407,53 +408,122 @@ class ProductTypeController {
         productType.save()
         render(view: "details", model: [productTypeInstance: productType, baseProductInstance: productType])
     }
-    def moveDown(){
-        def attributeType = AttributeType.get(params.id)
-        def otherAttType = attributeType.productType.attributeTypes.find {it.sortIndex==attributeType.sortIndex+1}
-        if(otherAttType){
-            attributeType.sortIndex++
-            attributeType.save()
-            otherAttType.sortIndex--
-            otherAttType.save()
-        }
-        render 0
-    }
-    def moveUp(){
-        def attributeType = AttributeType.get(params.id)
-        def otherAttType = attributeType.productType.attributeTypes.find {it.sortIndex==attributeType.sortIndex-1}
-        if(otherAttType){
-            attributeType.sortIndex--
-            attributeType.save()
-            otherAttType.sortIndex++
-            otherAttType.save()
-        }
-        render 0
-    }
-    def countProductsForAttributeValue(){
-        def attType=AttributeType.get(params.atid)
-        def attValue=AttributeValue.get(params.id)
-        def count = Product.createCriteria().count{
-            productTypes{
-                eq("id",attType.productType?.id)
+
+//    def moveDown() {
+//        def attributeType = AttributeType.get(params.id)
+//        def otherAttType = attributeType.productType.attributeTypes.find {it.sortIndex == attributeType.sortIndex + 1}
+//        if (otherAttType) {
+//            attributeType.sortIndex++
+//            attributeType.save()
+//            otherAttType.sortIndex--
+//            otherAttType.save()
+//        }
+//        render 0
+//    }
+//
+//    def moveUp() {
+//        def attributeType = AttributeType.get(params.id)
+//        def otherAttType = attributeType.productType.attributeTypes.find {it.sortIndex == attributeType.sortIndex - 1}
+//        if (otherAttType) {
+//            attributeType.sortIndex--
+//            attributeType.save()
+//            otherAttType.sortIndex++
+//            otherAttType.save()
+//        }
+//        render 0
+//    }
+
+    def countProductsForAttributeValue() {
+        def attType = AttributeType.get(params.atid)
+        def attValue = AttributeValue.get(params.id)
+        def count = Product.createCriteria().count {
+            productTypes {
+                eq("id", attType.productType?.id)
             }
-            attributes{
-                value{
-                    eq("id",attValue?.id)
+            attributes {
+                value {
+                    eq("id", attValue?.id)
                 }
             }
         }
         render count
     }
-    def calcSortIndex(){
+
+    def calcSortIndex() {
         ProductType.findAll().each { productType ->
-            def attrs=AttributeType.findAllByProductType(productType)
-            def maxindex=(attrs.max {it.sortIndex}?.sortIndex) ?:0
+            def attrs = AttributeType.findAllByProductType(productType)
+            def maxindex = (attrs.max {it.sortIndex}?.sortIndex) ?: 0
             maxindex++
             attrs.findAll {it.sortIndex == 0}.each {
-                it.sortIndex= maxindex++
+                it.sortIndex = maxindex++
+                it.save()
+            }
+
+            def attrcats = AttributeCategory.findAllByProductType(productType)
+            maxindex = (attrcats.max {it.sortIndex}?.sortIndex) ?: 0
+            maxindex++
+            attrcats.findAll {it.sortIndex == 0}.each {
+                it.sortIndex = maxindex++
                 it.save()
             }
         }
         render "OK"
+    }
+
+    def moveCategoryForm() {
+        def cat = AttributeCategory.get(params.id)
+        render(template: "moveForm", model: [id: params.id, sortIndex: cat.sortIndex])
+    }
+
+    def moveAttributeForm() {
+        def cat = AttributeType.get(params.id)
+        render(template: "moveForm", model: [id: params.id, sortIndex: cat.sortIndex])
+    }
+
+    def moveCategory() {
+        def cat = AttributeCategory.get(params.id)
+        def sortIndex = params.sortIndex as Integer
+        def lower = Math.min(sortIndex, cat.sortIndex)
+        def upper = Math.max(sortIndex, cat.sortIndex)
+        def i = sortIndex > cat.sortIndex ? -1 : 1
+        def cats = AttributeCategory.findAllByProductTypeAndSortIndexBetween(cat.productType, lower, upper)
+        cats.each {
+            it.sortIndex += i
+            it.save()
+        }
+        cat.sortIndex = sortIndex
+        cat.save()
+
+        render 0
+    }
+
+    def moveAttribute() {
+        def cat = AttributeType.get(params.id)
+        def sortIndex = params.sortIndex as Integer
+        def lower = Math.min(sortIndex, cat.sortIndex)
+        def upper = Math.max(sortIndex, cat.sortIndex)
+        def i = sortIndex > cat.sortIndex ? -1 : 1
+        def cats = AttributeType.findAllByProductTypeAndSortIndexBetween(cat.productType, lower, upper)
+        cats.each {
+            it.sortIndex += i
+            it.save()
+        }
+        cat.sortIndex = sortIndex
+        cat.save()
+
+        render 0
+    }
+
+    def saveGiftInformation() {
+        def giftInformation
+        if (params.id) {
+            giftInformation = GiftInformation.get(params.id)
+            giftInformation.properties = params
+        }
+        else
+            giftInformation = new GiftInformation(params)
+        giftInformation.cultureEvents = request.getParameterValues('cultureEvents').collect {CultureEvent.findById(it.toLong())}
+        giftInformation.save()
+        redirect(action: "details", id: giftInformation.productType?.id)
     }
 }

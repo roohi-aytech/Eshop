@@ -74,7 +74,7 @@ class VariationGroupController {
                 }
             }
             if (baseProduct instanceof Product) {
-                def parentproductvariation = baseProduct.productTypes.find {true}?.variations?.find {it.variationGroup == variationGroup}
+                def parentproductvariation = baseProduct?.productTypes.find {true}?.variations?.find {it.variationGroup == variationGroup}
                 variationValues = parentproductvariation?.variationValues
             }
         }

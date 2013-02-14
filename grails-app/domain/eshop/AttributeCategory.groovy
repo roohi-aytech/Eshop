@@ -6,12 +6,15 @@ class AttributeCategory {
     String name
     AttributeCategory parentCategory
     ProductType productType
+    int sortIndex
 
     static hasMany = [showPositions: String]
     static mapping = {
         sort 'name'
     }
     static constraints = {
+        sortIndex(nullable:true)
+        name(nullable:true)
     }
 
     String toString() {
