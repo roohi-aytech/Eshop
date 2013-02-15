@@ -26,6 +26,25 @@ Excel index 9
 Excel index 70
 <br>
 Excel index 34
-
+<br>
+============================================
+<br>
+before 91/11/26
+<br>
+-----------------------
+<br>
+Excel Indexes:
+<br>
+1-31
+<br>
+34
+<br>
+36-60
+<br>
+69-72
+<br>
+77
+<br>
+83
 </body>
 </html>
