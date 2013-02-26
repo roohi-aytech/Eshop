@@ -21,6 +21,7 @@
 
     <fieldset class="buttons">
         <g:submitButton name="create" class="save" value="${message(code: 'default.button.save.label', default: 'Save')}" />
+        <g:actionSubmit name="saveAndExit" action="editImageDetailsAndExit" class="save" value="${message(code: 'default.button.save.and.exit.label', default: 'Save')}" />
         <g:link class="list" action="list"><g:message code="default.product.list" default="Product List" /></g:link>
     </fieldset>
 </g:form>

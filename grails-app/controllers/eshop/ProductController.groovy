@@ -239,6 +239,15 @@ class ProductController {
         }
         redirect(action: "productDetails", params: [pid: params.product.id, curtab: params.curtab, curtab2: params.curtab2])
     }
+    def editImageDetailsAndExit() {
+        def product = Product.get(params.product.id)
+        def defaultImage = Content.get(params.mainImage)
+        if (defaultImage) {
+            product.mainImage = defaultImage
+            product.save()
+        }
+        redirect(action: "list", params: [curtab: params.curtab, curtab2: params.curtab2])
+    }
 
     def variationValue() {
         def variation = Variation.get(params.variation)
