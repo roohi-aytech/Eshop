@@ -867,3 +867,6 @@ a.skip {
     margin: 0;
     padding: 0.3em;
 }
+select{
+    max-width: 600px;
+}
