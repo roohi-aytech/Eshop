@@ -1,0 +1,41 @@
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    /*vertical-align: baseline;*/
+}
+.container{
+    min-width: 1024px;
+}
+#rotator
+{
+
+}
+#rotator a.arrow
+{
+    width: 18px;
+    height: 41px;
+    display: block;
+    z-index: 2;
+    text-indent: -50000em;
+    /*position: absolute;*/
+    top: 59px;
+    background: #fff;
+}
+.arrowLeft
+{
+    left: 0;
+    margin-left: 355px;
+}
+.arrowright
+{
+    right: 0;
+}
+.arrowLeft ,
+.arrowRight{
+    display: block;
+    height: 50px;
+    position: absolute;
+    width: 25px;;
+
+}
