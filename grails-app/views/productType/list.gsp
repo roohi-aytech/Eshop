@@ -412,6 +412,20 @@
                 attributeSaved,
                 undefined,{width:600})
     }
+    function moveAttributeCategory(id){
+        loadOverlay('<g:createLink action="moveCategoryForm"/>/'+id,
+                '<g:createLink action="moveCategory"/>',
+                function(){
+                    $("#AttributeCategoryGrid").trigger("reloadGrid")
+                })
+    }
+    function moveAttributeType(id){
+        loadOverlay('<g:createLink action="moveAttributeForm"/>/'+id,
+                '<g:createLink action="moveAttribute"/>',
+                function(){
+                    $("#AttributeTypeGrid").trigger("reloadGrid")
+                })
+    }
 
     </script>
 
@@ -430,12 +444,14 @@
                          [handler: "moveProductType(#id#)", icon: "cut",title:"${message(code: "move-product-type")}"]]}"/>
     </div>
     <div style="margin: 10px;">
-        <rg:grid domainClass="${eshop.AttributeCategory}" maxColumns="1"
-                 firstColumnWidth="10" showCommand="false"
+        <rg:grid domainClass="${eshop.AttributeCategory}" maxColumns="2"
+                 firstColumnWidth="20" showCommand="false"
+                 sortname="sortIndex"
                  tree="parentCategory"
                  commands="${[[loadOverlay: "${g.createLink(action: "attributeCategoryForm")}?parentCategory.id=#id#",saveCallback: "attributeCategorySaved",saveAction:"${g.createLink(action: "saveAttributeCategory")}", icon: "application_add",title:"${message(code: "add-sub-category")}"],
                          [loadOverlay: "${g.createLink(action: "attributeCategoryForm")}/#id#",saveAction:"${g.createLink(action: "saveAttributeCategory")}", icon: "application_edit",title:"${message(code: "edit-category")}"],
-                         [handler: "deleteAttributeCategory(#id#)", icon: "application_delete",title:"${message(code: "delete-category")}"]]}">
+                         [handler: "deleteAttributeCategory(#id#)", icon: "application_delete",title:"${message(code: "delete-category")}"],
+                         [handler: "moveAttributeCategory(#id#)", icon: "application_go",title:"${message(code: "move-category")}"]]}">
             <rg:criteria>
                 <rg:eq name="productType.id" value="0"/>
             </rg:criteria>
@@ -447,8 +463,10 @@
                  sortname="sortIndex"
                  commands="${[[handler: 'editAttributeType(#id#)', icon: "application_edit",title:"${message(code: "edit-attribute")}"],
                          [handler: "deleteAttributeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-attribute")}"],
-                         [handler: "moveup(#id#)", icon: "arrow_up",title:"${message(code: "move-up")}"],
-                         [handler: "movedown(#id#)", icon: "arrow_down",title:"${message(code: "move-down")}"]]}">
+//                         [handler: "moveup(#id#)", icon: "arrow_up",title:"${message(code: "move-up")}"],
+//                         [handler: "movedown(#id#)", icon: "arrow_down",title:"${message(code: "move-down")}"],
+                         [handler: "moveAttributeType(#id#)", icon: "application_go",title:"${message(code: "move-attribute")}"],
+                 ]}">
             <rg:criteria>
                 <rg:eq name="productType.id" value="0"/>
             </rg:criteria>

@@ -12,7 +12,6 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/modernizr-2.5.3/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ckeditor-3.6.2.2/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ckeditor-3.6.2.2/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-1.7.2/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/views" relative="/" />
@@ -25,6 +24,7 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cache-headers-1.1.5/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/famfamfam-1.0.1/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>

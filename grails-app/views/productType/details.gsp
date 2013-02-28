@@ -16,6 +16,7 @@
         %{--<li><a href="#variations"><g:message code="variations"/></a></li>--}%
         <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
         <li><a href="#articles"><g:message code="articles"/></a></li>
+        <li><a href="#gift"><g:message code="gift"/></a></li>
     </ul>
 
     <div id="godFathers" style="width: 98%">
@@ -31,6 +32,10 @@
     <div id="articles" style="width: 98%">
         <g:render template="../journalArticle/list"/>
     </div>
+    <div id="gift">
+        <g:render template="gift"/>
+    </div>
+
 
 </div>
 <g:javascript>

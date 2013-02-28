@@ -30,14 +30,14 @@ class EshopTagLib {
         out << "<legend>${productType.name}</legend>"
 
         def attributeTypes = AttributeType.findAllByProductTypeAndCategoryIsNull(productType)
-        attributeTypes?.sort {it.name}?.each {
+        attributeTypes?.sort {it.sortIndex}?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
             request.removeAttribute("attribute")
         }
 
         def categories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType)
-        categories?.sort {it.name}.each {
+        categories?.sort {it.sortIndex}.each {
             request.setAttribute("attributeCategory", it)
             out << renderAttributeCategory()
             request.removeAttribute("attributeCategory")
@@ -58,7 +58,7 @@ class EshopTagLib {
         out << "<legend>${attributeCategory?.name}</legend>"
 
         def attributeTypes = AttributeType.findAllByCategory(attributeCategory)
-        attributeTypes?.sort {it.name}?.each {
+        attributeTypes?.sort {it.sortIndex}?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
             request.removeAttribute("attribute")

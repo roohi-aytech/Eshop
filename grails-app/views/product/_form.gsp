@@ -69,13 +69,13 @@
     </label>
     <g:textField name="shabnamCode" value="${productInstance?.shabnamCode}"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'manufactureCountry', 'error')} ">
-    <label for="manufactureCountry">
-        <g:message code="product.manufactureCountry.label" default="Manufacture Country"/>
+%{--<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'manufactureCountry', 'error')} ">--}%
+    %{--<label for="manufactureCountry">--}%
+        %{--<g:message code="product.manufactureCountry.label" default="Manufacture Country"/>--}%
 
-    </label>
-    <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>
-</div>
+    %{--</label>--}%
+    %{--<g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>--}%
+%{--</div>--}%
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'weight', 'error')} ">
     <label for="manufactureCountry">
         <g:message code="product.weight.label" default="Weight"/>

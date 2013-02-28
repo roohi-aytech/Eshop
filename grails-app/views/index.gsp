@@ -45,6 +45,11 @@
                             src="images/currency.png"/><span><g:message
                             code="currency.label"
                             default="Currency"/></span></g:link></li>
+                <li>
+                    <g:link controller="cultureEvent" action="list"><img
+                            src="images/cultureEvent.png"/><span><g:message
+                            code="cultureEvent.label"
+                            default="Culture Event"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">
