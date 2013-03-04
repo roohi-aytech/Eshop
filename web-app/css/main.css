@@ -870,3 +870,8 @@ a.skip {
 select{
     max-width: 600px;
 }
+.pull-down{
+    position: fixed;
+    bottom: 50px;
+    left: 55px;
+}

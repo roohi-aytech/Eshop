@@ -9,10 +9,10 @@
     <g:form method="post" action="saveAttributeValues" params="${[curtab: 1, ptid: ptid]}">
         <g:hiddenField name="id" value="${productInstance?.id}"/>
         <g:render template="product_type_type"
-                  model="[productInstance: productInstance,ptid: ptid, productTypeTypes: productTypeTypes]"/>
+                  model="[productInstance: productInstance,ptid: ptid, productTypeTypes: productTypeTypes?.sort{it.title}]"/>
         <eshop:renderProductAttributes product="${productInstance}"/>
 
-        <fieldset class="buttons">
+        <fieldset class="buttons pull-down">
             <g:submitButton name="create" class="save"
                             value="${message(code: 'default.button.save.label', default: 'Save')}"/>
             <g:actionSubmit action="saveAttributeValuesAndExit" name="createAndExit" class="save"

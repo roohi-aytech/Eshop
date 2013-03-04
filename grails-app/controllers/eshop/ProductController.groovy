@@ -83,6 +83,17 @@ class ProductController {
         }
         else
             productTypeType = new ProductTypeType(params)
+//        if (params.productInstanceId) {
+//            def productInstance = Product.get(params.productInstanceId)
+//            productInstance.productTypes.each {
+//                def ptt = it.types.find {it.title==productTypeType.title}
+//                if(ptt)
+//                {
+//                    render ptt as JSON
+//                    return
+//                }
+//            }
+//        }
         productTypeType = productTypeType.save()
         if (params.productInstanceId) {
             def productInstance = Product.get(params.productInstanceId)

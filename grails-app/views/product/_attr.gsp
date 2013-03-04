@@ -4,7 +4,7 @@
         <g:checkBox name="notAvailable_${attributeType.id}" checked="${attributeValue?.value=='N/A'}"/>N/A
     </span>
     %{--<g:if test="${attributeType.values}">--}%
-        <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values}" optionKey="id" optionValue="value" noSelection="['':'']" value="${attributeValue?.id}"/>
+        <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values?.sort{it.value}}" optionKey="id" optionValue="value" noSelection="['':'']" value="${attributeValue?.id}"/>
         <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">
     %{--</g:if>--}%
     %{--<g:else>--}%

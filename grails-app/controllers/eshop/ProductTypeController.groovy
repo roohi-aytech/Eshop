@@ -7,6 +7,7 @@ import grails.plugins.springsecurity.Secured
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class ProductTypeController {
     def imageService
+    def fileService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -240,7 +241,7 @@ class ProductTypeController {
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
             productType = productType.save()
             if (image) {
-                productType.image = imageService.saveAndScaleImages(image, "image", imageService.imagePath(productType))
+                productType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productType))
                 productType.save()
             }
             render 0;
