@@ -23,6 +23,8 @@ class Product extends BaseProduct implements Comparable{
 
     static belongsTo = [ProductType]
 
+    static searchable = true
+
     static mapping = {
         sort 'name'
         attributes cascade: 'all'

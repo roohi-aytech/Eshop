@@ -363,7 +363,7 @@ class ProductTypeController {
         render attributeType.values as JSON
 
     }
-
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN,RoleHelper.ROLE_PRODUCT_TYPE_ADMIN])
     def getProductTypes() {
         def json = []
         def productTypes = ProductType.findAllByParentProductIsNull()

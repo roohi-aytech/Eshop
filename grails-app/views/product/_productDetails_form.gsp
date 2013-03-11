@@ -62,10 +62,13 @@
         });
         productTypeTree.bind("loaded.jstree refresh.jstree", function (event, data) {
 //                productTypeTree.jstree("open_all");
-            var productTypes = $("[name=producttypes]").val().split(",");
-            $(productTypes).each(function (index) {
-                productTypeTree.jstree('check_node', "#" + productTypes[index])
-            })
+            var val=$("[name=producttypes]").val()
+            if(val){
+                var productTypes = $("[name=producttypes]").val().split(",");
+                $(productTypes).each(function (index) {
+                    productTypeTree.jstree('check_node', "#" + productTypes[index])
+                })
+            }
 
         });
         productTypeTree.bind("change_state.jstree", function (e, d) {

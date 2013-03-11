@@ -61,6 +61,7 @@ class BootStrap {
             Closure messageClosure = { vals ->
                 //println "${attrs.code}"
                 def messagesFile = grailsApplication.config.eshop.messages.file
+                println vals.code
                 messagesFile.append("${vals.code}\n")
 
                 messageImpl(vals)
