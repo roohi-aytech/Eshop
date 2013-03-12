@@ -17,9 +17,12 @@
             <div class="extended">
                 <div>
                     <p>
-                        <a class="btn btn-success btn-shop" href="#"><g:message code="add-to-basket"/></a>
+                        <a class="btn btn-success" href="#"><g:message code="add-to-basket"/></a>
+                        <a class="btn btn-primary" href="#"><g:message code="add-to-compareList"/></a>
+                        <a class="btn btn-danger" href="#"><g:message code="add-to-wishList"/></a>
                     </p>
                     <g:if test="${product.details}">
+                        <h5><g:message code="product-details"></g:message></h5>
                         <span class="details">
                             ${product.details}
                         </span>
