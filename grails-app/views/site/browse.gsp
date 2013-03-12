@@ -143,7 +143,7 @@
                     <g:each in="${filters.products.productIds}" status="i" var="productId">
                         <g:set var="product" value="${eshop.Product.get(productId)}"/>
                         <g:if test="${product}">
-                            <g:render template="product_search" model="[product: product]"/>
+                            <g:render template="product_search" model="[product: product,]"/>
                         </g:if>
                     </g:each>
                 </ul>

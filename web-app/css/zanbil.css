@@ -1,0 +1,120 @@
+*{
+    font-family: tahoma !important;
+    font-size: 11px;
+}
+
+body{
+}
+
+.thumbnails > li{
+    height: auto;
+}
+
+.thumbnail{
+    text-align: center;
+    overflow: hidden;
+    height: 220px;
+    position: relative;
+    border-width:0;
+    box-shadow: none;
+    border-bottom-style: dashed;
+    border-radius: 5px 5px 0 0 !important;
+}
+
+.thumbnail:hover{
+    box-shadow: 0 0 2px silver;
+}
+
+.thumbnail .content{
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top:10px;
+}
+
+.selectedThumbnail{
+    box-shadow: 0 0 2px silver;
+    border-radius: 5px;
+}
+
+.thumbnail .main{
+    height: 220px;
+}
+
+.thumbnail .extended{
+    background: #ffffff;
+    border:1px solid #eeeeee;
+    border-radius: 0 0 5px 5px;
+    margin: -1px 0 0 0;
+    border-top-width: 0;
+    box-shadow: 0 0 2px silver;
+    max-height: 0;
+}
+
+.thumbnail .extended > div{
+    opacity: 0;
+}
+
+.thumbnail .image{
+    display: block;
+    height: 150px;
+    text-align: center;
+    position: relative;
+}
+
+.thumbnail .image img{
+}
+
+.thumbnail .image > span{
+    display: block;
+    vertical-align: bottom;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.thumbnail h4{
+    font-size: 11px;
+    font-weight: normal;
+    text-align: right;
+    margin: 5px 0 0 0;
+}
+
+.thumbnail .price{
+    display: block;
+    text-align: right;
+}
+
+.thumbnail .price .old{
+    text-decoration: line-through;
+    font-size: 10px;
+    color: Gray;
+}
+
+.thumbnail .price .current{
+    color: #942a25;
+}
+
+.thumbnail .title:hover{
+    color:#ff8c00;
+}
+
+.thumbnail .btn-shop{
+    width: 60%;
+    padding-top:3px;
+    padding-bottom:3px;
+    height: 12px;
+    line-height: 12px;
+    margin: 5px auto -3px auto;
+}
+
+.thumbnail .details{
+    padding-right: 5px;
+    padding-left: 5px;
+    line-height: 12px;
+}
+
+.btn{
+    font-size: 11px !important;
+}
