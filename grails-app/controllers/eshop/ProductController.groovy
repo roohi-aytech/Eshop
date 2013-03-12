@@ -56,6 +56,13 @@ class ProductController {
         render(template: "typeValue", model: [productTypeType: productTypeType])
     }
 
+    def getTypeImage() {
+        def content = ProductTypeType.get(params.id).image
+        response.contentType = 'image/png'
+        response.outputStream << content
+        response.outputStream.flush()
+    }
+
     def deleteType() {
         try {
             def type = ProductTypeType.get(params.id)
@@ -64,7 +71,7 @@ class ProductController {
                     it.type = null
                     it.save()
                 }
-                def productType=ProductType.get(params.ptid)
+                def productType = ProductType.get(params.ptid)
                 productType?.removeFromTypes(type)
                 productType?.save()
                 type.delete()
@@ -83,18 +90,13 @@ class ProductController {
         }
         else
             productTypeType = new ProductTypeType(params)
-//        if (params.productInstanceId) {
-//            def productInstance = Product.get(params.productInstanceId)
-//            productInstance.productTypes.each {
-//                def ptt = it.types.find {it.title==productTypeType.title}
-//                if(ptt)
-//                {
-//                    render ptt as JSON
-//                    return
-//                }
-//            }
-//        }
+        def image = productTypeType.image
+        productTypeType.image = null
         productTypeType = productTypeType.save()
+        if (image) {
+            productTypeType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productTypeType))
+            productTypeType.save()
+        }
         if (params.productInstanceId) {
             def productInstance = Product.get(params.productInstanceId)
             productInstance.productTypes.each {
@@ -250,6 +252,7 @@ class ProductController {
         }
         redirect(action: "productDetails", params: [pid: params.product.id, curtab: params.curtab, curtab2: params.curtab2])
     }
+
     def editImageDetailsAndExit() {
         def product = Product.get(params.product.id)
         def defaultImage = Content.get(params.mainImage)

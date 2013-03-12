@@ -21,6 +21,9 @@ class FileService {
             return filePath(baseProduct.parentProduct) + "/" + baseProduct
         return baseProduct ?: ""
     }
+    def filePath(ProductTypeType productTypeType) {
+        return "productTypeType/${productTypeType?.title}"
+    }
 
     def getFileContent(String path) {
         def p = "${grailsApplication.config.ckeditor.upload.basedir}${path}"

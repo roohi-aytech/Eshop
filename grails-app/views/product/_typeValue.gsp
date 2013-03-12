@@ -3,10 +3,12 @@
     <label for="title" class="valueslabel">
         <g:message code="productTypeType.title" default="Title"/>
     </label>
-    %{--<g:if test="${attributeType == "Text"}">--}%
-        %{--<g:textArea cols="40" rows="5" name="values" value="${value}"/>--}%
-    %{--</g:if>--}%
-    %{--<g:else>--}%
-        <g:textField name="title" value="${productTypeType?.title}"/>
-    %{--</g:else>--}%
+    <g:textField name="title" value="${productTypeType?.title}"/>
+</div>
+<div class="fieldcontain" style="">
+    <label for="image" class="valueslabel">
+        <g:message code="productTypeType.image" default="Image"/>
+    </label>
+    <input type="file" name="image" id="image">
+    <img src="<g:createLink controller="product" action="getTypeImage" id="${productTypeType?.id}"/>" style="max-width: 100px"/>
 </div>
