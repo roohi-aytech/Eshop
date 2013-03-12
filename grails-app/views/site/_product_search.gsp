@@ -20,9 +20,9 @@
                         <a class="btn btn-success btn-shop" href="#"><g:message code="add-to-basket"/></a>
                     </p>
                     <g:if test="${product.details}">
-                        <p class="details">
+                        <span class="details">
                             ${product.details}
-                        </p>
+                        </span>
                     </g:if>
                 </div>
             </div>
