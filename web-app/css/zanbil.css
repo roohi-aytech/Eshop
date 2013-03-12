@@ -34,7 +34,7 @@ body{
 
 .selectedThumbnail{
     box-shadow: 0 0 2px silver;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0 !important;
 }
 
 .thumbnail .main{
@@ -42,13 +42,22 @@ body{
 }
 
 .thumbnail .extended{
-    background: #ffffff;
     border:1px solid #eeeeee;
-    border-radius: 0 0 5px 5px;
-    margin: -1px 0 0 0;
-    border-top-width: 0;
-    box-shadow: 0 0 2px silver;
+    border-radius:5px;
+    margin: -2px -26px 0 -26px;
+    box-shadow: inset 0 0 1px #ffffff;
     max-height: 0;
+    background: #f8f8f8;
+    /* Safari 4-5, Chrome 1-9 */
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#ffffff));
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(top, #ffffff, #f8f8f8);
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, #ffffff, #eeeeee);
+    /* IE 10 */
+    background: -ms-linear-gradient(top, #ffffff, #f8f8f8);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, #ffffff, #f8f8f8)
 }
 
 .thumbnail .extended > div{
@@ -114,6 +123,9 @@ body{
     padding-left: 5px;
     line-height: 12px;
     display:block;
+    text-align: right;
+    font-size: 10px;
+    color: #808080;
 }
 
 .btn{
