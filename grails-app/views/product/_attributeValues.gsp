@@ -9,10 +9,10 @@
     <g:form method="post" action="saveAttributeValues" params="${[curtab: 1, ptid: ptid]}">
         <g:hiddenField name="id" value="${productInstance?.id}"/>
         <g:render template="product_type_type"
-                  model="[productInstance: productInstance,ptid: ptid, productTypeTypes: productTypeTypes]"/>
+                  model="[productInstance: productInstance,ptid: ptid, productTypeTypes: productTypeTypes?.sort{it.title}]"/>
         <eshop:renderProductAttributes product="${productInstance}"/>
 
-        <fieldset class="buttons">
+        <fieldset class="buttons pull-down">
             <g:submitButton name="create" class="save"
                             value="${message(code: 'default.button.save.label', default: 'Save')}"/>
             <g:actionSubmit action="saveAttributeValuesAndExit" name="createAndExit" class="save"
@@ -25,7 +25,7 @@
     </g:form>
     <g:javascript>
         $(function(){
-            $("select").searchable({
+            $("select").not('.ui-pg-selbox').searchable({
                maxListSize: 100,                       // if list size are less than maxListSize, show them all
                maxMultiMatch: 50,                      // how many matching entries should be displayed
                exactMatch: false,                      // Exact matching on search

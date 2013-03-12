@@ -1,0 +1,98 @@
+<%@ page import="eshop.discout.Discount" %>
+
+<div class="form-fields">
+    <div class="form-fields-part">
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'type', 'error')} ">
+            <label for="type">
+                <g:message code="discount.type.label" default="Type"/>
+
+            </label>
+            <g:select ng-model="discountInstance.type" name="type" from="${new Discount().constraints.type.inList}" value=""
+                      valueMessagePrefix="discount.type" noSelection="['': '']"/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'value', 'error')} ">
+            <label for="value">
+                <g:message code="discount.value.label" default="Value"/>
+
+            </label>
+            <g:field type="number" name="value" step="any" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'code', 'error')} ">
+            <label for="code">
+                <g:message code="discount.code.label" default="Code"/>
+
+            </label>
+            <g:textField name="code" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'fromDate', 'error')} ">
+            <label for="fromDate">
+                <g:message code="discount.fromDate.label" default="From Date"/>
+
+            </label>
+            <g:textField name="fromDate" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'toDate', 'error')} ">
+            <label for="toDate">
+                <g:message code="discount.toDate.label" default="To Date"/>
+
+            </label>
+            <g:textField name="toDate" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'usageType', 'error')} ">
+            <label for="usageType">
+                <g:message code="discount.usageType.label" default="Usage Type"/>
+
+            </label>
+            <g:select name="usageType" from="${new Discount().constraints.usageType.inList}" value=""
+                      valueMessagePrefix="discount.usageType" noSelection="['': '']"/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'basketCountMin', 'error')} ">
+            <label for="basketCountMin">
+                <g:message code="discount.basketCountMin.label" default="Basket Count Min"/>
+
+            </label>
+            <g:field type="number" name="basketCountMin" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'basketPriceMin', 'error')} ">
+            <label for="basketPriceMin">
+                <g:message code="discount.basketPriceMin.label" default="Basket Price Min"/>
+
+            </label>
+            <g:field type="number" name="basketPriceMin" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'basketPriceMax', 'error')} ">
+            <label for="basketPriceMax">
+                <g:message code="discount.basketPriceMax.label" default="Basket Price Max"/>
+
+            </label>
+            <g:field type="number" name="basketPriceMax" value=""/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'basketProductCriteria', 'error')} ">
+            <label for="basketProductCriteria">
+                <g:message code="discount.basketProductCriteria.label" default="Basket Product Criteria"/>
+
+            </label>
+            <g:select name="basketProductCriteria" from="${eshop.discout.ProductCriteria.list()}" multiple="multiple"
+                      optionKey="id" size="5" value="" class="many-to-many"/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'discountProductsCriteria', 'error')} ">
+            <label for="discountProductsCriteria">
+                <g:message code="discount.discountProductsCriteria.label" default="Discount Products Criteria"/>
+
+            </label>
+            <g:select name="discountProductsCriteria" from="${eshop.discout.ProductCriteria.list()}" multiple="multiple"
+                      optionKey="id" size="5" value="" class="many-to-many"/>
+        </div>
+
+    </div>
+</div>
