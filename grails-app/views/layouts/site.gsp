@@ -50,6 +50,99 @@
 </head>
 
 <body dir="rtl">
+
+
+<div class="navbar navbar-fixed-top">
+    <div id="header1">
+        <a id="logo"><h1><g:message code="title"></g:message></h1></a>
+
+        <div id="top-links">
+            <a href="#"><g:message code="home.label"></g:message></a> |
+            <a href="#"><g:message code="support.label"></g:message></a> |
+            <a href="#"><g:message code="help.label"></g:message></a> |
+            <a href="#"><g:message code="contact.label"></g:message></a>
+        </div>
+        <span id="support-number"><g:message code="support.number"></g:message></span>
+    </div>
+
+    <div class="navbar-inner" id="header2">
+        <div class="container">
+            <a id="logo-small"><span><g:message code="title"></g:message></span></a>
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <div class="search-box">
+                <div class="btn-group pull-right" style="margin-right: 0;">
+                    <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span id="searchCategory"><g:message code="category.all"></g:message></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <g:each in="${rootProductTypes}" var="rootProductType">
+                        %{--<li><a href="#">${rootProductType.name}</a></li>--}%
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1"
+                                   href="#"
+                                   onclick="$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
+                                <ul class="dropdown-menu">
+                                    <g:each in="${rootProductType.children}" var="secondLevelProductType">
+                                        <li>
+                                        <a href="#" onclick="$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                    </g:each>
+                                </ul>
+                            </li>
+                        </g:each>
+                    </ul>
+                </div>
+
+                <form class="navbar-search pull-right">
+                    <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
+                </form>
+
+                <div id="btn-search" class="btn-group pull-right" style="margin-right: 0;">
+                    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span></span></a>
+                </div>
+            </div>
+
+            <div class="btn-group pull-right topNavigationItem" id="link-compareList">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <g:message code="compareList"></g:message>
+                </a>
+                <div class="dropdown-menu content">
+                    content
+                </div>
+            </div>
+            <div class="btn-group pull-right topNavigationItem" id="link-wishList">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <g:message code="wishList"></g:message>
+                </a>
+                <div class="dropdown-menu content">
+                    content
+                </div>
+            </div>
+            <div class="btn-group pull-right topNavigationItem" id="link-basket">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <g:message code="basket"></g:message>
+                </a>
+                <div class="dropdown-menu content">
+                    content
+                </div>
+            </div>
+            <div class="btn-group pull-right topNavigationItem" id="link-profile">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <g:message code="profile-title"></g:message>
+                </a>
+                <div class="dropdown-menu content">
+                    content
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <g:layoutBody/>
 <r:layoutResources/>
 </body>
