@@ -56,6 +56,12 @@ class BootStrap {
             it.value=it.value.replace("\\n","\n")
             it.save()
         }
+
+//        def province = new Province(title: "Tehran")
+//        def city = new City(title: "Tehran", province: province)
+//        province.addToCities(city)
+//        province.save()
+
         if (GrailsUtil.environment == "development") {
             def validationTagLib = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib')
             Closure messageClosure = { vals ->
