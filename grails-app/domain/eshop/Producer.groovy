@@ -9,7 +9,6 @@ class Producer {
     byte[] logo
     static hasMany = [producerStaffs : ProducerStaff]
     static composites = ["producerStaffs"]
-    List producerStaffs = LazyList.decorate(new ArrayList(), FactoryUtils.instantiateFactory(ProducerStaff.class))
 
     static mapping = {
         sort 'name'
@@ -22,8 +21,6 @@ class Producer {
         name(unique: true)
         address(nullable: true)
         logo(nullable: true, maxSize: 1000000000)
-
-        producerStaffs()
     }
 
     String toString(){
