@@ -35,57 +35,15 @@
 </head>
 
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="#">Zanbil</a>
-
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li><a href="#"><g:message code="support"/></a></li>
-                    <li><a href="#"><g:message code="wishList"/></a></li>
-                    <li><a href="#"><g:message code="compareList"/></a></li>
-                    <li><a href="#"><g:message code="basket"/></a></li>
-                    <li><a href="#"><g:message code="profile-title"/></a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-            <div class="btn-group pull-right" style="margin-right: 0px; margin-left: 10px;">
-                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                    <g:message code="site.selectCategory"></g:message>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <g:each in="${rootProductTypes}" var="rootProductType">
-                    %{--<li><a href="#">${rootProductType.name}</a></li>--}%
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="${commonLink}/browse/${rootProductType.name}/">${rootProductType.name}</a>
-                            <ul class="dropdown-menu">
-                                <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                    <li>
-                                    <a href="${commonLink}/browse/${secondLevelProductType.name}/">${secondLevelProductType.name}</a>
-                                </g:each>
-                            </ul>
-                        </li>
-                    </g:each>
-                </ul>
-            </div>
-
-            <form class="navbar-search pull-right">
-                <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
-            </form>
-        </div>
-    </div>
-</div>
 
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2">
             <div class="well sidebar-nav">
+                <div id="navigator_root">
+                    <a href="/EShop/site/browse/${message(code:"applicances")}" id="navigator_appliance"><g:message code="applicances"></g:message></a>
+                    <a href="/EShop/site/browse/${message(code:"digital")}" id="navigator_digital"><g:message code="digital"></g:message></a>
+                </div>
                 <ul class="nav nav-list">
                     <g:if test="${filters.productTypes}">
                         <li class="nav-header"><g:message code="site.selectSubcategory" default="Select SubProductType"></g:message></li>
@@ -101,12 +59,12 @@
                         <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand" default="Select Brand"></g:message></li>
                         <g:each in="${filters.brands}" var="brand">
                             <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
-                                <li class="active">
+                                <li class="active checkable">
                                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}" remove="true"></eshop:filterAddBrand>
                                 </li>
                             </g:if>
                             <g:else>
-                                <li>
+                                <li class="checkable">
                                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"></eshop:filterAddBrand>
                                 </li>
                             </g:else>
@@ -119,12 +77,12 @@
                             <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
                             <g:each in="${attribute.value.countsByValue}" var="attributeValueCount">
                                 <g:if test="${filters.selecteds[attribute.key]?.contains(attributeValueCount._id)}">
-                                    <li class="active">
+                                    <li class="active checkable">
                                         <eshop:filterAddAttribute id="${attribute.key}" value="${attributeValueCount._id}" f="${params.f}" remove="true"></eshop:filterAddAttribute>
                                     </li>
                                 </g:if>
                                 <g:else>
-                                    <li>
+                                    <li class="checkable">
                                         <eshop:filterAddAttribute id="${attribute.key}" value="${attributeValueCount._id}" f="${params.f}"></eshop:filterAddAttribute>                                    </li>
                                 </g:else>
                             </g:each>

@@ -172,13 +172,17 @@
                     .css('display', 'inline')
                     .css('margin', '3px');
         </script>
+        <g:set var="productActions" value="[]"/>
+        <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
+            <g:set var="productActions" value="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}"/>
+        </sec:ifAllGranted>
         <rg:grid domainClass="${eshop.mongo.MongoProduct}"
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.find{true}?.name'],[name: 'type',expression:'obj[\\\'type\\\'][\\\'name\\\']'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'],[name: 'name']]"
+                 columns="[[name:'image',expression:'\\\'%3cimg height=30 src=%22\\\'%2bg.createLink(controller: \\\'image\\\',id:obj.baseProductId )%2b\\\'%22/%3e\\\''],[name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.find{true}?.name'],[name: 'type',expression:'obj[\\\'type\\\'][\\\'name\\\']'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'],[name: 'name']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
-                 commands="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}">
+                 commands="${productActions}">
             <g:if test="${ptid}">
                 <rg:criteria>
                     <rg:inCrit name="productTypes.id" value="${ptid as Long}"/>

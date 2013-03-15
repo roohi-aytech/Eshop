@@ -27,6 +27,7 @@
     <jqui:resources theme="cobalt"></jqui:resources>
 
     <g:javascript plugin="rapid-grails" src="angular.min.js"></g:javascript>
+    <g:javascript plugin="rapid-grails" src="angular.autocomplete.js"></g:javascript>
 
     <g:javascript plugin="rapid-grails" src="utils.js"></g:javascript>
     <g:javascript plugin="rapid-grails" src="grid_utils.js"></g:javascript>

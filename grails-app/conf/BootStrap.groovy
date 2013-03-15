@@ -23,7 +23,7 @@ class BootStrap {
             def authority = it
             def role = Role.findByAuthority(authority) ?: new Role(authority: authority).save(failOnError: true)
         }
-        def adminRole = Role.findByAuthority(RoleHelper.ROLE_USER_ADMIN)
+        def adminRole = Role.findByAuthority(RoleHelper.ROLE_PRODUCT_ADMIN)
         def adminUser = User.findByUsername('admin') ?: new User(
                 username: 'admin',
                 password: 'admin',
@@ -61,6 +61,7 @@ class BootStrap {
             Closure messageClosure = { vals ->
                 //println "${attrs.code}"
                 def messagesFile = grailsApplication.config.eshop.messages.file
+//                println vals.code
                 messagesFile.append("${vals.code}\n")
 
                 messageImpl(vals)
@@ -69,31 +70,31 @@ class BootStrap {
             messageClosure.setDelegate(validationTagLib)
             validationTagLib.message = messageClosure
 
-//            def at1 = new AttributeType(name: "a1", attributeType: "String")
-//            def at2 = new AttributeType(name: "a2", attributeType: "String")
-//
-//            def pt1 = new ProductType(name: "pt1", description: "")
-//            pt1.addToAttributeTypes(at1)
-//            pt1.rootProductType = pt1
-//            saveIt pt1
-//
-//            def pt2 = new ProductType(name: "pt2", description: "")
-//            pt2.addToAttributeTypes(at2)
-//            pt2.rootProductType = pt2
-//            saveIt pt2
-//
-//            def pr1 = new Product(name: "pr1", description: "pr1")
-//            pr1.addToProductTypes(pt1)
-//            saveIt pr1
-//
-//            def pr2 = new Product(name: "pr2", description: "pr2")
-//            pr2.addToProductTypes(pt2)
-//            saveIt pr2
-//
-//            def pr3 = new Product(name: "pr3", description: "pr3")
-//            pr3.addToProductTypes(pt1)
-//            pr3.addToProductTypes(pt2)
-//            saveIt pr3
+            def at1 = new AttributeType(name: "a1", attributeType: "String")
+            def at2 = new AttributeType(name: "a2", attributeType: "String")
+
+            def pt1 = new ProductType(name: "pt1", description: "")
+            pt1.addToAttributeTypes(at1)
+            pt1.rootProductType = pt1
+            saveIt pt1
+
+            def pt2 = new ProductType(name: "pt2", description: "")
+            pt2.addToAttributeTypes(at2)
+            pt2.rootProductType = pt2
+            saveIt pt2
+
+            def pr1 = new Product(name: "pr1", description: "pr1")
+            pr1.addToProductTypes(pt1)
+            saveIt pr1
+
+            def pr2 = new Product(name: "pr2", description: "pr2")
+            pr2.addToProductTypes(pt2)
+            saveIt pr2
+
+            def pr3 = new Product(name: "pr3", description: "pr3")
+            pr3.addToProductTypes(pt1)
+            pr3.addToProductTypes(pt2)
+            saveIt pr3
         }
     }
 

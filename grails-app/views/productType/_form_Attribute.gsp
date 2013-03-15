@@ -73,7 +73,7 @@
     <label for="values" class="valueslabel">
         <g:message code="attributeType.values.label" default="Values"/>
     </label>
-    <g:each in="${attributeTypeInstance?.values?.sort{it.id}}">
+    <g:each in="${attributeTypeInstance?.values?.sort{it.value}}">
         <div>
 
             <g:if test="${attributeTypeInstance?.attributeType=="Text"}">

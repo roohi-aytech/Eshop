@@ -58,19 +58,28 @@
                             default="Culture Event"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
-        <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">
+        <sec:ifAnyGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN},${eshop.RoleHelper.ROLE_PRICE_ADMIN}">
 
             <h3>
                 <g:message code="navigation.manage.product" default="product management"/>
             </h3>
             <ul>
+            <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">
                 <li>
                     <g:link controller="product" action="list"><img
                             src="images/products.png"/><span><g:message
                             code="product.label"
                             default="Products"/></span></g:link></li>
+                </sec:ifAllGranted>
+                <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
+                    <li>
+                        <g:link controller="discount" action="list"><img
+                                src="images/discount.png"/><span><g:message
+                                code="discount"
+                                default="Discount"/></span></g:link></li>
+                </sec:ifAllGranted>
             </ul>
-        </sec:ifAllGranted>
+        </sec:ifAnyGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
             <h3>
                 <g:message code="navigation.manage.users" default="User Management"/>
