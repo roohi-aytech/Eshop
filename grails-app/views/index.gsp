@@ -20,6 +20,12 @@
 
             <ul>
                 <li>
+                    <g:link controller="producer" action="list"><img
+                            src="images/productType.png"/><span><g:message
+                            code="producer.label"
+                            default="Producers"/></span></g:link></li>
+
+
                     <g:link controller="productType" action="list"><img
                             src="images/productType.png"/><span><g:message
                             code="productType.label"
