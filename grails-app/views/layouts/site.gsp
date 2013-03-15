@@ -1,4 +1,3 @@
-<%@ page import="grails.converters.JSON" %>
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -59,7 +58,7 @@
 </head>
 
 <body dir="rtl">
-<div id="mainContainer" ng-controller="eshopCtrl">
+<div id="main-container" ng-controller="eshopCtrl">
 <div class="navbar navbar-fixed-top">
     <div id="header1">
         <a id="logo"><h1><g:message code="title"></g:message></h1></a>
@@ -170,17 +169,6 @@
                         </li>
                     </ul>
                     <g:link controller="basket" action="show">Show Basket</g:link>
-                </div>
-            </div>
-
-            <div class="btn-group pull-right topNavigationItem" id="link-profile">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span><g:message code="profile-title"></g:message></span>
-                    <span class="counter">0</span>
-                </a>
-
-                <div class="dropdown-menu content">
-                    content
                 </div>
             </div>
         </div>
