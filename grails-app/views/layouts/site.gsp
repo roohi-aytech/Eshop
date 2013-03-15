@@ -28,7 +28,7 @@
     <script type="text/javascript" src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
     <script type="text/javascript">
         var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
-        var basket = ${(session.getAttribute("basket")?: []) as JSON};
+        var basket = ${(session.getAttribute("basket")?: []) as grails.converters.JSON};
         var contextRoot = "${createLink(uri: '/')}";
     </script>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
