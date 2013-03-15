@@ -17,7 +17,7 @@
             <div class="extended">
                 <div>
                     <p>
-                        <a class="btn btn-success btn-buy" href="#"><span><g:message code="add-to-basket"/></span></a>
+                        <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
                         <a class="btn btn-primary btn-compare" href="#"><span><g:message code="add-to-compareList"/></span></a>
                         <a class="btn btn-danger btn-wish" href="#"><span><g:message code="add-to-wishList"/></span></a>
                     </p>

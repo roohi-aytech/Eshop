@@ -148,4 +148,14 @@ class EshopTagLib {
         out << body()
         out << "</a>"
     }
+
+    def addToBasket = { attrs, body ->
+        out << """
+        <a class="btn btn-success btn-buy" ng-click="addToBasket(${attrs.prodcutId}, '${attrs.productTitle}')" href="#"><span>${g.message(code: "add-to-basket")}</span></a>
+        """
+    }
+
+    def basketItem = { attrs, body ->
+        out << "${attrs.id} ${attrs.name} ${attrs.count} salam farzin :D"
+    }
 }

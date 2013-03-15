@@ -1,9 +1,10 @@
+<%@ page import="grails.converters.JSON" %>
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" ng-app='eshop'><!--<![endif]-->
 <head>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
     %{--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--}%
@@ -25,6 +26,13 @@
     %{--<ckeditor:resources/>--}%
     <g:javascript library="jquery"></g:javascript>
     <r:layoutResources/>
+    <script type="text/javascript" src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
+    <script type="text/javascript">
+        var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
+        var basket = ${(session.getAttribute("basket")?: []) as JSON};
+        var contextRoot = "${createLink(uri: '/')}";
+    </script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
     %{--<jqui:resources theme="cobalt"></jqui:resources>--}%
     %{----}%
     %{--<g:javascript plugin="rapid-grails" src="utils.js"></g:javascript>--}%
@@ -51,7 +59,7 @@
 </head>
 
 <body dir="rtl">
-
+<div id="mainContainer" ng-controller="eshopCtrl">
 <div class="navbar navbar-fixed-top">
     <div id="header1">
         <a id="logo"><h1><g:message code="title"></g:message></h1></a>
@@ -152,11 +160,16 @@
             <div class="btn-group pull-right topNavigationItem" id="link-basket">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <span><g:message code="basket"></g:message></span>
-                    <span class="counter">0</span>
+                    <span id="basketCounter" class="counter">{{basketCounter}}</span>
                 </a>
 
-                <div class="dropdown-menu content">
-                    content
+                <div id="basketItems" class="dropdown-menu content">
+                    <ul>
+                        <li ng-repeat="basketItem in basket">
+                            {{basketItem.id}} {{basketItem.name}} {{basketItem.count}} :D
+                        </li>
+                    </ul>
+                    <g:link controller="basket" action="show">Show Basket</g:link>
                 </div>
             </div>
 
@@ -175,5 +188,6 @@
 </div>
 <g:layoutBody/>
 <r:layoutResources/>
+</div>
 </body>
 </html>
