@@ -3,9 +3,17 @@
     font-size: 11px;
 }
 
+.clear-float{
+    clear: both;
+}
+
+html{
+    background: none;
+}
+
 body{
     padding-top: 105px !important;
-    position: relative;
+    /*position: relative;*/
 }
 
 #main-container{
@@ -15,28 +23,45 @@ body{
 /*Layout*/
 
 .row-fluid{
+    /*position: relative;*/
+}
+
+.layout-container{
+    min-height: 100px;
     position: relative;
 }
 
 .span180{
     width: 180px !important;
-    position: absolute;
-    right: 0;
+    float: right !important;
+    margin-right: 5px;
+    margin-left: 0;
 }
 
 .span200{
     width: 200px !important;
-    margin-right: 5px !important;
-    position: absolute;
-    left: 0;
+    margin-left: 5px !important;
+    float: left !important;
 }
 
 .span600{
     min-width: 593px !important;
-    width: auto !important;
+    margin-right: 190px !important;
+    margin-left: 210px !important;
     position: absolute;
-    margin-right: 185px !important;
-    margin-left: 205px !important;
+}
+
+.span415{
+    margin-right: 191px !important;
+    margin-left: 402px !important;
+    position: absolute;
+}
+
+.span320{
+    width: 320px !important;
+    margin-left: 5px !important;
+    float: left !important;
+    padding-top:10px;
 }
 
 .container-fluid{
@@ -62,6 +87,10 @@ body{
     box-shadow: none;
     border-radius: 5px 5px 0 0 !important;
     border:1px solid #ffffff;
+}
+
+.row-fluid{
+    min-height: 100px !important;
 }
 
 .row-fluid [class*="span"]{
@@ -92,7 +121,9 @@ body{
     height: 220px;
 }
 
-.thumbnail .extended{
+.thumbnail .extended div p{
+    margin-right: -5px;
+    margin-left: -5px;
 }
 
 .thumbnail .image{
@@ -554,4 +585,29 @@ input.search-query {
 
 .dropdown-menu.content{
     padding: 5px;
+}
+
+/*product*/
+.product-image{
+    border: 1px solid #cccccc;
+    padding:10px;
+    display: inline-block;
+    margin:auto;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    margin-top:-10px;
+    width: 300px;
+}
+
+.product-image img{
+    border-radius: 5px;
+}
+
+.cloudzoom-gallery img{
+    border: 1px solid #cccccc;
+    padding:5px;
+    display: inline-block;
+    margin-top:10px;
+    border-radius: 5px;
+    background-color: #eeeeee;
 }

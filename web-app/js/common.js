@@ -23,4 +23,7 @@ function changeAddToBasketButtonLabel(){
     else{
         $('.thumbnail .btn-buy span').html('خرید');
     }
+
+    $('.span600').width($('body').innerWidth() - 400);
+    $('.span415').width($('body').innerWidth() - 522);
 }
