@@ -51,7 +51,7 @@
 </head>
 
 <body dir="rtl">
-
+<div id="main-container">
 <div class="navbar navbar-fixed-top">
     <div id="header1">
         <a id="logo"><h1><g:message code="title"></g:message></h1></a>
@@ -137,7 +137,6 @@
                     content
                 </div>
             </div>
-
             <div class="btn-group pull-right topNavigationItem" id="link-wishList">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <span><g:message code="wishList"></g:message></span>
@@ -148,21 +147,9 @@
                     content
                 </div>
             </div>
-
             <div class="btn-group pull-right topNavigationItem" id="link-basket">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <span><g:message code="basket"></g:message></span>
-                    <span class="counter">0</span>
-                </a>
-
-                <div class="dropdown-menu content">
-                    content
-                </div>
-            </div>
-
-            <div class="btn-group pull-right topNavigationItem" id="link-profile">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span><g:message code="profile-title"></g:message></span>
                     <span class="counter">0</span>
                 </a>
 
@@ -174,6 +161,7 @@
     </div>
 </div>
 <g:layoutBody/>
+</div>
 <r:layoutResources/>
 </body>
 </html>

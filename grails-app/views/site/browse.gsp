@@ -37,10 +37,10 @@
 </head>
 
 <body>
-
+${params.get('resolution')}
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span2">
+        <div class="span2 span180">
             <div class="well sidebar-nav">
                 <div id="navigator_root">
                     <a href="/EShop/site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="span8">
+        <div class="span8 span600">
             <ul class="breadcrumb">
                 <li>
                     <a href="#"><g:message code="home"/></a>
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <div class="span2">
+        <div class="span2 span200">
             <div class="well">
             </div>
         </div>

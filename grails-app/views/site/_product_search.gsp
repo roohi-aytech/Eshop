@@ -18,8 +18,8 @@
                 <div>
                     <p>
                         <a class="btn btn-success btn-buy" href="#"><span><g:message code="add-to-basket"/></span></a>
-                        <a class="btn btn-primary btn-compare" href="#"><span><g:message code="add-to-compareList"/></span></a>
-                        <a class="btn btn-danger btn-wish" href="#"><span><g:message code="add-to-wishList"/></span></a>
+                        <a class="btn btn-primary btn-compare" href="#" title="${message(code:'add-to-compareList')}"><span></span></a>
+                        <a class="btn btn-danger btn-wish" href="#" title="${message(code:'add-to-wishList')}"><span></span></a>
                     </p>
                     <g:if test="${product.details}">
                         <h5><g:message code="product-details"></g:message></h5>
