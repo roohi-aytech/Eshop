@@ -205,51 +205,49 @@ body{
     font-size: 11px !important;
 }
 
-.btn-buy{
+.thumbnail .btn-buy{
     padding-left:8px;
     padding-right:5px;
     height: 17px !important;
 }
 
-.btn-buy span{
+.thumbnail .btn-buy span{
     background-image: url(../images/icons/buy.png);
     background-position: top right;
     background-repeat: no-repeat;
     padding-right:20px;
     display: block;
-    height: 40px;
     padding-top: 2px;
 }
 
-.btn-compare{
+.thumbnail .btn-compare{
     padding-left:8px;
     padding-right:5px;
     height: 17px !important;
-    height: 17px !important;
 }
 
-.btn-compare span{
+.thumbnail .btn-compare span{
     background-image: url(../images/icons/compare.png);
     background-position: top right;
     background-repeat: no-repeat;
     display: block;
-    width: 14px;
+    min-width: 14px;
     height: 14px;
     padding-top: 2px;
 }
 
-.btn-wish{
+.thumbnail .btn-wish{
     padding-left:8px;
     padding-right:5px;
     height: 17px !important;
 }
 
-.btn-wish span{
+.thumbnail .btn-wish span{
     background-image: url(../images/icons/wish.png);
     background-position: top right;
     background-repeat: no-repeat;
     display: block;
-    width: 14px;
+    min-width: 14px;
     height: 14px;
     padding-top: 2px;
 }
@@ -651,4 +649,50 @@ h2{
 
 .price .current{
     color: #942a25;
+}
+
+.btn-buy{
+    padding-left:8px;
+    padding-right:5px;
+    height: 17px !important;
+}
+
+.btn-buy span{
+    background-image: url(../images/icons/buy.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    padding-right:20px;
+    padding-top: 2px;
+}
+
+.btn-compare{
+    padding-left:8px;
+    padding-right:5px;
+    height: 17px !important;
+}
+
+.btn-compare span{
+    padding-right:20px;
+    background-image: url(../images/icons/compare.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    min-width: 14px;
+    height: 14px;
+    padding-top: 2px;
+}
+
+.btn-wish{
+    padding-left:8px;
+    padding-right:5px;
+    height: 17px !important;
+}
+
+.btn-wish span{
+    padding-right:20px;
+    background-image: url(../images/icons/wish.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    min-width: 14px;
+    height: 14px;
+    padding-top: 2px;
 }

@@ -49,19 +49,17 @@
 
     <div class="span415">
         <ul class="breadcrumb">
-            %{--<li>--}%
-            %{--<a href="#"><g:message code="home"/></a>--}%
-            %{--<span class="divider">${">"}</span>--}%
-            %{--</li>--}%
-            %{--<g:if test="${breadCrumb.size() > 1}">--}%
-            %{--<g:each in="${breadCrumb[0..-2]}">--}%
-            %{--<li>--}%
-            %{--<a href="${it.href}">${it.name}</a>--}%
-            %{--<span class="divider">${">"}</span>--}%
-            %{--</li>--}%
-            %{--</g:each>--}%
-            %{--</g:if>--}%
-            %{--<li class="active">${breadCrumb[-1].name}</li>--}%
+            <li>
+            <a href="#"><g:message code="home"/></a>
+            </li>
+            <g:if test="${breadCrumb.size() > 1}">
+            <g:each in="${breadCrumb[0..-1]}">
+            <li>
+                <span class="divider">${">"}</span>
+            <a href="${it.href}">${it.name}</a>
+            </li>
+            </g:each>
+            </g:if>
         </ul>
 
         <div class="white-panel">
@@ -81,6 +79,12 @@
             <p>
                 <g:message code="rate"/>:
                 <b><g:render template="rate"/></b>
+            </p>
+
+            <p>
+                <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
+                <a class="btn btn-primary btn-compare" href="#" ><span>${message(code:'add-to-compareList')}</span></a>
+                <a class="btn btn-danger btn-wish" href="#" ><span>${message(code:'add-to-wishList')}</span></a>
             </p>
 
             <hr/>
