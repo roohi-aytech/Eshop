@@ -64,37 +64,26 @@
             %{--<li class="active">${breadCrumb[-1].name}</li>--}%
         </ul>
 
-        <div class="">
-
-            <div class="btn-group">
-                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                    <g:message code="request"/>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#"><g:message code="send-to-compare"/></a></li>
-                    <li><a href="#"><g:message code="send-to-wish-list"/></a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><g:message code="send-to-friend"/></a></li>
-                </ul>
-                <a class="btn btn-primary"><g:message code="more-details"/></a>
-                <a class="btn btn-success"><g:message code="buy"/></a>
-
-            </div>
+        <div class="white-panel">
 
             <h2>${product}</h2>
 
-            <p>
-                <g:message code="price"/>
-                <strong>
-                    <g:render template="price"/>
-                </strong>
+            <p class="brand-badge">
+                <span><g:message code="brand"/>:</span>
+                <b>${product?.brand}</b>
             </p>
 
             <p>
-                <g:message code="brand"/>:
-                <strong>${product?.brand}</strong>
+                <g:message code="price"/>:
+                <b><g:render template="price"/></b>
             </p>
+
+            <p>
+                <g:message code="rate"/>:
+                <b><g:render template="rate"/></b>
+            </p>
+
+            <hr/>
 
             <div class="product-description">${product?.description}</div>
 
