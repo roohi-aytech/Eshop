@@ -82,7 +82,7 @@
 
             </div>
 
-            <h3>${product?.name}</h3>
+            <h2>${product}</h2>
 
             <p>
                 <g:message code="price"/>

@@ -611,3 +611,9 @@ input.search-query {
     border-radius: 5px;
     background-color: #eeeeee;
 }
+
+/*product*/
+h2{
+    font-family: times !important;
+    font-size: 24px;
+}
