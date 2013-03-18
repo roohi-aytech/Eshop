@@ -5,29 +5,20 @@ $(document).ready(function () {
     $(".thumbnail").live({
             mouseenter: function () {
                 if (timeout) window.clearTimeout(timeout);
-                $(this).css('overflow', 'visible');
-                $(this).css('z-index', 1000);
                 $(this).css('border-color', '#EEEEEE');
-                $(this).wrap('<div class="selectedThumbnail"></div>');
-                $(this).find(".extended").first().stop().animate({
-                    'max-height': '1000px'
-                }, 2000);
-                $(this).find(".extended div").first().stop().animate({
-                    opacity: 1
-                }, 1000);
+                $(this).addClass('selectedThumbnail');
+                $(this).find(".main").first().stop().animate({
+                    'margin-top': '-160px'
+                }, 700);
             },
             mouseleave: function () {
                 if (timeout) window.clearTimeout(timeout);
-                $(this).css('overflow', 'hidden');
-                $(this).css('z-index', 0);
                 $(this).css('border-color', '#FFFFFF');
-                $(this).unwrap();
-                $(this).find(".extended").first().stop().animate({
-                    'max-height': 0
-                }, 10);
-                $(this).find(".extended div").first().stop().animate({
-                    opacity: 0
-                }, 10);
+                $(this).removeClass('selectedThumbnail');
+                $(this).find(".main").first().stop().animate({
+                    'margin-top': '0'
+                }, 500);
+
             }
         }
     );

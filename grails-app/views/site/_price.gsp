@@ -1,6 +1,8 @@
-<small>
-    <span class="badge">
-        <strike><g:formatNumber number="${mainVal}" type="number"/></strike>
-    </span>
-</small>
-<span class="badge badge-success"><g:formatNumber number="${showVal}" type="number"/></span>
+<span class="price">
+    <g:if test="${mainVal}">
+        <span class="old"><g:formatNumber number="${mainVal}" type="number"/></span>
+    </g:if>
+    <g:if test="${showVal}">
+        <span class="current"><g:formatNumber number="${showVal}" type="number"/></span>
+    </g:if>
+</span>

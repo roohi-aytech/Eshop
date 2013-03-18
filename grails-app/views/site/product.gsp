@@ -31,146 +31,70 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
-
+    <g:javascript src="common.js"></g:javascript>
+    <g:javascript src="browse.js"></g:javascript>
 </head>
 
 <body>
-<g:javascript src="browse.js"></g:javascript>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="<g:createLink action="index2"/>">Zanbil</a>
 
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li><a href="#"><g:message code="support"/></a></li>
-                    <li><a href="#"><g:message code="wishList"/></a></li>
-                    <li><a href="#"><g:message code="compareList"/></a></li>
-                    <li><a href="#"><g:message code="basket"/></a></li>
-                    <li><a href="#"><g:message code="profile-title"/></a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        %{--<ul class="nav pull-right">--}%
-        %{--<li class="dropdown">--}%
-        %{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}%
-        %{--Account--}%
-        %{--<b class="caret"></b>--}%
-        %{--</a>--}%
-        %{--<ul class="dropdown-menu">--}%
-        %{--<li><a href="#">a</a></li>--}%
-        %{--<li><a href="#">b</a></li>--}%
-        %{--<li><a href="#">c</a></li>--}%
-        %{--<li class="dropdown-submenu">--}%
-        %{--<a tabindex="-1" href="#">More options</a>--}%
-        %{--<ul class="dropdown-menu">--}%
-        %{--<li><a href="#">a</a></li>--}%
-        %{--<li><a href="#">b</a></li>--}%
-        %{--<li><a href="#">c</a></li>--}%
-        %{--<li class="dropdown-submenu">--}%
-        %{--<a tabindex="-1" href="#">More options</a>--}%
-        %{--<ul class="dropdown-menu">--}%
-        %{--<li><a href="#">a</a></li>--}%
-        %{--<li><a href="#">b</a></li>--}%
-        %{--<li><a href="#">c</a></li>--}%
-        %{--</ul>--}%
-        %{--</li>--}%
-        %{--</ul>--}%
-        %{--</li>--}%
-        %{--</ul>--}%
-        %{--</li>--}%
-        %{--</ul>--}%
-            <div class="btn-group pull-right" style="margin-right: 0px; margin-left: 10px;">
-                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                    <g:message code="site.selectCategory"></g:message>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <g:each in="${rootProductTypes}" var="rootProductType">
-                    %{--<li><a href="#">${rootProductType.name}</a></li>--}%
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">${rootProductType.name}</a>
-                            <ul class="dropdown-menu">
-                                <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                    <li><a href="javascript:topProductTypeSelect(${secondLevelProductType.id})">${secondLevelProductType.name}</a>
-                                    </li>
-                                </g:each>
-                            </ul>
-                        </li>
-                    </g:each>
-                </ul>
-            </div>
-
-            <form class="navbar-search pull-right">
-                <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
-            </form>
+<div class="layout-container">
+    <div class="span180">
+        <div class="well">
         </div>
+    </div>
+
+    <div class="span320">
+        <div><g:render template="product/zoom"/></div>
+    </div>
+
+    <div class="span415">
+        <ul class="breadcrumb">
+            <li>
+            <a href="#"><g:message code="home"/></a>
+            </li>
+            <g:if test="${breadCrumb.size() > 1}">
+            <g:each in="${breadCrumb[0..-1]}">
+            <li>
+                <span class="divider">${">"}</span>
+            <a href="${it.href}">${it.name}</a>
+            </li>
+            </g:each>
+            </g:if>
+        </ul>
+
+        <div class="white-panel">
+
+            <h2>${product}</h2>
+
+            <p class="brand-badge">
+                <span><g:message code="brand"/>:</span>
+                <b>${product?.brand}</b>
+            </p>
+
+            <p>
+                <g:message code="price"/>:
+                <b><g:render template="price"/></b>
+            </p>
+
+            <p>
+                <g:message code="rate"/>:
+                <b><g:render template="rate"/></b>
+            </p>
+
+            <p>
+                <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
+                <a class="btn btn-primary btn-compare" href="#" ><span>${message(code:'add-to-compareList')}</span></a>
+                <a class="btn btn-danger btn-wish" href="#" ><span>${message(code:'add-to-wishList')}</span></a>
+            </p>
+
+            <hr/>
+
+            <div class="product-description">${product?.description}</div>
+
+            <g:render template="product/variation"/></div>
     </div>
 </div>
 
-<div class="content container-fluid">
-    <div class="row-fluid">
-
-        <div class="span6">
-            <div class="well">
-
-                <div class="btn-group">
-                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                        <g:message code="request"/>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><g:message code="send-to-compare"/></a></li>
-                        <li><a href="#"><g:message code="send-to-wish-list"/></a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><g:message code="send-to-friend"/></a></li>
-                    </ul>
-                    <a class="btn btn-primary"><g:message code="more-details"/></a>
-                    <a class="btn btn-success"><g:message code="buy"/></a>
-
-                </div>
-
-                <h3>${product?.name}</h3>
-
-                <p>
-                    <g:message code="price"/>
-                    <strong>
-                        <g:render template="price"/>
-                    </strong>
-                </p>
-
-                <p>
-                    <g:message code="brand"/>:
-                    <strong>${product?.brand}</strong>
-                </p>
-
-                <div class="product-description">${product?.description}</div>
-
-                <g:render template="product/variation"/>
-            </div>
-        </div>
-
-        <div class="span6">
-            <div class="product-images well"><g:render template="product/zoom"/></div>
-        </div>
-    </div>
-
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="well">
-                <p>
-                    <g:render template="product/description" model="[product: product]"/>
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-</div>
 <g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 </body>
