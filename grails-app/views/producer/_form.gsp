@@ -1,4 +1,4 @@
-<%@ page import="eshop.ProducerStaff; eshop.Producer" %>
+<%@ page import="eshop.ProducingProduct; eshop.ProducerStaff; eshop.Producer" %>
 
 <div class="form-fields">
     <div class="form-fields-part">
@@ -25,6 +25,15 @@
 
             </label>
             <g:select name="producerStaffs" from="${ProducerStaff.list()}" multiple="multiple"
+                      optionKey="id" size="5" value="" class="many-to-many"/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producingProducts', 'error')} ">
+            <label for="producingProducts">
+                <g:message code="producingProducts.label" default="ProducingProducts"/>
+
+            </label>
+            <g:select name="producingProducts" from="${ProducingProduct.list()}" multiple="multiple"
                       optionKey="id" size="5" value="" class="many-to-many"/>
         </div>
 

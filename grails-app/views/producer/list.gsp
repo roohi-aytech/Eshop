@@ -35,6 +35,15 @@
                         </div>
                     </fieldset>
                 </div>
+                <div>
+                    <fieldset>
+                        <legend><g:message code="producingProducts"/></legend>
+                        <div>
+                            <rg:field name="producingProducts"/>
+                        </div>
+                    </fieldset>
+                </div>
+
             </rg:template>
         </rg:fields>
         <rg:saveButton domainClass="${eshop.Producer}"/>
@@ -64,7 +73,7 @@
             $( "#producer" ).on( "dialogopen", function( event, ui ) {
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             } );
-            $("[ng-click^=addCompositeProducerStaff]").click(function(){
+            $("[ng-click^=addCompositeproducerStaff], [ng-click^=addCompositeproducingProduct]").click(function(){
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             })
         })

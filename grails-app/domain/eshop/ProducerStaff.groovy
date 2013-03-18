@@ -5,13 +5,12 @@ class ProducerStaff {
     String role
     String name
     String lastName
-    int phoneNumber
-    int fax
-    int mobile
+    String phoneNumber
+    String fax
+    String mobile
     String emailAddress
     String secretary
 
-   // Producer producer
     static belongsTo =  Producer
 
     Boolean deleted

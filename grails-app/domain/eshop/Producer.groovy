@@ -7,12 +7,13 @@ class Producer {
     String name
     String address
     byte[] logo
-    static hasMany = [producerStaffs : ProducerStaff]
-    static composites = ["producerStaffs"]
+    static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
+    static composites = ["producerStaffs", "producingProducts"]
 
     static mapping = {
         sort 'name'
         producerStaffs cascade: "all-delete-orphan"
+        producingProducts cascade: "all-delete-orphan"
     }
 
     static searchable = true
