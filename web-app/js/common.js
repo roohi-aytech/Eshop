@@ -26,4 +26,5 @@ function changeAddToBasketButtonLabel(){
 
     $('.span600').width($('body').innerWidth() - 400);
     $('.span415').width($('body').innerWidth() - 522);
+    $('.span735').width($('body').innerWidth() - 200);
 }

@@ -50,15 +50,15 @@
     <div class="span415">
         <ul class="breadcrumb">
             <li>
-            <a href="#"><g:message code="home"/></a>
+                <a href="#"><g:message code="home"/></a>
             </li>
             <g:if test="${breadCrumb.size() > 1}">
-            <g:each in="${breadCrumb[0..-1]}">
-            <li>
-                <span class="divider">${">"}</span>
-            <a href="${it.href}">${it.name}</a>
-            </li>
-            </g:each>
+                <g:each in="${breadCrumb[0..-1]}">
+                    <li>
+                        <span class="divider">${">"}</span>
+                        <a href="${it.href}">${it.name}</a>
+                    </li>
+                </g:each>
             </g:if>
         </ul>
 
@@ -81,17 +81,38 @@
                 <b><g:render template="rate"/></b>
             </p>
 
-            <p>
-                <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
-                <a class="btn btn-primary btn-compare" href="#" ><span>${message(code:'add-to-compareList')}</span></a>
-                <a class="btn btn-danger btn-wish" href="#" ><span>${message(code:'add-to-wishList')}</span></a>
-            </p>
 
-            <hr/>
-
-            <div class="product-description">${product?.description}</div>
+            <div class="product-description">${product?.details}</div>
 
             <g:render template="product/variation"/></div>
+
+        <p>
+            <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
+            <a class="btn btn-primary btn-compare" href="#"><span>${message(code: 'add-to-compareList')}</span></a>
+            <a class="btn btn-danger btn-wish" href="#"><span>${message(code: 'add-to-wishList')}</span></a>
+        </p>
+    </div>
+
+    <div class="span735">
+        <div class="white-panel">
+            <h3><g:message code="product.specifications"></g:message></h3>
+            <ul class="attribute-list">
+            <g:each in="${product.attributes}">
+                <g:if test="${it.value.toString().compareTo("N/A") != 0}">
+                    <li><b>${it.attributeType}:</b> ${it.value}</li>
+                </g:if>
+            </g:each>
+            </ul>
+            <hr/>
+            <g:if test="${product.description}">
+                <h3><g:message code="product.description"></g:message></h3>
+
+                <div>
+                    ${product.description}
+                </div>
+                <hr/>
+            </g:if>
+        </div>
     </div>
 </div>
 
