@@ -64,6 +64,12 @@ body{
     padding-top:10px;
 }
 
+.span735{
+    margin-right: 191px !important;
+    margin-left: 5px !important;
+    clear: left;
+}
+
 .container-fluid{
     padding: 5px;
 }
@@ -234,6 +240,7 @@ body{
     min-width: 14px;
     height: 14px;
     padding-top: 2px;
+    padding-right: 0;
 }
 
 .thumbnail .btn-wish{
@@ -250,6 +257,7 @@ body{
     min-width: 14px;
     height: 14px;
     padding-top: 2px;
+    padding-right: 0;
 }
 
 /*Navigation*/
@@ -695,4 +703,16 @@ h2{
     min-width: 14px;
     height: 14px;
     padding-top: 2px;
+}
+
+h3{
+    font-family: times !important;
+    color: #ff8c00;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+ul.attribute-list li{
+    text-indent: 10px;
+    list-style-type: none;
 }
