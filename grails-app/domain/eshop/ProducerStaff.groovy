@@ -2,16 +2,15 @@ package eshop
 
 class ProducerStaff {
     //1.3.	اطلاعات افراد (سمت/ نام/ تلفن/ فکس/ تلفن همراه/ایمیل/مسئول دفتر)
-  //  String role
-    String value
-   /* String lastName
-    int phoneNumber
-    int fax
-    int mobile
+    String role
+    String name
+    String lastName
+    String phoneNumber
+    String fax
+    String mobile
     String emailAddress
-    String secretary     */
+    String secretary
 
-    Producer producer
     static belongsTo =  Producer
 
     Boolean deleted
@@ -20,13 +19,19 @@ class ProducerStaff {
     static transients = ['deleted']
 
     static mapping = {
-        sort 'value'
+        sort 'name'
     }
 
     static constraints = {
+        lastName(nullable: true)
+        phoneNumber(nullable: true)
+        fax(nullable: true)
+        mobile(nullable: true)
+        emailAddress(nullable: true)
+        secretary(nullable: true)
     }
 
     String toString() {
-        value
+        name
     }
 }
