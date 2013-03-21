@@ -174,7 +174,9 @@
         </div>
     </div>
 </div>
+<div id="body-container">
 <g:layoutBody/>
+</div>
 <r:layoutResources/>
 </div>
 </body>

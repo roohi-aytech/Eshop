@@ -141,6 +141,7 @@ class SiteController {
     }
 
     def product() {
+
         def productTypes = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         def model = [productTypes: productTypes, product: product]
@@ -161,6 +162,8 @@ class SiteController {
         productTypeChain.each {
             model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
         }
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         model
     }

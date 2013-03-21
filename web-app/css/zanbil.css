@@ -1,5 +1,5 @@
 *{
-    font-family: tahoma !important;
+    font-family: tahoma,serif !important;
     font-size: 11px;
 }
 
@@ -12,12 +12,28 @@ html{
 }
 
 body{
-    padding-top: 105px !important;
+    padding-top: 0 !important;
     /*position: relative;*/
 }
 
 #main-container{
     min-width: 993px;
+    position: relative;
+}
+
+#body-container{
+    /*margin-top: 110px;*/
+    position: absolute;
+    top: 105px;
+    right: 0;
+    z-index: 0;
+}
+
+.navbar-fixed-top{
+    z-index: 1000;
+    position: absolute !important;
+    margin-bottom: 0 !important;
+    min-width: 993px !important;
 }
 
 /*Layout*/
@@ -338,6 +354,7 @@ body{
 
 #header2{
     height: 56px;
+    padding: 0 !important;
 }
 
 #logo{
@@ -712,7 +729,12 @@ h3{
     margin-bottom: 0;
 }
 
+ul.attribute-list{
+    margin-left: 0;
+}
+
 ul.attribute-list li{
-    text-indent: 10px;
+    text-indent: 0;
     list-style-type: none;
+
 }
