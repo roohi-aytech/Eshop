@@ -26,6 +26,7 @@ body{
     position: absolute;
     top: 105px;
     right: 0;
+    left: 0;
     z-index: 0;
 }
 
@@ -515,17 +516,10 @@ input.search-query {
     float:right;
 }
 
-#link-basket a{
-    color:#ff4500;
-}
-
-#link-basket a:hover{
-}
-
 .topNavigationItem{
 }
 
-.topNavigationItem a{
+.topNavigationItem a.dropdown-toggle{
     background-repeat: no-repeat;
     background-position: center right;
     padding-right: 20px;
@@ -534,26 +528,23 @@ input.search-query {
     width: 57px;
     height: 30px;
     margin-top:14px !important;
-}
-
-.topNavigationItem a{
     box-shadow: none !important;
     padding: 0 !important;
 }
 
-.topNavigationItem a span{
+.topNavigationItem a.dropdown-toggle span{
     text-indent: -99999px;
     display: inline-block;
 }
 
-.topNavigationItem a span.counter{
+.topNavigationItem a.dropdown-toggle span.counter{
     text-indent: 0;
     font-weight: bold;
     font-size:12px;
     float:right;
 }
 
-.topNavigationItem a:hover{
+.topNavigationItem a.dropdown-toggle:hover{
     text-decoration: none;
 }
 
@@ -561,20 +552,25 @@ input.search-query {
 {
     left: 0;
     right: auto;
-    min-width: 350px;
 }
 
-#link-basket a{
+#link-basket a.dropdown-toggle{
     background-image: url(../images/shopping_basket.png);
     margin-top:4px !important;
     width: 82px;
     height: 40px;
+    color:#ffffff;
 }
 
-#link-basket a span.counter{
+#link-basket a.dropdown-toggle span.counter{
     margin-right:56px;
     margin-top: -20px;
     font-size:20px;
+    color: #ff8c00;
+}
+
+#basketItems .btn-warning{
+    text-shadow: none;
 }
 
 #link-wishList a{
@@ -737,4 +733,34 @@ ul.attribute-list li{
     text-indent: 0;
     list-style-type: none;
 
+}
+
+/*basket items*/
+.basket-item-image{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+}
+
+.basket-item-title{
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    padding:5px;
+}
+
+.basket-item-count{
+    text-align: right;
+    margin-top:5px;
+}
+
+#basketItems ul{
+    margin:5px;
+    margin-bottom: 10px;
+}
+
+#basketItems li{
+    list-style: none;
+    margin-bottom: 5px;
 }

@@ -17,7 +17,7 @@
             <div class="extended">
                 <div>
                     <p>
-                        <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
+                        <eshop:addToBasket prodcutId="${product.id}" productTitle="${product}"></eshop:addToBasket>
                         <a class="btn btn-primary btn-compare" href="#" title="${message(code:'add-to-compareList')}"><span></span></a>
                         <a class="btn btn-danger btn-wish" href="#" title="${message(code:'add-to-wishList')}"><span></span></a>
                     </p>
