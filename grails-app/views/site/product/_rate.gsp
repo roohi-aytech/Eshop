@@ -1,10 +1,10 @@
 
-<span id="star"></span>
+<span class="star"></span>
 
 <g:javascript src="jquery.raty.js"></g:javascript>
 <g:javascript>
     var alreadyRated = false;
-    $('#star').raty({
+    $('.star').raty({
         score: 3,
         click: function(score, evt) {
             saveScore(score);

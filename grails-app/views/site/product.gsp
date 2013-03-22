@@ -78,7 +78,7 @@
 
             <p>
                 <g:message code="rate"/>:
-                <b><g:render template="rate"/></b>
+                <b><g:render template="product/rate"/></b>
             </p>
 
 
@@ -113,6 +113,8 @@
                 </div>
                 <hr/>
             </g:if>
+            <g:render template="product/reviewList"></g:render>
+            <g:render template="product/newReview"></g:render>
         </div>
     </div>
 </div>

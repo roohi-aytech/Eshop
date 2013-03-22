@@ -764,3 +764,13 @@ ul.attribute-list li{
     list-style: none;
     margin-bottom: 5px;
 }
+
+/*product review*/
+span.cke_skin_kama{
+    border:none !important;
+    padding: 0 !important;
+}
+
+#reviewTitle{
+    width: 600px;
+}
