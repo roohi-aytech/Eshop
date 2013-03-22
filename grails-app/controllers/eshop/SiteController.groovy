@@ -141,10 +141,30 @@ class SiteController {
     }
 
     def product() {
+
         def productTypes = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         def model = [productTypes: productTypes, product: product]
         model << priceService.calcProductPrice(product?.id)
+
+        model.commonLink = createLink(action: "browse")
+
+        def productTypeChain = []
+        def productTypeNavigator = product.productTypes.toArray()[0]
+        while (productTypeNavigator) {
+            productTypeChain << productTypeNavigator
+            productTypeNavigator = productTypeNavigator.parentProduct
+        }
+        productTypeChain = productTypeChain.reverse()
+
+        model.breadCrumb = []
+
+        productTypeChain.each {
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
+        }
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
         model
     }
 

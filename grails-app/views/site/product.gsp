@@ -49,56 +49,73 @@
 
     <div class="span415">
         <ul class="breadcrumb">
-            %{--<li>--}%
-            %{--<a href="#"><g:message code="home"/></a>--}%
-            %{--<span class="divider">${">"}</span>--}%
-            %{--</li>--}%
-            %{--<g:if test="${breadCrumb.size() > 1}">--}%
-            %{--<g:each in="${breadCrumb[0..-2]}">--}%
-            %{--<li>--}%
-            %{--<a href="${it.href}">${it.name}</a>--}%
-            %{--<span class="divider">${">"}</span>--}%
-            %{--</li>--}%
-            %{--</g:each>--}%
-            %{--</g:if>--}%
-            %{--<li class="active">${breadCrumb[-1].name}</li>--}%
+            <li>
+                <a href="#"><g:message code="home"/></a>
+            </li>
+            <g:if test="${breadCrumb.size() > 1}">
+                <g:each in="${breadCrumb[0..-1]}">
+                    <li>
+                        <span class="divider">${">"}</span>
+                        <a href="${it.href}">${it.name}</a>
+                    </li>
+                </g:each>
+            </g:if>
         </ul>
 
-        <div class="">
+        <div class="white-panel">
 
-            <div class="btn-group">
-                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                    <g:message code="request"/>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#"><g:message code="send-to-compare"/></a></li>
-                    <li><a href="#"><g:message code="send-to-wish-list"/></a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><g:message code="send-to-friend"/></a></li>
-                </ul>
-                <a class="btn btn-primary"><g:message code="more-details"/></a>
-                <a class="btn btn-success"><g:message code="buy"/></a>
+            <h2>${product}</h2>
 
-            </div>
-
-            <h3>${product?.name}</h3>
-
-            <p>
-                <g:message code="price"/>
-                <strong>
-                    <g:render template="price"/>
-                </strong>
+            <p class="brand-badge">
+                <span><g:message code="brand"/>:</span>
+                <b>${product?.brand}</b>
             </p>
 
             <p>
-                <g:message code="brand"/>:
-                <strong>${product?.brand}</strong>
+                <g:message code="price"/>:
+                <b><g:render template="price"/></b>
             </p>
 
-            <div class="product-description">${product?.description}</div>
+            <p>
+                <g:message code="rate"/>:
+                <b><g:render template="product/rate"/></b>
+            </p>
 
-            <g:render template="product/variation"/></div>
+
+            <div class="product-description">${product?.details}</div>
+
+            <g:render template="product/variation"/>
+
+            <p>
+                <eshop:addToBasket prodcutId="${product.id}" productTitle="${product}"></eshop:addToBasket>
+                <a class="btn btn-primary btn-compare" href="#"><span>${message(code: 'add-to-compareList')}</span></a>
+                <a class="btn btn-danger btn-wish" href="#"><span>${message(code: 'add-to-wishList')}</span></a>
+            </p>
+        </div>
+    </div>
+
+    <div class="span735">
+        <div class="white-panel">
+            <h3><g:message code="product.specifications"></g:message></h3>
+            <ul class="attribute-list">
+                <g:each in="${product.attributes}">
+                    <g:if test="${it.value.toString().compareTo("N/A") != 0}">
+                        <li><b>${it.attributeType}:</b> ${it.value}</li>
+                    </g:if>
+                </g:each>
+            </ul>
+            <hr/>
+            <g:if test="${product.description}">
+                <h3><g:message code="product.description"></g:message></h3>
+
+                <div>
+                    ${product.description}
+                </div>
+                <hr/>
+            </g:if>
+            <g:render template="product/reviewList"></g:render>
+            <g:render template="product/newReview"></g:render>
+        </div>
     </div>
 </div>
 

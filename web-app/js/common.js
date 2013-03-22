@@ -11,6 +11,8 @@ $(document).ready(function () {
             $('#logo-small').css('display', 'none');
             $('.search-box').css('margin-right', '60px');
         }
+
+        $('.navbar-fixed-top').css('top', $(document).scrollTop());
     });
     changeAddToBasketButtonLabel();
     $(window).resize(function(){changeAddToBasketButtonLabel()});
@@ -24,6 +26,10 @@ function changeAddToBasketButtonLabel(){
         $('.thumbnail .btn-buy span').html('خرید');
     }
 
-    $('.span600').width($('body').innerWidth() - 400);
-    $('.span415').width($('body').innerWidth() - 522);
+    var innerWidth = $('body').innerWidth();
+    if(innerWidth < 993)
+        innerWidth = 993;
+    $('.span600').width(innerWidth - 400);
+    $('.span415').width(innerWidth - 522);
+    $('.span735').width(innerWidth - 200);
 }
