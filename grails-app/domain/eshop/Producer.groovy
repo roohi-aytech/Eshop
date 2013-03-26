@@ -6,6 +6,9 @@ import org.apache.commons.collections.list.LazyList
 class Producer {
     String name
     String address
+    String delivery
+    String paidOff
+
     byte[] logo
     static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
     static composites = ["producerStaffs", "producingProducts"]
@@ -19,9 +22,10 @@ class Producer {
     static searchable = true
 
     static constraints = {
-        name(unique: true)
         address(nullable: true)
         logo(nullable: true, maxSize: 1000000000)
+        delivery(nullable: true)
+        paidOff(nullable: true)
     }
 
     String toString(){
