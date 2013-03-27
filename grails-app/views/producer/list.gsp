@@ -24,6 +24,8 @@
                     <div class="form-fields-part">
                         <rg:field name="name"/>
                         <rg:field name="address"/>
+                        <rg:field name="delivery"/>
+                        <rg:field name="paidOff"/>
                     </div>
                 </div>
 
