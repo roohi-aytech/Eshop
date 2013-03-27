@@ -14,6 +14,7 @@
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
     <style>
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -34,6 +35,7 @@
 
     <g:javascript src="thumbnails.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
+    <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>

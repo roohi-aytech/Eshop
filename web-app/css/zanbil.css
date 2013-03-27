@@ -85,6 +85,8 @@ body{
     margin-right: 191px !important;
     margin-left: 5px !important;
     clear: left;
+    width: 773px;
+    float: right;
 }
 
 .container-fluid{
@@ -765,6 +767,15 @@ ul.attribute-list li{
     margin-bottom: 5px;
 }
 
+/*forms*/
+.field-name{
+    padding: 3px;
+}
+
+.field-value{
+
+}
+
 /*product review*/
 span.cke_skin_kama{
     border:none !important;
@@ -772,5 +783,5 @@ span.cke_skin_kama{
 }
 
 #reviewTitle{
-    width: 600px;
+    width: 500px;
 }

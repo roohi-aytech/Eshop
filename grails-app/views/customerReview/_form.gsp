@@ -79,7 +79,7 @@
     <li><g:link controller="customerReviewRate" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="customerReviewRate" action="create" params="['customerReview.id': customerReviewInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'customerReviewRate.label', default: 'CustomerReviewComment')])}</g:link>
+<g:link controller="customerReviewRate" action="create" params="['customerReview.id': customerReviewInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'customerReviewRate.label', default: 'CustomerReviewRate')])}</g:link>
 </li>
 </ul>
 

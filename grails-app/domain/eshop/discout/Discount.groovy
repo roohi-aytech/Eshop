@@ -1,5 +1,7 @@
 package eshop.discout
 
+import eshop.Content
+
 class Discount {
     String type
     Double value
@@ -8,6 +10,7 @@ class Discount {
     Date toDate
     Integer remainCount
     String usageType
+    Content image
 
     Integer basketCountMin
     Integer basketPriceMin
@@ -24,6 +27,7 @@ class Discount {
         toDate(nullable: true, persian: true)
         remainCount(nullable: true)
         usageType(inList: ["General", "DiscountCard"])
+        image(nullable: true)
 
         basketCountMin(nullable: true)
         basketPriceMin(nullable: true)

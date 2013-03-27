@@ -1,26 +1,16 @@
 
-<span class="star"></span>
+<span id="star${identifier}">
+    <input type="hidden" name="${identifier}" id="${identifier}" />
+</span>
 
 <g:javascript src="jquery.raty.js"></g:javascript>
 <g:javascript>
-    var alreadyRated = false;
-    $('.star').raty({
-        score: 3,
+    $('#${identifier}').val(${currentValue});
+    $('#star${identifier}').raty({
+        score: ${currentValue},
+        readOnly:${readOnly},
         click: function(score, evt) {
-            saveScore(score);
-            $('#star').html();
-            $('#star').raty({
-                score: score,
-                readOnly: true,
-                click: function(score, evt) {
-                    saveScore(score);
-                    readOnly:true
-                }
-            });
+            $('#${identifier}').val(score);
         }
     });
-
-    function saveScore(score){
-        alert('score: ' + score);
-    }
 </g:javascript>
