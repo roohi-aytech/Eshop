@@ -31,6 +31,7 @@
                     <div class="form-fields-part">
                         <rg:field name="type"/>
                         <rg:field name="fromDate"/>
+                        <rg:field name="image"/>
                     </div>
 
                     <div class="form-fields-part">

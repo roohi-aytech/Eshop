@@ -10,7 +10,7 @@ class Discount {
     Date toDate
     Integer remainCount
     String usageType
-    Content image
+    byte[] image
 
     Integer basketCountMin
     Integer basketPriceMin
