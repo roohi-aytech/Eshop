@@ -788,10 +788,18 @@ span.cke_skin_kama{
 
 /*Slider*/
 .slideshowContainer{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .coin-slider{
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 5px;
+    padding-bottom: 3px;
+    z-index: 100;
+    display:inline-block;
+    border:1px solid #eeeeee;
+    margin:auto;
 }
 
 .coin-slider > div{
@@ -810,11 +818,27 @@ span.cke_skin_kama{
 .cs-prev{
     left:auto !important;
     right:0 !important;
+    background-image: url(../images/prev.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #e0e0e0 !important;
+    text-indent: -99999px;
+    width: 20px;
+    border-radius: 5px;
+    margin:5px;
 }
 
 .cs-next{
     right:auto !important;
     left:0 !important;
+    background-image: url(../images/next.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #e0e0e0 !important;
+    text-indent: -99999px;
+    width: 20px;
+    border-radius: 5px;
+    margin:5px;
 }
 
 .cs-buttons{
@@ -826,8 +850,8 @@ span.cke_skin_kama{
 .slideshowContainer .baseLine{
     padding:15px;
     margin-top: -40px;
-    z-index: 99999;
-    background: #F5F5F5;
+    z-index: 999999;
+    background: #f5f5f5;
     border-radius: 5px;
 }
 
