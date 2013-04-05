@@ -855,6 +855,11 @@ span.cke_skin_kama{
     border-radius: 5px;
 }
 
+.cs-title{
+    width: 560px !important;
+    margin-bottom: 25px;
+}
+
 /*Breadcrumb*/
 .breadcrumb{
     margin:0 0 10px 0;

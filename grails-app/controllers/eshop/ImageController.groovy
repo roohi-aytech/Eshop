@@ -29,7 +29,13 @@ class ImageController {
             case 'discount':
                 def discount = Discount.get(params.id)
                 if (discount) {
-                    content = getDiscountImage(discount)
+                    content = discount.image
+                }
+                break;
+            case 'slide':
+                def slide = Slide.get(params.id)
+                if (slide) {
+                    content = slide.image
                 }
                 break;
         }
@@ -65,9 +71,5 @@ class ImageController {
 
         }
         content
-    }
-
-    byte[] getDiscountImage(Discount discount) {
-        discount.image
     }
 }
