@@ -162,6 +162,8 @@ class SiteController {
             model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
         }
 
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
         model
     }
 

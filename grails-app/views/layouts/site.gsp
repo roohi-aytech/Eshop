@@ -25,7 +25,8 @@
     %{--<ckeditor:resources/>--}%
     <g:javascript library="jquery"></g:javascript>
     <r:layoutResources/>
-    <script type="text/javascript" src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
+    <script type="text/javascript"
+            src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
     <script type="text/javascript">
         var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
         var basket = ${(session.getAttribute("basket")?: []) as grails.converters.JSON};
@@ -59,123 +60,134 @@
 
 <body dir="rtl">
 <div id="main-container" ng-controller="eshopCtrl">
-<div class="navbar navbar-fixed-top">
-    <div id="header1">
-        <a id="logo"><h1><g:message code="title"></g:message></h1></a>
+    <div class="navbar navbar-fixed-top">
+        <div id="header1">
+            <a id="logo"><h1><g:message code="title"></g:message></h1></a>
 
-        <div id="top-links">
-            <a href="#"><g:message code="home.label"></g:message></a> |
-            <a href="#"><g:message code="support.label"></g:message></a> |
-            <a href="#"><g:message code="help.label"></g:message></a> |
-            <a href="#"><g:message code="contact.label"></g:message></a>
+            <div id="top-links">
+                <a href="#"><g:message code="home.label"></g:message></a> |
+                <a href="#"><g:message code="support.label"></g:message></a> |
+                <a href="#"><g:message code="help.label"></g:message></a> |
+                <a href="#"><g:message code="contact.label"></g:message></a>
+            </div>
+            <span id="support-number"><g:message code="support.number"></g:message></span>
+
+            <div class="btn-group pull-left" id="profile-menu">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <g:message code="profile-title"></g:message>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="#"><g:message code="user.controlpanel.label"></g:message></a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="#"><g:message code="profile"></g:message></a></li>
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="#"><g:message code="password.change.label"></g:message></a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="#"><g:message code="logout"></g:message></a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <span id="support-number"><g:message code="support.number"></g:message></span>
 
-        <div class="btn-group pull-left" id="profile-menu">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <g:message code="profile-title"></g:message>
-                <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="dropdown">
-                    <a tabindex="-1"
-                       href="#"><g:message code="user.controlpanel.label"></g:message></a></li>
-                <li class="divider"></li>
-                <li class="dropdown">
-                    <a tabindex="-1"
-                       href="#"><g:message code="profile"></g:message></a></li>
-                <li class="dropdown">
-                    <a tabindex="-1"
-                       href="#"><g:message code="password.change.label"></g:message></a></li>
-                <li class="divider"></li>
-                <li class="dropdown">
-                    <a tabindex="-1"
-                       href="#"><g:message code="logout"></g:message></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+        <div class="navbar-inner" id="header2">
+            <div class="container">
+                <a id="logo-small"><span><g:message code="title"></g:message></span></a>
 
-    <div class="navbar-inner" id="header2">
-        <div class="container">
-            <a id="logo-small"><span><g:message code="title"></g:message></span></a>
+                <div class="search-box">
+                    <div class="btn-group pull-right" style="margin-right: 0;">
+                        <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span id="searchCategory"><g:message code="category.all"></g:message></span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <g:each in="${rootProductTypes}" var="rootProductType">
+                            %{--<li><a href="#">${rootProductType.name}</a></li>--}%
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1"
+                                       href="#"
+                                       onclick="$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
+                                    <ul class="dropdown-menu">
+                                        <g:each in="${rootProductType.children}" var="secondLevelProductType">
+                                            <li>
+                                            <a href="#" onclick="$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                        </g:each>
+                                    </ul>
+                                </li>
+                            </g:each>
+                        </ul>
+                    </div>
 
-            <div class="search-box">
-                <div class="btn-group pull-right" style="margin-right: 0;">
-                    <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span id="searchCategory"><g:message code="category.all"></g:message></span>
-                        <span class="caret"></span>
+                    <form class="navbar-search pull-right">
+                        <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
+                    </form>
+
+                    <div id="btn-search" class="btn-group pull-right" style="margin-right: 0;">
+                        <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span></span></a>
+                    </div>
+                </div>
+
+                <div class="btn-group pull-right topNavigationItem" id="link-compareList">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span><g:message code="compareList"></g:message></span>
+                        <span class="counter">0</span>
                     </a>
-                    <ul class="dropdown-menu">
-                        <g:each in="${rootProductTypes}" var="rootProductType">
-                        %{--<li><a href="#">${rootProductType.name}</a></li>--}%
-                            <li class="dropdown-submenu">
-                                <a tabindex="-1"
-                                   href="#"
-                                   onclick="$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
-                                <ul class="dropdown-menu">
-                                    <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                        <li>
-                                        <a href="#" onclick="$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
-                                    </g:each>
-                                </ul>
+
+                    <div class="dropdown-menu content">
+                        content
+                    </div>
+                </div>
+
+                <div class="btn-group pull-right topNavigationItem" id="link-wishList">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span><g:message code="wishList"></g:message></span>
+                        <span class="counter">0</span>
+                    </a>
+
+                    <div class="dropdown-menu content">
+                        content
+                    </div>
+                </div>
+
+                <div class="btn-group pull-right topNavigationItem" id="link-basket">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span><g:message code="basket"></g:message></span>
+                        <span id="basketCounter" class="counter">{{basketCounter}}</span>
+                    </a>
+
+                    <div id="basketItems" class="dropdown-menu content">
+                        <ul>
+                            <li ng-repeat="basketItem in basket">
+                                <span class="basket-item-image">
+                                    <img src="<g:createLink controller="image"
+                                                            action="index"/>/{{basketItem.id}}?wh=50x50"/>
+                                </span>
+                                <span class="basket-item-title">{{basketItem.name}}<br/>
+                                <g:message code="basket-items-count"></g:message>: <span class="basket-item-count">{{basketItem.count}}
+                                </span>
+                                </span>
                             </li>
-                        </g:each>
-                    </ul>
-                </div>
-
-                <form class="navbar-search pull-right">
-                    <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
-                </form>
-
-                <div id="btn-search" class="btn-group pull-right" style="margin-right: 0;">
-                    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span></span></a>
-                </div>
-            </div>
-
-            <div class="btn-group pull-right topNavigationItem" id="link-compareList">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span><g:message code="compareList"></g:message></span>
-                    <span class="counter">0</span>
-                </a>
-
-                <div class="dropdown-menu content">
-                    content
-                </div>
-            </div>
-
-            <div class="btn-group pull-right topNavigationItem" id="link-wishList">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span><g:message code="wishList"></g:message></span>
-                    <span class="counter">0</span>
-                </a>
-
-                <div class="dropdown-menu content">
-                    content
-                </div>
-            </div>
-
-            <div class="btn-group pull-right topNavigationItem" id="link-basket">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span><g:message code="basket"></g:message></span>
-                    <span id="basketCounter" class="counter">{{basketCounter}}</span>
-                </a>
-
-                <div id="basketItems" class="dropdown-menu content">
-                    <ul>
-                        <li ng-repeat="basketItem in basket">
-                            {{basketItem.id}} {{basketItem.name}} {{basketItem.count}} :D
-                        </li>
-                    </ul>
-                    <g:link controller="basket" action="show">Show Basket</g:link>
+                        </ul>
+                        <g:link class="btn btn-warning" controller="basket" action="show"><g:message
+                                code="basket.show"></g:message></g:link>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<g:layoutBody/>
-<r:layoutResources/>
+
+    <div id="body-container">
+        <g:layoutBody/>
+    </div>
+    <r:layoutResources/>
 </div>
 </body>
 </html>

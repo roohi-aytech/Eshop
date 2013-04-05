@@ -107,6 +107,10 @@
             <li class="active">${breadCrumb[-1].name}</li>
         </ul>
 
+        <g:render template="browse/slideshowMain"></g:render>
+
+        <g:render template="browse/slideshowSpecialSales"></g:render>
+
         <div class="container-fluid">
             <ul class="thumbnails row-fluid">
                 %{--<div class="span" style="display: none;"></div>--}%

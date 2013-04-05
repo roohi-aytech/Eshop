@@ -785,3 +785,55 @@ span.cke_skin_kama{
 #reviewTitle{
     width: 500px;
 }
+
+/*Slider*/
+.slideshowContainer{
+    margin-bottom: 20px;
+}
+
+.coin-slider{
+}
+
+.coin-slider > div{
+    margin: auto;
+    border-radius: 5px;
+}
+
+.cs-button-slideshowSpecialSales{
+    float:right !important;
+}
+
+.cs-button-slideshowMain{
+    float:right !important;
+}
+
+.cs-prev{
+    left:auto !important;
+    right:0 !important;
+}
+
+.cs-next{
+    right:auto !important;
+    left:0 !important;
+}
+
+.cs-buttons{
+    margin-top: -30px !important;
+    z-index: 99999;
+    padding:5px;
+}
+
+.slideshowContainer .baseLine{
+    padding:15px;
+    margin-top: -40px;
+    z-index: 99999;
+    background: #F5F5F5;
+    border-radius: 5px;
+}
+
+/*Breadcrumb*/
+.breadcrumb{
+    margin:0 0 10px 0;
+}
+
+
