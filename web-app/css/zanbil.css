@@ -111,7 +111,7 @@ body{
     position: relative;
     box-shadow: none;
     border-radius: 5px 5px 0 0 !important;
-    border:1px solid #ffffff;
+    border:1px solid transparent;
 }
 
 .row-fluid{
@@ -122,8 +122,11 @@ body{
     margin-right:5px;
 }
 
-.row-fluid .span3{
-    width: 24.3043%;
+.thumbnails .span3{
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0;
+    width: 33.33%;
 }
 
 .thumbnail:hover{
@@ -138,7 +141,6 @@ body{
 }
 
 .selectedThumbnail{
-    box-shadow: 0 0 7px #cccccc !important;
     border-radius: 5px !important;
 }
 
