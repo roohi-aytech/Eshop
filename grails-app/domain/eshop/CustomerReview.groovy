@@ -24,7 +24,7 @@ class CustomerReview {
 
     static constraints = {
         product(nullable: false)
-        rate(nullable: false, inList: [1..2])
+        rate(nullable: false)
         title(nullable: false, maxSize: 128)
         body(nullable: false, maxSize: 2048)
         creationDate(nullable: false)

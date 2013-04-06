@@ -16,6 +16,29 @@ body{
     /*position: relative;*/
 }
 
+.form-comment{
+    color:#808080;
+    padding:5px 0;
+}
+
+.login-required{
+    border:1px solid #87ceeb;
+    background-color: #d4ecf6;
+    padding:10px;
+    border-radius: 5px;
+    margin:10px;
+}
+
+.login-required div{
+    margin-bottom:5px;
+    background-image: url(../images/icons/info.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding:10px;
+    padding-top: 5px;
+    padding-right: 35px;
+}
+
 #main-container{
     min-width: 993px;
     position: relative;
@@ -827,6 +850,23 @@ span.cke_skin_kama{
 
 #reviewTitle{
     width: 500px;
+}
+
+.customer-review h4{
+    display: inline-block;
+    font-family: times,serif !important;
+    font-size:16px;
+    margin-bottom: 0;
+}
+
+.customer-review .date{
+    color: #808080;
+    font-size: 10px;
+}
+
+.newCustomerReview{
+    padding: 10px;
+    border-radius: 5px;
 }
 
 /*Slider*/

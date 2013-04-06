@@ -5,6 +5,8 @@ import grails.converters.JSON
 
 class CustomerReviewController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", delete: "POST"]
 
     def index() {
@@ -37,11 +39,12 @@ class CustomerReviewController {
             customerReviewInstance.body = params.reviewBody
             customerReviewInstance.creationDate = new Date()
             customerReviewInstance.lastUpdate = new Date()
+            customerReviewInstance.user = springSecurityService.currentUser
         }
         if (customerReviewInstance.validate() && customerReviewInstance.save()) {
-            render customerReviewInstance as JSON
+            render(template: "show", model: [customerReviewInstance: customerReviewInstance])
         } else
-            render(template: "form", model: [customerReviewInstance: customerReviewInstance])
+            render customerReviewInstance.errors
     }
 
 

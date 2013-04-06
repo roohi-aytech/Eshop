@@ -1,5 +1,7 @@
 <ckeditor:resources/>
+<g:javascript src="jquery.color.js"></g:javascript>
 <g:javascript>
+    var newReviewsCounter = 0;
     function submitReview() {
 
         var isValid = true;
@@ -38,7 +40,6 @@
             var $form = $("#submitNewReviewForm");
             // serialize the data in the form
             var serializedData = $form.serialize();
-            window.alert(serializedData);
             // fire off the request to /form.php
             var request = $.ajax({
                 url: "${createLink(controller: "CustomerReview", action: "save")}",
@@ -49,7 +50,17 @@
             // callback handler that will be called on success
             request.done(function (response, textStatus, jqXHR){
                 // log a message to the console
-                console.log("Hooray, it worked!");
+                newReviewsCounter++;
+                var result = response;
+                result = "<div class='newCustomerReview' id='newCustomerReview" + newReviewsCounter + "'>" + response + "</div>";
+                $('#newCustomerReviews').html($('#newCustomerReviews').html() + result)
+
+                var item = $("#newCustomerReview" + newReviewsCounter);
+                $('html,body').animate({
+                    scrollTop: $("#newCustomerReview" + newReviewsCounter).offset().top - 50},
+                    'slow');
+                item.css('background-color', '#fff2d9');
+                item.animate({backgroundColor: jQuery.Color("#fff2d9").transition("transparent", 1)}, 4000);
             });
 
             // callback handler that will be called on failure
@@ -65,13 +76,20 @@
             // if the request failed or succeeded
             request.always(function () {
             });
-
-            // prevent default posting of form
-            event.preventDefault();
 //        });
     }
 </g:javascript>
 <h3><g:message code="product.review.add"></g:message></h3>
+<div class="form-comment">
+    <g:message code="review.form.description"></g:message>
+</div>
+<sec:ifNotLoggedIn>
+    <div class="login-required">
+        <div><g:message code="review.loginRequired"></g:message></div>
+        <common:loginLink class="btn btn-primary"></common:loginLink>
+    </div>
+</sec:ifNotLoggedIn>
+<sec:ifLoggedIn>
 <g:form controller="customerReview" action="save" name="submitNewReviewForm" id="submitNewReviewForm">
     <input type="hidden" name="productId" id="productId" value="${product.id}"/>
     <div>
@@ -109,4 +127,5 @@
         </div>
     </div>
 </g:form>
+</sec:ifLoggedIn>
 <hr/>

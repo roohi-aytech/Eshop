@@ -114,8 +114,8 @@
                 </div>
                 <hr/>
             </g:if>
-            <g:render template="product/reviewList" model="${['product': product]}"></g:render>
-            <g:render template="product/newReview" model="${['product': product]}"></g:render>
+            <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
+            <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
         </div>
     </div>
 </div>
