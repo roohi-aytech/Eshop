@@ -37,6 +37,17 @@ body{
     min-width: 993px !important;
 }
 
+.validator{
+    color:red;
+    margin-right:10px;
+    padding-right: 20px;
+    display: inline-block;
+    background-image: url(../images/validator.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    display: none;
+}
+
 /*Layout*/
 
 .row-fluid{

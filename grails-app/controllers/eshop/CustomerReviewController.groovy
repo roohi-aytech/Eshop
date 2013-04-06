@@ -28,8 +28,16 @@ class CustomerReviewController {
         if (params.id) {
             customerReviewInstance = CustomerReview.get(params.id)
             customerReviewInstance.properties = params
-        } else
-            customerReviewInstance = new CustomerReview(params)
+        } else {
+            def product = Product.get(params.productId)
+            customerReviewInstance = new CustomerReview()
+            customerReviewInstance.product = product
+            customerReviewInstance.title = params.reviewTitle
+            customerReviewInstance.rate = Integer.parseInt(params.reviewRate)
+            customerReviewInstance.body = params.reviewBody
+            customerReviewInstance.creationDate = new Date()
+            customerReviewInstance.lastUpdate = new Date()
+        }
         if (customerReviewInstance.validate() && customerReviewInstance.save()) {
             render customerReviewInstance as JSON
         } else
