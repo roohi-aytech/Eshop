@@ -81,20 +81,20 @@
                 <sec:ifLoggedIn>
                     <div class="btn-group pull-left" id="profile-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <g:message code="profile-title"></g:message>
+                            <sec:loggedInUserInfo field="username"/>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="dropdown">
                                 <a tabindex="-1"
-                                   href="#"><g:message code="user.controlpanel.label"></g:message></a></li>
+                                   href="<g:createLink controller="Customer" action="panel"></g:createLink>"><g:message code="user.controlpanel.label"></g:message></a></li>
                             <li class="divider"></li>
                             <li class="dropdown">
                                 <a tabindex="-1"
-                                   href="#"><g:message code="profile"></g:message></a></li>
+                                   href="<g:createLink controller="Customer" action="profile"></g:createLink>"><g:message code="profile"></g:message></a></li>
                             <li class="dropdown">
                                 <a tabindex="-1"
-                                   href="#"><g:message code="password.change.label"></g:message></a></li>
+                                   href="<g:createLink controller="Customer" action="changePassword"></g:createLink>"><g:message code="password.change.label"></g:message></a></li>
                             <li class="divider"></li>
                             <li class="dropdown">
                                 <common:logoutLink tabindex="-1"></common:logoutLink>

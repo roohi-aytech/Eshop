@@ -84,7 +84,7 @@
     <g:message code="review.form.description"></g:message>
 </div>
 <sec:ifNotLoggedIn>
-    <div class="login-required">
+    <div class="info">
         <div><g:message code="review.loginRequired"></g:message></div>
         <common:loginLink class="btn btn-primary"></common:loginLink>
     </div>
