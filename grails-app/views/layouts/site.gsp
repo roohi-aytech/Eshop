@@ -6,6 +6,12 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" ng-app='eshop'><!--<![endif]-->
 <head>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
+    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet"
+          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
+    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     %{--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--}%
     %{--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">--}%
     %{--<title><g:layoutTitle default="Grails"/></title>--}%
@@ -72,29 +78,46 @@
             </div>
             <span id="support-number"><g:message code="support.number"></g:message></span>
 
-            <div class="btn-group pull-left" id="profile-menu">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <g:message code="profile-title"></g:message>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="dropdown">
-                        <a tabindex="-1"
-                           href="#"><g:message code="user.controlpanel.label"></g:message></a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown">
-                        <a tabindex="-1"
-                           href="#"><g:message code="profile"></g:message></a></li>
-                    <li class="dropdown">
-                        <a tabindex="-1"
-                           href="#"><g:message code="password.change.label"></g:message></a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown">
-                        <a tabindex="-1"
-                           href="#"><g:message code="logout"></g:message></a>
-                    </li>
-                </ul>
-            </div>
+                <sec:ifLoggedIn>
+                    <div class="btn-group pull-left" id="profile-menu">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <g:message code="profile-title"></g:message>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown">
+                                <a tabindex="-1"
+                                   href="#"><g:message code="user.controlpanel.label"></g:message></a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown">
+                                <a tabindex="-1"
+                                   href="#"><g:message code="profile"></g:message></a></li>
+                            <li class="dropdown">
+                                <a tabindex="-1"
+                                   href="#"><g:message code="password.change.label"></g:message></a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown">
+                                <common:logoutLink tabindex="-1"></common:logoutLink>
+                            </li>
+                        </ul>
+                    </div>
+                </sec:ifLoggedIn>
+                <sec:ifNotLoggedIn>
+                    <div class="btn-group pull-left" id="login-menu">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <g:message code="login"></g:message>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown">
+                                <common:loginLink tabindex="-1"></common:loginLink></li>
+                            <li class="dropdown">
+                                <a tabindex="-1"
+                                   href="#"><g:message code="register"></g:message></a></li>
+                        </ul>
+                    </div>
+                </sec:ifNotLoggedIn>
+
         </div>
 
         <div class="navbar-inner" id="header2">
@@ -171,7 +194,8 @@
                                                             action="index"/>/{{basketItem.id}}?wh=50x50"/>
                                 </span>
                                 <span class="basket-item-title">{{basketItem.name}}<br/>
-                                <g:message code="basket-items-count"></g:message>: <span class="basket-item-count">{{basketItem.count}}
+                                    <g:message code="basket-items-count"></g:message>: <span
+                                        class="basket-item-count">{{basketItem.count}}
                                 </span>
                                 </span>
                             </li>

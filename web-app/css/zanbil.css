@@ -496,6 +496,36 @@ input.search-query {
     text-decoration: none;
 }
 
+#login-menu{
+    margin-left: 40px;
+}
+
+#login-menu > a{
+    background-image: url(../images/icons/login.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding-right: 18px;
+}
+
+#login-menu.btn-group.open .dropdown-toggle{
+    box-shadow: none;
+}
+
+#login-menu a:hover{
+    text-decoration: none;
+}
+
+#login-menu .dropdown-menu
+{
+    left: 0;
+    right: auto;
+}
+
+#login-menu .caret{
+    margin-top:10px;
+    margin-right: 3px;
+}
+
 #profile-menu{
     margin-left: 40px;
 }
