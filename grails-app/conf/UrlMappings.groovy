@@ -12,7 +12,10 @@ class UrlMappings {
 			}
 		}
 
-		"/"( controller: "/default")
+		"/"( controller: "/site")
+
+        "/admin"(controller: "/default")
+
 		"500"(view:'/error')
 	}
 }

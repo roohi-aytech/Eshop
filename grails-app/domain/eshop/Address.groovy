@@ -1,4 +1,4 @@
-package eshop.eshop
+package eshop
 
 import eshop.City
 import eshop.Province
@@ -12,5 +12,10 @@ class Address {
     String telephone;
 
     static constraints = {
+        addressLine2(nullable: true)
+        city(nullable: true)
+        province(nullable: true)
+        postalCode(nullable: true)
+        telephone(nullable: true)
     }
 }

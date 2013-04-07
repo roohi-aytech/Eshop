@@ -122,10 +122,10 @@ class SiteController {
     }
 
     def index() {
-        redirect(action: "index2")
-//        def productTypes = ProductType.findAllByParentProductIsNull()
-//        def newProducts = Product.findAll()
-//        [productTypes: productTypes, newProducts: newProducts]
+        [
+                'slides':Slide.findAll(),
+                'discounts':Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan(new Date(), new Date(), 0)
+        ]
     }
 
     def category() {

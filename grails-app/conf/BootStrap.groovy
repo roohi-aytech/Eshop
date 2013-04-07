@@ -15,7 +15,7 @@ class BootStrap {
         }
     }
 
-    def roles = [ROLE_USER, ROLE_USER_ADMIN, ROLE_PRODUCT_ADMIN, ROLE_PRODUCT_TYPE_ADMIN, ROLE_PRICE_ADMIN]
+    def roles = [ROLE_USER, ROLE_USER_ADMIN, ROLE_PRODUCT_ADMIN, ROLE_PRODUCT_TYPE_ADMIN, ROLE_PRICE_ADMIN, ROLE_CUSTOMER]
 
     def init = { servletContext ->
 

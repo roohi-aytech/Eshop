@@ -1,6 +1,4 @@
-package eshop.eshop
-
-import eshop.*
+package eshop
 
 class Customer extends User {
     Address sendingAddress;

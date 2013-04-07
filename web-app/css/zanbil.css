@@ -43,6 +43,11 @@ body{
     margin-top: 5px;
 }
 
+ul.errors{
+    color:#dc143c;
+    margin-right: 30px;
+}
+
 #main-container{
     min-width: 993px;
     position: relative;
@@ -59,7 +64,7 @@ body{
 
 .navbar-fixed-top{
     z-index: 1000;
-    position: absolute !important;
+    /*position: absolute !important;*/
     margin-bottom: 0 !important;
     min-width: 993px !important;
 }
@@ -320,6 +325,25 @@ body{
 }
 
 /*Navigation*/
+
+.sidebar-nav.home{
+    padding-bottom: 0;
+}
+
+.sidebar-nav.home #navigator_root{
+    border-bottom-width: 0 !important;
+}
+
+.sidebar-nav.home #navigator_appliance{
+    border-bottom-width: 0 !important;
+    border-radius: 0 5px 5px 0;
+}
+
+.sidebar-nav.home #navigator_digital{
+    border-bottom-width: 0 !important;
+    border-radius: 5px 0 0 5px;
+}
+
 .sidebar-nav .nav-list li.checkable a{
     padding-right: 23px;
     background-image: url(../images/controls/checkbox/not-checked.png);

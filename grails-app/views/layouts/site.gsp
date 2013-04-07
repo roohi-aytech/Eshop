@@ -72,7 +72,7 @@
             <a id="logo"><h1><g:message code="title"></g:message></h1></a>
 
             <div id="top-links">
-                <a href="#"><g:message code="home.label"></g:message></a> |
+                <a href="${createLink(controller: 'site')}"><g:message code="home.label"></g:message></a> |
                 <a href="#"><g:message code="support.label"></g:message></a> |
                 <a href="#"><g:message code="help.label"></g:message></a> |
                 <a href="#"><g:message code="contact.label"></g:message></a>
@@ -82,7 +82,7 @@
                 <sec:ifLoggedIn>
                     <div class="btn-group pull-left" id="profile-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <sec:loggedInUserInfo field="username"/>
+                            <sec:username/>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -113,8 +113,7 @@
                             <li class="dropdown">
                                 <common:loginLink tabindex="-1"></common:loginLink></li>
                             <li class="dropdown">
-                                <a tabindex="-1"
-                                   href="#"><g:message code="register"></g:message></a></li>
+                                <common:registerLink tabindex="-1"></common:registerLink></li>
                         </ul>
                     </div>
                 </sec:ifNotLoggedIn>
@@ -196,7 +195,7 @@
                                     <img src="<g:createLink controller="image"
                                                             action="index"/>/{{basketItem.id}}?wh=50x50"/>
                                 </span>
-                                <span class="basket-item-title">{{basketItem.name}}<br/>
+                                <span class="basket-item-title">{{basketItem.title}}<br/>
                                     <g:message code="basket-items-count"></g:message>: <span
                                         class="basket-item-count">{{basketItem.count}}
                                 </span>

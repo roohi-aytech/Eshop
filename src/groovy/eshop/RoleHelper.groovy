@@ -13,5 +13,6 @@ class RoleHelper {
     public static final String ROLE_PRODUCT_ADMIN = "ROLE_PRODUCT_ADMIN";
     public static final String ROLE_PRODUCT_TYPE_ADMIN = "ROLE_PRODUCT_TYPE_ADMIN";
     public static final String ROLE_PRICE_ADMIN = "ROLE_PRICE_ADMIN";
+    public static final String ROLE_CUSTOMER = "ROLE_CUSTOMER";
 
 }
