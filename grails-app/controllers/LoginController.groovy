@@ -32,6 +32,8 @@ class LoginController {
             redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
         }
         else {
+            if (params.forwardUri)
+                session.forwardUri = params.forwardUri
             redirect action: 'auth', params: params
         }
     }

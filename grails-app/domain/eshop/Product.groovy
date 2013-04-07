@@ -19,7 +19,7 @@ class Product extends BaseProduct implements Comparable{
     Brand brand
     Content mainImage
 
-    static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content]
+    static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview]
 
     static belongsTo = [ProductType]
 

@@ -33,6 +33,7 @@
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
     <g:javascript src="common.js"></g:javascript>
     <g:javascript src="browse.js"></g:javascript>
+    <g:javascript src="jquery.raty.js"></g:javascript>
 </head>
 
 <body>
@@ -78,30 +79,31 @@
 
             <p>
                 <g:message code="rate"/>:
-                <b><g:render template="rate"/></b>
+                <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
             </p>
 
 
             <div class="product-description">${product?.details}</div>
 
-            <g:render template="product/variation"/></div>
+            <g:render template="product/variation"/>
 
-        <p>
-            <eshop:addToBasket prodcutId="${product.id}" productTitle="${product.name}"></eshop:addToBasket>
-            <a class="btn btn-primary btn-compare" href="#"><span>${message(code: 'add-to-compareList')}</span></a>
-            <a class="btn btn-danger btn-wish" href="#"><span>${message(code: 'add-to-wishList')}</span></a>
-        </p>
+            <p>
+                <eshop:addToBasket prodcutId="${product.id}" productTitle="${product}"></eshop:addToBasket>
+                <a class="btn btn-primary btn-compare" href="#"><span>${message(code: 'add-to-compareList')}</span></a>
+                <a class="btn btn-danger btn-wish" href="#"><span>${message(code: 'add-to-wishList')}</span></a>
+            </p>
+        </div>
     </div>
 
     <div class="span735">
         <div class="white-panel">
             <h3><g:message code="product.specifications"></g:message></h3>
             <ul class="attribute-list">
-            <g:each in="${product.attributes}">
-                <g:if test="${it.value.toString().compareTo("N/A") != 0}">
-                    <li><b>${it.attributeType}:</b> ${it.value}</li>
-                </g:if>
-            </g:each>
+                <g:each in="${product.attributes}">
+                    <g:if test="${it.value.toString().compareTo("N/A") != 0}">
+                        <li><b>${it.attributeType}:</b> ${it.value}</li>
+                    </g:if>
+                </g:each>
             </ul>
             <hr/>
             <g:if test="${product.description}">
@@ -112,6 +114,8 @@
                 </div>
                 <hr/>
             </g:if>
+            <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
+            <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
         </div>
     </div>
 </div>
