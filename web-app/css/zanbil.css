@@ -1028,13 +1028,13 @@ span.cke_skin_kama{
 }
 
 /*Shopping Basket*/
-.shopping-basket h2{
-    margin-bottom: 0;
-}
-
 .shopping-basket{
     padding: 20px;
     padding-top: 0;
+}
+
+.shopping-basket h2{
+    margin-bottom: 0;
 }
 
 .shopping-basket .group{
@@ -1113,6 +1113,34 @@ span.cke_skin_kama{
 
 .shopping-basket .check-out a{
     margin-right: 80px;
+}
+
+/*Invoice*/
+.invoice{
+    padding: 20px;
+    padding-top: 0;
+}
+
+.invoice h2{
+    margin-bottom: 0;
+}
+
+.invoice table{
+    width: 100%;
+}
+
+.invoice .label{
+    text-align: left;
+    background-color: transparent;
+    text-shadow: none;
+    font-weight: normal;
+    color: #000000;
+    width: 20%;
+}
+
+.invoice .value{
+    vertical-align: top;
+    width: 30%;
 }
 
 
