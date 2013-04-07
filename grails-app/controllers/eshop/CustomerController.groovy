@@ -43,4 +43,8 @@ class CustomerController {
             redirect(action: 'changePassword')
         }
     }
+
+    def register(){
+
+    }
 }

@@ -2,6 +2,7 @@ package eshop
 
 class BasketController {
     def springSecurityService
+    def priceService
 
     def index() {}
 
@@ -16,7 +17,7 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            basketItem = [id: id, name: product.name, count: 1]
+            basketItem = [id: id, name: product.name, title: product.toString(), count: 1, price:priceService.calcProductPrice(product.id).mainVal]
             basket << basketItem
         }
 
@@ -52,5 +53,27 @@ class BasketController {
     def checkout() {
         def username = springSecurityService.principal
         render username
+    }
+
+    def changeCount(){
+        def id = params.id
+
+        def basket = session.getAttribute("basket")
+        if (!basket)
+            basket = [];
+
+        def basketItem = basket.find { it -> it.id == id }
+        if (basketItem)
+            basketItem.count = params.count;
+
+        render "1"
+    }
+
+    def invoice(){
+        ['basket': session.getAttribute("basket")]
+    }
+
+    def shop(){
+
     }
 }

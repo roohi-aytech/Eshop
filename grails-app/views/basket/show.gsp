@@ -35,39 +35,65 @@
 
     <g:javascript src="thumbnails.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
+    <g:javascript>
+        function updateBasketItemCount(id, count) {
+            var scope = angular.element(document.getElementById('main-container')).scope();
+
+            var fount = false;
+            for (var i = 0; i < scope.basket.length; i++) {
+                if (id == scope.basket[i].id) {
+                    scope.basket[i].count = count;
+                    scope.$apply();
+                    found = true;
+                }
+            }
+
+            if (found)
+                scope.changeCount(id, count);
+        }
+    </g:javascript>
 </head>
 
 <body>
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span2">
+        <div class="span12">
+            <div class="shopping-basket">
+                <h2><g:message code="basket.content"/></h2>
 
-        </div>
+                <div class="group">
+                    <ul>
+                        <li ng-repeat="basketItem in basket">
+                            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
+                            </span>
+                            <span class="name"><h3><a
+                                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.title}}</a>
+                            </h3>
+                            </span>
+                            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>
+                            <span class="count"><g:message code="count"></g:message>: <input type="text"
+                                                                                             value="{{basketItem.count}}"
+                                                                                             onkeyup="updateBasketItemCount({{basketItem.id}},this.value)"/>
+                            </span>
+                            <span class="delete">[ <a type="button"
+                                                      ng-click="removeFromBasket(basketItem.id)"><g:message
+                                        code="application_delete"></g:message></a> ]</span>
+                        </li>
+                    </ul>
 
-        <div class="span8">
-            <div>
-                <h2><g:message code="your.basket"/></h2>
-                <ul>
-                    <li ng-repeat="basketItem in basket">
-                        <span>{{basketItem.name}}</span>
-                        <span>{{basketItem.count}}</span>
-                        <input type="button" ng-click="removeFromBasket(basketItem.id)" value="delete"/>
-                    </li>
-                </ul>
-                <g:link action="checkout"><g:message code="basket.checkout"/></g:link>
-            </div>
-        </div>
-
-        <div class="span2">
-            <div class="well">
+                    <div class="check-out">
+                        <g:message code="basket.totalPrice"></g:message>: <span
+                            class="totalPrice">{{calculateBasketTotalPrice()}}</span>
+                        <g:link action="invoice" class="btn btn-primary"><g:message
+                                code="basket.checkout"/></g:link>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div> <!-- /container -->
 
-<g:javascript library="jquery"/>
-<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 <script type="text/javascript">
     (function ($) {
         $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');

@@ -1,3 +1,4 @@
+<%@ page import="eshop.ProductService" %>
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -131,6 +132,8 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
+                            <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"></g:set>
                             <g:each in="${rootProductTypes}" var="rootProductType">
                             %{--<li><a href="#">${rootProductType.name}</a></li>--}%
                                 <li class="dropdown-submenu">
@@ -213,5 +216,7 @@
     </div>
     <r:layoutResources/>
 </div>
+<g:javascript library="jquery"/>
+<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 </body>
 </html>

@@ -128,8 +128,6 @@
         </div>
     </div>
 </div>
-<g:javascript library="jquery"/>
-<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 <script type="text/javascript">
     (function ($) {
         $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');

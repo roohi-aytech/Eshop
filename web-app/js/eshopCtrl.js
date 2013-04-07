@@ -3,6 +3,7 @@ var eshop = angular.module('eshop', []);
 eshop.controller('eshopCtrl', function($scope, $http) {
     $scope.basketCounter = basketCounter;
     $scope.basket = basket;
+    $scope.contextRoot = contextRoot;
 
     $scope.addToBasket = function(id, name) {
         $scope.basketCounter++;
@@ -35,4 +36,18 @@ eshop.controller('eshopCtrl', function($scope, $http) {
             $http.post(contextRoot + "basket/remove/" + id).success(function(response) {});
         }
     };
+
+    $scope.calculateBasketTotalPrice = function(){
+        var totalPrice = 0;
+
+        angular.forEach($scope.basket, function(item){
+            totalPrice += item.price * item.count;
+        });
+
+        return totalPrice;
+    }
+
+    $scope.changeCount = function(id, count){
+        $http.post(contextRoot + "basket/changeCount/" + id + "?count=" + count).success(function(response) {});
+    }
 });
