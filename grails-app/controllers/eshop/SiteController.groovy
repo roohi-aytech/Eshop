@@ -122,10 +122,18 @@ class SiteController {
     }
 
     def index() {
-        [
-                'slides':Slide.findAll(),
-                'discounts':Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan(new Date(), new Date(), 0)
-        ]
+
+        if (session.forwardUri) {
+            def url = session.forwardUri
+            session.forwardUri = null
+            url = url.replace(request.contextPath, "")
+            redirect url: url
+        } else
+            render(view: "/site/index", model:
+                    [
+                            'slides': Slide.findAll(),
+                            'discounts': Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan(new Date(), new Date(), 0)
+                    ])
     }
 
     def category() {

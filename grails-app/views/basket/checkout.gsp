@@ -41,7 +41,7 @@
 
             var fount = false;
             for (var i = 0; i < scope.basket.length; i++) {
-                if (id == scope.basket[i].id) {
+                if (parseInt(id) == scope.basket[i].id) {
                     scope.basket[i].count = count;
                     scope.$apply();
                     found = true;
@@ -68,13 +68,13 @@
                             <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
                             </span>
                             <span class="name"><h3><a
-                                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.title}}</a>
+                                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.name}}</a>
                             </h3>
                             </span>
                             <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>
                             <span class="count"><g:message code="count"></g:message>: <input type="text"
                                                                                              value="{{basketItem.count}}"
-                                                                                             onkeyup="updateBasketItemCount({{basketItem.id}},this.value)"/>
+                                                                                             onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
                             </span>
                             <span class="delete">[ <a type="button"
                                                       ng-click="removeFromBasket(basketItem.id)"><g:message
@@ -85,10 +85,19 @@
                     <div class="check-out">
                         <g:message code="basket.totalPrice"></g:message>: <span
                             class="totalPrice">{{calculateBasketTotalPrice()}}</span>
-                        <g:link action="invoice" class="btn btn-primary"><g:message
-                                code="basket.invoice"/></g:link>
+                        <sec:ifLoggedIn>
+                            <g:link action="invoice" class="btn btn-primary"><g:message
+                                    code="basket.invoice"/></g:link>
+                        </sec:ifLoggedIn>
                     </div>
                 </div>
+                <sec:ifNotLoggedIn>
+                    <div class="info">
+                        <div><g:message code="basket.checkout.loginRequired"></g:message></div>
+                        <common:loginLink class="btn btn-success"></common:loginLink>
+                        <common:registerLink class="btn btn-primary"></common:registerLink>
+                    </div>
+                </sec:ifNotLoggedIn>
             </div>
         </div>
     </div>

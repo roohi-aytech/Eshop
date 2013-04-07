@@ -17,7 +17,7 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            basketItem = [id: id, name: product.name, title: product.toString(), count: 1, price:priceService.calcProductPrice(product.id).mainVal]
+            basketItem = [id: id, name: product.toString(), count: 1, price:priceService.calcProductPrice(product.id).mainVal]
             basket << basketItem
         }
 
@@ -46,13 +46,8 @@ class BasketController {
         render "1"
     }
 
-    def show() {
-
-    }
-
     def checkout() {
-        def username = springSecurityService.principal
-        render username
+
     }
 
     def changeCount(){

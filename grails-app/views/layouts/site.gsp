@@ -195,14 +195,14 @@
                                     <img src="<g:createLink controller="image"
                                                             action="index"/>/{{basketItem.id}}?wh=50x50"/>
                                 </span>
-                                <span class="basket-item-title">{{basketItem.title}}<br/>
+                                <span class="basket-item-title">{{basketItem.name}}<br/>
                                     <g:message code="basket-items-count"></g:message>: <span
                                         class="basket-item-count">{{basketItem.count}}
                                 </span>
                                 </span>
                             </li>
                         </ul>
-                        <g:link class="btn btn-warning" controller="basket" action="show"><g:message
+                        <g:link class="btn btn-warning" controller="basket" action="checkout"><g:message
                                 code="basket.show"></g:message></g:link>
                     </div>
                 </div>

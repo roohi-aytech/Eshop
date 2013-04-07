@@ -50,24 +50,10 @@ class CustomerController {
     }
 
     def register(){
-//        if (params.username){
-//
-//            def customerInstance = new Customer()
-//
-//            customerInstance.username = params.username
-//            customerInstance.password = params.password
-//            customerInstance.firstName = params.firstName
-//            customerInstance.lastName = params.lastName
-//            customerInstance.email = params.email
-//            customerInstance.mobile = params.mobile
-//            customerInstance.telephone = params.telephone
-//            customerInstance.billingAddress = new Address(addressLine1: params.billingAddress)
-//            customerInstance.sendingAddress = new Address(addressLine1: params.sendingAddress)
-//
-//            render(view: 'register', model:['customerInstance': customerInstance])
-//        }
-//        else
-//            render(view: 'register', model:['customerInstance': new Customer()])
+
+        if (params.forwardUri)
+            session.forwardUri = params.forwardUri
+
         ['customerInstance': new Customer()]
     }
 
@@ -106,7 +92,12 @@ class CustomerController {
             UserRole.create customerInstance, customerRole
 
             flash.message = message(code: 'register.successful')
-            redirect(controller: 'login', action: 'auth')
+            if(session.forwardUri){
+                redirect(controller: 'login', params: ['forwardUri':session.forwardUri])
+                session.forwardUri = null
+            }
+            else
+                redirect(controller: 'login')
         }
         else{
             render(view: 'register', model:['customerInstance': customerInstance])
