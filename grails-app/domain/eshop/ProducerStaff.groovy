@@ -23,6 +23,8 @@ class ProducerStaff {
     }
 
     static constraints = {
+        role()
+        name()
         lastName(nullable: true)
         phoneNumber(nullable: true)
         fax(nullable: true)

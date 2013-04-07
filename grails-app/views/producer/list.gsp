@@ -39,7 +39,7 @@
                 </div>
                 <div>
                     <fieldset>
-                        <legend><g:message code="producingProducts"/></legend>
+                        <legend><g:message code="producingProducts.label"/></legend>
                         <div>
                             <rg:field name="producingProducts"/>
                         </div>

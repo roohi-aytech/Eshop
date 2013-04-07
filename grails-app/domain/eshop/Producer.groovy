@@ -22,10 +22,13 @@ class Producer {
     static searchable = true
 
     static constraints = {
+        name()
         address(nullable: true)
-        logo(nullable: true, maxSize: 1000000000)
+        producerStaffs()
+        producingProducts()
         delivery(nullable: true)
         paidOff(nullable: true)
+        logo(nullable: true, maxSize: 1000000000)
     }
 
     String toString(){
