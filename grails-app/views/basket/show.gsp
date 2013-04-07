@@ -86,7 +86,7 @@
                         <g:message code="basket.totalPrice"></g:message>: <span
                             class="totalPrice">{{calculateBasketTotalPrice()}}</span>
                         <g:link action="invoice" class="btn btn-primary"><g:message
-                                code="basket.checkout"/></g:link>
+                                code="basket.invoice"/></g:link>
                     </div>
                 </div>
             </div>

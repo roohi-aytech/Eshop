@@ -14,6 +14,6 @@
 </head>
 
 <body>
-<g:link action="shop" class="btn btn-primary shop"><g:message code="basket.shop"/></g:link>
+<g:link action="shop" class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
 </body>
 </html>
