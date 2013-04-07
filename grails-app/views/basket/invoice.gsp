@@ -16,7 +16,7 @@
 <body>
 <div class="invoice">
     <h2><g:message code="invoice"></g:message></h2>
-    <table border="0">
+    <table class="customer-info">
         <tr>
             <td class="label"><g:message code="invoice.owner.name"></g:message>:</td>
             <td class="value">${customer}</td>
@@ -39,8 +39,14 @@
             <td class="value">${customer.telephone}</td>
             <td></td>
         </tr>
+        <tr>
+            <td class="label"><g:message code="invoice.date"></g:message>:</td>
+            <td class="value"><rg:formatJalaliDate date="${new Date()}" hm="true"></rg:formatJalaliDate></td>
+            <td class="label"><g:message code="invoice.code"></g:message>:</td>
+            <td class="value"><g:message code="invoice.notCoded"></g:message></td>
+        </tr>
     </table>
-    <table border="1">
+    <table class="basket-detail" border="1">
         <tr>
             <th>#</th>
             <th><g:message code="invoice.item.name"></g:message></th>
@@ -50,13 +56,17 @@
         </tr>
         <g:each in="${basket}" var="basketItem" status="i">
         <tr>
-            <td>${i+1}</td>
+            <td class="center">${i+1}</td>
             <td>${basketItem.name}</td>
-            <td>${basketItem.count}</td>
+            <td class="center">${basketItem.count}</td>
             <td><g:formatNumber number="${basketItem.price}" type="number"></g:formatNumber></td>
             <td><g:formatNumber number="${basketItem.price * basketItem.count}" type="number"></g:formatNumber></td>
         </tr>
         </g:each>
+        <tr>
+            <td colspan="4" align="left"><g:message code="basket.totalPrice"></g:message></td>
+            <td><b><g:formatNumber number="${basket.sum{it.price * it.count}}" type="number"></g:formatNumber></b></td>
+        </tr>
     </table>
 </div>
 <g:link action="shop" class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
