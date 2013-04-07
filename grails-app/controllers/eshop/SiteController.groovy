@@ -1,5 +1,6 @@
 package eshop
 
+import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
 import eshop.mongo.MongoProduct
@@ -20,8 +21,7 @@ class SiteController {
 
     def browse() {
         def productType = params.productType ? ProductType.findByName(params.productType) : null
-        if (!productType)
-        {
+        if (!productType) {
             flash.message = message(code: "productType.not.found")
             redirect(action: "index")
         }
@@ -51,7 +51,10 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.name]
         }
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-        model.filters = browseService.findProductTypeFilters(model.productType, params.page?:0)
+        model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
+
+        model.slides = Slide.findAll()
+        model.discounts = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan new Date(), new Date(), 0
 
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
@@ -61,7 +64,7 @@ class SiteController {
 
     def filter() {
         def model = [:]
-        model.filters = browseService.findFilteredPageFilters(params.f, params.page?:0)
+        model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0)
         model.commonLink = createLink(controller: "site").replace("/index", "")
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -141,7 +144,6 @@ class SiteController {
     }
 
     def product() {
-
         def productTypes = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         def model = [productTypes: productTypes, product: product]

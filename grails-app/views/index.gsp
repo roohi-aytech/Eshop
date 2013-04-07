@@ -24,7 +24,7 @@
                             src="images/productType.png"/><span><g:message
                             code="producer.label"
                             default="Producers"/></span></g:link></li>
-
+                <li>
                     <g:link controller="productType" action="list"><img
                             src="images/productType.png"/><span><g:message
                             code="productType.label"
@@ -40,11 +40,6 @@
                             src="images/brand.png"/><span><g:message
                             code="brand.label"
                             default="Brand"/></span></g:link></li>
-                <li>
-                    <g:link controller="pageDetails" action="list"><img
-                            src="images/pageDetails.png"/><span><g:message
-                            code="pageDetails.label"
-                            default="Page Details"/></span></g:link></li>
                 <li>
                     <g:link controller="currency" action="list"><img
                             src="images/currency.png"/><span><g:message
@@ -81,14 +76,24 @@
         </sec:ifAnyGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
             <h3>
-                <g:message code="navigation.manage.users" default="User Management"/>
+                <g:message code="navigation.manage.settings" default="Settings"/>
             </h3>
             <ul>
                 <li>
                     <g:link controller="user" action="list"><img
                             src="images/users.png"/><span><g:message
-                            code="user.label"
+                            code="navigation.manage.users"
                             default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="slide" action="list"><img
+                            src="images/slideshow.png"/><span><g:message
+                            code="navigation.manage.slideshow"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="pageDetails" action="list"><img
+                            src="images/pageDetails.png"/><span><g:message
+                            code="pageDetails.label"
+                            default="Page Details"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
 

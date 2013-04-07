@@ -19,6 +19,21 @@
             <g:textField name="address" value=""/>
         </div>
 
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'delivery', 'error')} ">
+            <label for="delivery">
+                <g:message code="producer.delivery.label" default="Address"/>
+
+            </label>
+            <g:textField name="delivery" value=""/>
+        </div>
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'paidOff', 'error')} ">
+            <label for="paidOff">
+                <g:message code="producer.paidOff.label" default="Address"/>
+
+            </label>
+            <g:textField name="paidOff" value=""/>
+        </div>
+
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerStaffs', 'error')} ">
             <label for="producerStaffs">
                 <g:message code="producer.producerStaffs.label" default="Staffs"/>

@@ -68,20 +68,11 @@
 	<g:select id="user" name="user.id" from="${eshop.User.list()}" optionKey="id" required="" value="${customerReviewInstance?.user?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: customerReviewInstance, field: 'customerReviewRates', 'error')} ">
-	<label for="customerReviewRates">
-		<g:message code="customerReview.customerReviewRates.label" default="Customer Review Rates" />
+<div class="fieldcontain ${hasErrors(bean: customerReviewInstance, field: 'customerReviewReview', 'error')} ">
+	<label for="customerReviewReview">
+		<g:message code="customerReview.customerReviewReview.label" default="Customer Review Review" />
 		
 	</label>
-	
-<ul class="one-to-many">
-<g:each in="${customerReviewInstance?.customerReviewRates?}" var="c">
-    <li><g:link controller="customerReviewRate" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="customerReviewRate" action="create" params="['customerReview.id': customerReviewInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'customerReviewRate.label', default: 'CustomerReviewComment')])}</g:link>
-</li>
-</ul>
-
+	<g:select name="customerReviewReview" from="${eshop.CustomerReview.list()}" multiple="multiple" optionKey="id" size="5" value="${customerReviewInstance?.customerReviewReview*.id}" class="many-to-many"/>
 </div>
 

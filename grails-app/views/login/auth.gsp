@@ -1,6 +1,6 @@
 <html>
 <head>
-	<meta name='layout' content='main'/>
+	<meta name='layout' content='site'/>
 	<title><g:message code="springSecurity.login.title"/></title>
 	<style type='text/css' media='screen'>
 	#login {
@@ -10,52 +10,45 @@
 	}
 
 	#login .inner {
-		width: 340px;
-		padding-bottom: 6px;
-		margin: 60px auto;
+		width: 250px;
+		margin: 40px auto;
 		text-align: right;
-		border: 1px solid #aab;
-		background-color: #f0f0fa;
-		-moz-box-shadow: 2px 2px 2px #eee;
-		-webkit-box-shadow: 2px 2px 2px #eee;
-		-khtml-box-shadow: 2px 2px 2px #eee;
-		box-shadow: 2px 2px 2px #eee;
+        border: 1px solid #dddddd;
+		background-color: #fafafa;
+        border-radius: 5px;
+        padding: 5px;
 	}
 
 	#login .inner .fheader {
-		padding: 18px 26px 14px 26px;
-		background-color: #f7f7ff;
-		margin: 0px 0 14px 0;
+		padding: 5px;
+		background-color: #f0f0f0;
+		margin: 0px 0 0px 0;
 		color: #2e3741;
-		font-size: 18px;
-		font-weight: bold;
+		font-size: 11px;
+        border-radius: 5px;
+        margin-bottom: 5px;
 	}
 
 	#login .inner .cssform p {
 		clear: right;
 		margin: 0;
-		padding: 4px 0 3px 0;
-		padding-right: 105px;
-		margin-bottom: 20px;
-		height: 1%;
+		padding: 5px;
+        padding-right: 10px;
 	}
 
-	#login .inner .cssform input[type='text'] {
-		width: 160px;
+	#login .inner .cssform input[type='text'],#login .inner .cssform input[type='password'] {
+		width: 217px;
+        margin-bottom: 0;
 	}
 
 	#login .inner .cssform label {
-		font-weight: bold;
 		/*float: right;*/
 		text-align: right;
-		margin-right: -105px;
 		width: 110px;
-		padding-top: 3px;
-		padding-right: 10px;
+        padding-bottom: 3px;
 	}
 
 	#login #remember_me_holder {
-		padding-right: 120px;
 	}
 
 	#login #submit {
@@ -66,7 +59,9 @@
 		float: none;
 		margin-right: 0;
 		text-align: right;
-		width: 150px
+		width: 150px;
+        display: inline-block;
+        padding-bottom: 0;
 	}
 
 	#login .inner .login_message {
@@ -81,6 +76,18 @@
 	#login .inner .chk {
 		height: 12px;
 	}
+
+    #login .toolbar {
+        text-align: left;
+    }
+
+    #login input[type='submit'] {
+        margin-left: 5px;
+    }
+
+    #login form {
+        margin:0;
+    }
 	</style>
 </head>
 
@@ -109,8 +116,8 @@
 				<label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
 			</p>
 
-			<p>
-				<input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>
+			<p class="toolbar">
+				<input type='submit' id="submit" class="btn btn-primary" width="80px" value='${message(code: "login")}'/>
 			</p>
 		</form>
 	</div>

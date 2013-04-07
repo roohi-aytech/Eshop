@@ -1,0 +1,31 @@
+package eshop
+
+class CommonTagLib {
+
+    static namespace = "common"
+
+    def loginLink = {attrs, body ->
+
+        out << '<a'
+        out << ' href=\"' + createLink(controller: 'Login', params:['forwardUri':request.forwardURI]) + '\"'
+        attrs.each { key, value ->
+            out << ' ' + key + '=\"' + value + "\""
+        }
+        out << '>'
+        out <<  message(code:'login')
+        out << '</a>'
+    }
+
+    def logoutLink = {attrs, body ->
+
+        out << '<a'
+        out << ' href=\"' + createLink(controller: 'Logout', params:['forwardUri':request.forwardURI]) + '\"'
+        attrs.each { key, value ->
+            out << ' ' + key + '=\"' + value + "\""
+        }
+        out << '>'
+        out <<  message(code:'logout')
+        out << '</a>'
+    }
+
+}

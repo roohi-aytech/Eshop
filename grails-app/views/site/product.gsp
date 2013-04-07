@@ -33,6 +33,7 @@
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
     <g:javascript src="common.js"></g:javascript>
     <g:javascript src="browse.js"></g:javascript>
+    <g:javascript src="jquery.raty.js"></g:javascript>
 </head>
 
 <body>
@@ -78,7 +79,7 @@
 
             <p>
                 <g:message code="rate"/>:
-                <b><g:render template="product/rate"/></b>
+                <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
             </p>
 
 
@@ -113,8 +114,8 @@
                 </div>
                 <hr/>
             </g:if>
-            <g:render template="product/reviewList"></g:render>
-            <g:render template="product/newReview"></g:render>
+            <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
+            <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
         </div>
     </div>
 </div>

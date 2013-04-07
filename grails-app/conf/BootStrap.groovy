@@ -23,7 +23,8 @@ class BootStrap {
             def authority = it
             def role = Role.findByAuthority(authority) ?: new Role(authority: authority).save(failOnError: true)
         }
-        def adminRole = Role.findByAuthority(RoleHelper.ROLE_PRODUCT_ADMIN)
+        def adminRole = Role.findByAuthority(RoleHelper.ROLE_USER_ADMIN)
+
         def adminUser = User.findByUsername('admin') ?: new User(
                 username: 'admin',
                 password: 'admin',

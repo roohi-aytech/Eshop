@@ -10,7 +10,7 @@ class CustomerReview {
     Date lastUpdate
     User user
 
-    static hasMany = [customerReviewComments: CustomerReviewComment]
+    static hasMany = [customerReviewReview: CustomerReview]
 
     static belongsTo = [Product]
 
@@ -18,13 +18,13 @@ class CustomerReview {
 
     static mapping = {
         sort 'rate'
-        customerReviewComments cascade: 'all'
+        customerReviewReview cascade: 'all'
         version false
     }
 
     static constraints = {
         product(nullable: false)
-        rate(nullable: false, inList: [1..2])
+        rate(nullable: false)
         title(nullable: false, maxSize: 128)
         body(nullable: false, maxSize: 2048)
         creationDate(nullable: false)

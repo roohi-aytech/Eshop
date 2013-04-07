@@ -17,6 +17,8 @@ eshop.controller('eshopCtrl', function($scope, $http) {
         if (!found)
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1};
         $http.post(contextRoot + "basket/add/" + id).success(function(response) {});
+
+        return false;
     };
 
     $scope.removeFromBasket = function(id) {

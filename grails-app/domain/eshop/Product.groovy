@@ -28,7 +28,6 @@ class Product extends BaseProduct implements Comparable{
     static mapping = {
         sort 'name'
         attributes cascade: 'all'
-        customerReviews cascade: 'all'
         details type: "text"
         version false
     }

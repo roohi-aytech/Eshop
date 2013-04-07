@@ -8,12 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet"
-          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
     <style>
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -22,7 +17,7 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <!-- Le fav and touch icons -->
@@ -34,6 +29,7 @@
 
     <g:javascript src="thumbnails.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
+    <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>
@@ -104,6 +100,10 @@
             </g:if>
             <li class="active">${breadCrumb[-1].name}</li>
         </ul>
+
+        <g:render template="browse/slideshowMain"></g:render>
+
+        <g:render template="browse/slideshowSpecialSales" model="[discounts: discounts]"></g:render>
 
         <div class="container-fluid">
             <ul class="thumbnails row-fluid">
