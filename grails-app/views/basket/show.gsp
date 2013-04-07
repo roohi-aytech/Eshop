@@ -55,6 +55,7 @@
                         <input type="button" ng-click="removeFromBasket(basketItem.id)" value="delete"/>
                     </li>
                 </ul>
+                <g:link action="checkout"><g:message code="basket.checkout"/></g:link>
             </div>
         </div>
 

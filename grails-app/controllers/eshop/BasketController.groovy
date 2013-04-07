@@ -1,6 +1,7 @@
 package eshop
 
 class BasketController {
+    def springSecurityService
 
     def index() {}
 
@@ -46,5 +47,10 @@ class BasketController {
 
     def show() {
 
+    }
+
+    def checkout() {
+        def username = springSecurityService.principal
+        render username
     }
 }
