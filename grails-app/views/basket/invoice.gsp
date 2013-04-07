@@ -69,7 +69,7 @@
         </tr>
     </table>
     <div>
-        <g:link action="checkout" class="btn btn-warning"><g:message code="invoice.return"/></g:link>
+        <g:link action="checkout" class="btn"><g:message code="invoice.return"/></g:link>
         <g:link action="shop" class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
     </div>
 </div>
