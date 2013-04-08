@@ -59,18 +59,18 @@
             <td class="center">${i+1}</td>
             <td>${basketItem.name}</td>
             <td class="center">${basketItem.count}</td>
-            <td><g:formatNumber number="${basketItem.price}" type="number"></g:formatNumber></td>
-            <td><g:formatNumber number="${basketItem.price * basketItem.count}" type="number"></g:formatNumber></td>
+            <td><g:formatNumber number="${basketItem.price?basketItem.price:0}" type="number"></g:formatNumber></td>
+            <td><g:formatNumber number="${(basketItem.price?basketItem.price:0) * basketItem.count}" type="number"></g:formatNumber></td>
         </tr>
         </g:each>
         <tr>
             <td colspan="4" align="left"><g:message code="basket.totalPrice"></g:message></td>
-            <td><b><g:formatNumber number="${basket.sum{it.price * it.count}}" type="number"></g:formatNumber></b></td>
+            <td><b><g:formatNumber number="${basket.sum{(it.price?it.price:0) * it.count}}" type="number"></g:formatNumber></b></td>
         </tr>
     </table>
     <div>
         <g:link action="checkout" class="btn"><g:message code="invoice.return"/></g:link>
-        <g:link action="shop" class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
+        <g:link controller="order" action="create" class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
     </div>
 </div>
 </body>

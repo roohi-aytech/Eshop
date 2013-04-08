@@ -16,17 +16,17 @@
 
     <div class="group">
         <div class="header">
-            <img src="../images/settings.png">
-            <h3><g:message code="controlPanel.settings.label"></g:message></h3>
-            <div class="comment"><g:message code="controlPanel.settings.description"></g:message></div>
+            <img src="../images/box.png">
+            <h3><g:message code="controlPanel.orders.label"></g:message></h3>
+            <div class="comment"><g:message code="controlPanel.orders.description"></g:message></div>
         </div>
 
         <div class="column1 items">
             <h4><g:message code="controlPanel.settings.profile.label"></g:message></h4>
             <ul class="master">
-                <li><g:link controller="customer" action="profile"><g:message code="controlPanel.settings.profile.info.label"></g:message> </g:link> </li>
-                <li><g:link controller="customer" action="changePassword"><g:message code="controlPanel.settings.profile.changePassword.label"></g:message> </g:link> </li>
-                <li><common:logoutLink></common:logoutLink></li>
+                <li>item 1</li>
+                <li>item 1</li>
+                <li>item 1</li>
             </ul>
         </div>
 
@@ -50,9 +50,9 @@
         <div class="column1 items">
             <h4><g:message code="controlPanel.settings.profile.label"></g:message></h4>
             <ul class="master">
-                <li>item 1</li>
-                <li>item 1</li>
-                <li>item 1</li>
+                <li><g:link controller="customer" action="profile"><g:message code="controlPanel.settings.profile.info.label"></g:message> </g:link> </li>
+                <li><g:link controller="customer" action="changePassword"><g:message code="controlPanel.settings.profile.changePassword.label"></g:message> </g:link> </li>
+                <li><common:logoutLink></common:logoutLink></li>
             </ul>
         </div>
 

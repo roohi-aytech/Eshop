@@ -69,7 +69,7 @@
 <div id="main-container" ng-controller="eshopCtrl">
     <div class="navbar navbar-fixed-top">
         <div id="header1">
-            <a id="logo"><h1><g:message code="title"></g:message></h1></a>
+            <a id="logo" href="${createLink(controller: 'site')}"><h1><g:message code="title"></g:message></h1></a>
 
             <div id="top-links">
                 <a href="${createLink(controller: 'site')}"><g:message code="home.label"></g:message></a> |
