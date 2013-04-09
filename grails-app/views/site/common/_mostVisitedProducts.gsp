@@ -1,3 +1,5 @@
+
+<g:javascript src="jquery.mousewheel.js"></g:javascript>
 <g:javascript src="jcarousellite.js"></g:javascript>
 
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
@@ -17,8 +19,11 @@
 </div>
 
 <g:javascript>
-    $("#jCarouselLite").jCarouselLite({
-        btnNext: "#next",
-        btnPrev: "#prev"
-    });
+//    $(document).ready(function () {
+//        $('.carouselItem').width(($('#jCarouselLite').width() / 5) + "px");
+//        $("#jCarouselLite").jCarouselLite({
+//            btnNext: "#next",
+//            btnPrev: "#prev"
+//        })
+//    });
 </g:javascript>

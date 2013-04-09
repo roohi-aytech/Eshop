@@ -1184,11 +1184,11 @@ span.cke_skin_kama{
 
 /*Carousel*/
 #jCarouselLite{
-width: 100% !important;
+    width: 100% !important;
 }
 
 .carouselItem{
-    width: 200px !important;
+    width: 100px;
 }
 
 
