@@ -34,6 +34,6 @@ class ProducerStaff {
     }
 
     String toString() {
-        name
+        role
     }
 }

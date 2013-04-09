@@ -6,14 +6,17 @@ class ProducingProduct {
     ProductType productType
     Brand brand
     String discount
+    String paidOff
 
-   static belongsTo = [Producer]
+
+    static belongsTo = [Producer]
 
     static constraints = {
         product(nullable: true)
         productType(nullable: true)
         brand(nullable: true)
         discount(nullable: true)
+        paidOff(nullable: true)
     }
 
     Boolean deleted

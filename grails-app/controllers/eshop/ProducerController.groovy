@@ -6,7 +6,7 @@ import grails.converters.JSON
 
 class ProducerController {
 
-    static allowedMethods = [save: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -23,6 +23,8 @@ class ProducerController {
     }
 
     def list() {
+        [ptid: params.ptid ?: 0]
+
     }
 
     def save() {
