@@ -52,9 +52,9 @@
 
     <div class="span600">
 
-        <g:render template="browse/slideshowMain"></g:render>
+        <g:render template="common/slideshowMain"></g:render>
 
-        <g:render template="browse/slideshowSpecialSales" model="[discounts: discounts]"></g:render>
+        <g:render template="common/slideshowSpecialSales" model="[discounts: discounts]"></g:render>
 
     </div>
 </div>

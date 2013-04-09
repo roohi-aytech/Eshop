@@ -1182,6 +1182,15 @@ span.cke_skin_kama{
     padding: 5px;
 }
 
+/*Carousel*/
+#jCarouselLite{
+width: 100% !important;
+}
+
+.carouselItem{
+    width: 200px !important;
+}
+
 
 
 

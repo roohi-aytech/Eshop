@@ -116,6 +116,7 @@
             </g:if>
             <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
             <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
+            <g:render template="common/mostVisitedProducts"></g:render>
         </div>
     </div>
 </div>

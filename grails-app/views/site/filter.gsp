@@ -112,7 +112,7 @@
                 <li class="active">${filters.breadcrumb[-1].linkTitle}</li>
             </ul>
 
-            <g:render template="browse/slideshowMain"></g:render>
+            <g:render template="common/slideshowMain"></g:render>
 
             <div>
                 <ul class="thumbnails">
