@@ -54,7 +54,7 @@ class SiteController {
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
 
         model.slides = Slide.findAll()
-        model.discounts = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan new Date(), new Date(), 0
+//        model.discounts = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan new Date(), new Date(), 0
 
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
@@ -68,6 +68,7 @@ class SiteController {
         model.commonLink = createLink(controller: "site").replace("/index", "")
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+        model.slides = Slide.findAll()
 
         model
     }
@@ -174,6 +175,10 @@ class SiteController {
         }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+        if (!product.visitCount)
+            product.visitCount = 0;
+        product.visitCount++;
+        product.save()
 
         model
     }

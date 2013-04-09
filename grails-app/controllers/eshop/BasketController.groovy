@@ -59,7 +59,7 @@ class BasketController {
 
         def basketItem = basket.find { it -> it.id == id }
         if (basketItem)
-            basketItem.count = params.count;
+            basketItem.count = params.count.toInteger();
 
         render "1"
     }

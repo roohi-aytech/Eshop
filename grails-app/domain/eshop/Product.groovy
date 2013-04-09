@@ -13,6 +13,7 @@ class Product extends BaseProduct implements Comparable{
     Boolean manualTitle
     String iranCode
     String shabnamCode
+    Integer visitCount = 0
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -50,6 +51,7 @@ class Product extends BaseProduct implements Comparable{
         iranCode(nullable: true)
         shabnamCode(nullable: true)
         manualTitle(nullable:true)
+        visitCount(nullable:true)
 
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)

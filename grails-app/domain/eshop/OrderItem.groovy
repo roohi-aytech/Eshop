@@ -5,6 +5,7 @@ class OrderItem {
     Order order
     Product product
     int orderCount
+    int unitPrice = 0
 
     static belongsTo = [Order]
 

@@ -22,6 +22,7 @@ class OrderHelper {
     public static final String ACTION_CANCELLATION = "cancellation";
     public static final String ACTION_TRANSMISSION = "transmission";
     public static final String ACTION_DELIVERY = "delivery";
+    public static final String ACTION_REACTIVATION = "reactivation";
 
-    public static final def ACTION_LIST = [ACTION_CREATION, ACTION_PAYMENT, ACTION_CANCELLATION, ACTION_TRANSMISSION, ACTION_DELIVERY]
+    public static final def ACTION_LIST = [ACTION_CREATION, ACTION_PAYMENT, ACTION_CANCELLATION, ACTION_TRANSMISSION, ACTION_DELIVERY, ACTION_REACTIVATION]
 }

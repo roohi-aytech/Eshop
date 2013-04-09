@@ -167,7 +167,7 @@
                     </a>
 
                     <div class="dropdown-menu content">
-                        content
+                        <g:message code="underConstruction"></g:message>
                     </div>
                 </div>
 
@@ -178,7 +178,7 @@
                     </a>
 
                     <div class="dropdown-menu content">
-                        content
+                        <g:message code="underConstruction"></g:message>
                     </div>
                 </div>
 

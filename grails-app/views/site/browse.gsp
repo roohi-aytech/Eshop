@@ -103,8 +103,6 @@
 
         <g:render template="browse/slideshowMain"></g:render>
 
-        <g:render template="browse/slideshowSpecialSales" model="[discounts: discounts]"></g:render>
-
         <div class="container-fluid">
             <ul class="thumbnails row-fluid">
                 %{--<div class="span" style="display: none;"></div>--}%

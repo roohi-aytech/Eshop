@@ -8,11 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet"
-          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
     body {
@@ -31,14 +27,16 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
+
     <g:javascript src="thumbnails.js"></g:javascript>
+    <g:javascript src="common.js"></g:javascript>
+    <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>
 
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span2">
+<div class="layout-container">
+        <div class="span180">
             <div class="well sidebar-nav">
                 <div id="navigator_root">
                     <a href="/EShop/site/browse/${message(code:"applicances")}" id="navigator_appliance"><g:message code="applicances"></g:message></a>
@@ -92,7 +90,12 @@
             </div>
         </div>
 
-        <div class="span8">
+        <div class="span200">
+            <div class="well">
+            </div>
+        </div>
+
+        <div class="span600">
             <ul class="breadcrumb">
                 <li>
                     <a href="#"><g:message code="home"/></a>
@@ -108,6 +111,8 @@
                 </g:if>
                 <li class="active">${filters.breadcrumb[-1].linkTitle}</li>
             </ul>
+
+            <g:render template="browse/slideshowMain"></g:render>
 
             <div>
                 <ul class="thumbnails">
@@ -131,16 +136,8 @@
                 </g:if>
             </div>
         </div>
-
-        <div class="span2">
-            <div class="well">
-            </div>
-        </div>
-    </div>
 </div> <!-- /container -->
 
-<g:javascript library="jquery"/>
-<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 <script type="text/javascript">
     (function ($) {
         $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');

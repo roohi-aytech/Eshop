@@ -985,6 +985,15 @@ span.cke_skin_kama{
     margin: 0 20px 0 20px;
 }
 
+.control-panel ul{
+    display: table;
+    width: 100%;
+}
+
+.control-panel li{
+    display: table-row;
+}
+
 .control-panel .group{
     border: 1px solid #DCDCDC;
     border-radius: 5px;
@@ -994,17 +1003,18 @@ span.cke_skin_kama{
 
 .control-panel .header{
     padding:10px;
-    display: inline-block;
+    display: table-cell;
     width: 250px;
+    border-left: 1px dashed #DCDCDC;
 }
 
 .control-panel h3{
     margin-top: 0;
+    margin-bottom: -10px;
 }
 
 .control-panel .comment{
     color: gray;
-    margin-top:-10px;
 }
 
 .control-panel .items{
@@ -1012,14 +1022,16 @@ span.cke_skin_kama{
 }
 
 .control-panel .column1{
-    border-right: 1px dashed #DCDCDC;
     padding: 10px;
     width: 300px;
+    height: 100%;
+    display: table-cell;
 }
 
 .control-panel .column2{
     border-right: 1px dashed #DCDCDC;
     padding: 10px;
+    display: table-cell;
 }
 
 .control-panel ul li{
