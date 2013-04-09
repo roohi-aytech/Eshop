@@ -86,7 +86,8 @@
 <sec:ifNotLoggedIn>
     <div class="info">
         <div><g:message code="review.loginRequired"></g:message></div>
-        <common:loginLink class="btn btn-primary"></common:loginLink>
+        <common:loginLink class="btn btn-success"></common:loginLink>
+        <common:registerLink class="btn btn-primary"></common:registerLink>
     </div>
 </sec:ifNotLoggedIn>
 <sec:ifLoggedIn>

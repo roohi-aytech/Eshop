@@ -117,6 +117,7 @@
 			</p>
 
 			<p class="toolbar">
+                <common:registerLink></common:registerLink>
 				<input type='submit' id="submit" class="btn btn-primary" width="80px" value='${message(code: "login")}'/>
 			</p>
 		</form>

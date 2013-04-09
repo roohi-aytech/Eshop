@@ -13,4 +13,8 @@ class DefaultController {
         else
             render(view: "/index")
     }
+
+    def underConstruction(){
+        render(view: "/underConstruction")
+    }
 }

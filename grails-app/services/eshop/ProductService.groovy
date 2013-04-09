@@ -58,4 +58,8 @@ class ProductService {
             return false
         }
     }
+
+    def findRootProductTypes() {
+        ProductType.findAllByParentProductIsNull()
+    }
 }

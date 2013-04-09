@@ -1,7 +1,12 @@
 class UrlMappings {
 
 	static mappings = {
-		"/site/browse/$productType/" {
+        "/order/list/$status/" {
+            controller = "order"
+            action = "list"
+        }
+
+        "/site/browse/$productType/" {
             controller = "site"
             action = "browse"
         }
@@ -12,7 +17,11 @@ class UrlMappings {
 			}
 		}
 
-		"/"( controller: "/default")
+		"/"( controller: "/site")
+
+        "/admin"(controller: "/default")
+
 		"500"(view:'/error')
+        "404"(controller: "/default", action:"underConstruction")
 	}
 }

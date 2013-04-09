@@ -16,6 +16,18 @@ class CommonTagLib {
         out << '</a>'
     }
 
+    def registerLink = {attrs, body ->
+
+        out << '<a'
+        out << ' href=\"' + createLink(controller: 'Customer', action: 'register', params:['forwardUri':request.forwardURI]) + '\"'
+        attrs.each { key, value ->
+            out << ' ' + key + '=\"' + value + "\""
+        }
+        out << '>'
+        out <<  message(code:'register')
+        out << '</a>'
+    }
+
     def logoutLink = {attrs, body ->
 
         out << '<a'

@@ -16,6 +16,10 @@ body{
     /*position: relative;*/
 }
 
+.center{
+    text-align: center;
+}
+
 .form-comment{
     color:#808080;
     padding:5px 0;
@@ -43,6 +47,11 @@ body{
     margin-top: 5px;
 }
 
+ul.errors{
+    color:#dc143c;
+    margin-right: 30px;
+}
+
 #main-container{
     min-width: 993px;
     position: relative;
@@ -59,7 +68,7 @@ body{
 
 .navbar-fixed-top{
     z-index: 1000;
-    position: absolute !important;
+    /*position: absolute !important;*/
     margin-bottom: 0 !important;
     min-width: 993px !important;
 }
@@ -320,6 +329,25 @@ body{
 }
 
 /*Navigation*/
+
+.sidebar-nav.home{
+    padding-bottom: 0;
+}
+
+.sidebar-nav.home #navigator_root{
+    border-bottom-width: 0 !important;
+}
+
+.sidebar-nav.home #navigator_appliance{
+    border-bottom-width: 0 !important;
+    border-radius: 0 5px 5px 0;
+}
+
+.sidebar-nav.home #navigator_digital{
+    border-bottom-width: 0 !important;
+    border-radius: 5px 0 0 5px;
+}
+
 .sidebar-nav .nav-list li.checkable a{
     padding-right: 23px;
     background-image: url(../images/controls/checkbox/not-checked.png);
@@ -957,6 +985,15 @@ span.cke_skin_kama{
     margin: 0 20px 0 20px;
 }
 
+.control-panel ul{
+    display: table;
+    width: 100%;
+}
+
+.control-panel li{
+    display: table-row;
+}
+
 .control-panel .group{
     border: 1px solid #DCDCDC;
     border-radius: 5px;
@@ -966,17 +1003,18 @@ span.cke_skin_kama{
 
 .control-panel .header{
     padding:10px;
-    display: inline-block;
+    display: table-cell;
     width: 250px;
+    border-left: 1px dashed #DCDCDC;
 }
 
 .control-panel h3{
     margin-top: 0;
+    margin-bottom: -10px;
 }
 
 .control-panel .comment{
     color: gray;
-    margin-top:-10px;
 }
 
 .control-panel .items{
@@ -984,14 +1022,16 @@ span.cke_skin_kama{
 }
 
 .control-panel .column1{
-    border-right: 1px dashed #DCDCDC;
     padding: 10px;
     width: 300px;
+    height: 100%;
+    display: table-cell;
 }
 
 .control-panel .column2{
     border-right: 1px dashed #DCDCDC;
     padding: 10px;
+    display: table-cell;
 }
 
 .control-panel ul li{
@@ -1002,6 +1042,146 @@ span.cke_skin_kama{
     font-family: times !important;
     font-size: 16px;
 }
+
+/*Shopping Basket*/
+.shopping-basket{
+    padding: 20px;
+    padding-top: 0;
+}
+
+.shopping-basket h2{
+    margin-bottom: 0;
+}
+
+.shopping-basket .group{
+    border: 1px solid #DCDCDC;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.shopping-basket ul{
+    margin-left: 0;
+}
+
+.shopping-basket ul li{
+    list-style-type: none;
+    border-bottom: 1px dashed #eeeeee;
+    padding: 10px;
+    height: 100px;
+    clear: both;
+}
+
+.shopping-basket .image{
+    display: block;
+    float: right;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin-left: 10px;
+    position: relative;
+}
+
+.shopping-basket .image img{
+    position: absolute;
+    left:0;
+    bottom: 0;
+}
+
+.shopping-basket h3{
+    display: block;
+}
+
+.shopping-basket h3 a{
+    font-family: times !important;
+    font-size: 16px;
+}
+
+.shopping-basket .price{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.shopping-basket .count{
+}
+
+.shopping-basket .count input[type=text]{
+    width: 30px;
+    height: 15px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.shopping-basket .delete{
+    color: #808080;
+}
+
+.shopping-basket .totalPrice{
+    font-size: 14px;
+    color:#ff4500;
+    font-weight: bold;
+}
+
+.shopping-basket .check-out{
+    background-color: #f8f8f8;
+    padding: 5px;
+    margin:-5px;
+}
+
+.shopping-basket .check-out a{
+    margin-right: 80px;
+}
+
+/*Invoice*/
+.invoice{
+    padding: 20px;
+    padding-top: 0;
+}
+
+.invoice h2{
+    margin-bottom: 0;
+}
+
+.invoice table{
+    width: 100%;
+}
+
+.invoice .label{
+    text-align: left;
+    vertical-align: middle;
+    background-color: transparent;
+    text-shadow: none;
+    font-weight: normal;
+    color: #000000;
+    width: 0%;
+    color: #808080;
+    white-space: nowrap;
+}
+
+.invoice .value{
+    vertical-align: top;
+    text-align: right;
+    width: 50%;
+}
+
+.invoice td{
+    padding: 3px;
+    border-color:#808080;
+}
+
+.invoice .customer-info{
+    margin-bottom: 10px;
+}
+
+.invoice .basket-detail{
+    border-color: #000000;
+    margin-bottom: 10px;
+}
+
+.invoice .basket-detail th{
+    background-color: #ff8c00;
+    padding: 5px;
+}
+
 
 
 

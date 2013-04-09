@@ -1,5 +1,10 @@
 package eshop
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.AuthorityUtils
+import org.springframework.security.core.context.SecurityContextHolder
+
 class CustomerController {
 
     def springSecurityService
@@ -42,5 +47,61 @@ class CustomerController {
             flash.message = message(code: "password.change.invalidPassword")
             redirect(action: 'changePassword')
         }
+    }
+
+    def register(){
+
+        if (params.forwardUri)
+            session.forwardUri = params.forwardUri
+
+        ['customerInstance': new Customer()]
+    }
+
+    def save(){
+        def customerInstance = new Customer()
+
+        customerInstance.username = params.username
+        customerInstance.password = params.password
+        customerInstance.firstName = params.firstName
+        customerInstance.lastName = params.lastName
+        customerInstance.email = params.email
+        customerInstance.mobile = params.mobile
+        customerInstance.telephone = params.telephone
+
+        Address billingAddress = new Address(addressLine1: params.billingAddress)
+        if (!billingAddress.validate() || !billingAddress.save()){
+            flash.message = billingAddress.errors// message(code: 'register.fail')
+            redirect(controller: 'customer', action: 'register', params: ['customerInstance', customerInstance])
+            return
+        }
+
+        Address sendingAddress = new Address(addressLine1: params.sendingAddress)
+        if (!sendingAddress.validate() || !sendingAddress.save()){
+            flash.message = sendingAddress.errors// message(code: 'register.fail')
+            redirect(controller: 'customer', action: 'register', params: ['customerInstance', customerInstance])
+            return
+        }
+
+        customerInstance.billingAddress = (Address)billingAddress
+        customerInstance.sendingAddress = (Address)sendingAddress
+
+        customerInstance.enabled = true
+        if (customerInstance.validate() && customerInstance.save())
+        {
+            def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
+            UserRole.create customerInstance, customerRole
+
+            flash.message = message(code: 'register.successful')
+            if(session.forwardUri){
+                redirect(controller: 'login', params: ['forwardUri':session.forwardUri])
+                session.forwardUri = null
+            }
+            else
+                redirect(controller: 'login')
+        }
+        else{
+            render(view: 'register', model:['customerInstance': customerInstance])
+        }
+
     }
 }

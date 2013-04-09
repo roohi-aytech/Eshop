@@ -1,3 +1,4 @@
+<%@ page import="eshop.ProductService" %>
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -68,10 +69,10 @@
 <div id="main-container" ng-controller="eshopCtrl">
     <div class="navbar navbar-fixed-top">
         <div id="header1">
-            <a id="logo"><h1><g:message code="title"></g:message></h1></a>
+            <a id="logo" href="${createLink(controller: 'site')}"><h1><g:message code="title"></g:message></h1></a>
 
             <div id="top-links">
-                <a href="#"><g:message code="home.label"></g:message></a> |
+                <a href="${createLink(controller: 'site')}"><g:message code="home.label"></g:message></a> |
                 <a href="#"><g:message code="support.label"></g:message></a> |
                 <a href="#"><g:message code="help.label"></g:message></a> |
                 <a href="#"><g:message code="contact.label"></g:message></a>
@@ -81,7 +82,7 @@
                 <sec:ifLoggedIn>
                     <div class="btn-group pull-left" id="profile-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <sec:loggedInUserInfo field="username"/>
+                            <sec:username/>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -112,8 +113,7 @@
                             <li class="dropdown">
                                 <common:loginLink tabindex="-1"></common:loginLink></li>
                             <li class="dropdown">
-                                <a tabindex="-1"
-                                   href="#"><g:message code="register"></g:message></a></li>
+                                <common:registerLink tabindex="-1"></common:registerLink></li>
                         </ul>
                     </div>
                 </sec:ifNotLoggedIn>
@@ -131,6 +131,8 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
+                            <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"></g:set>
                             <g:each in="${rootProductTypes}" var="rootProductType">
                             %{--<li><a href="#">${rootProductType.name}</a></li>--}%
                                 <li class="dropdown-submenu">
@@ -165,7 +167,7 @@
                     </a>
 
                     <div class="dropdown-menu content">
-                        content
+                        <g:message code="underConstruction"></g:message>
                     </div>
                 </div>
 
@@ -176,7 +178,7 @@
                     </a>
 
                     <div class="dropdown-menu content">
-                        content
+                        <g:message code="underConstruction"></g:message>
                     </div>
                 </div>
 
@@ -200,7 +202,7 @@
                                 </span>
                             </li>
                         </ul>
-                        <g:link class="btn btn-warning" controller="basket" action="show"><g:message
+                        <g:link class="btn btn-warning" controller="basket" action="checkout"><g:message
                                 code="basket.show"></g:message></g:link>
                     </div>
                 </div>
@@ -213,5 +215,7 @@
     </div>
     <r:layoutResources/>
 </div>
+<g:javascript library="jquery"/>
+<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 </body>
 </html>
