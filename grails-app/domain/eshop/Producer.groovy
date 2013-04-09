@@ -4,10 +4,12 @@ import org.apache.commons.collections.FactoryUtils
 import org.apache.commons.collections.list.LazyList
 
 class Producer {
+    ProducerType producerType
     String name
     String address
+    String phone
+    String fax
     String delivery
-    String paidOff
 
     byte[] logo
     static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
@@ -22,12 +24,14 @@ class Producer {
     static searchable = true
 
     static constraints = {
+        producerType(nullable: true)
         name()
         address(nullable: true)
+        phone()
+        fax()
         producerStaffs()
         producingProducts()
         delivery(nullable: true)
-        paidOff(nullable: true)
         logo(nullable: true, maxSize: 1000000000)
     }
 

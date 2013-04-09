@@ -3,6 +3,15 @@
 <div class="form-fields">
     <div class="form-fields-part">
 
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerType', 'error')} ">
+            <label for="producerType">
+                <g:message code="producer.producerType.label" default="ProducerType"/>
+            </label>
+            <rg:autocomplete domainClass="eshop.ProducerType" id="producerType" like="true" value="${producerInstance?.producerType?.id}" display="${producerInstance?.producerType}"/>
+
+            <input type="button" value="${message(code: "add")}" onclick="addProducerType()">
+        </div>
+
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'name', 'error')} ">
             <label for="name">
                 <g:message code="producer.name.label" default="Name"/>
@@ -18,7 +27,20 @@
             </label>
             <g:textField name="address" value=""/>
         </div>
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'phone', 'error')} ">
+            <label for="phone">
+                <g:message code="producer.phone.label" default="Phone"/>
 
+            </label>
+            <g:textField name="phone" value=""/>
+        </div>
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'fax', 'error')} ">
+        <label for="delivery">
+            <g:message code="producer.fax.label" default="Fax"/>
+
+        </label>
+        <g:textField name="fax" value=""/>
+    </div>
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'delivery', 'error')} ">
             <label for="delivery">
                 <g:message code="producer.delivery.label" default="Address"/>
@@ -53,4 +75,6 @@
         </div>
 
     </div>
+
 </div>
+
