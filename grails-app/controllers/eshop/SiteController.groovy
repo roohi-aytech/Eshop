@@ -175,6 +175,7 @@ class SiteController {
         }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
         if (!product.visitCount)
             product.visitCount = 0;
         product.visitCount++;
