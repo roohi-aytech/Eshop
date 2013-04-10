@@ -15,20 +15,20 @@ $(document).ready(function () {
 
     $(".thumbnail").live({
             mouseenter: function () {
-//                if (timeout) window.clearTimeout(timeout);
-//                $(this).css('border-color', '#EEEEEE');
-//                $(this).addClass('selectedThumbnail');
-//                $(this).find(".main").first().stop().delay(1000).animate({
-//                    'margin-top': '-160px'
-//                }, 700);
+//                if (timeout) window.clear Timeout(timeout);
+                $(this).css('border-color', '#EEEEEE');
+                $(this).addClass('selectedThumbnail');
+                $(this).find(".main").first().stop().delay(1000).animate({
+                    'margin-top': '-160px'
+                }, 700);
             },
             mouseleave: function () {
 //                if (timeout) window.clearTimeout(timeout);
-//                $(this).css('border-color', 'Transparent');
-//                $(this).removeClass('selectedThumbnail');
-//                $(this).find(".main").first().stop().animate({
-//                    'margin-top': '0'
-//                }, 500);
+                $(this).css('border-color', 'Transparent');
+                $(this).removeClass('selectedThumbnail');
+                $(this).find(".main").first().stop().animate({
+                    'margin-top': '0'
+                }, 500);
 
             }
         }
@@ -36,13 +36,11 @@ $(document).ready(function () {
 
     $(window).resize(function(){
         changeAddToBasketButtonLabel();
-        //resizeThumbnails();
-        //resetCarousel();
+        resizeThumbnails();
     });
 
     changeAddToBasketButtonLabel();
     resizeThumbnails();
-    resetCarousel();
 
 });
 
@@ -58,12 +56,6 @@ function changeAddToBasketButtonLabel(){
     $('.span415').width($('body').innerWidth() - 522);
     $('.span735').width($('body').innerWidth() - 200);
 
-    //carousel
-    $('.carouselItem').width(($('#jCarouselLite').width() / 5) + "px");
-    $("#jCarouselLite").jCarouselLite({
-        btnNext: "#next",
-        btnPrev: "#prev"
-    })
 }
 
 function resizeThumbnails(){
@@ -75,15 +67,4 @@ function resizeThumbnails(){
     else{
         $('.span3').css('width', '33.33%');
     }
-}
-
-function resetCarousel(){
-//    $('.carouselItem').width(($('#jCarouselLite').width() / 5) + "px");
-    $("#jCarouselLite").jCarouselLite({
-        btnNext: "#next",
-        btnPrev: "#prev",
-//        easing: "bounceout",
-//        speed: 1000,
-        mouseWheel: true
-    })
 }

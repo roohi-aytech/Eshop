@@ -120,7 +120,9 @@
                     <g:each in="${filters.products.productIds}" status="i" var="productId">
                         <g:set var="product" value="${eshop.Product.get(productId)}"/>
                         <g:if test="${product}">
+                            <li class="span3">
                             <g:render template="product_search" model="[product: product]"/>
+                            </li>
                         </g:if>
                     </g:each>
                 </ul>
