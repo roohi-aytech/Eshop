@@ -32,6 +32,7 @@
     %{----}%
     %{--<ckeditor:resources/>--}%
     <g:javascript library="jquery"></g:javascript>
+
     <r:layoutResources/>
     <script type="text/javascript"
             src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
@@ -218,5 +219,8 @@
 </div>
 <g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
+<g:javascript src="jquery.mousewheel.js"></g:javascript>
+<g:javascript src="jcarousellite.js"></g:javascript>
+
 </body>
 </html>
