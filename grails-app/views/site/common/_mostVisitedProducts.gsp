@@ -1,6 +1,6 @@
 
-<g:javascript src="jquery.mousewheel.js"></g:javascript>
-<g:javascript src="jcarousellite.js"></g:javascript>
+<g:javascript src="${resource(dir:"js", file:"jquery.mousewheel.js")}"></g:javascript>
+<g:javascript src="${resource(dir:"js", file:"jcarousellite.js")}"></g:javascript>
 
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
 <g:set var="productList" value="${productService.findMostVisitedProducts()}"></g:set>
