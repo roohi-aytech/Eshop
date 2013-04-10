@@ -12,6 +12,7 @@
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     %{--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--}%
     %{--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">--}%
@@ -31,6 +32,7 @@
     %{----}%
     %{--<ckeditor:resources/>--}%
     <g:javascript library="jquery"></g:javascript>
+
     <r:layoutResources/>
     <script type="text/javascript"
             src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
@@ -217,5 +219,8 @@
 </div>
 <g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
+<g:javascript src="jquery.mousewheel.js"></g:javascript>
+<g:javascript src="jcarousellite.js"></g:javascript>
+
 </body>
 </html>

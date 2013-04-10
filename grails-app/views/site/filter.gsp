@@ -9,6 +9,7 @@
     <meta name="author" content="">
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
     body {

@@ -59,6 +59,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/integration" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/grails-app/jobs" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/uploads" />
       <excludeFolder url="file://$MODULE_DIR$/web-app/images/upload" />
@@ -104,10 +105,10 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="RapidGrails" exported="" />
     <orderEntry type="module" module-name="EShop-grailsPlugins" />
     <orderEntry type="library" name="commons-math-1.0" level="project" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="module" module-name="RapidGrails" exported="" />
   </component>
 </module>
 
