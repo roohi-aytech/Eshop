@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.rollbar.css')}"/>
     %{--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--}%
     %{--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">--}%
     %{--<title><g:layoutTitle default="Grails"/></title>--}%
@@ -42,6 +43,7 @@
         var contextRoot = "${createLink(uri: '/')}";
     </script>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
+    <g:javascript src="jquery.rollbar.js"></g:javascript>
     %{--<jqui:resources theme="cobalt"></jqui:resources>--}%
     %{----}%
     %{--<g:javascript plugin="rapid-grails" src="utils.js"></g:javascript>--}%

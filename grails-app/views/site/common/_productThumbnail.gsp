@@ -1,22 +1,21 @@
 <%@ page import="eshop.Product" %>
 
 <div class="thumbnail mediaholder">
+    <a class="thumbnail-link" href="<g:createLink action="product" params="[id: product.id]"/>" class="title">
     <div class="content">
         <div class="main">
-            <a href="<g:createLink action="product" params="[id: product.id]"/>" class="title">
                 <span class="image">
                     <span>
                         <img src="<g:createLink action="image" params="[id: product?.id, wh: '150x150']"/>"/>
                     </span>
                 </span>
                 <h4>${product}</h4>
-            </a>
             <eshop:thumbnailPrice productId="${product.id}"></eshop:thumbnailPrice>
         </div>
 
         <div class="extended">
             <div>
-                <div class="attributes scrollable">
+                <div class="attributes scrollable" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
                     <div class="attribute-list">
                         <g:each in="${product.attributes}">
                             <g:if test="${it.value.toString().compareTo("N/A") != 0}">
@@ -32,13 +31,8 @@
                     </a>
                     <a class="btn btn-wish" title="${message(code: 'add-to-wishList')}"><span>${message(code: 'add-to-wishList')}</span></a>
                 </div>
-                <g:if test="${product.details}">
-                    <h5><g:message code="product-details"></g:message></h5>
-                    <span class="details">
-                        ${product.details}
-                    </span>
-                </g:if>
             </div>
         </div>
     </div>
+    </a>
 </div>

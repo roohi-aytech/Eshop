@@ -42,7 +42,7 @@
     jQuery(document).ready(function () {
         jQuery('#example4').showbizpro({
             dragAndScroll: "of",
-            visibleElementsArray: [6, 5, 4, 3, 2, 1],
+            visibleElementsArray: [5, 4, 3, 2, 1],
             carousel: "on"
         });
     });

@@ -162,6 +162,7 @@ ul.errors{
     height: 230px;
     width: 90%;
     position: absolute;
+    display: block;
 }
 
 .row-fluid{
@@ -1039,6 +1040,10 @@ span.cke_skin_kama{
     margin-bottom: 10px;
 }
 
+.control-panel .text{
+    padding:10px;
+}
+
 .control-panel .header{
     padding:10px;
     display: table-cell;
@@ -1301,7 +1306,48 @@ span.cke_skin_kama{
 /*scrollbar*/
 .rollbar-content{
     float: none !important;
+    padding-left: 15px;
 }
+
+/*carousel*/
+.showbiz li.sb-showcase-skin{
+    border:1px solid #eeeeee;
+    padding:5px !important;
+    margin-right: 15px !important;
+    margin-left: -5px !important;
+}
+
+.showbiz .thumbnail{
+    background-color: #f4f4f4 !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    height: 240px !important;
+}
+
+.showbiz .thumbnail .extended{
+    display: block !important;
+}
+
+.showbiz .thumbnail .image{
+    padding: 5px;
+}
+
+.showbiz .thumbnail .attributes{
+    height: 145px;
+}
+
+.showbiz .rollbar-path-vertical{
+    left:0 !important;
+}
+
+.thumbnail-link{
+    display: block;
+}
+
+.thumbnail-link:hover{
+    text-decoration: none;
+}
+
 
 
 

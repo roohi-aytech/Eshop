@@ -49,10 +49,6 @@ class OrderController {
         redirect(action: 'payment', params:[id:order.id])
     }
 
-    def payment() {
-
-    }
-
     def list() {
 
         def status = params.status
@@ -88,6 +84,27 @@ class OrderController {
                 suggestedActions: suggestedActions,
                 actions: actions,
         ]
+    }
+
+    def payment() {
+        if(params.bank){
+            switch(params.bank){
+                case "mellat":
+
+                    //parameters
+                    String PgwSite = 'https://pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat'
+                    String CallBackUrl = 'http://srv2.tajan.ir/HostingPortal/My/OnlinePaymentResultMellat.aspx'
+                    String TerminalId = '642244'
+                    String UserName = 'tajan'
+                    String UserPassword = '20796'
+                    String BPService_PaymentGatewayImplService = 'https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw?wsdl'
+                    String MellatAccountId = '2'
+
+
+
+                    break;
+            }
+        }
     }
 
 }

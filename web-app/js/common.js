@@ -24,6 +24,13 @@ $(document).ready(function () {
         $(this).removeClass('selectedThumbnail');
     });
 
+    $(".showbiz .thumbnail").hover(function () {
+        $(this).find('.content').stop().animate({ 'margin-top': "-235"}, "fast");
+
+    }, function () {
+        $(this).find('.content').stop().animate({ 'margin-top': "0"}, "fast");
+    });
+
     $(window).resize(function () {
         changeAddToBasketButtonLabel();
         resizeThumbnails();
@@ -31,6 +38,8 @@ $(document).ready(function () {
 
     changeAddToBasketButtonLabel();
     resizeThumbnails();
+
+    $('.scrollable').rollbar({zIndex:80,wheelSpeed:10});
 
 });
 
