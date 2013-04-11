@@ -16,13 +16,22 @@
 
         <div class="extended">
             <div>
-                <p>
+                <div class="attributes">
+                    <ul class="attribute-list">
+                        <g:each in="${product.attributes}">
+                            <g:if test="${it.value.toString().compareTo("N/A") != 0}">
+                                <li><b>${it.attributeType}:</b> ${it.value}</li>
+                            </g:if>
+                        </g:each>
+                    </ul>
+                </div>
+                <div>
                     <eshop:addToBasket prodcutId="${product.id}"
                                        productTitle="${product.toString()}"></eshop:addToBasket>
-                    <a class="btn btn-primary btn-compare" title="${message(code: 'add-to-compareList')}"><span></span>
+                    <a class="btn btn-compare" title="${message(code: 'add-to-compareList')}"><span>${message(code: 'add-to-compareList')}</span>
                     </a>
-                    <a class="btn btn-danger btn-wish" title="${message(code: 'add-to-wishList')}"><span></span></a>
-                </p>
+                    <a class="btn btn-wish" title="${message(code: 'add-to-wishList')}"><span>${message(code: 'add-to-wishList')}</span></a>
+                </div>
                 <g:if test="${product.details}">
                     <h5><g:message code="product-details"></g:message></h5>
                     <span class="details">
