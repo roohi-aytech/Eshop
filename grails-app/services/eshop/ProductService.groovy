@@ -63,7 +63,11 @@ class ProductService {
         ProductType.findAllByParentProductIsNull()
     }
 
-    def findMostVisitedProducts(){
-        Product.listOrderByVisitCount(max: 20, order: "desc")
+    def findMostVisitedProducts(productTypeId){
+        Product.createCriteria().list([max: 20, sort: "visitCount", order: "desc"]) {
+            productTypes {
+                eq('id', productTypeId)
+            }
+        }
     }
 }

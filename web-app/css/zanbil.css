@@ -118,22 +118,17 @@ ul.errors{
 .span415{
     margin-right: 191px !important;
     margin-left: 402px !important;
-    position: absolute;
 }
 
 .span320{
     width: 320px !important;
     margin-left: 5px !important;
-    float: left !important;
     padding-top:10px;
 }
 
 .span735{
     margin-right: 191px !important;
     margin-left: 5px !important;
-    clear: left;
-    width: 773px;
-    float: right;
 }
 
 .container-fluid{
@@ -708,13 +703,10 @@ input.search-query {
 
 /*product*/
 .product-image{
-    border: 1px solid #cccccc;
     padding:10px;
     display: inline-block;
     margin:auto;
     border-radius: 5px;
-    background-color: #eeeeee;
-    margin-top:-10px;
     width: 300px;
 }
 
@@ -1183,12 +1175,80 @@ span.cke_skin_kama{
 }
 
 /*Carousel*/
-#jCarouselLite{
-    width: 100% !important;
+
+.sb-showcase-skin .mediaholder img{
+    height: auto !important;
 }
 
-.carouselItem{
-    width: 100px;
+.showbiz-navigation{
+    width: 35px !important;
+    height: 35px !important;
+    display: inline-block;
+}
+
+.showbiz-navigation.table-cell{
+    vertical-align: middle;
+}
+
+.sb-navigation-left{
+    margin-left:0 !important;
+    margin-right: 5px !important;
+    background: url(../images/next.png) no-repeat center center !important;
+    border-width: 0 !important;
+    display: inline-block;
+}
+
+.sb-navigation-right{
+    margin-right:0 !important;
+    margin-left: 5px !important;
+    background: url(../images/prev.png) no-repeat center center !important;
+    border-width: 0 !important;
+    display: inline-block;
+}
+
+/*grid*/
+.mega-entry-innerwrap{
+    background-color: transparent !important;
+}
+
+.mega-entry{
+
+}
+
+.icon-left-open{
+    display: none !important;
+}
+
+.icon-right-open{
+    display: none !important;
+}
+
+
+/*Layout*/
+.table{
+    display: table;
+    width: 100%;
+}
+
+.table-row{
+    display: table-row;
+}
+
+.table-cell{
+    vertical-align: top;
+    display: table-cell;
+}
+
+.product-rightColumn{
+    width: 180px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+.product-imageColumn{
+    width:320px;
+    padding-right:5px;
+    padding-left:5px;
 }
 
 
