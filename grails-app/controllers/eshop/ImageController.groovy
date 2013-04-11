@@ -64,7 +64,14 @@ class ImageController {
         def content
         if (img) {
             if (params.wh) {
-                content = imageService.getImage(img, params.wh, fileService.filePath(product))
+                try {
+                    content = imageService.getImage(img, params.wh, fileService.filePath(product))
+                }catch(e){
+
+                } finally {
+                    if (!content)
+                        content = img.fileContent
+                }
             } else {
                 content = img.fileContent
             }

@@ -15,7 +15,7 @@ class BootStrap {
         }
     }
 
-    def roles = [ROLE_USER, ROLE_USER_ADMIN, ROLE_PRODUCT_ADMIN, ROLE_PRODUCT_TYPE_ADMIN, ROLE_PRICE_ADMIN, ROLE_CUSTOMER]
+    def roles = [ROLE_USER, ROLE_USER_ADMIN, ROLE_PRODUCT_ADMIN, ROLE_PRODUCT_TYPE_ADMIN, ROLE_PRICE_ADMIN, ROLE_CUSTOMER, ROLE_PRODUCT_ADD, ROLE_PRODUCT_ADD_EDIT, ROLE_PRODUCER_ADD, ROLE_PRODUCER_ADD_EDIT]
 
     def init = { servletContext ->
 
@@ -42,8 +42,7 @@ class BootStrap {
             def val = attr.attributeType.values.find {it.value == attr.attributeValue}
             if (!val) {
                 val = new AttributeValue(value: attr.attributeValue).save()
-                if(attr.attributeValue!='N/A')
-                {
+                if (attr.attributeValue != 'N/A') {
                     attr.attributeType.addToValues(val)
                     attr.attributeType.save()
                 }
@@ -54,7 +53,7 @@ class BootStrap {
 
         }
         AttributeValue.findAllByValueLike('%\\n%').each {
-            it.value=it.value.replace("\\n","\n")
+            it.value = it.value.replace("\\n", "\n")
             it.save()
         }
 
