@@ -61,21 +61,21 @@
     <rg:checkBoxList translate="true" from="${Role.findAll()}" optionKey="id" name="authorities" value="${userInstance?.authorities.collect {it.id}}" />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'accountExpired', 'error')} ">
-	<label for="accountExpired">
-		<g:message code="user.accountExpired.label" default="Account Expired" />
-		
-	</label>
-	<g:checkBox name="accountExpired" value="${userInstance?.accountExpired}" />
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'accountExpired', 'error')} ">--}%
+	%{--<label for="accountExpired">--}%
+		%{--<g:message code="user.accountExpired.label" default="Account Expired" />--}%
+		%{----}%
+	%{--</label>--}%
+	%{--<g:checkBox name="accountExpired" value="${userInstance?.accountExpired}" />--}%
+%{--</div>--}%
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'accountLocked', 'error')} ">
-	<label for="accountLocked">
-		<g:message code="user.accountLocked.label" default="Account Locked" />
-		
-	</label>
-	<g:checkBox name="accountLocked" value="${userInstance?.accountLocked}" />
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'accountLocked', 'error')} ">--}%
+	%{--<label for="accountLocked">--}%
+		%{--<g:message code="user.accountLocked.label" default="Account Locked" />--}%
+		%{----}%
+	%{--</label>--}%
+	%{--<g:checkBox name="accountLocked" value="${userInstance?.accountLocked}" />--}%
+%{--</div>--}%
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'enabled', 'error')} ">
 	<label for="enabled">
@@ -85,11 +85,11 @@
 	<g:checkBox name="enabled" value="${userInstance?.enabled}" />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'passwordExpired', 'error')} ">
-	<label for="passwordExpired">
-		<g:message code="user.passwordExpired.label" default="Password Expired" />
-		
-	</label>
-	<g:checkBox name="passwordExpired" value="${userInstance?.passwordExpired}" />
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'passwordExpired', 'error')} ">--}%
+	%{--<label for="passwordExpired">--}%
+		%{--<g:message code="user.passwordExpired.label" default="Password Expired" />--}%
+		%{----}%
+	%{--</label>--}%
+	%{--<g:checkBox name="passwordExpired" value="${userInstance?.passwordExpired}" />--}%
+%{--</div>--}%
 
