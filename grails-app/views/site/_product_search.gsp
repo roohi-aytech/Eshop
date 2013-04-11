@@ -17,13 +17,13 @@
         <div class="extended">
             <div>
                 <div class="attributes">
-                    <ul class="attribute-list">
+                    <div class="attribute-list">
                         <g:each in="${product.attributes}">
                             <g:if test="${it.value.toString().compareTo("N/A") != 0}">
-                                <li><b>${it.attributeType}:</b> ${it.value}</li>
+                                <div><b>${it.attributeType}:</b> ${it.value}</div>
                             </g:if>
                         </g:each>
-                    </ul>
+                    </div>
                 </div>
                 <div>
                     <eshop:addToBasket prodcutId="${product.id}"
