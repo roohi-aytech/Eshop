@@ -67,10 +67,10 @@
                                                                    params="[redirect: request.requestURI]"/>"><g:message
                                 code="profile"/></a></li>
                     </sec:ifAllGranted>
-                    <li><a class="logout" href="<g:createLink controller="logout"/>"><g:message code="logout"/></a></li>
+                    <li><common:logoutLink></common:logoutLink></li>
                 </sec:ifLoggedIn>
                 <sec:ifNotLoggedIn>
-                    <li><a class="login" href="<g:createLink controller="login"/>"><g:message code="login"/></a></li>
+                    <li><common:loginLink></common:loginLink></li>
                 </sec:ifNotLoggedIn>
             </ul>
         </div>

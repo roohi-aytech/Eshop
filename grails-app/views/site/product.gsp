@@ -91,7 +91,7 @@
                             <p>
                                 <eshop:addToBasket prodcutId="${product.id}"
                                                    productTitle="${product}"></eshop:addToBasket>
-                                <a class="btn btn-primary btn-compare"
+                                <a class="btn btn-success btn-compare"
                                    href="#"><span>${message(code: 'add-to-compareList')}</span></a>
                                 <a class="btn btn-danger btn-wish"
                                    href="#"><span>${message(code: 'add-to-wishList')}</span>

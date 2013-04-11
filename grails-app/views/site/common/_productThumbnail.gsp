@@ -16,7 +16,7 @@
 
         <div class="extended">
             <div>
-                <div class="attributes">
+                <div class="attributes scrollable">
                     <div class="attribute-list">
                         <g:each in="${product.attributes}">
                             <g:if test="${it.value.toString().compareTo("N/A") != 0}">

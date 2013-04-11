@@ -42,18 +42,20 @@ function changeAddToBasketButtonLabel() {
 //        $('.thumbnail .btn-buy span').html('خرید');
 //    }
 
-    $('.span600').width($('body').innerWidth() - 400);
-    $('.span415').width($('body').innerWidth() - 522);
-    $('.span735').width($('body').innerWidth() - 200);
+//    $('.span600').width($('body').innerWidth() - 400);
+//    $('.span415').width($('body').innerWidth() - 522);
+//    $('.span735').width($('body').innerWidth() - 200);
 
 }
 
 function resizeThumbnails() {
     var currentWidth = $('.span600').first().width();
     if (currentWidth > 700) {
+//        $('.span3').stop().animate({ width:'25%'}, "slow");
         $('.span3').css('width', '25%');
     }
     else {
+//        $('.span3').stop().animate({ width:'33.3%'}, "slow");
         $('.span3').css('width', '33.33%');
     }
 

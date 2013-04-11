@@ -17,7 +17,7 @@
                 <ul>
                     <g:each in="${productList}" var="product">
                         <li class="sb-showcase-skin">
-                            <g:render template="product_search" model="${[product: product]}"></g:render>
+                            <g:render template="common/productThumbnail" model="${[product: product]}"></g:render>
                         </li>
                     </g:each>
                 </ul>

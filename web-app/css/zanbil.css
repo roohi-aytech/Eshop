@@ -98,21 +98,20 @@ ul.errors{
 .span180{
     width: 180px !important;
     float: right !important;
-    margin-right: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
     margin-left: 0;
 }
 
 .span200{
     width: 200px !important;
-    margin-left: 5px !important;
+    padding-left: 5px !important;
     float: left !important;
 }
 
 .span600{
     min-width: 593px !important;
-    margin-right: 190px !important;
-    margin-left: 210px !important;
-    position: absolute;
+    padding-left: 5px;
 }
 
 .span415{
@@ -348,16 +347,24 @@ ul.errors{
 
 .thumbnail .attributes{
     height: 100px;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     text-align: right;
+    font-size: 11px !important;
+    color:black !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.thumbnail .attributes .label{
-
+.thumbnail .attributes {
 }
 
-.thumbnail .attributes .value{
-
+.thumbnail .attributes b{
+    font-weight: normal;
+    color:#4169e1 !important;
 }
 
 /*Navigation*/
@@ -933,6 +940,7 @@ span.cke_skin_kama{
 /*Slider*/
 .slideshowContainer{
     margin-bottom: 10px;
+    padding-left: 5px;
 }
 
 .coin-slider{
@@ -997,6 +1005,7 @@ span.cke_skin_kama{
     z-index: 999999;
     background: #f5f5f5;
     border-radius: 5px;
+    display: none;
 }
 
 .cs-title{
@@ -1274,6 +1283,7 @@ span.cke_skin_kama{
 .table-cell{
     vertical-align: top;
     display: table-cell;
+    float: none !important;
 }
 
 .product-rightColumn{
@@ -1286,6 +1296,11 @@ span.cke_skin_kama{
     width:320px;
     padding-right:5px;
     padding-left:5px;
+}
+
+/*scrollbar*/
+.rollbar-content{
+    float: none !important;
 }
 
 

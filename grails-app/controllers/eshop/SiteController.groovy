@@ -3,7 +3,6 @@ package eshop
 import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
-import eshop.mongo.MongoProduct
 
 class SiteController {
     def browseService
@@ -205,7 +204,7 @@ class SiteController {
         def model = [product: product]
         model << priceService.calcProductPrice(productId)
 
-        render(template: "product_search", model: model)
+        render(template: "common/product_search", model: model)
     }
 
     def flushChanges() {
