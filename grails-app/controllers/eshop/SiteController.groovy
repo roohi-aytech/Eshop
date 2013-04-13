@@ -4,6 +4,8 @@ import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
 
+import javax.servlet.http.Cookie
+
 class SiteController {
     def browseService
     def priceService
@@ -181,11 +183,32 @@ class SiteController {
             }
         }
 
-
+        //update product visit count
         if (!product.visitCount)
             product.visitCount = 0;
         product.visitCount++;
         product.save()
+
+        //update last visited products
+        def lastVisitedProducts
+        synchronized (this.getClass()) {
+            lastVisitedProducts = session.getAttribute('lastVisitedProducts')
+            if (!lastVisitedProducts) {
+                lastVisitedProducts = []
+                String lastVisitedProductsStr = cookie(name: 'lastVisitedProducts')
+                if (lastVisitedProductsStr)
+                    lastVisitedProducts = lastVisitedProductsStr.split(",").toList()
+            }
+            if (!lastVisitedProducts.contains(params.id))
+                lastVisitedProducts.add(params.id)
+            session.setAttribute('lastVisitedProducts', lastVisitedProducts)
+        }
+
+        if (lastVisitedProducts) {
+            Cookie cookie = new Cookie("lastVisitedProducts", lastVisitedProducts.join(","))
+            cookie.maxAge = 100
+            response.addCookie(cookie)
+        }
 
         model
     }

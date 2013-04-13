@@ -1,6 +1,9 @@
 package eshop
 
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.context.request.RequestContextHolder
+
+import javax.servlet.http.Cookie
 
 class ProductService {
 
@@ -63,10 +66,22 @@ class ProductService {
         ProductType.findAllByParentProductIsNull()
     }
 
-    def findMostVisitedProducts(productTypeId){
-        Product.createCriteria().list([max: 20, sort: "visitCount", order: "desc"]) {
-            productTypes {
-                eq('id', productTypeId)
+    def findLastVisitedProducts(lastVisitedProductsCookie){
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        def lastVisitedProducts
+        synchronized (this.getClass()) {
+            lastVisitedProducts = session.getAttribute('lastVisitedProducts')
+            if (!lastVisitedProducts) {
+                lastVisitedProducts = []
+                String lastVisitedProductsStr = lastVisitedProductsCookie
+                if (lastVisitedProductsStr)
+                    lastVisitedProducts = lastVisitedProductsStr.split(",").toList()
+            }
+        }
+
+        if (lastVisitedProducts) {
+            return Product.createCriteria().list() {
+                'in'('id', lastVisitedProducts.collect() { it.toLong() })
             }
         }
     }
