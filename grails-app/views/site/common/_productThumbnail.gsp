@@ -1,7 +1,7 @@
 <%@ page import="eshop.Product" %>
 
 <div class="thumbnail mediaholder">
-    <a class="thumbnail-link" href="<g:createLink action="product" params="[id: product.id]"/>" class="title">
+    <a class="thumbnail-link" href="<g:createLink controller="site" action="product" params="[id: product.id]"/>" class="title">
         <div class="content">
             <div class="main">
                 <span class="image">

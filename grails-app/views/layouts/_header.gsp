@@ -36,7 +36,7 @@
                     </a>
 
                     <div id="basketItems" class="dropdown-menu content">
-                        <ul>
+                        <ul class="scrollable">
                             <li ng-repeat="basketItem in basket">
                                 <span class="basket-item-image">
                                     <img src="<g:createLink controller="image"

@@ -767,8 +767,8 @@ input.search-query{
 }
 
 .topNavigationItem .dropdown-menu {
-    left: 0;
-    right: auto;
+    right: 0;
+    left: auto;
 }
 
 .navbar .btn-group {
@@ -973,6 +973,11 @@ ul.attribute-list li {
 }
 
 /*basket items*/
+#basketItems ul{
+    max-height: 200px;
+    min-width: 263px;
+}
+
 .basket-item-image {
     width: 50px;
     height: 50px;
