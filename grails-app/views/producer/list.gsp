@@ -18,47 +18,28 @@
 <body>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
-<div class="content scaffold-list" role="main">
-    <div class="criteria-div">
-        <rg:criteria>
-            <rg:like name="name" label='producer.name'/>
-            <rg:filterGrid grid="ProducerGrid" label='search'/>
-        </rg:criteria>
-        <script type="text/javascript">
-            $(".criteria-div")
-                    .find('div,label,input')
-                    .css('display','inline')
-                    .css('margin','3px');
-        </script>
-    </div>
-    <rg:grid domainClass="${eshop.Producer}"
-             maxColumns="8"
+<g:set var="actions" value="[]"/>
+<sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
+    <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"]]}"/>
+</sec:ifAllGranted>
+<div class="content scaffold-list" ng-controller="producerController" role="main">
+    <rg:grid domainClass="${Producer}"
+             maxColumns="3"
              showCommand="false"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerGrid", icon: "plus"]]}"
-             commands="${[[handler: "addToProducerGrid(#id#)", icon: "application_edit"], [handler: "deleteProducer(#id#)", icon: "application_delete"]]}"
+             commands="${actions}"
     />
-    <g:set var="actions" value="[]"/>
-    <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
-        <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"]]}"/>
-    </sec:ifAllGranted>
-    <div class="content scaffold-list" ng-controller="producerController" role="main">
-        <rg:grid domainClass="${Producer}"
-                 maxColumns="3"
-                 showCommand="false"
-                 commands="${actions}"
-        />
-        <rg:dialog id="producer" title="${message(code: "variation")}">
-            <rg:fields bean="${new Producer()}">
+    <rg:dialog id="producer" title="${message(code: "variation")}">
+        <rg:fields bean="${new Producer()}">
 
-            </rg:fields>
-            <rg:saveButton domainClass="${eshop.Producer}" />
-            <rg:cancelButton/>
-        </rg:dialog>
-        <input type="button" ng-click="openProducerCreateDialog()" value="<g:message code="new" />"/>
-        <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
-            <input type="button" ng-click="openProducerEditDialog()" value="<g:message code="edit" />"/>
-        </sec:ifAnyGranted>
-        <g:javascript>
+        </rg:fields>
+        <rg:saveButton domainClass="${eshop.Producer}" />
+        <rg:cancelButton/>
+    </rg:dialog>
+    <input type="button" ng-click="openProducerCreateDialog()" value="<g:message code="new" />"/>
+    <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
+        <input type="button" ng-click="openProducerEditDialog()" value="<g:message code="edit" />"/>
+    </sec:ifAnyGranted>
+    <g:javascript>
         function deleteProducer(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -93,7 +74,7 @@
                 })
             },{width:400});
         }
-        </g:javascript>
-    </div>
+    </g:javascript>
+</div>
 </body>
 </html>
