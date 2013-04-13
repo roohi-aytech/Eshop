@@ -2,7 +2,6 @@ package eshop
 
 class ProducingProduct {
 
-    Product product
     ProductType productType
     Brand brand
     String discount
@@ -12,7 +11,6 @@ class ProducingProduct {
     static belongsTo = [Producer]
 
     static constraints = {
-        product(nullable: true)
         productType(nullable: true)
         brand(nullable: true)
         discount(nullable: true)
@@ -28,8 +26,7 @@ class ProducingProduct {
        // sort 'name'
     }
     String toString(){
-      (product == null ? "" : product.toString() + " ") +
-               (productType == null ? "" : productType.toString() + " ") +
+        (productType == null ? "" : productType.toString() + " ") +
                (brand == null ? "" : brand.toString() )
     }
 }

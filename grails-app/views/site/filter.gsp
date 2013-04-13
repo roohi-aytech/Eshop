@@ -9,7 +9,6 @@
     <meta name="author" content="">
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
     body {
@@ -29,71 +28,60 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
 
+    <g:javascript src="thumbnails.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
     <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>
 
-<div class="layout-container table">
-    <div class="table-row">
-        <div class="span180 table-cell">
+<div class="layout-container">
+        <div class="span180">
             <div class="well sidebar-nav">
                 <div id="navigator_root">
-                    <a href="${createLink(uri: '/')}site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message
-                            code="applicances"></g:message></a>
-                    <a href="${createLink(uri: '/')}site/browse/${message(code: "digital")}" id="navigator_digital"><g:message
-                            code="digital"></g:message></a>
+                    <a href="/EShop/site/browse/${message(code:"applicances")}" id="navigator_appliance"><g:message code="applicances"></g:message></a>
+                    <a href="/EShop/site/browse/${message(code:"digital")}" id="navigator_digital"><g:message code="digital"></g:message></a>
                 </div>
                 <ul class="nav nav-list">
                     <g:if test="${filters.productTypes}">
-                        <li class="nav-header"><g:message code="site.selectSubcategory"
-                                                          default="Select SubProductType"></g:message></li>
+                        <li class="nav-header"><g:message code="site.selectSubcategory" default="Select SubProductType"></g:message></li>
                         <g:each in="${filters.productTypes}" var="productType">
                             <li>
-                                <eshop:filterAddProductType id="${productType._id.id}" name="${productType._id.name}"
-                                                            f="${params.f}"/>
+                                <eshop:filterAddProductType id="${productType._id.id}" name="${productType._id.name}" f="${params.f}"/>
                             </li>
                         </g:each>
                         <li class="divider"></li>
                     </g:if>
-                %{--Brands Filters--}%
+                    %{--Brands Filters--}%
                     <g:if test="${filters?.brands}">
-                        <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand"
-                                                                            default="Select Brand"></g:message></li>
+                        <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand" default="Select Brand"></g:message></li>
                         <g:each in="${filters.brands}" var="brand">
                             <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
                                 <li class="active checkable">
-                                    <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                                          remove="true"></eshop:filterAddBrand>
+                                    <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}" remove="true"></eshop:filterAddBrand>
                                 </li>
                             </g:if>
                             <g:else>
                                 <li class="checkable">
-                                    <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}"
-                                                          f="${params.f}"></eshop:filterAddBrand>
+                                    <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"></eshop:filterAddBrand>
                                 </li>
                             </g:else>
                         </g:each>
                     </g:if>
                     <li class="divider"></li>
-                %{--Attribute Filters--}%
+                    %{--Attribute Filters--}%
                     <g:if test="${filters?.attributes}">
                         <g:each in="${filters.attributes}" var="attribute">
                             <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
                             <g:each in="${attribute.value.countsByValue}" var="attributeValueCount">
                                 <g:if test="${filters.selecteds[attribute.key]?.contains(attributeValueCount._id)}">
                                     <li class="active checkable">
-                                        <eshop:filterAddAttribute id="${attribute.key}"
-                                                                  value="${attributeValueCount._id}" f="${params.f}"
-                                                                  remove="true"></eshop:filterAddAttribute>
+                                        <eshop:filterAddAttribute id="${attribute.key}" value="${attributeValueCount._id}" f="${params.f}" remove="true"></eshop:filterAddAttribute>
                                     </li>
                                 </g:if>
                                 <g:else>
                                     <li class="checkable">
-                                        <eshop:filterAddAttribute id="${attribute.key}"
-                                                                  value="${attributeValueCount._id}"
-                                                                  f="${params.f}"></eshop:filterAddAttribute></li>
+                                        <eshop:filterAddAttribute id="${attribute.key}" value="${attributeValueCount._id}" f="${params.f}"></eshop:filterAddAttribute>                                    </li>
                                 </g:else>
                             </g:each>
                         </g:each>
@@ -102,50 +90,54 @@
             </div>
         </div>
 
-        <div class="table-cell">
-            <div class="table">
-                <div class="table-row">
-                    <g:render template="common/slideshowMain"></g:render>
-                </div>
-
-                <div class="table-row">
-                    <div class="table-cell">
-                        <div class="table">
-                            <div class="table-row">
-                                <div class="span600 table-cell">
-                                    <ul class="breadcrumb">
-                                        <li>
-                                            <a href="#"><g:message code="home"/></a>
-                                            <span class="divider">${">"}</span>
-                                        </li>
-                                        <g:if test="${filters.breadcrumb.size() > 1}">
-                                            <g:each in="${filters.breadcrumb[0..-2]}">
-                                                <li>
-                                                    <a href="${commonLink}/${it.linkTail}">${it.linkTitle}</a>
-                                                    <span class="divider">${">"}</span>
-                                                </li>
-                                            </g:each>
-                                        </g:if>
-                                        <li class="active">${filters.breadcrumb[-1].linkTitle}</li>
-                                    </ul>
-
-                                    <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"></g:render>
-
-                                </div>
-
-                                <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="span200">
+            <div class="well">
             </div>
         </div>
-    </div>
-</div>
+
+        <div class="span600">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#"><g:message code="home"/></a>
+                    <span class="divider">${">"}</span>
+                </li>
+                <g:if test="${filters.breadcrumb.size() > 1}">
+                    <g:each in="${filters.breadcrumb[0..-2]}">
+                        <li>
+                            <a href="${commonLink}/${it.linkTail}">${it.linkTitle}</a>
+                            <span class="divider">${">"}</span>
+                        </li>
+                    </g:each>
+                </g:if>
+                <li class="active">${filters.breadcrumb[-1].linkTitle}</li>
+            </ul>
+
+            <g:render template="common/slideshowMain"></g:render>
+
+            <div>
+                <ul class="thumbnails">
+                    %{--<div class="span" style="display: none;"></div>--}%
+                    <g:each in="${filters.products.productIds}" status="i" var="productId">
+                        <g:set var="product" value="${eshop.Product.get(productId)}"/>
+                        <g:if test="${product}">
+                            <g:render template="product_search" model="[product: product]"/>
+                        </g:if>
+                    </g:each>
+                </ul>
+                <g:if test="${filters.products.totalPages > 1}">
+                    <div class="pagination pagination-centered">
+                        <ul>
+                            <g:each in="${(0..<filters.products.totalPages + 1)}">
+                                <li ${(params.page?:"0") == it.toString() ? 'class="active"' : ''}>
+                                    <g:link action="filter" params="${params + [page: it]}">${it + 1}</g:link></li>
+                            </g:each>
+                        </ul>
+                    </div>
+                </g:if>
+            </div>
+        </div>
+</div> <!-- /container -->
+
 <script type="text/javascript">
     (function ($) {
         $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');

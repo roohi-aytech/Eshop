@@ -27,53 +27,35 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
 
+    <g:javascript src="thumbnails.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
     <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>
-<div class="layout-container table">
-    <div class="table-row">
-        <div class="span180 table-cell">
-            <div class="well sidebar-nav home">
-                <div id="navigator_root">
-                    <a href="${createLink(uri: '/')}site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message
-                            code="applicances"></g:message></a>
-                    <a href="${createLink(uri: '/')}site/browse/${message(code: "digital")}" id="navigator_digital"><g:message
-                            code="digital"></g:message></a>
-                </div>
+<div class="layout-container">
+    <div class="span180">
+        <div class="well sidebar-nav home">
+            <div id="navigator_root">
+                <a href="/EShop/site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message
+                        code="applicances"></g:message></a>
+                <a href="/EShop/site/browse/${message(code: "digital")}" id="navigator_digital"><g:message
+                        code="digital"></g:message></a>
             </div>
         </div>
+    </div>
 
-        <div class="table-cell">
-            <div class="table">
-                <div class="table-row">
-
-                    <g:render template="common/slideshowMain"></g:render>
-
-                    <g:render template="common/slideshowSpecialSales"
-                              model="[discounts: discounts]"></g:render>
-                </div>
-
-                <div class="table-row">
-                    <div class="table-cell">
-                        <div class="table">
-                            <div class="table-row">
-
-                                <div class="span600 table-cell">
-
-                                </div>
-
-                                <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="span200">
+        <div class="well">
         </div>
+    </div>
+
+    <div class="span600">
+
+        <g:render template="common/slideshowMain"></g:render>
+
+        <g:render template="common/slideshowSpecialSales" model="[discounts: discounts]"></g:render>
+
     </div>
 </div>
 <script type="text/javascript">

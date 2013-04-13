@@ -3,6 +3,7 @@ package eshop
 import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
+import eshop.mongo.MongoProduct
 
 import javax.servlet.http.Cookie
 
@@ -227,7 +228,7 @@ class SiteController {
         def model = [product: product]
         model << priceService.calcProductPrice(productId)
 
-        render(template: "common/product_search", model: model)
+        render(template: "product_search", model: model)
     }
 
     def flushChanges() {

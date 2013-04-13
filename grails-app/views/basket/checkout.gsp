@@ -14,7 +14,6 @@
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
     body {
@@ -34,6 +33,7 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
 
+    <g:javascript src="thumbnails.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
     <g:javascript>
         function updateBasketItemCount(id, count) {

@@ -176,9 +176,6 @@
         <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
             <g:set var="productActions" value="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}"/>
         </sec:ifAllGranted>
-        <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
-            <g:set var="productActions" value="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"]]}"/>
-        </sec:ifAllGranted>
         <rg:grid domainClass="${eshop.mongo.MongoProduct}"
                  maxColumns="4"
                  showCommand="false"
