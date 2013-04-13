@@ -73,16 +73,6 @@
             <g:select name="producingProducts" from="${ProducingProduct.list()}" multiple="multiple"
                       optionKey="id" size="5" value="" class="many-to-many"/>
         </div>
-
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'products', 'error')} ">
-            <label for="products">
-                <g:message code="products.label" default="Products"/>
-
-            </label>
-            <g:select name="products" from="${Product.list()}" multiple="multiple"
-                      optionKey="id" size="5" value="" class="many-to-many"/>
-        </div>
-
     </div>
 
 </div>
