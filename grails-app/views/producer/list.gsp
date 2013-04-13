@@ -17,6 +17,7 @@
 
 <body>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
+<<<<<<< HEAD
 
 <div class="content scaffold-list" role="main">
     <div class="criteria-div">
@@ -37,7 +38,30 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerGrid", icon: "plus"]]}"
              commands="${[[handler: "addToProducerGrid(#id#)", icon: "application_edit"], [handler: "deleteProducer(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    =======
+    <g:set var="actions" value="[]"/>
+    <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
+        <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"]]}"/>
+    </sec:ifAllGranted>
+    <div class="content scaffold-list" ng-controller="producerController" role="main">
+        <rg:grid domainClass="${Producer}"
+                 maxColumns="3"
+                 showCommand="false"
+                 commands="${actions}"
+        />
+        <rg:dialog id="producer" title="${message(code: "variation")}">
+            <rg:fields bean="${new Producer()}">
+
+            </rg:fields>
+            <rg:saveButton domainClass="${eshop.Producer}" />
+            <rg:cancelButton/>
+        </rg:dialog>
+        <input type="button" ng-click="openProducerCreateDialog()" value="<g:message code="new" />"/>
+        <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
+            <input type="button" ng-click="openProducerEditDialog()" value="<g:message code="edit" />"/>
+        </sec:ifAnyGranted>
+        >>>>>>> origin/master
+        <g:javascript>
         function deleteProducer(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -72,7 +96,7 @@
                 })
             },{width:400});
         }
-    </g:javascript>
-</div>
+        </g:javascript>
+    </div>
 </body>
 </html>

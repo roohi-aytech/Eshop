@@ -2,7 +2,6 @@ package eshop
 
 class ProducingProduct {
 
-    Product product
     ProductType productType
     Brand brand
     String discount
@@ -12,7 +11,6 @@ class ProducingProduct {
     static belongsTo = [Producer]
 
     static constraints = {
-        product(nullable: true)
         productType(nullable: true)
         brand(nullable: true)
         discount(nullable: true)
