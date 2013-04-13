@@ -28,8 +28,7 @@ class ProducingProduct {
        // sort 'name'
     }
     String toString(){
-      (product == null ? "" : product.toString() + " ") +
-               (productType == null ? "" : productType.toString() + " ") +
+        (productType == null ? "" : productType.toString() + " ") +
                (brand == null ? "" : brand.toString() )
     }
 }
