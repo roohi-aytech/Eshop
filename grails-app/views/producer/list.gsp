@@ -17,28 +17,7 @@
 
 <body>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
-<<<<<<< HEAD
 
-<div class="content scaffold-list" role="main">
-    <div class="criteria-div">
-        <rg:criteria>
-            <rg:like name="name" label='producer.name'/>
-            <rg:filterGrid grid="ProducerGrid" label='search'/>
-        </rg:criteria>
-        <script type="text/javascript">
-            $(".criteria-div")
-                    .find('div,label,input')
-                    .css('display','inline')
-                    .css('margin','3px');
-        </script>
-    </div>
-    <rg:grid domainClass="${eshop.Producer}"
-             maxColumns="8"
-             showCommand="false"
-             toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerGrid", icon: "plus"]]}"
-             commands="${[[handler: "addToProducerGrid(#id#)", icon: "application_edit"], [handler: "deleteProducer(#id#)", icon: "application_delete"]]}"
-    />
-    =======
     <g:set var="actions" value="[]"/>
     <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
         <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"]]}"/>
@@ -60,7 +39,6 @@
         <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
             <input type="button" ng-click="openProducerEditDialog()" value="<g:message code="edit" />"/>
         </sec:ifAnyGranted>
-        >>>>>>> origin/master
         <g:javascript>
         function deleteProducer(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
