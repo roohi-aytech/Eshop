@@ -7,6 +7,8 @@ class Customer extends User {
     String mobile;
     String telephone;
 
+    static hasMany = [wishList:Product]
+
     static constraints = {
         sendingAddress(nullable: false)
         billingAddress()

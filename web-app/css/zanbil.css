@@ -16,6 +16,15 @@ body {
     /*position: relative;*/
 }
 
+.scrollable{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .table {
     margin-bottom: 0;
 }
@@ -184,6 +193,23 @@ ul.errors {
     width: 33.33%;
     position: relative;
     z-index: 0;
+}
+
+.thumbnails .thumbnail .image{
+    width: auto;
+}
+
+.thumbnails .thumbnail .image > span{
+    position: relative;
+    margin: auto;
+    left: auto;
+    top:auto;
+    bottom:0;
+}
+
+.thumbnails .thumbnail .image > span > span{
+    left:0;
+    bottom:0;
 }
 
 .thumbnail:hover {
@@ -810,7 +836,7 @@ input.search-query{
     margin-top: -25px;
 }
 
-#link-wishList a {
+#link-wishList a.dropdown-toggle {
     background-image: url(../images/wish_basket.png);
     width: 26px;
     height: 36px;
@@ -821,7 +847,7 @@ input.search-query{
     margin-top: -25px;
 }
 
-#link-compareList a {
+#link-compareList a.dropdown-toggle {
     background-image: url(../images/compare_basket.png);
     width: 29px;
     height: 36px;
@@ -978,6 +1004,16 @@ ul.attribute-list li {
     min-width: 263px;
 }
 
+#compareListItems ul{
+    max-height: 200px;
+    min-width: 263px;
+}
+
+#wishListItems ul{
+    max-height: 200px;
+    min-width: 263px;
+}
+
 .basket-item-image {
     width: 50px;
     height: 50px;
@@ -1003,6 +1039,26 @@ ul.attribute-list li {
 }
 
 #basketItems li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+#compareListItems ul {
+    margin: 5px;
+    margin-bottom: 10px;
+}
+
+#compareListItems li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+#wishListItems ul {
+    margin: 5px;
+    margin-bottom: 10px;
+}
+
+#wishListItems li {
     list-style: none;
     margin-bottom: 5px;
 }

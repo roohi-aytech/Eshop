@@ -23,6 +23,18 @@
     <script type="text/javascript">
         var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
         var basket = ${(session.getAttribute("basket")?: []) as grails.converters.JSON};
+        var compareListCounter = ${session.getAttribute("compareListCounter") ?: 0};
+        var compareList = ${(session.getAttribute("compareList")?: []) as grails.converters.JSON};
+        <sec:ifLoggedIn>
+        <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+        <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username()).wishList.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).mainVal]}}"></g:set>
+        var wishListCounter = ${wishList? wishList.count {it}: 0};
+        var wishList = ${(wishList?: []) as grails.converters.JSON};
+        </sec:ifLoggedIn>
+        <sec:ifNotLoggedIn>
+        var wishListCounter = 0;
+        var wishList = ${[] as grails.converters.JSON};
+        </sec:ifNotLoggedIn>
         var contextRoot = "${createLink(uri: '/')}";
     </script>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>

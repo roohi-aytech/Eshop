@@ -155,6 +155,18 @@ class EshopTagLib {
         """
     }
 
+    def addToWishList = { attrs, body ->
+        out << """
+        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}')"><span>${g.message(code: "add-to-wishList")}</span></a>
+        """
+    }
+
+    def addToCompareList = { attrs, body ->
+        out << """
+        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}')"><span>${g.message(code: "add-to-compareList")}</span></a>
+        """
+    }
+
     def basketItem = { attrs, body ->
         out << "${attrs.id} ${attrs.name} ${attrs.count} salam farzin :D"
     }

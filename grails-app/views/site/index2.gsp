@@ -50,7 +50,7 @@
         </div>
         <div class="span8">
             <ul class="breadcrumb">
-                <li><a href="#"><g:message code="home" /></a></li>
+                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
             </ul>
             <div class="well">
                 <ul class="thumbnails">

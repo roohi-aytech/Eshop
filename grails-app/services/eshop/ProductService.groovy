@@ -7,6 +7,9 @@ import javax.servlet.http.Cookie
 
 class ProductService {
 
+    def springSecurityService
+    def priceService
+
     @Transactional()
     synchronized void addImageToProduct(productId, Set<Content> images) {
         synchronized (this) {
@@ -84,5 +87,15 @@ class ProductService {
                 'in'('id', lastVisitedProducts.collect() { it.toLong() })
             }
         }
+    }
+
+    def findCustomerWishList(){
+        if (!springSecurityService)
+            return
+
+        def user = springSecurityService.currentUser
+        if (user && user instanceof Customer)
+            return Customer.findByUsername(((Customer)user).username).wishList.collect{
+                [id:it.id, title:it.toString(), price: priceService.calcProductPrice(it.id).mainVal]}
     }
 }

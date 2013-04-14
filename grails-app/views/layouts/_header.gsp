@@ -57,22 +57,46 @@
                 <div class="btn-group pull-right topNavigationItem" id="link-compareList">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span><g:message code="compareList"></g:message></span>
-                        <span class="counter">0</span>
+                        <span class="counter">{{compareListCounter}}</span>
                     </a>
 
-                    <div class="dropdown-menu content">
-                        <g:message code="underConstruction"></g:message>
+                    <div id="compareListItems" class="dropdown-menu content">
+                        <ul class="scrollable">
+                            <li ng-repeat="compareListItem in compareList">
+                                <span class="basket-item-image">
+                                    <img src="<g:createLink controller="image"
+                                                            action="index"/>/{{compareListItem.id}}?wh=50x50"/>
+                                </span>
+                                <span class="basket-item-title">{{compareListItem.title}}
+                                </span>
+                            </li>
+                        </ul>
+                        <g:link class="btn btn-warning" controller="comparison" action="show"><g:message
+                                code="compareList.show"></g:message></g:link>
                     </div>
                 </div>
 
                 <div class="btn-group pull-right topNavigationItem" id="link-wishList">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span><g:message code="wishList"></g:message></span>
-                        <span class="counter">0</span>
+                        <span class="counter">{{wishListCounter}}</span>
                     </a>
 
-                    <div class="dropdown-menu content">
-                        <g:message code="underConstruction"></g:message>
+                    <div id="wishListItems" class="dropdown-menu content">
+                        <ul class="scrollable">
+                            <li ng-repeat="wishListItem in wishList">
+                                <span class="basket-item-image">
+                                    <img src="<g:createLink controller="image"
+                                                            action="index"/>/{{wishListItem.id}}?wh=50x50"/>
+                                </span>
+                                <span class="basket-item-title">{{wishListItem.title}}<br/>
+                                    <g:message code="price"></g:message>: <span
+                                        class="basket-item-count">{{wishListItem.price}}
+                                </span>
+                            </li>
+                        </ul>
+                        <g:link class="btn btn-warning" controller="wishList" action="show"><g:message
+                                code="wishList.show"></g:message></g:link>
                     </div>
                 </div>
 

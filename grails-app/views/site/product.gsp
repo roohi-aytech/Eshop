@@ -41,7 +41,7 @@
 
 <div class="layout-container table">
     <div class="table-cell product-rightColumn">
-        <div class="well" >
+        <div class="well">
         </div>
     </div>
 
@@ -50,9 +50,9 @@
             <div class="table-row">
                 <div class="table">
                     <div class="table-cell">
-                        <ul class="breadcrumb" >
+                        <ul class="breadcrumb">
                             <li>
-                                <a href="#"><g:message code="home"/></a>
+                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
                             </li>
                             <g:if test="${breadCrumb.size() > 1}">
                                 <g:each in="${breadCrumb[0..-1]}">
@@ -91,11 +91,11 @@
                             <p>
                                 <eshop:addToBasket prodcutId="${product.id}"
                                                    productTitle="${product}"></eshop:addToBasket>
-                                <a class="btn btn-success btn-compare"
-                                   href="#"><span>${message(code: 'add-to-compareList')}</span></a>
-                                <a class="btn btn-danger btn-wish"
-                                   href="#"><span>${message(code: 'add-to-wishList')}</span>
-                                </a>
+                                <eshop:addToCompareList prodcutId="${product.id}"
+                                                        productTitle="${product.toString()}"></eshop:addToCompareList>
+                                <eshop:addToWishList prodcutId="${product.id}"
+                                                     productTitle="${product.toString()}"></eshop:addToWishList>
+                            </a>
                             </p>
                         </div>
                     </div>

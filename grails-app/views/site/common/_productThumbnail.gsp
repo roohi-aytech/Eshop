@@ -31,12 +31,10 @@
                     <div>
                         <eshop:addToBasket prodcutId="${product.id}"
                                            productTitle="${product.toString()}"></eshop:addToBasket>
-                        <a class="btn btn-compare"
-                           title="${message(code: 'add-to-compareList')}"><span>${message(code: 'add-to-compareList')}</span>
-                        </a>
-                        <a class="btn btn-wish"
-                           title="${message(code: 'add-to-wishList')}"><span>${message(code: 'add-to-wishList')}</span>
-                        </a>
+                        <eshop:addToCompareList prodcutId="${product.id}"
+                                           productTitle="${product.toString()}"></eshop:addToCompareList>
+                        <eshop:addToWishList prodcutId="${product.id}"
+                                                productTitle="${product.toString()}"></eshop:addToWishList>
                     </div>
                 </div>
             </div>
