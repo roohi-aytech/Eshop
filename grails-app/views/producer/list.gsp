@@ -27,10 +27,11 @@
     <div class="criteria-div">
         <rg:criteria>
             <rg:like name="name" label='producer.name'/>
-            <rg:alias name="producingProducts" >
-                <rg:eq name="brand.id" value="$brandInstance.id"/>
-            </rg:alias>
-
+            <rg:nest name="producingProducts">
+                <rg:nest name="brand">
+                    <rg:like name="name" label='brand.name'/>
+                </rg:nest>
+            </rg:nest>
             <rg:filterGrid grid="ProducerGrid" label='search'/>
         </rg:criteria>
     </div>

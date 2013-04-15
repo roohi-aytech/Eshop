@@ -17,8 +17,8 @@ class Producer {
 
     static mapping = {
         sort 'name'
-        producerStaffs cascade: "all-delete-orphan"
-        producingProducts cascade: "all-delete-orphan"
+//        producerStaffs cascade: "all-delete-orphan"
+//        producingProducts cascade: "all-delete-orphan"
       //  products cascade: "all-delete-orphan"
     }
 

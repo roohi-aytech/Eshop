@@ -4,7 +4,6 @@ class ProducerType {
 
     String title
     static searchable = true
-    Producer producer
 
     static constraints = {
         title()
