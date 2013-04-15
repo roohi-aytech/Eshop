@@ -23,14 +23,28 @@
     <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"]]}"/>
 </sec:ifAllGranted>
 <div class="content scaffold-list" ng-controller="producerController" role="main">
+
+    <div class="criteria-div">
+        <rg:criteria>
+            <rg:like name="name" label='producer.name'/>
+            <rg:alias name="producingProducts" >
+                <rg:eq name="brand.id" value="$brandInstance.id"/>
+            </rg:alias>
+
+            <rg:filterGrid grid="ProducerGrid" label='search'/>
+        </rg:criteria>
+    </div>
+
     <rg:grid domainClass="${Producer}"
-             maxColumns="3"
-             showCommand="false"
+             maxColumns="8"
+             showCommand="true"
              commands="${actions}"
     />
     <rg:dialog id="producer" title="${message(code: "variation")}">
         <rg:fields bean="${new Producer()}">
-
+            <rg:modify>
+                <rg:ignoreField field="products"/>
+            </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${eshop.Producer}" />
         <rg:cancelButton/>
@@ -56,23 +70,6 @@
                     }
                 });
             }
-        }
-        function addToProducerGrid(id){
-            var url='<g:createLink action="form"/>'
-             if(id)
-                url+="/"+id
-            loadOverlay(url,'<g:createLink action="save" />',function(){
-                $("#ProducerGrid").trigger("reloadGrid")
-            },function(){
-                $(".count-words").keypress(function(){
-                    var inp=$(this)
-                    inp.parent().find(".word-counter").html(inp.val().length)
-                }).each(function(){
-                    $("<span class='word-counter'></span>").insertAfter($(this))
-                    $(this).keypress()
-
-                })
-            },{width:400});
         }
     </g:javascript>
 </div>
