@@ -11,6 +11,6 @@ class Slide {
         name(nullable: false)
         description(nullable: true)
         url(nullable: false)
-        image(nullable: false)
+        image(nullable: false, maxSize: 20000000)
     }
 }

@@ -5,6 +5,8 @@ import grails.converters.JSON
 import groovy.sql.Sql
 import eshop.mongo.MongoProduct
 
+import javax.servlet.http.Cookie
+
 class SiteController {
     def browseService
     def priceService
@@ -153,9 +155,9 @@ class SiteController {
     }
 
     def product() {
-        def productTypes = ProductType.findAllByParentProductIsNull()
+        def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
-        def model = [productTypes: productTypes, product: product]
+        def model = [productTypes: productTypeList, product: product]
         model << priceService.calcProductPrice(product?.id)
 
         model.commonLink = createLink(action: "browse")
@@ -171,15 +173,43 @@ class SiteController {
         model.breadCrumb = []
 
         productTypeChain.each {
-            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/", id: it.id]
         }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
+        model.mostVisitedProducts = Product.createCriteria().list([max: 20, sort: "visitCount", order: "desc"]) {
+            productTypes {
+                eq('id', model.breadCrumb.last().id)
+            }
+        }
+
+        //update product visit count
         if (!product.visitCount)
             product.visitCount = 0;
         product.visitCount++;
         product.save()
+
+        //update last visited products
+        def lastVisitedProducts
+        synchronized (this.getClass()) {
+            lastVisitedProducts = session.getAttribute('lastVisitedProducts')
+            if (!lastVisitedProducts) {
+                lastVisitedProducts = []
+                String lastVisitedProductsStr = cookie(name: 'lastVisitedProducts')
+                if (lastVisitedProductsStr)
+                    lastVisitedProducts = lastVisitedProductsStr.split(",").toList()
+            }
+            if (!lastVisitedProducts.contains(params.id))
+                lastVisitedProducts.add(params.id)
+            session.setAttribute('lastVisitedProducts', lastVisitedProducts)
+        }
+
+        if (lastVisitedProducts) {
+            Cookie cookie = new Cookie("lastVisitedProducts", lastVisitedProducts.join(","))
+            cookie.maxAge = 100
+            response.addCookie(cookie)
+        }
 
         model
     }

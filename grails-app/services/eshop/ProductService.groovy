@@ -1,8 +1,14 @@
 package eshop
 
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.context.request.RequestContextHolder
+
+import javax.servlet.http.Cookie
 
 class ProductService {
+
+    def springSecurityService
+    def priceService
 
     @Transactional()
     synchronized void addImageToProduct(productId, Set<Content> images) {
@@ -63,7 +69,33 @@ class ProductService {
         ProductType.findAllByParentProductIsNull()
     }
 
-    def findMostVisitedProducts(){
-        Product.listOrderByVisitCount(max: 20, order: "desc")
+    def findLastVisitedProducts(lastVisitedProductsCookie){
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        def lastVisitedProducts
+        synchronized (this.getClass()) {
+            lastVisitedProducts = session.getAttribute('lastVisitedProducts')
+            if (!lastVisitedProducts) {
+                lastVisitedProducts = []
+                String lastVisitedProductsStr = lastVisitedProductsCookie
+                if (lastVisitedProductsStr)
+                    lastVisitedProducts = lastVisitedProductsStr.split(",").toList()
+            }
+        }
+
+        if (lastVisitedProducts) {
+            return Product.createCriteria().list() {
+                'in'('id', lastVisitedProducts.collect() { it.toLong() })
+            }
+        }
+    }
+
+    def findCustomerWishList(){
+        if (!springSecurityService)
+            return
+
+        def user = springSecurityService.currentUser
+        if (user && user instanceof Customer)
+            return Customer.findByUsername(((Customer)user).username).wishList.collect{
+                [id:it.id, title:it.toString(), price: priceService.calcProductPrice(it.id).mainVal]}
     }
 }

@@ -27,7 +27,7 @@ class Discount {
         toDate(nullable: true, persian: true)
         remainCount(nullable: true)
         usageType(inList: ["General", "DiscountCard"])
-        image(nullable: true)
+        image(nullable: true, maxSize: 20000000)
 
         basketCountMin(nullable: true)
         basketPriceMin(nullable: true)

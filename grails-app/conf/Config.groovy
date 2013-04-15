@@ -122,7 +122,7 @@ ckeditor {
     skipAllowedItemsCheck = false
     defaultFileBrowser = "ofm"
     upload {
-        basedir = "D:/DevDesk/Eshop/web-app/images/upload/"
+        basedir = "/home/uploads/"
         baseurl = "/image/get?path="
         overwrite = false
         link {

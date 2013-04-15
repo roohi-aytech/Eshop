@@ -20,6 +20,13 @@ class Product extends BaseProduct implements Comparable{
     Brand brand
     Content mainImage
 
+    Double currentPrice
+    String getTitle(){
+        toString()
+    }
+
+    static transients = ['title', 'currentPrice']
+
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview]
 
     static belongsTo = [ProductType]
