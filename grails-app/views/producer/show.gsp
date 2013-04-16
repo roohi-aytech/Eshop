@@ -22,6 +22,28 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
     <ol class="property-list producer">
+        %{--<tr class="prop">--}%
+            %{--<td valign="top" class="name">Organizer:</td>--}%
+            %{--<td valign="top" class="value">--}%
+                %{--<g:link controller="tekUser" action="show"--}%
+                        %{--id="${tekEventInstance?.organizer?.id}" >--}%
+                    %{--${tekEventInstance?.organizer?.encodeAsHTML()}--}%
+                %{--</g:link>--}%
+            %{--</td>--}%
+        %{--</tr>--}%
+
+        <g:if test="${producerInstance?.producerType}">
+            <li class="fieldcontain">
+                <span id="producerType-label" class="property-label"><g:message code="producer.producerType.label" default="ProducerType" /></span>
+
+                <span class="property-value" aria-labelledby="producerType-label">
+                    <g:link controller="productType" action="show"
+                    id="${producerInstance?.producerType?.id}" >
+                    ${producerInstance?.producerType?.encodeAsHTML()}
+                    </g:link>
+                </span>
+            </li>
+        </g:if>
 
         <g:if test="${producerInstance?.name}">
             <li class="fieldcontain">
@@ -29,7 +51,40 @@
 
                 <span class="property-value" aria-labelledby="name-label">
                     <g:fieldValue bean="${producerInstance}" field="name"/></span>
+            </li>
+        </g:if>
 
+        <g:if test="${producerInstance?.address}">
+            <li class="fieldcontain">
+                <span id="address-label" class="property-label"><g:message code="producer.address.label" default="Address" /></span>
+
+                <span class="property-value" aria-labelledby="address-label">
+                    <g:fieldValue bean="${producerInstance}" field="address"/></span>
+            </li>
+        </g:if>
+        <g:if test="${producerInstance?.phone}">
+            <li class="fieldcontain">
+                <span id="phone-label" class="property-label"><g:message code="producer.phone.label" default="Phone" /></span>
+
+                <span class="property-value" aria-labelledby="phone-label">
+                    <g:fieldValue bean="${producerInstance}" field="phone"/></span>
+            </li>
+        </g:if>
+        <g:if test="${producerInstance?.fax}">
+            <li class="fieldcontain">
+                <span id="fax-label" class="property-label"><g:message code="producer.fax.label" default="Fax" /></span>
+
+                <span class="property-value" aria-labelledby="phone-label">
+                    <g:fieldValue bean="${producerInstance}" field="phone"/></span>
+            </li>
+        </g:if>
+
+        <g:if test="${producerInstance?.delivery}">
+            <li class="fieldcontain">
+                <span id="delivery-label" class="property-label"><g:message code="producer.delivery.label" default="Delivery" /></span>
+
+                <span class="property-value" aria-labelledby="delivery-label">
+                    <g:fieldValue bean="${producerInstance}" field="delivery"/></span>
             </li>
         </g:if>
 
