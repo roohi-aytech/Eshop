@@ -1,16 +1,25 @@
 var eshop = angular.module('eshop', []);
 
 eshop.controller('eshopCtrl', function ($scope, $http) {
+
     $scope.basketCounter = basketCounter;
     $scope.compareListCounter = compareListCounter;
     $scope.wishListCounter = wishListCounter;
     $scope.basket = basket;
     $scope.compareList = compareList;
     $scope.wishList = wishList;
+    $scope.wishListEnabled = wishListEnabled;
     $scope.contextRoot = contextRoot;
 
+    //slides
+    $scope.mainSlides = mainSlides;
+    $scope.mainSlideSize = mainSlideSize;
+
+    $scope.specialSaleSlides = specialSaleSlides;
+    $scope.specialSaleSlideSize = specialSaleSlideSize;
+
     //    basket
-    $scope.addToBasket = function (id, name) {
+    $scope.addToBasket = function (id, name, price) {
         $scope.basketCounter++;
         var found = false;
         for (var i = 0; i < $scope.basket.length; i++) {
@@ -21,7 +30,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             }
         }
         if (!found)
-            $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1};
+            $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, price: price};
         $http.post(contextRoot + "basket/add/" + id).success(function (response) {
         });
 
@@ -60,7 +69,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     }
 
     //    compareList
-    $scope.addToCompareList = function (id, name) {;
+    $scope.addToCompareList = function (id, name, price) {;
         var found = false;
         for (var i = 0; i < $scope.compareList.length; i++) {
             if ($scope.compareList[i].id == id) {
@@ -69,7 +78,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             }
         }
         if (!found)  {
-            $scope.compareList[$scope.compareList.length] = {id: id, title: name};
+            $scope.compareList[$scope.compareList.length] = {id: id, title: name, price: price};
             $scope.compareListCounter++
         }
         $http.post(contextRoot + "comparison/add/" + id).success(function (response) {
@@ -95,7 +104,16 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     };
 
     //    wishList
-    $scope.addToWishList = function (id, name) {
+    $scope.addToWishList = function (id, name, price) {
+        if(!$scope.wishListEnabled)
+        {
+            $.msgGrowl ({
+                type: 'warning'
+                , 'text': wishListNotEnabledMessage
+                , lifetime: 5000
+            });
+            return;
+        }
         var found = false;
         for (var i = 0; i < $scope.wishList.length; i++) {
             if ($scope.wishList[i].id == id) {
@@ -105,7 +123,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         if (!found){
             $scope.wishListCounter++;
-            $scope.wishList[$scope.wishList.length] = {id: id, title: name};
+            $scope.wishList[$scope.wishList.length] = {id: id, title: name, price: price};
         }
         $http.post(contextRoot + "wishList/add/" + id).success(function (response) {
         });

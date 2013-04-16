@@ -44,10 +44,26 @@ class SlideController {
 
     def getImage() {
         def slide = Slide.get(params.id)
-        if (slide && slide.image) {
+        if (slide){
             response.addHeader("content-disposition", "attachment;")
-            response.contentLength = slide.image.length
-            response.outputStream << slide.image
+            switch(params.size){
+                case "1024":
+                    response.contentLength = slide.image1024.length
+                    response.outputStream << slide.image1024
+                    break;
+                case "1280":
+                    response.contentLength = slide.image1280.length
+                    response.outputStream << slide.image1280
+                    break;
+                case "1440":
+                    response.contentLength = slide.image1440.length
+                    response.outputStream << slide.image1440
+                    break;
+                default:
+                    response.contentLength = 0
+                    response.outputStream << []
+            }
+
         }
         else {
             response.contentLength = 0

@@ -1,13 +1,15 @@
 <%@ page import="eshop.Product" %>
 
 <div class="thumbnail mediaholder">
-    <a class="thumbnail-link" href="<g:createLink controller="site" action="product" params="[id: product.id]"/>" class="title">
+    <a class="thumbnail-link" href="<g:createLink controller="site" action="product" params="[id: product.id]"/>"
+       class="title">
         <div class="content">
             <div class="main">
                 <span class="image">
                     <span>
                         <span>
-                            <img src="<g:createLink controller="site" action="image" params="[id: product?.id, wh: '150x150']"/>"/>
+                            <img src="<g:createLink controller="site" action="image"
+                                                    params="[id: product?.id, wh: '150x150']"/>"/>
                         </span>
                     </span>
                 </span>
@@ -29,12 +31,17 @@
                     </div>
 
                     <div>
+                        <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+                        <g:set var="price" value="${priceService.calcProductPrice(product.id).mainVal}"></g:set>
                         <eshop:addToBasket prodcutId="${product.id}"
-                                           productTitle="${product.toString()}"></eshop:addToBasket>
+                                           productTitle="${product.toString()}"
+                                           productPrice="price"></eshop:addToBasket>
                         <eshop:addToCompareList prodcutId="${product.id}"
-                                           productTitle="${product.toString()}"></eshop:addToCompareList>
+                                                productTitle="${product.toString()}"
+                                                productPrice="price"></eshop:addToCompareList>
                         <eshop:addToWishList prodcutId="${product.id}"
-                                                productTitle="${product.toString()}"></eshop:addToWishList>
+                                             productTitle="${product.toString()}"
+                                             productPrice="price"></eshop:addToWishList>
                     </div>
                 </div>
             </div>

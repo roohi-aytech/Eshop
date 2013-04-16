@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.rollbar.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}"/>
 
     <g:javascript library="jquery"></g:javascript>
 
@@ -30,15 +31,24 @@
         <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username()).wishList.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).mainVal]}}"></g:set>
         var wishListCounter = ${wishList? wishList.count {it}: 0};
         var wishList = ${(wishList?: []) as grails.converters.JSON};
+        var wishListEnabled = true;
         </sec:ifLoggedIn>
         <sec:ifNotLoggedIn>
         var wishListCounter = 0;
         var wishList = ${[] as grails.converters.JSON};
+        var wishListEnabled = false;
+        var wishListNotEnabledMessage = '${message(code:'wishList.notEnabled.message')}';
         </sec:ifNotLoggedIn>
         var contextRoot = "${createLink(uri: '/')}";
+        var mainSlides = [];
+        var mainSlideSize = 0;
+        var specialSaleSlides = [];
+        var specialSaleSlideSize = 0;
     </script>
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
     <g:javascript src="jquery.rollbar.js"></g:javascript>
+    <g:javascript src="jquery.mousewheel.js"></g:javascript>
+    <g:javascript src="jquery.msgGrowl.js"></g:javascript>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}"
             type="text/javascript"></script>
     <g:layoutHead/>
@@ -56,8 +66,6 @@
 </div>
 <g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
-<g:javascript src="jquery.mousewheel.js"></g:javascript>
-<g:javascript src="jcarousellite.js"></g:javascript>
 
 </body>
 </html>

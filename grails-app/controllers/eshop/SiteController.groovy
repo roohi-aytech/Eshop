@@ -12,6 +12,7 @@ class SiteController {
     def priceService
 //    def olapService
     def dataSource
+    def springSecurityService
 
     def findProducts(params) {
 
@@ -125,6 +126,11 @@ class SiteController {
     }
 
     def index() {
+        if(springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer))
+        {
+            redirect(uri: '/admin')
+            return
+        }
 
         if (session.forwardUri) {
             def url = session.forwardUri

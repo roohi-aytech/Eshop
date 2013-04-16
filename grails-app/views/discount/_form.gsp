@@ -52,6 +52,30 @@
                       valueMessagePrefix="discount.usageType" noSelection="['': '']"/>
         </div>
 
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'image1024', 'error')} required">
+            <label for="image1024">
+                <g:message code="slide.image1024.label" default="image1024"/>
+            </label>
+            <input type="file" id="image1024" name="image1024" />
+            <img src="<g:createLink controller="slide" action="getImage" params="${[id:discountInstance?.id, size:1024]}"/>" style="max-width: 100px"/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'image1280', 'error')} required">
+            <label for="image1280">
+                <g:message code="slide.image1280.label" default="image1280"/>
+            </label>
+            <input type="file" id="image1280" name="image1280" />
+            <img src="<g:createLink controller="slide" action="getImage" params="${[id:discountInstance?.id, size:1280]}"/>" style="max-width: 100px"/>
+        </div>
+
+        <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'image1440', 'error')} required">
+            <label for="image1440">
+                <g:message code="slide.image1440.label" default="image1440"/>
+            </label>
+            <input type="file" id="image1440" name="image1440" />
+            <img src="<g:createLink controller="slide" action="getImage" params="${[id:discountInstance?.id, size:1440]}"/>" style="max-width: 100px"/>
+        </div>
+
         <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'basketCountMin', 'error')} ">
             <label for="basketCountMin">
                 <g:message code="discount.basketCountMin.label" default="Basket Count Min"/>

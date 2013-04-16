@@ -10,7 +10,9 @@ class Discount {
     Date toDate
     Integer remainCount
     String usageType
-    byte[] image
+    byte[] image1024
+    byte[] image1280
+    byte[] image1440
 
     Integer basketCountMin
     Integer basketPriceMin
@@ -27,7 +29,9 @@ class Discount {
         toDate(nullable: true, persian: true)
         remainCount(nullable: true)
         usageType(inList: ["General", "DiscountCard"])
-        image(nullable: true, maxSize: 20000000)
+        image1024(nullable: true, maxSize: 20000000)
+        image1280(nullable: true, maxSize: 20000000)
+        image1440(nullable: true, maxSize: 20000000)
 
         basketCountMin(nullable: true)
         basketPriceMin(nullable: true)

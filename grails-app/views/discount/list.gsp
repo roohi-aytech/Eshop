@@ -25,20 +25,24 @@
                     <div class="form-fields-part">
                         <rg:field name="code"/>
                         <rg:field name="remainCount"/>
+                        <rg:field name="image1024"/>
                         <rg:field name="usageType"/>
                     </div>
 
                     <div class="form-fields-part">
                         <rg:field name="type"/>
                         <rg:field name="fromDate"/>
-                        <rg:field name="image"/>
+                        <rg:field name="image1280"/>
                     </div>
 
                     <div class="form-fields-part">
                         <rg:field name="value"/>
                         <rg:field name="toDate"/>
+                        <rg:field name="image1440"/>
                     </div>
                 </div>
+
+
 
                 <div>
                     <fieldset>

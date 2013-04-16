@@ -29,13 +29,31 @@ class ImageController {
             case 'discount':
                 def discount = Discount.get(params.id)
                 if (discount) {
-                    content = discount.image
+                    switch(params.size){
+                        case '1280':
+                            content = discount.image1280
+                            break
+                        case '1440':
+                            content = discount.image1440
+                            break
+                        default:
+                            content = discount.image1024
+                    }
                 }
                 break;
-            case 'slide':
+            case 'mainSlide':
                 def slide = Slide.get(params.id)
                 if (slide) {
-                    content = slide.image
+                    switch(params.size){
+                        case '1280':
+                            content = slide.image1280
+                            break
+                        case '1440':
+                            content = slide.image1440
+                            break
+                        default:
+                            content = slide.image1024
+                    }
                 }
                 break;
         }

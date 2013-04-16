@@ -45,6 +45,9 @@
                                 <span class="basket-item-title">{{basketItem.name}}<br/>
                                     <g:message code="basket-items-count"></g:message>: <span
                                         class="basket-item-count">{{basketItem.count}}
+                                </span><br/>
+                                    <g:message code="price"></g:message>: <span
+                                        class="basket-item-count">{{wishListItem.price}}
                                 </span>
                                 </span>
                             </li>
@@ -67,7 +70,10 @@
                                     <img src="<g:createLink controller="image"
                                                             action="index"/>/{{compareListItem.id}}?wh=50x50"/>
                                 </span>
-                                <span class="basket-item-title">{{compareListItem.title}}
+                                <span class="basket-item-title">{{compareListItem.title}}<br/>
+                                    <g:message code="price"></g:message>: <span
+                                        class="basket-item-count">{{wishListItem.price}}
+                                </span>
                                 </span>
                             </li>
                         </ul>
@@ -143,30 +149,31 @@
             <div class="table-cell">
                 <div class="search-box table">
                     <div class="table-cell category-select">
-                    <div class="btn-group pull-right" style="margin-top: 5px;">
-                        <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
-                            <span id="searchCategory"><g:message code="category.all"></g:message></span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"></g:set>
-                            <g:each in="${rootProductTypes}" var="rootProductType">
-                            %{--<li><a href="#">${rootProductType.name}</a></li>--}%
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1"
-                                       href="#"
-                                       onclick="$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
-                                    <ul class="dropdown-menu">
-                                        <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                            <li>
-                                            <a href="#" onclick="$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
-                                        </g:each>
-                                    </ul>
-                                </li>
-                            </g:each>
-                        </ul>
+                        <div class="btn-group pull-right" style="margin-top: 5px;">
+                            <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span id="searchCategory"><g:message code="category.all"></g:message></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"></g:set>
+                                <g:each in="${rootProductTypes}" var="rootProductType">
+                                %{--<li><a href="#">${rootProductType.name}</a></li>--}%
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1"
+                                           href="#"
+                                           onclick="$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
+                                        <ul class="dropdown-menu">
+                                            <g:each in="${rootProductType.children}" var="secondLevelProductType">
+                                                <li>
+                                                <a href="#" onclick="$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                            </g:each>
+                                        </ul>
+                                    </li>
+                                </g:each>
+                            </ul>
+                        </div>
                     </div>
-                    </div>
+
                     <form class="navbar-search pull-right table-cell">
                         <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
                     </form>

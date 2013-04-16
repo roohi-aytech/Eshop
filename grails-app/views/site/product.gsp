@@ -89,12 +89,17 @@
                             <g:render template="product/variation"/>
 
                             <p>
+                                <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+                                <g:set var="price" value="${priceService.calcProductPrice(product.id).mainVal}"></g:set>
                                 <eshop:addToBasket prodcutId="${product.id}"
-                                                   productTitle="${product}"></eshop:addToBasket>
+                                                   productTitle="${product}"
+                                                   productPrice="price"></eshop:addToBasket>
                                 <eshop:addToCompareList prodcutId="${product.id}"
-                                                        productTitle="${product.toString()}"></eshop:addToCompareList>
+                                                        productTitle="${product.toString()}"
+                                                        productPrice="price"></eshop:addToCompareList>
                                 <eshop:addToWishList prodcutId="${product.id}"
-                                                     productTitle="${product.toString()}"></eshop:addToWishList>
+                                                     productTitle="${product.toString()}"
+                                                     productPrice="price"></eshop:addToWishList>
                             </a>
                             </p>
                         </div>

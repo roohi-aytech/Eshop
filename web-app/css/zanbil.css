@@ -1171,7 +1171,9 @@ span.cke_skin_kama {
 }
 
 .cs-title {
-    width: 560px !important;
+    width: auto !important;
+    position:relative;
+    right:0;
     margin-bottom: 25px;
 }
 

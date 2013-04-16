@@ -1,12 +1,34 @@
+<g:javascript>
+    specialSaleSlides = ${discounts.collect{[id:it.id, code:it.code]} as grails.converters.JSON};
+    var specialSaleSlideSize;
+    var specialSaleSlideWidth = $('.slideshowContainer').width();
+    var specialSaleSlideHeight;
+    if(specialSaleSlideWidth < 1055){
+        specialSaleSlideWidth = 580;
+        specialSaleSlideHeight = 185;
+        specialSaleSlideSize = 1024;
+    }
+    else if(specialSaleSlideWidth < 1215){
+        specialSaleSlideWidth = 835;
+        specialSaleSlideHeight = 205;
+        specialSaleSlideSize = 1280;
+    }
+    else{
+        specialSaleSlideWidth = 995;
+        specialSaleSlideHeight = 260;
+        specialSaleSlideSize = 1440;
+    }
+</g:javascript>
+
 <div class="slideshowContainer">
     <center>
         <div id="slideshowSpecialSales">
-            <g:each in="${discounts}" var="discount">
-                <a href="http://www.princeofpersiagame.com/" target="_blank">
-                    <img src="<g:createLink controller="image" params="[id: discount?.id, type: 'discount']"/>"
-                         alt="Price of Persia"/>
-                </a>
-            </g:each>
+            %{--<g:each in="${discounts}" var="discount">--}%
+            <a href="#" target="_blank" ng-repeat="discount in specialSaleSlides">
+                <img ng-src="<g:createLink controller="image" action="index"/>/{{discount.id}}?type=discount&size={{specialSaleSlideSize}}"
+                     alt=" "/>
+            </a>
+            %{--</g:each>--}%
         </div>
 
         <div class="baseLine">
@@ -15,10 +37,12 @@
     </center>
 </div>
 <g:javascript>
-    $('#slideshowSpecialSales').coinslider(
-            {
-                width: 580,
-                height: 300,
-                delay: 5000
-            });
+    $(document).ready(function () {
+        $('#slideshowSpecialSales').coinslider(
+                {
+                    width: specialSaleSlideWidth,
+                    height: specialSaleSlideHeight,
+                    delay: 4000
+                });
+    });
 </g:javascript>

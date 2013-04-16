@@ -151,19 +151,19 @@ class EshopTagLib {
 
     def addToBasket = { attrs, body ->
         out << """
-        <a class="btn btn-primary btn-buy" ng-click="addToBasket(${attrs.prodcutId}, '${attrs.productTitle}')"><span>${g.message(code: "add-to-basket")}</span></a>
+        <a class="btn btn-primary btn-buy" ng-click="addToBasket(${attrs.prodcutId}, '${attrs.productTitle}'), '\${attrs.productPrice}')"><span>${g.message(code: "add-to-basket")}</span></a>
         """
     }
 
     def addToWishList = { attrs, body ->
         out << """
-        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}')"><span>${g.message(code: "add-to-wishList")}</span></a>
+        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '\${attrs.productPrice}')"><span>${g.message(code: "add-to-wishList")}</span></a>
         """
     }
 
     def addToCompareList = { attrs, body ->
         out << """
-        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}')"><span>${g.message(code: "add-to-compareList")}</span></a>
+        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '\${attrs.productPrice}')"><span>${g.message(code: "add-to-compareList")}</span></a>
         """
     }
 
