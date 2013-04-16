@@ -12,14 +12,14 @@ class Producer {
     String delivery
 
     byte[] logo
-    static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct, products: Product]
+    static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
     static composites = ["producerStaffs", "producingProducts"]
 
     static mapping = {
         sort 'name'
-        producerStaffs cascade: "all-delete-orphan"
-        producingProducts cascade: "all-delete-orphan"
-        products cascade: "all-delete-orphan"
+//        producerStaffs cascade: "all-delete-orphan"
+//        producingProducts cascade: "all-delete-orphan"
+      //  products cascade: "all-delete-orphan"
     }
 
     static searchable = true
@@ -32,7 +32,7 @@ class Producer {
         fax()
         producerStaffs()
         producingProducts()
-        products(nullable: true)
+       // products(nullable: true)
         delivery(nullable: true)
         logo(nullable: true, maxSize: 1000000000)
     }
