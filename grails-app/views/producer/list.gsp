@@ -28,21 +28,26 @@
     <div class="criteria-div">
         <rg:criteria>
             <rg:like name="name" label='producer.name'/>
-            <rg:nest name="producingProducts">
-                <rg:nest name="brand">
-                    <rg:like name="name" label='brand'/>
-                </rg:nest>
-            </rg:nest>
+
             <rg:nest name="producingProducts">
                 <rg:nest name="product">
                     <rg:like name="name" label='product'/>
                 </rg:nest>
             </rg:nest>
+
             <rg:nest name="producingProducts">
                 <rg:nest name="productType">
                     <rg:like name="name" label='productType'/>
                 </rg:nest>
             </rg:nest>
+
+            <rg:nest name="producingProducts">
+                <rg:nest name="brand">
+                    <rg:like name="name" label='brand'/>
+                </rg:nest>
+            </rg:nest>
+
+
             <rg:filterGrid grid="ProducerGrid" label='search'/>
         </rg:criteria>
     </div>
@@ -92,7 +97,7 @@
             $( "#producer" ).on( "dialogopen", function( event, ui ) {
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             } );
-            $("[ng-click^=addCompositeProducingProducts],[ng-click^=addCompositeProducerStaffs]").click(function(){
+            $("[ng-click^=addCompositeproducingProducts],[ng-click^=addCompositeproducerStaffs]").click(function(){
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             })
         })
