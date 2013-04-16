@@ -37,12 +37,14 @@
                 <span id="producerType-label" class="property-label"><g:message code="producer.producerType.label" default="ProducerType" /></span>
 
                 <span class="property-value" aria-labelledby="producerType-label">
-                    <g:link controller="productType" action="show"
-                    id="${producerInstance?.producerType?.id}" >
-                    ${producerInstance?.producerType?.encodeAsHTML()}
-                    </g:link>
-                </span>
-            </li>
+                    %{--<g:link controller="productType" action="show"--}%
+                    %{--id="${producerInstance?.producerType?.id}" >--}%
+                    %{--${producerInstance?.producerType?.encodeAsHTML()}--}%
+                    %{--</g:link>--}%
+                    <g:fieldValue bean="${producerInstance}" field="producerType"/></span>
+
+            </span>
+        </li>
         </g:if>
 
         <g:if test="${producerInstance?.name}">
@@ -102,6 +104,19 @@
             </li>
         </g:if>
 
+        <g:if test="${producerInstance?.producingProducts}">
+            <li class="fieldcontain">
+                <span id="producingProducts-label" class="property-label">
+                    <g:message code="producingProducts.label" default="producingProducts" />
+                </span>
+
+                <g:each in="${producerInstance.producingProducts}" var="v">
+                    <span class="property-value" aria-labelledby="producingProducts-label">
+                        <g:link controller="producer" action="showProducingProduct" id="${v.id}">${v?.encodeAsHTML()}</g:link></span>
+                </g:each>
+
+            </li>
+        </g:if>
     </ol>
 
 </div>

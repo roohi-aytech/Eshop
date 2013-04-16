@@ -1,6 +1,7 @@
 package eshop.discout
 
 import eshop.Producer
+import eshop.ProducingProduct
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 
@@ -20,6 +21,18 @@ class ProducerController {
         }
 
       [producerInstance: producerInstance]
+    }
+
+    def showProducingProduct(){
+        def producingProductInstance = ProducingProduct.get(params.id)
+        if (!producingProductInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'producingProducts.label', default: 'producingProducts'), id])
+            redirect(action: "list")
+            return
+        }
+
+        [producingProductInstance: producingProductInstance]
+
     }
 
     def form(){

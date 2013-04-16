@@ -16,6 +16,7 @@
 </head>
 
 <body>
+<g:javascript src="jquery.quickselect.pack.js"/>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <g:set var="actions" value="[]"/>
@@ -29,13 +30,28 @@
             <rg:like name="name" label='producer.name'/>
             <rg:nest name="producingProducts">
                 <rg:nest name="brand">
-                    <rg:like name="name" label='brand.name'/>
+                    <rg:like name="name" label='brand'/>
+                </rg:nest>
+            </rg:nest>
+            <rg:nest name="producingProducts">
+                <rg:nest name="product">
+                    <rg:like name="name" label='product'/>
+                </rg:nest>
+            </rg:nest>
+            <rg:nest name="producingProducts">
+                <rg:nest name="productType">
+                    <rg:like name="name" label='productType'/>
                 </rg:nest>
             </rg:nest>
             <rg:filterGrid grid="ProducerGrid" label='search'/>
         </rg:criteria>
     </div>
-
+    <script type="text/javascript">
+        $(".criteria-div")
+                .find('div,label,input')
+                .css('display', 'inline')
+                .css('margin', '3px');
+    </script>
     <rg:grid domainClass="${Producer}"
              maxColumns="8"
              showCommand="true"
@@ -72,6 +88,15 @@
                 });
             }
         }
+         $(function(){
+            $( "#producer" ).on( "dialogopen", function( event, ui ) {
+                setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
+            } );
+            $("[ng-click^=addCompositeProducingProducts],[ng-click^=addCompositeProducerStaffs]").click(function(){
+                setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
+            })
+        })
+
     </g:javascript>
 </div>
 </body>
