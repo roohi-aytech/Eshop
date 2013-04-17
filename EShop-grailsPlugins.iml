@@ -39,6 +39,7 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../backup" />
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/controllers" isTestSource="false" />
