@@ -847,7 +847,7 @@ input.search-query{
 
 #link-basket a.dropdown-toggle:hover span.counter {
     opacity: 1;
-    background-color: #696969;
+    background-color: #c0c0c0;
 }
 
 #basketItems .btn-warning {
