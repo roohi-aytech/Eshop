@@ -41,6 +41,8 @@ $(document).ready(function () {
 
     $('.scrollable').rollbar({zIndex:80,wheelSpeed:10});
 
+    $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
+
 });
 
 function changeAddToBasketButtonLabel() {

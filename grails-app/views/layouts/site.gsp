@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.rollbar.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.tipsy.css')}"/>
 
     <g:javascript library="jquery"></g:javascript>
 
@@ -48,6 +49,7 @@
     <g:javascript src="jquery.rollbar.js"></g:javascript>
     <g:javascript src="jquery.mousewheel.js"></g:javascript>
     <g:javascript src="jquery.msgGrowl.js"></g:javascript>
+    <g:javascript src="jquery.tipsy.js"></g:javascript>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}"
             type="text/javascript"></script>
