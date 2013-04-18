@@ -15,6 +15,12 @@ class ImageController {
     }
 
     def index() {
+
+        if(params.id && params.id.toString().contains("{{")) { //angular parameter
+            render ""
+            return
+        }
+
         if (!params.type)
             params.type = 'product'
         def content

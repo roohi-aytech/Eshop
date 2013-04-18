@@ -23,7 +23,7 @@
     </g:if>
     <g:each in="${orderList}" var="order">
     <div class="group">
-        <div class="header">
+        <div class="groupHeader">
             <img src="../../images/box.png">
             <h3>#${order.id}</h3>
             <div class="comment"><g:message code="order.totalPrice"></g:message>: <g:formatNumber number="${order.items.unitPrice.sum()}" type="number"></g:formatNumber></div>

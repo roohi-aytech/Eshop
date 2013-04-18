@@ -60,6 +60,28 @@ body {
     margin-top: 5px;
 }
 
+.error {
+    border: 1px solid #feb7b7;
+    background-color: #ffc9c9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.error div {
+    background-image: url(../images/error.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding: 10px;
+    padding-top: 5px;
+    padding-right: 35px;
+}
+
+.error a {
+    margin-top: 5px;
+}
+
 ul.errors {
     color: #dc143c;
     margin-right: 30px;
@@ -1261,7 +1283,7 @@ span.cke_skin_kama {
 
 /*Control panel*/
 .control-panel {
-    margin: 0 20px 0 20px;
+    margin: 0 20px 20px 20px;
 }
 
 .control-panel ul {
@@ -1284,7 +1306,7 @@ span.cke_skin_kama {
     padding: 10px;
 }
 
-.control-panel .header {
+.control-panel .groupHeader {
     padding: 10px;
     display: table-cell;
     width: 250px;

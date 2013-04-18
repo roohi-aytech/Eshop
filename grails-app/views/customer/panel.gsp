@@ -16,7 +16,7 @@
     <ul>
         <li>
             <div class="group">
-                <div class="header">
+                <div class="groupHeader">
                     <img src="../images/box.png">
 
                     <h3><g:message code="controlPanel.orders.label"></g:message></h3>
@@ -49,7 +49,7 @@
         </li>
         <li>
             <div class="group">
-                <div class="header">
+                <div class="groupHeader">
                     <img src="../images/settings.png">
 
                     <h3><g:message code="controlPanel.settings.label"></g:message></h3>

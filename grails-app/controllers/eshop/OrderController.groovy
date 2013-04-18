@@ -4,6 +4,7 @@ class OrderController {
 
     def springSecurityService
     def priceService
+    def mellatService
 
     def create() {
 
@@ -46,11 +47,24 @@ class OrderController {
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
 
-        redirect(action: 'payment', params:[id:order.id])
+        redirect(action: 'payment', params: [id: order.id])
     }
 
     def payment() {
-
+        if (params.bank) {
+            def order = Order.get(params.id)
+            switch (params.bank) {
+                case 'mellat':
+                    def result = mellatService.prepareForPayment(order.id, order.items.sum { it.orderCount * it.unitPrice }, order.customerId)
+                    if (result[0] == 0)
+                        [refId: result[1]]
+                    else
+                        flash.message = result[0]
+                    break
+                case 'pasargad':
+                    break
+            }
+        }
     }
 
     def list() {
@@ -60,7 +74,7 @@ class OrderController {
         def actions = []
         def suggestedActions = []
 
-        switch (status){
+        switch (status) {
             case OrderHelper.STATUS_CREATED:
                 suggestedActions = [OrderHelper.ACTION_PAYMENT]
                 actions = [OrderHelper.ACTION_CANCELLATION]
