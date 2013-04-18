@@ -2,11 +2,16 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>Bootstrap, from Twitter</title>
+    <g:if test="${title}">
+        <title>${title}</title>
+    </g:if>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <g:if test="${description}">
+        <meta name="description" content="${description}">
+    </g:if>
+    <g:if test="${keywords}">
+        <meta name="keywords" content="${keywords}">
+    </g:if>
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>

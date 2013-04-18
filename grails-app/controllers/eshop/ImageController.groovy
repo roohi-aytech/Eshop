@@ -69,6 +69,8 @@ class ImageController {
             response.outputStream << content
             response.outputStream.flush()
         }
+        else
+            render ""
 
     }
 

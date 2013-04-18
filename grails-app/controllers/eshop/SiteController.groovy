@@ -62,6 +62,14 @@ class SiteController {
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
 
+        def pageDetails = PageDetails.findByProductType(productType)
+        if(pageDetails)
+            model.title = pageDetails?.title?.replace('$BRAND$', '')
+        else
+            model.title = productType.name
+        model.description = pageDetails?.description?.replace('$BRAND$', '')
+        model.keywords = pageDetails?.keywords?.replace('$BRAND$', '')
+
         model
     }
 
@@ -72,6 +80,22 @@ class SiteController {
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
+
+        def brand
+        if(model.filters["selecteds"]["b"])
+            brand = Brand.createCriteria().list{
+                'in'('id', model.filters["selecteds"]["b"])
+            }.collect{it.name}.join(', ')
+        if(!brand)
+            brand = ''
+
+        def pageDetails = PageDetails.findByProductType(ProductType.get(params.f.split(',')[0].replace('p', '').toLong()))
+        if(pageDetails)
+            model.title = pageDetails?.title?.replace('$BRAND$', brand)
+        else
+            model.title = productType.name
+        model.description = pageDetails?.description?.replace('$BRAND$', brand)
+        model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
 
         model
     }
