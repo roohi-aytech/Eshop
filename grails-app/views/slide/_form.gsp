@@ -34,6 +34,14 @@
     <g:textField name="url" value="${slideInstance?.url}" class="count-words" size="50"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'productTypes', 'error')} ">
+    <label for="productTypes">
+        <g:message code="slide.productTypes.label" default="Product Types"/>
+    </label>
+
+    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px"></rg:tree>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image1024', 'error')} required">
     <label for="image1024">
         <g:message code="slide.image1024.label" default="image1024"/>

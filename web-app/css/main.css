@@ -921,3 +921,7 @@ select{
     background-color: Highlight;
     color: HighlightText;
 }
+
+.panel.combo-p{
+    z-index: 999999999 !important;
+}

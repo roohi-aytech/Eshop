@@ -6,7 +6,6 @@ import org.codehaus.groovy.grails.commons.ApplicationHolder
 class MellatService {
 
     WebService webService
-    def servletContext
 
     static Integer terminalId = 642244
     static String userName = "tajan"

@@ -18,8 +18,8 @@
 
 		@font-face {
 		  font-family: 'showbiz-fontello';
-		  src: url("fontello/fontello.eot");
-		  src: url("fontello/fontello.eot?#iefix") format('embedded-opentype'), url("fontello/fontello.woff") format('woff'), url("fontello/fontello.ttf") format('truetype'), url("fontello/fontello.svg#fontello") format('svg');
+		  /*src: url("fontello/fontello.eot");*/
+		  /*src: url("fontello/fontello.eot?#iefix") format('embedded-opentype'), url("fontello/fontello.woff") format('woff'), url("fontello/fontello.ttf") format('truetype'), url("fontello/fontello.svg#fontello") format('svg');*/
 		  font-weight: normal;
 		  font-style: normal;
 		}

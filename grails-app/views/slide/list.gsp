@@ -15,8 +15,7 @@
              maxColumns="3"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToSlideGrid", icon: "plus"]]}"
-             commands="${[[handler: "addToSlideGrid(#id#)", icon: "application_edit"], [handler: "deleteSlide(#id#)", icon: "application_delete"]]}"
-    />
+             commands="${[[handler: "addToSlideGrid(#id#)", icon: "application_edit"], [handler: "deleteSlide(#id#)", icon: "application_delete"]]}"/>
     <g:javascript>
         function deleteSlide(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
@@ -39,7 +38,7 @@
             var url='<g:createLink action="form"/>'
              if(id)
                 url+="/"+id
-            loadOverlay(url,'<g:createLink action="save" />',function(){
+            loadOverlay(url,'<g:createLink action="save"/>',function(){
                 $("#SlideGrid").trigger("reloadGrid")
             },function(){
                 $(".count-words").keypress(function(){
@@ -49,7 +48,10 @@
                     $("<span class='word-counter'></span>").insertAfter($(this))
                     $(this).keypress()
 
-                })
+                });
+
+                //prepare combotrees
+
             },{width:400});
         }
     </g:javascript>

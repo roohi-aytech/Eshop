@@ -49,6 +49,17 @@
 
     <script language="javascript" src="${resource(dir: 'js', file: 'msgGrowl.js')}" type="text/javascript"></script>
     <g:layoutHead/>
+
+
+    %{--easy ui--}%
+    <link rel="stylesheet" href="${resource(dir:'css/jquery.easyui/metro', file:'easyui.css')}" />
+    <link rel="stylesheet" href="${resource(dir:'css/jquery.easyui', file:'easyui-rtl.css')}" />
+    <g:javascript src="jquery.easyui/jquery.panel.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.parser.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.validatebox.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.tree.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.combo.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.combotree.js"></g:javascript>
 </head>
 
 <body dir="rtl">

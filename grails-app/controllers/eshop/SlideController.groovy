@@ -1,6 +1,7 @@
 package eshop
 
 import grails.converters.JSON
+import org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass
 
 class SlideController {
 
@@ -44,9 +45,9 @@ class SlideController {
 
     def getImage() {
         def slide = Slide.get(params.id)
-        if (slide){
+        if (slide) {
             response.addHeader("content-disposition", "attachment;")
-            switch(params.size){
+            switch (params.size) {
                 case "1024":
                     response.contentLength = slide.image1024.length
                     response.outputStream << slide.image1024
@@ -64,11 +65,12 @@ class SlideController {
                     response.outputStream << []
             }
 
-        }
-        else {
+        } else {
             response.contentLength = 0
             response.outputStream << []
         }
 
     }
+
+
 }
