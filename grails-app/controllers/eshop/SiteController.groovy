@@ -56,7 +56,11 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
 
-        model.slides = Slide.findAll()
+        model.slides = Slide.createCriteria().list{
+            productTypes {
+                eq('id', productType.id)
+            }
+        }
 //        model.discounts = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan new Date(), new Date(), 0
 
         model.pageContext = [:]

@@ -11,7 +11,7 @@
             <img id="zoomPane" class="cloudzoom" src="<g:createLink controller="image"
                                                                     params="[id: product?.id, wh: '300x300']"/>"
                  data-cloudzoom="zoomImage: '<g:createLink controller="image"
-                                                           params="[id: product?.id, wh: '500x500']"/>'"/>
+                                                           params="[id: product?.id, wh: 'max']"/>'"/>
         </div>
     </center>
 </div>
