@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".thumbnails .thumbnail").hover(function () {
+    $(".product-thumbnails .thumbnail").hover(function () {
         $(this).closest("li").css("z-index", 9999999);
         $(this).stop().animate({ height: "425", width: parseInt($(this).attr('oldWidth')) + 40 , left: parseInt($(this).attr('oldLeft')) - 20, top: $(this).attr('oldTop') - 20 }, "fast");
         $(this).addClass('selectedThumbnail');

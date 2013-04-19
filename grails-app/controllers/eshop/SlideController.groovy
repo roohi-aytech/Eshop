@@ -28,8 +28,11 @@ class SlideController {
         if (params.id) {
             slideInstance = Slide.get(params.id)
             slideInstance.properties = params
-        } else
+            slideInstance.image = []
+        } else {
             slideInstance = new Slide(params)
+            slideInstance.image = []
+        }
         if (slideInstance.validate() && slideInstance.save()) {
             render slideInstance as JSON
         } else

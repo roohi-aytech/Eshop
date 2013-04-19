@@ -51,7 +51,7 @@ class SiteController {
         def base = "${model.commonLink}/"
 
         productType.children.each {
-            model.subProductTypeLinks << [name: it.name, href: base + it.name]
+            model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
         }
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
@@ -96,8 +96,6 @@ class SiteController {
         def pageDetails = PageDetails.findByProductType(ProductType.get(params.f.split(',')[0].replace('p', '').toLong()))
         if(pageDetails)
             model.title = pageDetails?.title?.replace('$BRAND$', brand)
-        else
-            model.title = productType.name
         model.description = pageDetails?.description?.replace('$BRAND$', brand)
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
 

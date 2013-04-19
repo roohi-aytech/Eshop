@@ -32,6 +32,18 @@ class ImageController {
                     content = getProdcutImage(product)
                 }
                 break;
+            case 'productType':
+                def productType = ProductType.get(params.id)
+                if (productType) {
+                    content = productType.image
+                }
+                break;
+            case 'brand':
+                def brand = Brand.get(params.id)
+                if (brand) {
+                    content = brand.logo
+                }
+                break;
             case 'discount':
                 def discount = Discount.get(params.id)
                 if (discount) {

@@ -94,7 +94,11 @@ class EshopTagLib {
     def filterStartBrand = {attrs, body ->
         def f = "p${attrs.productType.id},b${attrs.brandId}"
         def link = g.createLink(controller: "site", action: "filter", params: [f : f])
-        out << "<a href='${link}'>${attrs.brandName}</a>"
+        def brand = Brand.get(attrs.brandId)
+        if(attrs.type == 'icon' && brand.logo)
+            out << "<a href='${link}'><img alt='${attrs.brandName}' src='${createLink(controller: 'image', params: [id:attrs.brandId, type:'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+        else
+            out << "<a href='${link}'><span>${attrs.brandName}</span></a>"
     }
 
     def filterAddProductType = {attrs, body ->
@@ -111,7 +115,10 @@ class EshopTagLib {
         else
             f = "${attrs.f},b${attrs.id}"
         def link = g.createLink(controller: "site", action: "filter", params: [f : f])
-        out << "<a href='${link}'>${attrs.name}</a>"
+        if(attrs.type == 'icon')
+            out << "<a href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id:attrs.id, type:'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+        else
+            out << "<a href='${link}'>${attrs.name}</span></a>"
     }
 
     def filterAddAttribute = {attrs, body ->
