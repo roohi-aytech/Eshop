@@ -258,8 +258,9 @@ ul.errors {
     background: linear-gradient(to bottom, #FAFAFA, #EEEEEE) !important;
 }
 
+.showbiz .thumbnail .main,
 .product-thumbnails .thumbnail .main {
-    height: 230px;
+    height: 230px !important;
     text-align: center;
 }
 
