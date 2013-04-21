@@ -1,4 +1,4 @@
-package eshop.discout
+package eshop
 
 import eshop.Producer
 import eshop.ProducingProduct
