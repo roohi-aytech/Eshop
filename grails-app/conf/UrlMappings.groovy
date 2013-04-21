@@ -1,6 +1,10 @@
 class UrlMappings {
 
 	static mappings = {
+        "/producer/list" {
+            controller = "producer"
+            action = "list"
+        }
         "/order/list/$status/" {
             controller = "order"
             action = "list"
@@ -22,6 +26,6 @@ class UrlMappings {
         "/admin"(controller: "/default")
 
 		"500"(view:'/error')
-//        "404"(controller: "/default", action:"underConstruction")
+        "404"(controller: "/default", action:"underConstruction")
 	}
 }
