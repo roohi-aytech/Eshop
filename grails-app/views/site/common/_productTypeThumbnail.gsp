@@ -6,13 +6,13 @@
                 <span class="image">
                     <span>
                         <span>
-                            <img src="${createLink(controller: 'image', params: [type:'productType', id:link.id])}"/>
+                            <img alt="${link.name}" src="${createLink(controller: 'image', params: [type:'productType', id:link.id, wh:'150x150'])}"/>
                         </span>
                     </span>
                 </span>
-                <h4>
-                    ${link.name}
-                </h4>
+                %{--<h4>--}%
+                    %{--${link.name}--}%
+                %{--</h4>--}%
             </div>
         </div>
     </a>

@@ -184,7 +184,7 @@ ul.errors {
 }
 
 .thumbnails > li {
-    height: 200px;
+    height: 170px;
 }
 .product-thumbnails > li {
     height: 230px;
@@ -197,7 +197,7 @@ ul.errors {
     border-radius: 5px !important;
     border: 1px solid white;
     /*background: #F5F5F5;*/
-    height: 200px;
+    height: 160px;
     width: 90%;
     position: absolute;
     display: block;
@@ -265,7 +265,7 @@ ul.errors {
 }
 
 .thumbnail .main {
-    height: 200px;
+    height: 160px;
     text-align: center;
 }
 
@@ -1772,6 +1772,33 @@ span.cke_skin_kama {
 
 .nav-list.value-list li.checkable a:hover{
     background-color: transparent;
+}
+
+/*product card*/
+.product-card{
+    background: #6fbbe2;
+    padding: 10px;
+    border-radius: 5px;
+    border:1px solid #41a6d9;
+    position: fixed;
+    right:5px;
+    width: 160px;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset
+}
+
+.product-card h4{
+    font-size:11px;
+}
+
+.product-card .buttons{
+    margin-top: 10px;
+    margin-bottom: -3px;
+}
+
+.product-card .buttons a{
+    display: block;
+    margin-bottom: 3px;
 }
 
 

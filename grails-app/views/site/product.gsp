@@ -40,7 +40,24 @@
 
 <div class="layout-container table">
     <div class="table-cell product-rightColumn">
-        <div class="well">
+        <div class="product-card">
+            <h4>${product}</h4>
+
+
+            <g:message code="price"/>:
+            <b><g:render template="price"/></b>
+
+            <div class="buttons">
+                <eshop:addToBasket prodcutId="${product.id}"
+                                   productTitle="${product}"
+                                   productPrice="price"></eshop:addToBasket>
+                <eshop:addToCompareList prodcutId="${product.id}"
+                                        productTitle="${product.toString()}"
+                                        productPrice="price"></eshop:addToCompareList>
+                <eshop:addToWishList prodcutId="${product.id}"
+                                     productTitle="${product.toString()}"
+                                     productPrice="price"></eshop:addToWishList>
+            </div>
         </div>
     </div>
 
@@ -90,15 +107,6 @@
                             <p>
                                 <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
                                 <g:set var="price" value="${priceService.calcProductPrice(product.id).mainVal}"></g:set>
-                                <eshop:addToBasket prodcutId="${product.id}"
-                                                   productTitle="${product}"
-                                                   productPrice="price"></eshop:addToBasket>
-                                <eshop:addToCompareList prodcutId="${product.id}"
-                                                        productTitle="${product.toString()}"
-                                                        productPrice="price"></eshop:addToCompareList>
-                                <eshop:addToWishList prodcutId="${product.id}"
-                                                     productTitle="${product.toString()}"
-                                                     productPrice="price"></eshop:addToWishList>
                             </a>
                             </p>
                         </div>

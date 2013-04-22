@@ -21,6 +21,7 @@ class FileService {
             return filePath(baseProduct.parentProduct) + "/" + baseProduct
         return baseProduct ?: ""
     }
+
     def filePath(ProductTypeType productTypeType) {
         return "productTypeType/${productTypeType?.title}"
     }
