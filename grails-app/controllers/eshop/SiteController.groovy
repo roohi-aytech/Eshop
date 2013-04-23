@@ -56,7 +56,7 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
 
-        model.slides = Slide.createCriteria().list{
+        model.slides = Slide.createCriteria().list {
             productTypes {
                 eq('id', productType.id)
             }
@@ -67,7 +67,7 @@ class SiteController {
         model.pageContext["productTypes.id"] = [productType.id]
 
         def pageDetails = PageDetails.findByProductType(productType)
-        if(pageDetails)
+        if (pageDetails)
             model.title = pageDetails?.title?.replace('$BRAND$', '')
         else
             model.title = productType.name
@@ -86,15 +86,15 @@ class SiteController {
         model.slides = Slide.findAll()
 
         def brand
-        if(model.filters["selecteds"]["b"])
-            brand = Brand.createCriteria().list{
+        if (model.filters["selecteds"]["b"])
+            brand = Brand.createCriteria().list {
                 'in'('id', model.filters["selecteds"]["b"])
-            }.collect{it.name}.join(', ')
-        if(!brand)
+            }.collect { it.name }.join(', ')
+        if (!brand)
             brand = ''
 
         def pageDetails = PageDetails.findByProductType(ProductType.get(params.f.split(',')[0].replace('p', '').toLong()))
-        if(pageDetails)
+        if (pageDetails)
             model.title = pageDetails?.title?.replace('$BRAND$', brand)
         model.description = pageDetails?.description?.replace('$BRAND$', brand)
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
@@ -152,8 +152,7 @@ class SiteController {
     }
 
     def index() {
-        if(springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer))
-        {
+        if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
             redirect(uri: '/admin')
             return
         }
@@ -216,6 +215,17 @@ class SiteController {
             }
         }
 
+        //attributes
+        model.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(product.productTypes.toArray().first()).toList()
+            .collect {[item:it]}
+//                .collect { [id: it.id, name: it.name, categories: [], attributes: []] }
+
+
+        model.rootAttributeCategories.each {
+            category ->
+                fillAttibuteCategoryChildren(product, category)
+        }
+
         //update product visit count
         if (!product.visitCount)
             product.visitCount = 0;
@@ -244,6 +254,19 @@ class SiteController {
         }
 
         model
+    }
+
+    def fillAttibuteCategoryChildren(Product product, parentCategory) {
+
+        parentCategory.attributes = product.attributes.findAll {
+            attr ->
+                attr?.attributeType?.category?.id == parentCategory.item.id
+        }
+
+        parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect {[item:it]}
+        parentCategory.childCategories.each { childCategory ->
+            fillAttibuteCategoryChildren(product, childCategory)
+        }
     }
 
     def image() {

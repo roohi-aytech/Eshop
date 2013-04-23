@@ -31,7 +31,6 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
-    <g:javascript src="common.js"></g:javascript>
     <g:javascript src="browse.js"></g:javascript>
     <g:javascript src="jquery.raty.js"></g:javascript>
 </head>
@@ -124,13 +123,9 @@
                 <div class="table-cell">
                     <div class="white-panel">
                         <h3><g:message code="product.specifications"></g:message></h3>
-                        <ul class="attribute-list">
-                            <g:each in="${product.attributes}">
-                                <g:if test="${it.value.toString().compareTo("N/A") != 0}">
-                                    <li><b>${it.attributeType}:</b> ${it.value}</li>
-                                </g:if>
-                            </g:each>
-                        </ul>
+                        <g:render template="product/attributes"
+                                  model="${[categories: rootAttributeCategories]}"></g:render>
+
                         <hr/>
                         <g:if test="${product.description}">
                             <h3><g:message code="product.description"></g:message></h3>

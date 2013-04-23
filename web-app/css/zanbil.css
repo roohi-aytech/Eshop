@@ -1105,14 +1105,30 @@ h3 {
     margin-bottom: 0;
 }
 
-ul.attribute-list {
+.attribute-list {
     margin-left: 0;
 }
 
-ul.attribute-list li {
+.attribute-list li {
     text-indent: 0;
     list-style-type: none;
 
+}
+
+.attribute-list h4{
+    background-color: #F4F4F4;
+    color: #005580;
+    font-size: 11px;
+    margin: -7px;
+    padding: 3px 10px 3px 3px;
+}
+
+.attribute-list td{
+    text-align: right;
+}
+
+.attribute-list td b{
+    white-space: nowrap;
 }
 
 /*basket items*/
