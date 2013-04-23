@@ -82,8 +82,7 @@
                                 </div>
 
                                 <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
+                                    <g:render template="banners/enamad"></g:render>
                                 </div>
                             </div>
                         </div>

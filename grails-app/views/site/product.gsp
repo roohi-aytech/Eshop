@@ -59,6 +59,7 @@
                                      productPrice="price"></eshop:addToWishList>
             </div>
         </div>
+        <g:render template="banners/enamad"></g:render>
     </div>
 
     <div class="table-cell">

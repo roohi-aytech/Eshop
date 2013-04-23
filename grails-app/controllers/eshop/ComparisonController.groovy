@@ -40,4 +40,8 @@ class ComparisonController {
         session.setAttribute("compareList", compareList)
         render "1"
     }
+
+    def show(){
+
+    }
 }

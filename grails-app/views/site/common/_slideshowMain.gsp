@@ -1,4 +1,5 @@
-<g:javascript>
+<g:if test="${!slides.isEmpty()}">
+    <g:javascript>
     mainSlides = ${slides as grails.converters.JSON};
     var mainSlideSize;
     var mainSlideWidth = $('.slideshowContainer').width();
@@ -18,37 +19,37 @@
         mainSlideHeight = 350;
         mainSlideSize = 1440;
     }
-</g:javascript>
+    </g:javascript>
 
-<div class="slideshowContainer">
-    <center>
-        <div id="slideshowMain">
-            %{--<g:each in="${slides}" var="slide">--}%
-            <a href="{{slide.url}}" target="_blank" ng-repeat="slide in mainSlides">
-                <img ng-src="<g:createLink controller="image" action="index"/>/{{slide.id}}?type=mainSlide&size={{mainSlideSize}}"
-                     alt="{{slide.name}}"/>
-                <g:if test="{{slide.description}}">
-                    <span>
-                        {{slide.description}}
-                    </span>
-                </g:if>
-            </a>
-            %{--</g:each>--}%
+    <div class="slideshowContainer">
+        <center>
+            <div id="slideshowMain">
+                %{--<g:each in="${slides}" var="slide">--}%
+                <a href="{{slide.url}}" target="_blank" ng-repeat="slide in mainSlides">
+                    <img ng-src="<g:createLink controller="image"
+                                               action="index"/>/{{slide.id}}?type=mainSlide&size={{mainSlideSize}}"
+                         alt="{{slide.name}}"/>
+                    %{--<span ng-hide="isEmpty(slide.description)">--}%
+                        %{--{{slide.description}}--}%
+                    %{--</span>--}%
+                </a>
+                %{--</g:each>--}%
 
-        </div>
+            </div>
 
-        <div class="baseLine">
+            <div class="baseLine">
 
-        </div>
-    </center>
-</div>
-<script>
-    $(document).ready(function () {
-        $('#slideshowMain').coinslider(
-                {
-                    width: mainSlideWidth,
-                    height: mainSlideHeight,
-                    delay: 5000
-                });
-    });
-</script>
+            </div>
+        </center>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#slideshowMain').coinslider(
+                    {
+                        width: mainSlideWidth,
+                        height: mainSlideHeight,
+                        delay: 5000
+                    });
+        });
+    </script>
+</g:if>

@@ -146,4 +146,9 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             });
         }
     };
+
+//    common functions
+    $scope.isEmpty = function(value){
+        return !value || value.toString().length == 0;
+    }
 });

@@ -1246,6 +1246,10 @@ span.cke_skin_kama {
     float: right !important;
 }
 
+.cs-buttons a{
+    color: transparent !important;
+}
+
 .cs-prev {
     left: auto !important;
     right: 0 !important;
@@ -1635,6 +1639,7 @@ span.cke_skin_kama {
     background-color: #eeeeee;
     border-top: 1px solid #dddddd;
     border-bottom: 1px solid #666666;
+    margin-top:10px;
 }
 
 .footer1 h3 {
@@ -1676,8 +1681,8 @@ span.cke_skin_kama {
 }
 
 .band-carousel-container{
-    background: none repeat scroll 0 0 #F4F4F4;
-    border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 #D6E3FA;
+    border-radius: 3px;
 }
 
 .brand-carousel{
@@ -1691,7 +1696,7 @@ span.cke_skin_kama {
     background-color: white;
     height: 150px;
     position: relative;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .brand-carousel li a .tick{
@@ -1784,7 +1789,7 @@ span.cke_skin_kama {
     right:5px;
     width: 160px;
     text-align: center;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
 }
 
 .product-card h4{
@@ -1800,6 +1805,24 @@ span.cke_skin_kama {
     display: block;
     margin-bottom: 3px;
 }
+
+/*enamad*/
+.enamad-panel{
+    background: linear-gradient(to bottom, #FAFAFA, #EEEEEE) !important;
+    border-radius: 5px;
+}
+
+.enamad-panel a{
+    background-image: url("../images/enamad.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    height: 200px;
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #eee inset;
+}
+
 
 
 

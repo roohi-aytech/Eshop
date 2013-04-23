@@ -1,4 +1,5 @@
-<g:javascript>
+<g:if test="${!discounts.isEmpty()}">
+    <g:javascript>
     specialSaleSlides = ${discounts.collect{[id:it.id, code:it.code]} as grails.converters.JSON};
     var specialSaleSlideSize;
     var specialSaleSlideWidth = $('.slideshowContainer').width();
@@ -46,3 +47,4 @@
                 });
     });
 </g:javascript>
+    </g:if>

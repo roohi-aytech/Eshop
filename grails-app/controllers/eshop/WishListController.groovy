@@ -50,4 +50,8 @@ class WishListController {
 
         render "1"
     }
+
+    def show(){
+
+    }
 }
