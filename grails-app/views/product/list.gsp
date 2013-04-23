@@ -173,7 +173,7 @@
                     .css('margin', '3px');
         </script>
         <g:set var="productActions" value="[]"/>
-        <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
+        <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_ADMIN}">
             <g:set var="productActions" value="${[[controller:'product',action:'productDetails',param:'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}"/>
         </sec:ifAllGranted>
         <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
