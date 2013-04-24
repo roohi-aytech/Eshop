@@ -1105,6 +1105,10 @@ h3 {
     margin-bottom: 0;
 }
 
+table.attribute-list{
+    width: 100%;
+}
+
 .attribute-list {
     margin-left: 0;
 }
@@ -1125,10 +1129,35 @@ h3 {
 
 .attribute-list td{
     text-align: right;
+    padding: 8px;
+    border-top:1px solid #dddddd;
+}
+
+.attribute-list th{
+    text-align: right;
+    padding: 8px;
+    border-top:1px solid #0088CC;
+    background-color:#D6E3FA;
+    font-weight: normal;
+}
+
+.attribute-list .delete{
+    color:grey;
+    white-space: nowrap;
+}
+
+.attribute-list h3{
+    margin-top:0;
 }
 
 .attribute-list td b{
     white-space: nowrap;
+}
+
+.attribute-list .buttons a{
+    display: block;
+    margin-bottom: 3px;
+    width:150px;
 }
 
 /*basket items*/
@@ -1837,6 +1866,15 @@ span.cke_skin_kama {
     border: 1px solid #eeeeee;
     border-radius: 5px;
     box-shadow: 0 0 2px #eee inset;
+}
+
+/*comparison*/
+.tabbable{
+    margin:10px;
+}
+
+.nav-tabs > li, .nav-pills > li{
+    float: right;
 }
 
 
