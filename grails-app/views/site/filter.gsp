@@ -33,7 +33,6 @@
     %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
 
-    <g:javascript src="common.js"></g:javascript>
     <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
@@ -82,8 +81,7 @@
                                 </div>
 
                                 <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
+                                    <g:render template="banners/enamad"></g:render>
                                 </div>
                             </div>
                         </div>

@@ -35,7 +35,7 @@ class ImageController {
             case 'productType':
                 def productType = ProductType.get(params.id)
                 if (productType) {
-                    content = productType.image
+                    content = getProdcutTypeImage(productType)
                 }
                 break;
             case 'brand':
@@ -105,6 +105,25 @@ class ImageController {
                 content = imageService.getImage(img, params.wh, fileService.filePath(product))
             } else {
                 content = img.fileContent
+            }
+
+        }
+        content
+    }
+
+    byte[] getProdcutTypeImage(ProductType productType) {
+        def img = productType.image
+        if (!img) {
+            img = new Content(name: "no-image.png", contentType: "", fileContent: new File("no-image.png").bytes)
+            params.wh = ""
+        }
+
+        def content
+        if (img) {
+            if (params.wh) {
+                content = imageService.getImage(params.wh, fileService.filePath(productType))
+            } else {
+                content = img
             }
 
         }

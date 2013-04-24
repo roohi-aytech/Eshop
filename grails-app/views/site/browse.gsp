@@ -25,7 +25,6 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <g:javascript src="common.js"></g:javascript>
     <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
@@ -67,14 +66,15 @@
 
                                     <g:render template="common/browsingGraphicalMenu"></g:render>
 
-                                    <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"></g:render>
+                                    <g:if test="${subProductTypeLinks.isEmpty()}">
+                                        <g:render template="common/productGrid"
+                                                  model="${[productIds: filters.products.productIds]}"></g:render>
+                                    </g:if>
 
                                 </div>
 
                                 <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
+                                    <g:render template="banners/enamad"></g:render>
                                 </div>
                             </div>
                         </div>
