@@ -24,6 +24,7 @@ class VariationGroupController {
         render(template: "form", model: [variationGroupInstance: variationGroup])
     }
 
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def variationForm() {
         def variation
         if (params.id)
@@ -33,7 +34,7 @@ class VariationGroupController {
 
         render(template: "variation_form", model: [variationInstance: variation, baseProductId: params.baseProductId])
     }
-
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def variationValueForm() {
         def variationValue
         if (params.id)
@@ -42,7 +43,7 @@ class VariationGroupController {
             variationValue = new VariationValue(params)
         render(template: "variation_value_add", model: [variationValueInstance: variationValue])
     }
-
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def saveVariationValue() {
         def variationValue
         if (params.id) {
@@ -56,7 +57,7 @@ class VariationGroupController {
         variationValue.save()
         render variationValue as JSON
     }
-
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def variationValues() {
         def variationGroup
         def variation
@@ -86,7 +87,7 @@ class VariationGroupController {
 
         render(template: "variation_values", model: [variationGroupInstance: variationGroup, variationInstance: variation, variationValues: variationValues])
     }
-
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def searchVariationValues() {
         def variationGroup = VariationGroup.get(params.variationGroupId)
         def values = VariationValue.findAllByVariationGroupAndValueIlike(variationGroup, "%${params.term}%")
@@ -123,6 +124,7 @@ class VariationGroupController {
         render 0
     }
 
+    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def saveVariation() {
         Variation variation
         if (params.id) {

@@ -6,9 +6,9 @@
 %{--<g:if test="${attributeType.values}">--}%
     <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values?.sort {it.value}}"
               optionKey="id" optionValue="value" noSelection="['': '']" value="${attributeValue?.id}"/>
-    <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
+    %{--<sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">--}%
         <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">
-    </sec:ifAllGranted>
+    %{--</sec:ifAllGranted>--}%
 %{--</g:if>--}%
 %{--<g:else>--}%
 %{--<g:if test="${attributeType?.attributeType=='Text'}">--}%
