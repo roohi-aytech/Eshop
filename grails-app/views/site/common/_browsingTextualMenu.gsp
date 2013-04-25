@@ -13,6 +13,7 @@
     <g:each in="${subProductTypeLinks}" var="subProductTypeLink">
         <li><a href="${subProductTypeLink.href}">${subProductTypeLink.name}</a></li>
     </g:each>
+    <li class="divider"></li>
 
 %{--Brands Filters--}%
     <g:if test="${filters?.brands}">
@@ -24,6 +25,7 @@
                                         brandName="${brand._id?.name}"></eshop:filterStartBrand>
             </li>
         </g:each>
+        <li class="divider"></li>
     </g:if>
 
 %{--Attribute Filters--}%
@@ -37,5 +39,6 @@
                 </li>
             </g:each>
         </g:each>
+        <li class="divider"></li>
     </g:if>
 </ul>
