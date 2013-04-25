@@ -56,7 +56,7 @@
             visibleElementsArray: [6, 5, 4, 3, 2, 1],
             </g:if>
             <g:else>
-            visibleElementsArray: [5, 4, 3, 2, 1],
+            visibleElementsArray: [8, 7, 6, 5, 4, 3, 2, 1],
             </g:else>
             carousel: "on"
         });

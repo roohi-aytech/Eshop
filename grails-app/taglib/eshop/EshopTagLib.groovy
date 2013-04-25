@@ -92,11 +92,11 @@ class EshopTagLib {
     }
 
     def filterStartBrand = {attrs, body ->
-        def f = "p${attrs.productType.id},b${attrs.brandId}"
+        def f = attrs.productType?.id? "p${attrs.productType.id},b${attrs.brandId}" : "b${attrs.brandId}"
         def link = g.createLink(controller: "site", action: "filter", params: [f : f])
         def brand = Brand.get(attrs.brandId)
         if(attrs.type == 'icon')
-            out << "<a href='${link}'><img alt='${attrs.brandName}' src='${createLink(controller: 'image', params: [id:attrs.brandId, type:'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}'><img alt='${attrs.brandName}' src='${createLink(controller: 'image', params: [id:attrs.brandId, type:'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
             out << "<a href='${link}'><span>${attrs.brandName}</span></a>"
     }
@@ -110,13 +110,20 @@ class EshopTagLib {
     def filterAddBrand = {attrs, body ->
         def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
         def f
-        if (remove)
-            f = attrs.f.replace(",b${attrs.id}", "")
+        if (remove){
+            def fItems = attrs.f.split(',')//.replace(",b${attrs.id}", "").replace("b${attrs.id},", "").replace("b${attrs.id}", "")
+            fItems = fItems.findAll{it != "b${attrs.id}"}
+//            fItems.each{
+//                if(it.replace('b', '') == attrs.id.toString())
+//                    it = ''
+//            }
+            f = fItems.join(',')//.replace(',,', ',')
+        }
         else
             f = "${attrs.f},b${attrs.id}"
-        def link = g.createLink(controller: "site", action: "filter", params: [f : f])
+        def link = (f == '' ? g.createLink(controller: 'site') : g.createLink(controller: "site", action: "filter", params: [f : f]))
         if(attrs.type == 'icon')
-            out << "<a href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id:attrs.id, type:'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id:attrs.id, type:'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
             out << "<a href='${link}'>${attrs.name}</span></a>"
     }

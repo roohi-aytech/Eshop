@@ -1726,8 +1726,13 @@ span.cke_skin_kama {
 }
 
 .band-carousel-container{
-    background: none repeat scroll 0 0 #D6E3FA;
+    /*background: none repeat scroll 0 0 #D6E3FA;*/
     border-radius: 3px;
+    border:1px solid #eeeeee;
+}
+
+.band-carousel-container .showbiz-navigation{
+    background-color: #f4f4f4;
 }
 
 .brand-carousel{
@@ -1739,18 +1744,23 @@ span.cke_skin_kama {
 .brand-carousel li a{
     display: block;
     background-color: white;
-    height: 150px;
+    height: 80px;
     position: relative;
     border-radius: 3px;
 }
 
+.brand-carousel li a img{
+    height: 80px;
+    height:80px;
+}
+
 .brand-carousel li a .tick{
-    background-image: url(../images/brand-tick.png);
-    width: 32px;
-    height: 32px;
+    background-image: url(../images/tick.png);
+    width: 24px;
+    height: 24px;
     position: absolute;
     left:40%;
-    bottom:20px;
+    bottom:0;
     display: none;
 }
 
@@ -1759,12 +1769,12 @@ span.cke_skin_kama {
 }
 
 .brand-carousel li a .tick-grey{
-    background-image: url(../images/brand-tick-grey.png);
-    width: 32px;
-    height: 32px;
+    background-image: url(../images/tick-grey.png);
+    width: 24px;
+    height: 24px;
     position: absolute;
     left:40%;
-    bottom:20px;
+    bottom:0;
     display: none;
 }
 

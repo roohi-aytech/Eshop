@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <ul class="thumbnails row-fluid">
+    <ul class="thumbnails row-fluid productTypes">
         <g:each in="${subProductTypeLinks}" var="subProductTypeLink">
             <li class="span3">
                 <g:if test="${type=='filter'}">
