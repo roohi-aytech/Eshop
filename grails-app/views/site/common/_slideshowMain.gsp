@@ -1,6 +1,6 @@
 <g:if test="${!slides.isEmpty()}">
     <g:javascript>
-    mainSlides = ${slides as grails.converters.JSON};
+    mainSlides = ${slides.collect{[id: it.id, url:it.url]} as grails.converters.JSON};
     var mainSlideSize;
     var mainSlideWidth = $('.slideshowContainer').width();
     var mainSlideHeight;

@@ -24,6 +24,8 @@
     <ckeditor:resources/>
     <g:javascript library="jquery"></g:javascript>
     <r:layoutResources/>
+
+    <g:layoutHead/>
     <jqui:resources theme="cobalt"></jqui:resources>
 
     <g:javascript plugin="rapid-grails" src="angular.min.js"></g:javascript>
@@ -48,7 +50,6 @@
     <rg:jstreeResources/>
 
     <script language="javascript" src="${resource(dir: 'js', file: 'msgGrowl.js')}" type="text/javascript"></script>
-    <g:layoutHead/>
 
 
     %{--easy ui--}%

@@ -25,6 +25,8 @@ class UrlMappings {
 
         "/admin"(controller: "/default")
 
+        "/test/$id?"(controller: "/default", action: "test")
+
 		"500"(view:'/error')
         "404"(controller: "/default", action:"underConstruction")
 	}

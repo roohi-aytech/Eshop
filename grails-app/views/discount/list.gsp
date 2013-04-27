@@ -25,29 +25,17 @@
                     <div class="form-fields-part">
                         <rg:field name="code"/>
                         <rg:field name="remainCount"/>
-                        <label for="image1024">
-                            <g:message code="slide.image1024.label" default="image1024"/>
-                        </label>
-                        <input type="file" id="image1024" name="image1024" />
                         <rg:field name="usageType"/>
                     </div>
 
                     <div class="form-fields-part">
                         <rg:field name="type"/>
                         <rg:field name="fromDate"/>
-                        <label for="image1280">
-                            <g:message code="slide.image1280.label" default="image1280"/>
-                        </label>
-                        <input type="file" id="image1280" name="image1280" />
                     </div>
 
                     <div class="form-fields-part">
                         <rg:field name="value"/>
                         <rg:field name="toDate"/>
-                        <label for="image1440">
-                            <g:message code="slide.image1440.label" default="image1440"/>
-                        </label>
-                        <input type="file" id="image1440" name="image1440" />
                     </div>
                 </div>
 
