@@ -1767,6 +1767,10 @@ span.cke_skin_kama {
     /*background: none repeat scroll 0 0 #D6E3FA;*/
     border-radius: 3px;
     border:1px solid #eeeeee;
+    margin-right:5px;
+    margin-left:5px;
+    width: 99%;
+    margin: auto;
 }
 
 .band-carousel-container .showbiz-navigation{
@@ -1923,6 +1927,10 @@ span.cke_skin_kama {
 
 .nav-tabs > li, .nav-pills > li{
     float: right;
+}
+
+.banners img{
+    margin-top: 10px;
 }
 
 

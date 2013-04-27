@@ -42,13 +42,14 @@
                                 <div class="span600 table-cell">
 
                                     <g:render template="common/slideshowSpecialSales"
-                                              model="[discounts: discounts]"></g:render>
+                                              model="[specialSaleSlides: specialSaleSlides]"></g:render>
 
                                     <g:render template="common/browsingGraphicalMenu"></g:render>
                                 </div>
 
                                 <div class="span200 table-cell">
                                     <g:render template="banners/enamad"></g:render>
+                                    <g:render template="banners/leftsideBanners"></g:render>
                                 </div>
                             </div>
                         </div>

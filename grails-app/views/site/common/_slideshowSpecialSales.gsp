@@ -1,6 +1,6 @@
-<g:if test="${!discounts.isEmpty()}">
+<g:if test="${!specialSaleSlides.isEmpty()}">
     <g:javascript>
-    specialSaleSlides = ${discounts.collect{[id:it.id, code:it.code]} as grails.converters.JSON};
+    specialSaleSlides = ${specialSaleSlides.collect { [id: it.id, productId: it.product.id, title: it.product.toString(), finishDate: it.finishDate] } as grails.converters.JSON};
     var specialSaleSlideSize;
     var specialSaleSlideWidth = $('.slideshowContainer').width();
     var specialSaleSlideHeight;
@@ -19,32 +19,69 @@
         specialSaleSlideHeight = 260;
         specialSaleSlideSize = 1440;
     }
-</g:javascript>
+    </g:javascript>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.fusion.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.jcountdown.css')}"/>
+    <g:javascript src="jquery.fusion.js"></g:javascript>
+    <g:javascript src="jquery.jcountdown.js"></g:javascript>
 
-<div class="slideshowContainer">
-    <center>
-        <div id="slideshowSpecialSales">
-            %{--<g:each in="${discounts}" var="discount">--}%
-            <a href="#" target="_blank" ng-repeat="discount in specialSaleSlides">
-                <img ng-src="<g:createLink controller="image" action="index"/>/{{discount.id}}?type=discount&size={{specialSaleSlideSize}}"
-                     alt=" "/>
-            </a>
-            %{--</g:each>--}%
+    <div id="fusion1" class="fusion" style="height: {{specialSaleSlideHeight}}px !important;"><!-- light -->
+
+        <ul>
+            <li ng-repeat="specialSale in specialSaleSlides"><a href="#">{{specialSale.title}}</a></li>
+        </ul>
+
+        <div class="slideshowContainer">
+        <center>
+            <section>
+
+                <div class="content" ng-repeat="specialSale in specialSaleSlides">
+                    <a ng-href="<g:createLink controller="site"
+                                              action="product"/>/{{specialSale.productId}}"><img ng-src="<g:createLink controller="image"
+                                                  action="index"/>/{{specialSale.id}}?type=specialSale&size={{specialSaleSlideSize}}"
+                            ng-alt="{{specialSale.title}}"/>
+                    </a>
+
+                    <div id="countdown{{specialSale.id}}" class="countdown" data-date="2013/12/01 12:15:16"></div>
+                </div>
+
+            </section>
+            </center>
         </div>
 
-        <div class="baseLine">
+    </div>
+    <g:javascript>
+        $(document).ready(function () {
+            $('#slideshowSpecialSales').coinslider(
+                    {
+                        width: specialSaleSlideWidth,
+                        height: specialSaleSlideHeight,
+                        delay: 4000
+                    });
 
-        </div>
-    </center>
-</div>
-<g:javascript>
-    $(document).ready(function () {
-        $('#slideshowSpecialSales').coinslider(
-                {
-                    width: specialSaleSlideWidth,
-                    height: specialSaleSlideHeight,
-                    delay: 4000
+
+            jQuery('#fusion1').fusion({
+                effect: 'mixed',
+                animSpeed: 700,
+                eventTrigger: 'click',//click, hover, etc.
+                autoHeight: true,
+                bar: 'top', //aside, top
+                showControls: false,
+                showPlay: false,
+                playInterval: 5000,
+                autoPlay: ${specialSaleSlides.count { it } > 1},
+                keyboardNav: true
+            });
+
+        <g:each in="${specialSaleSlides}" var="specialSaleSlide">
+            $('#countdown${specialSaleSlide.id}').jCountdown({
+                    timeText: '2013/12/01 12:15:16',
+                    displayLabel: false,
+                    displayDay: false,
+                    width:200,
+                    reflection: false
                 });
-    });
-</g:javascript>
-    </g:if>
+        </g:each>
+        });
+    </g:javascript>
+</g:if>
