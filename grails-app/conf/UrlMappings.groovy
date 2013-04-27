@@ -1,6 +1,10 @@
 class UrlMappings {
 
 	static mappings = {
+        "/producer/list" {
+            controller = "producer"
+            action = "list"
+        }
         "/order/list/$status/" {
             controller = "order"
             action = "list"

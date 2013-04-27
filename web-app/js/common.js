@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".thumbnails .thumbnail").hover(function () {
+    $(".product-thumbnails .thumbnail").hover(function () {
         $(this).closest("li").css("z-index", 9999999);
         $(this).stop().animate({ height: "425", width: parseInt($(this).attr('oldWidth')) + 40 , left: parseInt($(this).attr('oldLeft')) - 20, top: $(this).attr('oldTop') - 20 }, "fast");
         $(this).addClass('selectedThumbnail');
@@ -62,12 +62,12 @@ function changeAddToBasketButtonLabel() {
 function resizeThumbnails() {
     var currentWidth = $('.span600').first().width();
     if (currentWidth > 700) {
-//        $('.span3').stop().animate({ width:'25%'}, "slow");
-        $('.span3').css('width', '25%');
+        $('.thumbnails .span3').css('width', '25%');
+        $('.thumbnails.productTypes .span3').css('width', '20%');
     }
     else {
-//        $('.span3').stop().animate({ width:'33.3%'}, "slow");
-        $('.span3').css('width', '33.33%');
+        $('.thumbnails .span3').css('width', '33.33%');
+        $('.thumbnails.productTypes .span3').css('width', '25%');
     }
 
     //set thumbnails attributes

@@ -34,20 +34,15 @@
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
 
     <g:javascript>
-        function updateBasketItemCount(id, count) {
+        function addToBasket(id, title, price) {
             var scope = angular.element(document.getElementById('main-container')).scope();
-
-            var fount = false;
-            for (var i = 0; i < scope.basket.length; i++) {
-                if (parseInt(id) == scope.basket[i].id) {
-                    scope.basket[i].count = count;
-                    scope.$apply();
-                    found = true;
-                }
-            }
-
-            if (found)
-                scope.changeCount(id, count);
+            scope.addToBasket(id, title, price);
+            scope.$apply();
+        }
+        function addToCompareList(id, title, price) {
+            var scope = angular.element(document.getElementById('main-container')).scope();
+            scope.addToCompareList(id, title, price);
+            scope.$apply();
         }
     </g:javascript>
 </head>
@@ -58,40 +53,36 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="shopping-basket">
-                <h2><g:message code="basket.content"/></h2>
+                <h2><g:message code="wishList"/></h2>
 
                 <div class="group">
                     <ul>
-                        <li ng-repeat="basketItem in basket">
-                            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
+                        <li ng-repeat="wishListItem in wishList">
+                            <span class="image"><img ng-src="{{contextRoot}}site/image/{{wishListItem.id}}?wh=100x100"/>
                             </span>
                             <span class="name"><h3><a
-                                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.name}}</a>
+                                    ng-href="{{contextRoot}}site/product/{{wishListItem.id}}">{{wishListItem.title}}</a>
                             </h3>
                             </span>
-                            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>
-                            <span class="count"><g:message code="count"></g:message>: <input type="text"
-                                                                                             value="{{basketItem.count}}"
-                                                                                             onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
+                            <span class="price"><g:message code="price"></g:message>: <b>{{wishListItem.price}}</b>
+                            </span>
+                            <span>
+                                <a href="" class="btn btn-primary btn-buy"
+                                   onclick="addToBasket({{wishListItem.id}}, '{{wishListItem.title}}', '{{wishListItem.price}}')"><span><g:message code="add-to-basket"></g:message></span>
+                                </a>
+                                <a href="" class="btn btn-compare"
+                                   onclick="addToCompareList({{wishListItem.id}}, '{{wishListItem.title}}', '{{wishListItem.price}}')"><span><g:message code="add-to-compareList"></g:message></span>
+                                </a>
                             </span>
                             <span class="delete">[ <a type="button"
-                                                      ng-click="removeFromBasket(basketItem.id)"><g:message
+                                                      ng-click="removeFromBasket(wishListItem.id)"><g:message
                                         code="application_delete"></g:message></a> ]</span>
                         </li>
                     </ul>
-
-                    <div class="check-out">
-                        <g:message code="basket.totalPrice"></g:message>: <span
-                            class="totalPrice">{{calculateBasketTotalPrice()}}</span>
-                        <sec:ifLoggedIn>
-                            <g:link action="invoice" class="btn btn-primary"><g:message
-                                    code="basket.invoice"/></g:link>
-                        </sec:ifLoggedIn>
-                    </div>
                 </div>
                 <sec:ifNotLoggedIn>
                     <div class="info">
-                        <div><g:message code="basket.checkout.loginRequired"></g:message></div>
+                        <div><g:message code="wishList.notEnabled.message"></g:message></div>
                         <common:loginLink class="btn btn-success"></common:loginLink>
                         <common:registerLink class="btn btn-primary"></common:registerLink>
                     </div>

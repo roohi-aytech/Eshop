@@ -27,6 +27,17 @@ class ImageService {
 
     }
 
+    def getImage(String wh, String parent) {
+        if (wh?.toBoolean()) {
+            return fileService.getFileContent("image", "image", parent)
+        }
+        else if (wh)
+            return fileService.getFileContent(wh+"-image" , "image", parent)
+        else
+            return new byte[0]
+
+    }
+
 
 
     def saveAndScaleImages(byte[] content, String name, String parent) {

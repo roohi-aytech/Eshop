@@ -7,3 +7,12 @@
                   model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"></g:render>
     </g:if>
 </div>
+
+<div class="footer2">
+    <a href="${createLink(controller: 'site')}"><g:message code="home.label"></g:message></a> |
+    <a href="#"><g:message code="support.label"></g:message></a> |
+    <a href="#"><g:message code="help.label"></g:message></a> |
+    <a href="#"><g:message code="contact.label"></g:message></a>
+</div>
+
+<div class="footer3"></div>

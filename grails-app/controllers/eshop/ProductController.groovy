@@ -7,7 +7,7 @@ import grails.plugins.springsecurity.Secured
 import org.springframework.http.HttpStatus
 import eshop.mongo.MongoProduct
 
-@Secured(RoleHelper.ROLE_PRODUCT_ADMIN)
+@Secured([RoleHelper.ROLE_PRODUCT_ADMIN,RoleHelper.ROLE_PRODUCT_ADD,RoleHelper.ROLE_PRODUCT_ADD_EDIT])
 class ProductController {
 
     def imageService

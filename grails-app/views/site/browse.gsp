@@ -25,7 +25,6 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <g:javascript src="common.js"></g:javascript>
     <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
@@ -34,46 +33,7 @@
     <div class="table-row">
         <div class="span180 table-cell">
             <div class="well sidebar-nav">
-                <div id="navigator_root">
-                    <a href="/EShop/site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message
-                            code="applicances"></g:message></a>
-                    <a href="/EShop/site/browse/${message(code: "digital")}" id="navigator_digital"><g:message
-                            code="digital"></g:message></a>
-                </div>
-                <ul class="nav nav-list">
-                    <g:if test="${productType.children}">
-                        <li class="nav-header"><g:message code="site.selectSubcategory"
-                                                          default="Select SubProductType"></g:message></li>
-                    </g:if>
-                    <g:each in="${subProductTypeLinks}" var="subProductTypeLink">
-                        <li><a href="${subProductTypeLink.href}">${subProductTypeLink.name}</a></li>
-                    </g:each>
-
-                %{--Brands Filters--}%
-                    <g:if test="${filters?.brands}">
-                        <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand"
-                                                                            default="Select Brand"></g:message></li>
-                        <g:each in="${filters.brands}" var="brand">
-                            <li class="checkable">
-                                <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
-                                                        brandName="${brand._id?.name}"></eshop:filterStartBrand>
-                            </li>
-                        </g:each>
-                    </g:if>
-
-                %{--Attribute Filters--}%
-                    <g:if test="${filters?.attributes}">
-                        <g:each in="${filters.attributes}" var="attribute">
-                            <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
-                            <g:each in="${attribute.value.countsByValue}" var="attributeValueCount">
-                                <li class="checkable">
-                                    <eshop:filterStart productType="${productType}" attribute="${attribute.key}"
-                                                       value="${attributeValueCount._id}"></eshop:filterStart>
-                                </li>
-                            </g:each>
-                        </g:each>
-                    </g:if>
-                </ul>
+                <g:render template="common/browsingTextualMenu"></g:render>
             </div>
         </div>
 
@@ -104,14 +64,17 @@
                                         <li class="active">${breadCrumb[-1].name}</li>
                                     </ul>
 
-                                    <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"></g:render>
+                                    <g:render template="common/browsingGraphicalMenu"></g:render>
+
+                                    <g:if test="${subProductTypeLinks.isEmpty()}">
+                                        <g:render template="common/productGrid"
+                                                  model="${[productIds: filters.products.productIds]}"></g:render>
+                                    </g:if>
 
                                 </div>
 
                                 <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
+                                    <g:render template="banners/enamad"></g:render>
                                 </div>
                             </div>
                         </div>

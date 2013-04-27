@@ -9,25 +9,12 @@
     <meta name="author" content="">
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
-    <style>
-    body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    }
-    </style>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Le fav and touch icons -->
-    %{--<link rel="shortcut icon" href="../assets/ico/favicon.ico">--}%
-    %{--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">--}%
-    %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
-    %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
-    %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
-
-    <g:javascript src="common.js"></g:javascript>
     <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
@@ -36,12 +23,7 @@
     <div class="table-row">
         <div class="span180 table-cell">
             <div class="well sidebar-nav home">
-                <div id="navigator_root">
-                    <a href="${createLink(uri: '/')}site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message
-                            code="applicances"></g:message></a>
-                    <a href="${createLink(uri: '/')}site/browse/${message(code: "digital")}" id="navigator_digital"><g:message
-                            code="digital"></g:message></a>
-                </div>
+                <g:render template="common/browsingTextualMenu"></g:render>
             </div>
         </div>
 
@@ -61,11 +43,12 @@
 
                                     <g:render template="common/slideshowSpecialSales"
                                               model="[discounts: discounts]"></g:render>
+
+                                    <g:render template="common/browsingGraphicalMenu"></g:render>
                                 </div>
 
                                 <div class="span200 table-cell">
-                                    <div class="well">
-                                    </div>
+                                    <g:render template="banners/enamad"></g:render>
                                 </div>
                             </div>
                         </div>
