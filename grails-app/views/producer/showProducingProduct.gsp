@@ -23,25 +23,6 @@
     </g:if>
     <ol class="property-list producingProduct">
 
-        <g:if test="${producingProductInstance?.product}">
-            <li class="fieldcontain">
-                <span id="product-label" class="property-label"><g:message code="product.label" default="Product" /></span>
-
-                <span class="property-value" aria-labelledby="product-label">
-                    <g:fieldValue bean="${producingProductInstance}" field="product"/></span>
-
-            </li>
-        </g:if>
-
-        <g:if test="${producingProductInstance?.productType}">
-            <li class="fieldcontain">
-                <span id="productType-label" class="property-label"><g:message code="productType.label" default="ProductType" /></span>
-
-                <span class="property-value" aria-labelledby="productType-label">
-                    <g:fieldValue bean="${producingProductInstance}" field="productType"/></span>
-            </li>
-        </g:if>
-
         <g:if test="${producingProductInstance?.brand}">
             <li class="fieldcontain">
                 <span id="brand-label" class="property-label"><g:message code="brand.label" default="Brand" /></span>

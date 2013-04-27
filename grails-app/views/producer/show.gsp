@@ -81,14 +81,6 @@
             </li>
         </g:if>
 
-        <g:if test="${producerInstance?.delivery}">
-            <li class="fieldcontain">
-                <span id="delivery-label" class="property-label"><g:message code="producer.delivery.label" default="Delivery" /></span>
-
-                <span class="property-value" aria-labelledby="delivery-label">
-                    <g:fieldValue bean="${producerInstance}" field="delivery"/></span>
-            </li>
-        </g:if>
 
         <g:if test="${producerInstance?.producerStaffs}">
             <li class="fieldcontain">

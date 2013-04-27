@@ -21,25 +21,14 @@
 
 <g:set var="actions" value="[]"/>
 <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
-    <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"]]}"/>
+    <g:set var="actions" value="${[[handler: "deleteProducer(#id#)", icon: "application_delete"],
+            [controller: "producer", action: "details", param: "id=#id#", icon: "application_form",title:"${message(code: "producer-details")}"]]}"/>
 </sec:ifAllGranted>
 <div class="content scaffold-list" ng-controller="producerController" role="main">
 
     <div class="criteria-div">
         <rg:criteria>
             <rg:like name="name" label='producer.name'/>
-
-            <rg:nest name="producingProducts">
-                <rg:nest name="product">
-                    <rg:like name="name" label='product'/>
-                </rg:nest>
-            </rg:nest>
-
-            <rg:nest name="producingProducts">
-                <rg:nest name="productType">
-                    <rg:like name="name" label='productType'/>
-                </rg:nest>
-            </rg:nest>
 
             <rg:nest name="producingProducts">
                 <rg:nest name="brand">
@@ -62,10 +51,10 @@
              showCommand="true"
              commands="${actions}"
     />
-    <rg:dialog id="producer" title="${message(code: "variation")}">
+    <rg:dialog id="producer" title="${message(code: "producer")}">
         <rg:fields bean="${new Producer()}">
             <rg:modify>
-                <rg:ignoreField field="products"/>
+                <rg:ignoreField field="baseProduct"/>
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${eshop.Producer}" />
@@ -97,7 +86,7 @@
             $( "#producer" ).on( "dialogopen", function( event, ui ) {
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             } );
-            $("[ng-click^=addCompositeproducingProducts],[ng-click^=addCompositeproducerStaffs]").click(function(){
+            $("[ng-click^=addCompositeproducerStaffs]").click(function(){
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             })
         })

@@ -1,4 +1,4 @@
-package eshop.discout
+package eshop
 
 import eshop.Producer
 import eshop.ProducingProduct
@@ -69,5 +69,11 @@ class ProducerController {
         def producerInstance = Producer.get(params.id)
         producerInstance.delete(flush: true)
         render 0
+    }
+
+    def details() {
+        def producerInstance = Producer.get(params.id)
+
+        [producerInstance: producerInstance]
     }
 }
