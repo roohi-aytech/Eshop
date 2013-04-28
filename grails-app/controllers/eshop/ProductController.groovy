@@ -263,6 +263,61 @@ class ProductController {
         redirect(action: "list", params: [curtab: params.curtab, curtab2: params.curtab2])
     }
 
+    def saveProducer(){
+
+    }
+
+    def producerForm(){
+        def producerInstance
+        if (params.id)
+            producerInstance = Producer.findById(params.id)
+        else
+            producerInstance = new Producer()
+
+        render(template: "producer_form", model: [producerInstance: producerInstance, baseProductId: params.baseProductId])
+
+    }
+
+    def relatedProductForm() {
+        def relatedProduct
+        if (params.id)
+            relatedProduct = RelatedProduct.findById(params.id)
+        else
+            relatedProduct = new RelatedProduct()
+
+        render(template: "relatedProduct_form", model: [relatedProductInstance: relatedProduct, baseProductId: params.baseProductId])
+    }
+
+    def saveRelatedProduct() {
+        RelatedProduct relatedProduct
+        if (params.id) {
+            relatedProduct = RelatedProduct.get(params.id)
+            relatedProduct.properties = params
+        }
+        else
+            relatedProduct = new RelatedProduct(params)
+
+        // variation.variationValues = request.getParameterValues('variationValues').collect {VariationValue.findById(it.toLong())}
+        relatedProduct.save()
+
+        render 0
+    }
+
+    def AccessoryForm(){
+        def accessory
+        if (params.id)
+            accessory = Accessory.findById(params.id)
+        else
+            accessory = new Accessory()
+
+        render(template: "accessories_form", model: [accessoryInstance: accessory, baseProductId: params.baseProductId])
+
+    }
+    def saveAccessory(){
+
+    }
+
+
     def variationValue() {
         def variation = Variation.get(params.variation)
         if (variation) {

@@ -62,12 +62,19 @@ class ProducerController {
             render producerInstance as JSON
         }
         else
-            render(template: "form", model: [producerInstance: producerInstance])
+              render producerInstance.errors.toString()
+            //render(template: "form", model: [producerInstance: producerInstance])
     }
 
     def delete() {
         def producerInstance = Producer.get(params.id)
         producerInstance.delete(flush: true)
         render 0
+    }
+
+    def details() {
+        def producerInstance = Producer.get(params.id)
+
+        [producerInstance: producerInstance]
     }
 }
