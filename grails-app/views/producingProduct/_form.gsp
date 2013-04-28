@@ -118,7 +118,7 @@
     </script>
 </div>
 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} "  style="display: inline-block; width: 50%" >
-    <label for="retailDescription">
+    <label for="retailDescription" >
         <g:message code="producingProduct.retail.label" default="Retail"/>
 
     </label>
