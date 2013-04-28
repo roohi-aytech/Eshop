@@ -17,7 +17,7 @@
         <g:message code="producingProduct.productTypes.label" default="Product Types"/>
     </label>
 
-    <rg:tree bean="${producingProductInstance}" field="productTypes" relationField="parentProduct" width="340px"></rg:tree>
+    <rg:tree bean="${producingProductInstance}" field="productTypes" relationField="parentProduct" width="280px"></rg:tree>
 </div>
 
 
@@ -80,4 +80,24 @@
     <g:textField name="paidOff" value="${producingProductInstance?.paidOff}"/>
 </div>
 
+<script type="text/javascript">
+    function addBrand(){
+        loadOverlay('<g:createLink controller="brand" action="form"/>',
+                '<g:createLink controller="brand" action="save"/>',
+                function(r){
+                    $("#brand").val(r.name)
+                    $("#brand.id").val(r.id)
+                })
+    }
+    function addGuarantee(){
+        loadOverlay('<g:createLink controller="guarantee" action="form"/>',
+                '<g:createLink controller="guarantee" action="save"/>',
+                function(r){
+                    $("#guarantee").val(r.name)
+                    $("#guarantee.id").val(r.id)
+                })
+    }
+
+
+</script>
 

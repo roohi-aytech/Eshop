@@ -62,7 +62,8 @@ class ProducerController {
             render producerInstance as JSON
         }
         else
-            render(template: "form", model: [producerInstance: producerInstance])
+              render producerInstance.errors.toString()
+            //render(template: "form", model: [producerInstance: producerInstance])
     }
 
     def delete() {

@@ -26,10 +26,6 @@ class ProducingProduct {
         refundable(inList: ["Yes", "No"])
     }
 
-    Boolean deleted
-    Integer indx
-
-    static transients = ['deleted']
 
     static mapping = {
        // sort 'name'

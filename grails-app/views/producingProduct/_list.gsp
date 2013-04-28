@@ -4,7 +4,7 @@
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${eshop.ProducingProduct}"
-             maxColumns="3"
+             maxColumns="6"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProducingProductGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form", controller: "producingProduct", params: [producerId: producerInstance.id])}&id=#id#",saveAction: "${g.createLink(action: "save", controller: "producingProduct")}", icon: "application_edit"], [handler: "deleteProducingProduct(#id#)", icon: "application_delete"]]}">

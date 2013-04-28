@@ -20,4 +20,9 @@ class Guarantee {
         logo(nullable: true,maxSize: 1000000000)
 
     }
+
+    String toString(){
+        name
+    }
+
 }
