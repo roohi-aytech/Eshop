@@ -44,18 +44,18 @@ class ImageController {
                     content = brand.logo
                 }
                 break;
-            case 'discount':
-                def discount = Discount.get(params.id)
-                if (discount) {
+            case 'specialSale':
+                def specialSaleSlide = SpecialSaleSlide.get(params.id)
+                if (specialSaleSlide) {
                     switch(params.size){
                         case '1280':
-                            content = discount.image1280
+                            content = specialSaleSlide.image1280
                             break
                         case '1440':
-                            content = discount.image1440
+                            content = specialSaleSlide.image1440
                             break
                         default:
-                            content = discount.image1024
+                            content = specialSaleSlide.image1024
                     }
                 }
                 break;
@@ -108,6 +108,9 @@ class ImageController {
             }
 
         }
+        if (content instanceof Content)
+            return content.fileContent
+
         content
     }
 

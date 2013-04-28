@@ -39,6 +39,8 @@
     <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRICE_ADMIN}">
         <div id="price" style="width: 98%">
             <g:render template="../price/prices"/>
+
+            <input type="button" value="${message(code:'specialSaleSlide')}" onclick="window.location.href='${createLink(controller: 'specialSaleSlide', action: 'list', params:[id:productInstance.id, detail:params.id])}';">
         </div>
 
         <div id="addedValue" style="width: 98%">

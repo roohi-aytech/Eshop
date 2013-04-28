@@ -17,4 +17,8 @@ class DefaultController {
     def underConstruction(){
         render(view: "/underConstruction")
     }
+
+    def test(){
+        render(view: "/test")
+    }
 }

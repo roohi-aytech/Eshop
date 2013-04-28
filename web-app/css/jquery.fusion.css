@@ -1,0 +1,348 @@
+.fusion, .fusion div.content {
+}
+
+.fusion ul {
+}
+
+@font-face {
+    font-family: 'League-Gothic';
+    src: url('fonts/leaguegothic-regular-webfont.eot');
+    src: url('fonts/leaguegothic-regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/leaguegothic-regular-webfont.woff') format('woff'), url('fonts/leaguegothic-regular-webfont.ttf') format('truetype'), url('fonts/leaguegothic-regular-webfont.svg#league_gothicregular') format('svg');
+    font-weight: normal;
+    font-style: normal
+}
+
+.fusion {
+    position: relative;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #111;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: white;
+    padding-bottom: 5px;
+    margin: auto;
+}
+
+.fusion ul {
+    clear: both;
+    margin: 0;
+    margin-right: 15px;
+    padding: 0;
+    z-index: 1000;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.fusion {
+    opacity: .5
+}
+
+.fusion:after {
+    content: '...';
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    color: white;
+    background: black;
+    padding: 10px;
+    border-radius: 3px;
+    font-family: arial;
+    letter-spacing: 7px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.loaded:after {
+    content: '';
+    z-index: -10000;
+    background: transparent
+}
+
+.fusion ul li {
+    display: inline;
+    margin-right: 15px;
+    padding: 20px 0
+}
+
+.aside ul li {
+    margin-right: 0
+}
+
+.fusion ul li:last-child {
+    margin-right: 0
+}
+
+.fusion ul li a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-family: "League-Gothic", Courier;
+    color: #222;
+    text-shadow: 0 2px 3px #555;
+    padding-right:10px;
+    padding-left:10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 5px 5px 0 0;
+}
+
+.fusion ul li a:hover {
+    text-shadow: 0 1px 3px gray;
+    background-color: #696969;
+}
+
+.fusion ul li a.selected {
+    color: #fbfbfb;
+    background-color: #696969;
+}
+
+.fusion section {
+    line-height: 0
+}
+
+.fusion div.content {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+    line-height: 21px;
+    position: relative;
+}
+
+.fusion div.content .countdown {
+    position: absolute;
+    bottom: 10px;
+    right:30px;
+}
+
+.fusion div.content p:last-child {
+    margin-bottom: 0
+}
+
+.horizontal section {
+    width: 20000px
+}
+
+.horizontal div.content {
+    float: left
+}
+
+.vertical section {
+    height: 20000px
+}
+
+.vertical div.content {
+    float: none;
+    display: block
+}
+
+.mixed section {
+    height: 100%;
+    position: relative
+}
+
+.mixed div.content {
+    float: none;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: -1
+}
+
+.mixed div.content img {
+    margin:5px;
+    margin-top: 0;
+    padding: 5px;
+    border:1px solid #eeeeee;
+    border-radius: 5px;
+}
+
+.mixed div.content:first-child {
+    z-index: 100;
+}
+
+.controls {
+    position: absolute
+}
+
+.controls a {
+    text-decoration: none;
+    margin-right: 5px;
+    background: #474747;
+    background-image: url(img/dark.jpg);
+    color: #fbfbfb;
+    padding: 5px 10px 4px 10px;
+    border-radius: 50%;
+    font-family: "League-Gothic", Courier;
+    -webkit-box-shadow: 1px 1px 7px -2px rgba(0, 0, 0, .6);
+    -moz-box-shadow: 1px 1px 7px -2px rgba(0, 0, 0, .6);
+    -o-box-shadow: 1px 1px 7px -2px rgba(0, 0, 0, .6);
+    -ms-box-shadow: 1px 1px 7px -2px rgba(0, 0, 0, .6);
+    box-shadow: 1px 1px 7px -2px rgba(0, 0, 0, .6)
+}
+
+.controls a.play {
+    font-family: arial;
+    font-size: 15px;
+    padding: 5px 5px 5px 6px;
+    font-weight: bold;
+    background: #e6e6e6;
+    color: #474747;
+    border: 1px solid rgba(0, 0, 0, .1)
+}
+
+.controls a:last-child {
+    margin-right: 0
+}
+
+.blue {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .3)
+}
+
+.blue ul {
+    background: #3d8d94;
+    background-image: url(img/blue.jpg)
+}
+
+.blue ul li a {
+    color: #f8f8f8;
+    text-shadow: 0 0 0 #fff
+}
+
+.blue ul li a:hover {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3)
+}
+
+.blue ul li a.selected {
+    color: #1a3d41
+}
+
+.blue .controls a {
+    background: #3d8d94;
+    background-image: url(img/blue.jpg)
+}
+
+.blue .controls a.play {
+    background: #e6e6e6
+}
+
+.green {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .3)
+}
+
+.green ul {
+    background: #728827;
+    background-image: url(img/green.jpg)
+}
+
+.green ul li a {
+    color: #f8f8f8;
+    text-shadow: 0 0 0 #fff
+}
+
+.green ul li a:hover {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3)
+}
+
+.green ul li a.selected {
+    color: #2f3a11
+}
+
+.green .controls a {
+    background: #728827;
+    background-image: url(img/green.jpg)
+}
+
+.green .controls a.play {
+    background: #e6e6e6
+}
+
+.orange {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .3)
+}
+
+.orange ul {
+    background: #a74020;
+    background-image: url(img/orange.jpg)
+}
+
+.orange ul li a {
+    color: #f8f8f8;
+    text-shadow: 0 0 0 #fff
+}
+
+.orange ul li a:hover {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3)
+}
+
+.orange ul li a.selected {
+    color: #521e0e
+}
+
+.orange .controls a {
+    background: #a74020;
+    background-image: url(img/orange.jpg)
+}
+
+.orange .controls a.play {
+    background: #e6e6e6
+}
+
+.purple {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .3)
+}
+
+.purple ul {
+    background: #832053;
+    background-image: url(img/purple.jpg)
+}
+
+.purple ul li a {
+    color: #f8f8f8;
+    text-shadow: 0 0 0 #fff
+}
+
+.purple ul li a:hover {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3)
+}
+
+.purple ul li a.selected {
+    color: #350e23
+}
+
+.purple .controls a {
+    background: #832053;
+    background-image: url(img/purple.jpg)
+}
+
+.purple .controls a.play {
+    background: #e6e6e6
+}
+
+.aside ul {
+    float: left;
+    padding: 0 20px 0 20px;
+    height: 100%;
+    position: absolute
+}
+
+.aside ul li {
+    display: block
+}
+
+.aside ul li {
+    padding: 10px 0
+}

@@ -213,7 +213,7 @@ class SiteController {
 
         //slides
         model.slides = Slide.findAll()
-        model.discounts= Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan(new Date(), new Date(), 0)
+        model.specialSaleSlides= SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
 
         model
     }

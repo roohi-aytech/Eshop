@@ -183,11 +183,21 @@ ul.errors {
 .thumbnails {
 }
 
+.thumbnails.productTypes > li {
+    height: 120px;
+}
+
 .thumbnails > li {
     height: 170px;
 }
+
 .product-thumbnails > li {
     height: 230px;
+}
+
+
+.productTypes .thumbnail {
+    height: 120px;
 }
 
 .thumbnail {
@@ -264,12 +274,17 @@ ul.errors {
     text-align: center;
 }
 
+.productTypes .thumbnail .main {
+    height: 110px;
+    text-align: center;
+}
+
 .thumbnail .main {
     height: 160px;
     text-align: center;
 }
 
-.thumbnail .main
+.thumbnail .main{}
 
 .thumbnail .extended {
     display: none;
@@ -282,6 +297,18 @@ ul.errors {
 .thumbnail .extended div p {
     margin-right: -5px;
     margin-left: -5px;
+}
+
+.productTypes .thumbnail .image {
+    display: block;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    position: relative;
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: auto;
 }
 
 .thumbnail .image {
@@ -304,6 +331,17 @@ ul.errors {
     bottom: 5px;
     display: block;
     height: 150px;
+    left: 5px;
+    top: 5px;
+    vertical-align: bottom;
+    width: 150px;
+}
+
+.productTypes .thumbnail .image > span {
+    background: none repeat scroll 0 0 white;
+    bottom: 5px;
+    display: block;
+    height: 100px;
     left: 5px;
     top: 5px;
     vertical-align: bottom;
@@ -1017,7 +1055,7 @@ input.search-query {
 }
 
 h2 {
-    font-family: times !important;
+    font-family: 'b titr', titr, times !important;
     font-size: 24px;
     margin-bottom: 10;
 }
@@ -1099,7 +1137,7 @@ h2 {
 }
 
 h3 {
-    font-family: times !important;
+    font-family: 'b titr', titr, times !important;
     color: #ff8c00;
     font-size: 20px;
     margin-bottom: 0;
@@ -1246,7 +1284,7 @@ span.cke_skin_kama {
 
 .customer-review h4 {
     display: inline-block;
-    font-family: times, serif !important;
+    font-family: 'b titr', titr, times, serif !important;
     font-size: 16px;
     margin-bottom: 0;
 }
@@ -1411,7 +1449,7 @@ span.cke_skin_kama {
 }
 
 .control-panel h4 {
-    font-family: times !important;
+    font-family: 'b titr', titr, times !important;
     font-size: 16px;
 }
 
@@ -1464,7 +1502,7 @@ span.cke_skin_kama {
 }
 
 .shopping-basket h3 a {
-    font-family: times !important;
+    font-family: 'b titr', titr, times !important;
     font-size: 16px;
 }
 
@@ -1729,6 +1767,10 @@ span.cke_skin_kama {
     /*background: none repeat scroll 0 0 #D6E3FA;*/
     border-radius: 3px;
     border:1px solid #eeeeee;
+    margin-right:5px;
+    margin-left:5px;
+    width: 99%;
+    margin: auto;
 }
 
 .band-carousel-container .showbiz-navigation{
@@ -1885,6 +1927,10 @@ span.cke_skin_kama {
 
 .nav-tabs > li, .nav-pills > li{
     float: right;
+}
+
+.banners img{
+    margin-top: 10px;
 }
 
 
