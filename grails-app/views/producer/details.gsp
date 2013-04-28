@@ -12,7 +12,7 @@
     <r:require modules="bootstrap-file-upload"/>
     <meta name="layout" content="main">
 
-    <title><g:message code="producer.attributeValues.label" default="Producer Details"/></title>
+    <title><g:message code="producer.details.label" default="Producer Details"/></title>
 </head>
 
 <body>

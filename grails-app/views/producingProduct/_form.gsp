@@ -63,6 +63,14 @@
     <input type="button" value="${message(code: "add")}" onclick="addSettlement()">
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'settlementDescription', 'error')} ">
+    <label for="settlementDescription">
+        <g:message code="producingProduct.settlementDescription.label" default="settlementDescription"/>
+    </label>
+    <g:textField name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'refundable', 'error')} ">
     <label for="refundable">
         <g:message code="producingProduct.refundable.label" default="Refundable"/>
@@ -87,7 +95,7 @@
     </label>
     <g:textField name="deliveryPlace" value="${producingProductInstance?.deliveryPlace}"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'volumeDescription', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'volumeDescription', 'error')}" style="width: 50%" display="inline-block">
     <label for="volumeDescription">
         <g:message code="producingProduct.volume.label" default="Volume"/>
 
@@ -109,7 +117,7 @@
         })
     </script>
 </div>
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} " display="inline-block" style="width: 50%" >
     <label for="retailDescription">
         <g:message code="producingProduct.retail.label" default="Retail"/>
 
@@ -171,6 +179,14 @@
     <g:field type="number" style="direction: ltr;" name="addedValue" step="any" required=""
              value="${producingProductInstance.addedValue}"/>
 </div>
+<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'transportationCost', 'error')} ">
+    <label for="transportationCost">
+        <g:message code="producingProduct.transportationCost.label" default="TransportationCost"/>
+    </label>
+    <g:field type="number" style="direction: ltr;" name="transportationCost" step="any" required=""
+             value="${producingProductInstance.transportationCost}"/>
+</div>
+
 
 
 
@@ -194,6 +210,13 @@
                 })
     }
 
-
+    function addSettlement(){
+        loadOverlay('<g:createLink controller="settlement" action="form"/>',
+                '<g:createLink controller="settlement" action="save"/>',
+                function(r){
+                    $("#settlement").val(r.name)
+                    $("#settlement.id").val(r.id)
+                })
+    }
 </script>
 

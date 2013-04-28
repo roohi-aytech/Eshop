@@ -8,13 +8,10 @@ class ProducingProduct {
     String refundableDescription
     String discountType
 
-    String delivery
-
     boolean volume
     String volumeDescription
     boolean retail
     String retailDescription
-
 
     String priceType
     String priceDescription
@@ -52,13 +49,14 @@ class ProducingProduct {
         discount(nullable: true)
         cooperationPrice()
         settlement(nullable: true)
-
+        settlementDescription(nullable: true)
         refundable(inList: ["Yes", "No"])
         refundableDescription(nullable: true)
         testPeriod()
 
         guarantee(nullable: true)
         deliveryPlace(nullable: true)
+        transportationCost()
         addedValue(nullable: true)
     }
 
