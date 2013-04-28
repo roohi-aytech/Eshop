@@ -10,7 +10,7 @@
     }
 
     #register .inner {
-        width: 435px;
+        width: 395px;
         margin: 40px auto;
         text-align: right;
         border: 1px solid #dddddd;
@@ -37,7 +37,7 @@
     }
 
     #register .inner .cssform input[type='text'], #register .inner .cssform input[type='password'], #register .inner .cssform textarea {
-        width: 400px;
+        width: 360px;
         margin-bottom: 0;
     }
 
@@ -189,7 +189,7 @@
             <p>
                 <label for='username'><g:message code="springSecurity.register.username.label"/>:</label>
                 <span id="usernameValidationMessage"></span>
-                <input type='text' onblur="validate()" class='text_' name='username' id='username'
+                <input type='text' onblur="validateUsername()" class='text_' name='username' id='username'
                        value="${customerInstance.username}"/>
             </p>
 

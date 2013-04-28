@@ -10,6 +10,10 @@ class Customer extends User {
     String mobile
     Address address
 
+    String registrationLevel = 'basic'
+    Boolean profilePersonalInfoFilled = false
+    Boolean profileSendingAddressFilled = false
+
 
     static hasMany = [wishList:Product]
 
@@ -21,5 +25,8 @@ class Customer extends User {
         telephone(nullable: true)
         mobile(nullable: true)
         address(nullable: true)
+        registrationLevel(nullable: true, inList: ['basic', 'profile', 'favorites'])
+        profilePersonalInfoFilled(nullable: true)
+        profileSendingAddressFilled(nullable: true)
     }
 }

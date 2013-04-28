@@ -8,10 +8,13 @@ import org.springframework.security.core.context.SecurityContextHolder
 class CustomerController {
 
     def springSecurityService
+    def mailService
 
     def index() {}
 
-    def panel(){}
+    def panel(){
+        [customer: Customer.findByUsername(((User)springSecurityService.currentUser).username)]
+    }
 
     def changePassword(){
     }
@@ -78,20 +81,41 @@ class CustomerController {
             def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
             UserRole.create customerInstance, customerRole
 
-            flash.message = message(code: 'register.successful')
-            if(session.forwardUri){
-                redirect(controller: 'login', params: ['forwardUri':session.forwardUri])
-                session.forwardUri = null
+            mailService.sendMail {
+                to customerInstance.email
+                subject message(code: 'activationMail.subject')
+                html( view:"/messageTemplates/mail/emailVerification",
+                        model:[customer: customerInstance])
             }
-            else
-                redirect(controller: 'login')
+            redirect(action: 'checkForActivationMail')
         }
         else{
             render(view: 'register', model:['customerInstance': customerInstance])
         }
     }
 
-    def save(){
+    def checkForActivationMail(){
+    }
+
+    def activate(){
+        def code = new String(params.code.toString().decodeBase64()).split('_')[2]
+        if(code.toString() == params.id.toString()) {
+            def customer = Customer.get(params.id)
+            customer.enabled = true
+            customer.save()
+            flash.message = message(code: 'springSecurity.accountEnabled')
+            redirect(controller: 'login', action: 'auth')
+            return
+        }
+
+        render "code error"
+    }
+
+    def profile(){
+        [customerInstance: Customer.findByUsername(((User)springSecurityService.currentUser).username)]
+    }
+
+    def saveProfile(){
         def customerInstance = new Customer()
 
         customerInstance.username = params.username
