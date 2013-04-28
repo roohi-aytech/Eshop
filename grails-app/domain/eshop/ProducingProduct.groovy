@@ -36,6 +36,8 @@ class ProducingProduct {
     static constraints = {
         productTypes(nullable: true)
         brand(nullable: true)
+        guarantee(nullable: true)
+
         volume()
         volumeDescription(nullable: true)
 
@@ -47,14 +49,17 @@ class ProducingProduct {
 
         discountType(inList: ["percent", "fixed"])
         discount(nullable: true)
+
         cooperationPrice()
+
         settlement(nullable: true)
         settlementDescription(nullable: true)
+
         refundable(inList: ["Yes", "No"])
         refundableDescription(nullable: true)
+
         testPeriod()
 
-        guarantee(nullable: true)
         deliveryPlace(nullable: true)
         transportationCost()
         addedValue(nullable: true)
