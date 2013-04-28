@@ -37,7 +37,9 @@
 
                 <div class="content" ng-repeat="specialSale in specialSaleSlides">
                     <a ng-href="<g:createLink controller="site"
-                                              action="product"/>/{{specialSale.productId}}"><img ng-src="<g:createLink controller="image"
+                                              action="product"/>/{{specialSale.productId}}">
+                        <img style="width:{{specialSaleSlideWidth}}px;height:{{specialSaleSlideHeight}}px;"
+                             ng-src="<g:createLink controller="image"
                                                   action="index"/>/{{specialSale.id}}?type=specialSale&size={{specialSaleSlideSize}}"
                             ng-alt="{{specialSale.title}}"/>
                     </a>
