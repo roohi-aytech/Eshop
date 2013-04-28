@@ -14,9 +14,13 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     //slides
     $scope.mainSlides = mainSlides;
     $scope.mainSlideSize = mainSlideSize;
+    $scope.mainSlideWidth = mainSlideWidth;
+    $scope.mainSlideHeight = mainSlideHeight;
 
     $scope.specialSaleSlides = specialSaleSlides;
     $scope.specialSaleSlideSize = specialSaleSlideSize;
+    $scope.specialSaleSlideWidth = specialSaleSlideWidth;
+    $scope.specialSaleSlideHeight = specialSaleSlideHeight;
 
     //    basket
     $scope.addToBasket = function (id, name, price) {
