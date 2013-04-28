@@ -163,3 +163,29 @@ grails {
 
     }
 }
+
+
+//mail configuration
+grails.mail.default.from="Zanbil.ir <info@zanbil.ir>"
+grails {
+    mail {
+        ssl = "off"
+        host = "91.99.98.70"
+        from = "info@zanbil.ir"
+        port = 8443
+        ssl = "off"
+        username = "info"
+        password = "eshop@agah"
+        props = [
+//                "mail.smtp.starttls.enable":"false",
+//                "mail.smtp.socketFactory.port": "8443",
+//                "mail.smtp.auth": "true",
+//                "mail.smtp.debug":"true",
+//                "mail.smtp.starttls.enable":"true",
+//                "mail.smtp.socketFactory.port": "8443",
+//                "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
+//                "mail.smtp.socketFactory.fallback": "false"
+        ]
+
+    }
+}
