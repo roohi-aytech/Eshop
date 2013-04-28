@@ -57,6 +57,40 @@ class CustomerController {
         ['customerInstance': new Customer()]
     }
 
+    def checkUserNameIsRepetitive(){
+        if(User.findByUsername(params.username?.toString().trim().toLowerCase()))
+            render message(code: 'springSecurity.register.username.repetitive')
+        else
+            render message(code: 'springSecurity.register.username.valid')
+    }
+
+    def saveBasicInfo(){
+        def customerInstance = new Customer()
+
+        customerInstance.username = params.username
+        customerInstance.password = params.password
+        customerInstance.email = params.username
+
+        customerInstance.enabled = false
+
+        if (customerInstance.validate() && customerInstance.save())
+        {
+            def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
+            UserRole.create customerInstance, customerRole
+
+            flash.message = message(code: 'register.successful')
+            if(session.forwardUri){
+                redirect(controller: 'login', params: ['forwardUri':session.forwardUri])
+                session.forwardUri = null
+            }
+            else
+                redirect(controller: 'login')
+        }
+        else{
+            render(view: 'register', model:['customerInstance': customerInstance])
+        }
+    }
+
     def save(){
         def customerInstance = new Customer()
 

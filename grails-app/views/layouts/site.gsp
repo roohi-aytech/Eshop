@@ -46,6 +46,12 @@
         var mainSlideSize = 0;
         var specialSaleSlides = [];
         var specialSaleSlideSize = 0;
+        var mainSlideSize = 0;
+        var mainSlideWidth = 0;
+        var mainSlideHeight = 0;
+        var specialSaleSlideWidth = 0;
+        var specialSaleSlideHeight = 0;
+        var specialSaleSlideSize = 0;
     </script>
     <g:javascript src="jquery.rollbar.js"></g:javascript>
     <g:javascript src="jquery.mousewheel.js"></g:javascript>

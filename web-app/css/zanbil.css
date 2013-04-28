@@ -68,6 +68,17 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.validationError {
+    color:#ff0000;
+    padding-right: 20px;
+    margin-right: 10px;
+    background: url(../images/validationError.png) center right no-repeat;
+    line-height: 18px;
+    display: inline-block;
+}
+.validationSuccess {
+    color:green;
+}
 
 .error div {
     background-image: url(../images/error.png);
