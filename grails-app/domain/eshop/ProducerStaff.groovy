@@ -3,6 +3,7 @@ package eshop
 class ProducerStaff {
     //1.3.	اطلاعات افراد (سمت/ نام/ تلفن/ فکس/ تلفن همراه/ایمیل/مسئول دفتر)
     String role
+    String sex
     String name
     String lastName
     String phoneNumber
@@ -24,6 +25,7 @@ class ProducerStaff {
 
     static constraints = {
         role()
+        sex()
         name()
         lastName(nullable: true)
         phoneNumber(nullable: true)

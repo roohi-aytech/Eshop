@@ -35,26 +35,14 @@
             <g:textField name="phone" value=""/>
         </div>
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'fax', 'error')} ">
-        <label for="delivery">
+        <label for="fax">
             <g:message code="producer.fax.label" default="Fax"/>
 
         </label>
         <g:textField name="fax" value=""/>
     </div>
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'delivery', 'error')} ">
-            <label for="delivery">
-                <g:message code="producer.delivery.label" default="Address"/>
 
-            </label>
-            <g:textField name="delivery" value=""/>
-        </div>
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'paidOff', 'error')} ">
-            <label for="paidOff">
-                <g:message code="producer.paidOff.label" default="Address"/>
 
-            </label>
-            <g:textField name="paidOff" value=""/>
-        </div>
 
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerStaffs', 'error')} ">
             <label for="producerStaffs">
@@ -65,14 +53,14 @@
                       optionKey="id" size="5" value="" class="many-to-many"/>
         </div>
 
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producingProducts', 'error')} ">
-            <label for="producingProducts">
-                <g:message code="producingProducts.label" default="ProducingProducts"/>
+        %{--<div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producingProducts', 'error')} ">--}%
+            %{--<label for="producingProducts">--}%
+                %{--<g:message code="producingProducts.label" default="ProducingProducts"/>--}%
 
-            </label>
-            <g:select name="producingProducts" from="${ProducingProduct.list()}" multiple="multiple"
-                      optionKey="id" size="5" value="" class="many-to-many"/>
-        </div>
+            %{--</label>--}%
+            %{--<g:select name="producingProducts" from="${ProducingProduct.list()}" multiple="multiple"--}%
+                      %{--optionKey="id" size="5" value="" class="many-to-many"/>--}%
+        %{--</div>--}%
 
         %{--<div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'products', 'error')} ">--}%
             %{--<label for="products">--}%

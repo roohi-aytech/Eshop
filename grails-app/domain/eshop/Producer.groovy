@@ -9,11 +9,12 @@ class Producer {
     String address
     String phone
     String fax
-    String delivery
+
+
 
     byte[] logo
-    static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
-    static composites = ["producerStaffs", "producingProducts"]
+    static hasMany = [producerStaffs : ProducerStaff]
+    static composites = ["producerStaffs"]
 
     static mapping = {
         sort 'name'
@@ -31,9 +32,7 @@ class Producer {
         phone()
         fax()
         producerStaffs()
-        producingProducts()
-       // products(nullable: true)
-        delivery(nullable: true)
+     //   producingProducts()
         logo(nullable: true, maxSize: 1000000000)
     }
 

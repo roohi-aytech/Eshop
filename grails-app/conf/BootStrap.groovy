@@ -2,6 +2,7 @@ import grails.util.GrailsUtil
 import eshop.*
 
 import static eshop.RoleHelper.*
+import grails.converters.JSON
 
 class BootStrap {
 
@@ -18,6 +19,15 @@ class BootStrap {
     def roles = [ROLE_USER, ROLE_USER_ADMIN, ROLE_PRODUCT_ADMIN, ROLE_PRODUCT_TYPE_ADMIN, ROLE_PRICE_ADMIN, ROLE_CUSTOMER]
 
     def init = { servletContext ->
+
+        JSON.registerObjectMarshaller(VariationGroup) {
+            def returnArray = [:]
+            returnArray['name'] = it.name
+            returnArray['representationType'] = it.representationType
+            returnArray['variationValues'] = it.variationValues
+            return returnArray
+        }
+
 
         roles.each {
             def authority = it
