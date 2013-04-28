@@ -10,6 +10,8 @@ class Producer {
     String phone
     String fax
 
+
+
     byte[] logo
     static hasMany = [producerStaffs : ProducerStaff]
     static composites = ["producerStaffs"]
