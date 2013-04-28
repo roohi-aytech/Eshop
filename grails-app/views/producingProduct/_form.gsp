@@ -61,15 +61,17 @@
     </label>
     <rg:autocomplete domainClass="eshop.Settlement" id="settlement" like="true" value="${producingProductInstance?.settlement?.id}" display="${producingProductInstance?.settlement}"/>
     <input type="button" value="${message(code: "add")}" onclick="addSettlement()">
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'settlementDescription', 'error')} ">
-    <label for="settlementDescription">
-        <g:message code="producingProduct.settlementDescription.label" default="settlementDescription"/>
-    </label>
     <g:textField name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
 
 </div>
+
+%{--<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'settlementDescription', 'error')} ">--}%
+    %{--<label for="settlementDescription">--}%
+        %{--<g:message code="producingProduct.settlementDescription.label" default="settlementDescription"/>--}%
+    %{--</label>--}%
+    %{--<g:textField name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>--}%
+
+%{--</div>--}%
 
 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'refundable', 'error')} ">
     <label for="refundable">
@@ -78,15 +80,17 @@
     </label>
     <g:select name="refundable" from="${producingProductInstance.constraints.refundable.inList}" value="${producingProductInstance?.refundable}"
               valueMessagePrefix="producingProduct.refundable" noSelection="['': '']"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'refundableDescription', 'error')} ">
-    <label for="refundableDescription">
-        <g:message code="producingProduct.refundableDescription.label" default="refundableDescription"/>
-
-    </label>
     <g:textField name="refundableDescription" value="${producingProductInstance?.refundableDescription}"/>
+
 </div>
+
+%{--<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'refundableDescription', 'error')} ">--}%
+    %{--<label for="refundableDescription">--}%
+        %{--<g:message code="producingProduct.refundableDescription.label" default="refundableDescription"/>--}%
+
+    %{--</label>--}%
+    %{--<g:textField name="refundableDescription" value="${producingProductInstance?.refundableDescription}"/>--}%
+%{--</div>--}%
 
 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'deliveryPlace', 'error')} ">
     <label for="deliveryPlace">
@@ -147,14 +151,11 @@
     </label>
     <g:select name="priceType" from="${producingProductInstance.constraints.priceType.inList}" value="${producingProductInstance?.priceType}"
               valueMessagePrefix="producingProduct.priceType" noSelection="['': '']"/>
-</div>
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'priceDescription', 'error')} ">
-    <label for="priceDescription">
-        <g:message code="producingProduct.priceDescription.label" default="priceDescription"/>
 
-    </label>
-    <g:textField name="priceDescription" value=""/>
+    <g:textField name="priceDescription" value="${producingProductInstance.priceDescription}"/>
+
 </div>
+
 
 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'cooperationPrice', 'error')} ">
     <label for="cooperationPrice">
