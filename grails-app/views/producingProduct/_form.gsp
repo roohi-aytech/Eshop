@@ -25,7 +25,7 @@
     <label for="brand">
         <g:message code="producingProduct.brand.label" default="Brand"/>
     </label>
-    <rg:autocomplete domainClass="eshop.Brand" id="brand" like="true" value="${producingProductInstance?.brand?.id}" display="${producingProductInstance?.brand}"/>
+    <rg:autocomplete  domainClass="eshop.Brand" id="brand" like="true" value="${producingProductInstance?.brand?.id}" display="${producingProductInstance?.brand}"/>
     <input type="button" value="${message(code: "add")}" onclick="addBrand()">
 </div>
 
@@ -95,7 +95,7 @@
     </label>
     <g:textField name="deliveryPlace" value="${producingProductInstance?.deliveryPlace}"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'volumeDescription', 'error')}" style="width: 50%" display="inline-block">
+<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'volumeDescription', 'error')}"  style="display: inline-block; width: 50%">
     <label for="volumeDescription">
         <g:message code="producingProduct.volume.label" default="Volume"/>
 
@@ -117,7 +117,7 @@
         })
     </script>
 </div>
-<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} " display="inline-block" style="width: 50%" >
+<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} "  style="display: inline-block; width: 50%" >
     <label for="retailDescription">
         <g:message code="producingProduct.retail.label" default="Retail"/>
 
