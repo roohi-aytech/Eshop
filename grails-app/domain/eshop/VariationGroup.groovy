@@ -22,7 +22,7 @@ class VariationGroup {
         representationType(inList: ["String", "Color"])
         variationValues()
     }
-
+    static ignoredFieldsInJSON=["variations"]
     String toString() {
         name
     }
