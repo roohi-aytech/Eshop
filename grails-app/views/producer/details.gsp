@@ -9,7 +9,6 @@
 <!doctype html>
 <html>
 <head>
-    <r:require modules="bootstrap-file-upload"/>
     <meta name="layout" content="main">
 
     <title><g:message code="producer.details.label" default="Producer Details"/></title>
@@ -18,7 +17,7 @@
 <body>
 <h2><g:message code="producer.details.label" default="Producer Details"/> ${producerInstance}</h2>
 
-<div id="details-tabs">
+<div>
     <ul>
         <li><a href="#producingProducts"><g:message code="producingProducts"/></a></li>
 
@@ -30,10 +29,10 @@
 
 
 </div>
-<g:javascript>
-    $(function () {
-        $("#details-tabs").tabs();
-    });
-</g:javascript>
+%{--<g:javascript>--}%
+    %{--$(function () {--}%
+        %{--$("#details-tabs").tabs();--}%
+    %{--});--}%
+%{--</g:javascript>--}%
 </body>
 </html>
