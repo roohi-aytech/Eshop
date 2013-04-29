@@ -150,61 +150,7 @@ href="${resource(plugin: 'rapid-grails', dir: 'css/datepicker', file: 'ui.datepi
         type="text/javascript"></script>
 <script src="${resource(plugin: 'rapid-grails', dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc-fa.js')}"
         type="text/javascript"></script>
-<g:javascript>
 
-        function validateUsername(){
-            $('#usernameValidationMessage').html('');
-
-            var username = $('#username').val();
-
-            var emailPattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-            if (!emailPattern.test(username)) {
-                $('#usernameValidationMessage').html('${message(code: 'springSecurity.register.username.invalid')}')
-                return false;
-            }
-
-            $.ajax({
-                type:"POST",
-                url:"<g:createLink action="checkUserNameIsRepetitive"/>",
-                data:{username: username}
-            }).done(function (response) {
-                $('#usernameValidationMessage').html(response);
-            });
-
-            return true;
-        }
-
-        function validatePassword(){
-            $('#passwordValidationMessage').html('');
-
-            var password = $('#password').val();
-            if(!password || password == '') {
-                $('#passwordValidationMessage').html('${message(code: 'springSecurity.register.password.notEmpty')}')
-                return false;
-            }
-
-            return true;
-        }
-
-        function validateConfirmPassword(){
-            $('#confirmPasswordValidationMessage').html('');
-
-            var password = $('#password').val();
-            var confirmPassword = $('#confirmPassword').val();
-            if(password != confirmPassword){
-                $('#confirmPasswordValidationMessage').html('${message(code: 'springSecurity.register.password.notMatch')}')
-                return false;
-            }
-
-            return true;
-        }
-
-        function validate(){
-            if(validateUsername() && validatePassword() && validateConfirmPassword())
-                return true;
-            return false;
-        }
-</g:javascript>
 </head>
 
 <body>
@@ -224,129 +170,18 @@ href="${resource(plugin: 'rapid-grails', dir: 'css/datepicker', file: 'ui.datepi
 
         <div class="tabbable">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" data-toggle="tab"><g:message code="edit.profile.label"/></a></li>
-                <li><a href="#tab2" data-toggle="tab"><g:message
+                <li class="${customerInstance.registrationLevel != 'basic' || !customerInstance.profilePersonalInfoFilled?'active':''}"><a href="#tab1" data-toggle="tab"><g:message code="edit.profile.label"/></a></li>
+                <li class="${customerInstance.profilePersonalInfoFilled && !customerInstance.profileSendingAddressFilled?'active':''}"><a href="#tab2" data-toggle="tab"><g:message
                         code="springSecurity.register.sendingAddress.label"/></a></li>
             </ul>
 
             <div class="tab-content">
-                <div id="tab1" class="tab-pane active">
-                    <g:form controller="customer" action='saveBasicInfo' method='POST' id='registerForm'
-                            name='registerForm'
-                            class='cssform'
-                            autocomplete='off'>
-                        <div class="column1">
-
-                            <p>
-                                <label for='firstName'><g:message
-                                        code="springSecurity.register.firstName.label"/>:</label> *
-                                <input type='text' class='text_' name='firstName' id='firstName'/>
-                            </p>
-
-                            <p>
-                                <label for='lastName'><g:message
-                                        code="springSecurity.register.lastName.label"/>:</label> *
-                                <input type='text' class='text_' name='lastName' id='lastName'/>
-                            </p>
-
-                            <p>
-                                <label for='sex'><g:message code="springSecurity.register.sex.label"/>:</label>
-                                <select name="sex" id="sex">
-                                    <option value="female"><g:message code="sex.female"></g:message></option>
-                                    <option value="male"><g:message code="sex.male"></g:message></option>
-                                </select>
-                                %{--<input type='text' class='text_' name='sex' id='sex'/>--}%
-                            </p>
-
-                            <p>
-                                <label for='birthDate'><g:message
-                                        code="springSecurity.register.birthDate.label"/>:</label>
-                                <rg:datePicker name="birthDate"></rg:datePicker>
-                            </p>
-                        </div>
-
-                        <div class="column2">
-                            <p>
-                                <label for='nationalCode'><g:message
-                                        code="springSecurity.register.nationalCode.label"/>:</label>
-                                <input type='text' class='text_' name='nationalCode' id='nationalCode'/>
-                            </p>
-
-                            <p>
-                                <label for='jobTitle'><g:message
-                                        code="springSecurity.register.jobTitle.label"/>:</label>
-                                <input type='text' class='text_' name='jobTitle' id='jobTitle'/>
-                            </p>
-
-                            <p>
-                                <label for='mobile'><g:message code="springSecurity.register.mobile.label"/>:</label> *
-                                <input type='text' class='text_' name='mobile' id='mobile'/>
-                            </p>
-
-                            <p>
-                                <label for='telephone'><g:message
-                                        code="springSecurity.register.telephone.label"/>:</label> *
-                                <input type='text' class='text_' name='telephone' id='telephone'/>
-                            </p>
-
-                        </div>
-
-                        <p class="toolbar">
-                            <input type='submit' id="submit" onclick="return validate();" class="btn btn-primary"
-                                   width="80px"
-                                   value='${message(code: "savePersonalInfo")}'/>
-                        </p>
-                    </g:form>
+                <div id="tab1" class="tab-pane ${customerInstance.registrationLevel != 'basic' || !customerInstance.profilePersonalInfoFilled?'active':''}">
+                    <g:render template="profile/personalInfo"></g:render>
                 </div>
 
-                <div id="tab2" class="tab-pane">
-                    <g:form controller="customer" action='saveBasicInfo' method='POST' id='registerForm'
-                            name='registerForm'
-                            class='cssform'
-                            autocomplete='off'>
-
-                        <div class="column1">
-
-                            <p>
-                                <label for='province'><g:message
-                                        code="springSecurity.register.province.label"/>:</label> *
-                                <input type='text' class='text_' name='province' id='province'/>
-                            </p>
-
-                            <p>
-                                <label for='city'><g:message
-                                        code="springSecurity.register.city.label"/>:</label> *
-                                <input type='text' class='text_' name='city' id='city'/>
-                            </p>
-                        </div>
-
-                        <div class="column2">
-                            <p>
-                                <label for='postalCode'><g:message
-                                        code="springSecurity.register.postalCode.label"/>:</label>
-                                <input type='text' class='text_' name='postalCode' id='postalCode'/>
-                            </p>
-
-                            <p>
-                                <label for='telephone'><g:message
-                                        code="springSecurity.register.telephone.label"/>:</label>
-                                <input type='text' class='text_' name='telephone' id='telephone'/>
-                            </p>
-
-                        </div>
-
-                        <p>
-                            <label for='addressLine1'><g:message
-                                    code="springSecurity.register.address.label"/>:</label>
-                            <textarea type='text' class='text_' name='addressLine1' id='addressLine1'></textarea>
-                        </p>
-
-                        <p class="toolbar">
-                            <input type='submit' id="submit2" onclick="return validate();" class="btn btn-primary"
-                                   width="80px"
-                                   value='${message(code: "saveSendingAddress")}'/>
-                        </p>
-                    </g:form>
+                <div id="tab2" class="tab-pane ${customerInstance.profilePersonalInfoFilled && !customerInstance.profileSendingAddressFilled?'active':''}"">
+                    <g:render template="profile/address"></g:render>
                 </div>
             </div>
         </div>

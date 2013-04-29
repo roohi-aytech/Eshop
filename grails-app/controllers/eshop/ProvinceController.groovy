@@ -44,4 +44,8 @@ class ProvinceController {
         slideInstance.delete(flush: true)
         render 0
     }
+
+    def getProvinceCities(){
+        render City.findAllByProvince(Province.get(params.id)) as JSON
+    }
 }
