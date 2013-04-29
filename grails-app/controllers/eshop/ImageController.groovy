@@ -1,7 +1,5 @@
 package eshop
 
-import eshop.discout.Discount
-
 class ImageController {
     def imageService
     def fileService
@@ -36,6 +34,12 @@ class ImageController {
                 def productType = ProductType.get(params.id)
                 if (productType) {
                     content = getProdcutTypeImage(productType)
+                }
+                break;
+            case 'productTypeType':
+                def productTypeType = ProductTypeType.get(params.id)
+                if (productTypeType) {
+                    content = getProdcutTypeTypeImage(productTypeType)
                 }
                 break;
             case 'brand':
@@ -125,6 +129,25 @@ class ImageController {
         if (img) {
             if (params.wh) {
                 content = imageService.getImage(params.wh, fileService.filePath(productType))
+            } else {
+                content = img
+            }
+
+        }
+        content
+    }
+
+    byte[] getProdcutTypeTypeImage(ProductTypeType productTypeType) {
+        def img = productTypeType.image
+        if (!img) {
+            img = new Content(name: "no-image.png", contentType: "", fileContent: new File("no-image.png").bytes)
+            params.wh = ""
+        }
+
+        def content
+        if (img) {
+            if (params.wh) {
+                content = imageService.getImage(params.wh, fileService.filePath(productTypeType))
             } else {
                 content = img
             }

@@ -13,8 +13,6 @@ class GuaranteeController {
         redirect(action: "list", params: params)
     }
 
-
-
     def form(){
         def guaranteeInstance
         if(params.id)
@@ -30,18 +28,23 @@ class GuaranteeController {
     }
 
     def save() {
-        def guaranteeInstance
-        if(params.id){
-            guaranteeInstance = Guarantee.get(params.id)
-            guaranteeInstance.properties = params
+        def guarantee
+        if (params.id) {
+            guarantee = Guarantee.get(params.id)
+            def logo = guarantee.logo
+            guarantee.properties = params
+            if (!guarantee.logo)
+                guarantee.logo = logo
         }
         else
-            guaranteeInstance = new Guarantee(params)
-        if(guaranteeInstance.validate() && guaranteeInstance.save()){
-            render guaranteeInstance as JSON
+            guarantee = new Guarantee(params)
+        if (guarantee.validate()) {
+            guarantee.save(flush: true)
+            render guarantee as JSON
         }
-        else
-            render(template: "form", model: [guaranteeInstance: guaranteeInstance])
+        else {
+            render(template: "/guarantee/form", model: [guaranteeInstance: guarantee])
+        }
     }
 
     def delete() {
@@ -50,5 +53,18 @@ class GuaranteeController {
         render 0
     }
 
+    def getLogo() {
+        def guarantee = Guarantee.get(params.id)
+        if (guarantee && guarantee.logo) {
+            response.addHeader("content-disposition", "attachment;filename=$guarantee.name")
+//        response.contentType = "image/jpeg"
+            response.contentLength = guarantee.logo.length
+            response.outputStream << guarantee.logo
+        }
+        else {
+            response.contentLength = 0
+            response.outputStream << []
+        }
 
+    }
 }

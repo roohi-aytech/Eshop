@@ -15,6 +15,9 @@
     ]}"></g:render>
 </g:if>
 %{--attributes--}%
-<g:if test="${filters?.attributes}">
-    <g:render template="common/productAttributeList"></g:render>
+<g:if test="${!productTypeTypeLinks.isEmpty()}">
+    <h3 class="productType-container-title">
+        <g:message code="site.selectProductTypeType"></g:message>
+    </h3>
+    <g:render template="common/productTypeTypeGrid"></g:render>
 </g:if>

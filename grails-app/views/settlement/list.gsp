@@ -18,6 +18,18 @@
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <div class="content scaffold-list" role="main">
+    <div class="criteria-div">
+        <rg:criteria>
+            <rg:like name="name" label='settlement.name'/>
+            <rg:filterGrid grid="SettlementGrid" label='search'/>
+        </rg:criteria>
+        <script type="text/javascript">
+            $(".criteria-div")
+                    .find('div,label,input')
+                    .css('display','inline')
+                    .css('margin','3px');
+        </script>
+    </div>
 
     <rg:grid domainClass="${Settlement}"
              maxColumns="2"

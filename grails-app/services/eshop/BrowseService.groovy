@@ -82,6 +82,9 @@ class BrowseService {
             } else if (it.startsWith("b")) {
                 filterPartsMap["b"] = (filterPartsMap["b"] ?: []) + it.replace("b", "")
                 filterIndexes["b"] = index
+            } else if (it.startsWith("t")) {
+                filterPartsMap["t"] = (filterPartsMap["t"] ?: []) + it.replace("t", "")
+                filterIndexes["t"] = index
             } else {
                 def filter_parts = it.split("\\|")
                 filterPartsMap[filter_parts[0]] = (filterPartsMap[filter_parts[0]] ?: []) + filter_parts[1]
@@ -97,6 +100,10 @@ class BrowseService {
             else if (filterKey == "b") {
                 filterPartsMap["b"].each {
                     sortedFilters << "b${it}"
+                }
+            } else if (filterKey == "t") {
+                filterPartsMap["t"].each {
+                    sortedFilters << "t${it}"
                 }
             } else {
                 filterPartsMap[filterKey].each {
@@ -140,6 +147,20 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: Brand.get(brandId).name]
                 lastbc = "b"
+            } else if (filter.startsWith("t")) {
+                def typeId = Long.parseLong(filter.replace("t", ""))
+                if (!match['type.id'])
+                    match['type.id'] = typeId
+                else if (match['type.id'] instanceof Long)
+                    match['type.id'] = [$in: [match['type.id'], typeId]]
+                else match['type.id'] = [$in: match['type.id'].$in + typeId]
+                selecteds["t"] = (selecteds["t"] ?: []) + typeId
+
+                if (lastbc == "t")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${ProductTypeType.get(typeId).title}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
+                lastbc = "t"
             } else {
                 def filterParts = filter.split("\\|")
 
