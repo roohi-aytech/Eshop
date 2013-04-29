@@ -53,6 +53,15 @@ class SiteController {
         productType.children.each {
             model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
         }
+
+        model.productTypeTypeLinks = []
+        if(productType.children.isEmpty())
+        {
+            productType.types.each{
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "p${productType.id},t${it.id}"]), id: it.id]
+            }
+        }
+
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
 
@@ -92,6 +101,15 @@ class SiteController {
             }.collect { it.name }.join(', ')
         if (!brand)
             brand = ''
+
+        def productType = ProductType.get(params.f?.split(',')?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
+        model.productTypeTypeLinks = []
+        if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
+        {
+            productType.types.each{
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "${params.f},t${it.id}"]), id: it.id]
+            }
+        }
 
         def pageDetails = params.f?.contains('p')?PageDetails.findByProductType(ProductType.get(params.f.split(',').find {it.contains('p')}.replace('p', '').toLong())):null
         if (pageDetails)

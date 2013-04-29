@@ -94,6 +94,11 @@
                             code="navigation.manage.slideshow"
                             default="Users"/></span></g:link></li>
                 <li>
+                    <g:link controller="province" action="list"><img
+                            src="images/globe.png"/><span><g:message
+                            code="navigation.manage.province"
+                            default="Province"/></span></g:link></li>
+                <li>
                     <g:link controller="pageDetails" action="list"><img
                             src="images/pageDetails.png"/><span><g:message
                             code="pageDetails.label"
