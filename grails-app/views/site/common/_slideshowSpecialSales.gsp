@@ -1,4 +1,4 @@
-<g:if test="${!specialSaleSlides.isEmpty()}">
+<g:if test="${!specialSaleSlides?.isEmpty()}">
     <g:javascript>
     specialSaleSlides = ${specialSaleSlides.collect { [id: it.id, productId: it.product.id, title: it.product.toString(), finishDate: it.finishDate] } as grails.converters.JSON};
     var specialSaleSlideSize;
