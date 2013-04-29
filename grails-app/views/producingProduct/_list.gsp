@@ -1,7 +1,11 @@
 
 <%@ page import="eshop.ProducingProduct" %>
 
-
+<style>
+.ui-dialog{
+    width: 600px !important;
+}
+</style>
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${eshop.ProducingProduct}"
              maxColumns="3"
