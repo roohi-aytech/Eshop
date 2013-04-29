@@ -8,10 +8,13 @@ import org.springframework.security.core.context.SecurityContextHolder
 class CustomerController {
 
     def springSecurityService
+    def mailService
 
     def index() {}
 
-    def panel(){}
+    def panel(){
+        [customer: Customer.findByUsername(((User)springSecurityService.currentUser).username)]
+    }
 
     def changePassword(){
     }
@@ -57,7 +60,62 @@ class CustomerController {
         ['customerInstance': new Customer()]
     }
 
-    def save(){
+    def checkUserNameIsRepetitive(){
+        if(User.findByUsername(params.username?.toString().trim().toLowerCase()))
+            render message(code: 'springSecurity.register.username.repetitive')
+        else
+            render message(code: 'springSecurity.register.username.valid')
+    }
+
+    def saveBasicInfo(){
+        def customerInstance = new Customer()
+
+        customerInstance.username = params.username
+        customerInstance.password = params.password
+        customerInstance.email = params.username
+
+        customerInstance.enabled = false
+
+        if (customerInstance.validate() && customerInstance.save())
+        {
+            def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
+            UserRole.create customerInstance, customerRole
+
+            mailService.sendMail {
+                to customerInstance.email
+                subject message(code: 'activationMail.subject')
+                html( view:"/messageTemplates/mail/emailVerification",
+                        model:[customer: customerInstance])
+            }
+            redirect(action: 'checkForActivationMail')
+        }
+        else{
+            render(view: 'register', model:['customerInstance': customerInstance])
+        }
+    }
+
+    def checkForActivationMail(){
+    }
+
+    def activate(){
+        def code = new String(params.code.toString().decodeBase64()).split('_')[2]
+        if(code.toString() == params.id.toString()) {
+            def customer = Customer.get(params.id)
+            customer.enabled = true
+            customer.save()
+            flash.message = message(code: 'springSecurity.accountEnabled')
+            redirect(controller: 'login', action: 'auth')
+            return
+        }
+
+        render "code error"
+    }
+
+    def profile(){
+        [customerInstance: Customer.findByUsername(((User)springSecurityService.currentUser).username)]
+    }
+
+    def saveProfile(){
         def customerInstance = new Customer()
 
         customerInstance.username = params.username
