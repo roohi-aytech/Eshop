@@ -17,7 +17,7 @@
     ]}"></g:render>
 </g:if>
 %{--attributes--}%
-<g:if test="${!productTypeTypeLinks.isEmpty()}">
+<g:if test="${!productTypeTypeLinks?.isEmpty()}">
     <h3 class="productType-container-title">
         <g:message code="site.selectProductTypeType"></g:message>
     </h3>
