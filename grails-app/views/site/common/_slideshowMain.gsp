@@ -1,4 +1,4 @@
-<g:if test="${!slides?.isEmpty()}">
+<g:if test="${slides && !slides.isEmpty()}">
     <g:javascript>
     mainSlides = ${slides.collect { [id: it.id, url: it.url] } as grails.converters.JSON};
     mainSlideSize;
