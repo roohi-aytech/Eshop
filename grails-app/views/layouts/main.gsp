@@ -72,17 +72,23 @@
     <div id="content">
         <div class="panel-controls nav" role="navigation">
             <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+                <li><a class="home" href="${createLink(uri: '/admin')}"><g:message code="default.home.label"/></a></li>
                 <sec:ifLoggedIn>
                     <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_USER}">
                         <li><a class="profile" href="<g:createLink controller="user" action="profile"
                                                                    params="[redirect: request.requestURI]"/>"><g:message
                                 code="profile"/></a></li>
                     </sec:ifAllGranted>
-                    <li><a class="logout" href="<g:createLink controller="logout"/>"><g:message code="logout"/></a></li>
+                    <li>
+                        <common:logoutLink class="logout"></common:logoutLink>
+                        %{--<a class="logout" href="<g:createLink controller="logout"/>"><g:message code="logout"/></a>--}%
+                    </li>
                 </sec:ifLoggedIn>
                 <sec:ifNotLoggedIn>
-                    <li><a class="login" href="<g:createLink controller="login"/>"><g:message code="login"/></a></li>
+                    <li>
+                        <common:loginLink class="login"></common:loginLink>
+                        %{--<a class="login" href="<g:createLink controller="login"/>"><g:message code="login"/></a>--}%
+                    </li>
                 </sec:ifNotLoggedIn>
             </ul>
         </div>
