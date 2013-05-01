@@ -7,6 +7,8 @@ class Price {
     Currency currency
     Date startDate
     Date endDate
+    boolean defaultPrice
+    static hasMany = [variationValues: VariationValue]
 
     static mapping = {
         sort 'startDate'

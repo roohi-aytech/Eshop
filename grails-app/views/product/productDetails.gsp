@@ -23,6 +23,8 @@
         <li><a href="#product_description"><g:message code="description"/></a></li>
         <li><a href="#images"><g:message code="images"/></a></li>
         <li><a href="#videos"><g:message code="videos"/></a></li>
+        <li><a href="#producers"><g:message code="producers"/></a></li>
+
     </ul>
 
     <div id="details">
@@ -57,6 +59,10 @@
 
     <div id="videos">
         <g:render template="videos"/>
+    </div>
+
+    <div id="producers">
+        <g:render template="../producerVariations/producers"/>
     </div>
 
 </div>

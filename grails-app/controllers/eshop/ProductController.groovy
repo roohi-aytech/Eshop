@@ -263,20 +263,6 @@ class ProductController {
         redirect(action: "list", params: [curtab: params.curtab, curtab2: params.curtab2])
     }
 
-    def saveProducer(){
-
-    }
-
-    def producerForm(){
-        def producerInstance
-        if (params.id)
-            producerInstance = Producer.findById(params.id)
-        else
-            producerInstance = new Producer()
-
-        render(template: "producer_form", model: [producerInstance: producerInstance, baseProductId: params.baseProductId])
-
-    }
 
     def relatedProductForm() {
         def relatedProduct
@@ -610,5 +596,11 @@ class ProductController {
     def searchCountryValues() {
         def res = Product.executeQuery("select distinct manufactureCountry from Product where manufactureCountry like ? ", ["%${params.term}%"])
         render res.collect {[id: it, label: it, value: it]} as JSON
+    }
+
+    def variationValues (Variation variation){
+
+        return variation.variationValues
+
     }
 }
