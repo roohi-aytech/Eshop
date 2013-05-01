@@ -27,9 +27,7 @@
 
         <select id="variation_${variation.id}" name="variation_${variation.id}" >
             <g:each in="${variation.variationValues}" var="variationValue">
-                    if(priceInstance.variationValues.contains(variationId))
-             <option value="${variationValue.id}"  selected="selected">${variationValue.value}
-
+                <option value="${variationValue.id}" ${(priceInstance.variationValues.contains(variationValue))? 'selected': ''}>${variationValue.value}</option>
                 </option>
             </g:each>
         </select>
