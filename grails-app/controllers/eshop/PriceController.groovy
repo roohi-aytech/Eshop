@@ -46,14 +46,11 @@ class PriceController {
             }
         }
 
-
-                // or just eq('product', someProduct)
-
         def lastPrice = Price.createCriteria().list {
                 isNull('endDate')
                 eq('product', priceInstance.product)
                 variationValues {
-                      'in'('id', priceInstance.variationValues.collect{it.id})
+                        'in'('id', priceInstance.variationValues.collect{it.id})
 //                    priceInstance.variationValues.each(){
 //                        and{
 //                        eq("variationGroup",it?.variationGroup)
@@ -62,10 +59,6 @@ class PriceController {
 //                    }
                 }
             }
-
-        if ((params.browsingBrandId as Long) > 0)
-//                eq("brand", Brand.get(params.browsingBrandId))
-        //    def lastPrice = Price.findAllByProductAndVariationValuesAndEndDateIsNull(priceInstance.product, priceInstance.variationValues)
 
             if (lastPrice) {
                 lastPrice[0].endDate = new Date()
