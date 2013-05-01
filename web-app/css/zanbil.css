@@ -1549,7 +1549,7 @@ span.cke_skin_kama {
 }
 
 .shopping-basket .check-out a {
-    margin-right: 80px;
+    margin-right: 0;
 }
 
 /*Invoice*/
@@ -1602,6 +1602,68 @@ span.cke_skin_kama {
     background-color: #ff8c00;
     padding: 5px;
 }
+/*form*/
+.form label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.form .auto{
+    width: auto !important;
+}
+
+.form input{
+    font-size:11px;
+}
+
+.form select{
+    font-size:11px;
+}
+
+.form textarea{
+    font-size:11px;
+}
+
+.form input.full{
+    width: 220px;
+}
+.form input.half{
+    width: 100px;
+}
+
+.form select.full{
+    width: 210px;
+}
+
+.form select.half{
+    width: 115px;
+}
+
+.form textarea.double{
+    width: 400px;
+}
+
+.form textarea.full{
+    width: 220px;
+    height: 85px;
+}
+
+.form h4{
+    background: #f8f8f8;
+    font-family: tahoma;
+    font-size:11px;
+    padding:5px;
+    padding-right: 10px;
+    margin:0;
+    margin-left:5px;
+    margin-right:5px;
+    border-radius: 3px;
+}
+
+.form .content{
+    padding:10px 15px 10px 15px;
+}
+
 
 /*Carousel*/
 
@@ -1670,6 +1732,18 @@ span.cke_skin_kama {
     vertical-align: top;
     display: table-cell;
     float: none !important;
+}
+
+.block{
+    display: block !important;
+}
+
+.inline-block{
+    display: inline;
+}
+
+.inline{
+    display: inline-block;
 }
 
 .product-rightColumn {

@@ -49,56 +49,256 @@
             if (found)
                 scope.changeCount(id, count);
         }
+
+        function updateCityList(provinceCombo, cityCombo){
+            var currentCityId = '${customerInstance?.address?.city?.id}';
+
+            var $el = $("#" + cityCombo);
+            $el.empty(); // remove old options
+            $.ajax({
+                type:"GET",
+                url:"<g:createLink controller="province" action="getProvinceCities"/>",
+                data:{id: $('#' + provinceCombo).val()}
+            }).done(function (response) {
+                $el = $("#" + cityCombo);
+                $el.empty(); // remove old options
+                for(var i = 0; i < response.length; i++)
+                    if(response[i].id.toString() == currentCityId)
+                      $el.append($("<option selected></option>")
+                         .attr("value", response[i].id).text(response[i].title));
+                     else
+                      $el.append($("<option></option>")
+                         .attr("value", response[i].id).text(response[i].title));
+            });
+        }
+
+        $(document).ready(function(){
+           updateCityList('province1', 'city1');
+           updateCityList('province2', 'city2');
+        });
     </g:javascript>
+
 </head>
 
 <body>
 
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="shopping-basket">
-                <h2><g:message code="basket.content"/></h2>
+<div class="row-fluid">
+<div class="span12">
+<div class="shopping-basket">
+<h2><g:message code="basket.content"/></h2>
 
-                <div class="group">
-                    <ul>
-                        <li ng-repeat="basketItem in basket">
-                            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
-                            </span>
-                            <span class="name"><h3><a
-                                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.name}}</a>
-                            </h3>
-                            </span>
-                            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>
-                            <span class="count"><g:message code="count"></g:message>: <input type="text"
-                                                                                             value="{{basketItem.count}}"
-                                                                                             onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
-                            </span>
-                            <span class="delete">[ <a type="button"
-                                                      ng-click="removeFromBasket(basketItem.id)"><g:message
-                                        code="application_delete"></g:message></a> ]</span>
-                        </li>
-                    </ul>
+<div class="group">
+    <ul>
+        <li ng-repeat="basketItem in basket">
+            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
+            </span>
+            <span class="name"><h3><a
+                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.name}}</a>
+            </h3>
+            </span>
+            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>
+            <span class="count"><g:message code="count"></g:message>: <input type="text"
+                                                                             value="{{basketItem.count}}"
+                                                                             onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
+            </span>
+            <span class="delete">[ <a type="button"
+                                      ng-click="removeFromBasket(basketItem.id)"><g:message
+                        code="application_delete"></g:message></a> ]</span>
+        </li>
+    </ul>
 
-                    <div class="check-out">
-                        <g:message code="basket.totalPrice"></g:message>: <span
-                            class="totalPrice">{{calculateBasketTotalPrice()}}</span>
-                        <sec:ifLoggedIn>
-                            <g:link action="invoice" class="btn btn-primary"><g:message
-                                    code="basket.invoice"/></g:link>
-                        </sec:ifLoggedIn>
+    <div class="check-out">
+        <g:message code="basket.totalPrice"></g:message>: <span
+            class="totalPrice">{{calculateBasketTotalPrice()}}</span>
+    </div>
+</div>
+
+<sec:ifLoggedIn>
+    <h2><g:message code="order.owner.info"/></h2>
+    <g:form action="invoice" method="post">
+    <div class="group form">
+        <div class="table">
+            <div class="table-row">
+                <div class="table-cell">
+                    <h4><g:message code="invoice.specification"></g:message> </h4>
+                    <div class="content">
+                    <div class="field">
+                        <label for="ownerName"><g:message code="invoice.owner.name"></g:message></label>
+                        <input type="text" id="ownerName" name="ownerName" value="${customer}"
+                               class="block full"/>
+                    </div>
+
+                    <div class="field">
+                        <label for="ownerEmail"><g:message
+                                code="invoice.owner.email"></g:message></label>
+                        <input type="text" id="ownerEmail" name="ownerEmail" value="${customer.email}"
+                               class="block full"/>
+                    </div>
+
+                    <div class="field">
+                        <label for="ownerMobile"><g:message
+                                code="invoice.owner.mobile"></g:message></label>
+                        <input type="text" id="ownerMobile" name="ownerMobile"
+                               value="${customer.mobile}" class="block full"/>
+                    </div>
+
+                    <div class="field">
+                        <label for="ownerTelephone"><g:message
+                                code="invoice.owner.telephone"></g:message></label>
+                        <input type="text" id="ownerTelephone" name="ownerTelephone"
+                               value="${customer.telephone}" class="block full"/>
+                    </div>
                     </div>
                 </div>
-                <sec:ifNotLoggedIn>
-                    <div class="info">
-                        <div><g:message code="basket.checkout.loginRequired"></g:message></div>
-                        <common:loginLink class="btn btn-success"></common:loginLink>
-                        <common:registerLink class="btn btn-primary"></common:registerLink>
+
+                <div class="table-cell">
+                    <h4><g:message code="invoice.sendingAddress"></g:message> </h4>
+
+                    <div class="table auto content">
+                        <div class="table-row">
+                            <div class="table">
+                                <div class="table-row">
+                                    <div class="table-cell">
+                                        <div>
+                                            <label for='province1'><g:message
+                                                    code="springSecurity.register.province.label"/>:</label> *
+                                            <select name="province1" id="province1"
+                                                    onchange="updateCityList('province1', 'city1');" class="block half">
+                                                <g:set var="provinceList"
+                                                       value="${eshop.Province.findAll()}"></g:set>
+                                                <g:each in="${provinceList}" var="province">
+                                                    <option ${customer?.address?.city?.province?.id == province.id ? 'selected' : ''}
+                                                            value="${province.id}">${province.title}</option>
+                                                </g:each>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label for='postalCode1'><g:message
+                                                    code="springSecurity.register.postalCode.label"/>:</label>
+                                            <input type='text' name='postalCode1' id='postalCode1'
+                                                   value="${customer?.address?.postalCode}"
+                                                   class="block half"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-cell">
+
+                                        <div>
+                                            <label for='city1'><g:message
+                                                    code="springSecurity.register.city.label"/>:</label> *
+                                            <select name="city1" id="city1" class="block half">
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label for='telephone1'><g:message
+                                                    code="springSecurity.register.telephone.label"/>:</label>
+                                            <input type='text' name='telephone1' id='telephone1'
+                                                   value="${customer?.address?.telephone}"
+                                                   class="block half"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <label for='addressLine1'><g:message
+                                        code="springSecurity.register.address.label"/>:</label>
+                                <textarea type='text' name='addressLine1'
+                                          id='addressLine1'
+                                          class="block full">${customer?.address?.addressLine1}</textarea>
+                            </div>
+                        </div>
                     </div>
-                </sec:ifNotLoggedIn>
+                </div>
+
+                <div class="table-cell">
+
+                    <h4><g:message code="invoice.billingAddress"></g:message></h4>
+                    <div class="table auto content">
+                        <div class="table-row">
+                            <div class="table">
+                                <div class="table-row">
+                                    <div class="table-cell">
+                                        <div>
+                                            <label for='province2'><g:message
+                                                    code="springSecurity.register.province.label"/>:</label> *
+                                            <select name="province2" id="province2"
+                                                    onchange="updateCityList('province2', 'city2');" class="block half">
+                                                <g:set var="provinceList"
+                                                       value="${eshop.Province.findAll()}"></g:set>
+                                                <g:each in="${provinceList}" var="province">
+                                                    <option ${customer?.address?.city?.province?.id == province.id ? 'selected' : ''}
+                                                            value="${province.id}">${province.title}</option>
+                                                </g:each>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label for='postalCode2'><g:message
+                                                    code="springSecurity.register.postalCode.label"/>:</label>
+                                            <input type='text' name='postalCode2' id='postalCode2'
+                                                   value="${customer?.address?.postalCode}"
+                                                   class="block half"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-cell">
+
+                                        <div>
+                                            <label for='city2'><g:message
+                                                    code="springSecurity.register.city.label"/>:</label> *
+                                            <select name="city2" id="city2" class="block half">
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label for='telephone2'><g:message
+                                                    code="springSecurity.register.telephone.label"/>:</label>
+                                            <input type='text' name='telephone2' id='telephone2'
+                                                   value="${customer?.address?.telephone}"
+                                                   class="block half"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <label for='addressLine2'><g:message
+                                        code="springSecurity.register.address.label"/>:</label>
+                                <textarea type='text' name='addressLine2'
+                                          id='addressLine2'
+                                          class="block full">${customer?.address?.addressLine1}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="check-out">
+            <input type="submit" class="btn btn-primary" value="<g:message code="basket.invoice"/>" />
+        </div>
     </div>
+    </g:form>
+</sec:ifLoggedIn>
+
+<sec:ifNotLoggedIn>
+    <div class="info">
+        <div><g:message code="basket.checkout.loginRequired"></g:message></div>
+        <common:loginLink class="btn btn-success"></common:loginLink>
+        <common:registerLink class="btn btn-primary"></common:registerLink>
+    </div>
+</sec:ifNotLoggedIn>
+</div>
+</div>
+</div>
 </div> <!-- /container -->
 
 <script type="text/javascript">

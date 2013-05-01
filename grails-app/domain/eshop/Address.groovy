@@ -16,4 +16,11 @@ class Address {
         postalCode(nullable: true)
         telephone(nullable: true)
     }
+
+    String toString(){
+        city.province.toString() + " - " +
+        city.toString() + " - " +
+        addressLine1 + " " + (addressLine2?addressLine2:"") + " - " +
+        postalCode
+    }
 }
