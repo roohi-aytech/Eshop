@@ -123,4 +123,19 @@ class OrderController {
         ]
     }
 
+    def savePaymentRequest(){
+        def paymentRequest = new PaymentRequest()
+        paymentRequest.value = params.value.toInteger()
+        paymentRequest.trackingCode = params.trackingCode
+        paymentRequest.creationDate = new Date()
+        paymentRequest.owner = (Customer)springSecurityService.currentUser
+        paymentRequest.account = Account.get(params.account)
+        paymentRequest.order = Order.get(params.order.id)
+        paymentRequest.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
+        if(paymentRequest.validate() && paymentRequest.save()){
+            flash.message = message(code:"order.payment.paymentRequest.succeed")
+            redirect(action: 'payment', params: [id:params.paymentId])
+        }
+    }
+
 }

@@ -15,7 +15,7 @@ class Transaction {
     Order order
 
     static constraints = {
-        account ()
+        account (nullable: true)
         value min: 0
         type inList: AccountingHelper.TRANSACTION_TYPE_LIST
         order nullable: true

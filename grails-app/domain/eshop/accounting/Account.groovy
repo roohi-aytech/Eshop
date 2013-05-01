@@ -21,4 +21,8 @@ class Account {
         hasOnlinePayment()
         bankLogo(nullable: true, maxSize: 1000000000)
     }
+
+    String toString(){
+        bankName
+    }
 }
