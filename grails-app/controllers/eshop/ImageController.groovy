@@ -1,5 +1,7 @@
 package eshop
 
+import eshop.accounting.Account
+
 class ImageController {
     def imageService
     def fileService
@@ -76,6 +78,12 @@ class ImageController {
                         default:
                             content = slide.image1024
                     }
+                }
+                break;
+            case 'account':
+                def account = Account.get(params.id)
+                if (account) {
+                    content = account.bankLogo
                 }
                 break;
         }

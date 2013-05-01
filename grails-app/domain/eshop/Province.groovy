@@ -18,4 +18,8 @@ class Province {
         sort 'title'
         cities cascade: "all-delete-orphan"
     }
+
+    String toString(){
+        title
+    }
 }

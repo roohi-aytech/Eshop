@@ -13,16 +13,18 @@
 <BR>
 <ul id="home-nav">
     <li>
-        <sec:ifAnyGranted roles="${RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${RoleHelper.ROLE_PRODUCER_ADD},${RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
+        <sec:ifAnyGranted
+                roles="${RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${RoleHelper.ROLE_PRODUCER_ADD},${RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
             <h3>
                 <g:message code="navigation.manage.product.type" default="product Type Management"/>
             </h3>
 
             <ul>
-                <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCER_ADD},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
+                <sec:ifAnyGranted
+                        roles="${eshop.RoleHelper.ROLE_PRODUCER_ADD},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
                     <li>
                         <g:link controller="producer" action="list"><img
-                                src="images/productType.png"/><span><g:message
+                                src="images/supplier.png"/><span><g:message
                                 code="producer.label"
                                 default="Producers"/></span></g:link></li>
                 </sec:ifAnyGranted>
@@ -56,18 +58,20 @@
                 </sec:ifAllGranted>
             </ul>
         </sec:ifAnyGranted>
-        <sec:ifAnyGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN},${eshop.RoleHelper.ROLE_PRICE_ADMIN},${RoleHelper.ROLE_PRODUCT_ADD},${RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
+        <sec:ifAnyGranted
+                roles="${RoleHelper.ROLE_PRODUCT_ADMIN},${eshop.RoleHelper.ROLE_PRICE_ADMIN},${RoleHelper.ROLE_PRODUCT_ADD},${RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
 
             <h3>
                 <g:message code="navigation.manage.product" default="product management"/>
             </h3>
             <ul>
-            <sec:ifAnyGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN},${RoleHelper.ROLE_PRODUCT_ADD},${RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
-                <li>
-                    <g:link controller="product" action="list"><img
-                            src="images/products.png"/><span><g:message
-                            code="product.label"
-                            default="Products"/></span></g:link></li>
+                <sec:ifAnyGranted
+                        roles="${RoleHelper.ROLE_PRODUCT_ADMIN},${RoleHelper.ROLE_PRODUCT_ADD},${RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
+                    <li>
+                        <g:link controller="product" action="list"><img
+                                src="images/products.png"/><span><g:message
+                                code="product.label"
+                                default="Products"/></span></g:link></li>
                 </sec:ifAnyGranted>
                 <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
                     <li>
@@ -92,6 +96,11 @@
                     <g:link controller="slide" action="list"><img
                             src="images/slideshow.png"/><span><g:message
                             code="navigation.manage.slideshow"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="account" action="list"><img
+                            src="images/bank-account.png"/><span><g:message
+                            code="navigation.manage.bankAccount"
                             default="Users"/></span></g:link></li>
                 <li>
                     <g:link controller="province" action="list"><img

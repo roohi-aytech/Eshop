@@ -19,24 +19,24 @@
     <table class="customer-info">
         <tr>
             <td class="label"><g:message code="invoice.owner.name"></g:message>:</td>
-            <td class="value">${customer}</td>
+            <td class="value">${order.ownerName}</td>
             <td class="label"><g:message code="invoice.billingAddress"></g:message>:</td>
-            <td rowspan="2" class="value">${customer.billingAddress.addressLine1}</td>
+            <td rowspan="2" class="value"><g:render template="/site/formatters/address" model="${[address:billingAddress]}"></g:render></td>
         </tr>
         <tr>
             <td class="label"><g:message code="invoice.owner.email"></g:message>:</td>
-            <td class="value">${customer.email}</td>
+            <td class="value">${order.ownerEmail}</td>
             <td></td>
         </tr>
         <tr>
             <td class="label"><g:message code="invoice.owner.mobile"></g:message>:</td>
-            <td class="value">${customer.mobile}</td>
+            <td class="value">${order.ownerMobile}</td>
             <td class="label"><g:message code="invoice.sendingAddress"></g:message>:</td>
-            <td rowspan="2" class="value">${customer.sendingAddress.addressLine1}</td>
+            <td rowspan="2" class="value"><g:render template="/site/formatters/address" model="${[address:sendingAddress]}"></g:render></td>
         </tr>
         <tr>
             <td class="label"><g:message code="invoice.owner.telephone"></g:message>:</td>
-            <td class="value">${customer.telephone}</td>
+            <td class="value">${order.ownerTelephone}</td>
             <td></td>
         </tr>
         <tr>

@@ -3,8 +3,15 @@ package eshop
 class Order {
 
     Customer customer
+
+    String ownerName
+    String ownerEmail
+    String ownerMobile
+    String ownerTelephone
+
     Address billingAddress
     Address sendingAddress
+
     String status
 
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]

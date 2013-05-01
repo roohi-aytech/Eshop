@@ -1,19 +1,30 @@
 package eshop
 
+import eshop.accounting.Account
+
 class OrderController {
 
     def springSecurityService
     def priceService
     def mellatService
+    def accountingService
 
     def create() {
 
         //save order
-        def order = new Order()
+        def order = (Order)session["order"]
         order.customer = (Customer) springSecurityService.currentUser
         order.status = OrderHelper.STATUS_CREATED
-        order.sendingAddress = order.customer.sendingAddress
-        order.billingAddress = order.customer.billingAddress
+
+        def sendingAddress = (Address)session["sendingAddress"]
+        sendingAddress.save()
+
+        def billingAddress = (Address)session["billingAddress"]
+        billingAddress.save()
+
+        order.sendingAddress = sendingAddress
+        order.billingAddress = billingAddress
+
         if (!order.validate() || !order.save()) {
             //order save error
             return
@@ -50,7 +61,15 @@ class OrderController {
         redirect(action: 'payment', params: [id: order.id])
     }
 
-    def payment() {
+    def payment(){
+        [
+                accountsForOnlinePayment: Account.findAllByHasOnlinePayment(true),
+                accounts: Account.findAll(),
+                customerAccoutnValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
+        ]
+    }
+
+    def onlinePayment() {
         if (params.bank) {
             def order = Order.get(params.id)
             switch (params.bank) {
