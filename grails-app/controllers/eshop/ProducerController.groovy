@@ -23,6 +23,7 @@ class ProducerController {
       [producerInstance: producerInstance]
     }
 
+
     def showProducingProduct(){
         def producingProductInstance = ProducingProduct.get(params.id)
         if (!producingProductInstance) {

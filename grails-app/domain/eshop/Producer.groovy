@@ -13,7 +13,7 @@ class Producer {
 
 
     byte[] logo
-    static hasMany = [producerStaffs : ProducerStaff]
+    static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
     static composites = ["producerStaffs"]
 
     static mapping = {
