@@ -89,18 +89,19 @@ class PriceController {
             }
         }
 
-
+        //the previous default price should be set to false, and this is the new default price
         if (priceInstance.getDefaultPrice() == true) {
             if (defaultPrice) {
                 defaultPrice.defaultPrice = false
                 defaultPrice.save()
             }
         }
-
+        //it is the first record and should be set to default
         if(defaultPrice == null)
             priceInstance.defaultPrice = true
 
-        if(defaultPrice == null & !priceInstance.getDefaultPrice()){
+        //if this used to be the default price, and now the first record should be set to true
+        if(defaultPrice != null & !priceInstance.getDefaultPrice()){
             def price
             def Prices = Price.findAllByProduct(priceInstance.product)
             for (it in Prices) {
@@ -117,8 +118,6 @@ class PriceController {
                 }
             }
         }
-
-
 
         if (priceInstance.validate() && priceInstance.save()) {
             render priceInstance as JSON
