@@ -1,6 +1,8 @@
 package eshop
 
 import eshop.accounting.Account
+import eshop.accounting.CustomerTransaction
+import eshop.accounting.Transaction
 
 class OrderController {
 
@@ -63,9 +65,10 @@ class OrderController {
 
     def payment(){
         [
+                orderPrice:Order.get(params.id).items.sum{it.orderCount * it.unitPrice},
                 accountsForOnlinePayment: Account.findAllByHasOnlinePayment(true),
                 accounts: Account.findAll(),
-                customerAccoutnValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
+                customerAccountValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
         ]
     }
 
@@ -134,7 +137,48 @@ class OrderController {
         paymentRequest.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
         if(paymentRequest.validate() && paymentRequest.save()){
             flash.message = message(code:"order.payment.paymentRequest.succeed")
-            redirect(action: 'payment', params: [id:params.paymentId])
+            redirect(action: 'payment', params: [id:params.order.id])
+        }
+    }
+
+    def payOrderFromAccount(){
+
+        def order = Order.get(params.order.id)
+        def orderPrice = order.items.sum{it.orderCount * it.unitPrice}
+        def owner = springSecurityService.currentUser
+
+        //save withdrawal customer transaction
+        def customerTransaction = new CustomerTransaction()
+        customerTransaction.value = orderPrice
+        customerTransaction.date = new Date()
+        customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+        customerTransaction.order = order
+        customerTransaction.creator = owner
+        customerTransaction.save()
+
+        //save withdrawal transaction
+        def transaction = new Transaction()
+        transaction.value = orderPrice
+        transaction.date = new Date()
+        transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+        transaction.order = order
+        transaction.creator = owner
+        transaction.save()
+
+        //set order status
+        order.status = OrderHelper.STATUS_PAID
+        order.save()
+
+        //save order tracking log
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_PAYMENT
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = owner
+        trackingLog.title = message(code: 'order.trackingLog.action.payment.title', params: [trackingLog.date, trackingLog.user])
+        if (trackingLog.validate() && trackingLog.save()) {
+            flash.message = message(code:'order.payment.completed')
+            redirect(controller: 'customer', action: 'panel')
         }
     }
 

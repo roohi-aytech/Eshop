@@ -38,7 +38,7 @@
         </g:each>
     </select>
     <label><g:message code="order.payment.value"></g:message></label>
-    <input type="text" name="value" id="value" onblur="validateValue()"/>
+    <input type="text" name="value" id="value" onblur="validateValue()" value="${orderPrice}"/>
     <span id="valueValidationMessage"></span>
     <label><g:message code="order.payment.trackingCode"></g:message></label>
     <input type="text" name="trackingCode" id="trackingCode" onblur="validateTrackingCode()"/>

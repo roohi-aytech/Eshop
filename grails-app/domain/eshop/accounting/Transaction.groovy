@@ -22,8 +22,6 @@ class Transaction {
     }
 
     static mapping = {
-        tablePerHierarchy(false)
-
         value column: 'transaction_value'
         date column: 'transaction_date'
     }

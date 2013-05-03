@@ -81,6 +81,15 @@ class PaymentResponseController {
                     def payableAmount = request.usingCustomerAccountValueAllowed ? request.value + customerAccount : request.value
 
                     if(payableAmount > orderPrice){
+                        //save withdrawal customer transaction
+                        customerTransaction = new CustomerTransaction()
+                        customerTransaction.value = orderPrice
+                        customerTransaction.date = new Date()
+                        customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+                        customerTransaction.order = request.order
+                        customerTransaction.creator = request.owner
+                        customerTransaction.save()
+
                         //save withdrawal transaction
                         transaction = new Transaction()
                         transaction.value = orderPrice
