@@ -98,11 +98,6 @@
                             code="navigation.manage.slideshow"
                             default="Users"/></span></g:link></li>
                 <li>
-                    <g:link controller="account" action="list"><img
-                            src="images/bank-account.png"/><span><g:message
-                            code="navigation.manage.bankAccount"
-                            default="Users"/></span></g:link></li>
-                <li>
                     <g:link controller="province" action="list"><img
                             src="images/globe.png"/><span><g:message
                             code="navigation.manage.province"
@@ -112,6 +107,23 @@
                             src="images/pageDetails.png"/><span><g:message
                             code="pageDetails.label"
                             default="Page Details"/></span></g:link></li>
+            </ul>
+        </sec:ifAllGranted>
+        <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
+            <h3>
+                <g:message code="navigation.manage.accounting" default="Settings"/>
+            </h3>
+            <ul>
+                <li>
+                    <g:link controller="account" action="list"><img
+                            src="images/bank-account.png"/><span><g:message
+                            code="navigation.manage.bankAccount"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="paymentRequest" action="list"><img
+                            src="images/waitingPaymentRequests.png"/><span><g:message
+                            code="navigation.manage.waitingPaymentRequests"
+                            default="Users"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
 

@@ -285,13 +285,18 @@ img {
 }
 
 .nav a {
-	color: #666666;
-	display: block;
-	padding: 0.25em 0.7em;
-	text-decoration: none;
 	   -moz-border-radius: 0.3em;
 	-webkit-border-radius: 0.3em;
 	        border-radius: 0.3em;
+    background: none repeat scroll 0 0 -moz-field;
+    border-radius: 0.3em 0.3em 0.3em 0.3em;
+    color: #666666;
+    display: block;
+    padding: 0.25em 0.7em;
+    text-decoration: none;
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 20px;
 }
 
 .nav a:active, .nav a:visited {

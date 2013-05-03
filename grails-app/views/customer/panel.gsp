@@ -40,6 +40,9 @@
                                     params="${[status: OrderHelper.STATUS_CREATED]}"><g:message
                                     code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_CREATED}.label"></g:message></g:link></li>
                         <li><g:link controller="order" action="list"
+                                    params="${[status: OrderHelper.STATUS_INQUIRED]}"><g:message
+                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_INQUIRED}.label"></g:message></g:link></li>
+                        <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_PAID]}"><g:message
                                     code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_PAID}.label"></g:message></g:link></li>
                         <li><g:link controller="order" action="list"
