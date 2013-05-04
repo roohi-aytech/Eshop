@@ -1,16 +1,13 @@
 package eshop
 
 class Price {
-    Product product
     Double price = 0D
     Double rialPrice = 0D
     Currency currency
     Date startDate
     Date endDate
     boolean defaultPrice
-    Guarantee guarantee
-
-    static hasMany = [variationValues: VariationValue]
+    ProductModel model
 
     static mapping = {
         sort 'startDate'
