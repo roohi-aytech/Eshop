@@ -14,6 +14,6 @@ class ProductModel {
     }
 
     static constraints = {
-        status(inList: ['exists', 'not-exists', 'commin-soon'])
+        status(inList: ['exists', 'not-exists', 'coming-soon'])
     }
 }
