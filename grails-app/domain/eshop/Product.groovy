@@ -27,7 +27,7 @@ class Product extends BaseProduct implements Comparable{
 
     static transients = ['title', 'currentPrice']
 
-    static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide]
+    static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide, models: ProductModel]
 
     static belongsTo = [ProductType]
 
