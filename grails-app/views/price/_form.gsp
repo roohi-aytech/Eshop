@@ -49,7 +49,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'defaultPrice', 'error')}" >
 <label for="defaultPrice">
-    <g:message code="price.defauktPrice.label" default="Default Price"/>
+    <g:message code="price.defaultPrice.label" default="Default Price"/>
 
 </label>
 <g:checkBox name="defaultPrice" value="${priceInstance?.defaultPrice}"/>
