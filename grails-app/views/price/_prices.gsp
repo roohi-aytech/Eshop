@@ -3,11 +3,11 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${Price}"
              showCommand="false"
-             maxColumns="9"
+             maxColumns="5"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToPriceGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "price", params: ['product.id': productInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "price")}", icon: "application_edit"], [handler: "deletePrice(#id#)", icon: "application_delete"]]}">
+             commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "price", params: ['productModel.id': productModelInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "price")}", icon: "application_edit"], [handler: "deletePrice(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
-            <rg:eq name="product.id" value="${productInstance.id}"/>
+            <rg:eq name="productModel.id" value="${productModelInstance.id}"/>
         </rg:criteria>
     </rg:grid>
     <g:javascript>
@@ -29,7 +29,7 @@
             }
         }
         function addToPriceGrid(){
-            loadOverlay('<g:createLink controller="price" action="form" params="['product.id': productInstance.id]"/>','<g:createLink action="save" controller="price"/>',function(){
+            loadOverlay('<g:createLink controller="price" action="form" params="['productModel.id': productModelInstance.id]"/>','<g:createLink action="save" controller="price"/>',function(){
                 $("#PriceGrid").trigger("reloadGrid")
             });
         }

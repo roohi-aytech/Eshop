@@ -17,7 +17,7 @@
         <li><a href="#attributes"><g:message code="attributes"/></a></li>
         <li><a href="#variations"><g:message code="variations"/></a></li>
         <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRICE_ADMIN}">
-            <li><a href="#price"><g:message code="price"/></a></li>
+            <li><a href="#productModels"><g:message code="productModels"/></a></li>
             <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
         </sec:ifAllGranted>
         <li><a href="#product_description"><g:message code="description"/></a></li>
@@ -39,8 +39,8 @@
         <g:render template="../variationGroup/variations"/>
     </div>
     <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRICE_ADMIN}">
-        <div id="price" style="width: 98%">
-            <g:render template="../price/prices"/>
+        <div id="productModels" style="width: 98%">
+            <g:render template="../productModel/list"/>
 
             <input type="button" value="${message(code:'specialSaleSlide')}" onclick="window.location.href='${createLink(controller: 'specialSaleSlide', action: 'list', params:[id:productInstance.id, detail:params.id])}';">
         </div>

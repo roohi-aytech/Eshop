@@ -1,13 +1,31 @@
-<%@ page import="eshop.ProductModel" %>
+<%@ page import="eshop.ProductModel;" %>
+<!doctype html>
+<html>
+<head>
+    <meta name="layout" content="main">
+    <g:set var="entityName" value="${message(code: 'productModel.label', default: 'ProductModel')}"/>
+    <title><g:message code="default.list.label" args="[entityName]"/></title>
+</head>
+
+<body>
+<g:javascript src="jquery.quickselect.pack.js"/>
+<h2><g:message code="default.manage.label" args="[entityName]"/></h2>
+
+<g:set var="actions" value="[]"/>
+<sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
+    <g:set var="actions" value="${[[handler: "deleteProductModel(#id#)", icon: "application_delete"],
+            [controller: "productModel", action: "details", param: "id=#id#", icon: "application_form",title:"${message(code: "productModel-details")}"]]}"/>
+
+</sec:ifAllGranted>
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${ProductModel}"
              showCommand="false"
              maxColumns="9"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProductModelGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "productModel", params: ['product.id': productModelInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "productModel")}", icon: "application_edit"], [handler: "deleteProductModel(#id#)", icon: "application_delete"]]}">
+             commands="${actions}">
         <rg:criteria>
-            <rg:eq name="product.id" value="${productModelInstance.id}"/>
+            <rg:eq name="product.id" value="${productInstance.id}"/>
         </rg:criteria>
     </rg:grid>
     <g:javascript>
@@ -29,7 +47,7 @@
             }
         }
         function addToProductModelGrid(){
-            loadOverlay('<g:createLink controller="productModel" action="form" params="['product.id': productModelInstance.id]"/>','<g:createLink action="save" controller="productModel"/>',function(){
+            loadOverlay('<g:createLink controller="productModel" action="form" params="['product.id': productInstance.id]"/>','<g:createLink action="save" controller="productModel"/>',function(){
                 $("#ProductModelGrid").trigger("reloadGrid")
             });
         }
