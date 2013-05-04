@@ -20,7 +20,7 @@
 <div class="content scaffold-list" role="main">
 
     <rg:grid domainClass="${Guarantee}"
-             maxColumns="4"
+             maxColumns="3"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToGuaranteeGrid", icon: "plus"]]}"
              commands="${[[handler: "addToGuaranteeGrid(#id#)", icon: "application_edit"], [handler: "deleteGuarantee(#id#)", icon: "application_delete"]]}"
