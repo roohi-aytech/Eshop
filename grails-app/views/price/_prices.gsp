@@ -3,7 +3,7 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${Price}"
              showCommand="false"
-             maxColumns="8"
+             maxColumns="9"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToPriceGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "price", params: ['product.id': productInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "price")}", icon: "application_edit"], [handler: "deletePrice(#id#)", icon: "application_delete"]]}">
         <rg:criteria>

@@ -47,9 +47,18 @@
     </g:each>
 </div>
 
+
+<div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'guarantee', 'error')} ">
+    <label for="guarantee">
+        <g:message code="price.guarantee.label" default="Guarantee"/>
+    </label>
+    <rg:autocomplete domainClass="eshop.Guarantee" id="guarantee" like="true" value="${priceInstance?.guarantee?.id}" display="${priceInstance?.guarantee}"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'defaultPrice', 'error')}" >
 <label for="defaultPrice">
-    <g:message code="price.defauktPrice.label" default="Default Price"/>
+    <g:message code="price.defaultPrice.label" default="Default Price"/>
 
 </label>
 <g:checkBox name="defaultPrice" value="${priceInstance?.defaultPrice}"/>

@@ -8,6 +8,8 @@ class Price {
     Date startDate
     Date endDate
     boolean defaultPrice
+    Guarantee guarantee
+
     static hasMany = [variationValues: VariationValue]
 
     static mapping = {

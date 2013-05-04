@@ -6,6 +6,7 @@ class ProducerVariations {
     Product product
 
     static hasMany = [variationValues : VariationValue]
+    Guarantee guarantee
 
     static constraints = {
         producer()

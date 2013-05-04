@@ -53,7 +53,7 @@ class PriceController {
             }
             boolean tmp
             def lastPrice
-            def allLastPrices = Price.findByProductAndEndDateIsNull(priceInstance.product)
+            def allLastPrices = Price.findByProductAndEndDateIsNullAndGuarantee(priceInstance.product, priceInstance.guarantee)
             allLastPrices.each {
                 tmp = true
                 it.variationValues.each {
@@ -75,7 +75,7 @@ class PriceController {
 
         def tmp
         def defaultPrice
-        def allPrices = Price.findAllByProductAndDefaultPrice(priceInstance.product, true)
+        def allPrices = Price.findAllByProductAndDefaultPriceAndGuarantee(priceInstance.product, true, priceInstance.guarantee)
 
         allPrices.each {
             tmp = true
@@ -103,7 +103,7 @@ class PriceController {
         //if this used to be the default price, and now the first record should be set to true
         if(defaultPrice != null & !priceInstance.getDefaultPrice()){
             def price
-            def Prices = Price.findAllByProduct(priceInstance.product)
+            def Prices = Price.findAllByProductAndGuarantee(priceInstance.product, priceInstance.guarantee)
             for (it in Prices) {
                 tmp = true
                 it.variationValues.each {
@@ -134,7 +134,7 @@ class PriceController {
         if (priceInstance.defaultPrice == true) {
             def tmp
             def price
-            def allPrices = Price.findAllByProductAndDefaultPrice(priceInstance.product, false)
+            def allPrices = Price.findAllByProductAndDefaultPriceAndGuarantee(priceInstance.product, false, priceInstance.guarantee)
             for (it in allPrices) {
                 tmp = true
                 it.variationValues.each {
