@@ -17,6 +17,7 @@ class VariationValue {
     }
 
     static constraints = {
+        value(unique: 'variationGroup')
     }
 
     String toString() {

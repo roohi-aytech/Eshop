@@ -68,6 +68,29 @@ class BootStrap {
             it.save()
         }
 
+        // ino vase in gozashtam ke variation value haaye tekrari ro hazf kone ,,, badan bayad varesh darim
+        VariationValue.findAll().groupBy {it.variationGroup}.each {vgVariationGroup->
+            vgVariationGroup.value.groupBy {it.value}.each {
+                if(it.value.size()>1){
+                    def baseVariationValue
+                    it.value.eachWithIndex {variationValue,index->
+                        if(index==0)
+                            baseVariationValue=variationValue
+                        else{
+//                            def vs=Variation.findAllByVariationValues([variationValue])
+                            def vs=Variation.createCriteria().list {variationValues{eq('id',variationValue.id)}}
+                            vs.each {
+                                it.removeFromVariationValues(variationValue)
+                                it.addToVariationValues(baseVariationValue)
+                                it.save()
+                            }
+                            vgVariationGroup.key.removeFromVariationValues(variationValue)
+                            variationValue.delete()
+                        }
+                    }
+                }
+            }
+        }
 //        def province = new Province(title: "Tehran")
 //        def city = new City(title: "Tehran", province: province)
 //        province.addToCities(city)
