@@ -54,8 +54,11 @@ class VariationGroupController {
             variationValue = new VariationValue(params)
             variationValue.indx = 0
         }
-        variationValue.save()
-        render variationValue as JSON
+        if(variationValue.save())
+            render variationValue as JSON
+        else{
+            render(template: "variation_value_add", model: [variationValueInstance: variationValue])
+        }
     }
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def variationValues() {
