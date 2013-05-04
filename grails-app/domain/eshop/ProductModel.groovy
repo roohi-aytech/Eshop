@@ -10,8 +10,12 @@ class ProductModel {
 
     static hasMany = [variationValues: VariationValue, prices: Price]
 
+    static composites = ["prices"]
+
     static mapping = {
         sort 'id'
+        prices cascade: "all-delete-orphan"
+
     }
 
     static constraints = {
