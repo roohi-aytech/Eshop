@@ -98,6 +98,10 @@ class OrderController {
 
         switch (status) {
             case OrderHelper.STATUS_CREATED:
+                suggestedActions = []
+                actions = [OrderHelper.ACTION_CANCELLATION]
+                break;
+            case OrderHelper.STATUS_INQUIRED:
                 suggestedActions = [OrderHelper.ACTION_PAYMENT]
                 actions = [OrderHelper.ACTION_CANCELLATION]
                 break;

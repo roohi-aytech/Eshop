@@ -211,6 +211,12 @@ ul.errors {
     height: 120px;
 }
 
+.not-exists-label{
+    color:#ff4500;
+    padding:3px;
+    display:block;
+}
+
 .thumbnail {
     text-align: center;
     overflow: hidden;

@@ -33,28 +33,9 @@
 	<g:field type="number" name="price" step="any" required="" value="${priceInstance.price}"/>
 </div>
 
-<div>
-
-    <g:each in="${product.variations}" var="variation">
-        <label>${variation.name}</label>
-
-        <select id="variation_${variation.id}" name="variation_${variation.id}">
-            <g:each in="${variation.variationValues}" var="variationValue">
-                <option value="${variationValue.id}" ${(priceInstance?.variationValues?.contains(variationValue))? 'selected': ''}>${variationValue.value}</option>
-            </g:each>
-        </select>
-
-    </g:each>
-</div>
 
 
-<div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'guarantee', 'error')} ">
-    <label for="guarantee">
-        <g:message code="price.guarantee.label" default="Guarantee"/>
-    </label>
-    <rg:autocomplete domainClass="eshop.Guarantee" id="guarantee" like="true" value="${priceInstance?.guarantee?.id}" display="${priceInstance?.guarantee}"/>
 
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'defaultPrice', 'error')}" >
 <label for="defaultPrice">
