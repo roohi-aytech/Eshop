@@ -48,7 +48,7 @@ class GuaranteeController {
     }
 
     def delete() {
-        def guaranteeInstance = Producer.get(params.id)
+        def guaranteeInstance = Guarantee.get(params.id)
         guaranteeInstance.delete(flush: true)
         render 0
     }

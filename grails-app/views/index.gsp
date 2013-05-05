@@ -46,15 +46,11 @@
                                 code="brand.label"
                                 default="Brand"/></span></g:link></li>
                     <li>
-                        <g:link controller="currency" action="list"><img
-                                src="images/currency.png"/><span><g:message
-                                code="currency.label"
-                                default="Currency"/></span></g:link></li>
-                    <li>
-                        <g:link controller="cultureEvent" action="list"><img
-                                src="images/cultureEvent.png"/><span><g:message
-                                code="cultureEvent.label"
-                                default="Culture Event"/></span></g:link></li>
+                        <g:link controller="guarantee" action="list"><img
+                                src="images/guarantee.png"/><span><g:message
+                                code="guarantee.label"
+                                default="Guarantee"/></span></g:link></li>
+
                 </sec:ifAllGranted>
             </ul>
         </sec:ifAnyGranted>
@@ -107,6 +103,17 @@
                             src="images/pageDetails.png"/><span><g:message
                             code="pageDetails.label"
                             default="Page Details"/></span></g:link></li>
+                <li>
+
+                    <g:link controller="currency" action="list"><img
+                            src="images/currency.png"/><span><g:message
+                            code="currency.label"
+                            default="Currency"/></span></g:link></li>
+                <li>
+                    <g:link controller="cultureEvent" action="list"><img
+                            src="images/cultureEvent.png"/><span><g:message
+                            code="cultureEvent.label"
+                            default="Culture Event"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
@@ -124,7 +131,10 @@
                             src="images/waitingPaymentRequests.png"/><span><g:message
                             code="navigation.manage.waitingPaymentRequests"
                             default="Users"/></span></g:link></li>
+
+
             </ul>
+
         </sec:ifAllGranted>
 
     </li>

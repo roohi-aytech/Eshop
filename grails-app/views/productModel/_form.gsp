@@ -44,4 +44,25 @@
 </div>
 
 
+<div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'isDefaultModel', 'error')}" >
+    <label for="isDefaultModel">
+        <g:message code="productModel.isDefaultModel.label" default="Default Model"/>
+
+    </label>
+    <g:checkBox name="isDefaultModel" value="${productModelInstance?.isDefaultModel}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'status', 'error')} ">
+    <label for="status">
+        <g:message code="productModel.status.label" default="Status"/>
+
+    </label>
+    <g:select name="status" from="${productModelInstance.constraints.status.inList}" value="${productModelInstance?.status}"
+              valueMessagePrefix="productModel.status" noSelection="['': '']"/>
+
+
+</div>
+
+
+
 

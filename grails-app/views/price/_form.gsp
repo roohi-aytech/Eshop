@@ -10,7 +10,7 @@
 
 <g:hiddenField name="id" value="${priceInstance?.id}" />
 <g:hiddenField name="version" value="${priceInstance?.version}" />
-<g:hiddenField name="product.id" value="${priceInstance?.product?.id}" />
+<g:hiddenField name="productModel.id" value="${priceInstance?.productModel?.id}" />
 
 
 <div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'currency', 'error')} required">
@@ -36,12 +36,4 @@
 
 
 
-
-<div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'defaultPrice', 'error')}" >
-<label for="defaultPrice">
-    <g:message code="price.defaultPrice.label" default="Default Price"/>
-
-</label>
-<g:checkBox name="defaultPrice" value="${priceInstance?.defaultPrice}"/>
-</div>
 

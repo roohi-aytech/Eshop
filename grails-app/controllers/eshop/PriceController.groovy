@@ -15,17 +15,17 @@ class PriceController {
 
     def form() {
         def priceInstance
-        def product
+        def productModel
 
         if (params.id)
             priceInstance = Price.get(params.id)
         else
             priceInstance = new Price(params)
 
-        if (params.product.id)
-            product = Product.get(params.product.id)
+        if (params.productModel.id)
+            productModel = ProductModel.get(params.productModel.id)
 
-        render(template: "form", model: [priceInstance: priceInstance, product: product])
+        render(template: "form", model: [priceInstance: priceInstance, productModel: productModel])
     }
 
     def list() {
@@ -36,35 +36,12 @@ class PriceController {
         if (params.id) {
             priceInstance = Price.get(params.id)
             priceInstance.properties = params
-            priceInstance.variationValues = []
-            def variations = Variation.findAllByBaseProduct(Product.get(params.product.id))
-
-            variations.each {
-                priceInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
-            }
         }
         else {
             priceInstance = new Price(params)
-            priceInstance.variationValues = []
-            def variations = Variation.findAllByBaseProduct(Product.get(params.product.id))
+            
+            def lastPrice = Price.findByProductModelAndEndDateIsNull(priceInstance.productModel)
 
-            variations.each {
-                priceInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
-            }
-            boolean tmp
-            def lastPrice
-            def allLastPrices = Price.findByProductAndEndDateIsNullAndGuarantee(priceInstance.product, priceInstance.guarantee)
-            allLastPrices.each {
-                tmp = true
-                it.variationValues.each {
-                    if(!priceInstance.variationValues.collect{it.id}.contains(it.id)){
-                        tmp = false
-                    }
-                }
-                if (tmp == true){
-                    lastPrice = it
-                }
-            }
             if (lastPrice) {
                 lastPrice.endDate = new Date()
                 lastPrice.save()
@@ -73,51 +50,6 @@ class PriceController {
         priceInstance.startDate = new Date()
         priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
 
-        def tmp
-        def defaultPrice
-        def allPrices = Price.findAllByProductAndDefaultPriceAndGuarantee(priceInstance.product, true, priceInstance.guarantee)
-
-        allPrices.each {
-            tmp = true
-            it.variationValues.each {
-                if(!priceInstance.variationValues.collect{it.id}.contains(it.id)){
-                    tmp = false
-                }
-            }
-            if (tmp == true){
-                defaultPrice = it
-            }
-        }
-
-        //the previous default price should be set to false, and this is the new default price
-        if (priceInstance.getDefaultPrice() == true) {
-            if (defaultPrice) {
-                defaultPrice.defaultPrice = false
-                defaultPrice.save()
-            }
-        }
-        //it is the first record and should be set to default
-        if(defaultPrice == null)
-            priceInstance.defaultPrice = true
-
-        //if this used to be the default price, and now the first record should be set to true
-        if(defaultPrice != null & !priceInstance.getDefaultPrice()){
-            def price
-            def Prices = Price.findAllByProductAndGuarantee(priceInstance.product, priceInstance.guarantee)
-            for (it in Prices) {
-                tmp = true
-                it.variationValues.each {
-                    if (!priceInstance.variationValues.collect { it.id }.contains(it.id)) {
-                        tmp = false
-                    }
-                }
-                if (tmp == true) {
-                    it.defaultPrice = true
-                    it.save()
-                    break
-                }
-            }
-        }
 
         if (priceInstance.validate() && priceInstance.save()) {
             render priceInstance as JSON
@@ -125,30 +57,8 @@ class PriceController {
             render(template: "form", model: [priceInstance: priceInstance])
     }
 
-    def setDefaultValueForTheFirstPrice(){
-
-    }
-
     def delete() {
         def priceInstance = Price.get(params.id)
-        if (priceInstance.defaultPrice == true) {
-            def tmp
-            def price
-            def allPrices = Price.findAllByProductAndDefaultPriceAndGuarantee(priceInstance.product, false, priceInstance.guarantee)
-            for (it in allPrices) {
-                tmp = true
-                it.variationValues.each {
-                    if (!priceInstance.variationValues.collect { it.id }.contains(it.id)) {
-                        tmp = false
-                    }
-                }
-                if (tmp == true) {
-                    it.defaultPrice = true
-                    it.save()
-                    break
-                }
-            }
-        }
 
         priceInstance.delete(flush: true)
         render 0

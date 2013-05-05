@@ -6,8 +6,7 @@ class Price {
     Currency currency
     Date startDate
     Date endDate
-    boolean defaultPrice
-    ProductModel model
+    ProductModel productModel
 
     static mapping = {
         sort 'startDate'
@@ -19,5 +18,9 @@ class Price {
         currency(nullable: true)
         startDate(nullable: false)
         endDate(nullable: true)
+    }
+
+    String toString(){
+        rialPrice
     }
 }
