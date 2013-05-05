@@ -54,25 +54,30 @@ class ProductModelController {
         if (params.id) {
             modelInstance = ProductModel.get(params.id)
             modelInstance.properties = params
+            modelInstance.variationValues = []
+            def variations = Variation.findAllByBaseProduct(Product.get(params.product.id))
+
+            variations.each {
+                modelInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
+            }
         }
         else {
             modelInstance = new ProductModel(params)
+
+            modelInstance.variationValues = []
+            def variations = Variation.findAllByBaseProduct(Product.get(params.product.id))
+
+            variations.each {
+                modelInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
+            }
+
+            if (!validate(modelInstance)) {
+                flash.message = message(code: 'default.repetitive', args: [message(code: 'productModel.label', default: 'Product Model'), params.id])
+                redirect(action: "list")
+                return
+
+            }
         }
-
-        modelInstance.variationValues = []
-        def variations = Variation.findAllByBaseProduct(Product.get(params.product.id))
-
-        variations.each {
-            modelInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
-        }
-
-        if (!validate(modelInstance)) {
-            flash.message = message(code: 'default.repetitive', args: [message(code: 'productModel.label', default: 'Product Model'), params.id])
-            redirect(action: "list")
-            return
-
-        }
-
 
         def productModelDefault = ProductModel.findByProductAndIsDefaultModel(modelInstance.product, true)
         
