@@ -12,6 +12,9 @@
         </g:eachError>
     </ul>
 </g:hasErrors>
+<g:if test="${flash.message}">
+    <div class="message" role="status">${flash.message}</div>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'name', 'error')} ">
     <label for="name">

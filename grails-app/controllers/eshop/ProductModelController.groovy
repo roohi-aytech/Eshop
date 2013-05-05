@@ -72,10 +72,11 @@ class ProductModelController {
             }
 
             if (!validate(modelInstance)) {
-                flash.message = message(code: 'default.repetitive', args: [message(code: 'productModel.label', default: 'Product Model'), params.id])
-                redirect(action: "list")
-                return
+                flash.message = message(code: "default.repetitive")
+                render(template: 'form', model: ['productModelInstance': modelInstance, 'product' : Product.get(params.product.id)])
 
+
+                return
             }
         }
 
