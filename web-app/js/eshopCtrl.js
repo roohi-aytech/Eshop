@@ -23,7 +23,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.specialSaleSlideHeight = specialSaleSlideHeight;
 
     //    basket
-    $scope.addToBasket = function (id, name, price, defaultPriceId) {
+    $scope.addToBasket = function (id, name, price) {
         $scope.basketCounter++;
         var found = false;
         for (var i = 0; i < $scope.basket.length; i++) {

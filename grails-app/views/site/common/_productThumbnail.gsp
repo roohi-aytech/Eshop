@@ -23,7 +23,7 @@
                          onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
                         <div class="attribute-list">
                             <g:each in="${product.attributes}">
-                                <g:if test="${it.value.toString().compareTo("N/A") != 0}">
+                                <g:if test="${it.attributeType.showPositions.contains('productList') && it.value.toString().compareTo("N/A") != 0}">
                                     <div><b>${it.attributeType}:</b> ${it.value}</div>
                                 </g:if>
                             </g:each>

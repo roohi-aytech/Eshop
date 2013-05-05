@@ -3,7 +3,7 @@
 <g:javascript src="jquery.themepunch.showbizpro.js"></g:javascript>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.fancybox.css')}" type="text/css">
 <g:javascript src="jquery.fancybox.js"></g:javascript>
-<h3 class="band-carousel-container-title">${title}</h3>
+%{--<h3 class="band-carousel-container-title">${title}</h3>--}%
 <g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
 <div class="table band-carousel-container">
     <div class="showbiz-navigation center sb-nav-dark table-cell">

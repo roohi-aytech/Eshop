@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>${product}</title>
+    <title>${product.manualTitle ? product.pageTitle : product.toString()}</title>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
     <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
@@ -17,7 +17,9 @@
     }
     </style>
     <link rel="stylesheet"
-          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
+          href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
+    <link rel="stylesheet"
+          %{--href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>--}%
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -58,27 +60,31 @@
                                      productPrice="price"></eshop:addToWishList>
             </div>
         </div>
-        <g:render template="banners/enamad"></g:render>
     </div>
 
     <div class="table-cell">
         <div class="table">
             <div class="table-row">
+                <div class="table-cell" style="padding-left:5px;">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
+                        </li>
+                        <g:if test="${breadCrumb.size() > 1}">
+                            <g:each in="${breadCrumb[0..-1]}">
+                                <li>
+                                    <span class="divider">${">"}</span>
+                                    <a href="${it.href}">${it.name}</a>
+                                </li>
+                            </g:each>
+                        </g:if>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table-row">
                 <div class="table">
-                    <div class="table-cell">
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
-                            </li>
-                            <g:if test="${breadCrumb.size() > 1}">
-                                <g:each in="${breadCrumb[0..-1]}">
-                                    <li>
-                                        <span class="divider">${">"}</span>
-                                        <a href="${it.href}">${it.name}</a>
-                                    </li>
-                                </g:each>
-                            </g:if>
-                        </ul>
+                    <div class="table-cell" id="product-description-area">
 
                         <div class="white-panel">
 
@@ -146,7 +152,5 @@
     </div>
 </div>
 
-<g:javascript library="jquery"/>
-<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 </body>
 </html>

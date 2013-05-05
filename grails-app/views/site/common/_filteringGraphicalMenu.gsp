@@ -1,9 +1,9 @@
 %{--product types--}%
 <g:if test="${filters.productTypes}">
-    <h3 class="productType-container-title">
-        <g:message code="site.selectSubcategory"
-                   default="Select SubProductType"></g:message>
-    </h3>
+    %{--<h3 class="productType-container-title">--}%
+        %{--<g:message code="site.selectSubcategory"--}%
+                   %{--default="Select SubProductType"></g:message>--}%
+    %{--</h3>--}%
     <g:render template="common/productTypeGrid"
               model="${[type: 'filter', subProductTypeLinks: filters.productTypes]}"></g:render>
 </g:if>
@@ -18,8 +18,8 @@
 </g:if>
 %{--attributes--}%
 <g:if test="${productTypeTypeLinks && !productTypeTypeLinks.isEmpty()}">
-    <h3 class="productType-container-title">
-        <g:message code="site.selectProductTypeType"></g:message>
-    </h3>
+    %{--<h3 class="productType-container-title">--}%
+        %{--<g:message code="site.selectProductTypeType"></g:message>--}%
+    %{--</h3>--}%
     <g:render template="common/productTypeTypeGrid"></g:render>
 </g:if>

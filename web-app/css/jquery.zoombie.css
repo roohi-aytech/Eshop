@@ -1,0 +1,27 @@
+.zoom {
+    display: block;
+    text-align: center;
+    margin:auto;
+}
+
+.zoom:after {
+    content: '';
+    display: block;
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    top: 0;
+    right: 0;;
+}
+
+.zoom img {
+    display: inline-block;
+}
+
+.zoom img::selection {
+    background-color: transparent;
+}
+
+#zommArea{
+    background: url(../images/loading.gif) center center no-repeat;
+}

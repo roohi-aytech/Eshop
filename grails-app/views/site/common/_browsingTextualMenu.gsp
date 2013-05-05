@@ -32,7 +32,7 @@
     <g:if test="${filters?.attributes}">
         <g:each in="${filters.attributes}" var="attribute">
             <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
-            <g:each in="${attribute.value.countsByValue}" var="attributeValueCount">
+            <g:each in="${attribute.value.countsByValue.count{it} > 5? attribute.value.countsByValue[0..4]:attribute.value.countsByValue}" var="attributeValueCount">
                 <li class="checkable">
                     <eshop:filterStart productType="${productType}" attribute="${attribute.key}"
                                        value="${attributeValueCount._id}"></eshop:filterStart>

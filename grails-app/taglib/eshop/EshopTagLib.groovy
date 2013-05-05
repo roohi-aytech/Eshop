@@ -164,11 +164,17 @@ class EshopTagLib {
 
     def addToBasket = { attrs, body ->
         def product = Product.get attrs.prodcutId
-        def defaultPrice = Price.findAllByProductAndDefaultPrice product, true
-        if (defaultPrice)
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        if (defaultModel){
+            if(defaultModel.status == 'exists')
             out << """
-                <a class="btn btn-primary btn-buy addToBasket" defaultPriceId="${defaultPrice.id}" ng-click="addToBasket(${attrs.prodcutId}, '${attrs.productTitle}', '${attrs.productPrice}', \$(this).attr('defaultPriceId')"><span>${g.message(code: "add-to-basket")}</span></a>
+                <a class="btn btn-primary btn-buy addToBasket" ng-click="addToBasket(${defaultModel.id}, '${attrs.productTitle}', '${attrs.productPrice}'});"><span>${g.message(code: "add-to-basket")}</span></a>
                 """
+            else if(defaultModel.status == 'not-exists')
+                out << g.message(code: 'product.price.notExists')
+                else if(defaultModel.status == 'coming-soon')
+                out << g.message(code: 'product.price.comingSoon')
+        }
         else
             out << g.message(code: 'product.price.notExists')
     }
