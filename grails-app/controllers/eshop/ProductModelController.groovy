@@ -114,11 +114,9 @@ class ProductModelController {
 
     def details(){
         def productModelInstance = ProductModel.get(params.id)
-        redirect(action: "../price/prices", params: params)
 
-       // redirect action: '../price/prices', params: params
 
-        //redirect(template: '../price/prices', model:[productModelInstance : productModelInstance] )
+        [productModelInstance : productModelInstance]
     }
 
     def priceDetail(){
