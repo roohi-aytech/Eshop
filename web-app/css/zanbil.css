@@ -2105,6 +2105,16 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu{
     border:1px solid #eeeeee;
 }
 
+#etalage{
+    float:right;
+    margin-right: 5px;
+}
+
+.loading{
+    margin:auto;
+    margin-top:20px;
+}
+
 
 
 
