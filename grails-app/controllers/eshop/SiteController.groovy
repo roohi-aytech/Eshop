@@ -321,6 +321,11 @@ class SiteController {
 
         model
     }
+    def productImage() {
+        def product = Product.get(params.id)
+
+        render(template: "productImages", model: [product: product, selectedImage: product.images.find{it.id.toString() == params.img.toString()}])
+    }
 
     def fillAttibuteCategoryChildren(Product product, parentCategory) {
 

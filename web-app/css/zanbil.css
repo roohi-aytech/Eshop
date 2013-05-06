@@ -217,6 +217,12 @@ ul.errors {
     display:block;
 }
 
+.coming-soon-label{
+    color:#ff4500;
+    padding:3px;
+    display:block;
+}
+
 .thumbnail {
     text-align: center;
     overflow: hidden;
@@ -635,9 +641,11 @@ ul.errors {
     display: inline-block;
     margin: 3px;
     margin-bottom: -25px;
-    position: absolute;
-    top: 7px;
-    left: 120px;
+    margin-top:7px;
+    margin-right: 20px;
+    /*position: absolute;*/
+    /*top: 7px;*/
+    /*left: 120px;*/
 }
 
 #logo-small {
@@ -1064,6 +1072,14 @@ input.search-query {
     margin-top: 10px;
     border-radius: 5px;
     background-color: #eeeeee;
+}
+
+.close{
+    float:left !important;
+}
+
+.modal-footer{
+    text-align:left !important;
 }
 
 /*product*/
@@ -1969,15 +1985,15 @@ span.cke_skin_kama {
 
 /*product card*/
 .product-card{
-    background: #6fbbe2;
-    padding: 10px;
-    border-radius: 5px;
-    border:1px solid #41a6d9;
-    position: fixed;
-    right:5px;
-    width: 160px;
-    text-align: center;
+    background: none repeat scroll 0 0 #CCE0FF;
+    border: 1px solid #ABCDFF;
+    border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    padding: 10px;
+    position: fixed;
+    right: 5px;
+    text-align: center;
+    width: 160px;
 }
 
 .product-card h4{
@@ -2024,6 +2040,80 @@ span.cke_skin_kama {
     margin-top: 10px;
 }
 
+a.btn.btn-primary.dropdown-toggle:hover + ul.dropdown-menu{
+    display: block;
+}
+ ul.dropdown-menu:hover{
+    display: block;
+}
+a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu{
+    top:43px !important;
+    right:8px !important;
+}
+
+/*product image slideshow*/
+.modal {
+    position: fixed;
+    top: 65px;
+    right: 5px;
+    bottom: 5px;
+    left: 5px;
+    margin: 0;
+    width: auto !important;
+    /*height: 90%;*/
+}
+.modal-body {
+    /*top: 10% !important;*/
+    max-height: 90% !important;
+    /*bottom: 5% !important;*/
+    margin-top:2%;
+    padding: 0 !important;
+    margin-right: 25px !important;
+    margin-left: 25px !important;
+}
+.modal.fade.in {
+    top: 65px;
+}
+
+.modal-header{
+    border-bottom-width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+}
+
+.modal-header .close{
+    margin-left: 5px;
+}
+
+.product-slideShow .image-list{
+    max-width: 220px;
+}
+
+.product-slideShow .image-list img{
+    margin:5px;
+    padding:5px;
+    border:1px solid transparent;
+    border-radius: 5px;
+    cursor:pointer;
+}
+
+.product-slideShow .image-list img:hover{
+    border:1px solid #eeeeee;
+}
+
+.product-slideShow .image-list img.active{
+    border:1px solid #eeeeee;
+}
+
+#etalage{
+    float:right;
+    margin-right: 5px;
+}
+
+.loading{
+    margin:auto;
+    margin-top:20px;
+}
 
 
 

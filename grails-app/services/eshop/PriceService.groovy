@@ -4,8 +4,9 @@ class PriceService {
 
     def calcProductPrice(productId) {
         def product = Product.get(productId)
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         def now = new Date()
-        def price = Price.findByProductAndStartDateLessThanEqualsAndEndDateIsNull(product, now)
+        def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(defaultModel, now)
         def addedValues = []
         addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(product, "everyWhere"))
         product?.productTypes?.each {
