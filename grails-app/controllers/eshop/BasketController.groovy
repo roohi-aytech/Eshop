@@ -8,7 +8,7 @@ class BasketController {
 
     def add() {
         def id = params.id
-        def product = Product.get(id)
+        def productModel = ProductModel.get(id)
 
         def basket = session.getAttribute("basket")
         if (!basket)
@@ -17,7 +17,7 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            basketItem = [id: id, name: product.toString(), count: 1, price: priceService.calcProductPrice(product.id).mainVal]
+            basketItem = [id: id, name: productModel.toString(), count: 1, price: priceService.calcProductModelPrice(productModel.id).mainVal]
             basket << basketItem
         }
 
@@ -31,7 +31,6 @@ class BasketController {
 
     def remove() {
         def id = params.id
-        def product = Product.get(id)
 
         def basket = session.getAttribute("basket")
         if (!basket)

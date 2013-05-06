@@ -80,6 +80,32 @@
         </sec:ifAnyGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
             <h3>
+                <g:message code="navigation.manage.accounting" default="Settings"/>
+            </h3>
+            <ul>
+                <li>
+
+                    <g:link controller="currency" action="list"><img
+                            src="images/currency.png"/><span><g:message
+                            code="currency.label"
+                            default="Currency"/></span></g:link></li>
+                <li>
+                    <g:link controller="account" action="list"><img
+                            src="images/bank-account.png"/><span><g:message
+                            code="navigation.manage.bankAccount"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="paymentRequest" action="list"><img
+                            src="images/waitingPaymentRequests.png"/><span><g:message
+                            code="navigation.manage.waitingPaymentRequests"
+                            default="Users"/></span></g:link></li>
+
+
+            </ul>
+
+        </sec:ifAllGranted>
+        <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
+            <h3>
                 <g:message code="navigation.manage.settings" default="Settings"/>
             </h3>
             <ul>
@@ -99,42 +125,16 @@
                             code="navigation.manage.province"
                             default="Province"/></span></g:link></li>
                 <li>
-                    <g:link controller="pageDetails" action="list"><img
-                            src="images/pageDetails.png"/><span><g:message
-                            code="pageDetails.label"
-                            default="Page Details"/></span></g:link></li>
-                <li>
-
-                    <g:link controller="currency" action="list"><img
-                            src="images/currency.png"/><span><g:message
-                            code="currency.label"
-                            default="Currency"/></span></g:link></li>
-                <li>
                     <g:link controller="cultureEvent" action="list"><img
                             src="images/cultureEvent.png"/><span><g:message
                             code="cultureEvent.label"
                             default="Culture Event"/></span></g:link></li>
-            </ul>
-        </sec:ifAllGranted>
-        <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
-            <h3>
-                <g:message code="navigation.manage.accounting" default="Settings"/>
-            </h3>
-            <ul>
                 <li>
-                    <g:link controller="account" action="list"><img
-                            src="images/bank-account.png"/><span><g:message
-                            code="navigation.manage.bankAccount"
-                            default="Users"/></span></g:link></li>
-                <li>
-                    <g:link controller="paymentRequest" action="list"><img
-                            src="images/waitingPaymentRequests.png"/><span><g:message
-                            code="navigation.manage.waitingPaymentRequests"
-                            default="Users"/></span></g:link></li>
-
-
+                    <g:link controller="pageDetails" action="list"><img
+                            src="images/pageDetails.png"/><span><g:message
+                            code="pageDetails.label"
+                            default="Page Details"/></span></g:link></li>
             </ul>
-
         </sec:ifAllGranted>
 
     </li>

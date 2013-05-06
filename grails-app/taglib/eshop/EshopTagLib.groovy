@@ -163,6 +163,7 @@ class EshopTagLib {
     }
 
     def addToBasket = { attrs, body ->
+        if(attrs.proc)
         def product = Product.get attrs.prodcutId
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (defaultModel){
