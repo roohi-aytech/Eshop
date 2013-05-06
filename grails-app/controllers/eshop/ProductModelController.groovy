@@ -106,6 +106,7 @@ class ProductModelController {
             tempModel[0].isDefaultModel = true
             tempModel[0].save()
         }
+        productModelInstance.variationValues = null
 
         productModelInstance.delete(flush: true)
         render 0
@@ -113,8 +114,11 @@ class ProductModelController {
 
     def details(){
         def productModelInstance = ProductModel.get(params.id)
+        redirect(action: "../price/prices", params: params)
 
-        [productModelInstance : productModelInstance]
+       // redirect action: '../price/prices', params: params
+
+        //redirect(template: '../price/prices', model:[productModelInstance : productModelInstance] )
     }
 
     def priceDetail(){

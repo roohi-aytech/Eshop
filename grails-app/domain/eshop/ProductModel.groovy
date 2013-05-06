@@ -15,7 +15,6 @@ class ProductModel {
     static mapping = {
         sort 'id'
         prices cascade: "all-delete-orphan"
-
     }
 
     static constraints = {

@@ -4,13 +4,15 @@ class Variation {
     String name
     VariationGroup variationGroup
     BaseProduct baseProduct
-    static hasMany = [variationValues:VariationValue]
+    static hasMany = [variationValues : VariationValue]
 
     static belongsTo = [VariationGroup]
 
 
     static mapping = {
         sort 'name'
+        variationValues cascade: "all-delete-orphan"
+
     }
 
     static constraints = {
@@ -19,6 +21,7 @@ class Variation {
         variationValues()
 
     }
+
 
     @Override
     String toString() {

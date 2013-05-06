@@ -10,5 +10,6 @@ package eshop
 class BaseProduct {
     static hasMany = [variations: Variation, articles: JournalArticle, guarantees: Guarantee]
     static constraints = {
+
     }
 }
