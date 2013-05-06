@@ -38,6 +38,7 @@ class Product extends BaseProduct implements Comparable{
         attributes cascade: 'all'
         details type: "text"
         version false
+
     }
 
     static constraints = {
