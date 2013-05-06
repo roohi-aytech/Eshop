@@ -5,6 +5,8 @@ import rapidgrails.TaglibHelper
 class EshopTagLib {
     static namespace = "eshop"
 
+    def priceService
+
     def renderProductAttributes = { attrs, body ->
         Product product = attrs.product
         request.setAttribute("product", product)
@@ -163,20 +165,23 @@ class EshopTagLib {
     }
 
     def addToBasket = { attrs, body ->
-        if(attrs.proc)
         def product = Product.get attrs.prodcutId
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
-        if (defaultModel){
-            if(defaultModel.status == 'exists')
-            out << """
-                <a class="btn btn-primary btn-buy addToBasket" ng-click="addToBasket(${defaultModel.id}, '${attrs.productTitle}', '${attrs.productPrice}'});"><span>${g.message(code: "add-to-basket")}</span></a>
-                """
-            else if(defaultModel.status == 'not-exists')
+        if (defaultModel) {
+            if (defaultModel.status == 'exists') {
+                if (priceService.calcProductModelPrice(defaultModel.id)?.mainVal) {
+                    out << """
+                    <a class="btn btn-primary btn-buy addToBasket" ng-click="addToBasket(${defaultModel.id}, '${attrs.productTitle}', '${attrs.productPrice}'});"><span>${g.message(code: "add-to-basket")}</span></a>
+                    """
+                } else {
+                    out << g.message(code: 'product.price.notExists')
+                }
+            } else if (defaultModel.status == 'not-exists') {
                 out << g.message(code: 'product.price.notExists')
-                else if(defaultModel.status == 'coming-soon')
+            } else if (defaultModel.status == 'coming-soon') {
                 out << g.message(code: 'product.price.comingSoon')
-        }
-        else
+            }
+        } else
             out << g.message(code: 'product.price.notExists')
     }
 
