@@ -560,9 +560,21 @@ class ProductController {
 
             product.attributes.each {it.delete()}
             AddedValue.findAllByBaseProduct(product).each {it.delete()}
-            Price.findAllByProduct(product).each {it.delete()}
 
-            Variation.findAllByBaseProduct(product).each {it.delete()}
+
+
+            ProductModel.findAllByProduct(product).each {
+                it.variationValues = null
+                it.save()
+                it.delete()
+            }
+
+            Variation.findAllByBaseProduct(product).each {
+                it.variationValues = null
+                it.save()
+                it.delete()
+            }
+
             product.delete()
             render 0;
         }

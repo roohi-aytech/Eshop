@@ -55,6 +55,18 @@
                         a0.find(".etalage_thumb_image").data("anchor", aY.attr("href"))
                     }
                 });
+                var widthRatio = parseInt(v.find(".etalage_thumb_image").attr('width'));
+                var heightRatio = parseInt(v.find(".etalage_thumb_image").attr('height'));
+
+                if(widthRatio >= heightRatio){
+                    c.thumb_image_width = 300;
+                    c.thumb_image_height = (300 * heightRatio) / widthRatio;
+                }
+                else{
+                    c.thumb_image_height = 300;
+                    c.thumb_image_width = (300 * widthRatio) / heightRatio;
+                }
+
                 var ar = v.find(".etalage_thumb_image").css({width: c.thumb_image_width, height: c.thumb_image_height}).show();
                 a.each(ar, function () {
                     a(this).data("src", this.src)

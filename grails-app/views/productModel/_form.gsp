@@ -1,5 +1,10 @@
 <%@ page import="eshop.VariationValue; eshop.Price" %>
 
+
+
+<g:hiddenField name="id" value="${productModelInstance?.id}" />
+<g:hiddenField name="version" value="${productModelInstance?.version}" />
+<g:hiddenField name="product.id" value="${productModelInstance?.product?.id}" />
 <g:hasErrors bean="${productModelInstance}">
     <ul class="errors" role="alert">
         <g:eachError bean="${productModelInstance}" var="error">
@@ -7,10 +12,9 @@
         </g:eachError>
     </ul>
 </g:hasErrors>
-
-<g:hiddenField name="id" value="${productModelInstance?.id}" />
-<g:hiddenField name="version" value="${productModelInstance?.version}" />
-<g:hiddenField name="product.id" value="${productModelInstance?.product?.id}" />
+<g:if test="${flash.message}">
+    <div class="message" role="status">${flash.message}</div>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'name', 'error')} ">
     <label for="name">

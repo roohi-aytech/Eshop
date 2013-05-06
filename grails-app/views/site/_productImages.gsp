@@ -4,8 +4,13 @@
 <g:javascript src="jquery.zoombie.js"/>
 <script language="javascript">
     $(document).ready(function () {
-        $('#zommArea').zoombie({ });
+        $('#zommArea').zoombie({ })
+        resizeZoomArea();
 
+    });
+
+    $(window).resize(function (){
+        resizeZoomArea();
     });
 
     var oldSelectedThumbnail = ${selectedImage.id};
@@ -21,6 +26,10 @@
         $(imageTag).load(function () {
         }).appendTo($('#zommArea'));
         $('#zommArea').zoombie({  });
+    }
+
+    function resizeZoomArea(){
+        $('#zommArea').height($('#zommArea').parent().parent().parent().parent().parent().height() - 80);
     }
 </script>
 

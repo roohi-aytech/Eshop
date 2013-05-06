@@ -7,6 +7,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" ng-app='eshop'><!--<![endif]-->
 <head>
     <title><g:layoutTitle></g:layoutTitle></title>
+    <canonical:show/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet"
