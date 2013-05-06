@@ -227,7 +227,7 @@ class ProductTypeController {
     }
 
     def saveProductType() {
-        try {
+         try {
             def productType
             if (params.id) {
                 productType = ProductType.get(params.id)
@@ -240,7 +240,7 @@ class ProductTypeController {
 
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
             productType = productType.save()
-            if (image) {
+            if (image && !params.imagedeleted) {
                 productType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productType))
                 productType.save()
             }
@@ -253,6 +253,9 @@ class ProductTypeController {
 
     def getImage() {
         def productType = ProductType.get(params.id)
+        response.setHeader( "Pragma", "no-cache" );
+        response.setHeader( "Cache-Control", "no-cache" );
+        response.setDateHeader( "Expires", 0 );
         if (productType && productType.image) {
             response.addHeader("content-disposition", "attachment;filename=$productType.name")
             response.contentLength = productType.image.length

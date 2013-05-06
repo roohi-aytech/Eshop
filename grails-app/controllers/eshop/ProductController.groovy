@@ -7,7 +7,7 @@ import grails.plugins.springsecurity.Secured
 import org.springframework.http.HttpStatus
 import eshop.mongo.MongoProduct
 
-@Secured([RoleHelper.ROLE_PRODUCT_ADMIN,RoleHelper.ROLE_PRODUCT_ADD,RoleHelper.ROLE_PRODUCT_ADD_EDIT])
+@Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
 class ProductController {
 
     def imageService
@@ -289,7 +289,7 @@ class ProductController {
         render 0
     }
 
-    def AccessoryForm(){
+    def AccessoryForm() {
         def accessory
         if (params.id)
             accessory = Accessory.findById(params.id)
@@ -299,7 +299,8 @@ class ProductController {
         render(template: "accessories_form", model: [accessoryInstance: accessory, baseProductId: params.baseProductId])
 
     }
-    def saveAccessory(){
+
+    def saveAccessory() {
 
     }
 
@@ -598,7 +599,24 @@ class ProductController {
         render res.collect {[id: it, label: it, value: it]} as JSON
     }
 
-    def variationValues (Variation variation){
+    def countryForm() {
+        render(template: "countryForm", model: [country: params.country])
+    }
+
+    def saveCountry() {
+        if (params.manufactureCountry) {
+            Product.findAllByManufactureCountry(params.manufactureCountryOld).each {
+                it.manufactureCountry = params.manufactureCountry
+                it.save()
+            }
+            render ([country:params.manufactureCountry] as JSON)
+        }
+        else {
+            render(template: "countryForm", model: [country: params.manufactureCountryOld, hasError: true])
+        }
+    }
+
+    def variationValues(Variation variation) {
 
         return variation.variationValues
 
