@@ -19,6 +19,7 @@ class BrowseService {
                 [$match: params.match],
                 [$group: [_id: params.group, count: [$sum: 1]]],
                 [$match: [count: [$gt: 0], _id: [$ne: null]]],
+                [$match: [_id: [$ne: 'N/A']]],
                 [$sort: [count: -1]]
         ).results()
         countMap
