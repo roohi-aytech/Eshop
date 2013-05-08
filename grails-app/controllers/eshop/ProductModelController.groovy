@@ -119,10 +119,11 @@ class ProductModelController {
         [productModelInstance : productModelInstance]
     }
 
-    def priceDetail(){
-        }
+    def producersDetails(){
+        def productModelInstance = ProductModel.get(params.id)
 
-    def producerDetail(){
 
+        [productModelInstance : productModelInstance]
     }
+
 }

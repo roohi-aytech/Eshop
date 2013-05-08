@@ -7,7 +7,6 @@ class ProductModel {
     String status
     Boolean isDefaultModel
 
-
     static hasMany = [variationValues: VariationValue, prices: Price]
 
     static composites = ["prices"]
@@ -23,5 +22,9 @@ class ProductModel {
         variationValues()
         status(inList: ['exists', 'not-exists', 'coming-soon'])
         isDefaultModel()
+    }
+
+    String toString(){
+        name
     }
 }

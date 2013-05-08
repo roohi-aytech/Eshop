@@ -23,7 +23,7 @@
     </ul>
 
     <div id="price" style="width: 98%">
-        <g:render template="../price/prices"/>
+        <g:render template="../producerProductModel/list"/>
     </div>
 
 

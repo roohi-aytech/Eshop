@@ -569,6 +569,7 @@ class ProductController {
             }
 
             Variation.findAllByBaseProduct(product).each {
+               // it.variationValues.each{it.delete()}
                 it.variationValues = null
                 it.save()
                 it.delete()
