@@ -165,13 +165,25 @@ class EshopTagLib {
     }
 
     def addToBasket = { attrs, body ->
-        def product = Product.get attrs.prodcutId
-        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        def product
+        def defaultModel
+
+        if (attrs.prodcutModelId) {
+            defaultModel = ProductModel.get(attrs.prodcutModelId)
+            product = defaultModel.product
+        } else {
+            product = Product.get(attrs.prodcutId)
+            defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+            if (defaultModel?.prices?.count { it } == 0)
+                defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        }
+
         if (defaultModel) {
             if (defaultModel.status == 'exists') {
-                if (priceService.calcProductModelPrice(defaultModel.id)?.mainVal) {
+                def price = priceService.calcProductModelPrice(defaultModel.id)?.mainVal
+                if (price) {
                     out << """
-                    <a class="btn btn-primary btn-buy addToBasket" ng-click="addToBasket(${defaultModel.id}, '${attrs.productTitle}', '${attrs.productPrice}'});"><span>${g.message(code: "add-to-basket")}</span></a>
+                    <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false"? "on": "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
                     """
                 } else {
                     out << g.message(code: 'product.price.notExists')
@@ -186,14 +198,26 @@ class EshopTagLib {
     }
 
     def addToWishList = { attrs, body ->
+        def product = Product.get attrs.prodcutId
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        if (defaultModel?.prices?.count { it } == 0)
+            defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.mainVal : ''
+
         out << """
-        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${attrs.productPrice}')"><span>${g.message(code: "add-to-wishList")}</span></a>
+        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
         """
     }
 
     def addToCompareList = { attrs, body ->
+        def product = Product.get attrs.prodcutId
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        if (defaultModel?.prices?.count { it } == 0)
+            defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.mainVal : ''
+
         out << """
-        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${attrs.productPrice}')"><span>${g.message(code: "add-to-compareList")}</span></a>
+        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>
         """
     }
 

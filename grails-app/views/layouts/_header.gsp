@@ -48,7 +48,7 @@
                             class="basket-item-count">{{basketItem.count}}
                     </span><br/>
                         <g:message code="price"></g:message>: <span
-                            class="basket-item-count">{{wishListItem.price}}
+                            class="basket-item-count">{{basketItem.price}}
                     </span>
                     </span>
                 </li>
@@ -74,7 +74,7 @@
                     </span>
                     <span class="basket-item-title">{{compareListItem.title}}<br/>
                         <g:message code="price"></g:message>: <span
-                            class="basket-item-count">{{wishListItem.price}}
+                            class="basket-item-count">{{compareListItem.price}}
                     </span>
                     </span>
                 </li>

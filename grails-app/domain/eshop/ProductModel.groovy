@@ -24,4 +24,14 @@ class ProductModel {
         status(inList: ['exists', 'not-exists', 'coming-soon'])
         isDefaultModel()
     }
+
+    @Override
+    int compareTo(def t) {
+        name <=>t?.name
+    }
+
+    @Override
+    String toString() {
+        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} مدل ${name?:""}"
+    }
 }

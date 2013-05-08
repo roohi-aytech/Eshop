@@ -5,7 +5,7 @@
             <g:set var="product" value="${eshop.Product.get(productId)}"/>
             <g:if test="${product}">
                 <li class="span3">
-                    <g:render template="/site/common/productThumbnail" model="[product: product,]"/>
+                    <g:render template="/site/common/productThumbnail" model="[product: product]"/>
                 </li>
             </g:if>
         </g:each>

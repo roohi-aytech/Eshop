@@ -18,7 +18,7 @@
 		<g:message code="price.currency.label" default="Currency" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="currency" name="currency.id" from="${eshop.Currency.list()}"
+	<g:select id="currency" name="currency" from="${eshop.Currency.list()}"
               optionKey="id"  noSelection="['':message(code: 'rial')]"
               value="${priceInstance?.currency?.id}" class="many-to-one"/>
 </div>

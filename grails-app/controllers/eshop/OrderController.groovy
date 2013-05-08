@@ -47,10 +47,10 @@ class OrderController {
         def basket = session.getAttribute("basket")
         basket.each() { basketItem ->
             def orderItem = new OrderItem()
-            orderItem.product = Product.get(basketItem.id)
+            orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
             orderItem.orderCount = basketItem.count
-            def price = priceService.calcProductPrice(basketItem.id).mainVal
+            def price = priceService.calcProductModelPrice(basketItem.id).mainVal
             orderItem.unitPrice = price ? price : 0
             if (!orderItem.validate() || !orderItem.save()) {
                 //order item save error
@@ -60,7 +60,8 @@ class OrderController {
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
 
-        redirect(action: 'payment', params: [id: order.id])
+        flash.message = message(code: 'order.creation.success.message')
+        redirect(controller: 'customer', action: 'panel')
     }
 
     def payment(){

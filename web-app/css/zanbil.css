@@ -1985,19 +1985,35 @@ span.cke_skin_kama {
 
 /*product card*/
 .product-card{
-    background: none repeat scroll 0 0 #CCE0FF;
-    border: 1px solid #ABCDFF;
-    border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-    padding: 10px;
     position: fixed;
     right: 5px;
-    text-align: center;
-    width: 160px;
+    width: 180px;
+}
+
+.product-card-content{
+    background: none repeat scroll 0 0 #CCE0FF;
+    border: 1px solid #ABCDFF;
+    border-bottom-width: 0;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    padding: 10px;
+}
+
+.product-card-footer{
+    background: none repeat scroll 0 0 #eeeeee;
+    border: 1px solid #dddddd;
+    border-top-width: 0;
+    border-radius: 0 0 5px 5px ;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    padding: 10px;
 }
 
 .product-card h4{
-    font-size:11px;
+    color: #006DCC;
+    font-family: tahoma,times new roman !important;
+    font-size: 11px;
+    text-shadow: 0 0 2px #fff;
 }
 
 .product-card .buttons{
@@ -2006,6 +2022,11 @@ span.cke_skin_kama {
 }
 
 .product-card .buttons a{
+    display: block;
+    margin-bottom: 3px;
+}
+
+.product-card-footer a{
     display: block;
     margin-bottom: 3px;
 }
@@ -2113,6 +2134,37 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu{
 .loading{
     margin:auto;
     margin-top:20px;
+}
+
+/*product variations*/
+.cur-variation{
+    font-weight: bold;
+}
+
+.variation-value{
+    margin-bottom:5px;
+}
+
+.variation-value-color {
+    padding-top:1px;
+    padding-bottom:1px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+.variation-value-color.selected{
+    border-color: #E47911;
+    border-width: 2px;
+    background-color: #EBF3FE;
+    padding-top:0;
+    padding-bottom:0;
+    padding-right:4px;
+    padding-left:4px;
+}
+
+.hover-variation{
+    font-weight: bold;
+    color: #E47911;
 }
 
 
