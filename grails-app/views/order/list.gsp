@@ -29,7 +29,8 @@
                 <h3>#${order.id}</h3>
 
                 <div class="comment"><g:message code="order.totalPrice"></g:message>: <g:formatNumber
-                        number="${order.items.unitPrice.sum()}" type="number"></g:formatNumber></div>
+                        number="${order.items.sum { it.unitPrice * it.orderCount }}"
+                        type="number"></g:formatNumber></div>
 
                 <div class="comment"><g:message code="order.${status}.date"></g:message>: <rg:formatJalaliDate
                         date="${order.trackingLogs.sort { -it.id }.first().date}" hm="true"></rg:formatJalaliDate></div>

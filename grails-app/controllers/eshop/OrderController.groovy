@@ -187,4 +187,22 @@ class OrderController {
         }
     }
 
+    def cancellation(){
+        def order = Order.get(params.id)
+        order.status = OrderHelper.STATUS_CANCELLED
+        order.save()
+
+        //save order tracking log
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_CANCELLATION
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = springSecurityService.currentUser
+        trackingLog.title = message(code: 'order.trackingLog.action.cancellation.title', params: [trackingLog.date, trackingLog.user])
+        if (trackingLog.validate() && trackingLog.save()) {
+            flash.message = message(code:'order.cancellation.completed')
+            redirect(controller: 'customer', action: 'panel')
+        }
+    }
+
 }
