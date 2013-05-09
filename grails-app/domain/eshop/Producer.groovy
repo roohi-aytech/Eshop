@@ -17,7 +17,7 @@ class Producer {
     static composites = ["producerStaffs"]
 
     static mapping = {
-        sort 'name'
+        sort 'id'
 //        producerStaffs cascade: "all-delete-orphan"
 //        producingProducts cascade: "all-delete-orphan"
       //  products cascade: "all-delete-orphan"
