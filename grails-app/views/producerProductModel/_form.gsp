@@ -8,22 +8,41 @@
     </ul>
 </g:hasErrors>
 
+<script type="text/javascript">
+    function producerChanged(producer) {
+        $.ajax({
+            url:'<g:createLink action="producingProduct" controller="producerProductModel"/>',
+            data:{
+                producer:producer.val(),
+                ProducerProductModelId : '${producerProductModelInstance?.id}'
+            },
+            type:'GET'
+        }).done(function(response){
+                    $('#producerDetailsTemplate').html(response);
+                });
+    }
+</script>
+
 <g:hiddenField name="id" value="${producerProductModelInstance?.id}" />
 <g:hiddenField name="version" value="${producerProductModelInstance?.version}" />
 <g:hiddenField name="productModel.id" value="${producerProductModelInstance?.productModel?.id}" />
 
 <div class="fieldcontain ${hasErrors(bean: producerProductModelInstance, field: 'producer', 'error')} ">
-    <label for="producer">
+    <label for="producer.id">
         <g:message code="producer.label" default="Producer"/>
     </label>
-    <g:select name="producer.id"
+    <g:select id="producerId" name="producer.id"
               from="${producers}"
               optionKey="id"
               value="${producerProductModelInstance?.producer}"
-              onchange="producerChanged(this, ${producerProductModelInstance.id})"/>
+              onchange="producerChanged(\$(this))"/>
 </div>
 
-<span class="producingProducts">
+<script type="text/javascript" language="javascript">
+producerChanged($('#producerId'));
+</script>
+
+<span class="producingProducts" id="producerDetailsTemplate" style="width: 600px">
     <g:if test="${producerProductModelInstance?.producer}">
         <g:render template="producingProduct_values" model="[
                 producerProductModelInstance: producerProductModelInstance,
@@ -31,24 +50,3 @@
         ]"/>
     </g:if>
 </span>
-
-
-<script type="text/javascript">
-    function producerChanged(producer, ProducerProductModelId) {
-        $.ajax({
-            url:'<g:createLink action="producingProduct" controller="producerProductModel"/>',
-            data:{
-                producer:producer.id,
-                ProducerProductModelId : ProducerProductModelId
-
-            },
-            type:'GET'
-        }).done(function(response){
-                    $(producer)
-                            .parent()
-                            .find(".producingProducts")
-                            .html("")
-                            .append(response)
-                })
-    }
-</script>

@@ -32,36 +32,53 @@ class ProducerProductModelController {
                     eq('brand', productModel?.product?.brand)
                     isNull('brand')
                 }
-                productTypes{
+                productTypes {
                     eq('id', productModel?.product?.productTypes?.toArray().first()?.id)
                 }
             }
         }
+        Producer producer = new Producer()
 
-        render(template: "form", model: [producerProductModelInstance: producerProductModelInstance, productModel: productModel, producers: producers])
+        render(template: "form", model: [producerProductModelInstance: producerProductModelInstance, productModel: productModel, producers: producers, producer: producer])
     }
 
     def producingProduct() {
+        def producingProduct
         def producer = Producer.get(params.producer)
         def p = []
-        def producerProductModelInstance = ProducerProductModel.get(params.ProducerProductModelId)
+        def producerProductModelInstance
+
+        if (params.ProducerProductModelId)
+            producerProductModelInstance = ProducerProductModel.get(params.ProducerProductModelId)
+        else
+            producerProductModelInstance = new ProducerProductModel(params.ProducerProductModelId)
+
         def productModel = producerProductModelInstance.productModel
+
         if (producer) {
             p = ProducingProduct.createCriteria().list {
-                eq('producer', producer.id)
-                eq('guarantee', productModel.guarantee)
-                eq('brand', productModel.product.brand)
+                eq('producer', producer)
+                or {
+                    eq('guarantee', productModel?.guarantee)
+                    isNull('guarantee')
+                }
+                or {
+                    eq('brand', productModel?.product?.brand)
+                    isNull('brand')
+                }
                 productTypes {
-                    'in'('id', productModel.product.productTypes)
+                    eq('id', productModel?.product?.productTypes?.toArray()?.first()?.id)
                 }
             }
+            if (p.size() > 0) {
+                producingProduct = p[0]
+                producerProductModelInstance.properties = producingProduct.properties
+            }
 
-            render(template: "producingProduct_values", model: [producerProductModelInstance: producerProductModelInstance, producingProduct: p[0]])
+            render(template: "producingProduct_values", model: [producerProductModelInstance: producerProductModelInstance])
         } else
             render ""
     }
-
-
 
     def list() {
     }
