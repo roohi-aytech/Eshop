@@ -13,6 +13,38 @@
 <BR>
 <ul id="home-nav">
     <li>
+        <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
+            <h3>
+                <g:message code="navigation.manage.settings" default="Settings"/>
+            </h3>
+            <ul>
+                <li>
+                    <g:link controller="user" action="list"><img
+                            src="images/users.png"/><span><g:message
+                            code="navigation.manage.users"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="slide" action="list"><img
+                            src="images/slideshow.png"/><span><g:message
+                            code="navigation.manage.slideshow"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="province" action="list"><img
+                            src="images/globe.png"/><span><g:message
+                            code="navigation.manage.province"
+                            default="Province"/></span></g:link></li>
+                <li>
+                    <g:link controller="cultureEvent" action="list"><img
+                            src="images/cultureEvent.png"/><span><g:message
+                            code="cultureEvent.label"
+                            default="Culture Event"/></span></g:link></li>
+                <li>
+                    <g:link controller="pageDetails" action="list"><img
+                            src="images/pageDetails.png"/><span><g:message
+                            code="pageDetails.label"
+                            default="Page Details"/></span></g:link></li>
+            </ul>
+        </sec:ifAllGranted>
         <sec:ifAnyGranted
                 roles="${RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${RoleHelper.ROLE_PRODUCER_ADD},${RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
             <h3>
