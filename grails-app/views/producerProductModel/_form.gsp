@@ -20,7 +20,7 @@
               from="${producers}"
               optionKey="id"
               value="${producerProductModelInstance?.producer}"
-              onchange="producerChanged(this, ${producerProductModelInstance.id})"/>
+              onchange="producerChanged(this, '${producerProductModelInstance.id}')"/>
 </div>
 
 <span class="producingProducts">

@@ -5,7 +5,6 @@
 
     </label>
     <g:select name="discountType" from="${producerProductModelInstance.constraints.discountType.inList}"
-              dispaly="${producer?.discountType}"
               value="${producerProductModelInstance?.discountType}"
               valueMessagePrefix="producingProduct.discountType" noSelection="['': '']"/>
 </div>
