@@ -52,7 +52,7 @@
         <g:message code="product.manufactureCountry.label" default="Manufacture Country"/>
 
     </label>
-    <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/>
+    <g:textField name="manufactureCountry" value="${productInstance?.manufactureCountry}"/> <input type="button" onclick="editCountry()" value="${message(code:'edit')}">
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'iranCode', 'error')} ">
@@ -107,6 +107,20 @@
                     $("#brand").val(r.name)
                     $("#brand.id").val(r.id)
                 })
+    }
+    function editCountry(){
+        var country=$("#manufactureCountry").val()
+        if(country){
+            loadOverlay('<g:createLink controller="product" action="countryForm"/>?country='+country,
+                    '<g:createLink controller="product" action="saveCountry"/>',
+                    function(r){
+                        $("#manufactureCountry").val(r.country  )
+                    })
+        }
+        else{
+            alert('<g:message code="please-select-a-country" />')
+        }
+
     }
     $(function(){
 

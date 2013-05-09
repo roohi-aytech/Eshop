@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="eshop.ProductModel" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
@@ -19,8 +19,8 @@
     <link rel="stylesheet"
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet"
-          %{--href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>--}%
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
+%{--href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>--}%
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -42,22 +42,16 @@
 <div class="layout-container table">
     <div class="table-cell product-rightColumn">
         <div class="product-card">
-            <h4>${product}</h4>
+            <div class="product-card-content" id="product-card">
+                <g:render template="product/card"
+                          model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
+            </div>
 
-
-            <g:message code="price"/>:
-            <b><g:render template="price"/></b>
-
-            <div class="buttons">
-                <eshop:addToBasket prodcutId="${product.id}"
-                                   productTitle="${product}"
-                                   productPrice="price"></eshop:addToBasket>
+            <div class="product-card-footer">
                 <eshop:addToCompareList prodcutId="${product.id}"
-                                        productTitle="${product.toString()}"
-                                        productPrice="price"></eshop:addToCompareList>
+                                        productTitle="${product.toString()}"></eshop:addToCompareList>
                 <eshop:addToWishList prodcutId="${product.id}"
-                                     productTitle="${product.toString()}"
-                                     productPrice="price"></eshop:addToWishList>
+                                     productTitle="${product.toString()}"></eshop:addToWishList>
             </div>
         </div>
     </div>
@@ -93,11 +87,6 @@
                             <p class="brand-badge">
                                 <span><g:message code="brand"/>:</span>
                                 <b>${product?.brand}</b>
-                            </p>
-
-                            <p>
-                                <g:message code="price"/>:
-                                <b><g:render template="price"/></b>
                             </p>
 
                             <p>

@@ -22,6 +22,23 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.specialSaleSlideWidth = specialSaleSlideWidth;
     $scope.specialSaleSlideHeight = specialSaleSlideHeight;
 
+//    product cart
+    $scope.reloadProductCart = function(url, serializedData, productCard){
+        $http({
+            url: url,
+            method: "POST",
+            data: serializedData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config){
+                productCard.html(data);
+            }).error(function (data, status, headers, config){
+                console.error(
+                    "The following error occured: "+
+                        textStatus, errorThrown
+                );
+            });
+    }
+
     //    basket
     $scope.addToBasket = function (id, name, price) {
         $scope.basketCounter++;

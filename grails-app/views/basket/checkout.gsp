@@ -94,7 +94,7 @@
             <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
             </span>
             <span class="name"><h3><a
-                    ng-href="{{contextRoot}}site/product/{{basketItem.id}}">{{basketItem.name}}</a>
+                    ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">{{basketItem.name}}</a>
             </h3>
             </span>
             <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>

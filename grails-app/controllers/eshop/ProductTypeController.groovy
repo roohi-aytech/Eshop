@@ -8,6 +8,7 @@ import grails.plugins.springsecurity.Secured
 class ProductTypeController {
     def imageService
     def fileService
+    def mongoService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -119,6 +120,9 @@ class ProductTypeController {
         else {
             render(template: "form_AttributeCategory", model: [attributeCategory: attributeCategory])
         }
+        attributeCategory.productType.products.each {
+            mongoService.storeProduct(it)
+        }
     }
 
     def deleteAttributeCategory() {
@@ -131,10 +135,14 @@ class ProductTypeController {
             }
             attributecategory.delete()
             render 0
+            attributecategory.productType.products.each {
+                mongoService.storeProduct(it)
+            }
         } catch (x) {
             x.printStackTrace()
             render(message(code: "cannot.delete"))
         }
+
     }
 
     def delete(Long id) {
@@ -203,6 +211,9 @@ class ProductTypeController {
             attributeTypeInstance.attributes.each {it.delete()}
             attributeTypeInstance.productType.removeFromAttributeTypes(attributeTypeInstance)
             attributeTypeInstance.delete()
+            attributeTypeInstance.productType.products.each {
+                mongoService.storeProduct(it)
+            }
             render 0;
         }
         catch (DataIntegrityViolationException e) {
@@ -240,9 +251,12 @@ class ProductTypeController {
 
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
             productType = productType.save()
-            if (image) {
+            if (image && !params.imagedeleted) {
                 productType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productType))
                 productType.save()
+            }
+            productType.products.each {
+                mongoService.storeProduct(it)
             }
             render 0;
         }
@@ -253,6 +267,9 @@ class ProductTypeController {
 
     def getImage() {
         def productType = ProductType.get(params.id)
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
         if (productType && productType.image) {
             response.addHeader("content-disposition", "attachment;filename=$productType.name")
             response.contentLength = productType.image.length
@@ -355,6 +372,9 @@ class ProductTypeController {
             }
         }
         attributeType.save()
+        attributeType.productType.products.each {
+            mongoService.storeProduct(it)
+        }
         render "0"
     }
 
@@ -391,6 +411,9 @@ class ProductTypeController {
         def productType = ProductType.get(params.id)
         productType.parentProduct = ProductType.get(params.parentId)
         productType.save()
+        productType.products.each {
+            mongoService.storeProduct(it)
+        }
         render 0
     }
 
@@ -495,7 +518,9 @@ class ProductTypeController {
         }
         cat.sortIndex = sortIndex
         cat.save()
-
+        cat.productType.products.each {
+            mongoService.storeProduct(it)
+        }
         render 0
     }
 
@@ -512,7 +537,9 @@ class ProductTypeController {
         }
         cat.sortIndex = sortIndex
         cat.save()
-
+        cat.productType.products.each {
+            mongoService.storeProduct(it)
+        }
         render 0
     }
 

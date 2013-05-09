@@ -52,8 +52,17 @@
 
     </label>
     <input type="file" id="image" name="image" />
-    <img src="<g:createLink controller="productType" action="getImage" id="${productTypeInstance?.id}"/>" style="max-width: 100px"/>
-
+    <input type="hidden" id="image${productTypeInstance?.id}deleted" name="imagedeleted" value="" />
+    <img id="${productTypeInstance?.id}img" src="<g:createLink controller="productType" action="getImage" id="${productTypeInstance?.id}"/>" style="max-width: 100px"/>
+    <input type="button" value="<g:message code="delete" />" onclick="deleteImage()">
+    <script type="text/javascript">
+        function deleteImage(){
+            if(confirm('<g:message code="default.button.delete.confirm.message" />')){
+                $("#${productTypeInstance?.id}img").attr('src','')
+                $("#image${productTypeInstance?.id}deleted").val("true")
+            }
+        }
+    </script>
 </div>
 
 %{--<g:hiddenField name="parentProduct.id" value="${parentProduct?.id}" />--}%

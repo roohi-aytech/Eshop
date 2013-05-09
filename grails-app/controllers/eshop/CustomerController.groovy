@@ -67,6 +67,7 @@ class CustomerController {
         customerInstance.username = params.username
         customerInstance.password = params.password
         customerInstance.email = params.username
+        customerInstance.registrationLevel = 'basic'
 
         customerInstance.enabled = false
 
@@ -110,6 +111,10 @@ class CustomerController {
     def savePersonalInfo() {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         customer.properties = params
+
+        if(!customer.registrationLevel)
+            customer.registrationLevel = 'basic'
+
         customer.profilePersonalInfoFilled = true
         if (customer.profilePersonalInfoFilled && customer.profileSendingAddressFilled && customer.registrationLevel == 'basic')
             customer.registrationLevel = 'profile'
@@ -126,6 +131,10 @@ class CustomerController {
         address.postalCode = params.postalCode
         address.telephone = params.telephone
         address.city = City.get(params.city)
+
+        if(!customer.registrationLevel)
+            customer.registrationLevel = 'basic'
+
         if (address.validate() && address.save()) {
             customer.address = address
             customer.profileSendingAddressFilled = true

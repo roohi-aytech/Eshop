@@ -321,6 +321,33 @@ class SiteController {
 
         model
     }
+
+    def productCard(){
+        def product = Product.get(params.productId)
+
+        def models = ProductModel.findAllByProduct(product)
+        def productModel
+        models.each{
+            def model = it
+            Boolean selected = true
+            product.variations.each {variation ->
+                def modelVariationId = model.variationValues.find{it.variationGroup.id == variation.variationGroup.id}?.id.toLong()
+                def selectedVariationId = params."variation${variation.id}".toLong()
+                if(modelVariationId != selectedVariationId)
+                    selected = false
+
+            }
+
+            if(model.guarantee.id.toLong()!= params.guarantee.toLong())
+                selected = false
+
+            if(selected)
+                productModel = model
+        }
+
+        render(template: 'product/card', model: [product:product, productModel:productModel])
+    }
+
     def productImage() {
         def product = Product.get(params.id)
 

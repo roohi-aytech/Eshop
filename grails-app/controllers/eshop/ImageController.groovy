@@ -28,6 +28,8 @@ class ImageController {
         switch (params.type) {
             case 'product':
                 def product = Product.get(params.id)
+                if(!product)
+                    product = ProductModel.get(params.id)?.product
                 if (product) {
                     content = getProdcutImage(product)
                 }

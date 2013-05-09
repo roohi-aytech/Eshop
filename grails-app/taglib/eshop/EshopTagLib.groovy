@@ -5,6 +5,8 @@ import rapidgrails.TaglibHelper
 class EshopTagLib {
     static namespace = "eshop"
 
+    def priceService
+
     def renderProductAttributes = { attrs, body ->
         Product product = attrs.product
         request.setAttribute("product", product)
@@ -163,32 +165,59 @@ class EshopTagLib {
     }
 
     def addToBasket = { attrs, body ->
-        if(attrs.proc)
-        def product = Product.get attrs.prodcutId
-        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
-        if (defaultModel){
-            if(defaultModel.status == 'exists')
-            out << """
-                <a class="btn btn-primary btn-buy addToBasket" ng-click="addToBasket(${defaultModel.id}, '${attrs.productTitle}', '${attrs.productPrice}'});"><span>${g.message(code: "add-to-basket")}</span></a>
-                """
-            else if(defaultModel.status == 'not-exists')
-                out << g.message(code: 'product.price.notExists')
-                else if(defaultModel.status == 'coming-soon')
-                out << g.message(code: 'product.price.comingSoon')
+        def product
+        def defaultModel
+
+        if (attrs.prodcutModelId) {
+            defaultModel = ProductModel.get(attrs.prodcutModelId)
+            product = defaultModel.product
+        } else {
+            product = Product.get(attrs.prodcutId)
+            defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+            if (defaultModel?.prices?.count { it } == 0)
+                defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
         }
-        else
+
+        if (defaultModel) {
+            if (defaultModel.status == 'exists') {
+                def price = priceService.calcProductModelPrice(defaultModel.id)?.mainVal
+                if (price) {
+                    out << """
+                    <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false"? "on": "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
+                    """
+                } else {
+                    out << g.message(code: 'product.price.notExists')
+                }
+            } else if (defaultModel.status == 'not-exists') {
+                out << g.message(code: 'product.price.notExists')
+            } else if (defaultModel.status == 'coming-soon') {
+                out << g.message(code: 'product.price.comingSoon')
+            }
+        } else
             out << g.message(code: 'product.price.notExists')
     }
 
     def addToWishList = { attrs, body ->
+        def product = Product.get attrs.prodcutId
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        if (defaultModel?.prices?.count { it } == 0)
+            defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.mainVal : ''
+
         out << """
-        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${attrs.productPrice}')"><span>${g.message(code: "add-to-wishList")}</span></a>
+        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
         """
     }
 
     def addToCompareList = { attrs, body ->
+        def product = Product.get attrs.prodcutId
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        if (defaultModel?.prices?.count { it } == 0)
+            defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.mainVal : ''
+
         out << """
-        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${attrs.productPrice}')"><span>${g.message(code: "add-to-compareList")}</span></a>
+        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>
         """
     }
 

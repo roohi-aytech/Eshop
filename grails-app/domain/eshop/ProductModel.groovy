@@ -7,6 +7,7 @@ class ProductModel {
     String status
     Boolean isDefaultModel
 
+
     static hasMany = [variationValues: VariationValue, prices: Price]
 
     static composites = ["prices"]
@@ -24,7 +25,13 @@ class ProductModel {
         isDefaultModel()
     }
 
-    String toString(){
-        name
+    @Override
+    int compareTo(def t) {
+        name <=>t?.name
+    }
+
+    @Override
+    String toString() {
+        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} مدل ${name?:""}"
     }
 }

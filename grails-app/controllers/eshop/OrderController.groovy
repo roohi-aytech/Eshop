@@ -47,10 +47,10 @@ class OrderController {
         def basket = session.getAttribute("basket")
         basket.each() { basketItem ->
             def orderItem = new OrderItem()
-            orderItem.product = Product.get(basketItem.id)
+            orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
             orderItem.orderCount = basketItem.count
-            def price = priceService.calcProductPrice(basketItem.id).mainVal
+            def price = priceService.calcProductModelPrice(basketItem.id).mainVal
             orderItem.unitPrice = price ? price : 0
             if (!orderItem.validate() || !orderItem.save()) {
                 //order item save error
@@ -60,7 +60,8 @@ class OrderController {
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
 
-        redirect(action: 'payment', params: [id: order.id])
+        flash.message = message(code: 'order.creation.success.message')
+        redirect(controller: 'customer', action: 'panel')
     }
 
     def payment(){
@@ -182,6 +183,24 @@ class OrderController {
         trackingLog.title = message(code: 'order.trackingLog.action.payment.title', params: [trackingLog.date, trackingLog.user])
         if (trackingLog.validate() && trackingLog.save()) {
             flash.message = message(code:'order.payment.completed')
+            redirect(controller: 'customer', action: 'panel')
+        }
+    }
+
+    def cancellation(){
+        def order = Order.get(params.id)
+        order.status = OrderHelper.STATUS_CANCELLED
+        order.save()
+
+        //save order tracking log
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_CANCELLATION
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = springSecurityService.currentUser
+        trackingLog.title = message(code: 'order.trackingLog.action.cancellation.title', params: [trackingLog.date, trackingLog.user])
+        if (trackingLog.validate() && trackingLog.save()) {
+            flash.message = message(code:'order.cancellation.completed')
             redirect(controller: 'customer', action: 'panel')
         }
     }
