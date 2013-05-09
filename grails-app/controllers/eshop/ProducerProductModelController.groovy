@@ -22,10 +22,19 @@ class ProducerProductModelController {
             productModel = ProductModel.get(params.productModel.id)
 
 
-       def producers = Producer.createCriteria().list{
+        def producers = Producer.createCriteria().list {
             producingProducts {
-                eq('guarantee', productModel?.guarantee)
-                eq('brand', productModel?.product?.brand)
+                or {
+                    eq('guarantee', productModel?.guarantee)
+                    isNull('guarantee')
+                }
+                or {
+                    eq('brand', productModel?.product?.brand)
+                    isNull('brand')
+                }
+                productTypes{
+                    eq('id', productModel?.product?.productTypes?.toArray().first()?.id)
+                }
             }
         }
 
@@ -38,7 +47,7 @@ class ProducerProductModelController {
         def producerProductModelInstance = ProducerProductModel.get(params.ProducerProductModelId)
         def productModel = producerProductModelInstance.productModel
         if (producer) {
-            p =  ProducingProduct.createCriteria().list {
+            p = ProducingProduct.createCriteria().list {
                 eq('producer', producer.id)
                 eq('guarantee', productModel.guarantee)
                 eq('brand', productModel.product.brand)
@@ -48,8 +57,7 @@ class ProducerProductModelController {
             }
 
             render(template: "producingProduct_values", model: [producerProductModelInstance: producerProductModelInstance, producingProduct: p[0]])
-        }
-        else
+        } else
             render ""
     }
 
@@ -63,8 +71,7 @@ class ProducerProductModelController {
         if (params.id) {
             producerProductModelInstance = ProducerProductModel.get(params.id)
             producerProductModelInstance.properties = params
-        }
-        else {
+        } else {
             producerProductModelInstance = new ProducerProductModel(params)
         }
 

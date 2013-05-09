@@ -16,7 +16,7 @@
     <label for="producer">
         <g:message code="producer.label" default="Producer"/>
     </label>
-    <g:select name="producer"
+    <g:select name="producer.id"
               from="${producers}"
               optionKey="id"
               value="${producerProductModelInstance?.producer}"
