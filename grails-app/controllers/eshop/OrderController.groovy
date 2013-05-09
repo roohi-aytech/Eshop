@@ -66,7 +66,7 @@ class OrderController {
 
     def payment(){
         [
-                orderPrice:Order.get(params.id).items.sum{it.orderCount * it.unitPrice},
+                orderPrice:Order.get(params.id).items.sum{it.productModel.status == 'exists'? it.orderCount * it.unitPrice:0},
                 accountsForOnlinePayment: Account.findAllByHasOnlinePayment(true),
                 accounts: Account.findAll(),
                 customerAccountValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
@@ -149,7 +149,7 @@ class OrderController {
     def payOrderFromAccount(){
 
         def order = Order.get(params.order.id)
-        def orderPrice = order.items.sum{it.orderCount * it.unitPrice}
+        def orderPrice = order.items.sum{it.productModel.status == 'exists'? it.orderCount * it.unitPrice:0}
         def owner = springSecurityService.currentUser
 
         //save withdrawal customer transaction
@@ -201,6 +201,24 @@ class OrderController {
         trackingLog.title = message(code: 'order.trackingLog.action.cancellation.title', params: [trackingLog.date, trackingLog.user])
         if (trackingLog.validate() && trackingLog.save()) {
             flash.message = message(code:'order.cancellation.completed')
+            redirect(controller: 'customer', action: 'panel')
+        }
+    }
+
+    def reactivation(){
+        def order = Order.get(params.id)
+        order.status = OrderHelper.STATUS_CREATED
+        order.save()
+
+        //save order tracking log
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_REACTIVATION
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = springSecurityService.currentUser
+        trackingLog.title = message(code: 'order.trackingLog.action.reactivation.title', params: [trackingLog.date, trackingLog.user])
+        if (trackingLog.validate() && trackingLog.save()) {
+            flash.message = message(code:'order.reactivation.completed')
             redirect(controller: 'customer', action: 'panel')
         }
     }

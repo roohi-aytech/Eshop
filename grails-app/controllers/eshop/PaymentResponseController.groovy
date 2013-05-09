@@ -80,7 +80,7 @@ class PaymentResponseController {
                     def customerAccount = accountingService.calculateCustomerAccountValue(request.owner)
                     def payableAmount = request.usingCustomerAccountValueAllowed ? request.value + customerAccount : request.value
 
-                    if(payableAmount > orderPrice){
+                    if(payableAmount >= orderPrice){
                         //save withdrawal customer transaction
                         customerTransaction = new CustomerTransaction()
                         customerTransaction.value = orderPrice
