@@ -14,4 +14,8 @@ class OrderItem {
         productModel()
         orderCount()
     }
+
+    String toString(){
+        productModel.toString()
+    }
 }

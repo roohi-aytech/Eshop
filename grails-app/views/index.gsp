@@ -1,4 +1,4 @@
-<%@ page import="eshop.RoleHelper" %>
+<%@ page import="eshop.OrderHelper; eshop.RoleHelper" %>
 <!doctype html>
 <html>
 <head>
@@ -15,34 +15,24 @@
     <li>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
             <h3>
-                <g:message code="navigation.manage.settings" default="Settings"/>
+                <g:message code="navigation.manage.orders" default="Orders"/>
             </h3>
             <ul>
                 <li>
-                    <g:link controller="user" action="list"><img
-                            src="images/users.png"/><span><g:message
-                            code="navigation.manage.users"
+                    <g:link controller="orderAdministration" action="list" params="${[status:OrderHelper.STATUS_CREATED]}"><img
+                            src="images/inquire.png"/><span><g:message
+                            code="navigation.manage.order.created"
                             default="Users"/></span></g:link></li>
                 <li>
-                    <g:link controller="slide" action="list"><img
-                            src="images/slideshow.png"/><span><g:message
-                            code="navigation.manage.slideshow"
+                    <g:link controller="orderAdministration" action="list" params="${[status:OrderHelper.STATUS_PAID]}"><img
+                            src="images/send.png"/><span><g:message
+                            code="navigation.manage.order.paid"
                             default="Users"/></span></g:link></li>
                 <li>
-                    <g:link controller="province" action="list"><img
-                            src="images/globe.png"/><span><g:message
-                            code="navigation.manage.province"
-                            default="Province"/></span></g:link></li>
-                <li>
-                    <g:link controller="cultureEvent" action="list"><img
-                            src="images/cultureEvent.png"/><span><g:message
-                            code="cultureEvent.label"
-                            default="Culture Event"/></span></g:link></li>
-                <li>
-                    <g:link controller="pageDetails" action="list"><img
-                            src="images/pageDetails.png"/><span><g:message
-                            code="pageDetails.label"
-                            default="Page Details"/></span></g:link></li>
+                    <g:link controller="orderAdministration" action="list" params="${[status:OrderHelper.STATUS_TRANSMITTED]}"><img
+                            src="images/deliver.png"/><span><g:message
+                            code="navigation.manage.order.transmitted"
+                            default="Users"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
         <sec:ifAnyGranted

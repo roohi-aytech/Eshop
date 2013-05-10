@@ -2033,7 +2033,7 @@ span.cke_skin_kama {
 
 /*enamad*/
 .enamad-panel{
-    background: linear-gradient(to bottom, #FAFAFA, #EEEEEE) !important;
+    /*background: linear-gradient(to bottom, #FAFAFA, #EEEEEE) !important;*/
     border-radius: 5px;
 }
 
@@ -2043,9 +2043,9 @@ span.cke_skin_kama {
     background-repeat: no-repeat;
     display: block;
     height: 200px;
-    border: 1px solid #eeeeee;
+    /*border: 1px solid #eeeeee;*/
     border-radius: 5px;
-    box-shadow: 0 0 2px #eee inset;
+    /*box-shadow: 0 0 2px #eee inset;*/
 }
 
 /*comparison*/

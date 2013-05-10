@@ -5,6 +5,12 @@ class UrlMappings {
             controller = "producer"
             action = "list"
         }
+
+        "/orderAdministration/list/$status/" {
+            controller = "orderAdministration"
+            action = "list"
+        }
+
         "/order/list/$status/" {
             controller = "order"
             action = "list"
@@ -22,6 +28,8 @@ class UrlMappings {
 		}
 
 		"/"( controller: "/site")
+
+        "/changeLog"( controller: "/default", action:"changeLog" )
 
         "/admin"(controller: "/default")
 

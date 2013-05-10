@@ -29,7 +29,7 @@
                 <h3>#${order.id}</h3>
 
                 <div class="comment"><g:message code="order.totalPrice"></g:message>: <g:formatNumber
-                        number="${order.items.sum { it.unitPrice * it.orderCount }}"
+                        number="${order.items.sum { it.productModel.status == 'exists'?  it.unitPrice * it.orderCount:0 }}"
                         type="number"></g:formatNumber></div>
 
                 <div class="comment"><g:message code="order.${status}.date"></g:message>: <rg:formatJalaliDate
@@ -59,7 +59,12 @@
                         <g:if test="${orderItem.productModel}">
                             <li>
                                 <g:link controller="site" action="product"
-                                        params="${[id: orderItem.productModel?.product?.id]}">${orderItem.productModel}</g:link></li>
+                                        params="${[id: orderItem.productModel?.product?.id]}">${orderItem.productModel}</g:link>
+                                <g:if test="${orderItem.productModel.status != 'exists'}">
+                                    <span class="comment">(<g:message code="productModel.status.${orderItem.productModel.status}"></g:message>)</span>
+                                </g:if>
+
+                            </li>
                         </g:if>
                     </g:each>
                 </ul>

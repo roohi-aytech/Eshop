@@ -202,7 +202,8 @@
 
 <div class="table-cell support-cell">
     <span id="support-number"><g:message code="support.number"></g:message></span>
-    <a href="#"><g:message code="support.label"></g:message></a>
+    <script type="text/javascript" id="lz_textlink"
+            src="http://91.99.98.70:8080/image.php?acid=fac77&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgwODAvY2hhdC5waHA,YWNpZD00MzZlMg__&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>
 </div>
 </div>
 </div>

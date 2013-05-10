@@ -11,6 +11,7 @@ class PaymentResponseController {
     def priceService
     def accountingService
     def mailService
+    def messageService
 
     static allowedMethods = [save: "POST", delete: "POST"]
 
@@ -80,7 +81,7 @@ class PaymentResponseController {
                     def customerAccount = accountingService.calculateCustomerAccountValue(request.owner)
                     def payableAmount = request.usingCustomerAccountValueAllowed ? request.value + customerAccount : request.value
 
-                    if(payableAmount > orderPrice){
+                    if (payableAmount >= orderPrice) {
                         //save withdrawal customer transaction
                         customerTransaction = new CustomerTransaction()
                         customerTransaction.value = orderPrice
@@ -116,9 +117,34 @@ class PaymentResponseController {
                         }
 
                         //send alert to customer
-                    }
-                    else{
+                        mailService.sendMail {
+                            to springSecurityService.currentUser.email
+                            subject message(code: 'activationMail.subject')
+                            html(view: "/messageTemplates/mail/orderPaid",
+                                    model: [customer: springSecurityService.currentUser, order: request.order])
+                        }
+
+                        if (springSecurityService.currentUser.mobile)
+                            messageService.sendMessage(
+                                    springSecurityService.currentUser.mobile,
+                                    g.render(
+                                            template: '/messageTemplates/sms/orderPaid',
+                                            model: [customer: springSecurityService.currentUser, order: request.order]).toString())
+                    } else {
                         //send alert to customer
+                        mailService.sendMail {
+                            to springSecurityService.currentUser.email
+                            subject message(code: 'activationMail.subject')
+                            html(view: "/messageTemplates/mail/orderNotPaid",
+                                    model: [customer: springSecurityService.currentUser, order: request.order])
+                        }
+
+                        if (springSecurityService.currentUser.mobile)
+                            messageService.sendMessage(
+                                    springSecurityService.currentUser.mobile,
+                                    g.render(
+                                            template: '/messageTemplates/sms/orderNotPaid',
+                                            model: [customer: springSecurityService.currentUser, order: request.order]).toString())
                     }
                 }
 
@@ -128,6 +154,7 @@ class PaymentResponseController {
         } else
             render(template: "form", model: [paymentResponseInstance: paymentResponseInstance])
     }
+
 
 
     def delete() {

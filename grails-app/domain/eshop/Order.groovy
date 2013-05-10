@@ -17,11 +17,13 @@ class Order {
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
 
     static constraints = {
+        status(nullable: false, inList: OrderHelper.STATUS_LIST)
         customer(nullable: false)
+        ownerMobile()
+        ownerTelephone()
+        items()
         billingAddress(nullable: false)
         sendingAddress(nullable: false)
-        status(nullable: false, inList: OrderHelper.STATUS_LIST)
-        RoleHelper.ROLE_CUSTOMER
     }
 
     static mapping = {
