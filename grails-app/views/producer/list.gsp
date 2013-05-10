@@ -7,6 +7,12 @@
 --%>
 
 <%@ page import="eshop.Producer;" %>
+
+<style>
+.ui-dialog{
+    width: 500px !important;
+}
+</style>
 <!doctype html>
 <html>
 <head>
@@ -54,7 +60,7 @@
     <rg:dialog id="producer" title="${message(code: "producer")}">
         <rg:fields bean="${new Producer()}">
             <rg:modify>
-                <rg:ignoreField field="baseProduct"/>
+                <rg:ignoreField field="producingProducts"/>
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${eshop.Producer}" />

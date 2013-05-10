@@ -35,7 +35,7 @@
     <g:select id="producerId" name="producer.id"
               from="${producers}"
               optionKey="id"
-              value="${producerProductModelInstance?.producer}"
+              value="${producerProductModelInstance?.producer?.id}"
               onchange="producerChanged(\$(this))"/>
 </div>
 

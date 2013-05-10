@@ -60,23 +60,26 @@ class ProducerProductModelController {
             productModel = new ProductModel()
 
         if (producer) {
-            p = ProducingProduct.createCriteria().list {
-                eq('producer', producer)
-                or {
-                    eq('guarantee', productModel?.guarantee)
-                    isNull('guarantee')
+            if(producer != producerProductModelInstance?.producer) {
+                p = ProducingProduct.createCriteria().list {
+                    eq('producer', producer)
+                    or {
+                        eq('guarantee', productModel?.guarantee)
+                        isNull('guarantee')
+                    }
+                    or {
+                        eq('brand', productModel?.product?.brand)
+                        isNull('brand')
+                    }
+                    productTypes {
+                        eq('id', productModel?.product?.productTypes?.toArray()?.first()?.id)
+                    }
                 }
-                or {
-                    eq('brand', productModel?.product?.brand)
-                    isNull('brand')
+
+                if (p.size() > 0) {
+                    producingProduct = p[0]
+                    producerProductModelInstance.properties = producingProduct.properties
                 }
-                productTypes {
-                    eq('id', productModel?.product?.productTypes?.toArray()?.first()?.id)
-                }
-            }
-            if (p.size() > 0) {
-                producingProduct = p[0]
-                producerProductModelInstance.properties = producingProduct.properties
             }
 
             render(template: "producingProduct_values", model: [producerProductModelInstance: producerProductModelInstance])
