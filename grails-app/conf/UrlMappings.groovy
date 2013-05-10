@@ -29,6 +29,8 @@ class UrlMappings {
 
 		"/"( controller: "/site")
 
+        "/changeLog"( controller: "/default", action:"changeLog" )
+
         "/admin"(controller: "/default")
 
         "/test/$id?"(controller: "/default", action: "test")

@@ -18,6 +18,10 @@ class DefaultController {
         render(view: "/underConstruction")
     }
 
+    def changeLog(){
+        render(view: "/changeLog")
+    }
+
     def test(){
         render(view: "/test")
     }

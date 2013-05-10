@@ -169,6 +169,8 @@ class SiteController {
 //        }
     }
 
+    def messageService
+
     def index() {
         if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
             redirect(uri: '/admin')
