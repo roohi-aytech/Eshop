@@ -44,10 +44,10 @@ class ProducingProduct {
         retail()
         retailDescription(nullable: true)
 
-        priceType(inList: ["determined", "free"])
+        priceType(inList: ["determined", "free"], nullable: true)
         priceDescription(nullable: true)
 
-        discountType(inList: ["percent", "fixed"])
+        discountType(inList: ["percent", "fixed"], nullable: true)
         discount(nullable: true)
 
         cooperationPrice()
@@ -55,7 +55,7 @@ class ProducingProduct {
         settlement(nullable: true)
         settlementDescription(nullable: true)
 
-        refundable(inList: ["Yes", "No"])
+        refundable(inList: ["Yes", "No"], nullable: true)
         refundableDescription(nullable: true)
 
         testPeriod()

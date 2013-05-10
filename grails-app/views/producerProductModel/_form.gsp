@@ -14,7 +14,8 @@
             url:'<g:createLink action="producingProduct" controller="producerProductModel"/>',
             data:{
                 producer:producer.val(),
-                ProducerProductModelId : '${producerProductModelInstance?.id}'
+                ProducerProductModelId : '${producerProductModelInstance?.id}',
+                productModelId: '${productModel?.id}'
             },
             type:'GET'
         }).done(function(response){

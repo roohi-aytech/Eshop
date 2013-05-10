@@ -47,13 +47,17 @@ class ProducerProductModelController {
         def producer = Producer.get(params.producer)
         def p = []
         def producerProductModelInstance
+        def productModel
 
         if (params.ProducerProductModelId)
             producerProductModelInstance = ProducerProductModel.get(params.ProducerProductModelId)
         else
-            producerProductModelInstance = new ProducerProductModel(params.ProducerProductModelId)
+            producerProductModelInstance = new ProducerProductModel()
 
-        def productModel = producerProductModelInstance.productModel
+        if(params.productModelId)
+            productModel = ProductModel.get(params.productModelId)
+        else
+            productModel = new ProductModel()
 
         if (producer) {
             p = ProducingProduct.createCriteria().list {
