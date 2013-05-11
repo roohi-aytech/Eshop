@@ -18,6 +18,7 @@ class Price {
         currency(nullable: true)
         startDate(nullable: false)
         endDate(nullable: true)
+        productModel(nullable:true)
     }
 
     String toString(){

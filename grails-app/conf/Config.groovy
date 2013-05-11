@@ -75,9 +75,13 @@ environments {
         grails.resources.mappers.bundle.excludes = ['**/*.*']
         // zipped-resources
         grails.resources.mappers.zip.excludes = ['**/*.*']
+        grails.plugin.databasemigration.updateOnStart = true
+        grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
     }
     production {
         grails.logging.jul.usebridge = false
+        grails.plugin.databasemigration.updateOnStart = true
+        grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
