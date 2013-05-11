@@ -29,7 +29,7 @@ class UrlMappings {
 
 		"/"( controller: "/site")
 
-        "/changeLog"( controller: "/default", action:"changeLog" )
+//        "/changeLog"( controller: "/default", action:"changeLog" )
 
         "/admin"(controller: "/default")
 
