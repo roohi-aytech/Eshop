@@ -84,6 +84,13 @@ class BootStrap {
                                 it.addToVariationValues(baseVariationValue)
                                 it.save()
                             }
+                            def cs=Content.createCriteria().list {variationValues{eq('id',variationValue.id)}}
+                            cs.each {
+                                it.removeFromVariationValues(variationValue)
+                                it.addToVariationValues(baseVariationValue)
+                                it.save()
+                            }
+
                             vgVariationGroup.key.removeFromVariationValues(variationValue)
                             variationValue.delete()
                         }

@@ -11,7 +11,6 @@ class Variation {
 
     static mapping = {
         sort 'name'
-        variationValues cascade: "all-delete-orphan"
 
     }
 

@@ -14,13 +14,10 @@
 </head>
 
 <body>
-<h2><g:message code="productModel.details.label" default="Product Model Details"/> ${productModelInstance}</h2>
+<h2><g:message code="productModel.prices.label" default="Prices"/> ${productModelInstance}</h2>
 
 <div>
-    <ul>
-        <li><a href="#price"><g:message code="price"/></a></li>
 
-    </ul>
 
     <div id="price" style="width: 98%">
         <g:render template="../price/prices"/>

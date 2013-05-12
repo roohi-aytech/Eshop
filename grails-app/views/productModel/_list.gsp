@@ -16,7 +16,7 @@
     <g:set var="actions" value="${[[handler: "deleteProductModel(#id#)", icon: "application_delete"],
             [loadOverlay: "${g.createLink(action: "form",controller: "productModel", params: ['product.id': productInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "productModel")}", icon: "application_edit"],
             [controller: "productModel", action: "details", param: "id=#id#", icon: "application_form",title:"${message(code: "productModel-prices")}"],
-            [controller: "productModel", action: "producersDetails", param: "id=#id#", icon: "application_form",title:"${message(code: "productModel-producers")}"]]}"/>
+            [controller: "productModel", action: "producersDetails", param: "id=#id#", icon: "application_put",title:"${message(code: "productModel-producers")}"]]}"/>
 
 </sec:ifAllGranted>
 
