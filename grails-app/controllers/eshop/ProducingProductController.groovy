@@ -5,7 +5,7 @@ import eshop.ProducingProduct
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 
-class producingProductController {
+class ProducingProductController {
 
     static allowedMethods = [save: "POST", delete: "POST"]
 
