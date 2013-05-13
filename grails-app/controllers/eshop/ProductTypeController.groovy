@@ -303,7 +303,19 @@ class ProductTypeController {
         result as JSON;
     }
 
-
+    def repairAttrValues(){
+        AttributeType.findAll().each {attr->
+            Thread.start {
+                attr.attributes.collect {it.value}.each {
+                    if(it && !attr?.values?.contains(it))
+                        attr.addToValues(it)
+                }
+                attr.save()
+                println attr
+            }
+        }
+        render 0;
+    }
     def attributeForm() {
         def attribute
         if (params.id)
