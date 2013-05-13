@@ -303,6 +303,19 @@ class ProductTypeController {
         result as JSON;
     }
 
+    def repairAttrValues() {
+        def n_a = AttributeValue.findByValue("N/A")
+        AttributeType.findAll().each {attr ->
+            attr.attributes.collect {it.value}.unique().each {
+                if (it && !attr?.values?.contains(it))
+                    attr.addToValues(it)
+            }
+            attr.removeFromValues(n_a)
+            attr.save()
+            println attr
+        }
+        render 0;
+    }
 
     def attributeForm() {
         def attribute
