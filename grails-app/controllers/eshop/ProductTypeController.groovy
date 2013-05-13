@@ -304,11 +304,13 @@ class ProductTypeController {
     }
 
     def repairAttrValues() {
+        def n_a = AttributeValue.findByValue("N/A")
         AttributeType.findAll().each {attr ->
-            attr.attributes.collect {it.value}.each {
+            attr.attributes.collect {it.value}.unique().each {
                 if (it && !attr?.values?.contains(it))
                     attr.addToValues(it)
             }
+            attr.removeFromValues(n_a)
             attr.save()
             println attr
         }
