@@ -16,7 +16,7 @@ class ProductType extends BaseProduct {
     static searchable = true
 
     static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType]
-    static belongsTo = [ProducingProduct]
+    static belongsTo = [ProducingProduct, ProductTypeBrand]
     static mapping = {
         sort 'name'
         children cascade: 'all'
