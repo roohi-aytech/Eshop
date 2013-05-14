@@ -109,7 +109,7 @@ class ImageController {
         else
             img = product.images.find()
         if (!img) {
-            img = new Content(name: "no-image.png", contentType: "", fileContent: new File("no-image.png").bytes)
+            img = new Content(name: "no-image.png", contentType: "", fileContent: this.class.getResource("/no-image.png").bytes)
             params.wh = ""
         }
 
@@ -131,7 +131,7 @@ class ImageController {
     byte[] getProdcutTypeImage(ProductType productType) {
         def img = productType.image
         if (!img) {
-            img = new File("no-image.png").bytes
+            img = this.class.getResource("/no-image.png").bytes
             params.wh = ""
         }
 
@@ -150,7 +150,7 @@ class ImageController {
     byte[] getProdcutTypeTypeImage(ProductTypeType productTypeType) {
         def img = productTypeType.image
         if (!img) {
-            img = new File("no-image.png").bytes
+            img = this.class.getResource("/no-image.png").bytes
             params.wh = ""
         }
 
