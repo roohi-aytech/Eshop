@@ -7,6 +7,9 @@ class Guarantee {
     int period
     byte[] logo
 
+    static hasMany = [productTypeBrands: ProductTypeBrand]
+    static composites = ["productTypeBrands"]
+
     static searchable = true
 
     static mapping = {
