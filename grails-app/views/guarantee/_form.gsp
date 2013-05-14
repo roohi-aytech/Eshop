@@ -11,7 +11,7 @@
 
         <div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'productTypeBrands', 'error')} ">
             <label for="productTypeBrands">
-                <g:message code="producer.producerStaffs.label" default="Staffs"/>
+                <g:message code="producer.productTypeBrands.label" default="ProductTypeBrands"/>
 
             </label>
             <g:select name="productTypeBrands" from="${ProductTypeBrand.list()}" multiple="multiple"
