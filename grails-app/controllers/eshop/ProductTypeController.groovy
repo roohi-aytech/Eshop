@@ -303,6 +303,22 @@ class ProductTypeController {
         result as JSON;
     }
 
+    def repairN_A() {
+        def n_as = AttributeValue.findAllByValue("N/A")
+        def first = n_as.first();
+        n_as.each {
+            if (it != first) {
+                def att = Attribute.findAllByAttributeValue(it)
+                att.each {
+                    it.value = first
+                    it.save()
+                }
+                it.delete()
+            }
+
+        }
+    }
+
     def repairAttrValues() {
         def n_a = AttributeValue.findByValue("N/A")
         AttributeType.findAll().each {attr ->
