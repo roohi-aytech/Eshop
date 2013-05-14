@@ -308,15 +308,17 @@ class ProductTypeController {
         def first = n_as.first();
         n_as.each {
             if (it != first) {
-                def att = Attribute.findAllByAttributeValue(it)
+                def att = Attribute.findAllByValue(it)
                 att.each {
                     it.value = first
                     it.save()
                 }
                 it.delete()
+                println att.size()
             }
 
         }
+        render 0
     }
 
     def repairAttrValues() {
