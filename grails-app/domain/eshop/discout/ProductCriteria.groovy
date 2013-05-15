@@ -13,6 +13,7 @@ import eshop.VariationValue
  * To change this template use File | Settings | File Templates.
  */
 class ProductCriteria {
+    static auditable = true
     Product product
     ProductType productType
     Brand brand

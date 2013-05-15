@@ -7,7 +7,7 @@ import eshop.User
 
 class CustomerTransaction {
 
-
+    static auditable = true
     Account account
     Integer value
     String type

@@ -1,6 +1,7 @@
 package eshop
 
 class PaymentResponse {
+    static auditable = true
 
     PaymentRequest request
     Date creationDate

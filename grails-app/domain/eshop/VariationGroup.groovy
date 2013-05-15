@@ -4,6 +4,7 @@ import org.apache.commons.collections.list.LazyList
 import org.apache.commons.collections.FactoryUtils
 
 class VariationGroup {
+    static auditable = true
     String name
     String representationType
 

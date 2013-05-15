@@ -1,6 +1,7 @@
 package eshop
 
 class Customer extends User {
+    static auditable = true
 
     String sex
     Date birthDate

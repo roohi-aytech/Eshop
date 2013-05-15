@@ -1,6 +1,7 @@
 package eshop
 
 class VariationValue {
+    static auditable = true
     String value
     VariationGroup variationGroup
 

@@ -1,6 +1,7 @@
 package eshop
 
 class Price {
+    static auditable = true
     Double price = 0D
     Double rialPrice = 0D
     Currency currency

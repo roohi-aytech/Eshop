@@ -1,6 +1,7 @@
 package eshop
 
 class CustomerReview {
+    static auditable = true
 
     Product product
     int rate

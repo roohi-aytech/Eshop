@@ -1,6 +1,7 @@
 package eshop
 
 class ProducingProduct {
+    static auditable = true
     Brand brand
     double discount
     Guarantee guarantee

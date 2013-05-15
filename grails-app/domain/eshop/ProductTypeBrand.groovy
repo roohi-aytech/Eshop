@@ -1,6 +1,7 @@
 package eshop
 
 class ProductTypeBrand {
+    static auditable = true
 
     Brand brand
     static hasMany = [productTypes: ProductType]

@@ -1,6 +1,7 @@
 package eshop
 
 class City {
+    static auditable = true
     String title;
     Province province;
 

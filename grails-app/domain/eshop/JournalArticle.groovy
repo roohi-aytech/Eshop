@@ -1,6 +1,7 @@
 package eshop
 
 class JournalArticle {
+    static auditable = true
     String name
     String summary
     String text

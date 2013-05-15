@@ -4,6 +4,7 @@ import org.apache.commons.collections.FactoryUtils
 import org.apache.commons.collections.list.LazyList
 
 class Province {
+    static auditable = true
     String title;
 
     static hasMany = [cities: City]

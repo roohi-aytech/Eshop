@@ -1,6 +1,7 @@
 package eshop
 
 class GiftInformation {
+    static auditable = true
     ProductType productType
     String gender
     Integer fromAge

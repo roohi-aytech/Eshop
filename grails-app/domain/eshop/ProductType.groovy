@@ -1,6 +1,7 @@
 package eshop
 
 class ProductType extends BaseProduct {
+    static auditable = true
     String name
     String description
     String keywords

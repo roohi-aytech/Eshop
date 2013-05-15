@@ -1,6 +1,7 @@
 package eshop
 
 class AttributeCategory {
+    static auditable = true
     static final def showPositionValues = ["filter","compare"]
 
     String name

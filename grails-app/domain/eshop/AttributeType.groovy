@@ -9,6 +9,7 @@ package eshop
  */
 
 class AttributeType {
+    static auditable = true
     String name
     String attributeType
     AttributeValue defaultValue

@@ -1,6 +1,7 @@
 package eshop
 
 class AttributeMapping {
+    static auditable = true
     Attribute sourceAttribute
     Attribute destinationAttribute
 
