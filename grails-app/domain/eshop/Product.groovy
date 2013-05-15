@@ -1,5 +1,6 @@
 package eshop
 class Product extends BaseProduct implements Comparable{
+    static auditable = true
     String name
     ProductTypeType type
     String description

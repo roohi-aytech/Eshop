@@ -1,6 +1,7 @@
 package eshop
 
 class Content {
+    static auditable = true
     String name
     String contentType
     byte[] fileContent

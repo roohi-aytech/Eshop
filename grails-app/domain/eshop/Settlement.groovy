@@ -1,6 +1,7 @@
 package eshop
 
 class Settlement {
+    static auditable = true
 
     String name
 

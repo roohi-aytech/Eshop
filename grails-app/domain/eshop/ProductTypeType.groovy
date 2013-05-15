@@ -1,6 +1,7 @@
 package eshop
 
 class ProductTypeType {
+    static auditable = true
     String title
     byte[] image
 

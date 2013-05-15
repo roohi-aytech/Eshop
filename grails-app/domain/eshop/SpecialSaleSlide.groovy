@@ -1,6 +1,7 @@
 package eshop
 
 class SpecialSaleSlide {
+    static auditable = true
 
     Product product
     Date startDate

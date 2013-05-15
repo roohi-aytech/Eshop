@@ -1,6 +1,7 @@
 package eshop
 
 class Guarantee {
+    static auditable = true
 
     String name
     String description

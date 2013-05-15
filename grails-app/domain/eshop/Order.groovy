@@ -1,6 +1,7 @@
 package eshop
 
 class Order {
+    static auditable = true
 
     Customer customer
 
