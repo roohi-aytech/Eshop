@@ -303,6 +303,37 @@ class ProductTypeController {
         result as JSON;
     }
 
+    def repairN_A() {
+        def n_as = AttributeValue.findAllByValue("N/A")
+        def first = n_as.first();
+        n_as.each {
+            if (it != first) {
+                def att = Attribute.findAllByValue(it)
+                att.each {
+                    it.value = first
+                    it.save()
+                }
+                it.delete()
+                println att.size()
+            }
+
+        }
+        render 0
+    }
+
+    def repairAttrValues() {
+        def n_a = AttributeValue.findByValue("N/A")
+        AttributeType.findAll().each {attr ->
+            attr.attributes.collect {it.value}.unique().each {
+                if (it && !attr?.values?.contains(it))
+                    attr.addToValues(it)
+            }
+            attr.removeFromValues(n_a)
+            attr.save()
+            println attr
+        }
+        render 0;
+    }
 
     def attributeForm() {
         def attribute
