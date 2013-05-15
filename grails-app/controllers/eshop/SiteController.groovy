@@ -4,13 +4,14 @@ import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
 import eshop.mongo.MongoProduct
+import org.compass.core.engine.SearchEngineQueryParseException
 
 import javax.servlet.http.Cookie
 
 class SiteController {
     def browseService
     def priceService
-//    def olapService
+    def searchableService
     def dataSource
     def springSecurityService
 
@@ -83,6 +84,9 @@ class SiteController {
         model.description = pageDetails?.description?.replace('$BRAND$', '')
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', '')
 
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
+
         model
     }
 
@@ -116,6 +120,9 @@ class SiteController {
             model.title = pageDetails?.title?.replace('$BRAND$', brand)
         model.description = pageDetails?.description?.replace('$BRAND$', brand)
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
+
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
 
         model
     }
@@ -390,5 +397,48 @@ class SiteController {
         def sql = new Sql(dataSource)
         sql.execute("CALL `populate_product_closure`()")
         render "OK"
+    }
+
+    def search(){
+
+        if(params.category?.toString() == "0")
+            params.category = null
+
+        if (!params.phrase?.trim()) {
+            return [:]
+        }
+        try {
+            return [searchResult: Product.search(params.phrase)]
+        } catch (SearchEngineQueryParseException ex) {
+            return [parseException: true]
+        }
+
+//        def model = [:]
+//        model.filters = browseService.doSearch(params.phrase, params.category, params.f, params.page ?: 0)
+//        model.commonLink = createLink(controller: "site").replace("/index", "")
+
+//        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+//        def brand
+//        if (model.filters["selecteds"]["b"])
+//            brand = Brand.createCriteria().list {
+//                'in'('id', model.filters["selecteds"]["b"])
+//            }.collect { it.name }.join(', ')
+//        if (!brand)
+//            brand = ''
+
+//        def productType = ProductType.get(params.f?.split(',')?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
+//        model.productTypeTypeLinks = []
+//        if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
+//        {
+//            productType.types.each{
+//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "${params.f},t${it.id}"]), id: it.id]
+//            }
+//        }
+//
+//        model.productTypeId = productType?.id
+//        model.productTypeName = productType?.name
+
+//        model
     }
 }

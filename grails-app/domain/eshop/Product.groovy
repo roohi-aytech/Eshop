@@ -1,5 +1,6 @@
 package eshop
-class Product extends BaseProduct implements Comparable{
+
+class Product extends BaseProduct implements Comparable {
     String name
     ProductTypeType type
     String description
@@ -21,17 +22,42 @@ class Product extends BaseProduct implements Comparable{
     Content mainImage
 
     Double currentPrice
-    String getTitle(){
+
+    String getTitle() {
         toString()
     }
 
-    static transients = ['title', 'currentPrice']
+    String getBreadCrumb() {
+        def result
+        def type
+        if(productTypes?.count {it} > 0)
+            type = productTypes?.toArray()?.first()
+        while (type) {
+            if (result)
+                result = type.toString() + " - " + result
+            else
+                result = type.toString()
+            type = type.parentProduct
+        }
+        result
+    }
+
+    static transients = ['title', 'currentPrice', 'breadCrumb']
 
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide, models: ProductModel]
 
     static belongsTo = [ProductType]
 
-    static searchable = true
+    static searchable = {
+
+        title boost: 2.5
+        breadCrumb boost: 0.5
+
+        variations component: true
+        attributes component: true
+        customerReviews component: true
+        models component: true
+    }
 
     static mapping = {
         sort 'name'
@@ -44,7 +70,7 @@ class Product extends BaseProduct implements Comparable{
     static constraints = {
         name(nullable: true)
         type(nullable: true)
-        description(nullable: true,maxSize: 1000)
+        description(nullable: true, maxSize: 1000)
         brand(nullable: true)
         manufactureCountry(nullable: true)
         manufactureDate(nullable: true)
@@ -58,8 +84,8 @@ class Product extends BaseProduct implements Comparable{
         mainImage(nullable: true)
         iranCode(nullable: true)
         shabnamCode(nullable: true)
-        manualTitle(nullable:true)
-        visitCount(nullable:true)
+        manualTitle(nullable: true)
+        visitCount(nullable: true)
 
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
@@ -68,11 +94,11 @@ class Product extends BaseProduct implements Comparable{
 
     @Override
     int compareTo(def t) {
-        name <=>t?.name
+        name <=> t?.name
     }
 
     @Override
     String toString() {
-        "${productTypes?.find {true}?.name?:""} ${type?.title?:""} ${brand?.name?:""} مدل ${name?:""}"
+        "${productTypes?.find { true }?.name ?: ""} ${type?.title ?: ""} ${brand?.name ?: ""} مدل ${name ?: ""}"
     }
 }

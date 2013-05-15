@@ -326,4 +326,171 @@ class BrowseService {
     def getAllSubProductTypes(ProductType productType) {
         BrowseHelper.getAllSubProductTypes(productType)
     }
+
+
+
+    def doSearch(phrase, category, f, page) {
+        def productType
+        def breadcrumb = []
+        def match = [:]
+        def selecteds = [:]
+        def growingFilter = ""
+
+        def raw_filters = f.split(",")
+        def filterPartsMap = [:]
+        def filterIndexes = [:]
+        raw_filters.eachWithIndex { it, index ->
+            if (it.startsWith("p")) {
+                filterPartsMap[it] = 1
+                filterIndexes[it] = index
+            } else if (it.startsWith("b")) {
+                filterPartsMap["b"] = (filterPartsMap["b"] ?: []) + it.replace("b", "")
+                filterIndexes["b"] = index
+            } else if (it.startsWith("t")) {
+                filterPartsMap["t"] = (filterPartsMap["t"] ?: []) + it.replace("t", "")
+                filterIndexes["t"] = index
+            } else {
+                def filter_parts = it.split("\\|")
+                filterPartsMap[filter_parts[0]] = (filterPartsMap[filter_parts[0]] ?: []) + filter_parts[1]
+                filterIndexes[filter_parts[0]] = index
+            }
+        }
+
+        def sortedFilterKeys = filterIndexes.keySet().sort { a, b -> filterIndexes[a] <=> filterIndexes[b] }
+        def sortedFilters = []
+        sortedFilterKeys.each { filterKey ->
+            if (filterKey.startsWith("p"))
+                sortedFilters << filterKey
+            else if (filterKey == "b") {
+                filterPartsMap["b"].each {
+                    sortedFilters << "b${it}"
+                }
+            } else if (filterKey == "t") {
+                filterPartsMap["t"].each {
+                    sortedFilters << "t${it}"
+                }
+            } else {
+                filterPartsMap[filterKey].each {
+                    sortedFilters << "${filterKey}|${it}"
+                }
+            }
+        }
+        def lastbc = ""
+        sortedFilters.each { String filter ->
+            if (!growingFilter)
+                growingFilter = filter
+            else
+                growingFilter += "," + filter
+            if (filter.startsWith("p")) {
+                def productTypeId = Long.parseLong(filter.replace("p", ""))
+                match['productTypes.id'] = productTypeId
+                productType = ProductType.get(productTypeId)
+
+                if (!breadcrumb) {
+                    def pt = productType
+                    while (pt) {
+                        breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
+                        pt = pt.parentProduct
+                    }
+                    breadcrumb = breadcrumb.reverse()
+                } else {
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: productType.name]
+                }
+                lastbc = "p"
+            } else if (filter.startsWith("b")) {
+                def brandId = Long.parseLong(filter.replace("b", ""))
+                if (!match['brand.id'])
+                    match['brand.id'] = brandId
+                else if (match['brand.id'] instanceof Long)
+                    match['brand.id'] = [$in: [match['brand.id'], brandId]]
+                else match['brand.id'] = [$in: match['brand.id'].$in + brandId]
+                selecteds["b"] = (selecteds["b"] ?: []) + brandId
+
+                if (lastbc == "b")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${Brand.get(brandId).name}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: Brand.get(brandId).name]
+                lastbc = "b"
+            } else if (filter.startsWith("t")) {
+                def typeId = Long.parseLong(filter.replace("t", ""))
+                if (!match['type.id'])
+                    match['type.id'] = typeId
+                else if (match['type.id'] instanceof Long)
+                    match['type.id'] = [$in: [match['type.id'], typeId]]
+                else match['type.id'] = [$in: match['type.id'].$in + typeId]
+                selecteds["t"] = (selecteds["t"] ?: []) + typeId
+
+                if (lastbc == "t")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${ProductTypeType.get(typeId).title}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
+                lastbc = "t"
+            } else {
+                def filterParts = filter.split("\\|")
+
+                if (!match["a${filterParts[0]}"])
+                    match["a${filterParts[0]}"] = filterParts[1]
+                else if (match["a${filterParts[0]}"] instanceof String)
+                    match["a${filterParts[0]}"] = [$in: [match["a${filterParts[0]}"], filterParts[1]]]
+                else match["a${filterParts[0]}"] = [$in: match["a${filterParts[0]}"].$in + filterParts[1]]
+
+
+                def attributeId = Long.parseLong(filterParts[0])
+                selecteds[attributeId] = (selecteds[attributeId] ?: []) + filterParts[1]
+
+                if (lastbc == "a${filterParts[0]}")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${filterParts[1]}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
+                lastbc = "a${filterParts[0]}"
+            }
+        }
+
+        if(category)
+            match['productTypes.id'] = Long.parseLong(category)
+
+
+        def r = match.remove('brand.id')
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match)
+        if (r)
+            match.put('brand.id', r)
+
+        def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
+        def childProductTypeIds = productType? productType.children.collect { it.id }: ProductType.findAllByParentProductIsNull().collect { it.id }
+        def productTypesCountMap = []
+        allProductTypesCountMap.each {
+            if (childProductTypeIds.contains(it._id.id))
+                productTypesCountMap << it
+        }
+
+
+        def attributesCountMap = [:]
+        def pt = productType
+        while (pt) {
+            attributesCountMap = attributesCountMap + countAttributes(pt, match)
+            pt = pt.parentProduct
+        }
+
+        def products = searchProducts(phrase:phrase, match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
+
+        [brands: brandsCountMap, attributes: attributesCountMap, productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+    }
+
+    def searchProducts(params) {
+        def products = getProducts()
+//        products.ensureIndex(["brand": "text", ], [name: "product_index_text"])
+//        def productIds = products
+//                .command('text', {search: params.phrase})
+//                .aggregate(
+//                [$match: params.match],
+//                [$skip: params.start],
+//                [$limit: params.pageSize]
+//        ).results().collect { it.baseProductId }
+//
+//        def totalPages = (products.aggregate(
+//                [$match: params.match],
+//                [$group: [_id: null, count: [$sum: 1]]]
+//        ).results().collect { it.count }.find() ?: 0) / params.pageSize
+//        [totalPages: totalPages, productIds: productIds]
+    }
 }

@@ -10,6 +10,8 @@ class VariationValue {
     Boolean deleted
     Integer indx
 
+    static searchable = true
+
     static transients = ['deleted']
 
     static mapping = {

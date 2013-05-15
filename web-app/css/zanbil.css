@@ -730,22 +730,15 @@ input.search-query {
     width: 40px;
 }
 
-#btn-search a {
+#btn-search input {
     margin-top: 0;
-    height: 27px;
-}
-
-#btn-search span {
+    height: 36px;
+    border-radius: 5px 0 0 5px !important;
     display: inline-block;
     background-image: url(../images/icons/btn-search.png);
     background-position: center center;
     background-repeat: no-repeat;
-    width: 18px;
-    height: 20px;
-    margin-bottom: 0px;
-    margin-right: -4px;
-    margin-left: -4px;
-    margin-top: 4px;
+    width: 40px;
 }
 
 .btn-inverse-grey {

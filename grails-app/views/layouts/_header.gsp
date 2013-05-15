@@ -1,3 +1,4 @@
+<%@ page import="eshop.ProductType" %>
 <div class="navbar navbar-fixed-top header">
 <div class="table navbar-inner">
 <div class="table-row">
@@ -158,11 +159,17 @@
 </div>
 
 <div class="table-cell">
-    <div class="search-box table">
+    <g:form class="search-box table" controller="site" action="search" method="get">
+        <g:hiddenField name="category" id="hidCategory" value="${params.category ? params.category : productTypeId?productTypeId.toString():'0'}"/>
+        <g:if test="${params.f}">
+            <g:hiddenField name="f" id="hidFilter" value="${params.f}"/>
+        </g:if>
         <div class="table-cell category-select">
             <div class="btn-group pull-right" style="margin-top: 5px;">
                 <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span id="searchCategory"><g:message code="category.all"></g:message></span>
+                    <span id="searchCategory">
+                        ${params.category ? ProductType.get(params.category)?.name : productTypeId?productTypeName.toString():message(code: 'category.all')}
+                    </span>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -172,11 +179,12 @@
                         <li class="dropdown-submenu">
                             <a tabindex="-1"
                                href="#"
-                               onclick="$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
+                               onclick="$('#hidCategory').val('${rootProductType.id}');
+                               $('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
                                     <li>
-                                    <a href="#" onclick="$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                    <a href="#" onclick="$('#hidCategory').val('${rootProductType.id}');$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
                                 </g:each>
                             </ul>
                         </li>
@@ -185,15 +193,16 @@
             </div>
         </div>
 
-        <form class="navbar-search pull-right table-cell">
-            <input type="text" class="input-large search-query" placeholder="<g:message code="search"/>">
-        </form>
+        <div class="navbar-search pull-right table-cell">
+            <input name="phrase" id="searchPhrase" type="text" class="input-large search-query"
+                   value="${params.phrase ? params.phrase : ''}" placeholder="<g:message code="search"/>">
+        </div>
 
         <div id="btn-search" class="btn-group pull-right table-cell" style="margin-right: 0;">
-            <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                <span></span></a>
+            <g:submitButton name="s" class="btn btn-inverse dropdown-toggle" value=""
+                            onclick="\$(this).attr('disabled', true);return \$('searchPhrase').val() != '';"/>
         </div>
-    </div>
+    </g:form>
 </div>
 
 <div class="table-cell logo-cell">
