@@ -4,6 +4,7 @@ import org.apache.commons.collections.FactoryUtils
 import org.apache.commons.collections.list.LazyList
 
 class Producer {
+    static auditable = true
     ProducerType producerType
     String name
     String address

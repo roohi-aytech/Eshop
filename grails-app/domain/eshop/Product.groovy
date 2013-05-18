@@ -1,6 +1,6 @@
 package eshop
-
-class Product extends BaseProduct implements Comparable {
+class Product extends BaseProduct implements Comparable{
+    static auditable = true
     String name
     ProductTypeType type
     String description
@@ -72,7 +72,7 @@ class Product extends BaseProduct implements Comparable {
     static constraints = {
         name(nullable: true)
         type(nullable: true)
-        description(nullable: true, maxSize: 1000)
+        description(nullable: true,maxSize: 1000)
         brand(nullable: true)
         manufactureCountry(nullable: true)
         manufactureDate(nullable: true)
@@ -86,8 +86,8 @@ class Product extends BaseProduct implements Comparable {
         mainImage(nullable: true)
         iranCode(nullable: true)
         shabnamCode(nullable: true)
-        manualTitle(nullable: true)
-        visitCount(nullable: true)
+        manualTitle(nullable:true)
+        visitCount(nullable:true)
 
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
@@ -96,11 +96,11 @@ class Product extends BaseProduct implements Comparable {
 
     @Override
     int compareTo(def t) {
-        name <=> t?.name
+        name <=>t?.name
     }
 
     @Override
     String toString() {
-        "${productTypes?.find { true }?.name ?: ""} ${type?.title ?: ""} ${brand?.name ?: ""} مدل ${name ?: ""}"
+        "${productTypes?.find {true}?.name?:""} ${type?.title?:""} ${brand?.name?:""} مدل ${name?:""}"
     }
 }

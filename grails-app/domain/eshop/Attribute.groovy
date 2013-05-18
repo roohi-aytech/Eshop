@@ -1,6 +1,7 @@
 package eshop
 
 class Attribute {
+    static auditable = true
     AttributeValue value
     String attributeValue
     Product product

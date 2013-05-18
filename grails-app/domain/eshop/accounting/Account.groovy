@@ -2,6 +2,7 @@ package eshop.accounting
 
 class Account {
 
+    static auditable = true
     String bankName
     byte[] bankLogo
     Boolean hasOnlinePayment

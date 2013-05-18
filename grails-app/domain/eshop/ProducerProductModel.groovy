@@ -1,6 +1,7 @@
 package eshop
 
 class ProducerProductModel {
+    static auditable = true
 
     Producer producer
     ProductModel productModel

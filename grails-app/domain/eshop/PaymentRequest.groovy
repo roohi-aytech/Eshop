@@ -3,6 +3,7 @@ package eshop
 import eshop.accounting.Account
 
 class PaymentRequest {
+    static auditable = true
 
     Account account
     Integer value

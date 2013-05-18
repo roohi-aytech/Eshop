@@ -1,6 +1,7 @@
 package eshop
 
 class OrderTrackingLog {
+    static auditable = true
 
     Order order
     User user

@@ -4,6 +4,7 @@ import eshop.City
 import eshop.Province
 
 class Address {
+    static auditable = true
     String addressLine1;
     String addressLine2;
     City city;

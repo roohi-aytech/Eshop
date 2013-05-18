@@ -1,6 +1,7 @@
 package eshop
 
 class OrderItem {
+    static auditable = true
 
     Order order
     ProductModel productModel
