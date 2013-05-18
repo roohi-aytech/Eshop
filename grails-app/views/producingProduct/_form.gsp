@@ -124,7 +124,12 @@
                 <label for="settlement">
                     <g:message code="producingProduct.settlement.label" default="Settlement"/>
                 </label>
-                <rg:autocomplete domainClass="eshop.Settlement" id="settlement" like="true" value="${producingProductInstance?.settlement?.id}" display="${producingProductInstance?.settlement}"/>
+                <g:select id="settlement" name="settlement.id"
+                          from="${eshop.Settlement.list()}"
+                          optionKey="id"
+                          value="${producingProductInstance?.settlement?.id}"
+                          noSelection="['0': '']"/>
+
                 <g:textArea name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
 
                 <input type="button" value="${message(code: "add")}" onclick="addSettlement()">
@@ -144,10 +149,13 @@
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'testPeriod', 'error')} ">
                 <label for="testPeriod">
-                    <g:message code="producingProduct.testPeriod.label" default="testPeriod"/>
+                    <g:message code="producingProduct.testPeriod.label" default="TestPriod"/>
+
                 </label>
-                <g:field type="number" style="direction: ltr;" name="testPeriod" step="any" required=""
-                         value="${producingProductInstance.testPeriod}"/>
+                <g:select name="testPeriod" from="${producingProductInstance.constraints.testPeriod.inList}" value="${producingProductInstance?.testPeriod}"
+                          valueMessagePrefix="producingProduct.testPeriod" noSelection="['': '']"/>
+                <g:textField name="testPeriodDescription" value="${producingProductInstance?.testPeriodDescription}"/>
+
             </div>
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">

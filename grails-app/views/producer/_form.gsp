@@ -3,7 +3,7 @@
 <div class="form-fields">
     <div class="form-fields-part">
 
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerType', 'error')} ">
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerType', 'error')}">
             <label for="producerType">
                 <g:message code="producer.producerType.label" default="ProducerType"/>
             </label>
@@ -25,7 +25,7 @@
                 <g:message code="producer.address.label" default="Address"/>
 
             </label>
-            <g:textArea name="address" value="${producerInstance?.address}"/>
+            <g:textArea name="address"  rows="5" value="${producerInstance?.address}"/>
         </div>
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'phone', 'error')} ">
             <label for="phone">

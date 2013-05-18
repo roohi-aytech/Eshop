@@ -5,7 +5,7 @@ class Guarantee {
 
     String name
     String description
-    int period
+    String period
     byte[] logo
 
     static hasMany = [productTypeBrands: ProductTypeBrand]
@@ -19,7 +19,7 @@ class Guarantee {
 
     static constraints = {
         name(nullable: true)
-        period()
+        period(nullable: true)
         description(nullable: true)
         logo(nullable: true,maxSize: 1000000000)
 

@@ -10,7 +10,7 @@
 
 <style>
 .ui-dialog{
-    width: 500px !important;
+    width: 900px !important;
 }
 </style>
 <!doctype html>
@@ -41,7 +41,6 @@
                     <rg:like name="name" label='brand'/>
                 </rg:nest>
             </rg:nest>
-
 
             <rg:filterGrid grid="ProducerGrid" label='search'/>
         </rg:criteria>

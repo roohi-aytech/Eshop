@@ -22,7 +22,8 @@ class ProducingProduct {
     Settlement settlement
     String settlementDescription
 
-    int testPeriod
+    String testPeriod
+    String testPeriodDescription
 
     String deliveryPlace
     double transportationCost
@@ -58,7 +59,9 @@ class ProducingProduct {
         refundable(inList: ["Yes", "No"], nullable: true)
         refundableDescription(nullable: true)
 
-        testPeriod()
+        testPeriod(inList: ["Yes", "No"], nullable: true)
+        testPeriodDescription(nullable: true)
+
         guarantee(nullable: true)
         deliveryPlace(nullable: true)
         transportationCost()
