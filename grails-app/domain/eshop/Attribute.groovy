@@ -6,11 +6,13 @@ class Attribute {
     Product product
     AttributeType attributeType
 
-    static searchable = {
-        value component:true
-        attributeValue boost:1.5
-        attributeType component:true
-    }
+//    static searchable = true{
+//        only: ['attributeValue']
+//        alias: "AttributeClass"
+//        value component:true
+//        attributeValue boost:1.5
+//        attributeType component:true
+//    }
 
     static belongsTo = [AttributeType]
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>${product.manualTitle ? product.pageTitle : product.toString()}</title>
+    <title>${product.manualTitle ? product.pageTitle : product.toString()} - <g:message code="site.title"/></title>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="keywords" content="">

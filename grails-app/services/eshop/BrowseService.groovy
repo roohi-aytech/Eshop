@@ -54,7 +54,7 @@ class BrowseService {
 
     def findProductTypeFilters(ProductType productType, page) {
         def match = productType ? ['productTypes.id': productType.id]: [:]
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match)
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll{it._id.name != null}
 
         def attributesCountMap = [:]
         def pt = productType

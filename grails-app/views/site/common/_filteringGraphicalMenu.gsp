@@ -21,5 +21,5 @@
     %{--<h3 class="productType-container-title">--}%
         %{--<g:message code="site.selectProductTypeType"></g:message>--}%
     %{--</h3>--}%
-    <g:render template="common/productTypeTypeGrid"></g:render>
+    <g:render template="common/productTypeTypeCarousel"></g:render>
 </g:if>

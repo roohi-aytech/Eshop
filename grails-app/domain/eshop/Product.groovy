@@ -30,7 +30,7 @@ class Product extends BaseProduct implements Comparable {
     String getBreadCrumb() {
         def result
         def type
-        if(productTypes?.count {it} > 0)
+        if (productTypes?.count { it } > 0)
             type = productTypes?.toArray()?.first()
         while (type) {
             if (result)
@@ -50,11 +50,13 @@ class Product extends BaseProduct implements Comparable {
 
     static searchable = {
 
+//        only: ['name', 'title', 'breadCrumb', 'description', 'details', 'manufactureCountry', 'otherAtributes', 'keywords', 'pageTitle', 'manualTitle']
+
         title boost: 2.5
         breadCrumb boost: 0.5
 
         variations component: true
-        attributes component: true
+//        attributes component: true
         customerReviews component: true
         models component: true
     }

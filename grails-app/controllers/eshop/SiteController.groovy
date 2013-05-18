@@ -76,13 +76,13 @@ class SiteController {
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
 
-        def pageDetails = PageDetails.findByProductType(productType)
-        if (pageDetails)
-            model.title = pageDetails?.title?.replace('$BRAND$', '')
-        else
+//        def pageDetails = PageDetails.findByProductType(productType)
+//        if (pageDetails)
+//            model.title = pageDetails?.title?.replace('$BRAND$', '')
+//        else
             model.title = productType.name
-        model.description = pageDetails?.description?.replace('$BRAND$', '')
-        model.keywords = pageDetails?.keywords?.replace('$BRAND$', '')
+        model.description = productType.description // pageDetails?.description?.replace('$BRAND$', '')
+        model.keywords = productType.keywords //pageDetails?.keywords?.replace('$BRAND$', '')
 
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
@@ -106,7 +106,7 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(params.f?.split(',')?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
+        def productType = ProductType.get(params.f?.split(',').reverse()?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
         if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
         {
@@ -115,9 +115,18 @@ class SiteController {
             }
         }
 
-        def pageDetails = params.f?.contains('p')?PageDetails.findByProductType(ProductType.get(params.f.split(',').find {it.contains('p')}.replace('p', '').toLong())):null
+        def pageDetails
+        if(productType)
+            pageDetails = PageDetails.findByProductType(productType)
         if (pageDetails)
             model.title = pageDetails?.title?.replace('$BRAND$', brand)
+        else
+        {
+            model.title = productType?.toString()
+            if(brand && brand != "")
+                model.title = (model.title?" - " : "") + brand
+
+        }
         model.description = pageDetails?.description?.replace('$BRAND$', brand)
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
 
@@ -408,7 +417,7 @@ class SiteController {
             return [:]
         }
         try {
-            return [searchResult: Product.search(params.phrase)]
+            return [searchResult: searchableService.search(params.phrase, params)]
         } catch (SearchEngineQueryParseException ex) {
             return [parseException: true]
         }

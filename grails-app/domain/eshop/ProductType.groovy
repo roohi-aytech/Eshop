@@ -13,10 +13,10 @@ class ProductType extends BaseProduct {
     Long assetcategoryId
     byte[] image
 
-    static searchable = {
-        name boost:0.5
-        only:['name','description', 'keywords']
-    }
+    static searchable = true//{
+//        name boost:0.5
+//        only:['name','description', 'keywords']
+//    }
 
     static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType]
     static belongsTo = [ProducingProduct, ProductTypeBrand]
