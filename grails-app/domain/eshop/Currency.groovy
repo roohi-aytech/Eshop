@@ -1,6 +1,7 @@
 package eshop
 
 class Currency {
+    static auditable = true
     String name
     double exchangeRate
 

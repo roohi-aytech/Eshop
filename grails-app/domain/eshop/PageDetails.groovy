@@ -1,6 +1,7 @@
 package eshop
 
 class PageDetails {
+    static auditable = true
     ProductType productType
     Brand brand
     String title

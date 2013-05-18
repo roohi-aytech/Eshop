@@ -118,6 +118,7 @@ grails.plugins.springsecurity.userLookup.userDomainClassName = 'eshop.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'eshop.UserRole'
 grails.plugins.springsecurity.authority.className = 'eshop.Role'
 
+auditLog.verbose = true
 
 ckeditor {
     config = "/js/myckconfig.js"

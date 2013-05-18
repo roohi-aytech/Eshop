@@ -1,6 +1,7 @@
 package eshop
 
 class Slide {
+    static auditable = true
 
     String name
     String description

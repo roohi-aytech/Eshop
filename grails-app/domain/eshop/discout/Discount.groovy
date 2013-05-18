@@ -3,6 +3,7 @@ package eshop.discout
 import eshop.Content
 
 class Discount {
+    static auditable = true
     String type
     Double value
     String code

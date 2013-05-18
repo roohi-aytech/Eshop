@@ -1,6 +1,7 @@
 package eshop
 
 class AddedValue {
+    static auditable = true
     String name
     BaseProduct baseProduct
     Double value = 0D

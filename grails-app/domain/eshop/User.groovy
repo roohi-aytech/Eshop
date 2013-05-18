@@ -1,6 +1,7 @@
 package eshop
 
 class User {
+    static auditable = true
 
     transient springSecurityService
 

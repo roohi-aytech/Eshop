@@ -1,6 +1,7 @@
 package eshop
 
 class ProductModel {
+    static auditable = true
     String name
     Product product
     Guarantee guarantee

@@ -1,6 +1,7 @@
 package eshop
 
 class Accessory {
+    static auditable = true
 
     BaseProduct baseProduct
     ProductType productType
