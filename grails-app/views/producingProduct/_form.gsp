@@ -14,6 +14,7 @@
 <div style="display:table;">
     <div style="display: table-row">
         <div style="padding-left: 60px; display: table-cell" >
+
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'productTypes', 'error')} ">
                 <label for="productTypes">
                     <g:message code="producingProduct.productTypes.label" default="Product Types"/>
@@ -21,7 +22,6 @@
 
                 <rg:tree bean="${producingProductInstance}" field="productTypes" relationField="parentProduct" width="250px"></rg:tree>
             </div>
-
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'brand', 'error')} ">
                 <label for="brand">
@@ -31,66 +31,105 @@
                 <input type="button" value="${message(code: "add")}" onclick="addBrand()">
             </div>
 
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'discountType', 'error')} ">
-                <label for="discountType">
-                    <g:message code="producingProduct.discountType.label" default="Type"/>
+            <fieldset>
+                <legend><g:message code="cooperationWay"/></legend>
 
-                </label>
-                <g:select name="discountType" from="${producingProductInstance.constraints.discountType.inList}" value="${producingProductInstance?.discountType}"
-                          valueMessagePrefix="producingProduct.discountType" noSelection="['': '']"/>
-            </div>
+                <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'volumeDescription', 'error')}" >
+                    <label for="volumeDescription">
+                        <g:message code="producingProduct.volume.label" default="Volume"/>
 
+                    </label>
+                    <g:checkBox name="volume" value="${producingProductInstance?.volume}"/>
+                    <g:textField name="volumeDescription" value="${producingProductInstance?.volumeDescription}" class="count-words"/>
+                    <script type="text/javascript">
+                        $(function(){
+                            $("#volume").change(function(){
+                                if($(this).attr("checked"))
+                                    $("#volumeDescription").removeAttr("disabled")
+                                else
+                                    $("#volumeDescription").attr("disabled","disabled")
+                            })
+                            if($("#volume").attr("checked"))
+                                $("#volumeDescription").removeAttr("disabled")
+                            else
+                                $("#volumeDescription").attr("disabled","disabled")
+                        })
+                    </script>
+                </div>
+                <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} "  >
+                    <label for="retailDescription" >
+                        <g:message code="producingProduct.retail.label" default="Retail"/>
 
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'discount', 'error')} ">
-                <label for="discount">
-                    <g:message code="producingProduct.discount.label" default="Discount"/>
-                </label>
-                <g:field type="number" style="direction: ltr;" name="discount" step="any" required=""
-                         value="${producingProductInstance.discount}"/>
-            </div>
+                    </label>
+                    <g:checkBox name="retail" value="${producingProductInstance?.retail}"/>
+                    <g:textField name="retailDescription" value="${producingProductInstance?.retailDescription}" class="count-words"/>
+                    <script type="text/javascript">
+                        $(function(){
+                            $("#retail").change(function(){
+                                if($(this).attr("checked"))
+                                    $("#retailDescription").removeAttr("disabled")
+                                else
+                                    $("#retailDescription").attr("disabled","disabled")
+                            })
+                            if($("#retail").attr("checked"))
+                                $("#retailDescription").removeAttr("disabled")
+                            else
+                                $("#retailDescription").attr("disabled","disabled")
+                        })
+                    </script>
+                </div>
+            </fieldset>
 
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">
-                <label for="guarantee">
-                    <g:message code="producingProduct.guarantee.label" default="Guarantee"/>
-                </label>
-                <rg:autocomplete domainClass="eshop.Guarantee" id="guarantee" like="true" value="${producingProductInstance?.guarantee?.id}" display="${producingProductInstance?.guarantee}"/>
-                <input type="button" value="${message(code: "add")}" onclick="addGuarantee()">
-            </div>
+            <fieldset>
+                <legend><g:message code="price"/></legend>
+
+                <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'priceType', 'error')} ">
+                    <label for="priceType">
+                        <g:message code="producingProduct.priceType.label" default="PriceType"/>
+
+                    </label>
+                    <g:select name="priceType" from="${producingProductInstance.constraints.priceType.inList}" value="${producingProductInstance?.priceType}"
+                              valueMessagePrefix="producingProduct.priceType" noSelection="['': '']"/>
+
+                    <g:textArea name="priceDescription"  value="${producingProductInstance.priceDescription}"/>
+                </div>
+
+                <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'discountType', 'error')} ">
+                    <label for="discountType">
+                        <g:message code="producingProduct.discountType.label" default="Type"/>
+
+                    </label>
+                    <g:select name="discountType" from="${producingProductInstance.constraints.discountType.inList}" value="${producingProductInstance?.discountType}"
+                              valueMessagePrefix="producingProduct.discountType" noSelection="['': '']"/>
+
+                    <g:field type="number" style="direction: ltr;" name="discount" step="any" required=""
+                             value="${producingProductInstance.discount}"/>
+                </div>
+
+                <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'cooperationPrice', 'error')} ">
+                    <label for="cooperationPrice">
+                        <g:message code="producingProduct.cooperationPrice.label" default="cooperationPrice"/>
+                    </label>
+                    <g:textArea name="cooperationPrice" value="${producingProductInstance?.cooperationPrice}"/>
+
+                </div>
+
+            </fieldset>
+
+        </div>
+
+        <div style="display: table-cell">
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'settlement', 'error')} ">
                 <label for="settlement">
                     <g:message code="producingProduct.settlement.label" default="Settlement"/>
                 </label>
                 <rg:autocomplete domainClass="eshop.Settlement" id="settlement" like="true" value="${producingProductInstance?.settlement?.id}" display="${producingProductInstance?.settlement}"/>
+                <g:textArea name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
+
                 <input type="button" value="${message(code: "add")}" onclick="addSettlement()">
 
             </div>
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'settlementDescription', 'error')} ">
-
-                <g:textArea name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
-
-            </div>
-
-
-            %{--<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'settlementDescription', 'error')} ">--}%
-            %{--<label for="settlementDescription">--}%
-            %{--<g:message code="producingProduct.settlementDescription.label" default="settlementDescription"/>--}%
-            %{--</label>--}%
-            %{--<g:textField name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>--}%
-
-            %{--</div>--}%
-
-
-
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'deliveryPlace', 'error')} ">
-                <label for="deliveryPlace">
-                    <g:message code="producingProduct.deliveryPlace.label" default="DeliveryPlace"/>
-
-                </label>
-                <g:textField name="deliveryPlace" value="${producingProductInstance?.deliveryPlace}"/>
-            </div>
-        </div>
-        <div style="display: table-cell">
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'refundable', 'error')} ">
                 <label for="refundable">
@@ -103,76 +142,6 @@
 
             </div>
 
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'volumeDescription', 'error')}"  style="display: inline-block;">
-                <label for="volumeDescription">
-                    <g:message code="producingProduct.volume.label" default="Volume"/>
-
-                </label>
-                <g:checkBox name="volume" value="${producingProductInstance?.volume}"/>
-                <g:textField name="volumeDescription" value="${producingProductInstance?.volumeDescription}" class="count-words"/>
-                <script type="text/javascript">
-                    $(function(){
-                        $("#volume").change(function(){
-                            if($(this).attr("checked"))
-                                $("#volumeDescription").removeAttr("disabled")
-                            else
-                                $("#volumeDescription").attr("disabled","disabled")
-                        })
-                        if($("#volume").attr("checked"))
-                            $("#volumeDescription").removeAttr("disabled")
-                        else
-                            $("#volumeDescription").attr("disabled","disabled")
-                    })
-                </script>
-            </div>
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'retailDescription', 'error')} "  style="display: inline-block;" >
-                <label for="retailDescription" >
-                    <g:message code="producingProduct.retail.label" default="Retail"/>
-
-                </label>
-                <g:checkBox name="retail" value="${producingProductInstance?.retail}"/>
-                <g:textField name="retailDescription" value="${producingProductInstance?.retailDescription}" class="count-words"/>
-                <script type="text/javascript">
-                    $(function(){
-                        $("#retail").change(function(){
-                            if($(this).attr("checked"))
-                                $("#retailDescription").removeAttr("disabled")
-                            else
-                                $("#retailDescription").attr("disabled","disabled")
-                        })
-                        if($("#retail").attr("checked"))
-                            $("#retailDescription").removeAttr("disabled")
-                        else
-                            $("#retailDescription").attr("disabled","disabled")
-                    })
-                </script>
-            </div>
-
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'priceType', 'error')} ">
-                <label for="priceType">
-                    <g:message code="producingProduct.priceType.label" default="PriceType"/>
-
-                </label>
-                <g:select name="priceType" from="${producingProductInstance.constraints.priceType.inList}" value="${producingProductInstance?.priceType}"
-                          valueMessagePrefix="producingProduct.priceType" noSelection="['': '']"/>
-
-
-            </div>
-
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'priceDescription', 'error')} ">
-
-                <g:textArea name="priceDescription" value="${producingProductInstance.priceDescription}"/>
-
-            </div>
-
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'cooperationPrice', 'error')} ">
-                <label for="cooperationPrice">
-                    <g:message code="producingProduct.cooperationPrice.label" default="cooperationPrice"/>
-                </label>
-                <g:field type="number" style="direction: ltr;" name="cooperationPrice" step="any" required=""
-                         value="${producingProductInstance.cooperationPrice}"/>
-            </div>
-
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'testPeriod', 'error')} ">
                 <label for="testPeriod">
                     <g:message code="producingProduct.testPeriod.label" default="testPeriod"/>
@@ -181,19 +150,36 @@
                          value="${producingProductInstance.testPeriod}"/>
             </div>
 
-            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'addedValue', 'error')} ">
-                <label for="addedValue">
-                    <g:message code="producingProduct.addedValue.label" default="addedValue"/>
+            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">
+                <label for="guarantee">
+                    <g:message code="producingProduct.guarantee.label" default="Guarantee"/>
                 </label>
-                <g:field type="number" style="direction: ltr;" name="addedValue" step="any" required=""
-                         value="${producingProductInstance.addedValue}"/>
+                <rg:autocomplete domainClass="eshop.Guarantee" id="guarantee" like="true" value="${producingProductInstance?.guarantee?.id}" display="${producingProductInstance?.guarantee}"/>
+                <input type="button" value="${message(code: "add")}" onclick="addGuarantee()">
             </div>
+
+            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'deliveryPlace', 'error')} ">
+                <label for="deliveryPlace">
+                    <g:message code="producingProduct.deliveryPlace.label" default="DeliveryPlace"/>
+
+                </label>
+                <g:textField name="deliveryPlace" value="${producingProductInstance?.deliveryPlace}"/>
+            </div>
+
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'transportationCost', 'error')} ">
                 <label for="transportationCost">
                     <g:message code="producingProduct.transportationCost.label" default="TransportationCost"/>
                 </label>
                 <g:field type="number" style="direction: ltr;" name="transportationCost" step="any" required=""
                          value="${producingProductInstance.transportationCost}"/>
+            </div>
+
+            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'addedValue', 'error')} ">
+                <label for="addedValue">
+                    <g:message code="producingProduct.addedValue.label" default="addedValue"/>
+                </label>
+                <g:field type="number" style="direction: ltr;" name="addedValue" step="any" required=""
+                         value="${producingProductInstance.addedValue}"/>
             </div>
 
 
