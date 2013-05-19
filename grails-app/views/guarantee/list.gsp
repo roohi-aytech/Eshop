@@ -5,9 +5,7 @@
   Time: 8:51 AM
   To change this template use File | Settings | File Templates.
 --%>
-
-<%@ page import="eshop.Guarantee;" %>
-
+<%@ page import="eshop.Guarantee" %>
 <!doctype html>
 <html>
 <head>
@@ -17,45 +15,66 @@
 </head>
 
 <body>
-<g:javascript src="jquery.quickselect.pack.js"/>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
-<g:set var="actions" value="[]"/>
-<sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
-    <g:set var="actions" value="${[[handler: "deleteGuarantee(#id#)", icon: "application_delete"]]}"/>
-</sec:ifAllGranted>
-<div class="content scaffold-list" ng-controller="guaranteeController" role="main">
+<div class="content scaffold-list" role="main">
 
-    <div class="criteria-div">
-        <rg:criteria>
-            <rg:like name="name" label='guarantee.name'/>
-
-            <rg:filterGrid grid="GuaranteeGrid" label='search'/>
-        </rg:criteria>
-    </div>
-    <script type="text/javascript">
-        $(".criteria-div")
-                .find('div,label,input')
-                .css('display', 'inline')
-                .css('margin', '3px');
-    </script>
     <rg:grid domainClass="${Guarantee}"
-             maxColumns="8"
-             showCommand="true"
-             commands="${actions}"
-    />
-    <rg:dialog id="guarantee" title="${message(code: "guarantee")}">
-        <rg:fields bean="${new Guarantee()}">
 
-        </rg:fields>
-        <rg:saveButton domainClass="${eshop.Guarantee}" />
-        <rg:cancelButton/>
-    </rg:dialog>
-    <input type="button" ng-click="openGuaranteeCreateDialog()" value="<g:message code="new" />"/>
-    <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
-        <input type="button" ng-click="openGuaranteeEditDialog()" value="<g:message code="edit" />"/>
-    </sec:ifAnyGranted>
+             childGrid="${["productTypeBrand":"guarantee"]}"
+             maxColumns="3"
+             showCommand="false"
+             toolbarCommands="${[[caption: message(code: "add"), function: "addToGuaranteeGrid", icon: "plus"]]}"
+             commands="${[[handler: "addToGuaranteeGrid(#id#)", icon: "application_edit"], [handler: "deleteGuarantee(#id#)", icon: "application_delete"],
+                     [loadOverlay: "${g.createLink(action: "productTypeBrandForm")}?guarantee.id=#id#",saveAction:"${g.createLink(action: "saveProductTypeBrand")}", saveCallback:"productTypeBrandSaved", icon: "application_put",title:"${message(code: "add-productTypeBrand")}"]]}"
+    />
+
+    <div style="margin: 10px;">
+        <rg:grid domainClass="${eshop.ProductTypeBrand}" maxColumns="2"
+                 firstColumnWidth="45" showCommand="false"
+
+                 commands="${[[handler: 'editProductTypeBrand(#id#)', icon: "application_edit",title:"${message(code: "edit")}"],
+                         [handler: "deleteProductTypeBrand(#id#)", icon: "application_delete",title:"${message(code: "delete")}"]
+                 ]}">
+            <rg:criteria>
+                <rg:eq name="guarantee.id" value="0"/>
+            </rg:criteria>
+
+        </rg:grid>
+    </div>
+
     <g:javascript>
+         function productTypeBrandSaved(productTypeBrand){
+            var grid = $("#ProductTypeBrandGrid");
+            grid.trigger('reloadGrid');
+         }
+
+          function deleteProductTypeBrand(id) {
+            if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
+
+                var url = "<g:createLink action="deleteProductTypeBrand"/>";
+                $.ajax({
+                    type:"POST",
+                    url:url,
+                    data:{ id:id }
+                }).done(function (response) {
+                            if (response == "0") {
+                                var grid = $("#ProductTypeBrandGrid");
+                                grid.trigger('reloadGrid');
+                            }
+                            else {
+                            }
+                        });
+            }
+        }
+
+         function editProductTypeBrand(id){
+            loadOverlay('<g:createLink action="productTypeBrandForm"/>/'+id,
+                    '<g:createLink action="saveProductTypeBrand"/>',
+                    productTypeBrandSaved,
+                    undefined,{width:600})
+         }
+
         function deleteGuarantee(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -73,15 +92,23 @@
                 });
             }
         }
-         $(function(){
-            $( "#guarantee" ).on( "dialogopen", function( event, ui ) {
-                setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
-            } );
-            $("[ng-click^=addCompositeproductTypeBrands]").click(function(){
-                setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
-            })
-        })
+        function addToGuaranteeGrid(id){
+            var url='<g:createLink action="form"/>'
+             if(id)
+                url+="/"+id
+            loadOverlay(url,'<g:createLink action="save" />',function(){
+                $("#GuaranteeGrid").trigger("reloadGrid")
+            },function(){
+                $(".count-words").keypress(function(){
+                    var inp=$(this)
+                    inp.parent().find(".word-counter").html(inp.val().length)
+                }).each(function(){
+                    $("<span class='word-counter'></span>").insertAfter($(this))
+                    $(this).keypress()
 
+                })
+            },{width:400});
+        }
     </g:javascript>
 </div>
 </body>

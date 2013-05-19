@@ -8,8 +8,8 @@ class Guarantee {
     String period
     byte[] logo
 
-    static hasMany = [productTypeBrands: ProductTypeBrand]
-    static composites = ["productTypeBrands"]
+  //  static hasMany = [productTypeBrands: ProductTypeBrand]
+ //   static composites = ["productTypeBrands"]
 
     static searchable = true
 
