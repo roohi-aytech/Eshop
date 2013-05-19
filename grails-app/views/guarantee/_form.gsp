@@ -6,7 +6,7 @@
                 <g:message code="guarantee.name.label" default="Name"/>
 
             </label>
-            <g:textField name="name" value="${guaranteeInstance.name}"/>
+            <g:textField name="name" value="${guaranteeInstance?.name}"/>
         </div>
 
         %{--<div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'productTypeBrands', 'error')} ">--}%
@@ -23,7 +23,7 @@
                 <g:message code="guarantee.period.label" default="Period"/>
             </label>
             <g:field type="number" style="direction: ltr;" name="period" step="any" required=""
-                     value="${guaranteeInstance.period}"/>
+                     value="${guaranteeInstance?.period}"/>
         </div>
 
         <div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'description', 'error')} ">
