@@ -76,10 +76,10 @@
                                     <g:render template="common/filteringGraphicalMenu"></g:render>
 
 
-                                    <g:if test="${filters.productTypes?.isEmpty()}">
+                                    %{--<g:if test="${filters.productTypes?.isEmpty()}">--}%
                                         <g:render template="common/productGrid"
                                                   model="${[productIds: filters.products.productIds]}"></g:render>
-                                    </g:if>
+                                    %{--</g:if>--}%
 
                                 </div>
 

@@ -66,10 +66,10 @@
 
                                     <g:render template="common/browsingGraphicalMenu"></g:render>
 
-                                    <g:if test="${subProductTypeLinks?.isEmpty()}">
+                                    %{--<g:if test="${subProductTypeLinks?.isEmpty()}">--}%
                                         <g:render template="common/productGrid"
                                                   model="${[productIds: filters.products.productIds]}"></g:render>
-                                    </g:if>
+                                    %{--</g:if>--}%
 
                                 </div>
 

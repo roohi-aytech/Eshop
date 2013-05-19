@@ -35,7 +35,8 @@
                 </li>
             </g:each>
 
-            <li><a onclick="$(this).fadeOut();$('.moreBrandItems').fadeIn('slow');"><g:message code="more"></g:message></a></li>
+            <li><a onclick="$(this).parent().fadeOut();$(this).parent().next().fadeIn();$(this).parent().next().fadeIn();$('.moreBrandItems').fadeIn('slow');"><g:message code="more"></g:message></a></li>
+            <li class="moreItems"><a onclick="$(this).parent().fadeOut();$(this).parent().prev().fadeIn();$('.moreBrandItems').fadeOut('fast');"><g:message code="less"></g:message></a></li>
         </g:if>
 
         <li class="divider"></li>
@@ -62,7 +63,8 @@
                     </li>
                 </g:each>
 
-                <li><a onclick='$(this).fadeOut();$(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
+                <li><a onclick='$(this).parent().fadeOut();$(this).parent().next().fadeIn();$(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
+                <li class="moreItems"><a onclick='$(this).parent().fadeOut();$(this).parent().prev().fadeIn();$(".moreAttributeItems${indexer}").fadeOut("fast");'><g:message code="less"></g:message></a></li>
             </g:if>
         </g:each>
         <li class="divider"></li>

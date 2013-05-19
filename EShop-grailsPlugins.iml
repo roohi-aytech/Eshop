@@ -26,6 +26,8 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/mail-1.0.1/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/views" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -41,6 +43,12 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://D:/backup" />
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/domain" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/controllers" isTestSource="false" />

@@ -14,7 +14,9 @@
     <a href="#"><g:message code="contact.label"></g:message></a>
 </div>
 
-<div class="footer3"></div>
+<div class="footer3">
+    <g:message code="rulesFullFillment"/>
+</div>
 
 
 <!-- LiveZilla Tracking Code (ALWAYS PLACE IN BODY ELEMENT) -->

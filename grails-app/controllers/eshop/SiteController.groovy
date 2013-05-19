@@ -273,7 +273,7 @@ class SiteController {
         def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         def model = [productTypes: productTypeList, product: product]
-        model << priceService.calcProductPrice(product?.id)
+        model.price = priceService.calcProductPrice(product?.id)
 
         model.commonLink = createLink(action: "browse")
 

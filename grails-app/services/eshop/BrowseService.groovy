@@ -184,7 +184,7 @@ class BrowseService {
         }
 
         def r = match.remove('brand.id')
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match)
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll{it._id.name != null}
         if (r)
             match.put('brand.id', r)
 
@@ -451,7 +451,7 @@ class BrowseService {
 
 
         def r = match.remove('brand.id')
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match)
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll{it._id.name != null}
         if (r)
             match.put('brand.id', r)
 
