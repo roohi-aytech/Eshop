@@ -730,22 +730,15 @@ input.search-query {
     width: 40px;
 }
 
-#btn-search a {
+#btn-search input {
     margin-top: 0;
-    height: 27px;
-}
-
-#btn-search span {
+    height: 36px;
+    border-radius: 5px 0 0 5px !important;
     display: inline-block;
     background-image: url(../images/icons/btn-search.png);
     background-position: center center;
     background-repeat: no-repeat;
-    width: 18px;
-    height: 20px;
-    margin-bottom: 0px;
-    margin-right: -4px;
-    margin-left: -4px;
-    margin-top: 4px;
+    width: 40px;
 }
 
 .btn-inverse-grey {
@@ -1862,6 +1855,8 @@ span.cke_skin_kama {
     padding: 10px;
     background-color: #444444;
     border-top:2px solid #ff8c00;
+    text-align: center;
+    color: #eeeeee;
 }
 
 /*brand carousel*/
@@ -1882,12 +1877,6 @@ span.cke_skin_kama {
 
 .band-carousel-container .showbiz-navigation{
     background-color: #f4f4f4;
-}
-
-.brand-carousel{
-}
-
-.brand-carousel li.sb-showcase-skin.checkable.active{
 }
 
 .brand-carousel li a{
@@ -1933,6 +1922,21 @@ span.cke_skin_kama {
 
 .brand-carousel li.sb-showcase-skin.checkable.active a:hover .tick-grey{
     display: none;
+}
+
+
+
+.productTypeType-carousel-container{
+    /*background: none repeat scroll 0 0 #D6E3FA;*/
+    border-radius: 3px;
+    border:1px solid #eeeeee;
+    width: 99%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.productTypeType-carousel-container .showbiz-navigation{
+    background-color: #f4f4f4;
 }
 
 /*productType grid*/
@@ -2165,6 +2169,10 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu{
 .hover-variation{
     font-weight: bold;
     color: #E47911;
+}
+
+.moreItems{
+    display: none;
 }
 
 

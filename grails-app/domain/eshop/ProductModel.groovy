@@ -8,6 +8,11 @@ class ProductModel {
     String status
     Boolean isDefaultModel
 
+    static searchable = true//{
+//        name boost: 2.0
+//        guarantee component:true
+//        variationValues component: true
+//    }
 
     static hasMany = [variationValues: VariationValue, prices: Price]
 
