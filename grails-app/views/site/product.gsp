@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>${product.manualTitle ? product.pageTitle : product.toString()}</title>
+    <title>${product.manualTitle ? product.pageTitle : product.toString()} - <g:message code="site.title"/></title>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -94,9 +94,6 @@
                                 <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
                             </p>
 
-
-                            <div class="product-description">${product?.details}</div>
-
                             <g:render template="product/variation"/>
 
                             <p>
@@ -122,14 +119,7 @@
                                   model="${[categories: rootAttributeCategories]}"></g:render>
 
                         <hr/>
-                        <g:if test="${product.description}">
-                            <h3><g:message code="product.description"></g:message></h3>
-
-                            <div>
-                                ${product.description}
-                            </div>
-                            <hr/>
-                        </g:if>
+                        <g:render template="product/description"/>
                         <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
                         <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
                         <g:render template="common/productCarousel"

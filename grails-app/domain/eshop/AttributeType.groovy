@@ -17,6 +17,8 @@ class AttributeType {
     AttributeCategory category
     int sortIndex
 
+    static searchable = true
+
     static final def showPositionValues = ["filter", "productList", "compare", "productDetails", "productFullDetails"]
 
     static hasMany = [attributes: Attribute, values: AttributeValue, showPositions: String]

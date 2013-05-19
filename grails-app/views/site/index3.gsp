@@ -12,7 +12,7 @@
     </script>
 
     <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
-    <title>Zanbil Eshop</title>
+    <title><g:message code="site.title"/></title>
 </head>
 
 <body>

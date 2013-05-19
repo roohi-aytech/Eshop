@@ -3,7 +3,7 @@
 <html dir="rtl">
 <head>
     <g:if test="${title}">
-        <title>${title}</title>
+        <title>${title} - <g:message code="site.title"/></title>
     </g:if>
     <meta charset="utf-8">
     <g:if test="${description}">
@@ -76,10 +76,10 @@
                                     <g:render template="common/filteringGraphicalMenu"></g:render>
 
 
-                                    <g:if test="${filters.productTypes?.isEmpty()}">
+                                    %{--<g:if test="${filters.productTypes?.isEmpty()}">--}%
                                         <g:render template="common/productGrid"
                                                   model="${[productIds: filters.products.productIds]}"></g:render>
-                                    </g:if>
+                                    %{--</g:if>--}%
 
                                 </div>
 

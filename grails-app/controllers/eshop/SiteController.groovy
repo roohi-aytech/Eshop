@@ -4,13 +4,14 @@ import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
 import eshop.mongo.MongoProduct
+import org.compass.core.engine.SearchEngineQueryParseException
 
 import javax.servlet.http.Cookie
 
 class SiteController {
     def browseService
     def priceService
-//    def olapService
+    def searchableService
     def dataSource
     def springSecurityService
 
@@ -75,13 +76,16 @@ class SiteController {
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
 
-        def pageDetails = PageDetails.findByProductType(productType)
-        if (pageDetails)
-            model.title = pageDetails?.title?.replace('$BRAND$', '')
-        else
+//        def pageDetails = PageDetails.findByProductType(productType)
+//        if (pageDetails)
+//            model.title = pageDetails?.title?.replace('$BRAND$', '')
+//        else
             model.title = productType.name
-        model.description = pageDetails?.description?.replace('$BRAND$', '')
-        model.keywords = pageDetails?.keywords?.replace('$BRAND$', '')
+        model.description = productType.description // pageDetails?.description?.replace('$BRAND$', '')
+        model.keywords = productType.keywords //pageDetails?.keywords?.replace('$BRAND$', '')
+
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
 
         model
     }
@@ -102,7 +106,7 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(params.f?.split(',')?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
+        def productType = ProductType.get(params.f?.split(',').reverse()?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
         if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
         {
@@ -111,11 +115,23 @@ class SiteController {
             }
         }
 
-        def pageDetails = params.f?.contains('p')?PageDetails.findByProductType(ProductType.get(params.f.split(',').find {it.contains('p')}.replace('p', '').toLong())):null
+        def pageDetails
+        if(productType)
+            pageDetails = PageDetails.findByProductType(productType)
         if (pageDetails)
             model.title = pageDetails?.title?.replace('$BRAND$', brand)
+        else
+        {
+            model.title = productType?.toString()
+            if(brand && brand != "")
+                model.title = (model.title?" - " : "") + brand
+
+        }
         model.description = pageDetails?.description?.replace('$BRAND$', brand)
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
+
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
 
         model
     }
@@ -257,7 +273,7 @@ class SiteController {
         def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         def model = [productTypes: productTypeList, product: product]
-        model << priceService.calcProductPrice(product?.id)
+        model.price = priceService.calcProductPrice(product?.id)
 
         model.commonLink = createLink(action: "browse")
 
@@ -390,5 +406,48 @@ class SiteController {
         def sql = new Sql(dataSource)
         sql.execute("CALL `populate_product_closure`()")
         render "OK"
+    }
+
+    def search(){
+
+        if(params.category?.toString() == "0")
+            params.category = null
+
+        if (!params.phrase?.trim()) {
+            return [:]
+        }
+        try {
+            return [searchResult: searchableService.search(params.phrase, params)]
+        } catch (SearchEngineQueryParseException ex) {
+            return [parseException: true]
+        }
+
+//        def model = [:]
+//        model.filters = browseService.doSearch(params.phrase, params.category, params.f, params.page ?: 0)
+//        model.commonLink = createLink(controller: "site").replace("/index", "")
+
+//        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+//        def brand
+//        if (model.filters["selecteds"]["b"])
+//            brand = Brand.createCriteria().list {
+//                'in'('id', model.filters["selecteds"]["b"])
+//            }.collect { it.name }.join(', ')
+//        if (!brand)
+//            brand = ''
+
+//        def productType = ProductType.get(params.f?.split(',')?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
+//        model.productTypeTypeLinks = []
+//        if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
+//        {
+//            productType.types.each{
+//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "${params.f},t${it.id}"]), id: it.id]
+//            }
+//        }
+//
+//        model.productTypeId = productType?.id
+//        model.productTypeName = productType?.name
+
+//        model
     }
 }
