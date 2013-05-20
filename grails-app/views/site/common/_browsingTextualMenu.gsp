@@ -54,7 +54,7 @@
             <g:each in="${attribute.value.countsByValue.count { it } > 5 ? attribute.value.countsByValue.sort { -it.count }[0..4] : attribute.value.countsByValue.sort { -it.count }}"
                     var="attributeValueCount">
                 <li class="checkable">
-                    <eshop:filterStart productType="${productType}" attribute="${attribute.key}"
+                    <eshop:filterStart productType="${productType}" attribute="${attribute.value.type.replace("a", "") + attribute.key}"
                                        value="${attributeValueCount._id}"></eshop:filterStart>
                 </li>
             </g:each>
@@ -63,7 +63,7 @@
                 <g:each in="${attribute.value.countsByValue.sort { -it.count }[5..(attribute.value.countsByValue.count { it } - 1)]}"
                         var="attributeValueCount">
                     <li class="checkable moreItems moreAttributeItems${indexer}">
-                        <eshop:filterStart productType="${productType}" attribute="${attribute.key}"
+                        <eshop:filterStart productType="${productType}" attribute="${attribute.value.type.replace("a", "") + attribute.key}"
                                            value="${attributeValueCount._id}"></eshop:filterStart>
                     </li>
                 </g:each>

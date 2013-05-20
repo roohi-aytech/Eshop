@@ -163,6 +163,24 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
                 lastbc = "t"
+            } else if (filter.startsWith("c")) {
+                def filterParts = filter.split("\\|")
+
+                if (!match["a${filterParts[0]}.name"])
+                    match["a${filterParts[0]}.name"] = filterParts[1]
+                else if (match["a${filterParts[0]}.name"] instanceof String)
+                    match["a${filterParts[0]}.name"] = [$in: [match["a${filterParts[0]}.name"], filterParts[1]]]
+                else match["a${filterParts[0]}.name"] = [$in: match["a${filterParts[0]}.name"].$in + filterParts[1]]
+
+
+                def attributeCategoryId = Long.parseLong(filterParts[0].replace("c", ""))
+                selecteds[attributeCategoryId] = (selecteds[attributeCategoryId] ?: []) + filterParts[1]
+
+                if (lastbc == "a${filterParts[0]}")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${filterParts[1]}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
+                lastbc = "a${filterParts[0]}"
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -218,7 +236,7 @@ class BrowseService {
         def attrIds = attributeTypeList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
         attrIds.each { attrId ->
             def r = match.remove('a' + attrId)
-            result.put(attrId, [name: AttributeType.get(attrId), countsByValue: countProducts(group: '$a' + attrId, match: match)])
+            result.put(attrId, [type: 'a', name: AttributeType.get(attrId), countsByValue: countProducts(group: '$a' + attrId, match: match)])
             if (r)
                 match.put('a' + attrId, r)
         }
@@ -227,7 +245,11 @@ class BrowseService {
 
         def attrGroupIds = attributeCategoryList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
         attrGroupIds.each { attrGroupId ->
-            result.put(attrGroupId, countProducts(group: '$' + attrGroupId, match: match))
+//            result.put(attrGroupId, countProducts(group: '$' + attrGroupId, match: match))
+            def r = match.remove('ac' + attrGroupId)
+            result.put(attrGroupId, [type: 'ac', name: AttributeCategory.get(attrGroupId), countsByValue: countProductsWithUnwind(group: '$ac' + attrGroupId + '.name' ,unwind:'$ac' + attrGroupId, match: match)])
+            if (r)
+                match.put('ac' + attrGroupId, r)
         }
 
         result
