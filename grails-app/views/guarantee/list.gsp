@@ -20,14 +20,21 @@
 <div class="content scaffold-list" role="main">
 
     <rg:grid domainClass="${Guarantee}"
-
-             childGrid="${["productTypeBrand":"guarantee"]}"
              maxColumns="3"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToGuaranteeGrid", icon: "plus"]]}"
              commands="${[[handler: "addToGuaranteeGrid(#id#)", icon: "application_edit"], [handler: "deleteGuarantee(#id#)", icon: "application_delete"],
                      [loadOverlay: "${g.createLink(action: "productTypeBrandForm")}?guarantee.id=#id#",saveAction:"${g.createLink(action: "saveProductTypeBrand")}", saveCallback:"productTypeBrandSaved", icon: "application_put",title:"${message(code: "add-productTypeBrand")}"]]}"
+             onSelectRow="loadProductTypeBrands"
     />
+    <g:javascript>
+        var curSelectedGuarantee=${ptid?:0}
+        var loadProductTypeBrands = function (rowId) {
+            curSelectedGuarantee = rowId
+            var criteria = "[{'op':'eq', 'field':'guarantee.id', 'val':" + rowId + "}]"
+            loadGridWithCriteria("ProductTypeBrandGrid", criteria)
+        }
+    </g:javascript>
 
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProductTypeBrand}" maxColumns="2"
@@ -37,7 +44,7 @@
                          [handler: "deleteProductTypeBrand(#id#)", icon: "application_delete",title:"${message(code: "delete")}"]
                  ]}">
             <rg:criteria>
-                <rg:eq name="guarantee.id" value="0"/>
+                <rg:inCrit name="guarantee.id" value="${gurantee as Long}"/>
             </rg:criteria>
 
         </rg:grid>
