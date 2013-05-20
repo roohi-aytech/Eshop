@@ -3,7 +3,7 @@
 
 <style>
 .ui-dialog{
-    width: 600px !important;
+    width: 900px !important;
 }
 </style>
 <div class="content scaffold-list" role="main">

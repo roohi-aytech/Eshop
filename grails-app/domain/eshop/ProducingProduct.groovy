@@ -17,12 +17,13 @@ class ProducingProduct {
     String priceType
     String priceDescription
 
-    double cooperationPrice
+    String cooperationPrice
 
     Settlement settlement
     String settlementDescription
 
-    int testPeriod
+    String testPeriod
+    String testPeriodDescription
 
     String deliveryPlace
     double transportationCost
@@ -37,7 +38,6 @@ class ProducingProduct {
     static constraints = {
         productTypes(nullable: true)
         brand(nullable: true)
-        guarantee(nullable: true)
 
         volume()
         volumeDescription(nullable: true)
@@ -51,7 +51,7 @@ class ProducingProduct {
         discountType(inList: ["percent", "fixed"], nullable: true)
         discount(nullable: true)
 
-        cooperationPrice()
+        cooperationPrice(nullable: true)
 
         settlement(nullable: true)
         settlementDescription(nullable: true)
@@ -59,8 +59,10 @@ class ProducingProduct {
         refundable(inList: ["Yes", "No"], nullable: true)
         refundableDescription(nullable: true)
 
-        testPeriod()
+        testPeriod(inList: ["Yes", "No"], nullable: true)
+        testPeriodDescription(nullable: true)
 
+        guarantee(nullable: true)
         deliveryPlace(nullable: true)
         transportationCost()
         addedValue(nullable: true)

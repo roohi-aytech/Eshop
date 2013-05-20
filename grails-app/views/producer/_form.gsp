@@ -3,7 +3,7 @@
 <div class="form-fields">
     <div class="form-fields-part">
 
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerType', 'error')} ">
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerType', 'error')}">
             <label for="producerType">
                 <g:message code="producer.producerType.label" default="ProducerType"/>
             </label>
@@ -17,7 +17,7 @@
                 <g:message code="producer.name.label" default="Name"/>
 
             </label>
-            <g:textField  name="name" step="any" value=""/>
+            <g:textField  name="name" step="any" value="producerInstance?.name"/>
         </div>
 
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'address', 'error')} ">
@@ -25,21 +25,21 @@
                 <g:message code="producer.address.label" default="Address"/>
 
             </label>
-            <g:textField name="address" value=""/>
+            <g:textArea name="address"  rows="5" value="${producerInstance?.address}"/>
         </div>
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'phone', 'error')} ">
             <label for="phone">
                 <g:message code="producer.phone.label" default="Phone"/>
 
             </label>
-            <g:textField name="phone" value=""/>
+            <g:textField name="phone" value="${producerInstance?.phone}"/>
         </div>
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'fax', 'error')} ">
         <label for="fax">
             <g:message code="producer.fax.label" default="Fax"/>
 
         </label>
-        <g:textField name="fax" value=""/>
+        <g:textField name="fax" value="${producerInstance?.fax}"/>
     </div>
 
 

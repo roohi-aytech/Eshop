@@ -2,16 +2,13 @@ package eshop
 
 class ProductTypeBrand {
     static auditable = true
-
+    Guarantee guarantee
     Brand brand
     static hasMany = [productTypes: ProductType]
 
-    static belongsTo = [Guarantee]
-
-    Boolean deleted
-    Integer indx
-
     static transients = ['deleted']
+
+    static searchable = true
 
     static mapping = {
     }

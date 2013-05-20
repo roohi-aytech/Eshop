@@ -47,9 +47,45 @@ class GuaranteeController {
         }
     }
 
+    def productTypeBrandForm(){
+        def productTypeBrand
+        if (params.id)
+            productTypeBrand = ProductTypeBrand.get(params.id)
+        else {
+            productTypeBrand = new ProductTypeBrand(params)
+           
+        }
+        render(template: "productTypeBrandForm", model: [productTypeBrand: productTypeBrand])
+    }
+    
+    def saveProductTypeBrand(){
+        def productTypeBrand
+        if (params.id) {
+            productTypeBrand = ProductTypeBrand.get(params.id)
+            productTypeBrand.properties = params
+        }
+        else
+            productTypeBrand = new ProductTypeBrand(params)
+        if (productTypeBrand.validate() && productTypeBrand.save()) {
+            render productTypeBrand as JSON
+        }
+        else {
+            render(template: "productTypeBrandForm", model: [productTypeBrand: productTypeBrand])
+        }
+
+    }
+
     def delete() {
         def guaranteeInstance = Guarantee.get(params.id)
         guaranteeInstance.delete(flush: true)
+        render 0
+    }
+
+    def deleteProductTypeBrand(){
+        def productTypeBrand = ProductTypeBrand.get(params.id)
+        productTypeBrand.guarantee = null
+        productTypeBrand.save()
+        productTypeBrand.delete(flush: true)
         render 0
     }
 
