@@ -194,8 +194,26 @@ class ProductController {
         else {
             productInstance = new Product()
         }
+        if(productInstance?.type && !productTypeTypes.contains(productInstance?.type))
+            productTypeTypes.add(productInstance?.type)
 
         [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid ?: productInstance?.productTypes?.find()?.id, productTypeTypes: productTypeTypes]
+    }
+
+    def synchProductTypeTypes() {
+        Product.findAll().groupBy {it.productTypes.find()}.each {
+            if (it.key) {
+                def types = it.value.collect {it.type}.unique()
+                types.each {type ->
+                    if (type && !it.key.types.contains(type))
+                        it.key.addToTypes(type)
+                }
+                it.key.save()
+                println it.key
+            }
+        }
+
+        render 0
     }
 
     def saveProductDescription() {
@@ -570,7 +588,7 @@ class ProductController {
             }
 
             Variation.findAllByBaseProduct(product).each {
-               // it.variationValues.each{it.delete()}
+                // it.variationValues.each{it.delete()}
                 it.variationValues = null
                 it.save()
                 it.delete()
@@ -622,7 +640,7 @@ class ProductController {
                 it.manufactureCountry = params.manufactureCountry
                 it.save()
             }
-            render ([country:params.manufactureCountry] as JSON)
+            render([country: params.manufactureCountry] as JSON)
         }
         else {
             render(template: "countryForm", model: [country: params.manufactureCountryOld, hasError: true])
