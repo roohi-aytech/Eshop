@@ -16,6 +16,7 @@ class MongoService {
             if (it.value instanceof String)
                 mongoProduct[it.key] = it.value
         }
+        mongoProduct['isVisible'] = product.isVisible || product.isVisible == null
         mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
         mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]

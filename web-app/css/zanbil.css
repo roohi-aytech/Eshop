@@ -941,6 +941,7 @@ input.search-query {
     bottom: -4px;
     right: -4px;
     opacity: 0.7;
+    display: none;
 }
 
 #link-basket a.dropdown-toggle:hover span.counter {

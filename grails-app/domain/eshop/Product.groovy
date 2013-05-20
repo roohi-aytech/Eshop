@@ -15,6 +15,7 @@ class Product extends BaseProduct implements Comparable{
     String iranCode
     String shabnamCode
     Integer visitCount = 0
+    Boolean isVisible = true
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -26,6 +27,8 @@ class Product extends BaseProduct implements Comparable{
     String getTitle() {
         toString()
     }
+
+
 
     String getBreadCrumb() {
         def result
@@ -66,7 +69,6 @@ class Product extends BaseProduct implements Comparable{
         attributes cascade: 'all'
         details type: "text"
         version false
-
     }
 
     static constraints = {
@@ -88,6 +90,7 @@ class Product extends BaseProduct implements Comparable{
         shabnamCode(nullable: true)
         manualTitle(nullable:true)
         visitCount(nullable:true)
+        isVisible(nullable: true)
 
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
