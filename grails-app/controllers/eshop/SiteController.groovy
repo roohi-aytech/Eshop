@@ -293,10 +293,12 @@ class SiteController {
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
-        model.mostVisitedProducts = Product.createCriteria().list([max: 20, sort: "visitCount", order: "desc"]) {
+        model.mostVisitedProducts = Product.createCriteria().listDistinct {
             productTypes {
                 eq('id', model.breadCrumb.last().id)
             }
+            maxResults(20)
+            order("visitCount", "desc")
         }
 
         //attributes

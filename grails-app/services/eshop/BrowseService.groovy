@@ -41,6 +41,7 @@ class BrowseService {
         def products = getProducts()
         def productIds = products.aggregate(
                 [$match: params.match],
+                [$sort: [price:-1]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }

@@ -13,7 +13,7 @@ class ComparisonController {
             compareList = [];
         def compareListItem = compareList.find { it -> it.id == id }
         if (!compareListItem) {
-            compareListItem = [id: id, title: product.toString(), price: priceService.calcProductPrice(product.id).mainVal]
+            compareListItem = [id: id, title: product.toString(), price: priceService.calcProductPrice(product.id).showVal]
             compareList << compareListItem
         }
 

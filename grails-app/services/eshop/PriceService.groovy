@@ -6,7 +6,7 @@ class PriceService {
         def product = Product.get(productId)
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if(!defaultModel)
-            return []
+            return [mainVal:0D, showVal:0D]
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(defaultModel, now)
         def addedValues = []
@@ -34,7 +34,7 @@ class PriceService {
     def calcProductModelPrice(productModelId) {
         def productModel = ProductModel.get(productModelId)
         if(!productModel)
-            return []
+            return [mainVal:0D, showVal:0D]
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
         def addedValues = []

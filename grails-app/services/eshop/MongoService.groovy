@@ -4,6 +4,8 @@ import eshop.mongo.MongoProduct
 
 class MongoService {
 
+    def priceService
+
     def storeProduct(Product product) {
         def mongoProduct = MongoProduct.findByBaseProductId(product.id)
         if (!mongoProduct) {
@@ -14,10 +16,13 @@ class MongoService {
             if (it.value instanceof String)
                 mongoProduct[it.key] = it.value
         }
+        mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
         mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
         def productTypes = collectProductTypes(product)
         mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
+
+
         //mongoProduct['productTypeIds'] = productTypes.collect {it.id}
 
         product.attributes.findAll {it.attributeType.showPositions.contains("filter")}.each {

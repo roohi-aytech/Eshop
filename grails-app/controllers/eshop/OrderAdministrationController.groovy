@@ -36,7 +36,7 @@ class OrderAdministrationController {
 
         //update order item
         def orderItem = OrderItem.get(params.orderItem.id)
-        orderItem.unitPrice = priceService.calcProductModelPrice(priceInstance.productModel.id).mainVal?:0
+        orderItem.unitPrice = priceService.calcProductModelPrice(priceInstance.productModel.id).showVal?:0
 
         redirect(action: 'act', params: [id:params.order.id])
     }
