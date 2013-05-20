@@ -26,7 +26,7 @@ class ProducerStaff {
 
     static constraints = {
         role()
-        sex()
+        sex(inList: ["male", "female"], nullable: true)
         name()
         lastName(nullable: true)
         phoneNumber(nullable: true)

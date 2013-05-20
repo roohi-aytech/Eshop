@@ -22,17 +22,44 @@ class Product extends BaseProduct implements Comparable{
     Content mainImage
 
     Double currentPrice
-    String getTitle(){
+
+    String getTitle() {
         toString()
     }
 
-    static transients = ['title', 'currentPrice']
+    String getBreadCrumb() {
+        def result
+        def type
+        if (productTypes?.count { it } > 0)
+            type = productTypes?.toArray()?.first()
+        while (type) {
+            if (result)
+                result = type.toString() + " - " + result
+            else
+                result = type.toString()
+            type = type.parentProduct
+        }
+        result
+    }
+
+    static transients = ['title', 'currentPrice', 'breadCrumb']
 
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide, models: ProductModel]
 
     static belongsTo = [ProductType]
 
-    static searchable = true
+    static searchable = {
+
+//        only: ['name', 'title', 'breadCrumb', 'description', 'details', 'manufactureCountry', 'otherAtributes', 'keywords', 'pageTitle', 'manualTitle']
+
+        title boost: 2.5
+        breadCrumb boost: 0.5
+
+        variations component: true
+//        attributes component: true
+        customerReviews component: true
+        models component: true
+    }
 
     static mapping = {
         sort 'name'

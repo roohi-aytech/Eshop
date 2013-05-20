@@ -33,7 +33,6 @@ class ProducerController {
         }
 
         [producingProductInstance: producingProductInstance]
-
     }
 
     def form(){
@@ -47,8 +46,6 @@ class ProducerController {
     }
 
     def list() {
-        [ptid: params.ptid ?: 0]
-
     }
 
     def save() {

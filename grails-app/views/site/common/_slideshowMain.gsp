@@ -95,7 +95,7 @@
                 text_sync: true,
                 center_image: true,
                 shuffle: true,
-                mousewheel: true,
+                mousewheel: false,
                 swipe: true,
                 block_size: 75,
                 vslice_size: 55,

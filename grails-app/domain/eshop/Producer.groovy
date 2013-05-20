@@ -11,17 +11,12 @@ class Producer {
     String phone
     String fax
 
-
-
-    byte[] logo
     static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
     static composites = ["producerStaffs"]
 
     static mapping = {
         sort 'id'
-//        producerStaffs cascade: "all-delete-orphan"
-//        producingProducts cascade: "all-delete-orphan"
-      //  products cascade: "all-delete-orphan"
+        producerStaffs cascade: "all-delete-orphan"
     }
 
     static searchable = true
@@ -33,8 +28,6 @@ class Producer {
         phone()
         fax()
         producerStaffs()
-     //   producingProducts()
-        logo(nullable: true, maxSize: 1000000000)
     }
 
     String toString(){
