@@ -64,14 +64,14 @@
             <g:each in="${attribute.value.countsByValue.count { it } > 5 ? attribute.value.countsByValue.sort{-it.count}[0..4] : attribute.value.countsByValue.sort{-it.count}}" var="attributeValueCount">
                 <g:if test="${filters.selecteds[attribute.key]?.contains(attributeValueCount._id)}">
                     <li class="active checkable">
-                        <eshop:filterAddAttribute id="${attribute.key}"
+                        <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                   value="${attributeValueCount._id}" f="${params.f}"
                                                   remove="true"></eshop:filterAddAttribute>
                     </li>
                 </g:if>
                 <g:else>
                     <li class="checkable">
-                        <eshop:filterAddAttribute id="${attribute.key}"
+                        <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                   value="${attributeValueCount._id}"
                                                   f="${params.f}"></eshop:filterAddAttribute></li>
                 </g:else>
@@ -82,14 +82,14 @@
                 <g:each in="${attribute.value.countsByValue.sort { -it.count }[5..(attribute.value.countsByValue.count { it } - 1)]}" var="attributeValueCount">
                     <g:if test="${filters.selecteds[attribute.key]?.contains(attributeValueCount._id)}">
                         <li class="active checkable">
-                            <eshop:filterAddAttribute id="${attribute.key}"
+                            <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                       value="${attributeValueCount._id}" f="${params.f}"
                                                       remove="true"></eshop:filterAddAttribute>
                         </li>
                     </g:if>
                     <g:else>
                         <li class="checkable moreItems moreAttributeItems${indexer}">
-                            <eshop:filterAddAttribute id="${attribute.key}"
+                            <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                       value="${attributeValueCount._id}"
                                                       f="${params.f}"></eshop:filterAddAttribute></li>
                     </g:else>

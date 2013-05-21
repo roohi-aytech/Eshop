@@ -182,7 +182,7 @@ ul.errors {
 
 .container {
     width: auto !important;
-    min-width: 993px;
+    /*min-width: 993px;*/
 }
 
 /*Thumbnails*/

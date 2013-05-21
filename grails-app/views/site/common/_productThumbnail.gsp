@@ -32,7 +32,7 @@
 
                     <div>
                         <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-                        <g:set var="price" value="${priceService.calcProductPrice(product.id).mainVal}"></g:set>
+                        <g:set var="price" value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
                         <eshop:addToBasket prodcutId="${product.id}"
                                            productTitle="${product.toString()}"></eshop:addToBasket>
                         <eshop:addToCompareList prodcutId="${product.id}"
