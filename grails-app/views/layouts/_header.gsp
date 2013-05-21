@@ -168,7 +168,7 @@
             <div class="btn-group pull-right" style="margin-top: 5px;">
                 <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
                     <span id="searchCategory">
-                        ${params.category ? ProductType.get(params.category)?.name : productTypeId?productTypeName.toString():message(code: 'category.all')}
+                        ${params.category && params.category != "0" ? ProductType.get(params.category)?.name : productTypeId?productTypeName.toString():message(code: 'category.all')}
                     </span>
                     <span class="caret"></span>
                 </a>
@@ -184,7 +184,7 @@
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
                                     <li>
-                                    <a href="#" onclick="$('#hidCategory').val('${rootProductType.id}');$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                    <a href="#" onclick="$('#hidCategory').val('${secondLevelProductType.id}');$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
                                 </g:each>
                             </ul>
                         </li>

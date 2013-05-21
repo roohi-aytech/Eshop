@@ -9,12 +9,13 @@ class Variation {
 
     static belongsTo = [VariationGroup]
 
-    static searchable = true//{
+    static searchable = {
+        root false
 //        name boost:1.0
 //        variationGroup component:true
 //        variationValues component:true
 
-//    }
+    }
 
     static mapping = {
         sort 'name'

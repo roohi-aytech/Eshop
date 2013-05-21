@@ -16,7 +16,7 @@ class VariationGroup {
         variationValues cascade: "all-delete-orphan"
     }
 
-    static searchable=true
+//    static searchable=true
 
     static constraints = {
         name()

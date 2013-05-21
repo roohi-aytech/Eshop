@@ -4,7 +4,9 @@ class AttributeValue {
     static auditable = true
     String value
 
-    static searchable = true
+    static searchable = {
+        root false
+    }
 
     static constraints = {
         value(maxSize: 4000)

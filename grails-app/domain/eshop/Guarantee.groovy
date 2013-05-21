@@ -11,7 +11,7 @@ class Guarantee {
     static hasMany = [productTypeBrands: ProductTypeBrand]
  //   static composites = ["productTypeBrands"]
 
-    static searchable = true
+//    static searchable = true
 
     static mapping = {
         sort 'name'
