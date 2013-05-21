@@ -15,6 +15,7 @@ class Guarantee {
 
     static mapping = {
         sort 'name'
+
     }
 
     static constraints = {

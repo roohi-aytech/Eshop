@@ -1,4 +1,4 @@
-<%@ page import="eshop.ProducingProduct" %>
+<%@ page import="eshop.Guarantee; eshop.ProducingProduct" %>
 <g:hasErrors bean="${producingProductInstance}">
     <ul class="errors" role="alert">
         <g:eachError bean="${producingProductInstance}" var="error">
@@ -20,7 +20,7 @@
                     <g:message code="producingProduct.productTypes.label" default="Product Types"/>
                 </label>
 
-                <rg:tree bean="${producingProductInstance}" field="productTypes" relationField="parentProduct" width="250px"></rg:tree>
+                <rg:tree bean="${producingProductInstance}" field="productTypes"  relationField="parentProduct" width="250px"></rg:tree>
             </div>
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'brand', 'error')} ">
@@ -162,8 +162,13 @@
                 <label for="guarantee">
                     <g:message code="producingProduct.guarantee.label" default="Guarantee"/>
                 </label>
-                <rg:autocomplete domainClass="eshop.Guarantee" id="guarantee" like="true" value="${producingProductInstance?.guarantee?.id}" display="${producingProductInstance?.guarantee}"/>
-                <input type="button" value="${message(code: "add")}" onclick="addGuarantee()">
+
+                <g:select id="guarantee" name="guarantee.id"
+                          from="${Guarantee.list()}"
+                          optionKey="id"
+                          value="${producingProductInstance?.guarantee?.id}"
+                          noSelection="['0': '']"/>
+
             </div>
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'deliveryPlace', 'error')} ">

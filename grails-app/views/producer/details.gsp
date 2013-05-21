@@ -1,25 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Zanbil
-  Date: 4/25/13
-  Time: 9:44 PM
-  To change this template use File | Settings | File Templates.
---%>
-
+<%@ page import="eshop.Producer;" %>
 <!doctype html>
 <html>
 <head>
+    <r:require modules="bootstrap-file-upload"/>
     <meta name="layout" content="main">
+    <title>${producerInstance}</title>
 
-    <title><g:message code="producer.details.label" default="Producer Details"/></title>
 </head>
 
 <body>
 <h2><g:message code="producer.details.label" default="Producer Details"/> ${producerInstance}</h2>
 
-<div>
+<div id="details-tabs">
     <ul>
         <li><a href="#producingProducts"><g:message code="producingProducts"/></a></li>
+        <li><a href="#producerStaffs"><g:message code="producerStaff"/></a></li>
 
     </ul>
 
@@ -27,12 +22,20 @@
         <g:render template="../producingProduct/list"/>
     </div>
 
+    <div id="producerStaffs">
+        <g:render template="producerStaffs"/>
+    </div>
+
 
 </div>
-%{--<g:javascript>--}%
-    %{--$(function () {--}%
-        %{--$("#details-tabs").tabs();--}%
-    %{--});--}%
-%{--</g:javascript>--}%
+<g:javascript>
+    $(function() {
+        $( "#details-tabs" ).tabs({
+            selected:${curtab ?: 0}
+    ${producerInstance.id ? "" : ",disabled:[2]"}
+    });
+    });
+</g:javascript>
+
 </body>
 </html>

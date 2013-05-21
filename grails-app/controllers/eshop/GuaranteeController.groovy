@@ -77,6 +77,12 @@ class GuaranteeController {
 
     def delete() {
         def guaranteeInstance = Guarantee.get(params.id)
+        ProductTypeBrand.findAllByGuarantee(guaranteeInstance).each {
+            it.guarantee == null
+            it.productTypes = null
+            it.save()
+            it.delete()
+        }
         guaranteeInstance.delete(flush: true)
         render 0
     }

@@ -1,8 +1,5 @@
 package eshop
 
-import eshop.Producer
-import eshop.ProducingProduct
-import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 
 class ProducerController {
@@ -23,6 +20,15 @@ class ProducerController {
       [producerInstance: producerInstance]
     }
 
+    def producerStaffForm(){
+        def producerStaffInstance
+        if(params.id)
+            producerStaffInstance = ProducerStaff.get(params.id)
+        else
+            producerStaffInstance = new ProducerStaff()
+
+        render(template: "producerStaffs_form", model: [producerStaffInstance: producerStaffInstance, producerId: params.producerId])
+    }
 
     def showProducingProduct(){
         def producingProductInstance = ProducingProduct.get(params.id)
@@ -45,8 +51,49 @@ class ProducerController {
         render(template: "form", model: [producerInstance: producerInstance])
     }
 
+    def staffRole(){
+        def staffRole
+        if(params.id)
+            staffRole = StaffRole.get(params.id)
+        else
+            staffRole = new StaffRole()
+
+        render(template: "staffRole", model: [staffRoleInstance: staffRole])
+    }
+
     def list() {
     }
+
+    def saveProducerStaff(){
+        def producerStaff
+        if(params.id){
+            producerStaff = ProducerStaff.get(params.id)
+            producerStaff.properties = params
+        }
+        else
+            producerStaff = new ProducerStaff(params)
+        if(producerStaff.validate() && producerStaff.save()){
+            render producerStaff as JSON
+        }
+        else
+            render producerStaff.errors.toString()
+    }
+
+    def saveStaffRole(){
+        def staffRole
+        if(params.id){
+            staffRole = StaffRole.get(params.id)
+            staffRole.properties = params
+        }
+        else
+            staffRole = new StaffRole(params)
+        if(staffRole.validate() && staffRole.save()){
+            render staffRole as JSON
+        }
+        else
+            render staffRole.errors.toString()
+    }
+
 
     def save() {
         def producerInstance
@@ -66,7 +113,18 @@ class ProducerController {
 
     def delete() {
         def producerInstance = Producer.get(params.id)
+        ProducingProduct.findAllByProducer(producerInstance).each {
+            it.producer = null
+            it.save()
+            it.delete()
+        }
         producerInstance.delete(flush: true)
+        render 0
+    }
+
+    def deleteProducerStaff(){
+        def producerStaff = ProducerStaff.get(params.id)
+        producerStaff.delete(flush: true)
         render 0
     }
 

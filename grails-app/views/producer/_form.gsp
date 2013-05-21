@@ -58,3 +58,14 @@
 
 </div>
 
+<script type="text/javascript">
+    function addStaffRole(){
+        loadOverlay('<g:createLink controller="producer" action="form"/>',
+                '<g:createLink controller="brand" action="save"/>',
+                function(r){
+                    $("#brand").val(r.name)
+                    $("#brand.id").val(r.id)
+                })
+    }
+}
+
