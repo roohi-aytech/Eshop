@@ -74,8 +74,8 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    background: #000 url(../images/banner-rotator/loader.gif) center no-repeat;
-    background: rgba(0, 0, 0, .7) url(../images/banner-rotator/loader.gif) center no-repeat;
+    background: #fff url(../images/loading.gif) center no-repeat;
+    background: rgba(255, 255, 255, .7) url(../images/loading.gif) center no-repeat;
     z-index: 4;
     display: none;
 }
