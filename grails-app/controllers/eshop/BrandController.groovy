@@ -6,6 +6,7 @@ import grails.plugins.springsecurity.Secured
 
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class BrandController {
+    def mongoService
     def form() {
         def brand
         if (params.id)
@@ -27,8 +28,16 @@ class BrandController {
         }
         else
             brand = new Brand(params)
+        if(params.imageDeleted){
+            brand.logo=null
+        }
         if (brand.validate()) {
             brand.save(flush: true)
+            Product.findAllByBrand(brand).each {
+                mongoService.storeProduct(it)
+                println "synch ${it}"
+            }
+
             render brand as JSON
         }
         else {

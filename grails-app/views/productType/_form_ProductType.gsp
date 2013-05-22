@@ -53,7 +53,7 @@
     </label>
     <input type="file" id="image" name="image" />
     <input type="hidden" id="image${productTypeInstance?.id}deleted" name="imagedeleted" value="" />
-    <img id="${productTypeInstance?.id}img" src="<g:createLink controller="productType" action="getImage" id="${productTypeInstance?.id}"/>" style="max-width: 100px"/>
+    <img id="${productTypeInstance?.id}img" src="<g:createLink controller="productType" action="getImage" id="${productTypeInstance?.id}" params="[timestamp:System.currentTimeMillis()]"/>" style="max-width: 100px"/>
     <input type="button" value="<g:message code="delete" />" onclick="deleteImage()">
     <script type="text/javascript">
         function deleteImage(){

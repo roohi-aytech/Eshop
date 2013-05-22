@@ -361,6 +361,10 @@ class ProductTypeController {
         def attributeType;
         if (params.id) {
             attributeType = AttributeType.get(params.id)
+            if(!params.category.id){
+                params.remove("category.id")
+                attributeType.category=null
+            }
             attributeType.properties = params;
         }
         else {

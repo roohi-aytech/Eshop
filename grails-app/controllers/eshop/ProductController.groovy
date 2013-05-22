@@ -93,7 +93,7 @@ class ProductController {
         def image = productTypeType.image
         productTypeType.image = null
         productTypeType = productTypeType.save()
-        if (image) {
+        if (image && !params.imageDeleted) {
             productTypeType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productTypeType))
             productTypeType.save()
         }
