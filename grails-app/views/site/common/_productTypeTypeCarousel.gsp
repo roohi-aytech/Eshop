@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.themepunch.showbizpro.css')}" type="text/css">
 <g:javascript src="jquery.themepunch.plugins.js"></g:javascript>
 <g:javascript src="jquery.themepunch.showbizpro.js"></g:javascript>
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.fancybox.css')}" type="text/css">
-<g:javascript src="jquery.fancybox.js"></g:javascript>
 <g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
 <div class="table productTypeType-carousel-container">
     <div class="showbiz-navigation center sb-nav-dark table-cell">

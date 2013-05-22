@@ -2033,6 +2033,9 @@ span.cke_skin_kama {
     margin-right: 0;
     display: inline-block;
 }
+ul.nav.nav-list{
+    margin-right: 0 !important;
+}
 
 .nav-list.value-list li.checkable{
     display: inline-block;
