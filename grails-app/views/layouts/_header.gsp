@@ -160,10 +160,10 @@
 
 <div class="table-cell">
     <g:form class="search-box table" controller="site" action="search" method="get">
-        <g:hiddenField name="category" id="hidCategory" value="${params.category ? params.category : productTypeId?productTypeId.toString():'0'}"/>
-        <g:if test="${params.f}">
-            <g:hiddenField name="f" id="hidFilter" value="${params.f}"/>
-        </g:if>
+        <g:hiddenField name="f" id="hidCategory" value="p${productTypeId?productTypeId.toString():'0'}"/>
+        %{--<g:if test="${params.f}">--}%
+            %{--<g:hiddenField name="f" id="hidFilter" value="${params.f}"/>--}%
+        %{--</g:if>--}%
         <div class="table-cell category-select">
             <div class="btn-group pull-right" style="margin-top: 5px;">
                 <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
@@ -179,12 +179,12 @@
                         <li class="dropdown-submenu">
                             <a tabindex="-1"
                                href="#"
-                               onclick="$('#hidCategory').val('${rootProductType.id}');
+                               onclick="$('#hidCategory').val('p${rootProductType.id}');
                                $('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
                             <ul class="dropdown-menu">
                                 <g:each in="${rootProductType.children}" var="secondLevelProductType">
                                     <li>
-                                    <a href="#" onclick="$('#hidCategory').val('${secondLevelProductType.id}');$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                    <a href="#" onclick="$('#hidCategory').val('p${secondLevelProductType.id}');$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
                                 </g:each>
                             </ul>
                         </li>

@@ -16,7 +16,8 @@ class CustomerReview {
     static belongsTo = [Product]
 
     static searchable = {
-        root false
+//        root false
+        only = ['title','body']
     }
 
     static mapping = {
