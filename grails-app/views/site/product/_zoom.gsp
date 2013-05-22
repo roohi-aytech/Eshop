@@ -11,7 +11,7 @@
             source_image_width: 900,
             source_image_height: 900,
             zoom_area_width: $('#product-description-area').width(),
-            zoom_area_height: $('#product-description-area').height() + 80,
+            zoom_area_height: Math.max($('#product-description-area').height(), 300),
             zoom_area_distance: 5,
             small_thumbs: 4,
             smallthumb_inactive_opacity: 0.3,

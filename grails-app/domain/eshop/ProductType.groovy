@@ -14,7 +14,10 @@ class ProductType extends BaseProduct {
     Long assetcategoryId
     byte[] image
 
-    static searchable = true//{
+//    static searchable = {
+//        root false
+//        only: ['id']
+//    }
 //        name boost:0.5
 //        only:['name','description', 'keywords']
 //    }

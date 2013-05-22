@@ -15,6 +15,7 @@ class Product extends BaseProduct implements Comparable{
     String iranCode
     String shabnamCode
     Integer visitCount = 0
+    Boolean isVisible = true
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -42,6 +43,10 @@ class Product extends BaseProduct implements Comparable{
         result
     }
 
+//    ProductType getProductType() {
+//        productTypes?.count {it} > 0 ? productTypes?.toArray()?.first() : null
+//    }
+
     static transients = ['title', 'currentPrice', 'breadCrumb']
 
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide, models: ProductModel]
@@ -49,16 +54,18 @@ class Product extends BaseProduct implements Comparable{
     static belongsTo = [ProductType]
 
     static searchable = {
-
+        root true
+        only = ['title', 'breadCrumb', 'description', 'details', 'variations', 'attributes', 'customerReviews', 'models']
+//
 //        only: ['name', 'title', 'breadCrumb', 'description', 'details', 'manufactureCountry', 'otherAtributes', 'keywords', 'pageTitle', 'manualTitle']
-
-        title boost: 2.5
-        breadCrumb boost: 0.5
-
-        variations component: true
-//        attributes component: true
-        customerReviews component: true
-        models component: true
+//
+//        title boost: 2.5
+//        breadCrumb boost: 0.5
+//
+        variations reference:[lazy:true]
+        attributes reference:[lazy:true]
+        customerReviews reference:[lazy:true]
+        models reference:[lazy:true]
     }
 
     static mapping = {
@@ -66,7 +73,6 @@ class Product extends BaseProduct implements Comparable{
         attributes cascade: 'all'
         details type: "text"
         version false
-
     }
 
     static constraints = {
@@ -88,6 +94,7 @@ class Product extends BaseProduct implements Comparable{
         shabnamCode(nullable: true)
         manualTitle(nullable:true)
         visitCount(nullable:true)
+        isVisible(nullable: true)
 
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)

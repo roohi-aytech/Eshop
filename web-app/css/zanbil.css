@@ -182,7 +182,7 @@ ul.errors {
 
 .container {
     width: auto !important;
-    min-width: 993px;
+    /*min-width: 993px;*/
 }
 
 /*Thumbnails*/
@@ -195,7 +195,7 @@ ul.errors {
 }
 
 .thumbnails.productTypes > li {
-    height: 120px;
+    height: 140px;
 }
 
 .thumbnails > li {
@@ -208,7 +208,7 @@ ul.errors {
 
 
 .productTypes .thumbnail {
-    height: 120px;
+    height: 140px;
 }
 
 .not-exists-label{
@@ -298,7 +298,7 @@ ul.errors {
 }
 
 .productTypes .thumbnail .main {
-    height: 110px;
+    height: 130px;
     text-align: center;
 }
 
@@ -365,10 +365,12 @@ ul.errors {
     bottom: 5px;
     display: block;
     height: 100px;
-    left: 5px;
     top: 5px;
     vertical-align: bottom;
-    width: 150px;
+    width: auto;
+}
+.productTypes .thumbnail .image > span > span {
+    width: 100px;
 }
 
 .thumbnail .image > span > span {
@@ -710,6 +712,23 @@ input.search-query {
     margin-bottom: 2px;
 }
 
+.resultCounter{background-color: #F5F5F5;
+    border-radius: 4px 4px 4px 4px;
+    list-style: none outside none;
+    margin: 0 0 10px;
+    padding: 8px 15px;
+}
+
+.search-title h3{
+    margin-top:0;
+    margin-bottom:5px;
+    margin-right: 10px;
+}
+
+.search-title p{
+    margin-right: 10px;
+}
+
 .category-select {
     width: 20px;
     padding-right: 3px;
@@ -941,6 +960,7 @@ input.search-query {
     bottom: -4px;
     right: -4px;
     opacity: 0.7;
+    display: none;
 }
 
 #link-basket a.dropdown-toggle:hover span.counter {
@@ -1937,6 +1957,53 @@ span.cke_skin_kama {
 
 .productTypeType-carousel-container .showbiz-navigation{
     background-color: #f4f4f4;
+}
+
+
+
+.productTypeType-carousel li a{
+    display: block;
+    background-color: white;
+    height: 100px;
+    position: relative;
+    border-radius: 3px;
+}
+
+.productTypeType-carousel li a img{
+    height: 80px;
+    height:80px;
+}
+
+.productTypeType-carousel li a .tick{
+    background-image: url(../images/tick.png);
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left:40%;
+    bottom:0;
+    display: none;
+}
+
+.productTypeType-carousel li.sb-showcase-skin.checkable.active .tick{
+    display: inline-block;
+}
+
+.productTypeType-carousel li a .tick-grey{
+    background-image: url(../images/tick-grey.png);
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left:40%;
+    bottom:0;
+    display: none;
+}
+
+.productTypeType-carousel li a:hover .tick-grey{
+    display: inline-block;
+}
+
+.productTypeType-carousel li.sb-showcase-skin.checkable.active a:hover .tick-grey{
+    display: none;
 }
 
 /*productType grid*/

@@ -7,6 +7,8 @@ import grails.plugins.springsecurity.Secured
 @Secured(RoleHelper.ROLE_PRICE_ADMIN)
 class PriceController {
 
+    def mongoService
+
     static allowedMethods = [save: "POST", delete: "POST"]
 
     def index() {
@@ -52,6 +54,7 @@ class PriceController {
 
 
         if (priceInstance.validate() && priceInstance.save()) {
+            mongoService.storeProduct(priceInstance.productModel.product)
             render priceInstance as JSON
         } else
             render(template: "form", model: [priceInstance: priceInstance])

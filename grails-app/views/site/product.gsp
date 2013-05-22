@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>${product.manualTitle ? product.pageTitle : product.toString()} - <g:message code="site.title"/></title>
+    <title>${product.manualTitle ? product.pageTitle : title}</title>
     <meta charset="utf-8">
-    <meta name="description" content="">
+    <meta name="description" content="${description}">
     <meta name="keywords" content="">
     <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
     %{--<link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>--}%
@@ -98,7 +98,7 @@
 
                             <p>
                                 <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-                                <g:set var="price" value="${priceService.calcProductPrice(product.id).mainVal}"></g:set>
+                                <g:set var="price" value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
                             </a>
                             </p>
                         </div>

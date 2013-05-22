@@ -195,6 +195,9 @@ class ProductController {
             productInstance = new Product()
         }
 
+        if(productInstance.isVisible == null)
+            productInstance.isVisible = true;
+
         [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid ?: productInstance?.productTypes?.find()?.id, productTypeTypes: productTypeTypes]
     }
 
@@ -468,6 +471,9 @@ class ProductController {
                 productInstance.addToProductTypes(productType);
             }
         }
+
+        productInstance.isVisible = params.isVisible == "on"
+
         if (!productInstance.save(flush: true)) {
         }
 

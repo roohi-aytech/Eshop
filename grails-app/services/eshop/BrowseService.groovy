@@ -4,6 +4,7 @@ class BrowseService {
     def mongo
     def db
     def products
+    def searchableService
 
     def getProducts() {
         if (!products) {
@@ -15,6 +16,7 @@ class BrowseService {
 
     def countProducts(params) {
         def products = getProducts()
+        params.match["isVisible"] = true
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$group: [_id: params.group, count: [$sum: 1]]],
@@ -27,6 +29,7 @@ class BrowseService {
 
     def countProductsWithUnwind(params) {
         def products = getProducts()
+        params.match["isVisible"] = true
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$unwind: params.unwind],
@@ -39,8 +42,10 @@ class BrowseService {
 
     def listProducts(params) {
         def products = getProducts()
+        params.match["isVisible"] = true
         def productIds = products.aggregate(
                 [$match: params.match],
+                [$sort: [price: -1]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
@@ -53,8 +58,8 @@ class BrowseService {
     }
 
     def findProductTypeFilters(ProductType productType, page) {
-        def match = productType ? ['productTypes.id': productType.id]: [:]
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll{it._id.name != null}
+        def match = productType ? ['productTypes.id': productType.id] : [:]
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
 
         def attributesCountMap = [:]
         def pt = productType
@@ -162,6 +167,24 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
                 lastbc = "t"
+            } else if (filter.startsWith("c")) {
+                def filterParts = filter.split("\\|")
+
+                if (!match["a${filterParts[0]}.name"])
+                    match["a${filterParts[0]}.name"] = filterParts[1]
+                else if (match["a${filterParts[0]}.name"] instanceof String)
+                    match["a${filterParts[0]}.name"] = [$in: [match["a${filterParts[0]}.name"], filterParts[1]]]
+                else match["a${filterParts[0]}.name"] = [$in: match["a${filterParts[0]}.name"].$in + filterParts[1]]
+
+
+                def attributeCategoryId = Long.parseLong(filterParts[0].replace("c", ""))
+                selecteds[attributeCategoryId] = (selecteds[attributeCategoryId] ?: []) + filterParts[1]
+
+                if (lastbc == "a${filterParts[0]}")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${filterParts[1]}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
+                lastbc = "a${filterParts[0]}"
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -184,12 +207,12 @@ class BrowseService {
         }
 
         def r = match.remove('brand.id')
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll{it._id.name != null}
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
         if (r)
             match.put('brand.id', r)
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
-        def childProductTypeIds = productType? productType.children.collect { it.id }: ProductType.findAllByParentProductIsNull().collect { it.id }
+        def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
         def productTypesCountMap = []
         allProductTypesCountMap.each {
             if (childProductTypeIds.contains(it._id.id))
@@ -212,21 +235,25 @@ class BrowseService {
     def countAttributes(ProductType productType, match) {
         def result = [:]
 
-        def attributeTypeList = productType? AttributeType.findAllByProductType(productType) : AttributeType.findAllByProductTypeIsNull()
+        def attributeTypeList = productType ? AttributeType.findAllByProductType(productType) : AttributeType.findAllByProductTypeIsNull()
 
         def attrIds = attributeTypeList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
         attrIds.each { attrId ->
             def r = match.remove('a' + attrId)
-            result.put(attrId, [name: AttributeType.get(attrId), countsByValue: countProducts(group: '$a' + attrId, match: match)])
+            result.put(attrId, [type: 'a', name: AttributeType.get(attrId), countsByValue: countProducts(group: '$a' + attrId, match: match)])
             if (r)
                 match.put('a' + attrId, r)
         }
 
-        def attributeCategoryList = productType? AttributeCategory.findAllByProductType(productType) : AttributeCategory.findAllByProductTypeIsNull()
+        def attributeCategoryList = productType ? AttributeCategory.findAllByProductType(productType) : AttributeCategory.findAllByProductTypeIsNull()
 
         def attrGroupIds = attributeCategoryList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
         attrGroupIds.each { attrGroupId ->
-            result.put(attrGroupId, countProducts(group: '$' + attrGroupId, match: match))
+//            result.put(attrGroupId, countProducts(group: '$' + attrGroupId, match: match))
+            def r = match.remove('ac' + attrGroupId)
+            result.put(attrGroupId, [type: 'ac', name: AttributeCategory.get(attrGroupId), countsByValue: countProductsWithUnwind(group: '$ac' + attrGroupId + '.name', unwind: '$ac' + attrGroupId, match: match)])
+            if (r)
+                match.put('ac' + attrGroupId, r)
         }
 
         result
@@ -256,6 +283,7 @@ class BrowseService {
         }
 
         def products = getProducts()
+        params.match["isVisible"] = true
         def brands = products.aggregate(
                 [$match: match],
                 [$group: [_id: '$brand.id', count: [$sum: 1]]],
@@ -313,28 +341,13 @@ class BrowseService {
                 productIds: productIds, attrs: attrs, attrGroups: attrGroups, totalPages: totalPages]
     }
 
-    def breadCrumb(params) {
-        def productType = ProductType.get(params.browsingProductTypeId)
-        def result = []
-        while (productType?.parentProduct != null) {
-            result << [id: productType.id, name: productType.name]
-            productType = productType.parentProduct
-        }
-        result.reverse()
-    }
-
-    def getAllSubProductTypes(ProductType productType) {
-        BrowseHelper.getAllSubProductTypes(productType)
-    }
-
-
-
-    def doSearch(phrase, category, f, page) {
+    def findSearchPageFilters(productIdList, f, page) {
         def productType
         def breadcrumb = []
-        def match = [:]
         def selecteds = [:]
         def growingFilter = ""
+
+        def match = [baseProductId: [$in: productIdList]]
 
         def raw_filters = f.split(",")
         def filterPartsMap = [:]
@@ -383,18 +396,20 @@ class BrowseService {
                 growingFilter += "," + filter
             if (filter.startsWith("p")) {
                 def productTypeId = Long.parseLong(filter.replace("p", ""))
-                match['productTypes.id'] = productTypeId
-                productType = ProductType.get(productTypeId)
+                if (productTypeId != 0) {
+                    match['productTypes.id'] = productTypeId
+                    productType = ProductType.get(productTypeId)
 
-                if (!breadcrumb) {
-                    def pt = productType
-                    while (pt) {
-                        breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
-                        pt = pt.parentProduct
+                    if (!breadcrumb) {
+                        def pt = productType
+                        while (pt) {
+                            breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
+                            pt = pt.parentProduct
+                        }
+                        breadcrumb = breadcrumb.reverse()
+                    } else {
+                        breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: productType.name]
                     }
-                    breadcrumb = breadcrumb.reverse()
-                } else {
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: productType.name]
                 }
                 lastbc = "p"
             } else if (filter.startsWith("b")) {
@@ -425,6 +440,24 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
                 lastbc = "t"
+            } else if (filter.startsWith("c")) {
+                def filterParts = filter.split("\\|")
+
+                if (!match["a${filterParts[0]}.name"])
+                    match["a${filterParts[0]}.name"] = filterParts[1]
+                else if (match["a${filterParts[0]}.name"] instanceof String)
+                    match["a${filterParts[0]}.name"] = [$in: [match["a${filterParts[0]}.name"], filterParts[1]]]
+                else match["a${filterParts[0]}.name"] = [$in: match["a${filterParts[0]}.name"].$in + filterParts[1]]
+
+
+                def attributeCategoryId = Long.parseLong(filterParts[0].replace("c", ""))
+                selecteds[attributeCategoryId] = (selecteds[attributeCategoryId] ?: []) + filterParts[1]
+
+                if (lastbc == "a${filterParts[0]}")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${filterParts[1]}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
+                lastbc = "a${filterParts[0]}"
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -446,17 +479,13 @@ class BrowseService {
             }
         }
 
-        if(category)
-            match['productTypes.id'] = Long.parseLong(category)
-
-
         def r = match.remove('brand.id')
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll{it._id.name != null}
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
         if (r)
             match.put('brand.id', r)
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
-        def childProductTypeIds = productType? productType.children.collect { it.id }: ProductType.findAllByParentProductIsNull().collect { it.id }
+        def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
         def productTypesCountMap = []
         allProductTypesCountMap.each {
             if (childProductTypeIds.contains(it._id.id))
@@ -471,26 +500,22 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def products = searchProducts(phrase:phrase, match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
+        def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
 
         [brands: brandsCountMap, attributes: attributesCountMap, productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
-    def searchProducts(params) {
-        def products = getProducts()
-//        products.ensureIndex(["brand": "text", ], [name: "product_index_text"])
-//        def productIds = products
-//                .command('text', {search: params.phrase})
-//                .aggregate(
-//                [$match: params.match],
-//                [$skip: params.start],
-//                [$limit: params.pageSize]
-//        ).results().collect { it.baseProductId }
-//
-//        def totalPages = (products.aggregate(
-//                [$match: params.match],
-//                [$group: [_id: null, count: [$sum: 1]]]
-//        ).results().collect { it.count }.find() ?: 0) / params.pageSize
-//        [totalPages: totalPages, productIds: productIds]
+    def breadCrumb(params) {
+        def productType = ProductType.get(params.browsingProductTypeId)
+        def result = []
+        while (productType?.parentProduct != null) {
+            result << [id: productType.id, name: productType.name]
+            productType = productType.parentProduct
+        }
+        result.reverse()
+    }
+
+    def getAllSubProductTypes(ProductType productType) {
+        BrowseHelper.getAllSubProductTypes(productType)
     }
 }

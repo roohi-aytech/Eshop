@@ -105,7 +105,7 @@ class EshopTagLib {
 
     def filterAddProductType = { attrs, body ->
         def f = "${attrs.f},p${attrs.id}"
-        def link = g.createLink(controller: "site", action: "filter", params: [f: f])
+        def link = g.createLink(controller: params.controller, action: params.action, params: params + [f: f])
         out << "<a href='${link}'>${attrs.name}</a>"
     }
 
@@ -122,7 +122,7 @@ class EshopTagLib {
             f = fItems.join(',')//.replace(',,', ',')
         } else
             f = "${attrs.f},b${attrs.id}"
-        def link = (f == '' ? g.createLink(controller: 'site') : g.createLink(controller: "site", action: "filter", params: [f: f]))
+        def link = (f == '' ? g.createLink(controller: 'site') : g.createLink(controller: params.controller, action: params.action, params: params + [f: f]))
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
@@ -137,7 +137,7 @@ class EshopTagLib {
             f = f.replaceFirst(/,/ + attrs.id + /\|/ + attrs.value + /$/, "")
         } else
             f = "${attrs.f},${attrs.id}|${attrs.value}"
-        def link = g.createLink(controller: "site", action: "filter", params: [f: f])
+        def link = g.createLink(controller: params.controller, action: params.action, params: params + [f: f])
         out << "<a href='${link}'>${attrs.value}</a>"
     }
 
@@ -180,7 +180,7 @@ class EshopTagLib {
 
         if (defaultModel) {
             if (defaultModel.status == 'exists') {
-                def price = priceService.calcProductModelPrice(defaultModel.id)?.mainVal
+                def price = priceService.calcProductModelPrice(defaultModel.id)?.showVal
                 if (price) {
                     out << """
                     <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false"? "on": "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
@@ -202,7 +202,7 @@ class EshopTagLib {
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (defaultModel?.prices?.count { it } == 0)
             defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
-        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.mainVal : ''
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal : ''
 
         out << """
         <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
@@ -214,7 +214,7 @@ class EshopTagLib {
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (defaultModel?.prices?.count { it } == 0)
             defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
-        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.mainVal : ''
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal : ''
 
         out << """
         <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>

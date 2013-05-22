@@ -56,10 +56,9 @@ class SiteController {
         }
 
         model.productTypeTypeLinks = []
-        if(productType.children.isEmpty())
-        {
-            productType.types.each{
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "p${productType.id},t${it.id}"]), id: it.id]
+        if (productType.children.isEmpty()) {
+            productType.types.each {
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "p${productType.id},t${it.id}"]), id: it.id]
             }
         }
 
@@ -80,7 +79,7 @@ class SiteController {
 //        if (pageDetails)
 //            model.title = pageDetails?.title?.replace('$BRAND$', '')
 //        else
-            model.title = productType.name
+        model.title = productType.name
         model.description = productType.description // pageDetails?.description?.replace('$BRAND$', '')
         model.keywords = productType.keywords //pageDetails?.keywords?.replace('$BRAND$', '')
 
@@ -106,25 +105,23 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(params.f?.split(',').reverse()?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
+        def productType = ProductType.get(params.f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
-        if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
-        {
-            productType.types.each{
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "${params.f},t${it.id}"]), id: it.id]
+        if (productType && productType.children.isEmpty() && !params.f?.split(',')?.find { it.startsWith('t') }) {
+            productType.types.each {
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${params.f},t${it.id}"]), id: it.id]
             }
         }
 
         def pageDetails
-        if(productType)
+        if (productType)
             pageDetails = PageDetails.findByProductType(productType)
         if (pageDetails)
             model.title = pageDetails?.title?.replace('$BRAND$', brand)
-        else
-        {
+        else {
             model.title = productType?.toString()
-            if(brand && brand != "")
-                model.title = (model.title?" - " : "") + brand
+            if (brand && brand != "")
+                model.title = (model.title ? model.title + " - " : "") + brand
 
         }
         model.description = pageDetails?.description?.replace('$BRAND$', brand)
@@ -249,7 +246,7 @@ class SiteController {
 
         //slides
         model.slides = Slide.findAll()
-        model.specialSaleSlides= SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
+        model.specialSaleSlides = SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
 
         model
     }
@@ -293,10 +290,12 @@ class SiteController {
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
-        model.mostVisitedProducts = Product.createCriteria().list([max: 20, sort: "visitCount", order: "desc"]) {
+        model.mostVisitedProducts = Product.createCriteria().listDistinct {
             productTypes {
                 eq('id', model.breadCrumb.last().id)
             }
+            maxResults(20)
+            order("visitCount", "desc")
         }
 
         //attributes
@@ -337,39 +336,45 @@ class SiteController {
             response.addCookie(cookie)
         }
 
+        def modelNames = [product.name]
+        product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
+        def title = product.toString().replace(product.name, modelNames.join(','))
+        model.title = title
+        model.description = message(code: 'site.product.page.description', args: [title])
+
         model
     }
 
-    def productCard(){
+    def productCard() {
         def product = Product.get(params.productId)
 
         def models = ProductModel.findAllByProduct(product)
         def productModel
-        models.each{
+        models.each {
             def model = it
             Boolean selected = true
-            product.variations.each {variation ->
-                def modelVariationId = model.variationValues.find{it.variationGroup.id == variation.variationGroup.id}?.id.toLong()
+            product.variations.each { variation ->
+                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id.toLong()
                 def selectedVariationId = params."variation${variation.id}".toLong()
-                if(modelVariationId != selectedVariationId)
+                if (modelVariationId != selectedVariationId)
                     selected = false
 
             }
 
-            if(model.guarantee.id.toLong()!= params.guarantee.toLong())
+            if (model.guarantee.id.toLong() != params.guarantee.toLong())
                 selected = false
 
-            if(selected)
+            if (selected)
                 productModel = model
         }
 
-        render(template: 'product/card', model: [product:product, productModel:productModel])
+        render(template: 'product/card', model: [product: product, productModel: productModel])
     }
 
     def productImage() {
         def product = Product.get(params.id)
 
-        render(template: "productImages", model: [product: product, selectedImage: product.images.find{it.id.toString() == params.img.toString()}])
+        render(template: "productImages", model: [product: product, selectedImage: product.images.find { it.id.toString() == params.img.toString() }])
     }
 
     def fillAttibuteCategoryChildren(Product product, parentCategory) {
@@ -408,46 +413,63 @@ class SiteController {
         render "OK"
     }
 
-    def search(){
+    def search() {
 
-        if(params.category?.toString() == "0")
-            params.category = null
 
-        if (!params.phrase?.trim()) {
-            return [:]
+        def model = [:]
+        def productIdList = []
+        if (params.phrase)
+            productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
+
+        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0)
+        model.commonLink = createLink(controller: "site").replace("/index", "")
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+        model.slides = Slide.findAll()
+
+        def brand
+        if (model.filters["selecteds"]["b"])
+            brand = Brand.createCriteria().list {
+                'in'('id', model.filters["selecteds"]["b"])
+            }.collect { it.name }.join(', ')
+        if (!brand)
+            brand = ''
+
+        def productType = ProductType.get(params.f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
+        model.productTypeTypeLinks = []
+        if (productType && productType.children.isEmpty() && !params.f?.split(',')?.find { it.startsWith('t') }) {
+            productType.types.each {
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${params.f},t${it.id}"]), id: it.id]
+            }
         }
-        try {
-            return [searchResult: searchableService.search(params.phrase, params)]
-        } catch (SearchEngineQueryParseException ex) {
-            return [parseException: true]
+
+        def pageDetails
+        if (productType && brand != '')
+            pageDetails = PageDetails.findByProductType(productType)
+        if (pageDetails)
+            model.title = pageDetails?.title?.replace('$BRAND$', brand)
+        else {
+            model.title = (productType ? productType.toString() + " - " : "") + params.phrase
+            if (brand && brand != '')
+                model.title = (model.title ? model.title + " - " : "") + brand + params.phrase
+        }
+        model.description = pageDetails?.description?.replace('$BRAND$', brand)
+        model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
+
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
+
+        render(view: 'search', model: model)
+    }
+
+    def getAllChildProductTypes(ProductType productType) {
+
+        def result = [productType]
+
+        productType.children.each {
+            result += getAllChildProductTypes(it)
         }
 
-//        def model = [:]
-//        model.filters = browseService.doSearch(params.phrase, params.category, params.f, params.page ?: 0)
-//        model.commonLink = createLink(controller: "site").replace("/index", "")
-
-//        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-
-//        def brand
-//        if (model.filters["selecteds"]["b"])
-//            brand = Brand.createCriteria().list {
-//                'in'('id', model.filters["selecteds"]["b"])
-//            }.collect { it.name }.join(', ')
-//        if (!brand)
-//            brand = ''
-
-//        def productType = ProductType.get(params.f?.split(',')?.find{it.startsWith('p')}?.replace('p', '')?.toLong())
-//        model.productTypeTypeLinks = []
-//        if(productType && productType.children.isEmpty() && !params.f?.split(',')?.find{it.startsWith('t')})
-//        {
-//            productType.types.each{
-//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params:[f: "${params.f},t${it.id}"]), id: it.id]
-//            }
-//        }
-//
-//        model.productTypeId = productType?.id
-//        model.productTypeName = productType?.name
-
-//        model
+        result
     }
 }

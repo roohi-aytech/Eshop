@@ -17,7 +17,7 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            basketItem = [id: id, productId:productModel.product.id, name: productModel.toString(), count: 1, price: priceService.calcProductModelPrice(productModel.id).mainVal]
+            basketItem = [id: id, productId:productModel.product.id, name: productModel.toString(), count: 1, price: priceService.calcProductModelPrice(productModel.id).showVal]
             basket << basketItem
         }
 
