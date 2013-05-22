@@ -14,11 +14,12 @@
     <div id="carousel_${id}" class="showbiz-container table-cell">
         <div class="showbiz" data-left="#showbiz_left_${id}" data-right="#showbiz_right_${id}">
             <div class="overflowholder">
-                <ul class="brand-carousel">
+                <ul class="productTypeType-carousel">
                     <g:each in="${productTypeTypeLinks}" var="productTypeTypeLink">
                         <li class="sb-showcase-skin">
                             <a href="${productTypeTypeLink.href}">
                                 <img src="${createLink(controller: 'image', params: [type:'productTypeType', id:productTypeTypeLink.id, wh:'100x100'])}" alt="${productTypeTypeLink.name}">
+                                <div>${productTypeTypeLink.name}</div>
                             </a>
                         </li>
                     </g:each>

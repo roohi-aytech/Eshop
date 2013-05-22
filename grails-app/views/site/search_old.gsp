@@ -9,7 +9,7 @@
 <%@ page import="org.springframework.util.ClassUtils; grails.plugin.searchable.internal.util.StringQueryUtils; grails.plugin.searchable.internal.lucene.LuceneUtils" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>${params.phrase} - <g:message code="site.title"/></title>
+    <title><g:message code="site.title"/>: ${params.phrase}</title>
 </head>
 
 <body>

@@ -10,9 +10,9 @@
                         </span>
                     </span>
                 </span>
-                %{--<h4>--}%
-                    %{--${link.name}--}%
-                %{--</h4>--}%
+                <h4>
+                    ${link.name}
+                </h4>
             </div>
         </div>
     </a>

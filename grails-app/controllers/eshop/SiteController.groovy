@@ -336,6 +336,12 @@ class SiteController {
             response.addCookie(cookie)
         }
 
+        def modelNames = [product.name]
+        product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
+        def title = product.toString().replace(product.name, modelNames.join(','))
+        model.title = title
+        model.description = message(code: 'site.product.page.description', args: [title])
+
         model
     }
 
