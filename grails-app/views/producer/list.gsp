@@ -50,7 +50,9 @@
              maxColumns="8"
              showCommand="true"
              commands="${actions}"
+             firstColumnWidth="20"
     />
+
     <rg:dialog id="producer" title="${message(code: "producer")}">
         <rg:fields bean="${new Producer()}">
             <rg:modify>

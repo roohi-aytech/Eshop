@@ -7,7 +7,7 @@ import grails.converters.JSON
 
 class GuaranteeController {
 
-//    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -38,8 +38,7 @@ class GuaranteeController {
         }
         else
             guarantee = new Guarantee(params)
-        if (guarantee.validate()) {
-            guarantee.save(flush: true)
+        if (guarantee.validate() && guarantee.save()) {
             render guarantee as JSON
         }
         else {
@@ -78,10 +77,12 @@ class GuaranteeController {
     def delete() {
         def guaranteeInstance = Guarantee.get(params.id)
         ProductTypeBrand.findAllByGuarantee(guaranteeInstance).each {
-            it.guarantee == null
-            it.productTypes = null
+
+            if (it.productTypes){
+                it.productTypes = null
+            }
             it.save()
-            it.delete()
+            it.delete(flush: true)
         }
         guaranteeInstance.delete(flush: true)
         render 0
@@ -89,8 +90,12 @@ class GuaranteeController {
 
     def deleteProductTypeBrand(){
         def productTypeBrand = ProductTypeBrand.get(params.id)
-        productTypeBrand.guarantee = null
-        productTypeBrand.save()
+        //productTypeBrand.guarantee = null
+        if (productTypeBrand.productTypes){
+            productTypeBrand.productTypes = null
+            productTypeBrand.save()
+        }
+
         productTypeBrand.delete(flush: true)
         render 0
     }

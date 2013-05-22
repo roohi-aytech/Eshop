@@ -42,6 +42,18 @@ class ProducingProductController {
             render(template: "form", model: [producerInstance: producingProductInstance])
     }
 
+    def loadGuarantee(){
+        def brand = Brand.get(params.brand)
+        def producerInstance = Producer.get(params.producer)
+
+        def guarantees = Guarantee.createCriteria().list {
+            productTypeBrands {
+                eq('brand', brand?.id)
+            }
+        }
+        render(template: "guarantee_value", model: [producerInstance: producerInstance, guarantees: guarantees])
+    }
+
     def delete() {
         def producingProductInstance = ProducingProduct.get(params.id)
         producingProductInstance.delete(flush: true)

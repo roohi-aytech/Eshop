@@ -9,21 +9,13 @@
             <g:textField name="name" value="${guaranteeInstance?.name}"/>
         </div>
 
-        %{--<div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'productTypeBrands', 'error')} ">--}%
-            %{--<label for="productTypeBrands">--}%
-                %{--<g:message code="producer.productTypeBrands.label" default="ProductTypeBrands"/>--}%
-
-            %{--</label>--}%
-            %{--<g:select name="productTypeBrands" from="${ProductTypeBrand.list()}" multiple="multiple"--}%
-                      %{--optionKey="id" size="5" value="" class="many-to-many"/>--}%
-        %{--</div>--}%
-
         <div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'period', 'error')} ">
             <label for="period">
                 <g:message code="guarantee.period.label" default="Period"/>
             </label>
-            <g:field type="number" style="direction: ltr;" name="period" step="any" required=""
-                     value="${guaranteeInstance?.period}"/>
+
+            <g:textField name="period" value="${guaranteeInstance?.period}"/>
+
         </div>
 
         <div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'description', 'error')} ">
