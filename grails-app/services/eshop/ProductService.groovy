@@ -96,6 +96,6 @@ class ProductService {
         def user = springSecurityService.currentUser
         if (user && user instanceof Customer)
             return Customer.findByUsername(((Customer)user).username).wishList.collect{
-                [id:it.id, title:it.toString(), price: priceService.calcProductPrice(it.id).mainVal]}
+                [id:it.id, title:it.toString(), price: priceService.calcProductPrice(it.id).showVal]}
     }
 }

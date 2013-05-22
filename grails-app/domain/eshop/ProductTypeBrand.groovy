@@ -8,7 +8,7 @@ class ProductTypeBrand {
 
     static transients = ['deleted']
 
-    static searchable = true
+//    static searchable = true
 
     static mapping = {
     }

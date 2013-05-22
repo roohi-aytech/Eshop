@@ -91,6 +91,14 @@
     <input type="button" value="${message(code: "add")}" onclick="addBrand()">
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'isVisible', 'error')} ">
+    <label for="isVisible">
+        <g:message code="product.isVisible.label"/>
+    </label>
+    <g:checkBox name="isVisible" id="isVisible" checked="${productInstance?.isVisible}" />
+</div>
+
+
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'productTypes', 'error')} ">
     <label for="productTypes">
         <g:message code="product.producttypes.label" default="Product Types"/>

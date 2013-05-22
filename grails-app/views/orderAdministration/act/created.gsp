@@ -83,7 +83,7 @@
                 <td>
                     ${orderItem.orderCount}
                 </td>
-                <g:set var="price" value="${priceService.calcProductModelPrice(orderItem.productModel.id).mainVal}"/>
+                <g:set var="price" value="${priceService.calcProductModelPrice(orderItem.productModel.id).showVal}"/>
                 <td>
                     <g:formatNumber number="${price?price:0}" type="number"/>
                 </td>

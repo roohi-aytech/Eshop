@@ -50,7 +50,7 @@ class OrderController {
             orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
             orderItem.orderCount = basketItem.count
-            def price = priceService.calcProductModelPrice(basketItem.id).mainVal
+            def price = priceService.calcProductModelPrice(basketItem.id).showVal
             orderItem.unitPrice = price ? price : 0
             if (!orderItem.validate() || !orderItem.save()) {
                 //order item save error

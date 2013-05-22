@@ -17,7 +17,9 @@ class AttributeType {
     AttributeCategory category
     int sortIndex
 
-    static searchable = true
+    static searchable = {
+        root false
+    }
 
     static final def showPositionValues = ["filter", "productList", "compare", "productDetails", "productFullDetails"]
 

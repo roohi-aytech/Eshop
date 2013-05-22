@@ -15,6 +15,7 @@ class Product extends BaseProduct implements Comparable{
     String iranCode
     String shabnamCode
     Integer visitCount = 0
+    Boolean isVisible = true
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -42,21 +43,26 @@ class Product extends BaseProduct implements Comparable{
         result
     }
 
-    static transients = ['title', 'currentPrice', 'breadCrumb']
+    ProductType getProductType() {
+        productTypes?.count {it} > 0 ? productTypes?.toArray()?.first() : null
+    }
+
+    static transients = ['title', 'currentPrice', 'breadCrumb', 'productType']
 
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide, models: ProductModel]
 
     static belongsTo = [ProductType]
 
     static searchable = {
-
+        root true
+//
 //        only: ['name', 'title', 'breadCrumb', 'description', 'details', 'manufactureCountry', 'otherAtributes', 'keywords', 'pageTitle', 'manualTitle']
-
-        title boost: 2.5
-        breadCrumb boost: 0.5
-
+//
+//        title boost: 2.5
+//        breadCrumb boost: 0.5
+//
         variations component: true
-//        attributes component: true
+        attributes component: true
         customerReviews component: true
         models component: true
     }
@@ -66,7 +72,6 @@ class Product extends BaseProduct implements Comparable{
         attributes cascade: 'all'
         details type: "text"
         version false
-
     }
 
     static constraints = {
@@ -88,6 +93,7 @@ class Product extends BaseProduct implements Comparable{
         shabnamCode(nullable: true)
         manualTitle(nullable:true)
         visitCount(nullable:true)
+        isVisible(nullable: true)
 
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
