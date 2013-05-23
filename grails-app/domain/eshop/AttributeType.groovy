@@ -20,6 +20,7 @@ class AttributeType {
 
     static searchable = {
         root false
+        only = ['name']
     }
 
     static final def showPositionValues = ["filter", "productList", "compare", "productDetails", "productFullDetails"]

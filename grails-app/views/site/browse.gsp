@@ -3,7 +3,7 @@
 <html dir="rtl">
 <head>
     <g:if test="${title}">
-        <title>${title} - <g:message code="site.title"/></title>
+        <title><g:message code="site.title"/>: ${title}</title>
     </g:if>
     <meta charset="utf-8">
     <g:if test="${description}">

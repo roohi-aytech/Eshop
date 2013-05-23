@@ -10,10 +10,11 @@ class Variation {
     static belongsTo = [VariationGroup]
 
     static searchable = {
-        root false
+//        root false
+        only = ['name', 'variationValues', 'variationGroup']
 //        name boost:1.0
-//        variationGroup component:true
-//        variationValues component:true
+        variationGroup component:true
+        variationValues component:true
 
     }
 

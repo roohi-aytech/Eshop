@@ -9,7 +9,8 @@ class ProductModel {
     Boolean isDefaultModel
 
     static searchable = {
-        root false
+//        root false
+        only = ['name','guarantee']
 //        name boost: 2.0
 //        guarantee component:true
 //        variationValues component: true

@@ -11,7 +11,10 @@ class VariationValue {
     Boolean deleted
     Integer indx
 
-//    static searchable = true
+    static searchable = {
+        root false
+        only = ['value']
+    }
 
     static transients = ['deleted']
 
