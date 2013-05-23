@@ -61,6 +61,8 @@ class GuaranteeController {
         def productTypeBrand
         if (params.id) {
             productTypeBrand = ProductTypeBrand.get(params.id)
+            productTypeBrand.productTypes = []
+            productTypeBrand.brand = null
             productTypeBrand.properties = params
         }
         else
