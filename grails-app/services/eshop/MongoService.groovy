@@ -7,7 +7,7 @@ class MongoService {
     def priceService
 
     def storeProduct(Product product) {
-        if(product.deleted)
+        if(product?.deleted)
             return
         def mongoProduct = MongoProduct.findByBaseProductId(product.id)
         if (!mongoProduct) {
