@@ -15,6 +15,7 @@ class AttributeType {
     AttributeValue defaultValue
     ProductType productType
     AttributeCategory category
+    Boolean deleted=false
     int sortIndex
 
     static searchable = {
@@ -28,7 +29,7 @@ class AttributeType {
 
     static mapping = {
         sort 'name'
-        attributes cascade: 'delete'
+//        attributes cascade: 'delete'
     }
 
     static constraints = {
@@ -39,7 +40,7 @@ class AttributeType {
         category(nullable: true)
         values()
         productType()
-
+        deleted(nullable: true)
     }
 
 //    transient def getOptionValues() {

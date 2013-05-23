@@ -12,6 +12,7 @@ class ProductType extends BaseProduct {
     ProductType parentProduct
     ProductType rootProductType
     Long assetcategoryId
+    Boolean deleted=false
     byte[] image
 
     static searchable = {
@@ -43,7 +44,7 @@ class ProductType extends BaseProduct {
         seoFriendlyAlternativeName(nullable: true)
         seoFriendlyName(nullable: true)
         image(nullable: true, maxSize: 1000000000)
-
+        deleted(nullable: true)
     }
 
     @Override

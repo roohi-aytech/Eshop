@@ -133,7 +133,8 @@ class ProductTypeController {
                 it.category = null
                 it.save()
             }
-            attributecategory.delete()
+            attributecategory.deleted=true
+            attributecategory.save()
             render 0
             attributecategory.productType.products.each {
                 mongoService.storeProduct(it)
@@ -183,11 +184,14 @@ class ProductTypeController {
 //                productTypeInstance.rootProductType = null
 //                productTypeInstance.save(flush: true)
 //            }
-            productTypeInstance.products.each {
-                it.removeFromProductTypes(productTypeInstance)
-                it.save()
-            }
-            productTypeInstance.delete(flush: true)
+//            productTypeInstance.products.each {
+//                it.removeFromProductTypes(productTypeInstance)
+//                it.save()
+//            }
+            if(!productTypeInstance.rootProductType)
+                productTypeInstance.rootProductType=productTypeInstance
+            productTypeInstance.deleted=true
+            productTypeInstance.save(flush: true)
             render 0;
         }
         catch (DataIntegrityViolationException e) {
@@ -208,15 +212,19 @@ class ProductTypeController {
             it.save()
         }
         try {
-            attributeTypeInstance.attributes.each {it.delete()}
-            attributeTypeInstance.productType.removeFromAttributeTypes(attributeTypeInstance)
-            attributeTypeInstance.delete()
-            attributeTypeInstance.productType.products.each {
-                mongoService.storeProduct(it)
+            attributeTypeInstance.deleted=true
+            attributeTypeInstance.save(flush: true)
+            def ptid=attributeTypeInstance.productType.id
+            Thread.start{
+                ProductType.get(ptid).products.each {
+                    mongoService.storeProduct(it)
+                }
             }
+
             render 0;
         }
         catch (DataIntegrityViolationException e) {
+            e.printStackTrace()
             render 1;
         }
     }

@@ -658,4 +658,26 @@ class ProductController {
         return variation.variationValues
 
     }
+    def migrateImages(){
+        def base="${grailsApplication.config.ckeditor.upload.basedir}/image/"
+        ProductType.findAll().each {
+            def pathNew = base+fileService.filePath(it)
+            def pathOld=base+fileService.filePathOld(it)
+            new File(pathOld).list().each {
+                if(new File(pathOld+"/"+it).isFile())
+                    fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
+            }
+
+        }
+        Product.findAll().each {
+            def pathNew = base+fileService.filePath(it)
+            def pathOld=base+fileService.filePathOld(it)
+            new File(pathOld).list().each {
+                if(new File(pathOld+"/"+it).isFile())
+                    fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
+            }
+
+        }
+        render 0
+    }
 }

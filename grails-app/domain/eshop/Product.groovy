@@ -16,6 +16,7 @@ class Product extends BaseProduct implements Comparable{
     String shabnamCode
     Integer visitCount = 0
     Boolean isVisible = true
+    Boolean deleted =false
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId
@@ -69,7 +70,7 @@ class Product extends BaseProduct implements Comparable{
 
     static mapping = {
         sort 'name'
-        attributes cascade: 'all'
+//        attributes cascade: 'all'
         details type: "text"
         version false
     }
@@ -94,7 +95,7 @@ class Product extends BaseProduct implements Comparable{
         manualTitle(nullable:true)
         visitCount(nullable:true)
         isVisible(nullable: true)
-
+        deleted(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)
