@@ -32,10 +32,6 @@ databaseChangeLog = {
         dropColumn(columnName: "logo", tableName: "producer")
     }
 
-    changeSet(author: "roohi (generated)", id: "1369222671353-9") {
-        dropColumn(columnName: "indx", tableName: "product_type_brand")
-    }
-
     changeSet(author: "roohi (generated)", id: "1369222671353-10") {
         dropTable(tableName: "guarantee_product_type_brand")
     }
