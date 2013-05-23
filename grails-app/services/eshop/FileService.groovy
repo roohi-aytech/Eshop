@@ -14,16 +14,23 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 class FileService {
     def grailsApplication
 
+    def filePathOld(BaseProduct baseProduct) {
+        if (baseProduct instanceof Product)
+            return filePathOld(baseProduct.productTypes?.find {true}) + "/" + baseProduct
+        else if (baseProduct instanceof ProductType)
+            return filePathOld(baseProduct.parentProduct) + "/" + baseProduct
+        return baseProduct ?: ""
+    }
     def filePath(BaseProduct baseProduct) {
         if (baseProduct instanceof Product)
-            return filePath(baseProduct.productTypes?.find {true}) + "/" + baseProduct
+            return "p${baseProduct?.id}"
         else if (baseProduct instanceof ProductType)
-            return filePath(baseProduct.parentProduct) + "/" + baseProduct
+            return "pt${baseProduct?.id}"
         return baseProduct ?: ""
     }
 
     def filePath(ProductTypeType productTypeType) {
-        return "productTypeType/${productTypeType?.title}"
+        return "productTypeType/${productTypeType?.id}"
     }
 
     def getFileContent(String path) {
@@ -62,5 +69,12 @@ class FileService {
         fileos.write(content)
         fileos.flush()
         fileos.close()
+    }
+
+    def moveFile(String from, String to){
+        def fromF=new File(from)
+        def toF=new File(to)
+        toF.parentFile.mkdirs()
+        fromF.renameTo(toF)
     }
 }

@@ -930,3 +930,16 @@ select{
 .panel.combo-p{
     z-index: 999999999 !important;
 }
+
+dl.error-details{
+    direction: ltr;
+}
+
+pre.snippet{
+    direction: ltr;
+}
+
+pre.stack{
+    direction: ltr;
+    height: auto;
+}

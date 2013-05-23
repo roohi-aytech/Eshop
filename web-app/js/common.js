@@ -43,6 +43,7 @@ $(document).ready(function () {
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
 
+    $('#link-basket .counter').fadeIn('slow');
 });
 
 function changeAddToBasketButtonLabel() {

@@ -15,7 +15,10 @@ class CustomerReview {
 
     static belongsTo = [Product]
 
-    static searchable = true
+    static searchable = {
+//        root false
+        only = ['title','body']
+    }
 
     static mapping = {
         sort 'rate'

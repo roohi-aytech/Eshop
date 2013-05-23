@@ -18,7 +18,7 @@ class Producer {
         producerStaffs cascade: "all-delete-orphan"
     }
 
-    static searchable = true
+//    static searchable = true
 
     static constraints = {
         producerType(nullable: true)

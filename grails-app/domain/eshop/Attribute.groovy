@@ -7,13 +7,15 @@ class Attribute {
     Product product
     AttributeType attributeType
 
-//    static searchable = true{
+    static searchable = {
+//        root false
+        only = ['attributeValue', 'attributeType']
 //        only: ['attributeValue']
 //        alias: "AttributeClass"
 //        value component:true
 //        attributeValue boost:1.5
-//        attributeType component:true
-//    }
+        attributeType component:true
+    }
 
     static belongsTo = [AttributeType]
 
@@ -25,11 +27,11 @@ class Attribute {
         value(nullable: true)
         attributeValue(nullable: true)
         product()
-        attributeType()
+        attributeType(nullable: true)
     }
 
     @Override
     String toString() {
-        attributeType.name + ": " + value
+        attributeType?.name + ": " + value
     }
 }
