@@ -7,7 +7,7 @@ class MongoService {
     def priceService
 
     def storeProduct(Product product) {
-        if(product?.deleted)
+        if (product?.deleted)
             return
         def mongoProduct = MongoProduct.findByBaseProductId(product.id)
         if (!mongoProduct) {
@@ -23,19 +23,19 @@ class MongoService {
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
         mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
         def productTypes = collectProductTypes(product)
-        mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
+        mongoProduct['productTypes'] = productTypes.collect { [id: it.id, name: it.name, parentId: it?.parentId] }
 
-        product.attributes.findAll {it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted}.each {
+        product.attributes.findAll { it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted }.each {
             if (it.value)
                 mongoProduct["a${it.attributeType.id}"] = it.value?.value
             else if (it.attributeType.defaultValue)
                 mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
         }
 
-        def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll{it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted}.collect{it.attributeType.category.id})
+        def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll { it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted }.collect { it.attributeType.category.id })
         attributeCategories.each {
             def attributes = Attribute.findAllByProductAndAttributeTypeInListAndValueIsNotNull(product, AttributeType.findAllByCategory(it))
-            mongoProduct["ac${it.id}"] = attributes.collect{[id: it.attributeType.id, name:it.attributeType.name, valueId:it.value?.id, value:it.value?.value]}
+            mongoProduct["ac${it.id}"] = attributes.collect { [id: it.attributeType.id, name: it.attributeType.name, valueId: it.value?.id, value: it.value?.value] }
         }
 
         mongoProduct.save(flush: true)
@@ -43,17 +43,21 @@ class MongoService {
 
     private def collectProductTypes(Product product) {
         def res = []
-        product.productTypes.findAll {!it?.deleted}.each {
+        product.productTypes.findAll { !it?.deleted }.each {
             res.addAll(collectProductTypes(it))
         }
         return res
     }
 
     private def collectProductTypes(ProductType productType) {
-        def res = [[name: productType?.name, id: productType?.id,parentId: productType?.parentProduct?.id]]
+        def res = [[name: productType?.name, id: productType?.id, parentId: productType?.parentProduct?.id]]
 
         if (productType.parentProduct)
             res.addAll(collectProductTypes(productType.parentProduct))
+
+        productType.godFathers.each {
+            res.addAll(collectProductTypes(ProductType.get(it.id)))
+        }
 
         return res
     }

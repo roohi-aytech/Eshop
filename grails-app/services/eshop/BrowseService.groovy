@@ -213,6 +213,14 @@ class BrowseService {
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
         def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
+        if (productType)
+            ProductType.createCriteria().listDistinct {
+                godFathers {
+                    eq('id', productType.id)
+                }
+            }.each {
+                childProductTypeIds.add(it.id)
+            }
         def productTypesCountMap = []
         allProductTypesCountMap.each {
             if (childProductTypeIds.contains(it._id.id))
@@ -486,6 +494,14 @@ class BrowseService {
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
         def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
+        if (productType)
+            ProductType.createCriteria().listDistinct {
+                godFathers {
+                    eq('id', productType.id)
+                }
+            }.each {
+                childProductTypeIds.add(it.id)
+            }
         def productTypesCountMap = []
         allProductTypesCountMap.each {
             if (childProductTypeIds.contains(it._id.id))

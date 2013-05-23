@@ -79,5 +79,14 @@ function resizeThumbnails() {
         $(this).attr('oldTop', $(this).position().top);
         $(this).attr('style', '');
     })
+
+    //show top 8 brand images
+    var brandItems = $('.brand-carousel li a img');
+    if(brandItems.length > 8)
+        brandItems = brandItems.slice(0, 8);
+    brandItems.each(function(){
+        if($(this).attr('src') != $(this).attr('original-src'))
+            $(this).attr('src', $(this).attr('original-src'));
+    });
 }
 

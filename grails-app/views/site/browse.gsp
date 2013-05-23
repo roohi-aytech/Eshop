@@ -12,8 +12,6 @@
     <g:if test="${keywords}">
         <meta name="keywords" content="${keywords}">
     </g:if>
-
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
     <style>
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -24,8 +22,6 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>

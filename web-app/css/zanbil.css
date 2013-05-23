@@ -1905,11 +1905,13 @@ span.cke_skin_kama {
     height: 80px;
     position: relative;
     border-radius: 3px;
+    background: url(../images/loading.gif) center center no-repeat;
 }
 
 .brand-carousel li a img{
     height: 80px;
     height:80px;
+    background: url(../images/loading.gif) center center no-repeat;
 }
 
 .brand-carousel li a .tick{

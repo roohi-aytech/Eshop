@@ -49,12 +49,6 @@
 
     <script>
         $(document).ready(function () {
-//            $('#slideshowMain').coinslider(
-//                    {
-//                        width: mainSlideWidth,
-//                        height: mainSlideHeight,
-//                        delay: 5000
-//                    });
 
             var $container = $(".container");
 
