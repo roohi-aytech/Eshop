@@ -24,6 +24,16 @@
         <g:message code="productTypeBrand.brand.label" default="Brand"/>
     </label>
     <rg:autocomplete  domainClass="eshop.Brand" id="brand" like="true" value="${productTypeBrand?.brand?.id}" display="${productTypeBrand?.brand}"/>
-    <input type="button" value="${message(code: "add")}" onclick="addBrand()">
+
 </div>
+
+<script type="text/javascript">
+    function addBrand(){
+        loadOverlay('<g:createLink controller="brand" action="form"/>',
+                '<g:createLink controller="brand" action="save"/>',
+                function(r){
+                    $("#brand").val(r.name)
+                    $("#brand.id").val(r.id)
+                })
+</script>
 

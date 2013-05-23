@@ -27,11 +27,11 @@ class Attribute {
         value(nullable: true)
         attributeValue(nullable: true)
         product()
-        attributeType()
+        attributeType(nullable: true)
     }
 
     @Override
     String toString() {
-        attributeType.name + ": " + value
+        attributeType?.name + ": " + value
     }
 }

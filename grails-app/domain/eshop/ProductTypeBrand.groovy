@@ -6,9 +6,7 @@ class ProductTypeBrand {
     Brand brand
     static hasMany = [productTypes: ProductType]
 
-    static transients = ['deleted']
-
-//    static searchable = true
+    static searchable = true
 
     static mapping = {
     }

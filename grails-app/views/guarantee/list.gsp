@@ -28,7 +28,7 @@
              onSelectRow="loadProductTypeBrands"
     />
     <g:javascript>
-        var curSelectedGuarantee=${ptid?:0}
+        var curSelectedGuarantee=${guarantee?:0}
         var loadProductTypeBrands = function (rowId) {
             curSelectedGuarantee = rowId
             var criteria = "[{'op':'eq', 'field':'guarantee.id', 'val':" + rowId + "}]"
@@ -93,6 +93,8 @@
                     if (response == "0") {
                         var grid = $("#GuaranteeGrid");
                         grid.trigger('reloadGrid');
+                        var grid2 = $("#ProductTypeBrandGrid");
+                        grid2.trigger('reloadGrid');
                     }
                     else {
                     }

@@ -7,6 +7,8 @@ class MongoService {
     def priceService
 
     def storeProduct(Product product) {
+        if(product?.deleted)
+            return
         def mongoProduct = MongoProduct.findByBaseProductId(product.id)
         if (!mongoProduct) {
             mongoProduct = new MongoProduct(baseProductId: product.id)
@@ -23,14 +25,14 @@ class MongoService {
         def productTypes = collectProductTypes(product)
         mongoProduct['productTypes'] = productTypes.collect {[id: it.id, name: it.name, parentId: it?.parentId]}
 
-        product.attributes.findAll {it.attributeType.showPositions.contains("filter")}.each {
+        product.attributes.findAll {it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted}.each {
             if (it.value)
                 mongoProduct["a${it.attributeType.id}"] = it.value?.value
             else if (it.attributeType.defaultValue)
                 mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
         }
 
-        def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll{it.attributeType?.category?.showPositions?.contains("filter")}.collect{it.attributeType.category.id})
+        def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll{it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted}.collect{it.attributeType.category.id})
         attributeCategories.each {
             def attributes = Attribute.findAllByProductAndAttributeTypeInListAndValueIsNotNull(product, AttributeType.findAllByCategory(it))
             mongoProduct["ac${it.id}"] = attributes.collect{[id: it.attributeType.id, name:it.attributeType.name, valueId:it.value?.id, value:it.value?.value]}
@@ -41,7 +43,7 @@ class MongoService {
 
     private def collectProductTypes(Product product) {
         def res = []
-        product.productTypes.each {
+        product.productTypes.findAll {!it?.deleted}.each {
             res.addAll(collectProductTypes(it))
         }
         return res

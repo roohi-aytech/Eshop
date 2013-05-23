@@ -3,7 +3,7 @@ package eshop
 class ProducerStaff {
     static auditable = true
     //1.3.	اطلاعات افراد (سمت/ نام/ تلفن/ فکس/ تلفن همراه/ایمیل/مسئول دفتر)
-    String role
+    StaffRole role
     String sex
     String name
     String lastName
@@ -13,10 +13,11 @@ class ProducerStaff {
     String emailAddress
     String secretary
 
+    Producer producer
+
     static belongsTo =  Producer
 
     Boolean deleted
-    Integer indx
 
     static transients = ['deleted']
 
