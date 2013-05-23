@@ -93,7 +93,7 @@ class ProductController {
         def image = productTypeType.image
         productTypeType.image = null
         productTypeType = productTypeType.save()
-        if (image) {
+        if (image && !params.imageDeleted) {
             productTypeType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productTypeType))
             productTypeType.save()
         }
@@ -194,11 +194,29 @@ class ProductController {
         else {
             productInstance = new Product()
         }
+        if(productInstance?.type && !productTypeTypes.contains(productInstance?.type))
+            productTypeTypes.add(productInstance?.type)
 
         if(productInstance.isVisible == null)
             productInstance.isVisible = true;
 
         [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid ?: productInstance?.productTypes?.find()?.id, productTypeTypes: productTypeTypes]
+    }
+
+    def synchProductTypeTypes() {
+        Product.findAll().groupBy {it.productTypes.find()}.each {
+            if (it.key) {
+                def types = it.value.collect {it.type}.unique()
+                types.each {type ->
+                    if (type && !it.key.types.contains(type))
+                        it.key.addToTypes(type)
+                }
+                it.key.save()
+                println it.key
+            }
+        }
+
+        render 0
     }
 
     def saveProductDescription() {
@@ -576,7 +594,7 @@ class ProductController {
             }
 
             Variation.findAllByBaseProduct(product).each {
-               // it.variationValues.each{it.delete()}
+                // it.variationValues.each{it.delete()}
                 it.variationValues = null
                 it.save()
                 it.delete()
@@ -628,7 +646,7 @@ class ProductController {
                 it.manufactureCountry = params.manufactureCountry
                 it.save()
             }
-            render ([country:params.manufactureCountry] as JSON)
+            render([country: params.manufactureCountry] as JSON)
         }
         else {
             render(template: "countryForm", model: [country: params.manufactureCountryOld, hasError: true])
@@ -639,5 +657,27 @@ class ProductController {
 
         return variation.variationValues
 
+    }
+    def migrateImages(){
+        def base="${grailsApplication.config.ckeditor.upload.basedir}/image/"
+        ProductType.findAll().each {
+            def pathNew = base+fileService.filePath(it)
+            def pathOld=base+fileService.filePathOld(it)
+            new File(pathOld).list().each {
+                if(new File(pathOld+"/"+it).isFile())
+                    fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
+            }
+
+        }
+        Product.findAll().each {
+            def pathNew = base+fileService.filePath(it)
+            def pathOld=base+fileService.filePathOld(it)
+            new File(pathOld).list().each {
+                if(new File(pathOld+"/"+it).isFile())
+                    fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
+            }
+
+        }
+        render 0
     }
 }

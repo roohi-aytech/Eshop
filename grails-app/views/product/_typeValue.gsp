@@ -10,5 +10,7 @@
         <g:message code="productTypeType.image" default="Image"/>
     </label>
     <input type="file" name="image" id="image">
-    <img src="<g:createLink controller="product" action="getTypeImage" id="${productTypeType?.id}"/>" style="max-width: 100px"/>
+    <input type="hidden" name="imageDeleted">
+    <img id="img${productTypeType?.id}" src="<g:createLink controller="product" action="getTypeImage" id="${productTypeType?.id}" params="[timestamp:System.currentTimeMillis()]"/>" style="max-width: 100px"/>
+    <input type="button" onclick="$('[name=imageDeleted]').val('true');$('#img${productTypeType?.id}').remove()" value="<g:message code="delete" />">
 </div>

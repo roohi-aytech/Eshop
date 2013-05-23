@@ -46,7 +46,9 @@
         <g:message code="brand.logo.label" default="Logo"/>
     </label>
     <input type="file" id="logo" name="logo" />
-    <img src="<g:createLink controller="brand" action="getLogo" id="${brandInstance?.id}"/>" style="max-width: 100px"/>
+    <input type="hidden" name="imageDeleted" />
+    <img id="img${brandInstance?.id}" src="<g:createLink controller="brand" action="getLogo" id="${brandInstance?.id}" params="[timestamp:System.currentTimeMillis()]"/>" style="max-width: 100px"/>
+    <input type="button" onclick="$('[name=imageDeleted]').val('true');$('#img${brandInstance?.id}').remove()" value="<g:message code="delete" />">
 </div>
 
 
