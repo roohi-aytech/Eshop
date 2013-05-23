@@ -8,11 +8,7 @@
 
 <%@ page import="eshop.Producer;" %>
 
-<style>
-.ui-dialog{
-    width: 900px !important;
-}
-</style>
+
 <!doctype html>
 <html>
 <head>
@@ -22,7 +18,6 @@
 </head>
 
 <body>
-<g:javascript src="jquery.quickselect.pack.js"/>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <g:set var="actions" value="[]"/>
@@ -55,7 +50,9 @@
              maxColumns="8"
              showCommand="true"
              commands="${actions}"
+             firstColumnWidth="20"
     />
+
     <rg:dialog id="producer" title="${message(code: "producer")}">
         <rg:fields bean="${new Producer()}">
             <rg:modify>
@@ -87,14 +84,7 @@
                 });
             }
         }
-         $(function(){
-            $( "#producer" ).on( "dialogopen", function( event, ui ) {
-                setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
-            } );
-            $("[ng-click^=addCompositeproducerStaffs]").click(function(){
-                setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
-            })
-        })
+
 
     </g:javascript>
 </div>

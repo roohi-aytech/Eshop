@@ -8,7 +8,7 @@ class Guarantee {
     String period
     byte[] logo
 
-    static hasMany = [productTypeBrands: ProductTypeBrand]
+    //static hasMany = [productTypeBrands: ProductTypeBrand]
  //   static composites = ["productTypeBrands"]
 
     static searchable = {
@@ -18,6 +18,7 @@ class Guarantee {
 
     static mapping = {
         sort 'name'
+    //    productTypeBrands cascade: "all-delete-orphan"
     }
 
     static constraints = {

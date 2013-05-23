@@ -12,7 +12,6 @@ class Producer {
     String fax
 
     static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
-    static composites = ["producerStaffs"]
 
     static mapping = {
         sort 'id'
