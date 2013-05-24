@@ -691,7 +691,7 @@ class ProductController {
                 def pts = old.parentFile.list().findAll {file->file?.contains(it?.name?:'1234567890')}
                 if(pts.size()==1){
                     println pathOld+" "+pts[0]
-                    old=new File(old.parent+"/"+pts[0])
+                    old=new File(old.parentFile.absolutePath+"/"+pts[0])
                     println old.parent+"/"+pts[0]
                     old.list().each {
                         if(new File(pathOld+"/"+it).isFile())
