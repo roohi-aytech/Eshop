@@ -8,14 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>

@@ -55,6 +55,14 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
         }
 
+        ProductType.createCriteria().listDistinct {
+            godFathers {
+                eq('id', productType.id)
+            }
+        }.each {
+            model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
+        }
+
         model.productTypeTypeLinks = []
         if (productType.children.isEmpty()) {
             productType.types.each {
