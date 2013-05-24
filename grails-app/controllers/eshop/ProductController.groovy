@@ -692,7 +692,7 @@ class ProductController {
                 if(pts.size()==1){
                     println pathOld+" "+pts[0]
                     old=new File(old.parent+"/"+pts[0])
-
+                    println old.parent+"/"+pts[0]
                     old.list().each {
                         if(new File(pathOld+"/"+it).isFile())
                             fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
