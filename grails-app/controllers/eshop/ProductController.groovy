@@ -688,7 +688,7 @@ class ProductController {
             def pathOld=base+fileService.filePathOld(it)
             def old=new File(pathOld)
             if(!old.exists()){
-                def pts = old.parentFile.list().findAll {file->file.contains(it.name)}
+                def pts = old.parentFile.list().findAll {file->file?.contains(it?.name?:'1234567890')}
                 if(pts.size()==1){
                     println pathOld+" "+pts[0]
                     old=new File(old.parent+"/"+pts[0])
