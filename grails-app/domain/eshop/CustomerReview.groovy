@@ -10,6 +10,7 @@ class CustomerReview {
     Date creationDate
     Date lastUpdate
     User user
+    CustomerReview parentReview
 
     static hasMany = [customerReviewReview: CustomerReview]
 
@@ -34,5 +35,6 @@ class CustomerReview {
         creationDate(nullable: false)
         lastUpdate(nullable: false)
         user(nullable: false)
+        parentReview(nullable: true)
     }
 }

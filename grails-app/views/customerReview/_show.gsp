@@ -27,4 +27,17 @@
             ${customerReviewInstance.body}
         </div>
     </g:if>
+
+    <sec:ifLoggedIn>
+        <a class="link-button"><img src="${resource(dir:'images/icons', file: 'comment.png')}"/><g:message code="reviewOnReview.label"/></a>
+    </sec:ifLoggedIn>
+
+    <div class="childCustomerReviews">
+
+    </div>
+
+    <div class="reviewThisReview">
+
+    </div>
+
 </div>

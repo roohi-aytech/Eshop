@@ -9,7 +9,7 @@ class Brand {
 
     byte[] logo
 
-//    static searchable = true
+    static searchable = true
 
     static mapping = {
         sort 'name'
