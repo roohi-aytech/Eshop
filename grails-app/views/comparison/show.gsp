@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="layout" content="site">
-    <title></title>
+    <title><g:message code="compare"/></title>
 </head>
 
 <body>
@@ -18,7 +18,9 @@
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <g:each in="${productTypeList}" var="productType">
-            <li><a href="#tab${productType.item.id}" data-toggle="tab">${productType.item.name}</a></li>
+            <li><a href="#tab${productType.item.id}" data-toggle="tab">
+                %{--<img src="${createLink(controller: 'image', params:[type:'productType', id:productType.item.id, wh:'50x50'])}"/>--}%
+                ${productType.item.name}</a></li>
         </g:each>
     </ul>
 
@@ -44,7 +46,7 @@
                     <g:each in="${productType.rootAttributeCategories}" var="category">
                         <tr>
                             <td colspan="${productType.products.toList().count { it } + 1}">
-                                <h4>${category.item.name}</h4>
+                                <h4>${category?.item?.name?:message(code:'otherAttributes')}</h4>
                             </td>
                         </tr>
                         <g:each in="${category.attributeTypes}" var="attributeType">
@@ -54,7 +56,7 @@
                                 </td>
                                 <g:each in="${attributeType.values}" var="attribute">
                                     <td>
-                                        ${attribute ? attribute : '-'}
+                                        ${attribute ? attribute.replace('\n', '<br/>') : '-'}
                                     </td>
                                 </g:each>
                             </tr>
