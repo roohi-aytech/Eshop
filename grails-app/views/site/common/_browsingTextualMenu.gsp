@@ -1,9 +1,3 @@
-%{--<div id="navigator_root">--}%
-%{--<a href="${createLink(uri: '/')}site/browse/${message(code: "applicances")}" id="navigator_appliance"><g:message--}%
-%{--code="applicances"></g:message></a>--}%
-%{--<a href="${createLink(uri: '/')}site/browse/${message(code: "digital")}" id="navigator_digital"><g:message--}%
-%{--code="digital"></g:message></a>--}%
-%{--</div>--}%
 <ul class="nav nav-list">
     <g:if test="${productType.children}">
         <li class="nav-header"><g:message code="site.selectSubcategory"
