@@ -82,16 +82,16 @@
 
                         <div class="white-panel">
 
-                            <h2>${product}</h2>
-
-                            <p class="brand-badge">
-                                <span><g:message code="brand"/>:</span>
-                                <b>${product?.brand}</b>
-                            </p>
+                            <h1>${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""}</h1>
+                            <h2 class="small"><g:message code="productModel"/> ${product?.name?:""}</h2>
 
                             <p>
                                 <g:message code="rate"/>:
                                 <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
+                            </p>
+
+                            <p class="brand-badge">
+                                <img width="80px" height="80px" src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}" alt="${product?.brand}"/>
                             </p>
 
                             <g:render template="product/variation"/>

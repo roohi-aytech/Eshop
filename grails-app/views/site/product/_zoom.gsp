@@ -17,7 +17,7 @@
             smallthumb_inactive_opacity: 0.3,
             smallthumbs_position: 'bottom',
             show_icon: false,
-            autoplay: true,
+            autoplay: false,
             keyboard: false,
             zoom_easing: true,
             show_hint: true,

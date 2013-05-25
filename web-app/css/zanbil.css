@@ -1100,10 +1100,16 @@ input.search-query {
     padding: 0 10px 0 10px;
 }
 
+h1{
+    font-family: times !important;
+    font-size: 36px;
+    margin-bottom: 0;
+}
+
 h2 {
     font-family: times !important;
     font-size: 24px;
-    margin-bottom: 10;
+    margin-bottom: 10px;
 }
 
 .brand-badge {
