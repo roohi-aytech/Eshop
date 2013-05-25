@@ -1100,10 +1100,16 @@ input.search-query {
     padding: 0 10px 0 10px;
 }
 
+h1{
+    font-family: times !important;
+    font-size: 36px;
+    margin-bottom: 0;
+}
+
 h2 {
-    font-family: 'b titr', titr, times !important;
+    font-family: times !important;
     font-size: 24px;
-    margin-bottom: 10;
+    margin-bottom: 10px;
 }
 
 .brand-badge {
@@ -1183,7 +1189,7 @@ h2 {
 }
 
 h3 {
-    font-family: 'b titr', titr, times !important;
+    font-family: times !important;
     color: #ff8c00;
     font-size: 20px;
     margin-bottom: 0;
@@ -1330,7 +1336,7 @@ span.cke_skin_kama {
 
 .customer-review h4 {
     display: inline-block;
-    font-family: 'b titr', titr, times, serif !important;
+    font-family: times, serif !important;
     font-size: 16px;
     margin-bottom: 0;
 }
@@ -1495,7 +1501,7 @@ span.cke_skin_kama {
 }
 
 .control-panel h4 {
-    font-family: 'b titr', titr, times !important;
+    font-family: times !important;
     font-size: 16px;
 }
 
@@ -1548,7 +1554,7 @@ span.cke_skin_kama {
 }
 
 .shopping-basket h3 a {
-    font-family: 'b titr', titr, times !important;
+    font-family: times !important;
     font-size: 16px;
 }
 
@@ -2245,6 +2251,72 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu{
 
 .moreItems{
     display: none;
+}
+
+/*link-button*/
+.link-button{
+    border:1px solid transparent;
+    border-radius: 3px;
+    padding:3px;
+    padding-right: 7px;
+    padding-left: 7px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.link-button img{
+    margin-left: 5px;
+}
+
+.link-button:hover{
+    border-color: #dddddd;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 1px #ffffff inset;
+    text-decoration: none;
+}
+
+/*editor*/
+.cke_toolbox_collapser{
+    display:none;
+}
+
+.cke_bottom{
+    display: none;
+}
+
+.cke_skin_kama .cke_wrapper{
+    background: none !important;
+    padding:0 !important;
+}
+
+.cke_skin_kama .cke_editor{
+    border: 0 solid white !important;
+}
+
+.cke_skin_kama .cke_top{
+    padding: 2px !important;
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+}
+
+.cke_contents{
+    border:1px solid #dddddd !important;
+    border-radius: 0 0 3px 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+.cke_contents:focus{
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
+
+.cke_skin_kama .cke_toolbox{
+    margin-top:5px;
+    margin-right:5px;
 }
 
 

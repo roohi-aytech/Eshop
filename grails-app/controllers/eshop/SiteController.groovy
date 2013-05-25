@@ -24,7 +24,7 @@ class SiteController {
     }
 
     def browse() {
-        def productType = params.productType ? ProductType.findByName(params.productType) : null
+        def productType = params.productType ? ProductType.findBySeoFriendlyName(params.productType) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
         if (!productType) {
             flash.message = message(code: "productType.not.found")
             redirect(action: "index")
@@ -45,14 +45,14 @@ class SiteController {
         model.breadCrumb = []
 
         productTypeChain.each {
-            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.urlName}/"]
         }
 
         model.subProductTypeLinks = []
         def base = "${model.commonLink}/"
 
         productType.children.each {
-            model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
+            model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
         ProductType.createCriteria().listDistinct {
@@ -60,7 +60,7 @@ class SiteController {
                 eq('id', productType.id)
             }
         }.each {
-            model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
+            model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
         model.productTypeTypeLinks = []
@@ -78,18 +78,12 @@ class SiteController {
                 eq('id', productType.id)
             }
         }
-//        model.discounts = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThan new Date(), new Date(), 0
-
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
 
-//        def pageDetails = PageDetails.findByProductType(productType)
-//        if (pageDetails)
-//            model.title = pageDetails?.title?.replace('$BRAND$', '')
-//        else
-        model.title = productType.name
-        model.description = productType.description // pageDetails?.description?.replace('$BRAND$', '')
-        model.keywords = productType.keywords //pageDetails?.keywords?.replace('$BRAND$', '')
+        model.title = productType.pageTitle?:productType.name
+        model.description = productType.description
+        model.keywords = productType.keywords
 
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
@@ -105,11 +99,13 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
 
+        def brandList = []
         def brand
         if (model.filters["selecteds"]["b"])
-            brand = Brand.createCriteria().list {
+            brandList = Brand.createCriteria().list {
                 'in'('id', model.filters["selecteds"]["b"])
-            }.collect { it.name }.join(', ')
+            }
+        brand = brandList.collect { it.name }.join(', ')
         if (!brand)
             brand = ''
 
@@ -121,19 +117,42 @@ class SiteController {
             }
         }
 
-        def pageDetails
-        if (productType)
-            pageDetails = PageDetails.findByProductType(productType)
-        if (pageDetails)
-            model.title = pageDetails?.title?.replace('$BRAND$', brand)
-        else {
-            model.title = productType?.toString()
-            if (brand && brand != "")
-                model.title = (model.title ? model.title + " - " : "") + brand
+        if (productType) {
+            if (brand != '') {
+                //brand and productType def pageDetails
+                def pageDetails = PageDetails.findByProductType(productType)
+                if (pageDetails) {
+                    model.title = pageDetails?.title?.replace('$BRAND$', brand)
+                    model.description = pageDetails?.description?.replace('$BRAND$', brand)
+                    model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
+                } else {
+                    model.title = productType?.toString()
+                    if (brand && brand != "")
+                        model.title = (model.title ? model.title + " - " : "") + brand
 
+                }
+            } else {
+                //productType only
+                model.title = productType.pageTitle?:productType.name
+                model.description = productType.description
+                model.keywords = productType.keywords
+            }
+        } else if (brand != '') {
+            //brand only
+            if(brandList.count{it} == 1){
+                model.title = brandList.first()?.pageTitle?:brandList.first()?.name
+                model.description = brandList.first()?.description
+                model.keywords = brandList.first()?.keywords
+            }
+            else{
+                model.title = brand
+            }
+        } else {
+            //no filter
+            model.title = message(code: 'site.mainPage.title')
+            model.description = message(code: 'site.mainPage.description')
+            model.keywords = message(code: 'site.mainPage.keywords')
         }
-        model.description = pageDetails?.description?.replace('$BRAND$', brand)
-        model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
 
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
@@ -233,7 +252,7 @@ class SiteController {
         def base = "${model.commonLink}/"
 
         productType.children.each {
-            model.subProductTypeLinks << [name: it.name, href: base + it.name, id: it.id]
+            model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -293,7 +312,7 @@ class SiteController {
         model.breadCrumb = []
 
         productTypeChain.each {
-            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/", id: it.id]
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.urlName}/", id: it.id]
         }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()

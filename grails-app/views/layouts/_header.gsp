@@ -15,11 +15,11 @@
             %{--<li><a href="#">${rootProductType.name}</a></li>--}%
                 <li class="dropdown-submenu">
                     <a tabindex="-1"
-                       href="${createLink(controller: 'site', action: 'browse', params: [productType: rootProductType.name])}">${rootProductType.name}</a>
+                       href="${createLink(controller: 'site', action: 'browse', params: [productType: rootProductType.urlName])}">${rootProductType.name}</a>
                     <ul class="dropdown-menu">
                         <g:each in="${rootProductType.children}" var="secondLevelProductType">
                             <li>
-                            <a href="${createLink(controller: 'site', action: 'browse', params: [productType: secondLevelProductType.name])}" >${secondLevelProductType.name}</a>
+                            <a href="${createLink(controller: 'site', action: 'browse', params: [productType: secondLevelProductType.urlName])}" >${secondLevelProductType.name}</a>
                         </g:each>
                     </ul>
                 </li>

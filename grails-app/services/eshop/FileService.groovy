@@ -48,7 +48,7 @@ class FileService {
     def getFileContent(String name, String type, String parent) {
         if(name.startsWith("max-"))
             name = name.replace("max-", "")
-        def path = "${grailsApplication.config.ckeditor.upload.basedir}"+ type  + "/" + parent + "/" + "/" + name
+        def path = "${grailsApplication.config.ckeditor.upload.basedir}"+ type  + "/" + parent + "/" + name
         def file = new File(path)
         if (file.exists()) {
             def fis = new FileInputStream(file)

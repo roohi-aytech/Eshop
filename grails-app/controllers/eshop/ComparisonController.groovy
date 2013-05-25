@@ -63,6 +63,8 @@ class ComparisonController {
             productType.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType.item)
                     .toList().collect { [item: it] }
 
+            productType.rootAttributeCategories << [item: null]
+
             productType.rootAttributeCategories.each {
                 category ->
                     fillAttibuteCategoryChildren(productType.products, category)
@@ -74,22 +76,49 @@ class ComparisonController {
 
     def fillAttibuteCategoryChildren(products, parentCategory) {
 
-        parentCategory.attributeTypes = AttributeType.findAllByCategory(parentCategory.item).collect { [item: it] }
+        if (parentCategory.item) {
+            parentCategory.attributeTypes = AttributeType.findAllByCategory(parentCategory.item).findAll {it.showPositions.contains('compare')}.collect { [item: it] }
 
-        parentCategory.attributeTypes.each { attributeType ->
-            attributeType.values = []
-            products.each { product ->
-                def attr = product.attributes.find { attribute ->
-                    attribute.attributeType.id == attributeType.item.id
+            parentCategory.attributeTypes.each { attributeType ->
+                attributeType.values = []
+                products.each { product ->
+                    def attr = product.attributes.find { attribute ->
+                        attribute.attributeType.id == attributeType.item.id
+                    }
+
+                    attributeType.values << attr?.value?.toString()
                 }
-
-                attributeType.values << attr?.value?.toString()
             }
-        }
 
-        parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it] }
-        parentCategory.childCategories.each { childCategory ->
-            fillAttibuteCategoryChildren(products, childCategory)
+            parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it] }
+            parentCategory.childCategories.each { childCategory ->
+                fillAttibuteCategoryChildren(products, childCategory)
+            }
+        } else {
+            parentCategory.attributeTypes = []
+            products.each { product ->
+                product.attributes.each { attribute ->
+                    if (attribute.attributeType.category == null && attribute.attributeType.showPositions.contains('compare')) {
+                        def item = [item: attribute.attributeType]
+                        if (!parentCategory.attributeTypes.contains(item)) {
+                            parentCategory.attributeTypes << item
+                        }
+                    }
+                }
+            }
+
+            parentCategory.attributeTypes.each { attributeType ->
+                attributeType.values = []
+                products.each { product ->
+                    def attr = product.attributes.find { attribute ->
+                        attribute.attributeType.id == attributeType.item.id
+                    }
+
+                    attributeType.values << attr?.value?.toString()
+                }
+            }
+
+            parentCategory.childCategories = [:]
         }
     }
 }

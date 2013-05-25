@@ -116,6 +116,14 @@ class ImageController {
         def content
         if (img) {
             if (params.wh) {
+                if(params.wh == "max")
+                    content = imageService.getImage(
+                            img,
+                            params.wh,
+                            fileService.filePath(product))//, remove comment to enble watermarking
+//                            request.getSession().getServletContext().getRealPath("/images/watermark.png"))
+
+                    else
                 content = imageService.getImage(img, params.wh, fileService.filePath(product))
             } else {
                 content = img.fileContent

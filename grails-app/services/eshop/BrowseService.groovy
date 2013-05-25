@@ -131,7 +131,7 @@ class BrowseService {
                 if (!breadcrumb) {
                     def pt = productType
                     while (pt) {
-                        breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
+                        breadcrumb << [linkTail: "browse/${pt.urlName}", linkTitle: pt.name]
                         pt = pt.parentProduct
                     }
                     breadcrumb = breadcrumb.reverse()
@@ -411,7 +411,7 @@ class BrowseService {
                     if (!breadcrumb) {
                         def pt = productType
                         while (pt) {
-                            breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
+                            breadcrumb << [linkTail: "browse/${pt.urlName}", linkTitle: pt.name]
                             pt = pt.parentProduct
                         }
                         breadcrumb = breadcrumb.reverse()

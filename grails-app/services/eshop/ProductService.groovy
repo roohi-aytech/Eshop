@@ -37,6 +37,7 @@ class ProductService {
             return false
         }
     }
+
     @Transactional()
     synchronized void addVideoToProduct(productId, Set<Content> images) {
         synchronized (this) {
@@ -66,10 +67,20 @@ class ProductService {
     }
 
     def findRootProductTypes() {
-        ProductType.findAllByParentProductIsNull()
+        def result = ProductType.findAllByParentProductIsNull().collect { [id: it.id, name: it.name, urlName: it.urlName] }
+        result.each { rootItem ->
+            rootItem.children = ProductType.findAllByParentProduct(ProductType.get(rootItem.id)).collect { [id: it.id, name: it.name, urlName: it.urlName] }
+            ProductType.createCriteria().listDistinct {
+                godFathers {
+                    eq('id', rootItem.id)
+                }
+            }.each {
+                rootItem.children << [id: it.id, name: it.name, urlName: it.urlName]
+            }
+        }
     }
 
-    def findLastVisitedProducts(lastVisitedProductsCookie){
+    def findLastVisitedProducts(lastVisitedProductsCookie) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def lastVisitedProducts
         synchronized (this.getClass()) {
@@ -89,13 +100,14 @@ class ProductService {
         }
     }
 
-    def findCustomerWishList(){
+    def findCustomerWishList() {
         if (!springSecurityService)
             return
 
         def user = springSecurityService.currentUser
         if (user && user instanceof Customer)
-            return Customer.findByUsername(((Customer)user).username).wishList.collect{
-                [id:it.id, title:it.toString(), price: priceService.calcProductPrice(it.id).showVal]}
+            return Customer.findByUsername(((Customer) user).username).wishList.collect {
+                [id: it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).showVal]
+            }
     }
 }
