@@ -30,9 +30,18 @@
 		<g:message code="price.price.label" default="Price" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="price" step="any" required="" value="${priceInstance.price}"/>
+
+	<g:field id="price" type="number" name="price" step="any" value="${priceInstance.price}" />
 </div>
 
+
+
+<script type="text/javascript">
+
+$("#price").blur(function(){
+    $(this).format({format:"#,###.00", locale:"de"});
+});
+</script>
 
 
 
