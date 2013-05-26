@@ -49,12 +49,6 @@
 
     <script>
         $(document).ready(function () {
-//            $('#slideshowMain').coinslider(
-//                    {
-//                        width: mainSlideWidth,
-//                        height: mainSlideHeight,
-//                        delay: 5000
-//                    });
 
             var $container = $(".container");
 
@@ -72,8 +66,8 @@
                 delay: 6000,
                 play_once: false,
                 pause_onmouseover: false,
-                effect: 'random',
-                duration: 800,
+                effect: 'fade',
+                duration: 1000,
                 easing: 'swing',
                 cpanel_align: 'BC',
                 outside_cpanel: false,

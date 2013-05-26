@@ -54,13 +54,6 @@
     </div>
     <g:javascript>
         $(document).ready(function () {
-            $('#slideshowSpecialSales').coinslider(
-                    {
-                        width: specialSaleSlideWidth,
-                        height: specialSaleSlideHeight,
-                        delay: 4000
-                    });
-
 
             jQuery('#fusion1').fusion({
                 effect: 'mixed',

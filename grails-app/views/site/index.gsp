@@ -2,20 +2,19 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title><g:message code="site.title"/></title>
+    <title><g:message code="site.mainPage.title"/></title>
+    <meta name="description" content="${message(code:'site.mainPage.description')}">
+    <meta name="keywords" content="${message(code:'site.mainPage.keywords')}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'coin-slider.css')}"/>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <g:javascript src="coin-slider.js"></g:javascript>
 </head>
 
 <body>

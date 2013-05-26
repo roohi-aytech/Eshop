@@ -6,6 +6,8 @@ import java.awt.Image
 
 class ImageService {
     def fileService
+    def burningImageService
+    def grailsApplication
     def size = [
             [width: 500, height: 500],
             [width: 400, height: 400],
@@ -16,13 +18,37 @@ class ImageService {
             [width: 50, height: 50]
     ]
 
+    def getImage(Content img, String wh, String parent, def watermark) {
+        if (wh?.toBoolean()) {
+            return fileService.getFileContent(img.name, "image", parent)
+        } else if (wh) {
+            if (wh == "max") {
+                def path = "${grailsApplication.config.ckeditor.upload.basedir}image/" + parent + "/"
+                def file = new File(path + "wm/" + img.name)
+                if (!file.exists()) {
+
+                    def base = new File(path + "wm/")
+                    if (!base.exists() && !base.mkdirs())
+                        return new byte[0]
+
+                    burningImageService.doWith(path + img.name, path + "wm/")
+                            .execute {
+                        it.watermark(watermark.toString(), ['bottom': 10])
+                    }
+                }
+            }
+            return fileService.getFileContent((wh == "max" ? "wm/" : wh + "-") + img.name, "image", parent)
+        } else
+            return new byte[0]
+
+    }
+
     def getImage(Content img, String wh, String parent) {
         if (wh?.toBoolean()) {
             return fileService.getFileContent(img.name, "image", parent)
-        }
-        else if (wh)
-            return fileService.getFileContent(wh+"-"+img.name , "image", parent)
-        else
+        } else if (wh) {
+            return fileService.getFileContent( wh + "-" + img.name, "image", parent)
+        } else
             return new byte[0]
 
     }
@@ -30,9 +56,8 @@ class ImageService {
     def getImage(String wh, String parent) {
         if (wh?.toBoolean()) {
             return fileService.getFileContent("image", "image", parent)
-        }
-        else if (wh)
-            return fileService.getFileContent(wh+"-image" , "image", parent)
+        } else if (wh)
+            return fileService.getFileContent(wh + "-image", "image", parent)
         else
             return new byte[0]
 

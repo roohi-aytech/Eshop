@@ -15,6 +15,13 @@ class ProductType extends BaseProduct {
     Boolean deleted=false
     byte[] image
 
+    String getUrlName(){
+        if(seoFriendlyName)
+            return seoFriendlyName
+
+        name
+    }
+
 //    static searchable = {
 //        root false
 //        only: ['id']
@@ -22,6 +29,8 @@ class ProductType extends BaseProduct {
 //        name boost:0.5
 //        only:['name','description', 'keywords']
 //    }
+
+    static transients = ['rlName']
 
     static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType]
     static belongsTo = [ProducingProduct, ProductTypeBrand]

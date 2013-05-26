@@ -680,4 +680,27 @@ class ProductController {
         }
         render 0
     }
+    def migrateImagesNameChange(){
+        def base="${grailsApplication.config.ckeditor.upload.basedir}/image/"
+
+        Product.findAll().each {
+            def pathNew = base+fileService.filePath(it)
+            def pathOld=base+fileService.filePathOld(it)
+            def old=new File(pathOld)
+            if(!old.exists()){
+                def pts = old.parentFile.list().findAll {file->file?.contains(it?.name?:'1234567890')}
+                if(pts.size()==1){
+                    println pathOld+","+pts[0]
+                    old=new File(old.parentFile.absolutePath+"/"+pts[0])
+                    println old.parentFile.absolutePath+"/"+pts[0]
+                    old.list().each {
+                        if(new File(old.absolutePath+"/"+it).isFile())
+                            fileService.moveFile(old.absolutePath+"/"+it,pathNew+"/"+it)
+                    }
+                }
+            }
+
+        }
+        render 0
+    }
 }

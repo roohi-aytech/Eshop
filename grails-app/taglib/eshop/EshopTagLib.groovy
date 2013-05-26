@@ -98,7 +98,7 @@ class EshopTagLib {
         def link = g.createLink(controller: "site", action: "filter", params: [f: f])
         def brand = Brand.get(attrs.brandId)
         if (attrs.type == 'icon')
-            out << "<a class='brand-filter' href='${link}'><img alt='${attrs.brandName}' src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}'><img original-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
             out << "<a href='${link}'><span>${attrs.brandName}</span></a>"
     }

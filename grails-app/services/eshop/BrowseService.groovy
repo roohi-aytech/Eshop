@@ -131,7 +131,7 @@ class BrowseService {
                 if (!breadcrumb) {
                     def pt = productType
                     while (pt) {
-                        breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
+                        breadcrumb << [linkTail: "browse/${pt.urlName}", linkTitle: pt.name]
                         pt = pt.parentProduct
                     }
                     breadcrumb = breadcrumb.reverse()
@@ -213,6 +213,14 @@ class BrowseService {
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
         def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
+        if (productType)
+            ProductType.createCriteria().listDistinct {
+                godFathers {
+                    eq('id', productType.id)
+                }
+            }.each {
+                childProductTypeIds.add(it.id)
+            }
         def productTypesCountMap = []
         allProductTypesCountMap.each {
             if (childProductTypeIds.contains(it._id.id))
@@ -403,7 +411,7 @@ class BrowseService {
                     if (!breadcrumb) {
                         def pt = productType
                         while (pt) {
-                            breadcrumb << [linkTail: "browse/${pt.name}", linkTitle: pt.name]
+                            breadcrumb << [linkTail: "browse/${pt.urlName}", linkTitle: pt.name]
                             pt = pt.parentProduct
                         }
                         breadcrumb = breadcrumb.reverse()
@@ -486,6 +494,14 @@ class BrowseService {
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
         def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
+        if (productType)
+            ProductType.createCriteria().listDistinct {
+                godFathers {
+                    eq('id', productType.id)
+                }
+            }.each {
+                childProductTypeIds.add(it.id)
+            }
         def productTypesCountMap = []
         allProductTypesCountMap.each {
             if (childProductTypeIds.contains(it._id.id))
