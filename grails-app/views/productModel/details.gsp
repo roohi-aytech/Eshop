@@ -11,6 +11,8 @@
 <head>
     <meta name="layout" content="main">
 
+    <title><g:message code="productModel.price.label" default="Price"/></title>
+
 </head>
 
 <body>

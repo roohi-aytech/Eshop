@@ -1,4 +1,12 @@
 <%@ page import="eshop.Price" %>
+<!doctype html>
+<html>
+<head>
+    <meta name="layout" content="main">
+    <g:set var="entityName" value="${message(code: 'price.label', default: 'Price')}"/>
+</head>
+
+<body>
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${Price}"
@@ -35,3 +43,4 @@
         }
     </g:javascript>
 </div>
+</body>

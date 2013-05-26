@@ -22,6 +22,7 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${ProductModel}"
              showCommand="false"
+             firstColumnWidth="50"
              maxColumns="9"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProductModelGrid", icon: "plus"]]}"
              commands="${actions}">
