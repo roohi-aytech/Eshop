@@ -22,7 +22,7 @@ class ProductType extends BaseProduct {
         name
     }
 
-//    static searchable = {
+    static searchable = true//{
 //        root false
 //        only: ['id']
 //    }
