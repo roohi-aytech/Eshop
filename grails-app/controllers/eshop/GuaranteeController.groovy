@@ -86,6 +86,9 @@ class GuaranteeController {
             it.save()
             it.delete(flush: true)
         }
+        if (guaranteeInstance.productTypeBrands)
+            guaranteeInstance.productTypeBrands = null
+        guaranteeInstance.save()
         guaranteeInstance.delete(flush: true)
         render 0
     }

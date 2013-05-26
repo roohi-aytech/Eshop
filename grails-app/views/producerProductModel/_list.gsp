@@ -1,4 +1,12 @@
 <%@ page import="eshop.ProducerProductModel" %>
+<!doctype html>
+<html>
+<head>
+    <meta name="layout" content="main">
+    <g:set var="entityName" value="${message(code: 'producer.label', default: 'Producer')}"/>
+</head>
+
+<body>
 
 <style>
 .ui-dialog{
@@ -41,3 +49,4 @@
         }
     </g:javascript>
 </div>
+</body>

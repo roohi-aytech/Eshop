@@ -12,7 +12,7 @@ class ProductModelController {
 
     def form() {
         def productModelInstance
-        def product
+        def product = new Product()
 
         if (params.id)
             productModelInstance = ProductModel.get(params.id)
@@ -22,7 +22,21 @@ class ProductModelController {
         if (params.product.id)
             product = Product.get(params.product.id)
 
-        render(template: "form", model: [productModelInstance: productModelInstance, product: product])
+
+        def guarantees = Guarantee.createCriteria().list {
+            productTypeBrands {
+                or {
+                    eq('brand', product?.brand)
+                    isNull('brand')
+                }
+                productTypes {
+                    eq('id', product?.productTypes?.toArray().first()?.id)
+                }
+            }
+
+        }
+
+        render(template: "form", model: [productModelInstance: productModelInstance, product: product, guarantees: guarantees])
     }
 
     def list() {
@@ -107,7 +121,7 @@ class ProductModelController {
             tempModel[0].save()
         }
         productModelInstance.variationValues = null
-
+        productModelInstance.save()
         productModelInstance.delete(flush: true)
         render 0
     }
