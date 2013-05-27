@@ -1,15 +1,12 @@
 
 <%@ page import="eshop.ProducerStaff" %>
 
-<style>
-.ui-dialog{
-    width: 900px !important;
-}
-</style>
+
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${eshop.ProducerStaff}"
              maxColumns="8"
              showCommand="false"
+             firstColumnWidth="30"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerStaffGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "producerStaffForm", controller: "producer", params: [producerId: producerInstance.id])}&id=#id#",saveAction: "${g.createLink(action: "saveProducerStaff", controller: "producer")}", icon: "application_edit"], [handler: "deleteProducerStaff(#id#)", icon: "application_delete"]]}">
         <rg:criteria>

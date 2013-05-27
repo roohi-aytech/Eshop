@@ -32,7 +32,7 @@
                           from="${Brand.list()}"
                           optionKey="id"
                           value="${producingProductInstance?.brand?.id}"
-                         noSelection="['0' : '']"
+                         noSelection="['' : '']"
                           onchange="brandChanged(\$(this))"/>
             </div>
 
@@ -133,7 +133,7 @@
                           from="${eshop.Settlement.list()}"
                           optionKey="id"
                           value="${producingProductInstance?.settlement?.id}"
-                          noSelection="['0': '']"/>
+                          noSelection="[null: '']"/>
 
                 <g:textArea name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
 
@@ -163,14 +163,29 @@
 
             </div>
 
-            <span class="guarantee" id="guaranteeTemplate" >
-                <g:if test="${producingProductInstance?.brand}">
-                    <g:render template="guarantee_value" model="[
-                            producingProductInstance: producingProductInstance,
-                            brand: producingProductInstance?.brand
-                    ]"/>
-                </g:if>
-            </span>
+            %{--<span class="guarantee" id="guaranteeTemplate" >--}%
+                %{--<g:if test="${producingProductInstance?.brand}">--}%
+                    %{--<g:render template="guarantee_value" model="[--}%
+                            %{--producingProductInstance: producingProductInstance,--}%
+                            %{--brand: producingProductInstance?.brand--}%
+                    %{--]"/>--}%
+                %{--</g:if>--}%
+            %{--</span>--}%
+
+            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">
+                <label for="guarantee">
+                    <g:message code="guarantee.label" default="Guarantee"/>
+                </label>
+
+            <g:select id="guarantee" name="guarantee.id"
+                      from="${eshop.Guarantee.list()}"
+                      optionKey="id"
+                      value="${producingProductInstance?.guarantee?.id}"
+                      noSelection="[null: '']"/>
+
+
+        </div>
+
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'deliveryPlace', 'error')} ">
                 <label for="deliveryPlace">
@@ -235,18 +250,18 @@
 
     }
 
-    function brandChanged(brand){
-        $.ajax({
-            url:'<g:createLink action="producingProduct" controller="loadGuarantee"/>',
-            data:{
-                brand : brand.val(),
-                producer: ${producerInstance?.id}
-            },
-            type:'GET'
-        }).done(function(response){
-                    $('#guaranteeTemplate').html(response);
-                });
+    %{--function brandChanged(brand){--}%
+        %{--$.ajax({--}%
+            %{--url:'<g:createLink action="producingProduct" controller="loadGuarantee"/>',--}%
+            %{--data:{--}%
+                %{--brand : brand.val(),--}%
+                %{--producer: ${producerInstance?.id}--}%
+            %{--},--}%
+            %{--type:'GET'--}%
+        %{--}).done(function(response){--}%
+                    %{--$('#guaranteeTemplate').html(response);--}%
+                %{--});--}%
 
-    }
+    %{--}--}%
 </script>
 

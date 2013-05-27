@@ -17,6 +17,7 @@
             <g:message code="producerStaff.role.label" default="Role"/>
         </label>
         <g:select id="roleId" name="role.id"
+                  required=""
                   from="${eshop.StaffRole.list()}"
                   optionKey="id"
                   value="${producerStaffInstance?.role?.id}"

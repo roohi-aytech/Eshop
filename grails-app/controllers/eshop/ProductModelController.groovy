@@ -87,10 +87,16 @@ class ProductModelController {
                 modelInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
             }
 
+            if (!modelInstance.guarantee) {
+                flash.message = message(code: "default.enter_guarantee")
+                render(template: 'form', model: ['productModelInstance': modelInstance, 'product' : Product.get(params.product.id)])
+
+                return
+            }
+
             if (!validate(modelInstance)) {
                 flash.message = message(code: "default.repetitive")
                 render(template: 'form', model: ['productModelInstance': modelInstance, 'product' : Product.get(params.product.id)])
-
 
                 return
             }

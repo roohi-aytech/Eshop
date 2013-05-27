@@ -116,9 +116,11 @@ class ProducerController {
     def delete() {
         def producerInstance = Producer.get(params.id)
         ProducingProduct.findAllByProducer(producerInstance).each {
-            it.producer = null
+            if(it.productTypes)
+                it.productTypes = null
+
             it.save()
-            it.delete()
+            it.delete(flush: true)
         }
         producerInstance.delete(flush: true)
         render 0

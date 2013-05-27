@@ -24,9 +24,8 @@ class Producer {
         producerType(nullable: true)
         name()
         address(nullable: true)
-        phone()
-        fax()
-        producerStaffs()
+        phone(nullable: true)
+        fax(nullable: true)
     }
 
     String toString(){

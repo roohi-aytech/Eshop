@@ -35,6 +35,7 @@ class ProducingProductController {
         }
         else
             producingProductInstance = new ProducingProduct(params)
+
         if(producingProductInstance.validate() && producingProductInstance.save()){
             render producingProductInstance as JSON
         }
@@ -54,8 +55,14 @@ class ProducingProductController {
         render(template: "guarantee_value", model: [producerInstance: producerInstance, guarantees: guarantees])
     }
 
-    def delete() {
+    def deleteProducingProduct() {
         def producingProductInstance = ProducingProduct.get(params.id)
+
+        if(producingProductInstance.productTypes ){
+            producingProductInstance.productTypes = null
+            producingProductInstance.save()
+        }
+
         producingProductInstance.delete(flush: true)
         render 0
     }
