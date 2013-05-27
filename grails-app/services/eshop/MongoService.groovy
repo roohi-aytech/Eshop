@@ -44,7 +44,7 @@ class MongoService {
     private def collectProductTypes(Product product) {
         def res = []
         product.productTypes.findAll { !it?.deleted }.each {
-            res.addAll(collectProductTypes(it),new HashSet())
+            res.addAll(collectProductTypes(it,new HashSet()))
         }
         return res
     }
