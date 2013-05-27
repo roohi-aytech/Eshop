@@ -43,8 +43,7 @@
             request.done(function (response, textStatus, jqXHR){
                 newReviewsCounter++;
                 var result = response;
-                result = "<div class='newCustomerReview'
-                               id='newCustomerReview" + newReviewsCounter + "'>" + response + "</div>";
+                result = "<div class='newCustomerReview' id='newCustomerReview" + newReviewsCounter + "'>" + response + "</div>";
                 $('#newCustomerReviews').html($('#newCustomerReviews').html() + result)
 
                 var item = $("#newCustomerReview" + newReviewsCounter);

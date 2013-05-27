@@ -25,7 +25,6 @@
 </div>
 
 <div>
-
     <g:each in="${product.variations}" var="variation">
         <label>${variation.name}</label>
 
@@ -43,8 +42,12 @@
     <label for="guarantee">
         <g:message code="productModel.guarantee.label" default="Guarantee"/>
     </label>
-    <rg:autocomplete domainClass="eshop.Guarantee" id="guarantee" like="true" value="${productModelInstance?.guarantee?.id}" display="${productModelInstance?.guarantee}"/>
 
+    <g:select id="guarantee" name="guarantee.id"
+              from="${guarantees}"
+              optionKey="id"
+              value="${productModelInstance?.guarantee?.id}"
+              noSelection="['0' : '']"/>
 </div>
 
 
@@ -66,7 +69,3 @@
 
 
 </div>
-
-
-
-

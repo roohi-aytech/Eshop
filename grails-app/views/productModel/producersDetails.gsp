@@ -11,6 +11,8 @@
 <head>
     <meta name="layout" content="main">
 
+    <title><g:message code="productModel.producers.label" default="Producers"/></title>
+
 </head>
 
 <body>
