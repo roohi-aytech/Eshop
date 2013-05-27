@@ -18,6 +18,13 @@
             <rg:eq name="productModel.id" value="${productModelInstance.id}"/>
         </rg:criteria>
     </rg:grid>
+
+    <fieldset class="buttons">
+
+        <g:link class="list" controller="product" action="productDetails" params="[curtab: 3, id:productModelInstance?.product?.id]"><g:message code="default.productModel.list"
+                                                                               default="Product List"/></g:link>
+    </fieldset>
+
     <g:javascript>
         function deletePrice(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {

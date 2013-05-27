@@ -2,7 +2,7 @@ package eshop
 
 class Price {
     static auditable = true
-    Double price = 0D
+    Double price
     Double rialPrice = 0D
     Currency currency
     Date startDate
