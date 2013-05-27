@@ -40,6 +40,8 @@ class ProductModelController {
     }
 
     def list() {
+        [pmid: params.pmid ?: 0]
+
     }
 
     def validate(ProductModel productModel){
@@ -120,7 +122,9 @@ class ProductModelController {
             tempModel[0].isDefaultModel = true
             tempModel[0].save()
         }
-        productModelInstance.variationValues = null
+        if(productModelInstance.variationValues)
+            productModelInstance.variationValues = null
+
         productModelInstance.save()
         productModelInstance.delete(flush: true)
         render 0
@@ -129,13 +133,11 @@ class ProductModelController {
     def details(){
         def productModelInstance = ProductModel.get(params.id)
 
-
         [productModelInstance : productModelInstance]
     }
 
     def producersDetails(){
         def productModelInstance = ProductModel.get(params.id)
-
 
         [productModelInstance : productModelInstance]
     }
