@@ -173,7 +173,7 @@ class VariationGroupController {
             }
         }
 
-        def variationsForCorrection = Variation.findAllByBaseProductInList([Product.get(2453)])
+        def variationsForCorrection = Variation.findAllByBaseProductInList(Product.findAll())
         variationsForCorrection.eachWithIndex { variation, index ->
 
             println index
