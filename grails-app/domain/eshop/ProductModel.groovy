@@ -28,7 +28,7 @@ class ProductModel {
     static constraints = {
         name(nullable: true)
         guarantee()
-        variationValues()
+        variationValues(nullable: true)
         status(inList: ['exists', 'not-exists', 'coming-soon'])
         isDefaultModel()
     }

@@ -95,7 +95,7 @@ class GuaranteeController {
 
     def deleteProductTypeBrand(){
         def productTypeBrand = ProductTypeBrand.get(params.id)
-        //productTypeBrand.guarantee = null
+
         if (productTypeBrand.productTypes){
             productTypeBrand.productTypes = null
             productTypeBrand.save()

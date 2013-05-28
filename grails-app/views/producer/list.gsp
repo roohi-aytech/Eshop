@@ -50,13 +50,14 @@
              maxColumns="8"
              showCommand="true"
              commands="${actions}"
-             firstColumnWidth="20"
+             firstColumnWidth="50"
     />
 
     <rg:dialog id="producer" title="${message(code: "producer")}">
         <rg:fields bean="${new Producer()}">
             <rg:modify>
                 <rg:ignoreField field="producingProducts"/>
+                <rg:ignoreField field="producerStaffs"/>
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${eshop.Producer}" />

@@ -40,6 +40,8 @@ class ProductModelController {
     }
 
     def list() {
+        [pmid: params.pmid ?: 0]
+
     }
 
     def validate(ProductModel productModel){
@@ -85,10 +87,16 @@ class ProductModelController {
                 modelInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
             }
 
+            if (!modelInstance.guarantee) {
+                flash.message = message(code: "default.enter_guarantee")
+                render(template: 'form', model: ['productModelInstance': modelInstance, 'product' : Product.get(params.product.id)])
+
+                return
+            }
+
             if (!validate(modelInstance)) {
                 flash.message = message(code: "default.repetitive")
                 render(template: 'form', model: ['productModelInstance': modelInstance, 'product' : Product.get(params.product.id)])
-
 
                 return
             }
@@ -120,7 +128,9 @@ class ProductModelController {
             tempModel[0].isDefaultModel = true
             tempModel[0].save()
         }
-        productModelInstance.variationValues = null
+        if(productModelInstance.variationValues)
+            productModelInstance.variationValues = null
+
         productModelInstance.save()
         productModelInstance.delete(flush: true)
         render 0
@@ -129,13 +139,11 @@ class ProductModelController {
     def details(){
         def productModelInstance = ProductModel.get(params.id)
 
-
         [productModelInstance : productModelInstance]
     }
 
     def producersDetails(){
         def productModelInstance = ProductModel.get(params.id)
-
 
         [productModelInstance : productModelInstance]
     }

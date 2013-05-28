@@ -49,6 +49,14 @@
                                 src="images/supplier.png"/><span><g:message
                                 code="producer.label"
                                 default="Producers"/></span></g:link></li>
+
+                    <li>
+                        <g:link controller="staffRole" action="list"><img
+                                src="images/supplier.png"/><span><g:message
+                                code="staffRole.label"
+                                default="Staff Roles"/></span></g:link></li>
+
+
                 </sec:ifAnyGranted>
                 <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
                     <li>

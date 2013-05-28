@@ -44,19 +44,22 @@ class MongoService {
     private def collectProductTypes(Product product) {
         def res = []
         product.productTypes.findAll { !it?.deleted }.each {
-            res.addAll(collectProductTypes(it))
+            res.addAll(collectProductTypes(it,new HashSet()))
         }
         return res
     }
 
-    private def collectProductTypes(ProductType productType) {
+    private def collectProductTypes(ProductType productType,Set visited) {
+        if(visited.contains(productType))
+            return []
+        visited.add(productType)
         def res = [[name: productType?.name, id: productType?.id, parentId: productType?.parentProduct?.id]]
 
         if (productType.parentProduct)
-            res.addAll(collectProductTypes(productType.parentProduct))
+            res.addAll(collectProductTypes(productType.parentProduct,visited))
 
         productType.godFathers.each {
-            res.addAll(collectProductTypes(ProductType.get(it.id)))
+            res.addAll(collectProductTypes(ProductType.get(it.id),visited))
         }
 
         return res

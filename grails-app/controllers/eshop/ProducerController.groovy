@@ -58,7 +58,7 @@ class ProducerController {
         else
             staffRole = new StaffRole()
 
-        render(template: "staffRole", model: [staffRoleInstance: staffRole])
+        render(template: "staffRole_form", model: [staffRoleInstance: staffRole])
     }
 
 
@@ -115,11 +115,18 @@ class ProducerController {
 
     def delete() {
         def producerInstance = Producer.get(params.id)
+
         ProducingProduct.findAllByProducer(producerInstance).each {
-            it.producer = null
-            it.save()
-            it.delete()
+            if(it.productTypes){
+                it.productTypes = null
+                it.save()
+            }
+
+            it.delete(flush: true)
         }
+        if (producerInstance.producingProducts)
+            producerInstance.producingProducts = null
+        producerInstance.save()
         producerInstance.delete(flush: true)
         render 0
     }
