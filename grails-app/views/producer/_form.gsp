@@ -27,6 +27,15 @@
             </label>
             <g:textArea name="address"  rows="5" value="${producerInstance?.address}"/>
         </div>
+
+        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'warehouseAddress', 'error')} ">
+            <label for="warehouseAddress">
+                <g:message code="producer.warehouseAddress.label" default="warehouseAddress"/>
+
+            </label>
+            <g:textArea name="warehouseAddress"  rows="5" value="${producerInstance?.warehouseAddress}"/>
+        </div>
+
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'phone', 'error')} ">
             <label for="phone">
                 <g:message code="producer.phone.label" default="Phone"/>
@@ -34,6 +43,7 @@
             </label>
             <g:textField name="phone" value="${producerInstance?.phone}"/>
         </div>
+
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'fax', 'error')} ">
         <label for="fax">
             <g:message code="producer.fax.label" default="Fax"/>
@@ -41,8 +51,6 @@
         </label>
         <g:textField name="fax" value="${producerInstance?.fax}"/>
     </div>
-
-
 
         <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerStaffs', 'error')} ">
             <label for="producerStaffs">
@@ -52,7 +60,6 @@
             <g:select name="producerStaffs" from="${ProducerStaff.list()}" multiple="multiple"
                       optionKey="id" size="5" value="" class="many-to-many"/>
         </div>
-
 
     </div>
 

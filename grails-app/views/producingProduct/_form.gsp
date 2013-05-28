@@ -107,8 +107,7 @@
                     <g:select name="discountType" from="${producingProductInstance.constraints.discountType.inList}" value="${producingProductInstance?.discountType}"
                               valueMessagePrefix="producingProduct.discountType" noSelection="['': '']"/>
 
-                    <g:field type="number" style="direction: ltr;" name="discount" step="any" required=""
-                             value="${producingProductInstance.discount}"/>
+                    <g:textField  name="discount" value="${producingProductInstance.discount}"/>
                 </div>
 
                 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'cooperationPrice', 'error')} ">
@@ -199,7 +198,7 @@
                 <label for="transportationCost">
                     <g:message code="producingProduct.transportationCost.label" default="TransportationCost"/>
                 </label>
-                <g:field type="number" style="direction: ltr;" name="transportationCost" step="any" required=""
+                <g:textField  name="transportationCost"
                          value="${producingProductInstance.transportationCost}"/>
             </div>
 
@@ -207,8 +206,11 @@
                 <label for="addedValue">
                     <g:message code="producingProduct.addedValue.label" default="addedValue"/>
                 </label>
-                <g:field type="number" style="direction: ltr;" name="addedValue" step="any" required=""
-                         value="${producingProductInstance.addedValue}"/>
+                <g:select name="addedValue" from="${producingProductInstance.constraints.addedValue.inList}" value="${producingProductInstance?.addedValue}"
+                          valueMessagePrefix="producingProduct.addedValue" noSelection="['': '']"/>
+
+                <g:field id="addedValueDescription" type="number" name="addedValueDescription" step="any" value="${producingProductInstance?.addedValueDescription}" />
+
             </div>
 
 

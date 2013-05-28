@@ -31,6 +31,11 @@ class ProducingProductController {
         def producingProductInstance
         if(params.id){
             producingProductInstance = ProducingProduct.get(params.id)
+            producingProductInstance.productTypes = []
+            producingProductInstance.brand = null
+            producingProductInstance.guarantee = null
+            producingProductInstance.settlement = null
+
             producingProductInstance.properties = params
         }
         else

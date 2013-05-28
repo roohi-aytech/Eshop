@@ -32,7 +32,7 @@
 
         </label>
         <g:select name="sex" from="${producerStaffInstance.constraints.sex.inList}" value="${producerStaffInstance?.sex}"
-                  valueMessagePrefix="producingProduct.sex" noSelection="['': '']"/>
+                  valueMessagePrefix="producerStaff.sex" noSelection="['': '']"/>
     </div>
 
     <div class="fieldcontain ${hasErrors(bean: producerStaffInstance, field: 'name', 'error')} ">
@@ -98,8 +98,8 @@
 
 <script type="text/javascript">
     function addStaffRole(){
-        loadOverlay('<g:createLink controller="producer" action="staffRole"/>',
-                '<g:createLink controller="producer" action="saveStaffRole"/>',
+        loadOverlay('<g:createLink controller="staffRole" action="form"/>',
+                '<g:createLink controller="staffRole" action="save"/>',
                 function(r){
                     $("#staffRole").val(r.role)
                     $("#staffRole.id").val(r.id)

@@ -8,6 +8,7 @@ class Producer {
     ProducerType producerType
     String name
     String address
+    String warehouseAddress
     String phone
     String fax
 
@@ -24,6 +25,7 @@ class Producer {
         producerType(nullable: true)
         name()
         address(nullable: true)
+        warehouseAddress(nullable: true)
         phone(nullable: true)
         fax(nullable: true)
     }
