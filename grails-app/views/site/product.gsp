@@ -122,6 +122,7 @@
                         <g:render template="product/description"/>
                         <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
                         <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
+                        <hr/>
                         <g:render template="common/productCarousel"
                                   model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"></g:render>
                     </div>

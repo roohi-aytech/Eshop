@@ -3,7 +3,7 @@ package eshop
 class ProducingProduct {
     static auditable = true
     Brand brand
-    double discount
+    String discount
     Guarantee guarantee
     String refundable
     String refundableDescription
@@ -26,8 +26,10 @@ class ProducingProduct {
     String testPeriodDescription
 
     String deliveryPlace
-    double transportationCost
-    double addedValue
+    String transportationCost
+
+    String addedValue
+    double addedValueDescription
 
     static belongsTo = [Producer]
 
@@ -64,8 +66,9 @@ class ProducingProduct {
 
         guarantee(nullable: true)
         deliveryPlace(nullable: true)
-        transportationCost()
-        addedValue(nullable: true)
+        transportationCost(nullable: true)
+        addedValue(inList: ["Yes", "No"], nullable: true)
+        addedValueDescription(nullable: true)
     }
 
 

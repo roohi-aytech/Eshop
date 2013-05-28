@@ -44,10 +44,11 @@
     </label>
 
     <g:select id="guarantee" name="guarantee.id"
+              required=""
               from="${guarantees}"
               optionKey="id"
               value="${productModelInstance?.guarantee?.id}"
-              noSelection="['0' : '']"/>
+              noSelection="['' : '']"/>
 </div>
 
 

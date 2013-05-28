@@ -194,7 +194,7 @@ class ProductController {
         else {
             productInstance = new Product()
         }
-        if(productInstance?.type && !productTypeTypes.contains(productInstance?.type))
+        if(productInstance?.type && !productTypeTypes.collect{it.id}.contains(productInstance?.type?.id))
             productTypeTypes.add(productInstance?.type)
 
         if(productInstance.isVisible == null)

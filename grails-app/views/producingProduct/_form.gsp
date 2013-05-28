@@ -32,7 +32,7 @@
                           from="${Brand.list()}"
                           optionKey="id"
                           value="${producingProductInstance?.brand?.id}"
-                         noSelection="['0' : '']"
+                         noSelection="['' : '']"
                           onchange="brandChanged(\$(this))"/>
             </div>
 
@@ -107,8 +107,7 @@
                     <g:select name="discountType" from="${producingProductInstance.constraints.discountType.inList}" value="${producingProductInstance?.discountType}"
                               valueMessagePrefix="producingProduct.discountType" noSelection="['': '']"/>
 
-                    <g:field type="number" style="direction: ltr;" name="discount" step="any" required=""
-                             value="${producingProductInstance.discount}"/>
+                    <g:textField  name="discount" value="${producingProductInstance.discount}"/>
                 </div>
 
                 <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'cooperationPrice', 'error')} ">
@@ -133,7 +132,7 @@
                           from="${eshop.Settlement.list()}"
                           optionKey="id"
                           value="${producingProductInstance?.settlement?.id}"
-                          noSelection="['0': '']"/>
+                          noSelection="[null: '']"/>
 
                 <g:textArea name="settlementDescription" value="${producingProductInstance?.settlementDescription}"/>
 
@@ -163,14 +162,29 @@
 
             </div>
 
-            <span class="guarantee" id="guaranteeTemplate" >
-                <g:if test="${producingProductInstance?.brand}">
-                    <g:render template="guarantee_value" model="[
-                            producingProductInstance: producingProductInstance,
-                            brand: producingProductInstance?.brand
-                    ]"/>
-                </g:if>
-            </span>
+            %{--<span class="guarantee" id="guaranteeTemplate" >--}%
+                %{--<g:if test="${producingProductInstance?.brand}">--}%
+                    %{--<g:render template="guarantee_value" model="[--}%
+                            %{--producingProductInstance: producingProductInstance,--}%
+                            %{--brand: producingProductInstance?.brand--}%
+                    %{--]"/>--}%
+                %{--</g:if>--}%
+            %{--</span>--}%
+
+            <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">
+                <label for="guarantee">
+                    <g:message code="guarantee.label" default="Guarantee"/>
+                </label>
+
+            <g:select id="guarantee" name="guarantee.id"
+                      from="${eshop.Guarantee.list()}"
+                      optionKey="id"
+                      value="${producingProductInstance?.guarantee?.id}"
+                      noSelection="[null: '']"/>
+
+
+        </div>
+
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'deliveryPlace', 'error')} ">
                 <label for="deliveryPlace">
@@ -184,7 +198,7 @@
                 <label for="transportationCost">
                     <g:message code="producingProduct.transportationCost.label" default="TransportationCost"/>
                 </label>
-                <g:field type="number" style="direction: ltr;" name="transportationCost" step="any" required=""
+                <g:textField  name="transportationCost"
                          value="${producingProductInstance.transportationCost}"/>
             </div>
 
@@ -192,8 +206,11 @@
                 <label for="addedValue">
                     <g:message code="producingProduct.addedValue.label" default="addedValue"/>
                 </label>
-                <g:field type="number" style="direction: ltr;" name="addedValue" step="any" required=""
-                         value="${producingProductInstance.addedValue}"/>
+                <g:select name="addedValue" from="${producingProductInstance.constraints.addedValue.inList}" value="${producingProductInstance?.addedValue}"
+                          valueMessagePrefix="producingProduct.addedValue" noSelection="['': '']"/>
+
+                <g:field id="addedValueDescription" type="number" name="addedValueDescription" step="any" value="${producingProductInstance?.addedValueDescription}" />
+
             </div>
 
 
@@ -235,18 +252,18 @@
 
     }
 
-    function brandChanged(brand){
-        $.ajax({
-            url:'<g:createLink action="producingProduct" controller="loadGuarantee"/>',
-            data:{
-                brand : brand.val(),
-                producer: ${producerInstance?.id}
-            },
-            type:'GET'
-        }).done(function(response){
-                    $('#guaranteeTemplate').html(response);
-                });
+    %{--function brandChanged(brand){--}%
+        %{--$.ajax({--}%
+            %{--url:'<g:createLink action="producingProduct" controller="loadGuarantee"/>',--}%
+            %{--data:{--}%
+                %{--brand : brand.val(),--}%
+                %{--producer: ${producerInstance?.id}--}%
+            %{--},--}%
+            %{--type:'GET'--}%
+        %{--}).done(function(response){--}%
+                    %{--$('#guaranteeTemplate').html(response);--}%
+                %{--});--}%
 
-    }
+    %{--}--}%
 </script>
 
