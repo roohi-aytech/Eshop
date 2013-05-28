@@ -34,6 +34,7 @@ class VariationGroupController {
 
         render(template: "variation_form", model: [variationInstance: variation, baseProductId: params.baseProductId])
     }
+
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def variationValueForm() {
         def variationValue
@@ -43,23 +44,24 @@ class VariationGroupController {
             variationValue = new VariationValue(params)
         render(template: "variation_value_add", model: [variationValueInstance: variationValue])
     }
+
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def saveVariationValue() {
         def variationValue
         if (params.id) {
             variationValue = VariationValue.findById(params.id)
             variationValue.properties = params
-        }
-        else {
+        } else {
             variationValue = new VariationValue(params)
             variationValue.indx = 0
         }
-        if(variationValue.save())
+        if (variationValue.save())
             render variationValue as JSON
-        else{
+        else {
             render(template: "variation_value_add", model: [variationValueInstance: variationValue])
         }
     }
+
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def variationValues() {
         def variationGroup
@@ -73,12 +75,12 @@ class VariationGroupController {
             variation = Variation.findByBaseProductAndVariationGroup(baseProduct, variationGroup)
             if (baseProduct instanceof ProductType) {
                 if (baseProduct.parentProduct) {
-                    def parentproductvariation = baseProduct.parentProduct.variations.find {it.variationGroup == variationGroup}
+                    def parentproductvariation = baseProduct.parentProduct.variations.find { it.variationGroup == variationGroup }
                     variationValues = parentproductvariation?.variationValues
                 }
             }
             if (baseProduct instanceof Product) {
-                def parentproductvariation = baseProduct?.productTypes.find {true}?.variations?.find {it.variationGroup == variationGroup}
+                def parentproductvariation = baseProduct?.productTypes.find { true }?.variations?.find { it.variationGroup == variationGroup }
                 variationValues = parentproductvariation?.variationValues
             }
         }
@@ -90,6 +92,7 @@ class VariationGroupController {
 
         render(template: "variation_values", model: [variationGroupInstance: variationGroup, variationInstance: variation, variationValues: variationValues])
     }
+
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def searchVariationValues() {
         def variationGroup = VariationGroup.get(params.variationGroupId)
@@ -105,8 +108,7 @@ class VariationGroupController {
         if (params.id) {
             variationGroup = VariationGroup.get(params.id)
             variationGroup.properties = params
-        }
-        else
+        } else
             variationGroup = new VariationGroup(params)
         bindComposites(variationGroup, params)
         variationGroup.save()
@@ -133,20 +135,19 @@ class VariationGroupController {
         if (params.id) {
             variation = Variation.get(params.id)
             variation.properties = params
-        }
-        else
+        } else
             variation = new Variation(params)
 
-        variation.variationValues = request.getParameterValues('variationValues').collect {VariationValue.findById(it.toLong())}
+        variation.variationValues = request.getParameterValues('variationValues').collect { VariationValue.findById(it.toLong()) }
         variation.save()
         def baseProduct = variation.baseProduct
         def productType
         if (baseProduct instanceof Product)
-            productType = baseProduct.productTypes.find {true}
+            productType = baseProduct.productTypes.find { true }
         else if (baseProduct instanceof ProductType)
             productType = baseProduct.parentProduct
         while (productType) {
-            def pvariation = productType.variations.find {it.variationGroup = variation.variationGroup}
+            def pvariation = productType.variations.find { it.variationGroup == variation.variationGroup }
             if (!pvariation)
                 pvariation = new Variation(name: variation.variationGroup.name, baseProduct: productType, variationGroup: variation.variationGroup)
             variation.variationValues.each {
@@ -160,5 +161,44 @@ class VariationGroupController {
         render 0
     }
 
+    def correctVariationsOfProductTypes() {
 
+        def variationsForDelete = Variation.findAllByBaseProductInList(ProductType.findAll())
+
+        variationsForDelete.each {
+            it.variationValues.clear()
+            if (!it.save()) {
+                render it.toString() + "<br/> "
+                render it.errors.toString() + "<br/> "
+            }
+        }
+
+        def variationsForCorrection = Variation.findAllByBaseProductInList([Product.get(2453)])
+        variationsForCorrection.eachWithIndex { variation, index ->
+
+            println index
+            def baseProduct = variation.baseProduct
+            def productType
+            if (baseProduct instanceof Product)
+                productType = baseProduct.productTypes.find { true }
+            else if (baseProduct instanceof ProductType)
+                productType = baseProduct.parentProduct
+            while (productType) {
+                def pvariation = productType.variations.find { it.variationGroup == variation.variationGroup }
+                if (!pvariation)
+                    pvariation = new Variation(name: variation.variationGroup.name, baseProduct: productType, variationGroup: variation.variationGroup)
+
+                variation.variationValues.each {
+                    if (!pvariation.variationValues || !pvariation.variationValues.contains(it))
+                        pvariation.addToVariationValues(it)
+                }
+                pvariation.save()
+                productType = productType.parentProduct
+
+                render pvariation.toString()
+            }
+        }
+        render "finished"
+
+    }
 }

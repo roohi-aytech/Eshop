@@ -1334,6 +1334,10 @@ span.cke_skin_kama {
     width: 500px;
 }
 
+.customer-review{
+    margin-bottom:10px;
+}
+
 .customer-review h4 {
     display: inline-block;
     font-family: times, serif !important;
