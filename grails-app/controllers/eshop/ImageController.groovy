@@ -136,21 +136,22 @@ class ImageController {
     }
 
     byte[] getProdcutTypeImage(ProductType productType) {
-        def img = productType.image
-        if (!img) {
-            img = this.class.getResource("/no-image.png").bytes
-            params.wh = ""
-        }
-
+//        def img = productType.image
+//        if (!img) {
+//            img = this.class.getResource("/no-image.png").bytes
+//            params.wh = ""
+//        }
+//
         def content
-        if (img) {
+//        if (img) {
             if (params.wh) {
                 content = imageService.getImage(params.wh, fileService.filePath(productType))
-            } else {
-                content = img
             }
-
-        }
+//            else {
+//                content = img
+//            }
+//
+//        }
         content
     }
 
