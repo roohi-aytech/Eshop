@@ -353,6 +353,14 @@ class ProductController {
 
     def deleteimage() {
         def success = productService.deleteProductImage(params.id, params.name)
+        if(success){
+            def product = Product.get(params.id)
+            if(product.images.count {it} == 0)
+            {
+                product.mainImage = null
+                product.save()
+            }
+        }
         def result = [success: success]
         render result as JSON
     }
