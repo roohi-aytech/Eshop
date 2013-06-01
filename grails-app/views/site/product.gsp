@@ -120,6 +120,7 @@
 
                         <hr/>
                         <g:render template="product/description"/>
+                        <g:render template="../customerReview/resources" model="${['product': product]}"></g:render>
                         <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
                         <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
                         <hr/>

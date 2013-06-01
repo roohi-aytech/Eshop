@@ -1,43 +1,66 @@
-
-
-<div class="customer-review">
-
-    <g:if test="${customerReviewInstance?.title}">
-        <h4><g:fieldValue bean="${customerReviewInstance}" field="title"/></h4>
-    </g:if>
-
-    <g:if test="${customerReviewInstance?.lastUpdate}">
-        <span class="date"><rg:formatJalaliDate date="${customerReviewInstance?.lastUpdate}" hm="true"></rg:formatJalaliDate></span>
-    </g:if>
-
-    <g:if test="${customerReviewInstance?.user}">
-        <div class="comment">
-            <g:message code="customerReview.writtenBy" default="By"/>
-            <g:link controller="user" action="show" id="${customerReviewInstance?.user?.id}">${customerReviewInstance?.user?.encodeAsHTML()}</g:link>
-
+<div class="customer-review table">
+    <div class="table-row">
+        <div class="table-cell vote">
+            <g:render template="/customerReview/vote" model="${[customerReviewInstance: customerReviewInstance]}"/>
         </div>
-    </g:if>
 
-    <g:if test="${customerReviewInstance?.rate}">
-        <eshop:rate identifier="hidCustomerReviewRate${customerReviewInstance.id}" currentValue="${customerReviewInstance.rate}" readOnly="true"/>
-    </g:if>
+        <div class="table-cell">
 
-    <g:if test="${customerReviewInstance?.body}">
-        <div>
-            ${customerReviewInstance.body}
+            <g:if test="${customerReviewInstance?.title}">
+                <h4><g:fieldValue bean="${customerReviewInstance}" field="title"/></h4>
+            </g:if>
+
+            <g:if test="${customerReviewInstance?.lastUpdate}">
+                <span class="date"><rg:formatJalaliDate date="${customerReviewInstance?.lastUpdate}"
+                                                        hm="true"></rg:formatJalaliDate></span>
+            </g:if>
+
+            <g:if test="${customerReviewInstance?.user}">
+                <div class="comment">
+                    <g:message code="customerReview.writtenBy" default="By"/>
+                    <g:link controller="user" action="show"
+                            id="${customerReviewInstance?.user?.id}">${customerReviewInstance?.user?.encodeAsHTML()}</g:link>
+
+                </div>
+            </g:if>
+
+            <g:if test="${customerReviewInstance?.rate}">
+                <eshop:rate identifier="hidCustomerReviewRate${customerReviewInstance.id}"
+                            currentValue="${customerReviewInstance.rate}" readOnly="true"/>
+            </g:if>
+
+            <g:if test="${customerReviewInstance?.body}">
+                <div>
+                    ${customerReviewInstance.body}
+                </div>
+            </g:if>
+
+            <g:if test="${customerReviewInstance.status == 'waiting'}">
+                <div class="info">
+                    <div><g:message code="review.approveRequired"/></div>
+                </div>
+            </g:if>
+
+            <sec:ifLoggedIn>
+                <a id="reviewThisReviewButton_${customerReviewInstance?.id}" class="link-button reviewThisReviewButton"
+                   onclick="showReviewForm(${customerReviewInstance?.id})"><img
+                        src="${resource(dir: 'images/icons', file: 'comment.png')}"/><g:message
+                        code="reviewOnReview.label"/></a>
+            </sec:ifLoggedIn>
+
+            <div id="reviewThisReview_${customerReviewInstance?.id}">
+
+            </div>
+
+            <div class="childCustomerReviews">
+                <g:each in="${customerReviewInstance.customerReviewReviews.findAll {it.status == 'approved'}.sort {-it.totalVotes}}">
+                    <g:render template="/customerReview/show" model="${[customerReviewInstance:it]}"/>
+                </g:each>
+            </div>
+
+            <div id="newCustomerReviews_${customerReviewInstance?.id}">
+            </div>
         </div>
-    </g:if>
-
-    <sec:ifLoggedIn>
-        <a class="link-button"><img src="${resource(dir:'images/icons', file: 'comment.png')}"/><g:message code="reviewOnReview.label"/></a>
-    </sec:ifLoggedIn>
-
-    <div class="childCustomerReviews">
-
-    </div>
-
-    <div class="reviewThisReview">
-
     </div>
 
 </div>

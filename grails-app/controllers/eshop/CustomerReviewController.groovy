@@ -35,11 +35,16 @@ class CustomerReviewController {
             customerReviewInstance = new CustomerReview()
             customerReviewInstance.product = product
             customerReviewInstance.title = params.reviewTitle
-            customerReviewInstance.rate = Integer.parseInt(params.reviewRate)
-            customerReviewInstance.body = params.reviewBody
+            if (params.parentReviewId.toInteger() == 0)
+                customerReviewInstance.rate = Integer.parseInt(params.reviewRate)
+            else
+                customerReviewInstance.rate = 0
+            customerReviewInstance.body = params."reviewBody_${params.parentReviewId}"
             customerReviewInstance.creationDate = new Date()
             customerReviewInstance.lastUpdate = new Date()
+            customerReviewInstance.parentReview = CustomerReview.get(params.parentReviewId)
             customerReviewInstance.user = springSecurityService.currentUser
+            customerReviewInstance.status = 'waiting'
         }
         if (customerReviewInstance.validate() && customerReviewInstance.save()) {
             render(template: "show", model: [customerReviewInstance: customerReviewInstance])
@@ -52,5 +57,28 @@ class CustomerReviewController {
         def customerReviewInstance = CustomerReview.get(params.id)
         customerReviewInstance.delete(flush: true)
         render 0
+    }
+
+    def create() {
+        render(template: 'create')
+    }
+
+    def vote() {
+        if (springSecurityService.loggedIn) {
+            def customerReview = CustomerReview.get(params.parentReviewId)
+            if (CustomerReviewVote.findByUserAndCustomerReview(springSecurityService.currentUser, customerReview)) {
+                render message(code: 'review.vote.repetitiveUser')
+            } else {
+                def voteInstance = new CustomerReviewVote()
+                voteInstance.customerReview = customerReview
+                voteInstance.user = springSecurityService.currentUser
+                voteInstance.value = params.voteValue.toInteger()
+                voteInstance.save()
+
+                render voteInstance.customerReview.totalVotes
+            }
+        } else {
+            render message(code: 'review.vote.loginRequired')
+        }
     }
 }
