@@ -37,13 +37,18 @@ class CustomerReview {
 
     static constraints = {
         product(nullable: false)
-        rate(nullable: false)
         title(nullable: false, maxSize: 1024)
-        body(nullable: false, maxSize: 200000)
+        rate(nullable: false)
         creationDate(nullable: false)
-        lastUpdate(nullable: false)
         user(nullable: false)
         parentReview(nullable: true)
         status inList: ['waiting', 'approved', 'rejected']
+        body(nullable: false, maxSize: 200000)
+        lastUpdate(nullable: false)
+    }
+
+    @Override
+    String toString(){
+        title
     }
 }

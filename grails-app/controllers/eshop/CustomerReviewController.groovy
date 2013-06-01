@@ -25,6 +25,10 @@ class CustomerReviewController {
     def list() {
     }
 
+    def show(){
+        [customerReviewInstance: CustomerReview.get(params.id)]
+    }
+
     def save() {
         def customerReviewInstance
         if (params.id) {
@@ -50,6 +54,13 @@ class CustomerReviewController {
             render(template: "show", model: [customerReviewInstance: customerReviewInstance])
         } else
             render customerReviewInstance.errors
+    }
+
+    def investigate() {
+        def customerReviewInstance = CustomerReview.get(params.review.id)
+        customerReviewInstance.status = params.status
+        customerReviewInstance.save()
+        redirect(action: 'show', params:[id: params.review.id])
     }
 
 
