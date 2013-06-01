@@ -14,6 +14,9 @@ class Product extends BaseProduct implements Comparable{
     Boolean manualTitle
     String iranCode
     String shabnamCode
+    Double length
+    Double width
+    Double height
     Integer visitCount = 0
     Boolean isVisible = true
     Boolean deleted =false
@@ -94,6 +97,9 @@ class Product extends BaseProduct implements Comparable{
         iranCode(nullable: true)
         shabnamCode(nullable: true)
         manualTitle(nullable:true)
+        length nullable: true
+        width nullable: true
+        height nullable: true
         visitCount(nullable:true)
         isVisible(nullable: true)
         deleted(nullable: true)

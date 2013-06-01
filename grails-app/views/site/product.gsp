@@ -82,8 +82,14 @@
 
                         <div class="white-panel">
 
-                            <h1>${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""}</h1>
-                            <h2 class="small"><g:message code="productModel"/> ${product?.name?:""}</h2>
+                            <g:if test="${product?.pageTitle}">
+                                <h1>${product?.pageTitle}</h1>
+                            </g:if>
+                            <g:else>
+                                <h1>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+
+                                <h2 class="small"><g:message code="productModel"/> ${product?.name ?: ""}</h2>
+                            </g:else>
 
                             <p>
                                 <g:message code="rate"/>:
@@ -91,7 +97,9 @@
                             </p>
 
                             <p class="brand-badge">
-                                <img width="80px" height="80px" src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}" alt="${product?.brand}"/>
+                                <img width="80px" height="80px"
+                                     src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
+                                     alt="${product?.brand}"/>
                             </p>
 
                             <g:render template="product/variation"/>

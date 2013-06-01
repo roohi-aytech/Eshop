@@ -1116,6 +1116,14 @@ h2 {
     margin-bottom: 10px;
 }
 
+#product-description-area h1{
+    margin-bottom: 10px;
+}
+
+#product-description-area h2{
+    margin-top: 0;
+}
+
 .brand-badge {
 }
 
