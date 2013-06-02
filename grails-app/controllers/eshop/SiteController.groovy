@@ -25,7 +25,7 @@ class SiteController {
 
     def browse() {
         def productType = params.productType ? ProductType.findBySeoFriendlyName(params.productType) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
-        if (!productType) {
+        if (!productType || productType.deleted) {
             flash.message = message(code: "productType.not.found")
             redirect(action: "index")
         }
@@ -51,13 +51,14 @@ class SiteController {
         model.subProductTypeLinks = []
         def base = "${model.commonLink}/"
 
-        productType.children.each {
+        productType.children.findAll {!it.deleted}.each {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
         ProductType.createCriteria().listDistinct {
             godFathers {
                 eq('id', productType.id)
+                ne('deleted', true)
             }
         }.each {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]

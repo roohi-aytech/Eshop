@@ -84,17 +84,21 @@ class ProductController {
 
     def saveType() {
         def productTypeType
+        def image
         if (params.id) {
             productTypeType = ProductTypeType.get(params.id)
+            image = productTypeType.image
             productTypeType.properties = params
         }
         else
             productTypeType = new ProductTypeType(params)
-        def image = productTypeType.image
         productTypeType.image = null
         productTypeType = productTypeType.save()
-        if (image && !params.imageDeleted) {
-            productTypeType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productTypeType))
+        if (!params.imageDeleted) {
+            if (params.image)
+                productTypeType.image = imageService.saveAndScaleImages(params.image.bytes, "image", fileService.filePath(productTypeType))
+            else if (image)
+                productTypeType.image=image
             productTypeType.save()
         }
         if (params.productInstanceId) {
@@ -499,20 +503,21 @@ class ProductController {
 
         productInstance.isVisible = params.isVisible == "on"
 
-        if (!productInstance.save(flush: true)) {
-        }
+        if (productInstance.save(flush: true)) {
+
 
         def productTypeIds = []
-        productInstance.productTypes.each {
-            productTypeIds << it.id
-        }
+            productInstance.productTypes.each {
+                productTypeIds << it.id
+            }
 //        try{
 //            dataSource.getc
 //        }catch(x){
 //
 //        }
-        mongoService.storeProduct(productInstance)
-        return [productInstance: productInstance, productTypeIds: productTypeIds]
+            mongoService.storeProduct(productInstance)
+            return [productInstance: productInstance, productTypeIds: productTypeIds]
+        }
     }
 
     def show() {
