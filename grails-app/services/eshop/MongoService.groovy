@@ -7,12 +7,16 @@ class MongoService {
     def priceService
 
     def storeProduct(Product product) {
+
+        def mongoProduct = MongoProduct.findByBaseProductId(product.id)
+
+        if (mongoProduct) {
+            mongoProduct.delete(flush: true)
+        }
         if (product?.deleted)
             return
-        def mongoProduct = MongoProduct.findByBaseProductId(product.id)
-        if (!mongoProduct) {
-            mongoProduct = new MongoProduct(baseProductId: product.id)
-        }
+
+        mongoProduct = new MongoProduct(baseProductId: product.id)
 
         product.properties.each {
             if (it.value instanceof String)

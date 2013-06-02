@@ -620,13 +620,7 @@ class ProductController {
     def synchMongo() {
 //        Thread.start {
 
-        def mps = MongoProduct.findAll()
         def i = 0
-        mps.each {
-            println "${i++} of ${mps.size()}"
-            it.delete()
-        }
-        i = 0
         def ps = Product.findAll()
         ps.each {
             try {
