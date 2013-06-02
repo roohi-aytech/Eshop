@@ -248,19 +248,24 @@ class ProductTypeController {
     def saveProductType() {
         try {
             def productType
+            def image
             if (params.id) {
                 productType = ProductType.get(params.id)
+                image = productType.image
                 productType.properties = params
             }
-            else
+            else{
                 productType = new ProductType(params)
-            def image = productType.image
-            productType.image = null
+            }
 
+            productType.image = null
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
             productType = productType.save()
-            if (image && !params.imagedeleted) {
-                productType.image = imageService.saveAndScaleImages(image, "image", fileService.filePath(productType))
+            if (!params.imagedeleted) {
+                if(params.image)
+                    productType.image = imageService.saveAndScaleImages(params.image.bytes, "image", fileService.filePath(productType))
+                else if (image)
+                    productType.image =image
                 productType.save()
             }
             productType.products.each {
