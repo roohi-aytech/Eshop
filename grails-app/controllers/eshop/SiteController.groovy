@@ -14,6 +14,8 @@ class SiteController {
     def searchableService
     def dataSource
     def springSecurityService
+    def trackingService
+    def messageService
 
     def findProducts(params) {
 
@@ -29,6 +31,8 @@ class SiteController {
             flash.message = message(code: "productType.not.found")
             redirect(action: "index")
         }
+
+        trackingService.trackExplore(productType)
 
         def model = [productType: productType]
 
@@ -81,7 +85,7 @@ class SiteController {
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
 
-        model.title = productType.pageTitle?:productType.name
+        model.title = productType.pageTitle ?: productType.name
         model.description = productType.description
         model.keywords = productType.keywords
 
@@ -99,12 +103,12 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
 
-        def brandList = []
+        def brandList = new ArrayList<Brand>()
         def brand
         if (model.filters["selecteds"]["b"])
-            brandList = Brand.createCriteria().list {
+            brandList.addAll(Brand.createCriteria().list {
                 'in'('id', model.filters["selecteds"]["b"])
-            }
+            })
         brand = brandList.collect { it.name }.join(', ')
         if (!brand)
             brand = ''
@@ -116,6 +120,8 @@ class SiteController {
                 model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${params.f},t${it.id}"]), id: it.id]
             }
         }
+
+        trackingService.trackExplore(productType, brandList)
 
         if (productType) {
             if (brand != '') {
@@ -133,18 +139,17 @@ class SiteController {
                 }
             } else {
                 //productType only
-                model.title = productType.pageTitle?:productType.name
+                model.title = productType.pageTitle ?: productType.name
                 model.description = productType.description
                 model.keywords = productType.keywords
             }
         } else if (brand != '') {
             //brand only
-            if(brandList.count{it} == 1){
-                model.title = brandList.first()?.pageTitle?:brandList.first()?.name
+            if (brandList.count { it } == 1) {
+                model.title = brandList.first()?.pageTitle ?: brandList.first()?.name
                 model.description = brandList.first()?.description
                 model.keywords = brandList.first()?.keywords
-            }
-            else{
+            } else {
                 model.title = brand
             }
         } else {
@@ -209,8 +214,6 @@ class SiteController {
 //        }
     }
 
-    def messageService
-
     def index() {
         if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
             redirect(uri: '/admin')
@@ -218,12 +221,17 @@ class SiteController {
         }
 
         if (session.forwardUri) {
+
+            trackingService.trackSignIn()
+
             def url = session.forwardUri
             session.forwardUri = null
             url = url.replace(request.contextPath, "")
             redirect url: url
             return
         }
+
+        trackingService.trackExplore()
 
         //product type
         def productType = [
@@ -296,6 +304,9 @@ class SiteController {
     def product() {
         def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
+
+        trackingService.trackProductVisit(product)
+
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
@@ -454,11 +465,13 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
 
+        def brandList = new ArrayList<Brand>()
         def brand
         if (model.filters["selecteds"]["b"])
-            brand = Brand.createCriteria().list {
+            brandList.addAll(Brand.createCriteria().list {
                 'in'('id', model.filters["selecteds"]["b"])
-            }.collect { it.name }.join(', ')
+            })
+        brand = brandList.collect { it.name }.join(', ')
         if (!brand)
             brand = ''
 
@@ -469,6 +482,8 @@ class SiteController {
                 model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${params.f},t${it.id}"]), id: it.id]
             }
         }
+
+        trackingService.trackSearch(productType, brandList, params.phrase)
 
         def pageDetails
         if (productType && brand != '')
