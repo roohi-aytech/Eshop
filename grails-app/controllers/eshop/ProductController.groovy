@@ -577,38 +577,40 @@ class ProductController {
         }
 
         try {
-            def tmp = []
+//            def tmp = []
             def product = Product.get(mongoProductInstance.baseProductId)
-            product.productTypes.each {
-                tmp << it
-            }
-            tmp.each {
-                product.removeFromProductTypes(it)
-            }
+//            product.productTypes.each {
+//                tmp << it
+//            }
+//            tmp.each {
+//                product.removeFromProductTypes(it)
+//            }
             mongoProductInstance.delete(flush: true)
-            product.mainImage?.delete()
-            product.images.each {it.delete()}
-            product.videos.each {it.delete()}
+            product.deleted=true
+            product.save()
+//            product.mainImage?.delete()
+//            product.images.each {it.delete()}
+//            product.videos.each {it.delete()}
+//
+//            product.attributes.each {it.delete()}
+//            AddedValue.findAllByBaseProduct(product).each {it.delete()}
+//
+//
+//
+//            ProductModel.findAllByProduct(product).each {
+//                it.variationValues = null
+//                it.save()
+//                it.delete()
+//            }
+//
+//            Variation.findAllByBaseProduct(product).each {
+//                // it.variationValues.each{it.delete()}
+//                it.variationValues = null
+//                it.save()
+//                it.delete()
+//            }
 
-            product.attributes.each {it.delete()}
-            AddedValue.findAllByBaseProduct(product).each {it.delete()}
-
-
-
-            ProductModel.findAllByProduct(product).each {
-                it.variationValues = null
-                it.save()
-                it.delete()
-            }
-
-            Variation.findAllByBaseProduct(product).each {
-                // it.variationValues.each{it.delete()}
-                it.variationValues = null
-                it.save()
-                it.delete()
-            }
-
-            product.delete()
+//            product.delete()
             render 0;
         }
         catch (DataIntegrityViolationException e) {
@@ -617,12 +619,19 @@ class ProductController {
     }
 
     def synchMongo() {
-        Product.findAll().each {
-            try {
-                mongoService.storeProduct(it)
-                println it
-            } catch (e) {
-                println(e)
+        Thread.start {
+
+            MongoProduct.findAll().each {
+                it.delete()
+            }
+
+            Product.findAll().each {
+                try {
+                    mongoService.storeProduct(it)
+                    println it
+                } catch (e) {
+                    println(e)
+                }
             }
         }
         render "Synch OK"
