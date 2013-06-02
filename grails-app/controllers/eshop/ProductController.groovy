@@ -194,10 +194,10 @@ class ProductController {
         else {
             productInstance = new Product()
         }
-        if(productInstance?.type && !productTypeTypes.collect{it.id}.contains(productInstance?.type?.id))
+        if (productInstance?.type && !productTypeTypes.collect {it.id}.contains(productInstance?.type?.id))
             productTypeTypes.add(productInstance?.type)
 
-        if(productInstance.isVisible == null)
+        if (productInstance.isVisible == null)
             productInstance.isVisible = true;
 
         [productInstance: productInstance, productTypeIds: productTypeIds.join(","), baseProductInstance: productInstance, curtab: params.curtab, curtab2: params.curtab2, ptid: params.ptid ?: productInstance?.productTypes?.find()?.id, productTypeTypes: productTypeTypes]
@@ -353,10 +353,9 @@ class ProductController {
 
     def deleteimage() {
         def success = productService.deleteProductImage(params.id, params.name)
-        if(success){
+        if (success) {
             def product = Product.get(params.id)
-            if(product.images.count {it} == 0)
-            {
+            if (product.images.count {it} == 0) {
                 product.mainImage = null
                 product.save()
             }
@@ -586,7 +585,7 @@ class ProductController {
 //                product.removeFromProductTypes(it)
 //            }
             mongoProductInstance.delete(flush: true)
-            product.deleted=true
+            product.deleted = true
             product.save()
 //            product.mainImage?.delete()
 //            product.images.each {it.delete()}
@@ -619,21 +618,26 @@ class ProductController {
     }
 
     def synchMongo() {
-        Thread.start {
+//        Thread.start {
 
-            MongoProduct.findAll().each {
-                it.delete()
-            }
-
-            Product.findAll().each {
-                try {
-                    mongoService.storeProduct(it)
-                    println it
-                } catch (e) {
-                    println(e)
-                }
+        def mps = MongoProduct.findAll()
+        def i = 0
+        mps.each {
+            println "${i++} of ${mps.size()}"
+            it.delete()
+        }
+        i = 0
+        def ps = Product.findAll()
+        ps.each {
+            try {
+                println "${i++} of ${ps.size()}"
+                mongoService.storeProduct(it)
+                println it
+            } catch (e) {
+                println(e)
             }
         }
+//        }
         render "Synch OK"
     }
 
@@ -675,44 +679,46 @@ class ProductController {
         return variation.variationValues
 
     }
-    def migrateImages(){
-        def base="${grailsApplication.config.ckeditor.upload.basedir}/image/"
+
+    def migrateImages() {
+        def base = "${grailsApplication.config.ckeditor.upload.basedir}/image/"
         ProductType.findAll().each {
-            def pathNew = base+fileService.filePath(it)
-            def pathOld=base+fileService.filePathOld(it)
+            def pathNew = base + fileService.filePath(it)
+            def pathOld = base + fileService.filePathOld(it)
             new File(pathOld).list().each {
-                if(new File(pathOld+"/"+it).isFile())
-                    fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
+                if (new File(pathOld + "/" + it).isFile())
+                    fileService.moveFile(pathOld + "/" + it, pathNew + "/" + it)
             }
 
         }
         Product.findAll().each {
-            def pathNew = base+fileService.filePath(it)
-            def pathOld=base+fileService.filePathOld(it)
+            def pathNew = base + fileService.filePath(it)
+            def pathOld = base + fileService.filePathOld(it)
             new File(pathOld).list().each {
-                if(new File(pathOld+"/"+it).isFile())
-                    fileService.moveFile(pathOld+"/"+it,pathNew+"/"+it)
+                if (new File(pathOld + "/" + it).isFile())
+                    fileService.moveFile(pathOld + "/" + it, pathNew + "/" + it)
             }
 
         }
         render 0
     }
-    def migrateImagesNameChange(){
-        def base="${grailsApplication.config.ckeditor.upload.basedir}/image/"
+
+    def migrateImagesNameChange() {
+        def base = "${grailsApplication.config.ckeditor.upload.basedir}/image/"
 
         Product.findAll().each {
-            def pathNew = base+fileService.filePath(it)
-            def pathOld=base+fileService.filePathOld(it)
-            def old=new File(pathOld)
-            if(!old.exists()){
-                def pts = old.parentFile.list().findAll {file->file?.contains(it?.name?:'1234567890')}
-                if(pts.size()==1){
-                    println pathOld+","+pts[0]
-                    old=new File(old.parentFile.absolutePath+"/"+pts[0])
-                    println old.parentFile.absolutePath+"/"+pts[0]
+            def pathNew = base + fileService.filePath(it)
+            def pathOld = base + fileService.filePathOld(it)
+            def old = new File(pathOld)
+            if (!old.exists()) {
+                def pts = old.parentFile.list().findAll {file -> file?.contains(it?.name ?: '1234567890')}
+                if (pts.size() == 1) {
+                    println pathOld + "," + pts[0]
+                    old = new File(old.parentFile.absolutePath + "/" + pts[0])
+                    println old.parentFile.absolutePath + "/" + pts[0]
                     old.list().each {
-                        if(new File(old.absolutePath+"/"+it).isFile())
-                            fileService.moveFile(old.absolutePath+"/"+it,pathNew+"/"+it)
+                        if (new File(old.absolutePath + "/" + it).isFile())
+                            fileService.moveFile(old.absolutePath + "/" + it, pathNew + "/" + it)
                     }
                 }
             }
