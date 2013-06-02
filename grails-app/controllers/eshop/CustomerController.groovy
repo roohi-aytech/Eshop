@@ -112,7 +112,7 @@ class CustomerController {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         customer.properties = params
 
-        if(!customer.registrationLevel)
+        if (!customer.registrationLevel)
             customer.registrationLevel = 'basic'
 
         customer.profilePersonalInfoFilled = true
@@ -132,7 +132,7 @@ class CustomerController {
         address.telephone = params.telephone
         address.city = City.get(params.city)
 
-        if(!customer.registrationLevel)
+        if (!customer.registrationLevel)
             customer.registrationLevel = 'basic'
 
         if (address.validate() && address.save()) {
@@ -188,5 +188,25 @@ class CustomerController {
             render(view: 'register', model: ['customerInstance': customerInstance])
         }
 
+    }
+
+    def validateReagent() {
+        def reagent = Customer.findByUsername(params.email)
+        if (reagent)
+            render reagent.toString()
+        else
+            render 0
+    }
+
+    def saveReagent() {
+        def reagent = Customer.findByUsername(params.email)
+        if (reagent) {
+            def customer = springSecurityService.currentUser as Customer
+            if(customer){
+                customer.reagent = reagent
+                customer.save()
+                redirect(action: 'profile')
+            }
+        }
     }
 }

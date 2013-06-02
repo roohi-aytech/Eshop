@@ -1,10 +1,12 @@
 <div class="customer-review table">
-    <div class="table-row">
+    <div class="table-row" style="${customerReviewInstance.id == selectedId?'background-color:#e3e3e3;border:1px solid white;':''}">
         <div class="table-cell vote">
-            <g:render template="/customerReview/vote" model="${[customerReviewInstance: customerReviewInstance]}"/>
+            <span>
+                <span id="voteValue_${customerReviewInstance.id}">${customerReviewInstance.totalVotes}</span>
+            </span>
         </div>
 
-        <div class="table-cell">
+        <div class="table-cell body">
 
             <g:if test="${customerReviewInstance?.title}">
                 <h4><g:fieldValue bean="${customerReviewInstance}" field="title"/></h4>
@@ -53,8 +55,8 @@
             </div>
 
             <div class="childCustomerReviews">
-                <g:each in="${customerReviewInstance.customerReviewReviews.findAll {it.status == 'approved'}.sort {-it.totalVotes}}">
-                    <g:render template="/customerReview/show" model="${[customerReviewInstance:it]}"/>
+                <g:each in="${customerReviewInstance.customerReviewReviews.sort {-it.totalVotes}}">
+                    <g:render template="/customerReview/showToAdmin" model="${[customerReviewInstance:it, selectedId:selectedId]}"/>
                 </g:each>
             </div>
 

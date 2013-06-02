@@ -11,8 +11,15 @@ class CustomerReview {
     Date lastUpdate
     User user
     CustomerReview parentReview
+    String status
 
-    static hasMany = [customerReviewReview: CustomerReview]
+    Integer getTotalVotes(){
+        votes.sum(0) {it.value} as Integer
+    }
+
+    static transients = ['totalVotes']
+
+    static hasMany = [customerReviewReviews: CustomerReview, votes: CustomerReviewVote]
 
     static belongsTo = [Product]
 
@@ -23,18 +30,25 @@ class CustomerReview {
 
     static mapping = {
         sort 'rate'
-        customerReviewReview cascade: 'all'
+        customerReviewReviews cascade: 'all'
+        votes cascade: 'all'
         version false
     }
 
     static constraints = {
         product(nullable: false)
+        title(nullable: false, maxSize: 1024)
         rate(nullable: false)
-        title(nullable: false, maxSize: 128)
-        body(nullable: false, maxSize: 2048)
         creationDate(nullable: false)
-        lastUpdate(nullable: false)
         user(nullable: false)
         parentReview(nullable: true)
+        status inList: ['waiting', 'approved', 'rejected']
+        body(nullable: false, maxSize: 200000)
+        lastUpdate(nullable: false)
+    }
+
+    @Override
+    String toString(){
+        title
     }
 }

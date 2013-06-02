@@ -4,7 +4,7 @@
 <div class="table-row">
 <div class="table-cell category-cell">
     <div class="pull-right" style="margin-right: 0;">
-        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+        <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
             <span><g:message code="category.jump"></g:message></span>
             <span class="caret"></span>
         </a>
@@ -30,7 +30,7 @@
 
 <div class="table-cell action-cell">
 
-    <div class="btn-group pull-right topNavigationItem" id="link-basket">
+    <div class="btn-group pull-right topNavigationItem ${session.getAttribute("basketCounter")?.toInteger() > 0 ? 'full' : ''}" id="link-basket">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"
            original-title="${message(code: "basket")}">
             <span><g:message code="basket"></g:message></span>
@@ -156,6 +156,21 @@
         </div>
     </sec:ifNotLoggedIn>
 
+
+    <div class="btn-group pull-right topNavigationItem" id="link-contactus">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <span><g:message code="wishList"></g:message></span>
+        </a>
+
+        <div id="contactusItems" class="dropdown-menu content">
+
+            <div class="support-cell">
+            <span id="support-number"><g:message code="support.number"></g:message></span>
+            <script type="text/javascript" id="lz_textlink" src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="table-cell">
@@ -209,10 +224,10 @@
     <a id="logo" href="${createLink(controller: 'site')}"><h1><g:message code="title"></g:message></h1></a>
 </div>
 
-<div class="table-cell support-cell">
-    <span id="support-number"><g:message code="support.number"></g:message></span>
-    <script type="text/javascript" id="lz_textlink" src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>
-</div>
+%{--<div class="table-cell support-cell">--}%
+    %{--<span id="support-number"><g:message code="support.number"></g:message></span>--}%
+    %{--<script type="text/javascript" id="lz_textlink" src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>--}%
+%{--</div>--}%
 </div>
 </div>
 </div>

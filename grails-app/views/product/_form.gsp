@@ -83,6 +83,30 @@
     </label>
     <g:field type="number" name="weight" value="${productInstance?.weight}"/>
 </div>
+
+
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'length', 'error')} ">
+    <label for="length">
+        <g:message code="product.length.label" default="length"/>
+
+    </label>
+    <g:field type="number" name="length" value="${productInstance?.length}"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'width', 'error')} ">
+    <label for="width">
+        <g:message code="product.width.label" default="width"/>
+
+    </label>
+    <g:field type="number" name="width" value="${productInstance?.width}"/>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'height', 'error')} ">
+    <label for="height">
+        <g:message code="product.height.label" default="height"/>
+
+    </label>
+    <g:field type="number" name="height" value="${productInstance?.height}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'brand', 'error')} ">
     <label for="brand">
         <g:message code="product.brand.label" default="Brand"/>

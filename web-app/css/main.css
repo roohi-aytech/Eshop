@@ -943,3 +943,94 @@ pre.stack{
     direction: ltr;
     height: auto;
 }
+
+
+
+.customer-review {
+    /*margin-bottom: 10px;*/
+}
+
+.customer-review h4 {
+    display: inline-block;
+    font-family: times, serif !important;
+    font-size: 16px;
+    margin-bottom: 0;
+    font-weight: bolder;
+}
+
+.customer-review .date {
+    color: #808080;
+    font-size: 10px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.customer-review .vote {
+    width: 50px;
+    padding-top: 10px;
+}
+
+.customer-review .vote a {
+    display: block;
+    text-align: center;
+}
+
+.customer-review .vote span{
+    display: block;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.customer-review .vote span span{
+    display: inline-block;
+    border:1px solid #eeeeee;
+    border-radius: 5px;
+    width: 30px;
+    cursor: default;
+    direction: ltr;
+    background-color: #ffffff;
+    margin-top: 5px;
+}
+
+.customer-review .body{
+    padding-top: 15px;
+    border-right: 2px solid #dddddd;
+    padding-right: 10px;
+}
+
+.customer-review p span{
+    background-color: transparent !important;
+}
+
+.newCustomerReview {
+    /*padding: 10px;*/
+    border-radius: 5px;
+}
+
+.reviewForm{
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.btn-toolbar .btn{
+    margin-left:5px;
+}
+
+.waiting{
+    display: none;
+}
+
+.table {
+    display: table;
+    width: 100%;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    vertical-align: top;
+    display: table-cell;
+    float: none !important;
+}
