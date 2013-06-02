@@ -2098,6 +2098,10 @@ ul.nav.nav-list {
     margin-right: 0 !important;
 }
 
+ul.nav.nav-tabs {
+    margin-right: 0 !important;
+}
+
 .nav-list.value-list li.checkable {
     display: inline-block;
 }
