@@ -41,6 +41,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
     //    basket
     $scope.addToBasket = function (id, name, price) {
+        $('#link-basket').addClass('full');
         $scope.basketCounter++;
         var found = false;
         for (var i = 0; i < $scope.basket.length; i++) {
@@ -52,7 +53,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         if (!found)
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, price: price};
-        $http.post(contextRoot + "basket/add/" + id).success(function (response) {
+            $http.post(contextRoot + "basket/add/" + id).success(function (response) {
         });
 
         return false;
