@@ -2386,7 +2386,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 /*new toolbar!!!*/
 .navbar-inner {
-    background-image: linear-gradient(to bottom, #ffeebb, #FFCC00);
+    background:#FFCC00;
 }
 
 .category-cell .btn-inverse {
@@ -2497,6 +2497,20 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
 
 #link-contactus a.dropdown-toggle:hover + div.dropdown-menu {
     display: block;
+}
+
+.topNavigationItem{
+    border-color: transparent;
+}
+
+.topNavigationItem a.dropdown-toggle{
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.topNavigationItem a.dropdown-toggle:hover{
+    background-color: transparent !important;
+    border-color: transparent !important;
 }
 
 
