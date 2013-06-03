@@ -1257,9 +1257,32 @@ table.attribute-list {
 }
 
 .attribute-list .buttons a {
-    display: block;
     margin-bottom: 3px;
     width: 150px;
+}
+
+.attribute-list.comparison .attributeName{
+    font-weight:bold;
+}
+
+.attribute-list.comparison .attributeValue{
+    text-align: center;
+}
+
+.attribute-list.comparison .imageBorder{
+}
+
+.attribute-list.comparison .imageBorder img{
+    border-radius:5px;
+    border:1px solid #cadbf7;
+    padding:5px;
+    background-color: #ebf1fb;
+    cursor:pointer;
+    box-shadow: 0 0 2px #b8cdf2;
+}
+
+.attribute-list.comparison .imageBorder img:hover{
+    box-shadow: 0 0 3px #98b6ec;
 }
 
 /*basket items*/
