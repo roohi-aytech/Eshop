@@ -29,6 +29,10 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/views" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -102,6 +106,10 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/grails-app/controllers" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/grails-app/i18n" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/famfamfam-1.0.1">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/famfamfam-1.0.1/grails-app/taglib" isTestSource="false" />
     </content>
@@ -132,11 +140,18 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/modernizr-2.5.3/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/mongodb-1.0.0.GA" />
-    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.1.6">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.1.6/src/java" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.1.6/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.1.6/grails-app/i18n" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.1.6/grails-app/taglib" isTestSource="false" />
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.3">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.3/src/java" isTestSource="false" />
@@ -187,6 +202,8 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/lib" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ws-client-1.0/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/burning-image-0.5.1/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
@@ -218,8 +235,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sf.jasperreports/jasperreports/jars/jasperreports-3.7.6.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.activation/activation/jars/activation-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.mail/mail/jars/mail-1.4.3.jar!/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/burning-image-0.5.1/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/lib" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.atmosphere/atmosphere-runtime/bundles/atmosphere-runtime-1.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
