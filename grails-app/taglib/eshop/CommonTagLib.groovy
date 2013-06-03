@@ -31,7 +31,7 @@ class CommonTagLib {
     def logoutLink = {attrs, body ->
 
         out << '<a'
-        out << ' href=\"' + createLink(controller: 'Logout', params:['forwardUri':request.forwardURI]) + '\"'
+        out << ' href=\"' + createLink(controller: 'Logout') + '\"'
         attrs.each { key, value ->
             out << ' ' + key + '=\"' + value + "\""
         }

@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 class LoginController {
 
+    def trackingService
+
     /**
      * Dependency injection for the authenticationTrustResolver.
      */
