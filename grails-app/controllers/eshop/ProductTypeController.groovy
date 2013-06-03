@@ -3,6 +3,7 @@ package eshop
 import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
+import org.springframework.transaction.annotation.Transactional
 
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class ProductTypeController {
@@ -111,13 +112,11 @@ class ProductTypeController {
         if (params.id) {
             attributeCategory = AttributeCategory.get(params.id)
             attributeCategory.properties = params
-        }
-        else
+        } else
             attributeCategory = new AttributeCategory(params)
         if (attributeCategory.validate() && attributeCategory.save()) {
             render attributeCategory as JSON
-        }
-        else {
+        } else {
             render(template: "form_AttributeCategory", model: [attributeCategory: attributeCategory])
         }
         attributeCategory.productType.products.each {
@@ -133,7 +132,7 @@ class ProductTypeController {
                 it.category = null
                 it.save()
             }
-            attributecategory.deleted=true
+            attributecategory.deleted = true
             attributecategory.save()
             render 0
             attributecategory.productType.products.each {
@@ -188,9 +187,9 @@ class ProductTypeController {
 //                it.removeFromProductTypes(productTypeInstance)
 //                it.save()
 //            }
-            if(!productTypeInstance.rootProductType)
-                productTypeInstance.rootProductType=productTypeInstance
-            productTypeInstance.deleted=true
+            if (!productTypeInstance.rootProductType)
+                productTypeInstance.rootProductType = productTypeInstance
+            productTypeInstance.deleted = true
             productTypeInstance.save(flush: true)
             render 0;
         }
@@ -206,16 +205,16 @@ class ProductTypeController {
             return
         }
         attributeTypeInstance.productType.attributeTypes
-                .findAll {it.sortIndex > attributeTypeInstance.sortIndex}
-                .each {
+                .findAll { it.sortIndex > attributeTypeInstance.sortIndex }
+        .each {
             it.sortIndex--
             it.save()
         }
         try {
-            attributeTypeInstance.deleted=true
+            attributeTypeInstance.deleted = true
             attributeTypeInstance.save(flush: true)
-            def ptid=attributeTypeInstance.productType.id
-            Thread.start{
+            def ptid = attributeTypeInstance.productType.id
+            Thread.start {
                 ProductType.get(ptid).products.each {
                     mongoService.storeProduct(it)
                 }
@@ -246,36 +245,41 @@ class ProductTypeController {
     }
 
     def saveProductType() {
+        ProductType productType
         try {
-            def productType
             def image
             if (params.id) {
                 productType = ProductType.get(params.id)
                 image = productType.image
                 productType.properties = params
-            }
-            else{
+                productType.seoFriendlyName = params.seoFriendlyName
+            } else {
                 productType = new ProductType(params)
             }
 
             productType.image = null
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
-            productType = productType.save()
+//            productType = productType.save()
             if (!params.imagedeleted) {
-                if(params.image)
+                if (params.image)
                     productType.image = imageService.saveAndScaleImages(params.image.bytes, "image", fileService.filePath(productType))
                 else if (image)
-                    productType.image =image
-                productType.save()
+                    productType.image = image
             }
-            productType.products.each {
-                mongoService.storeProduct(it)
+            productType.save()
+        } catch (x) {
+
+        }
+
+        if (productType)
+            Thread.start {
+                productType?.products?.each {
+                    if (it instanceof Product) try {
+                        mongoService.storeProduct(it)
+                    } catch (x) {}
+                }
             }
-            render 0;
-        }
-        catch (x) {
-            render 1;
-        }
+        render 0;
     }
 
     def getImage() {
@@ -287,8 +291,7 @@ class ProductTypeController {
             response.addHeader("content-disposition", "attachment;filename=$productType.name")
             response.contentLength = productType.image.length
             response.outputStream << productType.image
-        }
-        else {
+        } else {
             response.contentLength = 0
             response.outputStream << []
         }
@@ -301,8 +304,7 @@ class ProductTypeController {
             if (params.id) {
                 product = Product.get(params.id)
                 product.properties = params
-            }
-            else
+            } else
                 product = new Product(params)
             product.save()
             render 0;
@@ -336,8 +338,8 @@ class ProductTypeController {
 
     def repairAttrValues() {
         def n_a = AttributeValue.findByValue("N/A")
-        AttributeType.findAll().each {attr ->
-            attr.attributes.collect {it.value}.unique().each {
+        AttributeType.findAll().each { attr ->
+            attr.attributes.collect { it.value }.unique().each {
                 if (it && !attr?.values?.contains(it))
                     attr.addToValues(it)
             }
@@ -364,8 +366,7 @@ class ProductTypeController {
         if (params.id) {
             attribute = Attribute.get(params.id)
             attribute.properties = params;
-        }
-        else
+        } else
             attribute = new Attribute(params);
         attribute.save()
     }
@@ -374,15 +375,14 @@ class ProductTypeController {
         def attributeType;
         if (params.id) {
             attributeType = AttributeType.get(params.id)
-            if(!params.category.id){
+            if (!params.category.id) {
                 params.remove("category.id")
-                attributeType.category=null
+                attributeType.category = null
             }
             attributeType.properties = params;
-        }
-        else {
+        } else {
             attributeType = new AttributeType(params);
-            attributeType.sortIndex = (attributeType.productType.attributeTypes.max {it.sortIndex}?.sortIndex ?: 0) + 1
+            attributeType.sortIndex = (attributeType.productType.attributeTypes.max { it.sortIndex }?.sortIndex ?: 0) + 1
         }
 //        if (params.values_old && attributeType.id) {
 //            params.values_old.eachWithIndex {oldVal, idx ->
@@ -398,8 +398,7 @@ class ProductTypeController {
             if (params["values_${it.id}"]) {
                 it.value = params["values_${it.id}"]
                 it.save()
-            }
-            else {
+            } else {
                 mustRemove << it
             }
         }
@@ -413,8 +412,7 @@ class ProductTypeController {
         }
         if (params.values_ instanceof String) {
             attributeType.addToValues(new AttributeValue(value: params.values_).save())
-        }
-        else {
+        } else {
             params.values_.each {
                 attributeType.addToValues(new AttributeValue(value: it).save())
             }
@@ -525,17 +523,17 @@ class ProductTypeController {
     def calcSortIndex() {
         ProductType.findAll().each { productType ->
             def attrs = AttributeType.findAllByProductType(productType)
-            def maxindex = (attrs.max {it.sortIndex}?.sortIndex) ?: 0
+            def maxindex = (attrs.max { it.sortIndex }?.sortIndex) ?: 0
             maxindex++
-            attrs.findAll {it.sortIndex == 0}.each {
+            attrs.findAll { it.sortIndex == 0 }.each {
                 it.sortIndex = maxindex++
                 it.save()
             }
 
             def attrcats = AttributeCategory.findAllByProductType(productType)
-            maxindex = (attrcats.max {it.sortIndex}?.sortIndex) ?: 0
+            maxindex = (attrcats.max { it.sortIndex }?.sortIndex) ?: 0
             maxindex++
-            attrcats.findAll {it.sortIndex == 0}.each {
+            attrcats.findAll { it.sortIndex == 0 }.each {
                 it.sortIndex = maxindex++
                 it.save()
             }
@@ -596,10 +594,9 @@ class ProductTypeController {
         if (params.id) {
             giftInformation = GiftInformation.get(params.id)
             giftInformation.properties = params
-        }
-        else
+        } else
             giftInformation = new GiftInformation(params)
-        giftInformation.cultureEvents = request.getParameterValues('cultureEvents').collect {CultureEvent.findById(it.toLong())}
+        giftInformation.cultureEvents = request.getParameterValues('cultureEvents').collect { CultureEvent.findById(it.toLong()) }
         giftInformation.save()
         redirect(action: "details", id: giftInformation.productType?.id)
     }
