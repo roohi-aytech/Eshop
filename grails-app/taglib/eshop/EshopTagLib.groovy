@@ -180,7 +180,7 @@ class EshopTagLib {
 
         if (defaultModel) {
             if (defaultModel.status == 'exists') {
-                def price = priceService.calcProductModelPrice(defaultModel.id)?.showVal
+                def price = priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger()
                 if (price) {
                     out << """
                     <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false"? "on": "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
@@ -202,7 +202,7 @@ class EshopTagLib {
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (defaultModel?.prices?.count { it } == 0)
             defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
-        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal : ''
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger() : ''
 
         out << """
         <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
@@ -214,7 +214,7 @@ class EshopTagLib {
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (defaultModel?.prices?.count { it } == 0)
             defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
-        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal : ''
+        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger() : ''
 
         out << """
         <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>
