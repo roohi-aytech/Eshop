@@ -430,6 +430,12 @@ class ProductController {
         else
             productInstance = new Product(params)
 
+        if (!productInstance.productTypes)  {
+            flash.message = message(code: "default.enter_guarantee")
+            render(view: "create", model: [productInstance: productInstance])
+
+            return
+        }
 
         def tmp = []
         productInstance.productTypes.each {

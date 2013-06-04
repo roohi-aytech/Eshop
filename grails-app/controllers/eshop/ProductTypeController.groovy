@@ -94,6 +94,54 @@ class ProductTypeController {
         redirect(action: "show", id: productTypeInstance.id)
     }
 
+    def setAttValueToProducts_form(){
+        def attributeType = AttributeType.get(params.id)
+        boolean setNewValue
+        String newValue
+        boolean n_a
+
+        render(template: "set_att_value_to_products", model: [attributeType: attributeType, setNewValue : setNewValue, newValue: newValue, n_a : n_a])
+    }
+
+    def setAttValueToProducts_save(){
+        def attributeType = AttributeType.get(params.id)
+
+        def productType = attributeType?.productType
+        def setNewValue = params.setNewValue
+        def n_a = params.n_a
+        def newValue = params.newValue
+        boolean hasAttr
+
+
+        productType.products.findAll().each {
+            hasAttr = false
+            for (attr in it.attributes.findAll()) {
+              if(attr.attributeType == attributeType)
+                  hasAttr = true
+                break
+            }
+
+            if (!hasAttr){
+                def attributeValue = new AttributeValue()
+                attributeValue.value = newValue
+                attributeValue.save()
+
+                attributeType.addToValues(attributeValue)
+                attributeType.save()
+
+                def newAttr = new Attribute()
+                newAttr.attributeType = attributeType
+                newAttr.product = it
+                newAttr.value = attributeValue
+
+                if(newAttr.save()){
+                    it.attributes.add(newAttr)
+                    mongoService.storeProduct(it)
+                }
+            }
+        }
+    }
+
     def attributeCategoryForm() {
         def attributeCategory
         if (params.id)

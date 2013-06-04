@@ -465,6 +465,7 @@
                          [handler: "deleteAttributeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-attribute")}"],
 //                         [handler: "moveup(#id#)", icon: "arrow_up",title:"${message(code: "move-up")}"],
 //                         [handler: "movedown(#id#)", icon: "arrow_down",title:"${message(code: "move-down")}"],
+                         [loadOverlay: "${g.createLink(action: "setAttValueToProducts_form")}/#id#",saveAction:"${g.createLink(action: "setAttValueToProducts_save")}", icon: "application_edit",title:"${message(code: "edit-category")}"],
                          [handler: "moveAttributeType(#id#)", icon: "application_go",title:"${message(code: "move-attribute")}"],
                  ]}">
             <rg:criteria>
