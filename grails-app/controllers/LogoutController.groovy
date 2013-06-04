@@ -6,12 +6,17 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 class LogoutController {
 
+    def trackingService
+
     def springSecurityService
     /**
      * Index action. Redirects to the Spring security logout uri.
      */
     def index = {
         // TODO put any pre-logout code here
+
+        trackingService.trackSignOut()
+
         if(params.forwardUri)
         {
             Authentication auth = SecurityContextHolder.context.authentication

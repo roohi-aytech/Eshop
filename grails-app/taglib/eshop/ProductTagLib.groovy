@@ -5,7 +5,7 @@ class ProductTagLib {
 
     def rate = {attrs, body ->
         out << '<span id="star' + attrs.identifier + '">\n'
-        out << '<input type="hidden" name="' + attrs.identifier + '" id="' + attrs.identifier + '" />\n'
+        out << '<input type="hidden" name="' + attrs.name + '" id="' + attrs.identifier + '" />\n'
         out << '</span>\n'
 
         out << '<script language=\'javascript\'>'

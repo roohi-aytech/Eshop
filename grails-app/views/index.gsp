@@ -42,22 +42,6 @@
             </h3>
 
             <ul>
-                <sec:ifAnyGranted
-                        roles="${eshop.RoleHelper.ROLE_PRODUCER_ADD},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
-                    <li>
-                        <g:link controller="producer" action="list"><img
-                                src="images/supplier.png"/><span><g:message
-                                code="producer.label"
-                                default="Producers"/></span></g:link></li>
-
-                    <li>
-                        <g:link controller="staffRole" action="list"><img
-                                src="images/supplier.png"/><span><g:message
-                                code="staffRole.label"
-                                default="Staff Roles"/></span></g:link></li>
-
-
-                </sec:ifAnyGranted>
                 <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">
                     <li>
                         <g:link controller="productType" action="list"><img
@@ -82,6 +66,22 @@
                                 default="Guarantee"/></span></g:link></li>
 
                 </sec:ifAllGranted>
+                <sec:ifAnyGranted
+                        roles="${eshop.RoleHelper.ROLE_PRODUCER_ADD},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
+                    <li>
+                        <g:link controller="producer" action="list"><img
+                                src="images/supplier.png"/><span><g:message
+                                code="producer.label"
+                                default="Producers"/></span></g:link></li>
+
+                    <li>
+                        <g:link controller="staffRole" action="list"><img
+                                src="images/staff.png"/><span><g:message
+                                code="staffRole.label"
+                                default="Staff Roles"/></span></g:link></li>
+
+
+                </sec:ifAnyGranted>
             </ul>
         </sec:ifAnyGranted>
         <sec:ifAnyGranted
@@ -105,6 +105,12 @@
                                 src="images/discount.png"/><span><g:message
                                 code="discount"
                                 default="Discount"/></span></g:link></li>
+                </sec:ifAllGranted>
+                <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
+                    <li>
+                        <g:link controller="customerReview" action="list"><img
+                                src="images/comment.png"/><span><g:message
+                                code="review.waiting.list"/></span></g:link></li>
                 </sec:ifAllGranted>
             </ul>
         </sec:ifAnyGranted>

@@ -16,7 +16,7 @@ class ImageController {
 
     def index() {
 
-        if(params.id && params.id.toString().contains("{{")) { //angular parameter
+        if (params.id && params.id.toString().contains("{{")) { //angular parameter
             render ""
             return
         }
@@ -28,8 +28,14 @@ class ImageController {
         switch (params.type) {
             case 'product':
                 def product = Product.get(params.id)
-                if(!product)
-                    product = ProductModel.get(params.id)?.product
+//                if (!product)
+//                    product = ProductModel.get(params.id)?.product
+                if (product) {
+                    content = getProdcutImage(product)
+                }
+                break;
+            case 'productModel':
+                def product = ProductModel.get(params.id)?.product
                 if (product) {
                     content = getProdcutImage(product)
                 }
@@ -55,7 +61,7 @@ class ImageController {
             case 'specialSale':
                 def specialSaleSlide = SpecialSaleSlide.get(params.id)
                 if (specialSaleSlide) {
-                    switch(params.size){
+                    switch (params.size) {
                         case '1280':
                             content = specialSaleSlide.image1280
                             break
@@ -70,7 +76,7 @@ class ImageController {
             case 'mainSlide':
                 def slide = Slide.get(params.id)
                 if (slide) {
-                    switch(params.size){
+                    switch (params.size) {
                         case '1280':
                             content = slide.image1280
                             break
@@ -94,8 +100,7 @@ class ImageController {
             response.contentType = 'image/png'
             response.outputStream << content
             response.outputStream.flush()
-        }
-        else
+        } else
             render ""
 
     }
@@ -116,15 +121,15 @@ class ImageController {
         def content
         if (img) {
             if (params.wh) {
-                if(params.wh == "max")
+                if (params.wh == "max")
                     content = imageService.getImage(
                             img,
                             params.wh,
-                            fileService.filePath(product))//, remove comment to enble watermarking
-//                            request.getSession().getServletContext().getRealPath("/images/watermark.png"))
+                            fileService.filePath(product),
+                            request.getSession().getServletContext().getRealPath("/images/watermark.png"))
 
-                    else
-                content = imageService.getImage(img, params.wh, fileService.filePath(product))
+                else
+                    content = imageService.getImage(img, params.wh, fileService.filePath(product))
             } else {
                 content = img.fileContent
             }
@@ -137,21 +142,22 @@ class ImageController {
     }
 
     byte[] getProdcutTypeImage(ProductType productType) {
-        def img = productType.image
-        if (!img) {
-            img = this.class.getResource("/no-image.png").bytes
-            params.wh = ""
-        }
-
+//        def img = productType.image
+//        if (!img) {
+//            img = this.class.getResource("/no-image.png").bytes
+//            params.wh = ""
+//        }
+//
         def content
-        if (img) {
+//        if (img) {
             if (params.wh) {
                 content = imageService.getImage(params.wh, fileService.filePath(productType))
-            } else {
-                content = img
             }
-
-        }
+//            else {
+//                content = img
+//            }
+//
+//        }
         content
     }
 

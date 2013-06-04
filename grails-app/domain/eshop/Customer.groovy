@@ -10,6 +10,7 @@ class Customer extends User {
     String telephone
     String mobile
     Address address
+    Customer reagent
 
     String registrationLevel = 'basic'
     Boolean profilePersonalInfoFilled = false
@@ -29,5 +30,6 @@ class Customer extends User {
         registrationLevel(nullable: true, inList: ['basic', 'profile', 'favorites'])
         profilePersonalInfoFilled(nullable: true)
         profileSendingAddressFilled(nullable: true)
+        reagent nullable:true
     }
 }

@@ -242,7 +242,7 @@
                     $("#edit-form-productType [name=keywords]").val(row.keywords)
                     $("#edit-form-productType [name=seoFriendlyAlternativeName]").val(row.seoFriendlyAlternativeName)
                     $("#edit-form-productType [name=seoFriendlyName]").val(row.seoFriendlyName)
-                    $("#edit-form-productType img").attr("src",'<g:createLink controller="productType" action="getImage"/>?id='+id)
+                    $("#edit-form-productType img").attr("src",'<g:createLink controller="productType" action="getImage"/>?id='+id+'&tkid='+Math.random())
                     $("#edit-form-productType").attr("url", url)
                     $("#edit-form-productType").dialog("open")
                     $(".count-words").keypress()
