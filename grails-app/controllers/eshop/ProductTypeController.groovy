@@ -98,9 +98,9 @@ class ProductTypeController {
         def attributeType = AttributeType.get(params.id)
         boolean setNewValue
         String newValue
-        boolean n_a
+        boolean nA
 
-        render(template: "set_att_value_to_products", model: [attributeType: attributeType, setNewValue : setNewValue, newValue: newValue, n_a : n_a])
+        render(template: "set_att_value_to_products", model: [attributeType: attributeType, setNewValue : setNewValue, newValue: newValue, nA : nA])
     }
 
     def setAttValueToProducts_save(){
@@ -108,7 +108,7 @@ class ProductTypeController {
 
         def productType = attributeType?.productType
         def setNewValue = params.setNewValue
-        def n_a = params.n_a
+        boolean nA = params.nA
         def newValue = params.newValue
         boolean hasAttr
 
@@ -116,14 +116,15 @@ class ProductTypeController {
         productType.products.findAll().each {
             hasAttr = false
             for (attr in it.attributes.findAll()) {
-              if(attr.attributeType == attributeType)
+              if(attr.attributeType == attributeType){
                   hasAttr = true
-                break
+                  break
+              }
             }
 
             if (!hasAttr){
                 def attributeValue = new AttributeValue()
-                attributeValue.value = newValue
+                attributeValue.value = (nA)? "N/A" : newValue
                 attributeValue.save()
 
                 attributeType.addToValues(attributeValue)

@@ -18,14 +18,14 @@
                 $("#newValue").attr("disabled","disabled")
         })
     </script>
-    <label >
+
         <g:message code="attribute_added_message"  />
-    </label>
+
 
 </div>
 <div class="fieldcontain">
 
-    <g:checkBox name="NA" value="${n_a}"/> N/A
+    <g:checkBox name="nA" value="${nA}"/> N/A
     <g:textField name="newValue" value="${newValue}"/>
 
 </div>
