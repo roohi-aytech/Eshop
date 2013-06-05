@@ -67,12 +67,12 @@ class ImageService {
                     def watermarkFactor = Math.sqrt(watermarkArea / 12)
                     def watermarkWidth = Math.round(watermarkFactor * 4).toInteger()
                     def watermarkHeight = Math.round(watermarkFactor * 3).toInteger()
-                    def watermarkPath = watermark.toString().replace("watermark", "watermark/${watermarkWidth}x${watermarkHeight}")
+                    def watermarkPath = "${grailsApplication.config.ckeditor.upload.basedir}image/watermark/${watermarkWidth}x${watermarkHeight}"
 
                     //create new watermark image
                     if (!new File(watermarkPath).exists()) {
 
-                        def watermarkDirectory = watermark.toString().replace(".png", "/")
+                        def watermarkDirectory = "${grailsApplication.config.ckeditor.upload.basedir}image/watermark/"
                         def directory = new File(watermarkDirectory)
                         if (!directory.exists() && !directory.mkdirs())
                             return new byte[0]
