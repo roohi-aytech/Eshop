@@ -22,17 +22,9 @@ class ProductType extends BaseProduct {
         name
     }
 
-    static searchable = true
+    static searchable = [only: ['name']]
 
-//{
-//        root false
-//        only: ['id']
-//    }
-//        name boost:0.5
-//        only:['name','description', 'keywords']
-//    }
-
-    static transients = ['rlName']
+    static transients = ['urlName']
 
     static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType]
     static belongsTo = [ProducingProduct, ProductTypeBrand]
