@@ -63,12 +63,12 @@ function changeAddToBasketButtonLabel() {
 function resizeThumbnails() {
     var currentWidth = $('.span600').first().width();
     if (currentWidth > 700) {
+        $('.thumbnails.productTypes .span3').css('width', '20%');
         $('.thumbnailGrid .span3').css('width', (currentWidth - 30) / 4);
-        $('.thumbnailGrid.productTypes .span3').css('width', '20%');
     }
     else {
+        $('.thumbnails.productTypes .span3').css('width', '25%');
         $('.thumbnailGrid .span3').css('width', (currentWidth - 25) / 3);
-        $('.thumbnailGrid.productTypes .span3').css('width', '25%');
     }
 
     //set thumbnails attributes

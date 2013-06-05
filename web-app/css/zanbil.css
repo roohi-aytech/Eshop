@@ -196,6 +196,10 @@ ul.errors {
 .thumbnails {
 }
 
+.thumbnails.productTypes {
+    margin:0;
+}
+
 .thumbnails.productTypes > li {
     height: 140px;
 }
