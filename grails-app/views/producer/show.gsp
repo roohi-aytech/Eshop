@@ -12,10 +12,10 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'producer.label', default: 'Producer')}" />
-    <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <title><g:message code="producer.show.label" args="[entityName]" /></title>
 </head>
 <body>
-<h2><g:message code="default.show.label" args="[entityName]" /></h2>
+<h2><g:message code="producer.show.label" args="[entityName]" /></h2>
 
 <div id="show-producer" class="content scaffold-show" role="main">
     <g:if test="${flash.message}">
@@ -76,8 +76,8 @@
             <li class="fieldcontain">
                 <span id="fax-label" class="property-label"><g:message code="producer.fax.label" default="Fax" /></span>
 
-                <span class="property-value" aria-labelledby="phone-label">
-                    <g:fieldValue bean="${producerInstance}" field="phone"/></span>
+                <span class="property-value" aria-labelledby="fax-label">
+                    <g:fieldValue bean="${producerInstance}" field="fax"/></span>
             </li>
         </g:if>
 

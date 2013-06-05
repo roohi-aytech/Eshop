@@ -1,5 +1,7 @@
 package eshop
 
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
+
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import java.awt.Image
@@ -19,35 +21,87 @@ class ImageService {
     ]
 
     def getImage(Content img, String wh, String parent, def watermark) {
+        byte[] bytes
+        def path = "${grailsApplication.config.ckeditor.upload.basedir}image/" + parent + "/"
+
         if (wh?.toBoolean()) {
-            return fileService.getFileContent(img.name, "image", parent)
+            bytes = fileService.getFileContent(img.name, "image", parent) as byte[]
         } else if (wh) {
-            if (wh == "max") {
-                def path = "${grailsApplication.config.ckeditor.upload.basedir}image/" + parent + "/"
-                def file = new File(path + "wm/" + img.name)
-                if (!file.exists()) {
 
-                    def base = new File(path + "wm/")
-                    if (!base.exists() && !base.mkdirs())
-                        return new byte[0]
+            def fileName = (wh == 'max' ? '' : wh + '-') + img.name;
+            def emptyImagePath = watermark.toString().replace('watermark.png', 'empty.jpg')
 
-                    burningImageService.doWith(path + img.name, path + "wm/")
+            def file = new File(path + "wm/" + fileName)
+            if (!file.exists()) {
+
+                def base = new File(path + "wm/")
+                if (!base.exists() && !base.mkdirs())
+                    return new byte[0]
+
+                bytes = fileService.getFileContent(fileName, "image", parent) as byte[]
+                def image = ImageIO.read(new ByteInputStream(bytes, bytes.length))
+                if (!image)
+                    return new byte[0]
+                def size = image.width > image.height ? image.width : image.height
+
+                //create empty image
+                def uuid = UUID.randomUUID().toString()
+                new AntBuilder().copy(file: emptyImagePath, tofile: path + "wm/" + uuid + ".jpg")
+                new File(path + "wm/" + uuid + ".jpg").renameTo(path + "wm/" + fileName)
+                burningImageService.doWith(path + "wm/" + fileName, path + "wm/")
+                        .execute {
+                    it.scaleAccurate(size, size)
+                }
+
+                //align bottom image in empty image
+                burningImageService.doWith(path + "wm/" + fileName, path + "wm/")
+                        .execute {
+                    it.watermark(path + fileName, ['bottom': 0])
+                }
+
+                //do watermark if required
+                if (wh == 'max') {
+
+                    //scale watermark
+                    def watermarkArea = (image.width * image.height * 4) / 100
+                    def watermarkFactor = Math.sqrt(watermarkArea / 12)
+                    def watermarkWidth = Math.round(watermarkFactor * 4).toInteger()
+                    def watermarkHeight = Math.round(watermarkFactor * 3).toInteger()
+                    def watermarkPath = watermark.toString().replace("watermark", "watermark/${watermarkWidth}x${watermarkHeight}")
+
+                    //create new watermark image
+                    if (!new File(watermarkPath).exists()) {
+
+                        def watermarkDirectory = watermark.toString().replace(".png", "/")
+                        def directory = new File(watermarkDirectory)
+                        if (!directory.exists() && !directory.mkdirs())
+                            return new byte[0]
+
+                        new AntBuilder().copy(file: watermark.toString(), tofile: watermarkPath)
+                        burningImageService.doWith(watermarkPath, watermarkDirectory)
+                                .execute {
+                            it.scaleAccurate(watermarkWidth, watermarkHeight)
+                        }
+                    }
+
+                    burningImageService.doWith(path + "wm/" + fileName, path + "wm/")
                             .execute {
-                        it.watermark(watermark.toString(), ['bottom': 10])
+                        it.watermark(watermarkPath, ['bottom': 10])
                     }
                 }
             }
-            return fileService.getFileContent((wh == "max" ? "wm/" : wh + "-") + img.name, "image", parent)
+            bytes = fileService.getFileContent('wm/' + fileName, "image", parent) as byte[]
         } else
             return new byte[0]
 
+        return bytes
     }
 
     def getImage(Content img, String wh, String parent) {
         if (wh?.toBoolean()) {
             return fileService.getFileContent(img.name, "image", parent)
         } else if (wh) {
-            return fileService.getFileContent( wh + "-" + img.name, "image", parent)
+            return fileService.getFileContent(wh + "-" + img.name, "image", parent)
         } else
             return new byte[0]
 

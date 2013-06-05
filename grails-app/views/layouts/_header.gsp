@@ -42,7 +42,7 @@
                 <li ng-repeat="basketItem in basket">
                     <span class="basket-item-image">
                         <img src="<g:createLink controller="image"
-                                                action="index"/>/{{basketItem.id}}?wh=50x50"/>
+                                                action="index"/>/{{basketItem.id}}?type=productModel&wh=50x50"/>
                     </span>
                     <span class="basket-item-title">{{basketItem.name}}<br/>
                         <g:message code="basket-items-count"></g:message>: <span

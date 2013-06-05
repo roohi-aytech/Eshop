@@ -55,7 +55,7 @@ class SiteController {
         model.subProductTypeLinks = []
         def base = "${model.commonLink}/"
 
-        productType.children.findAll {!it.deleted}.each {
+        productType.children.findAll { !it.deleted }.each {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
@@ -413,7 +413,7 @@ class SiteController {
     def productImage() {
         def product = Product.get(params.id)
 
-        render(template: "productImages", model: [product: product, selectedImage: product.images.find { it.id.toString() == params.img.toString() }])
+        render(template: "productImages", model: [product: product, selectedImage: params.img ? product.images.find { it.id.toString() == params.img.toString() } : product.mainImage])
     }
 
     def fillAttibuteCategoryChildren(Product product, parentCategory) {

@@ -13,18 +13,18 @@ $(document).ready(function () {
         }
     });
 
-    $(".product-thumbnails .thumbnail").hover(function () {
-        $(this).closest("li").css("z-index", 9999999);
-        $(this).stop().animate({ height: "425", width: parseInt($(this).attr('oldWidth')) + 40 , left: parseInt($(this).attr('oldLeft')) - 20, top: $(this).attr('oldTop') - 20 }, "fast");
-        $(this).addClass('selectedThumbnail');
+//    $(".product-thumbnails .thumbnail").hover(function () {
+//        $(this).closest("li").css("z-index", 9999999);
+//        $(this).stop().animate({ height: "425", width: parseInt($(this).attr('oldWidth')) + 40 , left: parseInt($(this).attr('oldLeft')) - 20, top: $(this).attr('oldTop') - 20 }, "fast");
+//        $(this).addClass('selectedThumbnail');
+//
+//    }, function () {
+//        $(this).closest("li").css("z-index", 0);
+//        $(this).stop().animate({ height: $(this).attr('oldHeight'), width: ($(this).closest("li").width() * 9)/10, left: "5%", top: $(this).attr('oldTop') }, "fast");
+//        $(this).removeClass('selectedThumbnail');
+//    });
 
-    }, function () {
-        $(this).closest("li").css("z-index", 0);
-        $(this).stop().animate({ height: $(this).attr('oldHeight'), width: ($(this).closest("li").width() * 9)/10, left: "5%", top: $(this).attr('oldTop') }, "fast");
-        $(this).removeClass('selectedThumbnail');
-    });
-
-    $(".showbiz .thumbnail").hover(function () {
+    $(".thumbnail").hover(function () {
         $(this).find('.content').stop().animate({ 'margin-top': "-235"}, "fast");
 
     }, function () {
@@ -63,16 +63,16 @@ function changeAddToBasketButtonLabel() {
 function resizeThumbnails() {
     var currentWidth = $('.span600').first().width();
     if (currentWidth > 700) {
-        $('.thumbnails .span3').css('width', '25%');
-        $('.thumbnails.productTypes .span3').css('width', '20%');
+        $('.thumbnailGrid .span3').css('width', (currentWidth - 30) / 4);
+        $('.thumbnailGrid.productTypes .span3').css('width', '20%');
     }
     else {
-        $('.thumbnails .span3').css('width', '33.33%');
-        $('.thumbnails.productTypes .span3').css('width', '25%');
+        $('.thumbnailGrid .span3').css('width', (currentWidth - 25) / 3);
+        $('.thumbnailGrid.productTypes .span3').css('width', '25%');
     }
 
     //set thumbnails attributes
-    $(".thumbnails .thumbnail").each(function(){
+    $(".thumbnailGrid .thumbnail").each(function(){
         $(this).attr('oldWidth', $(this).width());
         $(this).attr('oldHeight', $(this).height());
         $(this).attr('oldLeft', $(this).position().left);
