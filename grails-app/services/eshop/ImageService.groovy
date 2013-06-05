@@ -67,7 +67,7 @@ class ImageService {
                     def watermarkFactor = Math.sqrt(watermarkArea / 12)
                     def watermarkWidth = Math.round(watermarkFactor * 4).toInteger()
                     def watermarkHeight = Math.round(watermarkFactor * 3).toInteger()
-                    def watermarkPath = "${grailsApplication.config.ckeditor.upload.basedir}image/watermark/${watermarkWidth}x${watermarkHeight}"
+                    def watermarkPath = "${grailsApplication.config.ckeditor.upload.basedir}image/watermark/${watermarkWidth}x${watermarkHeight}.png"
 
                     //create new watermark image
                     if (!new File(watermarkPath).exists()) {
