@@ -24,7 +24,7 @@ $(document).ready(function () {
 //        $(this).removeClass('selectedThumbnail');
 //    });
 
-    $(".thumbnail").hover(function () {
+    $(".showbiz .thumbnail").hover(function () {
         $(this).find('.content').stop().animate({ 'margin-top': "-235"}, "fast");
 
     }, function () {
