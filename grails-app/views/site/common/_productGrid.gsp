@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <ul class="product-thumbnails thumbnails row-fluid">
+    <ul class="showbiz thumbnailGrid row-fluid">
     %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
             <g:set var="product" value="${eshop.Product.get(productId)}"/>

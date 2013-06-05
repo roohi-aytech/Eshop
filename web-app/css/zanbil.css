@@ -249,6 +249,14 @@ ul.errors {
     margin-right: 5px;
 }
 
+ul.thumbnailGrid {
+    margin:0;
+}
+
+.thumbnailGrid.row-fluid [class*="span"]:first-child{
+    margin-right: 5px;
+}
+
 .thumbnails .span3 {
     margin-right: 0;
     margin-left: 0;
