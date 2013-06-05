@@ -40,7 +40,7 @@ class ImageService {
 
                 bytes = fileService.getFileContent(fileName, "image", parent) as byte[]
                 def image = ImageIO.read(new ByteInputStream(bytes, bytes.length))
-                if(!image)
+                if (!image)
                     return new byte[0]
                 def size = image.width > image.height ? image.width : image.height
 
@@ -53,18 +53,42 @@ class ImageService {
                     it.scaleAccurate(size, size)
                 }
 
-                //center image in empty image
+                //align bottom image in empty image
                 burningImageService.doWith(path + "wm/" + fileName, path + "wm/")
                         .execute {
-                    it.watermark(path + fileName)
+                    it.watermark(path + fileName, ['bottom': 0])
                 }
 
                 //do watermark if required
-                if (wh == 'max')
+                if (wh == 'max') {
+
+                    //scale watermark
+                    def watermarkArea = (image.width * image.height * 4) / 100
+                    def watermarkFactor = Math.sqrt(watermarkArea / 12)
+                    def watermarkWidth = Math.round(watermarkFactor * 4).toInteger()
+                    def watermarkHeight = Math.round(watermarkFactor * 3).toInteger()
+                    def watermarkPath = watermark.toString().replace("watermark", "watermark/${watermarkWidth}x${watermarkHeight}")
+
+                    //create new watermark image
+                    if (!new File(watermarkPath).exists()) {
+
+                        def watermarkDirectory = watermark.toString().replace(".png", "/")
+                        def directory = new File(watermarkDirectory)
+                        if (!directory.exists() && !directory.mkdirs())
+                            return new byte[0]
+
+                        new AntBuilder().copy(file: watermark.toString(), tofile: watermarkPath)
+                        burningImageService.doWith(watermarkPath, watermarkDirectory)
+                                .execute {
+                            it.scaleAccurate(watermarkWidth, watermarkHeight)
+                        }
+                    }
+
                     burningImageService.doWith(path + "wm/" + fileName, path + "wm/")
                             .execute {
-                        it.watermark(watermark.toString(), ['bottom': 10])
+                        it.watermark(watermarkPath, ['bottom': 10])
                     }
+                }
             }
             bytes = fileService.getFileContent('wm/' + fileName, "image", parent) as byte[]
         } else
