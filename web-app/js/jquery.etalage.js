@@ -381,9 +381,9 @@
                             af = false
                         })
                     }
-                    aD.find(".etalage_thumb_active").removeClass("etalage_thumb_active").stop().animate({opacity: 0}, c.speed, function () {
-                        a(this).hide()
-                    });
+                    aD.find(".etalage_thumb_active").removeClass("etalage_thumb_active").stop().hide();//.animate({opacity: 0}, c.speed, function () {
+//                        a(this).hide()
+//                    });
                     j = v.filter(".thumb_" + aZ.data("thumb_id")).addClass("etalage_thumb_active").show().stop().css({opacity: 0}).animate({opacity: 1}, c.speed);
                     av = j.find(".etalage_thumb_image");
                     am = j.find(".etalage_source_image");

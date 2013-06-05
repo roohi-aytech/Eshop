@@ -12,7 +12,7 @@
             source_image_height: 900,
             zoom_area_width: $('#product-description-area').width(),
             zoom_area_height: Math.max($('#product-description-area').height(), 300),
-            zoom_area_distance: 5,
+            zoom_area_distance: 20,
             small_thumbs: 4,
             smallthumb_inactive_opacity: 0.3,
             smallthumbs_position: 'bottom',
@@ -38,7 +38,7 @@
         <li>
             <a href="${it.id}">
                 <g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>
-                <img class="etalage_thumb_image" width="${image.width}" height="${image.height}"
+                <img class="etalage_thumb_image" width="50" height="50"
                      src="<g:createLink controller="image" params="[id: product?.id, name: it.name, wh: '300x300']"/>"/>
                 <img class="etalage_source_image"
                      src="<g:createLink controller="image" params="[id: product?.id, name: it.name, wh: 'max']"/>"/>
@@ -51,10 +51,14 @@
 <div id="myModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        %{--<h3 id="myModalLabel">${product}</h3>--}%
     </div>
 
     <div class="modal-body">
     </div>
+    %{--<div class="modal-footer">--}%
+    %{--<button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="close"/> </button>--}%
+    %{--</div>--}%
 </div>
 
 
