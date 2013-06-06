@@ -182,19 +182,24 @@ class EshopTagLib {
             if (defaultModel.status == 'exists') {
                 def price = priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger()
                 if (price) {
-                    out << """
-                    <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false"? "on": "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
-                    """
+                    if(attrs.image)
+                        out << """
+                            <a class="" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='\${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            """
+                        else
+                            out << """
+                            <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
+                            """
                 } else {
-                    out << g.message(code: 'product.price.notExists')
+                    out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
                 }
             } else if (defaultModel.status == 'not-exists') {
-                out << g.message(code: 'product.price.notExists')
+                out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
             } else if (defaultModel.status == 'coming-soon') {
-                out << g.message(code: 'product.price.comingSoon')
+                out << (attrs.image ? '' : g.message(code: 'product.price.comingSoon'))
             }
         } else
-            out << g.message(code: 'product.price.notExists')
+            out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
     }
 
     def addToWishList = { attrs, body ->
@@ -204,9 +209,14 @@ class EshopTagLib {
             defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
         def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger() : ''
 
-        out << """
-        <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
-        """
+        if (attrs.image)
+            out << """
+            <a ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
+            """
+        else
+            out << """
+                <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
+                """
     }
 
     def addToCompareList = { attrs, body ->
@@ -216,9 +226,14 @@ class EshopTagLib {
             defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
         def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger() : ''
 
-        out << """
-        <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${attrs.productTitle}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>
-        """
+        if (attrs.image)
+            out << """
+                <a ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
+                """
+        else
+            out << """
+                <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>
+                """
     }
 
     def basketItem = { attrs, body ->
