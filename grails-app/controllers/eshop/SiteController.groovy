@@ -16,6 +16,7 @@ class SiteController {
     def springSecurityService
     def trackingService
     def messageService
+    def mongoService
 
     def findProducts(params) {
 
@@ -353,6 +354,7 @@ class SiteController {
             product.visitCount = 0;
         product.visitCount++;
         product.save()
+        mongoService.storeProduct(product)
 
         //update last visited products
         def lastVisitedProducts

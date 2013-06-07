@@ -26,6 +26,13 @@ class MongoService {
         mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
         mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
+        mongoProduct['visitCount'] = product?.visitCount?:0
+        mongoProduct['saleCount'] = product?.models?.count { it } == 0 ? 0 : Order.createCriteria().count {
+            'eq'('status', OrderHelper.STATUS_DELIVERED)
+            items {
+                'in'('productModel', ProductModel.findAllByProduct(product))
+            }
+        }
         def productTypes = collectProductTypes(product)
         mongoProduct['productTypes'] = productTypes.collect { [id: it.id, name: it.name, parentId: it?.parentId] }
 
@@ -48,22 +55,22 @@ class MongoService {
     private def collectProductTypes(Product product) {
         def res = []
         product.productTypes.findAll { !it?.deleted }.each {
-            res.addAll(collectProductTypes(it,new HashSet()))
+            res.addAll(collectProductTypes(it, new HashSet()))
         }
         return res
     }
 
-    private def collectProductTypes(ProductType productType,Set visited) {
-        if(visited.contains(productType))
+    private def collectProductTypes(ProductType productType, Set visited) {
+        if (visited.contains(productType))
             return []
         visited.add(productType)
         def res = [[name: productType?.name, id: productType?.id, parentId: productType?.parentProduct?.id]]
 
         if (productType.parentProduct)
-            res.addAll(collectProductTypes(productType.parentProduct,visited))
+            res.addAll(collectProductTypes(productType.parentProduct, visited))
 
         productType.godFathers.each {
-            res.addAll(collectProductTypes(ProductType.get(it.id),visited))
+            res.addAll(collectProductTypes(ProductType.get(it.id), visited))
         }
 
         return res
