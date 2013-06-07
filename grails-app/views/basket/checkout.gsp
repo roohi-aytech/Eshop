@@ -91,7 +91,7 @@
 <div class="group">
     <ul>
         <li ng-repeat="basketItem in basket">
-            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?wh=100x100"/>
+            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?type=productModel&wh=100x100"/>
             </span>
             <span class="name"><h3><a
                     ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">{{basketItem.name}}</a>

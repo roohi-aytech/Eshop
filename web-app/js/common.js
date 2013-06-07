@@ -24,11 +24,62 @@ $(document).ready(function () {
 //        $(this).removeClass('selectedThumbnail');
 //    });
 
-    $(".showbiz .thumbnail").hover(function () {
-        $(this).find('.content').stop().animate({ 'margin-top': "-235"}, "fast");
+    $(".showbiz .thumbnail").hoverIntent(function () {
+
+        $(this).find('img').first().stop().animate({
+            'position': 'absolute',
+            'right': '0',
+            'margin-right': '0',
+            'margin-left': '0',
+            'border-radius': '2px',
+            'padding': '2px',
+            'width': '50px',
+            'height': '50px'
+        });
+
+        $(this).find('.title').first().stop().animate({
+            'top': '0',
+            'margin-right': '60px',
+            'margin-left': '0'
+        });
+
+        $(this).find('.attributes').first().stop().animate({
+            'top': $(this).find('.title').first().height() - 10,
+            'opacity': '1'
+        });
+
+        $(this).find('.buttons').first().stop().animate({
+            'top': $(this).find('.title').first().height() - 5,
+            'opacity': '1'
+        });
 
     }, function () {
-        $(this).find('.content').stop().animate({ 'margin-top': "0"}, "fast");
+
+        $(this).find('img').first().stop().animate({
+            'right': 'auto',
+            'margin-right': $(this).width()/2 - 80,
+            'margin-left': $(this).width()/2 - 80,
+            'border-radius': '4px',
+            'padding': '4px',
+            'width': '150px',
+            'height': '150px'
+        });
+
+        $(this).find('.title').first().stop().animate({
+            'top': '168px',
+            'margin-right': '30px',
+            'margin-left': '30px'
+        });
+
+        $(this).find('.attributes').first().stop().animate({
+            'top': '300px',
+            'opacity': '0'
+        });
+
+        $(this).find('.buttons').first().stop().animate({
+            'top': '255px',
+            'opacity': '0'
+        });
     });
 
     $(window).resize(function () {
@@ -42,6 +93,8 @@ $(document).ready(function () {
     $('.scrollable').rollbar({zIndex:80,wheelSpeed:10});
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
+
+//    $('.tipsy').tipsy({live:true});
 
     $('#link-basket .counter').fadeIn('slow');
 });
@@ -71,14 +124,19 @@ function resizeThumbnails() {
         $('.thumbnailGrid .span3').css('width', (currentWidth - 25) / 3);
     }
 
+//    $(".showbiz .thumbnail").each(function(){
+//        $(this).find('img').first().css('margin-right', $(this).width()/2 - 80);
+//        $(this).find('img').first().css('margin-left', $(this).width()/2 - 80);
+//    })
+
     //set thumbnails attributes
-    $(".thumbnailGrid .thumbnail").each(function(){
-        $(this).attr('oldWidth', $(this).width());
-        $(this).attr('oldHeight', $(this).height());
-        $(this).attr('oldLeft', $(this).position().left);
-        $(this).attr('oldTop', $(this).position().top);
-        $(this).attr('style', '');
-    })
+//    $(".thumbnailGrid .thumbnail").each(function(){
+//        $(this).attr('oldWidth', $(this).width());
+//        $(this).attr('oldHeight', $(this).height());
+//        $(this).attr('oldLeft', $(this).position().left);
+//        $(this).attr('oldTop', $(this).position().top);
+//        $(this).attr('style', '');
+//    })
 
     //show top 8 brand images
     var brandItems = $('.brand-carousel li a img');

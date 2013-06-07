@@ -64,6 +64,7 @@
     <g:layoutHead/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
 
+    <g:javascript src="jquery.hoverIntent.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
 </head>
 
