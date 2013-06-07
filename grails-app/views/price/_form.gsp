@@ -36,13 +36,5 @@
 
 
 
-<script type="text/javascript">
-
-$("#price").blur(function(){
-    $(this).format({format:"#,###.00", locale:"de"});
-});
-</script>
-
-
 
 
