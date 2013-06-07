@@ -184,7 +184,7 @@ class EshopTagLib {
                 if (price) {
                     if(attrs.image)
                         out << """
-                            <a class="" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='\${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a class="" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                         else
                             out << """
