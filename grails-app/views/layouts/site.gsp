@@ -31,7 +31,7 @@
         var compareList = ${(session.getAttribute("compareList")?: []) as grails.converters.JSON};
         <sec:ifLoggedIn>
         <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-        <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username()).wishList.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).showVal]}}"></g:set>
+        <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username())?.wishList?.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).showVal]}?:[]}"></g:set>
         var wishListCounter = ${wishList? wishList.count {it}: 0};
         var wishList = ${(wishList?: []) as grails.converters.JSON};
         var wishListEnabled = true;
