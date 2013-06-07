@@ -149,4 +149,10 @@ class ProductModelController {
         [productModelInstance : productModelInstance]
     }
 
+    def productModelDetails(){
+        def productModelInstance = ProductModel.get(params.id)
+
+        [productModelInstance : productModelInstance]
+    }
+
 }
