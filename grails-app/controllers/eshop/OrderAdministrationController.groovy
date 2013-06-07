@@ -6,6 +6,7 @@ class OrderAdministrationController {
 
     def priceService
     def springSecurityService
+    def mongoService
 
     def list() {
         render view: '/orderAdministration/list'
@@ -93,6 +94,9 @@ class OrderAdministrationController {
         def order = Order.get(params.id)
         order.status = OrderHelper.STATUS_DELIVERED
         order.save()
+        order.items.each{
+            mongoService.storeProduct(it.productModel.product)
+        }
 
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = OrderHelper.ACTION_DELIVERY

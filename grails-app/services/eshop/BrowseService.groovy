@@ -45,7 +45,7 @@ class BrowseService {
         params.match["isVisible"] = true
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: [price: -1]],
+                [$sort: [price: -1, saleCount: -1, visitCount: -1]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
