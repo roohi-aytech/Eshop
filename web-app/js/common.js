@@ -94,7 +94,24 @@ $(document).ready(function () {
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
 
-//    $('.tipsy').tipsy({live:true});
+    $('.has-tipsy').each(function(){
+        var tipContainer = $(this).parent().parent().find('.tips-container');
+        tipContainer.append('<span class="manual-tip ' + $(this).attr('type') + '"><span>' + $(this).attr('original-title') + '</span></span>');
+
+        $(this).hoverIntent(function () {
+            var tip = $(this).parent().parent().find('.tips-container .manual-tip.' + $(this).attr('type'));
+            tip.css('top', $(this).parent().parent().find('.title').first().height() + 30);
+            tip.css('left', $(this).position().left + 15);
+            tip.animate({
+                'opacity': 0.8
+            });
+        }, function(){
+            var tip = $(this).parent().parent().find('.tips-container .manual-tip.' + $(this).attr('type'));
+            tip.css('opacity', 0)
+        });
+
+
+    });
 
     $('#link-basket .counter').fadeIn('slow');
 });
