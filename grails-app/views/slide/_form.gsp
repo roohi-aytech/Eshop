@@ -39,7 +39,7 @@
         <g:message code="slide.productTypes.label" default="Product Types"/>
     </label>
 
-    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px"></rg:tree>
+    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px" cascadeCheck="true"></rg:tree>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image1024', 'error')} required">
