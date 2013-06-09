@@ -53,7 +53,8 @@ class TrackingService {
         trackingLog.browserName = userAgentIdentService.browserName
         trackingLog.browserVersion = userAgentIdentService.browserVersion
         trackingLog.operatingSystem = userAgentIdentService.operatingSystem
-        if (springSecurityService.loggedIn)
+        if (springSecurityService.loggedIn
+            && springSecurityService.currentUser instanceof Customer)
             trackingLog.customer = springSecurityService.currentUser as Customer
         trackingLog.date = new Date()
     }

@@ -6,14 +6,14 @@
     <table class="attribute-list">
 </g:if>
 
-<g:each in="${categories}" var="category">
+<g:each in="${categories?.sort {it.sortIndex}}" var="category">
     <g:if test="${category.attributes.count { (it.attributeType.showPositions.contains('productDetails') || it.attributeType.showPositions.contains('productFullDetails')) && it.value && it.value.toString().compareTo("N/A") != 0 } > 0}">
         <tr>
             <td colspan="2">
                 <h4>${category.item.name}</h4>
             </td>
         </tr>
-        <g:each in="${category.attributes}" var="attribute">
+        <g:each in="${category.attributes.sort {it.attributeType.sortIndex}}" var="attribute">
             <g:if test="${(attribute.attributeType.showPositions.contains('productDetails') || attribute.attributeType.showPositions.contains('productFullDetails')) && attribute.value && attribute.value.toString().compareTo("N/A") != 0}">
                 <tr>
                     <td>
@@ -39,7 +39,7 @@
             </td>
         </tr>
     </g:if>
-    <g:each in="${orphanAttributes}" var="attribute">
+    <g:each in="${orphanAttributes?.sort {it.attributeType.sortIndex}}" var="attribute">
         <g:if test="${(attribute.attributeType.showPositions.contains('productDetails') || attribute.attributeType.showPositions.contains('productFullDetails')) && attribute.value && attribute.value.toString().compareTo("N/A") != 0}">
             <tr>
                 <td>
