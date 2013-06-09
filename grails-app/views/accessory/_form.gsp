@@ -20,7 +20,7 @@
     <rg:autocomplete domainClass="eshop.ProductType" id="productType" like="true" value="${accessoryInstance?.productType?.id}"
                      display="${accessoryInstance?.productType}"/>
 
-    %{--<rg:tree bean="${accessoryInstance}" field="productType" relationField="parentProduct" width="340px"></rg:tree>--}%
+    %{--<rg:tree bean="${accessoryInstance}" field="productType" relationField="parentProduct" width="340px" cascadeCheck="true"></rg:tree>--}%
 
 </div>
 
