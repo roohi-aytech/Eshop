@@ -523,7 +523,7 @@ class ProductTypeController {
         productType.godFathers = productType.godFathers.findAll{params.godFathers.split(",").contains(it.id.toString())}
         params.godFathers.split(",").each {
             if (it) {
-                productType.addToGodFathers(ProductType.get(it))
+                productType.godFathers.add(ProductType.get(it))
             }
         }
         productType.save()
