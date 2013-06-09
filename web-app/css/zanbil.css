@@ -1513,6 +1513,11 @@ span.cke_skin_kama {
     margin-bottom: 25px;
 }
 
+.fusion {
+    margin-right:auto;
+    margin-left:auto;
+}
+
 /*Breadcrumb*/
 .breadcrumb {
     margin: 0 0 10px 0;
