@@ -33,6 +33,26 @@ body {
     text-align: center;
 }
 
+.font-koodak{
+    font-family:'b koodak', koodak, times, serif !important;
+}
+
+h1.font-koodak{
+    font-size: 32px;
+}
+
+h2 .font-koodak{
+    font-size: 24px;
+}
+
+.font-calibri{
+    font-family:calibri, times, serif !important;
+}
+
+h2 .font-calibri{
+    font-size: 24px;
+}
+
 .form-comment {
     color: #808080;
     padding: 5px 0;
@@ -1770,7 +1790,7 @@ span.cke_skin_kama {
 /*Carousel*/
 
 .sb-showcase-skin .mediaholder img {
-    height: auto !important;
+    /*height: auto !important;*/
 }
 
 .showbiz-navigation {

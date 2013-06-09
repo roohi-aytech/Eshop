@@ -86,9 +86,9 @@
                                 <h1>${product?.pageTitle}</h1>
                             </g:if>
                             <g:else>
-                                <h1>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+                                <h1 class="font-koodak">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                                <h2 class="small"><g:message code="productModel"/> ${product?.name ?: ""}</h2>
+                                <h2 class="small"><span class="font-koodak"><g:message code="productModel"/></span> <span class="font-calibri">${product?.name ?: ""}</span></h2>
                             </g:else>
 
                             <p>
