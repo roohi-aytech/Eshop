@@ -18,6 +18,7 @@ class Product extends BaseProduct implements Comparable{
     Double width
     Double height
     Integer visitCount = 0
+    Integer saleCount = 0
     Boolean isVisible = true
     Boolean deleted =false
 //    Long assetId
