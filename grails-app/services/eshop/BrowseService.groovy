@@ -45,7 +45,7 @@ class BrowseService {
         params.match["isVisible"] = true
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: [price: -1, saleCount: -1, visitCount: -1]],
+                [$sort: [saleCount: -1, visitCount: -1]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
@@ -248,7 +248,8 @@ class BrowseService {
         def attrIds = attributeTypeList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
         attrIds.each { attrId ->
             def r = match.remove('a' + attrId)
-            result.put(attrId, [type: 'a', name: AttributeType.get(attrId), countsByValue: countProducts(group: '$a' + attrId, match: match)])
+            def attributeType = AttributeType.get(attrId)
+            result.put(attrId, [type: 'a', name: attributeType, sortIndex:attributeType.sortIndex, countsByValue: countProducts(group: '$a' + attrId, match: match)])
             if (r)
                 match.put('a' + attrId, r)
         }
@@ -257,12 +258,14 @@ class BrowseService {
 
         def attrGroupIds = attributeCategoryList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
         attrGroupIds.each { attrGroupId ->
-//            result.put(attrGroupId, countProducts(group: '$' + attrGroupId, match: match))
             def r = match.remove('ac' + attrGroupId)
-            result.put(attrGroupId, [type: 'ac', name: AttributeCategory.get(attrGroupId), countsByValue: countProductsWithUnwind(group: '$ac' + attrGroupId + '.name', unwind: '$ac' + attrGroupId, match: match)])
+            def attributeCategory = AttributeCategory.get(attrGroupId)
+            result.put(attrGroupId, [type: 'ac', name: attributeCategory, sortIndex:attributeCategory.sortIndex, countsByValue: countProductsWithUnwind(group: '$ac' + attrGroupId + '.name', unwind: '$ac' + attrGroupId, match: match)])
             if (r)
                 match.put('ac' + attrGroupId, r)
         }
+
+        result = result.sort {it.value.sortIndex}
 
         result
     }
