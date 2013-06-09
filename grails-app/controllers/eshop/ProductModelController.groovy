@@ -138,11 +138,18 @@ class ProductModelController {
 
     def details(){
         def productModelInstance = ProductModel.get(params.id)
+        def product = productModelInstance.product
+
+        [productModelInstance : productModelInstance, product: product]
+    }
+
+    def producersDetails(){
+        def productModelInstance = ProductModel.get(params.id)
 
         [productModelInstance : productModelInstance]
     }
 
-    def producersDetails(){
+    def productModelDetails(){
         def productModelInstance = ProductModel.get(params.id)
 
         [productModelInstance : productModelInstance]

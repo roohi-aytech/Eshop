@@ -21,7 +21,7 @@
 
     <fieldset class="buttons">
 
-        <g:link class="list" controller="product" action="productDetails" params="[curtab: 3, id:productModelInstance?.product?.id]"><g:message code="default.productModel.list"
+        <g:link class="list" controller="product" action="productDetails" params="[curtab: 3, pid:productModelInstance?.product?.id]"><g:message code="default.productModel.list"
                                                                                default="Product List"/></g:link>
     </fieldset>
 
