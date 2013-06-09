@@ -95,7 +95,10 @@ class OrderAdministrationController {
         order.status = OrderHelper.STATUS_DELIVERED
         order.save()
         order.items.each{
-            mongoService.storeProduct(it.productModel.product)
+            def product = Product.get it.productModel.product.id
+            product.saleCount = product.saleCount ? product.saleCount + 1 : 0
+            product.save()
+            mongoService.storeProduct(product)
         }
 
         def trackingLog = new OrderTrackingLog()

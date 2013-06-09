@@ -26,11 +26,24 @@ class MongoService {
         mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
         mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
         mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
-        mongoProduct['visitCount'] = product?.visitCount?:0
-        mongoProduct['saleCount'] = product?.models?.count { it } == 0 ? 0 : Order.createCriteria().count {
-            'eq'('status', OrderHelper.STATUS_DELIVERED)
-            items {
-                'in'('productModel', ProductModel.findAllByProduct(product))
+        mongoProduct['visitCount'] = product?.visitCount ?: 0
+        mongoProduct['saleCount'] = product?.saleCount
+        def productTypeId = product?.productTypes?.count { it } > 0 ? product?.productTypes?.toArray()?.first()?.id : 0.toLong()
+        mongoProduct['sortOrder'] = Product.createCriteria().count {
+            eq('deleted', false)
+            or {
+                eq('isVisible', true)
+                isNull('isVisible')
+            }
+            productTypes {
+                eq('id', productTypeId)
+            }
+            or {
+                gt('saleCount', product?.saleCount)
+                and {
+                    eq('saleCount', product?.saleCount)
+                    gt('visitCount', product?.visitCount)
+                }
             }
         }
         def productTypes = collectProductTypes(product)

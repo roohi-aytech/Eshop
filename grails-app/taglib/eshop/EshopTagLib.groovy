@@ -184,7 +184,7 @@ class EshopTagLib {
                 if (price) {
                     if(attrs.image)
                         out << """
-                            <a class="" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a type="basket" original-title="${message(code:"add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                         else
                             out << """
@@ -211,7 +211,7 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-            <a ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
+            <a type="wish" original-title="${message(code:"add-to-wishList")}" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
             """
         else
             out << """
@@ -228,7 +228,7 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-                <a ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
+                <a type="compare" original-title="${message(code:"add-to-compareList")}" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
                 """
         else
             out << """

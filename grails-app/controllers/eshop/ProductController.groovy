@@ -167,6 +167,7 @@ class ProductController {
     def saveImageVariations() {
         def image = Content.get(params.id)
         if (image) {
+            image.variationValues.clear()
             image.properties = params;
             image.save()
             render image.variationValues as JSON
