@@ -39,11 +39,13 @@
 
         this.opt.number = methods._between(this.opt.number, 0, this.opt.numberMax)
 
-        this.opt.path = this.opt.path || '';
+//        this.opt.path = this.opt.path || '';
+//
+//        if (this.opt.path && this.opt.path.slice(this.opt.path.length - 1, this.opt.path.length) !== '/') {
+//          this.opt.path += '/';
+//        }
 
-        if (this.opt.path && this.opt.path.slice(this.opt.path.length - 1, this.opt.path.length) !== '/') {
-          this.opt.path += '/';
-        }
+        this.opt.path = '../images/raty/'
 
         this.stars = methods._createStars.call(this);
         this.score = methods._createScore.call(this);
