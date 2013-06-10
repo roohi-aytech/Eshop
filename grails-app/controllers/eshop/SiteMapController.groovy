@@ -5,7 +5,7 @@ import grails.plugins.springsecurity.Secured
 
 class SiteMapController {
 
-    @Secured([RoleHelper.ROLE_PRODUCT_ADMIN])
+    @Secured([RoleHelper.ROLE_USER_ADMIN])
     def index() {
 
     }
@@ -22,6 +22,18 @@ class SiteMapController {
                     loc(g.createLink(absolute: true, uri: "/"))
                     changefreq(SiteMapHelper.CHANGE_FREQUENCY_HOURLY)
                     priority(1.0)
+                }
+
+                //login
+                url {
+                    loc(g.createLink(absolute: true, controller: 'login'))
+                    changefreq(SiteMapHelper.CHANGE_FREQUENCY_NEVER)
+                    priority(0.1)
+                }
+                url {
+                    loc(g.createLink(absolute: true, controller: 'customer', action: 'register'))
+                    changefreq(SiteMapHelper.CHANGE_FREQUENCY_NEVER)
+                    priority(0.1)
                 }
 
             }

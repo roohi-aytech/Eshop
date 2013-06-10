@@ -1,4 +1,4 @@
-<%@ page import="eshop.ProductType" %>
+<%@ page import="eshop.RoleHelper; eshop.Customer; eshop.User; eshop.ProductType" %>
 <div class="navbar navbar-fixed-top header">
 <div class="table navbar-inner">
 <div class="table-row">
@@ -30,7 +30,8 @@
 
 <div class="table-cell action-cell">
 
-    <div class="btn-group pull-right topNavigationItem ${session.getAttribute("basketCounter")?.toInteger() > 0 ? 'full' : ''}" id="link-basket">
+    <div class="btn-group pull-right topNavigationItem ${session.getAttribute("basketCounter")?.toInteger() > 0 ? 'full' : ''}"
+         id="link-basket">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"
            original-title="${message(code: "basket")}">
             <span><g:message code="basket"></g:message></span>
@@ -111,29 +112,42 @@
     </div>
 
     <sec:ifLoggedIn>
-
+        <g:set var="currentUser" value="${User.findByUsername(sec.username())}"/>
         <div class="btn-group pull-right topNavigationItem" id="link-userMenu-loggedIn">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"
-               original-title="${message(code: "userMenu")} [ ${sec.username()} ]">
+               original-title="${message(code: "userMenu")} [ ${currentUser} ]">
                 <span><g:message code="user.controlpanel.label"></g:message></span>
             </a>
             <ul class="dropdown-menu">
-                <li class="dropdown">
-                    <a tabindex="-1"
-                       href="<g:createLink controller="Customer" action="panel"></g:createLink>"><g:message
-                            code="user.controlpanel.label"></g:message></a></li>
+                <g:if test="${currentUser.authorities.any {
+                    it.authority in [
+                            RoleHelper.ROLE_USER_ADMIN
+                    ]
+                }}">
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="<g:createLink uri="/admin"></g:createLink>"><g:message
+                                code="admin.controlpanel.label"></g:message></a></li>
+                </g:if>
+                <g:if test="${currentUser instanceof Customer}">
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="<g:createLink controller="Customer" action="panel"></g:createLink>"><g:message
+                                code="user.controlpanel.label"></g:message></a></li>
+                </g:if>
                 <li class="divider"></li>
-                <li class="dropdown">
+            <li class="dropdown">
+                <g:if test="${currentUser instanceof Customer}">
                     <a tabindex="-1"
                        href="<g:createLink controller="Customer"
                                            action="profile"></g:createLink>"><g:message
                             code="profile"></g:message></a></li>
+                </g:if>
                 <li class="dropdown">
                     <a tabindex="-1"
                        href="<g:createLink controller="Customer"
                                            action="changePassword"></g:createLink>"><g:message
                             code="password.change.label"></g:message></a></li>
-                <li class="divider"></li>
                 <li class="dropdown">
                     <common:logoutLink tabindex="-1"></common:logoutLink>
                 </li>
@@ -165,8 +179,9 @@
         <div id="contactusItems" class="dropdown-menu content">
 
             <div class="support-cell">
-            <span id="support-number"><g:message code="support.number"></g:message></span>
-            <script type="text/javascript" id="lz_textlink" src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>
+                <span id="support-number"><g:message code="support.number"></g:message></span>
+                <script type="text/javascript" id="lz_textlink"
+                        src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>
             </div>
         </div>
     </div>
@@ -174,16 +189,16 @@
 </div>
 
 <div class="table-cell">
-    <g:form class="search-box table" url="${createLink(uri:'/search')}" method="get">
-        <g:hiddenField name="f" id="hidCategory" value="p${productTypeId?productTypeId.toString():'0'}"/>
-        %{--<g:if test="${params.f}">--}%
-            %{--<g:hiddenField name="f" id="hidFilter" value="${params.f}"/>--}%
-        %{--</g:if>--}%
+    <g:form class="search-box table" url="${createLink(uri: '/search')}" method="get">
+        <g:hiddenField name="f" id="hidCategory" value="p${productTypeId ? productTypeId.toString() : '0'}"/>
+    %{--<g:if test="${params.f}">--}%
+    %{--<g:hiddenField name="f" id="hidFilter" value="${params.f}"/>--}%
+    %{--</g:if>--}%
         <div class="table-cell category-select">
             <div class="btn-group pull-right" style="margin-top: 5px;">
                 <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
                     <span id="searchCategory">
-                        ${params.category && params.category != "0" ? ProductType.get(params.category)?.name : productTypeId?productTypeName.toString():message(code: 'category.all')}
+                        ${params.category && params.category != "0" ? ProductType.get(params.category)?.name : productTypeId ? productTypeName.toString() : message(code: 'category.all')}
                     </span>
                     <span class="caret"></span>
                 </a>
@@ -225,8 +240,8 @@
 </div>
 
 %{--<div class="table-cell support-cell">--}%
-    %{--<span id="support-number"><g:message code="support.number"></g:message></span>--}%
-    %{--<script type="text/javascript" id="lz_textlink" src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>--}%
+%{--<span id="support-number"><g:message code="support.number"></g:message></span>--}%
+%{--<script type="text/javascript" id="lz_textlink" src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>--}%
 %{--</div>--}%
 </div>
 </div>

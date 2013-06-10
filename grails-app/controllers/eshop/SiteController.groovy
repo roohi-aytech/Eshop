@@ -220,10 +220,10 @@ class SiteController {
     }
 
     def index() {
-        if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
-            redirect(uri: '/admin')
-            return
-        }
+//        if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
+//            redirect(uri: '/admin')
+//            return
+//        }
 
         if (session.forwardUri) {
 
