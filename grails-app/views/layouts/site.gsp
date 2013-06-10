@@ -8,6 +8,8 @@
 <head>
     <title><g:layoutTitle></g:layoutTitle></title>
     <canonical:show/>
+    <meta name="robots" content="index, follow" />
+    <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M" />
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet"

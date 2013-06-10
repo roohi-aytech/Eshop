@@ -6,7 +6,7 @@
                                 params="[id: product?.id, wh: '150x150']"/>"/>
 
         <div class="title">
-            <h4>${product}</h4>
+            <h4>${product.manualTitle ? product.pageTitle : product.toString()}</h4>
             <eshop:thumbnailPrice productId="${product.id}"></eshop:thumbnailPrice>
         </div>
 
@@ -21,7 +21,7 @@
             </div>
         </div>
     </a>
-
+    <div class="tips-container"></div>
     <div class="buttons">
         <eshop:addToBasket prodcutId="${product.id}" image="true"></eshop:addToBasket>
         <eshop:addToCompareList prodcutId="${product.id}" image="true"></eshop:addToCompareList>

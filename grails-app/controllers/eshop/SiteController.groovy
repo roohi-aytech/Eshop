@@ -396,7 +396,7 @@ class SiteController {
             Boolean selected = true
             product.variations.each { variation ->
                 def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id.toLong()
-                def selectedVariationId = params."variation${variation.id}".toLong()
+                def selectedVariationId = params."variation${variation.id}"?.toLong()
                 if (modelVariationId != selectedVariationId)
                     selected = false
 

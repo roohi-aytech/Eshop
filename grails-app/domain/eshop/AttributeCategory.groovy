@@ -12,7 +12,7 @@ class AttributeCategory {
 
     static hasMany = [showPositions: String]
     static mapping = {
-        sort 'name'
+        sort 'sortIndex'
     }
     static constraints = {
         sortIndex(nullable:true)

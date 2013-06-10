@@ -29,7 +29,7 @@ class AttributeType {
     static belongsTo = [ProductType, AttributeCategory]
 
     static mapping = {
-        sort 'name'
+        sort 'sortIndex'
 //        attributes cascade: 'delete'
     }
 

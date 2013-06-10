@@ -54,7 +54,7 @@
     </div>
     <g:javascript>
         $(document).ready(function () {
-
+            jQuery('#fusion1').css('width', specialSaleSlideWidth + 22);
             jQuery('#fusion1').fusion({
                 effect: 'mixed',
                 animSpeed: 700,

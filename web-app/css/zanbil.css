@@ -1513,6 +1513,11 @@ span.cke_skin_kama {
     margin-bottom: 25px;
 }
 
+.fusion {
+    margin-right:auto;
+    margin-left:auto;
+}
+
 /*Breadcrumb*/
 .breadcrumb {
     margin: 0 0 10px 0;
@@ -2677,45 +2682,23 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     display: inline;
 }
 
-.showbiz .thumbnail:hover .buttons img {
-    width: auto !important;
-    height: auto !important;
-    background: none;
-    border-width: 0;
-    display: inline;
+.manual-tip{
+    display: inline-block;
+    position: absolute;
+    opacity: 0;
+    background: url(../images/tip-arrow.png) no-repeat 10px 0;
+    padding-top: 5px;
 }
 
-/*.showbiz .thumbnail:hover {*/
-/*}*/
-
-.showbiz .thumbnail:hover a {
-    /*height: 200px;*/
+.manual-tip span{
+    background: black;
+    color:#ffffff;
+    display: inline-block;
+    padding-bottom: 2px;
+    padding-right: 4px;
+    padding-left: 4px;
+    border-radius: 4px;
 }
-
-.showbiz .thumbnail:hover img{
-    /*right:0;*/
-    /*margin-right: 0;*/
-    /*margin-left: 0;*/
-    /*border-radius: 2px;*/
-    /*padding:2px;*/
-    /*width: 50px !important;*/
-    /*height: 50px;*/
-}
-
-.showbiz .thumbnail:hover .title{
-    /*top:0;*/
-    /*margin-right: 60px;*/
-    /*margin-left: 0;*/
-}
-
-.showbiz .thumbnail:hover .attributes{
-    /*display: block;*/
-}
-
-.showbiz .thumbnail:hover .buttons {
-    /*display: block;*/
-}
-
 
 
 
