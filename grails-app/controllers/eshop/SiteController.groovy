@@ -9,6 +9,9 @@ import org.compass.core.engine.SearchEngineQueryParseException
 import javax.servlet.http.Cookie
 
 class SiteController {
+
+    static defaultAction = "index"
+
     def browseService
     def priceService
     def searchableService
@@ -37,7 +40,7 @@ class SiteController {
 
         def model = [productType: productType]
 
-        model.commonLink = createLink(action: "browse")
+        model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []
         def productTypeNavigator = productType
@@ -100,7 +103,7 @@ class SiteController {
     def filter() {
         def model = [:]
         model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0)
-        model.commonLink = createLink(controller: "site").replace("/index", "")
+        model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
@@ -242,7 +245,7 @@ class SiteController {
 
         def model = [productType: productType]
 
-        model.commonLink = createLink(action: "browse")
+        model.commonLink = createLink(uri: '/browse').replace('/site', '')
 
 //        def productTypeChain = []
 //        def productTypeNavigator = productType
@@ -312,7 +315,7 @@ class SiteController {
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
-        model.commonLink = createLink(action: "browse")
+        model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []
         def productTypeNavigator = product.productTypes.toArray()[0]
@@ -463,7 +466,7 @@ class SiteController {
             productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
 
         model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0)
-        model.commonLink = createLink(controller: "site").replace("/index", "")
+        model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()

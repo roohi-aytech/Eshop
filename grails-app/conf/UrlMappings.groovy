@@ -1,6 +1,27 @@
 class UrlMappings {
 
 	static mappings = {
+
+        "/browse/$productType/" {
+            controller = "site"
+            action = "browse"
+        }
+
+        "/filter" {
+            controller = "site"
+            action = "filter"
+        }
+
+        "/search" {
+            controller = "site"
+            action = "search"
+        }
+
+        "/product/$id?" {
+            controller = "site"
+            action = "product"
+        }
+
         "/producer/list" {
             controller = "producer"
             action = "list"
@@ -14,11 +35,6 @@ class UrlMappings {
         "/order/list/$status/" {
             controller = "order"
             action = "list"
-        }
-
-        "/site/browse/$productType/" {
-            controller = "site"
-            action = "browse"
         }
 
         "/$controller/$action?/$id?"{

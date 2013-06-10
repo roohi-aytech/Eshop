@@ -15,11 +15,11 @@
             %{--<li><a href="#">${rootProductType.name}</a></li>--}%
                 <li class="dropdown-submenu">
                     <a tabindex="-1"
-                       href="${createLink(controller: 'site', action: 'browse', params: [productType: rootProductType.urlName])}">${rootProductType.name}</a>
+                       href="${createLink(uri: "/browse/${rootProductType.urlName}")}">${rootProductType.name}</a>
                     <ul class="dropdown-menu">
                         <g:each in="${rootProductType.children}" var="secondLevelProductType">
                             <li>
-                            <a href="${createLink(controller: 'site', action: 'browse', params: [productType: secondLevelProductType.urlName])}" >${secondLevelProductType.name}</a>
+                            <a href="${createLink(uri: "/browse/${secondLevelProductType.urlName}")}" >${secondLevelProductType.name}</a>
                         </g:each>
                     </ul>
                 </li>
@@ -174,7 +174,7 @@
 </div>
 
 <div class="table-cell">
-    <g:form class="search-box table" controller="site" action="search" method="get">
+    <g:form class="search-box table" url="${createLink(uri:'/search')}" method="get">
         <g:hiddenField name="f" id="hidCategory" value="p${productTypeId?productTypeId.toString():'0'}"/>
         %{--<g:if test="${params.f}">--}%
             %{--<g:hiddenField name="f" id="hidFilter" value="${params.f}"/>--}%
@@ -221,7 +221,7 @@
 </div>
 
 <div class="table-cell logo-cell">
-    <a id="logo" href="${createLink(controller: 'site')}"><h1><g:message code="title"></g:message></h1></a>
+    <a id="logo" href="${createLink(uri: '/')}"><h1><g:message code="title"></g:message></h1></a>
 </div>
 
 %{--<div class="table-cell support-cell">--}%
