@@ -22,6 +22,10 @@ class UrlMappings {
             action = "product"
         }
 
+        "/product/$action?" {
+            controller = "product"
+        }
+
         "/producer/list" {
             controller = "producer"
             action = "list"

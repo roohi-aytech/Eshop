@@ -68,7 +68,7 @@
                                         <g:if test="${filters.breadcrumb.size() > 0}">
                                             <g:each in="${filters.breadcrumb[0..-1]}">
                                                 <li>
-                                                    <a href="${commonLink}/${it.linkTail}">${it.linkTitle}</a>
+                                                    <a href="${commonLink}${it.linkTail}">${it.linkTitle}</a>
                                                     <span class="divider">${">"}</span>
                                                 </li>
                                             </g:each>
