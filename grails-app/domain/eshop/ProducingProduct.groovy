@@ -71,6 +71,7 @@ class ProducingProduct {
         addedValueDescription(nullable: true)
     }
 
+    static searchable = true
 
     static mapping = {
        // sort 'name'
