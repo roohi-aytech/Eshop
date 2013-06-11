@@ -48,16 +48,78 @@ class ProducingProductController {
             render(template: "form", model: [producerInstance: producingProductInstance])
     }
 
-    def loadGuarantee(){
-        def brand = Brand.get(params.brand)
-        def producerInstance = Producer.get(params.producer)
 
-        def guarantees = Guarantee.createCriteria().list {
-            productTypeBrands {
-                eq('brand', brand?.id)
+
+    def loadGuarantee(){
+        def producingProductInstance
+        def brand
+        List<ProductType> producerProductTypes = []
+
+        if (params.brand)
+            brand = Brand.get(params.brand)
+        else
+            brand = null
+
+        if (params.productTypes){
+            params.productTypes.each{
+                producerProductTypes.add(it.toLong())
             }
         }
-        render(template: "guarantee_value", model: [producerInstance: producerInstance, guarantees: guarantees])
+        else
+            producerProductTypes = null
+
+            if (params.producingProductInstance)
+                producingProductInstance = ProducingProduct.get(params.producingProductInstance)
+            else
+                producingProductInstance = new ProducingProduct()
+
+            def guarantees = f(producerProductTypes, brand)
+
+            render(template: "guarantee_value", model: [producingProductInstance: producingProductInstance, guarantees: guarantees])
+
+        render ''
+    }
+
+    def f(producerProductTypes, brand){
+        List<Guarantee> guarantees = []
+
+        def selectedGuarantees = Guarantee.createCriteria().list {
+            productTypeBrands {
+                or {
+                    eq('brand', brand)
+                    isNull('brand')
+                }
+            }
+        }
+        selectedGuarantees.each {
+            it.productTypeBrands.each { productTypeBrand ->
+                if (productTypeBrand.productTypes.size() == 0 && !guarantees.contains(it))
+                    guarantees.add(it)
+            }
+        }
+
+        selectedGuarantees.each {
+            def temp = -1
+
+            for (productType in producerProductTypes) {
+                def tmp = false
+                for (productTypeBrand in it.productTypeBrands) {
+                    if (productTypeBrand.productTypes.id.contains(productType) && (productTypeBrand.brand == null || productTypeBrand.brand == brand)){
+                        tmp = true
+                        if(temp == -1) temp = 1
+                        break
+                    }
+                }
+                if (tmp == false){
+                   temp = 0
+                }
+            }
+
+            if (temp == 1 && !guarantees.contains(it))
+               guarantees.add(it)
+        }
+
+        return guarantees
     }
 
     def deleteProducingProduct() {
