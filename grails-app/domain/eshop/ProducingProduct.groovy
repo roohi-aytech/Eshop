@@ -67,7 +67,7 @@ class ProducingProduct {
         guarantee(nullable: true)
         deliveryPlace(nullable: true)
         transportationCost(nullable: true)
-        addedValue(inList: ["Yes", "No"], nullable: true)
+        addedValue(inList: ["Yes", "No", "Conditionally"], nullable: true)
         addedValueDescription(nullable: true)
     }
 
