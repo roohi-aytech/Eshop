@@ -1,15 +1,3 @@
-import com.octo.captcha.component.image.backgroundgenerator.GradientBackgroundGenerator
-import com.octo.captcha.component.image.color.SingleColorGenerator
-import com.octo.captcha.component.image.fontgenerator.RandomFontGenerator
-import com.octo.captcha.component.image.textpaster.NonLinearTextPaster
-import com.octo.captcha.component.image.wordtoimage.ComposedWordToImage
-import com.octo.captcha.component.word.wordgenerator.RandomWordGenerator
-import com.octo.captcha.engine.GenericCaptchaEngine
-import com.octo.captcha.image.gimpy.GimpyFactory
-import com.octo.captcha.service.multitype.GenericManageableCaptchaService
-import com.octo.captcha.service.sound.DefaultManageableSoundCaptchaService
-import org.codehaus.groovy.grails.web.context.ServletContextHolder
-
 import java.awt.Color
 import java.awt.Font
 
