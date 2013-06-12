@@ -121,38 +121,26 @@ log4j = {
             'net.sf.ehcache.hibernate'
 }
 
-jcaptchas {
-    imageCaptcha = new GenericManageableCaptchaService(
-            new GenericCaptchaEngine(
-                    new GimpyFactory(
-                            new RandomWordGenerator(
-                                    "abcdefghijklmnopqrstuvwxyz1234567890"
-                            ),
-                            new ComposedWordToImage(
-                                    new RandomFontGenerator(
-                                            20, // min font size
-                                            30, // max font size
-                                            [new Font("Arial", 0, 10)] as Font[]
-                                    ),
-                                    new GradientBackgroundGenerator(
-                                            140, // width
-                                            35, // height
-                                            new SingleColorGenerator(new Color(0, 60, 0)),
-                                            new SingleColorGenerator(new Color(20, 20, 20))
-                                    ),
-                                    new NonLinearTextPaster(
-                                            6, // minimal length of text
-                                            6, // maximal length of text
-                                            new Color(0, 255, 0)
-                                    )
-                            )
-                    )
-            ),
-            180, // minGuaranteedStorageDelayInSeconds
-            180000 // maxCaptchaStoreSize
-    )
+simpleCaptcha {
+    // font size used in CAPTCHA images
+    fontSize = 30
+    height = 200
+    width = 200
+    // number of characters in CAPTCHA text
+    length = 6
 
-    soundCaptcha = new DefaultManageableSoundCaptchaService()
+    // amount of space between the bottom of the CAPTCHA text and the bottom of the CAPTCHA image
+    bottomPadding = 16
+
+    // distance between the diagonal lines used to obfuscate the text
+    lineSpacing = 10
+
+    // the charcters shown in the CAPTCHA text must be one of the following
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    // this param will be passed as the first argument to this java.awt.Font constructor
+    // http://docs.oracle.com/javase/6/docs/api/java/awt/Font.html#Font(java.lang.String,%20int,%20int)
+    font = "Serif"
 }
 
 eshop.messages.file = new File("messageCodes")
