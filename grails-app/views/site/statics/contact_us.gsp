@@ -81,8 +81,8 @@
         </div>
 
         <div style="margin-top: 10px">
-            <script type="text/javascript" id="lz_textlink"
-                    src="http://91.99.98.70:81/image.php?acid=fc474&amp;tl=1&amp;srv=aHR0cDovLzkxLjk5Ljk4LjcwOjgxL2NoYXQucGhwP2FjaWQ9MjY2MTc_&amp;tlont=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;tloft=2b7YtNiq24zYqNin2YbbjCDYotmG2YTYp9uM2YY_&amp;xhtml=1"></script>
+            ارتباط از طریق
+            <a href="javascript:void(window.open('http://support.zanbil.ir/chat.php?acid=26617','','width=590,height=760,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'))">پشتیبانی آنلاین</a>
         </div>
 
     </div>

@@ -26,12 +26,12 @@
     var script = document.createElement("script");
     script.async = true;
     script.type = "text/javascript";
-    var src = "http://91.99.98.70:81/server.php?acid=4292d&request=track&output=jcrpt&nse=" + Math.random();
+    var src = "http://support.zanbil.ir/server.php?acid=4292d&request=track&output=jcrpt&nse=" + Math.random();
     setTimeout("script.src=src;document.getElementById('livezilla_tracking').appendChild(script)", 1);
     /* ]]> */
 </script>
 <noscript>
-    <img src="http://91.99.98.70:81/server.php?acid=4292d&amp;request=track&amp;output=nojcrpt"
+    <img src="http://support.zanbil.ir/server.php?acid=4292d&amp;request=track&amp;output=nojcrpt"
          width="0" height="0" style="visibility:hidden;" alt=""/>
 </noscript>
 <!-- http://www.LiveZilla.net Tracking Code -->
