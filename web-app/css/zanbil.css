@@ -2641,6 +2641,10 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     top:0;
 }
 
+.etalage_smallthumb_first, etalage_small_thumb{
+    display: none;
+}
+
 /*new thumbnails*/
 
 .showbiz .thumbnail{

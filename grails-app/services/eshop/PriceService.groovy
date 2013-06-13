@@ -8,7 +8,7 @@ class PriceService {
         if (!defaultModel)
             return [mainVal: 0D, showVal: 0D]
 
-        calcProductModelPrice(defaultModel.id)
+        calcProductModelPrice(defaultModel?.id)
     }
 
     def calcProductModelPrice(productModelId) {
@@ -17,6 +17,9 @@ class PriceService {
             return [mainVal: 0D, showVal: 0D]
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
+        if(!price)
+            return [mainVal: 0D, showVal: 0D]
+
         def priceVal = price?.rialPrice
         def mainVal = price?.rialPrice
 
