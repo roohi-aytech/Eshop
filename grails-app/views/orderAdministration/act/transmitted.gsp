@@ -66,8 +66,8 @@
         <tr>
             <th><g:message code="orderItem.product"/></th>
             <th><g:message code="orderItem.productModel"/></th>
-            <th><g:message code="orderItem.orderCount"/></th>
             <th><g:message code="orderItem.unitPrice"/></th>
+            <th><g:message code="orderItem.orderCount"/></th>
             <th><g:message code="orderItem.totalPrice"/></th>
             <th><g:message code="productModel.status"/></th>
         </tr>
@@ -79,12 +79,12 @@
                 <td>
                     ${orderItem.productModel}
                 </td>
-                <td>
-                    ${orderItem.orderCount}
-                </td>
                 <g:set var="price" value="${priceService.calcProductModelPrice(orderItem.productModel.id).showVal}"/>
                 <td>
                     <g:formatNumber number="${price?price:0}" type="number"/>
+                </td>
+                <td>
+                    ${orderItem.orderCount}
                 </td>
                 <td>
                     <g:formatNumber number="${orderItem.orderCount * (price?price:0)}" type="number"/>

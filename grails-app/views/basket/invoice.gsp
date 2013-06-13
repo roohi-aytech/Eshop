@@ -50,22 +50,26 @@
         <tr>
             <th>#</th>
             <th><g:message code="invoice.item.name"></g:message></th>
-            <th><g:message code="invoice.item.count"></g:message></th>
             <th><g:message code="invoice.item.price"></g:message></th>
+            <th><g:message code="invoice.item.addedValue"></g:message></th>
+            <th><g:message code="invoice.item.realPrice"></g:message></th>
+            <th><g:message code="invoice.item.count"></g:message></th>
             <th><g:message code="invoice.item.totalPrice"></g:message></th>
         </tr>
         <g:each in="${basket}" var="basketItem" status="i">
         <tr>
             <td class="center">${i+1}</td>
             <td>${basketItem.name}</td>
-            <td class="center">${basketItem.count}</td>
             <td><g:formatNumber number="${basketItem.price?basketItem.price:0}" type="number"></g:formatNumber></td>
-            <td><g:formatNumber number="${(basketItem.price?basketItem.price:0) * basketItem.count}" type="number"></g:formatNumber></td>
+            <td><g:formatNumber number="${basketItem.price?basketItem.realPrice - basketItem.price:0}" type="number"></g:formatNumber></td>
+            <td><g:formatNumber number="${basketItem.price?basketItem.realPrice:0}" type="number"></g:formatNumber></td>
+            <td class="center">${basketItem.count}</td>
+            <td><g:formatNumber number="${(basketItem.price?basketItem.realPrice:0) * basketItem.count}" type="number"></g:formatNumber></td>
         </tr>
         </g:each>
         <tr>
-            <td colspan="4" align="left"><g:message code="basket.totalPrice"></g:message></td>
-            <td><b><g:formatNumber number="${basket.sum{(it.price?it.price:0) * it.count}}" type="number"></g:formatNumber></b></td>
+            <td colspan="6" align="left"><g:message code="basket.totalPrice"></g:message></td>
+            <td><b><g:formatNumber number="${basket.sum{(it.realPrice?it.realPrice:0) * it.count}}" type="number"></g:formatNumber></b></td>
         </tr>
     </table>
     <div>

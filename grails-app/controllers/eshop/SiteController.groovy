@@ -9,6 +9,9 @@ import org.compass.core.engine.SearchEngineQueryParseException
 import javax.servlet.http.Cookie
 
 class SiteController {
+
+    static defaultAction = "index"
+
     def browseService
     def priceService
     def searchableService
@@ -17,6 +20,8 @@ class SiteController {
     def trackingService
     def messageService
     def mongoService
+    def mailService
+    def simpleCaptchaService
 
     def findProducts(params) {
 
@@ -37,7 +42,7 @@ class SiteController {
 
         def model = [productType: productType]
 
-        model.commonLink = createLink(action: "browse")
+        model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []
         def productTypeNavigator = productType
@@ -100,7 +105,7 @@ class SiteController {
     def filter() {
         def model = [:]
         model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0)
-        model.commonLink = createLink(controller: "site").replace("/index", "")
+        model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
@@ -217,10 +222,10 @@ class SiteController {
     }
 
     def index() {
-        if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
-            redirect(uri: '/admin')
-            return
-        }
+//        if (springSecurityService.loggedIn && !(springSecurityService.currentUser instanceof Customer)) {
+//            redirect(uri: '/admin')
+//            return
+//        }
 
         if (session.forwardUri) {
 
@@ -242,7 +247,7 @@ class SiteController {
 
         def model = [productType: productType]
 
-        model.commonLink = createLink(action: "browse")
+        model.commonLink = createLink(uri: '/browse').replace('/site', '')
 
 //        def productTypeChain = []
 //        def productTypeNavigator = productType
@@ -312,7 +317,7 @@ class SiteController {
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
-        model.commonLink = createLink(action: "browse")
+        model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []
         def productTypeNavigator = product.productTypes.toArray()[0]
@@ -395,11 +400,10 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id.toLong()
-                def selectedVariationId = params."variation${variation.id}"?.toLong()
+                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
-
             }
 
             if (model.guarantee.id.toLong() != params.guarantee.toLong())
@@ -463,7 +467,7 @@ class SiteController {
             productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
 
         model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0)
-        model.commonLink = createLink(controller: "site").replace("/index", "")
+        model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.slides = Slide.findAll()
@@ -516,5 +520,28 @@ class SiteController {
         }
 
         result
+    }
+
+    def contactUs(){
+        render view: '/site/statics/contact_us'
+    }
+
+    def sendMail(){
+
+        if(!simpleCaptchaService.validateCaptcha(params.captcha)){
+
+            flash.message = message(code: 'contactUs.email.invalidCaptcha')
+            redirect(uri: '/contactUs')
+            return
+        }
+
+        mailService.sendMail {
+            to params.department
+            subject "${message(code: 'contactUs.email.subject')} ${params.firstName} ${params.lastName}"
+            body params.body
+        }
+
+        flash.message = message(code: 'contactUs.email.successMessage')
+        redirect(uri: '/contactUs')
     }
 }

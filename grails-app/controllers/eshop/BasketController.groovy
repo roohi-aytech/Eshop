@@ -17,9 +17,11 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            basketItem = [id: id, productId:productModel.product.id, name: productModel.toString(), count: 1, price: priceService.calcProductModelPrice(productModel.id).showVal]
+            def price = priceService.calcProductModelPrice(productModel.id)
+            basketItem = [id: id, productId: productModel.product.id, name: productModel.toString(), count: 1, price: price.showVal, realPrice:price.valueAddedVal]
             basket << basketItem
         }
+
 
         def basketCounter = 0
         basket.each { basketCounter += it.count }

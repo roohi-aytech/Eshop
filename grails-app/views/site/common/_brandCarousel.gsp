@@ -18,7 +18,8 @@
                         <li class="sb-showcase-skin checkable ${(selectedBrands?.contains(brand._id?.id) ? 'active' : '')}">
                             <g:if test="${type == 'filter'}">
                                 <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                                      remove="${(selectedBrands?.contains(brand._id?.id)).toString()}" type="icon" ></eshop:filterAddBrand>
+                                                      remove="${(selectedBrands?.contains(brand._id?.id)).toString()}"
+                                                      type="icon"></eshop:filterAddBrand>
 
                             </g:if>
                             <g:else>
@@ -48,16 +49,43 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
-        jQuery('#carousel_${id}').showbizpro({
-            dragAndScroll: "of",
-            <g:if test="${mode=='large'}">
-            visibleElementsArray: [6, 5, 4, 3, 2, 1],
-            </g:if>
-            <g:else>
-            visibleElementsArray: [8, 7, 6, 5, 4, 3, 2, 1],
-            </g:else>
-            carousel: "on"
-        });
+
+        var itemsCount = ${brands.count{it}};
+
+        var visibleElementsArray;
+        <g:if test="${mode=='large'}">
+        visibleElementsArray = [6, 5, 4, 3];
+        </g:if>
+        <g:else>
+        visibleElementsArray = [8, 7, 6, 5];
+        </g:else>
+        var width = $('#carousel_${id}').width();
+        var visibleCount;
+        if (width > 980) {
+            visibleCount = visibleElementsArray[0]
+        }
+        if (width < 981 && width > 768) {
+            visibleCount = visibleElementsArray[1]
+        }
+        if (width < 769 && width > 420) {
+            visibleCount = visibleElementsArray[2]
+        }
+        if (width < 421) {
+            visibleCount = visibleElementsArray[3]
+        }
+
+        if (itemsCount > visibleCount) {
+            jQuery('#carousel_${id}').showbizpro({
+                dragAndScroll: "of",
+                visibleElementsArray: visibleElementsArray,
+                carousel: "on"
+            });
+        }
+        else{
+            var carousel = $('#carousel_${id} .brand-carousel');
+            carousel.parent().parent().parent().parent().replaceWith(carousel);
+            carousel.removeClass('brand-carousel').addClass('static-brand-carousel');
+        }
     });
 
 </script>

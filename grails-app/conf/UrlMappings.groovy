@@ -1,6 +1,31 @@
 class UrlMappings {
 
 	static mappings = {
+
+        "/browse/$productType/" {
+            controller = "site"
+            action = "browse"
+        }
+
+        "/filter" {
+            controller = "site"
+            action = "filter"
+        }
+
+        "/search" {
+            controller = "site"
+            action = "search"
+        }
+
+        "/product/$id?" {
+            controller = "site"
+            action = "product"
+        }
+
+        "/product/$action?" {
+            controller = "product"
+        }
+
         "/producer/list" {
             controller = "producer"
             action = "list"
@@ -16,11 +41,13 @@ class UrlMappings {
             action = "list"
         }
 
-        "/site/browse/$productType/" {
+//        static pages
+        "/contactUs"{
             controller = "site"
-            action = "browse"
+            action = "contactUs"
         }
 
+//        default mapping
         "/$controller/$action?/$id?"{
 			constraints {
 				// apply constraints here

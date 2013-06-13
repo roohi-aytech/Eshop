@@ -16,7 +16,7 @@
         <g:message code="productTypeBrand.productTypes.label" default="Product Types"/>
     </label>
 
-    <rg:tree bean="${productTypeBrand}" field="productTypes" relationField="parentProduct" width="250px"></rg:tree>
+    <rg:tree bean="${productTypeBrand}" field="productTypes" relationField="parentProduct" width="250px" cascadeCheck="true"></rg:tree>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'brand', 'error')} ">

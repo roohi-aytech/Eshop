@@ -28,9 +28,8 @@ class AddedValueController {
             def addedValueInstance = AddedValue.get(params.addedValueId)
             variations = collectVariations(addedValueInstance?.baseProduct)
             variationValue = VariationValue.get(params.variationValueId)
-            variation = addedValueInstance?.baseProduct?.variations?.find {it.variationValues.contains(variationValue)}
-        }
-        else {
+            variation = addedValueInstance?.baseProduct?.variations?.find { it.variationValues.contains(variationValue) }
+        } else {
             def baseProductInstance = BaseProduct.get(params.baseProduct.id)
             variations = collectVariations(baseProductInstance)
         }
@@ -44,12 +43,17 @@ class AddedValueController {
         def variations = baseProduct.variations
         if (baseProduct instanceof Product) {
             baseProduct.productTypes.each {
-                variations.addAll(collectVariations(it))
+                collectVariations(it).each { variation ->
+                    if (!variations.any { it.variationGroup == variation.variationGroup })
+                        variations.add(variation)
+                }
             }
-        }
-        else if(baseProduct instanceof ProductType){
+        } else if (baseProduct instanceof ProductType) {
             if (baseProduct.parentProduct)
-                variations.addAll(collectVariations(baseProduct.parentProduct))
+                collectVariations(baseProduct.parentProduct).each { variation ->
+                    if (!variations.any { it.variationGroup == variation.variationGroup })
+                        variations.add(variation)
+                }
         }
         return variations
     }
@@ -57,11 +61,27 @@ class AddedValueController {
     def variationValue() {
         def variation = Variation.get(params.variation)
         if (variation) {
-            def values = variation.variationValues
+            def values = collectVariationValues(variation.baseProduct, variation.variationGroup)
             render(template: "variation_values", model: [variationValues: values])
-        }
-        else
+        } else
             render ""
+    }
+
+    private def collectVariationValues(BaseProduct baseProduct, VariationGroup variationGroup) {
+        def variationValues = []
+        def variation = baseProduct.variations.find {it.variationGroup == variationGroup}
+        if(variation)
+            variationValues.addAll(variation.variationValues)
+
+        if (baseProduct instanceof Product) {
+            baseProduct.productTypes.each {
+                variationValues.addAll(collectVariationValues(it, variationGroup))
+            }
+        } else if (baseProduct instanceof ProductType) {
+            if (baseProduct.parentProduct)
+                variationValues.addAll(collectVariationValues(baseProduct.parentProduct, variationGroup))
+        }
+        return variationValues.unique {it.id}.sort {it.value}
     }
 
     def list() {
@@ -72,13 +92,11 @@ class AddedValueController {
         if (params.id) {
             addedValueInstance = AddedValue.get(params.id)
             addedValueInstance.properties = params
-        }
-        else
+        } else
             addedValueInstance = new AddedValue(params)
         if (addedValueInstance.validate() && addedValueInstance.save()) {
             render addedValueInstance as JSON
-        }
-        else
+        } else
             render(template: "form", model: [addedValueInstance: addedValueInstance])
     }
 

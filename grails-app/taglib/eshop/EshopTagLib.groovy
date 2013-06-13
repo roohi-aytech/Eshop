@@ -89,13 +89,13 @@ class EshopTagLib {
 
     def filterStart = { attrs, body ->
         def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
-        def link = g.createLink(controller: "site", action: "filter", params: [f: f])
+        def link = g.createLink(action: "filter", params: [f: f])
         out << "<a href='${link}'>${attrs.value}</a>"
     }
 
     def filterStartBrand = { attrs, body ->
         def f = attrs.productType?.id ? "p${attrs.productType.id},b${attrs.brandId}" : "b${attrs.brandId}"
-        def link = g.createLink(controller: "site", action: "filter", params: [f: f])
+        def link = g.createLink(action: "filter", params: [f: f])
         def brand = Brand.get(attrs.brandId)
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img original-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
@@ -105,7 +105,7 @@ class EshopTagLib {
 
     def filterAddProductType = { attrs, body ->
         def f = "${attrs.f},p${attrs.id}"
-        def link = g.createLink(controller: params.controller, action: params.action, params: params + [f: f])
+        def link = g.createLink(action: params.action, params: params + [f: f])
         out << "<a href='${link}'>${attrs.name}</a>"
     }
 
@@ -122,7 +122,7 @@ class EshopTagLib {
             f = fItems.join(',')//.replace(',,', ',')
         } else
             f = "${attrs.f},b${attrs.id}"
-        def link = (f == '' ? g.createLink(controller: 'site') : g.createLink(controller: params.controller, action: params.action, params: params + [f: f]))
+        def link = (f == '' ? g.createLink(uri:'/') : g.createLink(action: params.action, params: params + [f: f]))
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
@@ -137,7 +137,7 @@ class EshopTagLib {
             f = f.replaceFirst(/,/ + attrs.id + /\|/ + attrs.value + /$/, "")
         } else
             f = "${attrs.f},${attrs.id}|${attrs.value}"
-        def link = g.createLink(controller: params.controller, action: params.action, params: params + [f: f])
+        def link = g.createLink(action: params.action, params: params + [f: f])
         out << "<a href='${link}'>${attrs.value}</a>"
     }
 

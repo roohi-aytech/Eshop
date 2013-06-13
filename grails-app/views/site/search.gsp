@@ -12,6 +12,8 @@
     <g:if test="${keywords}">
         <meta name="keywords" content="${keywords}">
     </g:if>
+    <g:render template="common/productGridMeta"
+              model="${[productIds: filters.products.productIds]}"/>
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
@@ -68,7 +70,7 @@
                                         <g:if test="${filters.breadcrumb.size() > 0}">
                                             <g:each in="${filters.breadcrumb[0..-1]}">
                                                 <li>
-                                                    <a href="${commonLink}/${it.linkTail}">${it.linkTitle}</a>
+                                                    <a href="${commonLink}${it.linkTail}">${it.linkTitle}</a>
                                                     <span class="divider">${">"}</span>
                                                 </li>
                                             </g:each>
