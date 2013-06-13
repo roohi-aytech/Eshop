@@ -59,7 +59,7 @@ class PriceService {
             }
         }
 
-        [mainVal: mainVal, showVal: priceVal, valueAddedVal: valueAddedVal]
+        [mainVal: mainVal, showVal: priceVal, valueAddedVal: valueAddedVal, lastUpdate: price.startDate]
     }
 
     def getAddedvalues(ProductType productType) {
