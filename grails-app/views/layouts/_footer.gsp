@@ -11,7 +11,7 @@
 <div class="footer2">
     <a href="${createLink(uri: '/')}"><g:message code="home.label"></g:message></a> |
     <a href="#"><g:message code="help.label"></g:message></a> |
-    <a href="#"><g:message code="contact.label"></g:message></a>
+    <a href="${createLink(uri: '/contactUs')}"><g:message code="contact.label"></g:message></a>
 </div>
 
 <div class="footer3">

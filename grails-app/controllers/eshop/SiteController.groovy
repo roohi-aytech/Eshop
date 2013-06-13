@@ -20,6 +20,8 @@ class SiteController {
     def trackingService
     def messageService
     def mongoService
+    def mailService
+    def simpleCaptchaService
 
     def findProducts(params) {
 
@@ -518,5 +520,28 @@ class SiteController {
         }
 
         result
+    }
+
+    def contactUs(){
+        render view: '/site/statics/contact_us'
+    }
+
+    def sendMail(){
+
+        if(!simpleCaptchaService.validateCaptcha(params.captcha)){
+
+            flash.message = message(code: 'contactUs.email.invalidCaptcha')
+            redirect(uri: '/contactUs')
+            return
+        }
+
+        mailService.sendMail {
+            to params.department
+            subject "${message(code: 'contactUs.email.subject')} ${params.firstName} ${params.lastName}"
+            body params.body
+        }
+
+        flash.message = message(code: 'contactUs.email.successMessage')
+        redirect(uri: '/contactUs')
     }
 }

@@ -25,6 +25,11 @@ body {
     user-select: none;
 }
 
+.page-content{
+    margin:20px;
+    margin-top: 0;
+}
+
 .table {
     margin-bottom: 0;
 }

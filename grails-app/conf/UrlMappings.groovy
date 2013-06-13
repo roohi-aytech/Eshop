@@ -41,6 +41,13 @@ class UrlMappings {
             action = "list"
         }
 
+//        static pages
+        "/contactUs"{
+            controller = "site"
+            action = "contactUs"
+        }
+
+//        default mapping
         "/$controller/$action?/$id?"{
 			constraints {
 				// apply constraints here
