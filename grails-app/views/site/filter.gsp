@@ -12,6 +12,8 @@
     <g:if test="${keywords}">
         <meta name="keywords" content="${keywords}">
     </g:if>
+    <g:render template="common/productGridMeta"
+              model="${[productIds: filters.products.productIds]}"/>
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
     <style>
