@@ -10,9 +10,12 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-  <title><g:message code="underConstruction"></g:message></title>
+    <title><g:message code="underConstruction"></g:message></title>
 </head>
+
 <body>
-    <center><h3><g:message code="underConstruction"></g:message></h3></center>
+<div class="page-content">
+    <h2><g:message code="underConstruction"></g:message></h2>
+</div>
 </body>
 </html>

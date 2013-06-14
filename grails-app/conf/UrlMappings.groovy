@@ -26,6 +26,11 @@ class UrlMappings {
             controller = "product"
         }
 
+        "/article/$id?" {
+            controller = "site"
+            action = "article"
+        }
+
         "/producer/list" {
             controller = "producer"
             action = "list"

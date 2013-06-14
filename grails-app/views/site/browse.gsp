@@ -34,6 +34,7 @@
             <div class="well sidebar-nav">
                 <g:render template="common/browsingTextualMenu"></g:render>
             </div>
+            <g:render template="productType/article_list"/>
         </div>
 
         <div class="table-cell">
