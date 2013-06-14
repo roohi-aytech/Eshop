@@ -1,29 +1,5 @@
 $(document).ready(function () {
 
-    $(window).scroll(function () {
-        if ($(document).scrollTop() > $('#header1').height()) {
-//            $('#header1').css('display', 'none');
-//            $('#logo-small').css('display', 'inline-block');
-//            $('.search-box').css('margin-right', '75px');
-        }
-        else {
-//            $('#header1').css('display', 'block');
-//            $('#logo-small').css('display', 'none');
-//            $('.search-box').css('margin-right', '60px');
-        }
-    });
-
-//    $(".product-thumbnails .thumbnail").hover(function () {
-//        $(this).closest("li").css("z-index", 9999999);
-//        $(this).stop().animate({ height: "425", width: parseInt($(this).attr('oldWidth')) + 40 , left: parseInt($(this).attr('oldLeft')) - 20, top: $(this).attr('oldTop') - 20 }, "fast");
-//        $(this).addClass('selectedThumbnail');
-//
-//    }, function () {
-//        $(this).closest("li").css("z-index", 0);
-//        $(this).stop().animate({ height: $(this).attr('oldHeight'), width: ($(this).closest("li").width() * 9)/10, left: "5%", top: $(this).attr('oldTop') }, "fast");
-//        $(this).removeClass('selectedThumbnail');
-//    });
-
     $(".showbiz .thumbnail").hoverIntent(function () {
 
         $(this).find('img').first().stop().animate({
@@ -93,17 +69,20 @@ $(document).ready(function () {
     $('.scrollable').rollbar({zIndex:80,wheelSpeed:10});
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
+    $('.price-last-update').tipsy({live:true});
 
     $('.has-tipsy').each(function(){
         var tipContainer = $(this).parent().parent().find('.tips-container');
         tipContainer.append('<span class="manual-tip ' + $(this).attr('type') + '"><span>' + $(this).attr('original-title') + '</span></span>');
 
         $(this).hoverIntent(function () {
+            $('.manual-tip').css('opacity', 0)
+            $('.manual-tip').attr('opened', '0')
             var tip = $(this).parent().parent().find('.tips-container .manual-tip.' + $(this).attr('type'));
             tip.css('top', $(this).parent().parent().find('.title').first().height() + 30);
             tip.css('left', $(this).position().left + 15);
             tip.animate({
-                'opacity': 0.8
+                'opacity': 0.7
             });
         }, function(){
             var tip = $(this).parent().parent().find('.tips-container .manual-tip.' + $(this).attr('type'));
@@ -112,22 +91,11 @@ $(document).ready(function () {
 
 
     });
-
-    $('#link-basket .counter').fadeIn('slow');
 });
 
+
 function changeAddToBasketButtonLabel() {
-//    if ($('body').innerWidth() > 1000) {
-//        $('.thumbnail .btn-buy span').html('افزودن به سبد');
-//    }
-//    else {
-//        $('.thumbnail .btn-buy span').html('خرید');
-//    }
-
-//    $('.span600').width($('body').innerWidth() - 400);
-//    $('.span415').width($('body').innerWidth() - 522);
-//    $('.span735').width($('body').innerWidth() - 200);
-
+      $('#basketCounter').fadeIn();
 }
 
 function resizeThumbnails() {
@@ -141,20 +109,6 @@ function resizeThumbnails() {
         $('.thumbnailGrid .span3').css('width', (currentWidth - 25) / 3);
     }
 
-//    $(".showbiz .thumbnail").each(function(){
-//        $(this).find('img').first().css('margin-right', $(this).width()/2 - 80);
-//        $(this).find('img').first().css('margin-left', $(this).width()/2 - 80);
-//    })
-
-    //set thumbnails attributes
-//    $(".thumbnailGrid .thumbnail").each(function(){
-//        $(this).attr('oldWidth', $(this).width());
-//        $(this).attr('oldHeight', $(this).height());
-//        $(this).attr('oldLeft', $(this).position().left);
-//        $(this).attr('oldTop', $(this).position().top);
-//        $(this).attr('style', '');
-//    })
-
     //show top 8 brand images
     var brandItems = $('.brand-carousel li a img');
     if(brandItems.length > 8)
@@ -163,5 +117,27 @@ function resizeThumbnails() {
         if($(this).attr('src') != $(this).attr('original-src'))
             $(this).attr('src', $(this).attr('original-src'));
     });
+
+    $('.sb-navigation-right').hoverIntent(function(){
+        lastHoveredCarouselButton = $(this);
+        hoverCarouselButton();
+    }, function(){
+        lastHoveredCarouselButton = null;
+    });
+
+    $('.sb-navigation-left').hoverIntent(function(){
+        lastHoveredCarouselButton = $(this);
+        hoverCarouselButton();
+    }, function(){
+        lastHoveredCarouselButton = null;
+    });
+}
+
+var lastHoveredCarouselButton;
+function hoverCarouselButton(){
+    if(lastHoveredCarouselButton){
+        lastHoveredCarouselButton.click();
+        setTimeout(hoverCarouselButton, 300);
+    }
 }
 

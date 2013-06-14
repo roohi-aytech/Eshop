@@ -12,6 +12,9 @@
     <g:if test="${keywords}">
         <meta name="keywords" content="${keywords}">
     </g:if>
+
+    <g:render template="common/productGridMeta"
+              model="${[productIds: filters.products.productIds]}"/>
     <style>
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */

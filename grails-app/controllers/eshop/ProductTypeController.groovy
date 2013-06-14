@@ -95,16 +95,16 @@ class ProductTypeController {
         redirect(action: "show", id: productTypeInstance.id)
     }
 
-    def setAttValueToProducts_form(){
+    def setAttValueToProducts_form() {
         def attributeType = AttributeType.get(params.id)
         boolean setNewValue
         String newValue
         boolean nA
 
-        render(template: "set_att_value_to_products", model: [attributeType: attributeType, setNewValue : setNewValue, newValue: newValue, nA : nA])
+        render(template: "set_att_value_to_products", model: [attributeType: attributeType, setNewValue: setNewValue, newValue: newValue, nA: nA])
     }
 
-    def setAttValueToProducts_save(){
+    def setAttValueToProducts_save() {
         def attributeType = AttributeType.get(params.id)
 
         def productType = attributeType?.productType
@@ -117,15 +117,15 @@ class ProductTypeController {
         productType.products.findAll().each {
             hasAttr = false
             for (attr in it.attributes.findAll()) {
-              if(attr.attributeType == attributeType){
-                  hasAttr = true
-                  break
-              }
+                if (attr.attributeType == attributeType) {
+                    hasAttr = true
+                    break
+                }
             }
 
-            if (!hasAttr){
+            if (!hasAttr) {
                 def attributeValue = new AttributeValue()
-                attributeValue.value = (nA)? "N/A" : newValue
+                attributeValue.value = (nA) ? "N/A" : newValue
                 attributeValue.save()
 
                 attributeType.addToValues(attributeValue)
@@ -136,7 +136,7 @@ class ProductTypeController {
                 newAttr.product = it
                 newAttr.value = attributeValue
 
-                if(newAttr.save()){
+                if (newAttr.save()) {
                     it.attributes.add(newAttr)
                     mongoService.storeProduct(it)
                 }
@@ -520,13 +520,21 @@ class ProductTypeController {
 
     def saveGodFathers() {
         def productType = ProductType.get(params.id)
-        productType.godFathers = productType.godFathers.findAll{params.godFathers.split(",").contains(it.id.toString())}
+        productType.godFathers = productType.godFathers.findAll { params.godFathers.split(",").contains(it.id.toString()) }
         params.godFathers.split(",").each {
             if (it) {
                 productType.godFathers.add(ProductType.get(it))
             }
         }
         productType.save()
+
+        //products need to be resynched
+        Thread.start {
+            ProductType.get(params.id).products.each {
+                mongoService.storeProduct(it)
+            }
+        }
+
         render(view: "details", model: [productTypeInstance: productType, baseProductInstance: productType])
     }
 

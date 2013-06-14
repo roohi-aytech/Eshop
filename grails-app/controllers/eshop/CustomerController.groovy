@@ -27,7 +27,10 @@ class CustomerController {
                     user.password = params.newPassword
                     if (user.validate() && user.save()) {
                         flash.message = message(code: "password.change.success")
-                        redirect(action: 'panel')
+                        if (user instanceof Customer)
+                            redirect(action: 'panel')
+                        else
+                            redirect(uri: '/admin')
                     } else {
                         flash.message = message(code: "password.change.fail")
                         redirect(action: 'changePassword')
@@ -202,7 +205,7 @@ class CustomerController {
         def reagent = Customer.findByUsername(params.email)
         if (reagent) {
             def customer = springSecurityService.currentUser as Customer
-            if(customer){
+            if (customer) {
                 customer.reagent = reagent
                 customer.save()
                 redirect(action: 'profile')
