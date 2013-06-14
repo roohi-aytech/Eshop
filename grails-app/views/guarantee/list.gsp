@@ -7,7 +7,7 @@
 --%>
 <%@ page import="eshop.Guarantee" %>
 <!doctype html>
-<html>
+<html dir="rtl">
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'guarantee.label', default: 'Guarantee')}"/>

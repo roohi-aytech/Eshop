@@ -66,9 +66,6 @@
                     $('#guaranteeTemplate').html(response);
                 });
     }
-    function onLoadProductTypesSuccess(node, param){
-        brandChanged($('#brandId'));
-    }
 
 
 </script>
@@ -86,7 +83,7 @@
             <g:message code="producingProduct.productTypes.label" default="Product Types"/>
         </label>
 
-        <rg:tree bean="${producingProductInstance}"  field="productTypes" onLoadSuccess="onLoadProductTypesSuccess" onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
+        <rg:tree bean="${producingProductInstance}"  field="productTypes"  onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
     </div>
 
     <script type="text/javascript">
