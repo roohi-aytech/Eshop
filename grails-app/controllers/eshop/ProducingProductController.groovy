@@ -73,14 +73,14 @@ class ProducingProductController {
             else
                 producingProductInstance = new ProducingProduct()
 
-            def guarantees = f(producerProductTypes, brand)
+            def guarantees = findGuarantees(producerProductTypes, brand)
 
             render(template: "guarantee_value", model: [producingProductInstance: producingProductInstance, guarantees: guarantees])
 
         render ''
     }
 
-    def f(producerProductTypes, brand){
+    def findGuarantees(producerProductTypes, brand){
         List<Guarantee> guarantees = []
 
         def selectedGuarantees = Guarantee.createCriteria().list {

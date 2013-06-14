@@ -22,22 +22,67 @@ class ProductModelController {
         if (params.product.id)
             product = Product.get(params.product.id)
 
+        def guarantees = findGuarantees(product?.productTypes, product?.brand)
 
-        def guarantees = Guarantee.createCriteria().list {
-            productTypeBrands {
-                or {
-                    eq('brand', product?.brand)
-                    isNull('brand')
-                }
-                productTypes {
-                    eq('id', product?.productTypes?.toArray().first()?.id)
-                }
-            }
 
-        }
+//        def guarantees = Guarantee.createCriteria().list {
+//            productTypeBrands {
+//                or {
+//                    eq('brand', product?.brand)
+//                    isNull('brand')
+//                }
+//                productTypes {
+//                    eq('id', product?.productTypes?.toArray().first()?.id)
+//                }
+//            }
+//        }
+
 
         render(template: "form", model: [productModelInstance: productModelInstance, product: product, guarantees: guarantees])
     }
+
+    def findGuarantees(productTypes, brand){
+        List<Guarantee> guarantees = []
+
+        def selectedGuarantees = Guarantee.createCriteria().list {
+            productTypeBrands {
+                or {
+                    eq('brand', brand)
+                    isNull('brand')
+                }
+            }
+        }
+        selectedGuarantees.each {
+            it.productTypeBrands.each { productTypeBrand ->
+                if (productTypeBrand.productTypes.size() == 0 && !guarantees.contains(it))
+                    guarantees.add(it)
+            }
+        }
+
+        selectedGuarantees.each {
+            def temp = -1
+
+            for (productType in productTypes) {
+                def tmp = false
+                for (productTypeBrand in it.productTypeBrands) {
+                    if (productTypeBrand.productTypes.contains(productType) && (productTypeBrand.brand == null || productTypeBrand.brand == brand)){
+                        tmp = true
+                        if(temp == -1) temp = 1
+                        break
+                    }
+                }
+                if (tmp == false){
+                    temp = 0
+                }
+            }
+
+            if (temp == 1 && !guarantees.contains(it))
+                guarantees.add(it)
+        }
+
+        return guarantees
+    }
+
 
     def list() {
         [pmid: params.pmid ?: 0]

@@ -41,7 +41,6 @@
         for( var i = 0; i < size ; i++ )
             productTypesArr[i] = ($(document.getElementsByName("productTypes")[i]).val())
 
-
         $.ajax({
             url:'<g:createLink action="loadGuarantee" controller="producingProduct"/>',
             data:{
@@ -67,6 +66,9 @@
                     $('#guaranteeTemplate').html(response);
                 });
     }
+    function onLoadProductTypesSuccess(node, param){
+        brandChanged($('#brandId'));
+    }
 
 
 </script>
@@ -84,8 +86,12 @@
             <g:message code="producingProduct.productTypes.label" default="Product Types"/>
         </label>
 
-        <rg:tree bean="${producingProductInstance}" field="productTypes" onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
+        <rg:tree bean="${producingProductInstance}"  field="productTypes" onLoadSuccess="onLoadProductTypesSuccess" onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
     </div>
+
+    <script type="text/javascript">
+
+    </script>
 
     <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'brand', 'error')} ">
         <label for="brandId">
@@ -226,15 +232,14 @@
 
     </div>
 
-    <script type="text/javascript" language="javascript">
 
-        //                $(document).ready(brandChanged($('#brandId')))
-        //                 setTimeout("brandChanged($('#brandId'))" ,50000)
+    <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">
+        <label for="guaranteeTemplate">
+            <g:message code="producingProduct.guarantee.label" default="Guarantee"/>
 
-    </script>
+        </label>
 
-
-    <span class="guarantee" id="guaranteeTemplate" >
+        <span class="guarantee" id="guaranteeTemplate" >
 
         <g:render template="guarantee_value" model="[
                 producingProductInstance: producingProductInstance,
@@ -242,7 +247,7 @@
         ]"/>
 
     </span>
-
+</div>
 
     %{--<div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'guarantee', 'error')} ">--}%
     %{--<label for="guarantee">--}%
@@ -291,6 +296,21 @@
 </div>
 </div>
 
+<script type="text/javascript" language="javascript">
+    $(window).load(function(){
+        brandChanged($('#brandId'));
+
+    });
+
+
+    //        $("#button").click(function(){
+    //            setTimeout("brandChanged($('#brandId'))",100)
+    //        })
+
+    //                        $(document).ready(brandChanged($('#brandId')))
+    //                         setTimeout("brandChanged($('#brandId'))" ,50000)
+
+</script>
 
 
 

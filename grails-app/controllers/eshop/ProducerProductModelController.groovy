@@ -32,11 +32,13 @@ class ProducerProductModelController {
                     eq('brand', productModel?.product?.brand)
                     isNull('brand')
                 }
+
                 productTypes {
                     eq('id', productModel?.product?.productTypes?.toArray().first()?.id)
                 }
             }
         }
+
         Producer producer = new Producer()
 
         render(template: "form", model: [producerProductModelInstance: producerProductModelInstance, productModel: productModel, producers: producers, producer: producer])
@@ -73,6 +75,7 @@ class ProducerProductModelController {
                     }
                     productTypes {
                         eq('id', productModel?.product?.productTypes?.toArray()?.first()?.id)
+
                     }
                 }
 
