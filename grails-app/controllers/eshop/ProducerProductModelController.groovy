@@ -1,6 +1,9 @@
 package eshop
 
 import grails.converters.JSON
+import org.hibernate.Criteria
+import org.hibernate.criterion.Projections
+import org.hibernate.criterion.Property
 
 class ProducerProductModelController {
     static allowedMethods = [save: "POST", delete: "POST"]
@@ -22,7 +25,7 @@ class ProducerProductModelController {
             productModel = ProductModel.get(params.productModel.id)
 
 
-        def producers = Producer.createCriteria().list {
+        def producers = Producer.createCriteria().listDistinct {
             producingProducts {
                 or {
                     eq('guarantee', productModel?.guarantee)

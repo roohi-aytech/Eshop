@@ -41,6 +41,7 @@
         for( var i = 0; i < size ; i++ )
             productTypesArr[i] = ($(document.getElementsByName("productTypes")[i]).val())
 
+//        window.alert(productTypesArr)
         $.ajax({
             url:'<g:createLink action="loadGuarantee" controller="producingProduct"/>',
             data:{
@@ -54,9 +55,10 @@
                 });
 
     }
-
+    var loaded = false
     function onProductTypeSelect(param){
-        $.ajax({
+        if(loaded)
+        {$.ajax({
             url: "${createLink(controller: "producingProduct", action: "loadGuarantee")}",
 
             type: "post",
@@ -65,6 +67,11 @@
         }).done(function(response){
                     $('#guaranteeTemplate').html(response);
                 });
+        }
+    }
+    function onLoadSuccess(node, param){
+        brandChanged($('#brandId'));
+        loaded = true
     }
 
 
@@ -83,7 +90,7 @@
             <g:message code="producingProduct.productTypes.label" default="Product Types"/>
         </label>
 
-        <rg:tree bean="${producingProductInstance}"  field="productTypes"  onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
+        <rg:tree bean="${producingProductInstance}"  field="productTypes" onLoadSuccess="onLoadSuccess" onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
     </div>
 
     <script type="text/javascript">
@@ -293,21 +300,7 @@
 </div>
 </div>
 
-<script type="text/javascript" language="javascript">
-    $(window).load(function(){
-        brandChanged($('#brandId'));
 
-    });
-
-
-    //        $("#button").click(function(){
-    //            setTimeout("brandChanged($('#brandId'))",100)
-    //        })
-
-    //                        $(document).ready(brandChanged($('#brandId')))
-    //                         setTimeout("brandChanged($('#brandId'))" ,50000)
-
-</script>
 
 
 

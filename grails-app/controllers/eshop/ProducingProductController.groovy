@@ -49,7 +49,6 @@ class ProducingProductController {
     }
 
 
-
     def loadGuarantee(){
         def producingProductInstance
         def brand
