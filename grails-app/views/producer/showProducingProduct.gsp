@@ -12,10 +12,10 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'producingProducts.label', default: 'ProducingProduct')}" />
-    <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <title><g:message code="producer.show.label" args="[entityName]" /></title>
 </head>
 <body>
-<h2><g:message code="default.show.label" args="[entityName]" /></h2>
+<h2><g:message code="producer.show.label" args="[entityName]" /></h2>
 
 <div id="show-producingProduct" class="content scaffold-show" role="main">
     <g:if test="${flash.message}">
@@ -41,12 +41,21 @@
             </li>
         </g:if>
 
-        <g:if test="${producingProductInstance?.paidOff}">
+        <g:if test="${producingProductInstance?.guarantee}">
             <li class="fieldcontain">
-                <span id="paidOff-label" class="property-label"><g:message code="producer.paidOff.label" default="PaidOff" /></span>
+                <span id="guarantee-label" class="property-label"><g:message code="guarantee.label" default="guarantee" /></span>
 
-                <span class="property-value" aria-labelledby="paidOff-label">
-                    <g:fieldValue bean="${producingProductInstance}" field="paidOff"/></span>
+                <span class="property-value" aria-labelledby="guarantee-label">
+                    <g:fieldValue bean="${producingProductInstance}" field="guarantee"/></span>
+            </li>
+        </g:if>
+
+        <g:if test="${producingProductInstance?.settlement}">
+            <li class="fieldcontain">
+                <span id="settlement-label" class="property-label"><g:message code="producingProduct.settlement.label" default="settlement" /></span>
+
+                <span class="property-value" aria-labelledby="settlement-label">
+                    <g:fieldValue bean="${producingProductInstance}" field="settlement"/></span>
             </li>
         </g:if>
 

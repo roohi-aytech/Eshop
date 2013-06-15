@@ -71,11 +71,14 @@ class ProducingProduct {
         addedValueDescription(nullable: true)
     }
 
+    static searchable = true
 
     static mapping = {
        // sort 'name'
     }
     String toString(){
-        (brand == null ? "" : brand.toString() )
+        def res = ""
+        productTypes.each {res = res + " " + it}
+        res + ": " + (brand != null ? brand.toString() : "") + ", " + guarantee
     }
 }
