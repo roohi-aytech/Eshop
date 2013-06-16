@@ -19,8 +19,8 @@
                 <label for="productTypes">
                     <g:message code="producingProduct.productTypes.label" default="Product Types"/>
                 </label>
-
-                <rg:tree bean="${producingProductInstance}" field="productTypes" checked="reloadGuarantee()" cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
+                %{--in this form cascadeCheck should be set to false!!!--}%
+                <rg:tree bean="${producingProductInstance}" field="productTypes" checked="reloadGuarantee()" cascadeCheck="false" relationField="parentProduct" width="250px"></rg:tree>
             </div>
 
             <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'brand', 'error')} ">
