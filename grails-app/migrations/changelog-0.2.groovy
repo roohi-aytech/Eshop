@@ -12,9 +12,9 @@ databaseChangeLog = {
         dropTable(tableName: "base_product_guarantee")
     }
 
-    changeSet(author: "Zohreh (generated)", id: "1368638620071-4") {
-        addColumn(columnName: "guarantee",tableName: "product_type_brand")
-    }
+//    changeSet(author: "Zohreh (generated)", id: "1368638620071-4") {
+//        addColumn(columnName: "guarantee",tableName: "product_type_brand")
+//    }
 
     changeSet(author: "Zohreh (generated)", id: "1368638620071-5") {
         dropColumn(columnName: "role",tableName: "producer_staff")

@@ -5,7 +5,7 @@ import grails.converters.JSON
 
 class AddedValueController {
 
-    static allowedMethods = [save: "POST", delete: "POST"]
+//    static allowedMethods = [save: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -103,6 +103,12 @@ class AddedValueController {
 
     def delete() {
         def addedValueInstance = AddedValue.get(params.id)
+
+        //required for object being deleted
+        addedValueInstance.properties.each {
+            it
+        }
+
         addedValueInstance.delete(flush: true)
         render 0
     }

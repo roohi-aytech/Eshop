@@ -21,6 +21,7 @@
         <rg:fields bean="${new VariationGroup()}">
             <rg:modify>
                 <rg:ignoreField field="variations"/>
+                <rg:ignoreField field="variations"/>
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${VariationGroup}" />

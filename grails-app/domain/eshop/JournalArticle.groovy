@@ -4,6 +4,7 @@ class JournalArticle {
     static auditable = true
     String name
     String summary
+    String keywords
     String text
     BaseProduct baseProduct
     static belongsTo = [BaseProduct]
@@ -13,7 +14,8 @@ class JournalArticle {
     }
     static constraints = {
         name()
-        summary()
+        summary(maxSize: 200000)
+        keywords(maxSize: 200000)
         text()
     }
 }

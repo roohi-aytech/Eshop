@@ -28,6 +28,7 @@ environments {
             username = "root"
             password = ""
             pooled = true
+            logSql = false
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             properties {

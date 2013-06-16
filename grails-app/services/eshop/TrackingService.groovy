@@ -50,12 +50,15 @@ class TrackingService {
     def fillGeneralTrackingLog(TrackingLog trackingLog) {
         def request = RequestContextHolder.currentRequestAttributes().getRequest()
         trackingLog.ipAddress = request.getRemoteAddr()
-        trackingLog.browserName = userAgentIdentService.browserName
-        trackingLog.browserVersion = userAgentIdentService.browserVersion
-        trackingLog.operatingSystem = userAgentIdentService.operatingSystem
+        try {
+            trackingLog.browserName = userAgentIdentService.browserName
+            trackingLog.browserVersion = userAgentIdentService.browserVersion
+            trackingLog.operatingSystem = userAgentIdentService.operatingSystem
+        } catch (ex) {}
         if (springSecurityService.loggedIn
-            && springSecurityService.currentUser instanceof Customer)
+                && springSecurityService.currentUser instanceof Customer)
             trackingLog.customer = springSecurityService.currentUser as Customer
         trackingLog.date = new Date()
     }
+
 }

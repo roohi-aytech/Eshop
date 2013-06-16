@@ -412,7 +412,7 @@ class ProductTypeController {
         else {
             attribute = new AttributeType(params)
         }
-        def attributeCategories = AttributeCategory.findAllByProductType(attribute.productType)
+        def attributeCategories = AttributeCategory.findAllByProductTypeAndDeleted(attribute.productType, false)
         render(template: "form_Attribute", model: [attributeTypeInstance: attribute, attributeCategories: attributeCategories])
     }
 
@@ -448,10 +448,38 @@ class ProductTypeController {
 //                }
 //            }
 //        }
+
+        //attribute value groups
         def mustRemove = []
+        attributeType.groups?.each {
+            if (params["valueGroups_${it.id}"]) {
+                it.value = params["valueGroups_${it.id}"]
+                it.save()
+            } else {
+                mustRemove << it
+            }
+        }
+        mustRemove.each {
+            attributeType.groups?.removeFromGroups(it)
+            it.delete()
+        }
+        if (params.valueGroups_ instanceof String) {
+            attributeType.addToGroups(new AttributeValueGroup(value: params.valueGroups_).save())
+        } else {
+            params.valueGroups_.each {
+                attributeType.addToGroups(new AttributeValueGroup(value: it).save())
+            }
+        }
+
+        //attribute values
+        mustRemove = []
         attributeType.values?.each {
             if (params["values_${it.id}"]) {
                 it.value = params["values_${it.id}"]
+                if (params["values_group_${it.id}"] && params["values_group_${it.id}"] != "")
+                    it.group = AttributeValueGroup.get(params["values_group_${it.id}"])
+                else
+                    it.group = null
                 it.save()
             } else {
                 mustRemove << it
@@ -465,13 +493,26 @@ class ProductTypeController {
             }
             it.delete()
         }
+
         if (params.values_ instanceof String) {
-            attributeType.addToValues(new AttributeValue(value: params.values_).save())
+            def attributeValue = new AttributeValue(value: params.values_)
+            if (params.values_group_ && params.values_group_ != "")
+                attributeValue.group = AttributeValueGroup.get(params.values_group_)
+            if (attributeValue.save())
+                attributeType.addToValues(attributeValue)
         } else {
+            def indexer = 0
             params.values_.each {
-                attributeType.addToValues(new AttributeValue(value: it).save())
+                def attributeValue = new AttributeValue(value: it)
+                if (params["values_group_"][indexer] && params["values_group_"][indexer] != "")
+                    attributeValue.group = AttributeValueGroup.get(params["values_group_"][indexer])
+                if (attributeValue.save())
+                    attributeType.addToValues(attributeValue)
+                indexer++;
             }
         }
+
+        //save product type
         attributeType.save()
         attributeType.productType.products.each {
             mongoService.storeProduct(it)
@@ -578,6 +619,25 @@ class ProductTypeController {
             attributes {
                 value {
                     eq("id", attValue?.id)
+                }
+            }
+        }
+        render count
+    }
+
+    def countProductsForAttributeValueGroup() {
+        def attType = AttributeType.get(params.atid)
+        def attValueGroup = AttributeValueGroup.get(params.id)
+        def count = 0
+        attValueGroup.values.each {
+            count += Product.createCriteria().count {
+                productTypes {
+                    eq("id", attType.productType?.id)
+                }
+                attributes {
+                    value {
+                        eq("id", attValue?.id)
+                    }
                 }
             }
         }

@@ -27,7 +27,15 @@
         <g:message code="journalArticle.summary.label" default="Summary"/>
 
     </label>
-    <g:textField name="summary" value="${journalArticleInstance?.summary}"/>
+    <g:textArea name="summary" value="${journalArticleInstance?.summary}" style="width: 400px"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'keywords', 'error')} ">
+    <label for="summary">
+        <g:message code="journalArticle.keywords.label" default="keywords"/>
+
+    </label>
+    <g:textArea name="keywords" value="${journalArticleInstance?.keywords}" style="width: 400px"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'text', 'error')} ">

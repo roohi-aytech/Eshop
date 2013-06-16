@@ -45,7 +45,7 @@ class BrowseService {
         params.match["isVisible"] = true
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: [sortOrder: 1 ,saleCount: -1, visitCount: -1]],
+                [$sort: [sortOrder: 1, saleCount: -1, visitCount: -1]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
@@ -68,7 +68,7 @@ class BrowseService {
             pt = pt.parentProduct
         }
         def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
-        [brands: brandsCountMap, attributes: attributesCountMap, products: products]
+        [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
     def findFilteredPageFilters(f, page) {
@@ -185,6 +185,22 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
                 lastbc = "a${filterParts[0]}"
+            } else if (filter.startsWith("v")) {
+                def filterParts = filter.split("\\|")
+
+                if (!match["${filterParts[0]}"])
+                    match["${filterParts[0]}"] = [$elemMatch: [name: [$in: [filterParts[1]]]]]
+                else match["${filterParts[0]}"] = [$elemMatch: [name: [$in: match["${filterParts[0]}"].$elemMatch.name.$in + filterParts[1]]]]
+
+                def variationGroupId = Long.parseLong(filterParts[0].replace("v", ""))
+                selecteds[variationGroupId] = (selecteds[variationGroupId] ?: []) + filterParts[1]
+
+                if (lastbc == "${filterParts[0]}")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${filterParts[1]}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
+                lastbc = "${filterParts[0]}"
+
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -205,6 +221,7 @@ class BrowseService {
                 lastbc = "a${filterParts[0]}"
             }
         }
+
 
         def r = match.remove('brand.id')
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
@@ -227,7 +244,6 @@ class BrowseService {
                 productTypesCountMap << it
         }
 
-
         def attributesCountMap = [:]
         def pt = productType
         while (pt) {
@@ -237,7 +253,7 @@ class BrowseService {
 
         def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
 
-        [brands: brandsCountMap, attributes: attributesCountMap, productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+        [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
     def countAttributes(ProductType productType, match) {
@@ -249,7 +265,7 @@ class BrowseService {
         attrIds.each { attrId ->
             def r = match.remove('a' + attrId)
             def attributeType = AttributeType.get(attrId)
-            result.put(attrId, [type: 'a', name: attributeType, sortIndex:attributeType.sortIndex, countsByValue: countProducts(group: '$a' + attrId, match: match)])
+            result.put(attrId, [type: 'a', name: attributeType, sortIndex: attributeType.sortIndex, countsByValue: countProducts(group: '$a' + attrId, match: match)])
             if (r)
                 match.put('a' + attrId, r)
         }
@@ -260,13 +276,29 @@ class BrowseService {
         attrGroupIds.each { attrGroupId ->
             def r = match.remove('ac' + attrGroupId)
             def attributeCategory = AttributeCategory.get(attrGroupId)
-            result.put(attrGroupId, [type: 'ac', name: attributeCategory, sortIndex:attributeCategory.sortIndex, countsByValue: countProductsWithUnwind(group: '$ac' + attrGroupId + '.name', unwind: '$ac' + attrGroupId, match: match)])
+            result.put(attrGroupId, [type: 'ac', name: attributeCategory, sortIndex: attributeCategory.sortIndex, countsByValue: countProductsWithUnwind(group: '$ac' + attrGroupId + '.name', unwind: '$ac' + attrGroupId, match: match)])
             if (r)
                 match.put('ac' + attrGroupId, r)
         }
 
-        result = result.sort {it.value.sortIndex}
+        result = result.sort { it.value.sortIndex }
 
+        result
+    }
+
+    def countVariations(match) {
+        def result = [:]
+
+        def variationGroupList = VariationGroup.findAll()
+
+        def varIds = variationGroupList.asList().findAll { it.showInFilter }.collect { it.id }
+        varIds.each { varId ->
+            def r = match.remove('v' + varId)
+            def variationGroup = VariationGroup.get(varId)
+            result.put(varId, [type: 'v', name: variationGroup, countsByValue: countProductsWithUnwind(group: '$v' + varId, match: match, unwind: '$v' + varId)])
+            if (r)
+                match.put('v' + varId, r)
+        }
         result
     }
 
@@ -469,6 +501,21 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
                 lastbc = "a${filterParts[0]}"
+            } else if (filter.startsWith("v")) {
+                def filterParts = filter.split("\\|")
+
+                if (!match["${filterParts[0]}"])
+                    match["${filterParts[0]}"] = [$elemMatch: [name: [$in: [filterParts[1]]]]]
+                else match["${filterParts[0]}"] = [$elemMatch: [name: [$in: match["${filterParts[0]}"].$elemMatch.name.$in + filterParts[1]]]]
+
+                def variationGroupId = Long.parseLong(filterParts[0].replace("v", ""))
+                selecteds[variationGroupId] = (selecteds[variationGroupId] ?: []) + filterParts[1]
+
+                if (lastbc == "${filterParts[0]}")
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${filterParts[1]}"]
+                else
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
+                lastbc = "${filterParts[0]}"
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -521,7 +568,7 @@ class BrowseService {
 
         def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
 
-        [brands: brandsCountMap, attributes: attributesCountMap, productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+        [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
     def breadCrumb(params) {

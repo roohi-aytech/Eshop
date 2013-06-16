@@ -74,6 +74,8 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
+        model.articles = JournalArticle.findAllByBaseProduct productType
+
         model.productTypeTypeLinks = []
         if (productType.children.isEmpty()) {
             productType.types.each {
@@ -150,6 +152,9 @@ class SiteController {
                 model.description = productType.description
                 model.keywords = productType.keywords
             }
+
+            model.articles = JournalArticle.findAllByBaseProduct productType
+
         } else if (brand != '') {
             //brand only
             if (brandList.count { it } == 1) {
@@ -522,13 +527,13 @@ class SiteController {
         result
     }
 
-    def contactUs(){
+    def contactUs() {
         render view: '/site/statics/contact_us'
     }
 
-    def sendMail(){
+    def sendMail() {
 
-        if(!simpleCaptchaService.validateCaptcha(params.captcha)){
+        if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
 
             flash.message = message(code: 'contactUs.email.invalidCaptcha')
             redirect(uri: '/contactUs')
@@ -543,5 +548,39 @@ class SiteController {
 
         flash.message = message(code: 'contactUs.email.successMessage')
         redirect(uri: '/contactUs')
+    }
+
+    def article() {
+        def model = [:]
+
+        model.article = JournalArticle.get(params.id)
+
+        model.productType = model.article.baseProduct as ProductType
+        model.articles = JournalArticle.findAllByBaseProduct model.productType
+
+        model.commonLink = createLink(uri: '/browse')
+
+        def productTypeChain = []
+        def productTypeNavigator = model.productType
+        while (productTypeNavigator) {
+            productTypeChain << productTypeNavigator
+            productTypeNavigator = productTypeNavigator.parentProduct
+        }
+        productTypeChain = productTypeChain.reverse()
+
+        model.breadCrumb = []
+
+        productTypeChain.each {
+            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.urlName}/"]
+        }
+
+        model.subProductTypeLinks = []
+        def base = "${model.commonLink}/"
+
+        model.productType.children.findAll { !it.deleted }.each {
+            model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
+        }
+
+        model
     }
 }

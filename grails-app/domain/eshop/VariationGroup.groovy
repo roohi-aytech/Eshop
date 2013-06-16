@@ -7,6 +7,7 @@ class VariationGroup {
     static auditable = true
     String name
     String representationType
+    Boolean showInFilter
 
     static hasMany = [variationValues: VariationValue, variations: Variation]
     static composites = ["variationValues"]
@@ -24,6 +25,7 @@ class VariationGroup {
     static constraints = {
         name()
         representationType(inList: ["String", "Color"])
+        showInFilter(nullable: true)
         variationValues()
     }
     static ignoredFieldsInJSON=["variations"]
