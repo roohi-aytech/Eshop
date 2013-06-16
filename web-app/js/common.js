@@ -69,7 +69,7 @@ $(document).ready(function () {
     $('.scrollable').rollbar({zIndex:80,wheelSpeed:10});
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
-    $('.price-last-update').tipsy({live:true});
+//    $('.price-last-update').tipsy({live:true});
 
     $('.has-tipsy').each(function(){
         var tipContainer = $(this).parent().parent().find('.tips-container');

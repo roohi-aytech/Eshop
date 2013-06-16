@@ -2775,6 +2775,12 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     padding: 5px;
 }
 
+.price-last-update{
+    color:grey;
+    font-size:9px;
+    padding-right:5px;
+}
+
 
 
 
