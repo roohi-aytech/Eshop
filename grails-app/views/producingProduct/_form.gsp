@@ -90,7 +90,8 @@
             <g:message code="producingProduct.productTypes.label" default="Product Types"/>
         </label>
 
-        <rg:tree bean="${producingProductInstance}"  field="productTypes" onLoadSuccess="onLoadSuccess" onChange="onProductTypeSelect"  cascadeCheck="true" relationField="parentProduct" width="250px"></rg:tree>
+        %{--in this tree cascade check property should be set to FALSE--}%
+        <rg:tree bean="${producingProductInstance}"  field="productTypes" onLoadSuccess="onLoadSuccess" onChange="onProductTypeSelect"  cascadeCheck="false" relationField="parentProduct" width="250px"></rg:tree>
     </div>
 
     <script type="text/javascript">
