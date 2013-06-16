@@ -25,7 +25,7 @@ class AttributeType {
 
     static final def showPositionValues = ["filter", "productList", "compare", "productDetails", "productFullDetails"]
 
-    static hasMany = [attributes: Attribute, values: AttributeValue, showPositions: String]
+    static hasMany = [attributes: Attribute, values: AttributeValue, groups: AttributeValueGroup, showPositions: String]
     static belongsTo = [ProductType, AttributeCategory]
 
     static mapping = {
@@ -39,6 +39,7 @@ class AttributeType {
         attributeType(inList: ["String", "Text", "Date", "Number"])
         defaultValue(nullable: true)
         category(nullable: true)
+        groups()
         values()
         productType()
         deleted(nullable: true)

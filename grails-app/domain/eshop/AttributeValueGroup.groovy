@@ -1,21 +1,14 @@
 package eshop
 
-class AttributeValue {
+class AttributeValueGroup {
     static auditable = true
     String value
     Boolean deleted=false
-    AttributeValueGroup group
 
-    static searchable = {
-        root false
-    }
+    static hasMany = [values: AttributeValue]
 
     static constraints = {
         value(maxSize: 4000)
         deleted(nullable: true)
-        group nullable: true
-    }
-    String toString(){
-        value
     }
 }

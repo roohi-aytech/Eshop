@@ -51,7 +51,10 @@ class MongoService {
 
         product.attributes.findAll { it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted }.each {
             if (it.value)
-                mongoProduct["a${it.attributeType.id}"] = it.value?.value
+                if (it.value?.group)
+                    mongoProduct["a${it.attributeType.id}"] = it.value?.group?.value
+                else
+                    mongoProduct["a${it.attributeType.id}"] = it.value?.value
             else if (it.attributeType.defaultValue)
                 mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
         }
@@ -60,6 +63,13 @@ class MongoService {
         attributeCategories.each {
             def attributes = Attribute.findAllByProductAndAttributeTypeInListAndValueIsNotNull(product, AttributeType.findAllByCategory(it))
             mongoProduct["ac${it.id}"] = attributes.collect { [id: it.attributeType.id, name: it.attributeType.name, valueId: it.value?.id, value: it.value?.value] }
+        }
+
+        product.variations
+//                .findAll {it?.variationGroup?.showInFilter}
+        .each{
+            if(it.variationValues.count {it} > 0)
+            mongoProduct["v${it.variationGroup?.id}"] = it.variationValues.collect {[id: it.id, name:it.value]}
         }
 
         mongoProduct.save(flush: true)

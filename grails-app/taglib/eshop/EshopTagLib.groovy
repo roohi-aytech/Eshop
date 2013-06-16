@@ -103,6 +103,12 @@ class EshopTagLib {
             out << "<a href='${link}'><span>${attrs.brandName}</span></a>"
     }
 
+    def filterStartVariation = { attrs, body ->
+        def f = "p${attrs.productType.id},${attrs.variation}|${attrs.value}"
+        def link = g.createLink(action: "filter", params: [f: f])
+        out << "<a href='${link}'>${attrs.value}</a>"
+    }
+
     def filterAddProductType = { attrs, body ->
         def f = "${attrs.f},p${attrs.id}"
         def link = g.createLink(action: params.action, params: params + [f: f])
@@ -113,20 +119,29 @@ class EshopTagLib {
         def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
         def f
         if (remove) {
-            def fItems = attrs.f.split(',')//.replace(",b${attrs.id}", "").replace("b${attrs.id},", "").replace("b${attrs.id}", "")
+            def fItems = attrs.f.split(',')
             fItems = fItems.findAll { it != "b${attrs.id}" }
-//            fItems.each{
-//                if(it.replace('b', '') == attrs.id.toString())
-//                    it = ''
-//            }
-            f = fItems.join(',')//.replace(',,', ',')
+            f = fItems.join(',')
         } else
             f = "${attrs.f},b${attrs.id}"
-        def link = (f == '' ? g.createLink(uri:'/') : g.createLink(action: params.action, params: params + [f: f]))
+        def link = (f == '' ? g.createLink(uri: '/') : g.createLink(action: params.action, params: params + [f: f]))
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
             out << "<a href='${link}'>${attrs.name}</span></a>"
+    }
+
+
+    def filterAddVariation = { attrs, body ->
+        def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
+        def f
+        if (remove) {
+            f = attrs.f.replace(",v${attrs.id}|${attrs.value}", "")
+            f = f.replaceFirst(/,/ + attrs.id + /\|/ + attrs.value + /$/, "")
+        } else
+            f = "${attrs.f},${attrs.id}|${attrs.value}"
+        def link = g.createLink(action: params.action, params: params + [f: f])
+        out << "<a href='${link}'>${attrs.value}</a>"
     }
 
     def filterAddAttribute = { attrs, body ->
@@ -182,12 +197,12 @@ class EshopTagLib {
             if (defaultModel.status == 'exists') {
                 def price = priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger()
                 if (price) {
-                    if(attrs.image)
+                    if (attrs.image)
                         out << """
-                            <a type="basket" original-title="${message(code:"add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a type="basket" original-title="${message(code: "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
-                        else
-                            out << """
+                    else
+                        out << """
                             <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
                             """
                 } else {
@@ -211,7 +226,7 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-            <a type="wish" original-title="${message(code:"add-to-wishList")}" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
+            <a type="wish" original-title="${message(code: "add-to-wishList")}" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
             """
         else
             out << """
@@ -228,7 +243,7 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-                <a type="compare" original-title="${message(code:"add-to-compareList")}" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
+                <a type="compare" original-title="${message(code: "add-to-compareList")}" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
                 """
         else
             out << """
