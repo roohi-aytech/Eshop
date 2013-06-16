@@ -10,6 +10,8 @@
     <canonical:show/>
     <meta name="robots" content="index, follow" />
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M" />
+    <script language="javascript" type="text/javascript" src="${resource(dir:'js', file:'ieFix.js')}"></script>
+    <g:javascript library="jquery"></g:javascript>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet"
@@ -20,8 +22,6 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.rollbar.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.tipsy.css')}"/>
-
-    <g:javascript library="jquery"></g:javascript>
 
     <r:layoutResources/>
     <script type="text/javascript"
