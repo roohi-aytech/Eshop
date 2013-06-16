@@ -26,7 +26,7 @@ environments {
 //            url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
-            password = "Neters11"
+            password = ""
             pooled = true
             logSql = false
             driverClassName = "com.mysql.jdbc.Driver"
