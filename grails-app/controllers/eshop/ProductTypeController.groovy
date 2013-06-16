@@ -124,12 +124,18 @@ class ProductTypeController {
             }
 
             if (!hasAttr) {
-                def attributeValue = new AttributeValue()
-                attributeValue.value = (nA) ? "N/A" : newValue
-                attributeValue.save()
+                def attributeValue
+                if(!attributeType.values.collect{it.value}.contains((nA) ? "N/A" : newValue)){
+                    attributeValue = new AttributeValue()
+                    attributeValue.value = (nA) ? "N/A" : newValue
+                    attributeValue.save()
 
-                attributeType.addToValues(attributeValue)
-                attributeType.save()
+                    attributeType.addToValues(attributeValue)
+                    attributeType.save()
+                }
+                else{
+                    attributeValue = attributeType.values.find {v -> v.value == ((nA) ? "N/A" : newValue)}
+                }
 
                 def newAttr = new Attribute()
                 newAttr.attributeType = attributeType

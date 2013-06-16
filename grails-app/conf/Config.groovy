@@ -64,6 +64,11 @@ grails.hibernate.cache.queries = true
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
+        searchable {
+            // disable bulk index on startup
+            bulkIndexOnStartup = false
+        }
+
         grails.logging.jul.usebridge = true
 
         //grails.resources.debug = true
@@ -76,7 +81,7 @@ environments {
         grails.resources.mappers.bundle.excludes = ['**/*.*']
         // zipped-resources
         grails.resources.mappers.zip.excludes = ['**/*.*']
-        grails.plugin.databasemigration.updateOnStart = true
+        grails.plugin.databasemigration.updateOnStart = false
         grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
     }
     production {
@@ -148,7 +153,7 @@ ckeditor {
     skipAllowedItemsCheck = false
     defaultFileBrowser = "ofm"
     upload {
-        basedir = "/home/uploads/"
+        basedir = "D:/DevDesk/Eshop/web-app/images/upload/"
         baseurl = "/image/get?path="
         overwrite = false
         link {
