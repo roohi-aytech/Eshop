@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name='layout' content='site'/>
-    <title><g:message code="springSecurity.login.title"/></title>
+    <title><g:message code="forgetPassword.title"/></title>
     <style type='text/css' media='screen'>
     #login {
         margin: 15px 0px;
@@ -88,57 +88,46 @@
     #login form {
         margin: 0;
     }
+
+    .comment{
+        color: grey;
+        padding-right: 10px;
+    }
     </style>
 </head>
 
 <body>
 <div id='login'>
     <div class='inner'>
-        <div class='fheader'><g:message code="springSecurity.login.header"/></div>
+        <div class='fheader'><g:message code="forgetPassword.title"/></div>
 
         <g:if test='${flash.message}'>
             <div class='login_message'>${flash.message}</div>
         </g:if>
-
-        <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
-            <p>
-                <label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
-                <input type='text' class='text_' name='j_username' id='username'/>
-            </p>
-
-            <p>
-                <label for='password'><g:message code="springSecurity.login.password.label"/>:</label>
-                <input type='password' class='text_' name='j_password' id='password'/>
-            </p>
-
-            <p id="remember_me_holder">
-                <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
-                       <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-                <label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
-            </p>
-
-            <p class="toolbar">
-
-            <div style="float: right;padding-right: 10px;">
-                <common:registerLink></common:registerLink>
-                <br/>
-                <a href="${createLink(controller: 'customer', action: 'forgetPassword')}">
-                    <g:message code="forgetPassword"/>
-                </a>
+        <g:if test="${!user}">
+            <div class="comment">
+                <g:message code="forgetPassword.description"/>
             </div>
 
-            <div style="float: left;padding-left:5px;">
-                <input type='submit' id="submit" class="btn btn-primary" width="80px"
-                       value='${message(code: "login")}'/>
-            </div>
-        </p>
-        </form>
+            <form action='${createLink(controller: 'customer', action: 'sendPasswordResetMail')}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+                <p>
+                    <label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
+                    <input type='text' class='text_' name='username' id='username'/>
+                </p>
+
+                <p class="toolbar">
+
+                    <input type='submit' id="submit" class="btn btn-primary" width="80px"
+                           value="${message(code: 'forgetPassword.sendMail')}"/>
+                </p>
+            </form>
+        </g:if>
     </div>
 </div>
 <script type='text/javascript'>
     <!--
     (function () {
-        document.forms['loginForm'].elements['j_username'].focus();
+        document.forms['loginForm'].elements['username'].focus();
     })();
     // -->
 </script>

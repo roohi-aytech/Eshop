@@ -530,6 +530,9 @@ ul.thumbnailGrid {
 }
 
 /*Navigation*/
+.sidebar-nav {
+    margin-bottom:0;
+}
 
 .sidebar-nav.home {
     padding-bottom: 0;

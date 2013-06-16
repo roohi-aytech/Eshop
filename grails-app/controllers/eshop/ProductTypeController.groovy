@@ -406,7 +406,7 @@ class ProductTypeController {
         else {
             attribute = new AttributeType(params)
         }
-        def attributeCategories = AttributeCategory.findAllByProductType(attribute.productType)
+        def attributeCategories = AttributeCategory.findAllByProductTypeAndDeleted(attribute.productType, false)
         render(template: "form_Attribute", model: [attributeTypeInstance: attribute, attributeCategories: attributeCategories])
     }
 

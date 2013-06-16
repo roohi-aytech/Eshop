@@ -38,7 +38,7 @@ class EshopTagLib {
             request.removeAttribute("attribute")
         }
 
-        def categories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType)
+        def categories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNullAndDeleted(productType, false)
         categories?.sort { it.sortIndex }.each {
             request.setAttribute("attributeCategory", it)
             out << renderAttributeCategory()
@@ -55,6 +55,8 @@ class EshopTagLib {
     }
     def renderAttributeCategory = { attrs, body ->
         AttributeCategory attributeCategory = request.getAttribute("attributeCategory") ?: attrs.attributeCategory
+        if(attributeCategory.deleted)
+            return
 
         out << "<fieldset class='form'>"
         out << "<legend>${attributeCategory?.name}</legend>"

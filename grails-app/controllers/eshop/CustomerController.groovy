@@ -212,4 +212,64 @@ class CustomerController {
             }
         }
     }
+
+    def forgetPassword() {
+
+    }
+
+    def sendPasswordResetMail() {
+
+        def user = User.findByUsername params.username
+
+        if (user) {
+            mailService.sendMail {
+                to user.email
+                subject message(code: 'passwordResetMail.subject')
+                html(view: "/messageTemplates/mail/passwordReset",
+                        model: [user: user])
+            }
+            flash.message = g.message(code: 'forgetPassword.succeed')
+        } else {
+            flash.message = g.message(code: 'forgetPassword.wrongUsername')
+        }
+
+        render view: 'forgetPassword', model: [user: user]
+    }
+
+    def resetPassword() {
+        def code
+        try {
+            code = new String(params.code.toString().decodeBase64()).split('_')[2]
+            if (code.toString() == params.id.toString()) {
+                def user = User.get(params.id)
+
+            } else {
+                render "code error"
+            }
+        } catch (ex) {
+            render "code error"
+        }
+    }
+
+    def saveResetPassword() {
+        def user = User.get(params.userId)
+        if (params.newPassword.trim() != '') {
+            if (params.newPassword == params.confirmPassword) {
+                user.password = params.newPassword
+                if (user.validate() && user.save()) {
+                    flash.message = message(code: "password.change.success")
+                    redirect(action: 'resetPassword', params: [id: params.userId, code: params.code, done: 1])
+                } else {
+                    flash.message = message(code: "password.change.fail")
+                    redirect(action: 'resetPassword', params: [id: params.userId, code: params.code])
+                }
+            } else {
+                flash.message = message(code: "password.change.notMatch")
+                redirect(action: 'resetPassword', params: [id: params.userId, code: params.code])
+            }
+        } else {
+            flash.message = message(code: "password.change.emptyPassword")
+            redirect(action: 'resetPassword', params: [id: params.userId, code: params.code])
+        }
+    }
 }
