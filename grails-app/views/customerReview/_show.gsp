@@ -1,10 +1,10 @@
-<div class="customer-review table">
-    <div class="table-row">
-        <div class="table-cell vote">
+<table class="customer-review table-simulated">
+    <tr class="table-row">
+        <td class="table-cell vote">
             <g:render template="/customerReview/vote" model="${[customerReviewInstance: customerReviewInstance]}"/>
-        </div>
+        </td>
 
-        <div class="table-cell">
+        <td class="table-cell">
 
             <g:if test="${customerReviewInstance?.title}">
                 <h4><g:fieldValue bean="${customerReviewInstance}" field="title"/></h4>
@@ -60,7 +60,7 @@
 
             <div id="newCustomerReviews_${customerReviewInstance?.id}">
             </div>
-        </div>
-    </div>
+        </td>
+    </tr>
 
-</div>
+</table>

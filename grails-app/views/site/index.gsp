@@ -18,47 +18,48 @@
 </head>
 
 <body>
-<div class="layout-container table">
-    <div class="table-row">
-        <div class="span180 table-cell">
+<table class="layout-container table-simulated">
+    <tr class="table-row">
+        <td class="span180 table-cell">
             <div class="well sidebar-nav home">
                 <g:render template="common/browsingTextualMenu"></g:render>
             </div>
             <g:render template="banners/rightsideBanners"/>
-        </div>
+        </td>
 
-        <div class="table-cell">
-            <div class="table">
-                <div class="table-row">
-
+        <td class="table-cell">
+            <table class="table-simulated">
+                <tr class="table-row">
+                    <td>
                     <g:render template="common/slideshowMain"></g:render>
-                </div>
+                    </td>
+                </tr>
 
-                <div class="table-row">
-                    <div class="table-cell">
-                        <div class="table">
-                            <div class="table-row">
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <table class="table-simulated">
+                            <tr class="table-row">
 
-                                <div class="span600 table-cell">
+                                <td class="span600 table-cell">
 
                                     <g:render template="common/slideshowSpecialSales"
                                               model="[specialSaleSlides: specialSaleSlides]"></g:render>
 
                                     <g:render template="common/browsingGraphicalMenu"></g:render>
-                                </div>
+                                </td>
 
-                                <div class="span200 table-cell">
+                                <td class="span200 table-cell">
                                     <g:render template="banners/enamad"></g:render>
                                     <g:render template="banners/leftsideBanners"></g:render>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 <script type="text/javascript">
     (function ($) {
         $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');

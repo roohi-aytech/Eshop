@@ -1,12 +1,12 @@
-<div class="customer-review table">
-    <div class="table-row" style="${customerReviewInstance.id == selectedId?'background-color:#e3e3e3;border:1px solid white;':''}">
-        <div class="table-cell vote">
+<table class="customer-review table-simulated">
+    <tr class="table-row" style="${customerReviewInstance.id == selectedId?'background-color:#e3e3e3;border:1px solid white;':''}">
+        <td class="table-cell vote">
             <span>
                 <span id="voteValue_${customerReviewInstance.id}">${customerReviewInstance.totalVotes}</span>
             </span>
-        </div>
+        </td>
 
-        <div class="table-cell body">
+        <td class="table-cell body">
 
             <g:if test="${customerReviewInstance?.title}">
                 <h4><g:fieldValue bean="${customerReviewInstance}" field="title"/></h4>
@@ -62,7 +62,7 @@
 
             <div id="newCustomerReviews_${customerReviewInstance?.id}">
             </div>
-        </div>
-    </div>
+        </td>
+    </tr>
 
-</div>
+</table>

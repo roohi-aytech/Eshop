@@ -39,107 +39,118 @@
 
 <body>
 
-<div class="layout-container table">
-    <div class="table-cell product-rightColumn">
-        <div class="product-card">
-            <div class="product-card-content" id="product-card">
-                <g:render template="product/card"
-                          model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
-            </div>
+<table class="layout-container table-simulated">
+    <tr class="table-row">
+        <td class="table-cell product-rightColumn">
+            <div class="product-card">
+                <div class="product-card-content" id="product-card">
+                    <g:render template="product/card"
+                              model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
+                </div>
 
-            <div class="product-card-footer">
-                <eshop:addToCompareList prodcutId="${product.id}"
-                                        productTitle="${product.toString()}"></eshop:addToCompareList>
-                <eshop:addToWishList prodcutId="${product.id}"
-                                     productTitle="${product.toString()}"></eshop:addToWishList>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-cell">
-        <div class="table">
-            <div class="table-row">
-                <div class="table-cell" style="padding-left:5px;">
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
-                        </li>
-                        <g:if test="${breadCrumb.size() > 1}">
-                            <g:each in="${breadCrumb[0..-1]}">
-                                <li>
-                                    <span class="divider">${">"}</span>
-                                    <a href="${it.href}">${it.name}</a>
-                                </li>
-                            </g:each>
-                        </g:if>
-                    </ul>
+                <div class="product-card-footer">
+                    <eshop:addToCompareList prodcutId="${product.id}"
+                                            productTitle="${product.toString()}"></eshop:addToCompareList>
+                    <eshop:addToWishList prodcutId="${product.id}"
+                                         productTitle="${product.toString()}"></eshop:addToWishList>
                 </div>
             </div>
+        </td>
 
-            <div class="table-row">
-                <div class="table">
-                    <div class="table-cell" id="product-description-area">
-
-                        <div class="white-panel">
-
-                            <g:if test="${product?.pageTitle}">
-                                <h1>${product?.pageTitle}</h1>
+        <td class="table-cell">
+            <table class="table-simulated">
+                <tr class="table-row">
+                    <td class="table-cell" style="padding-left:5px;">
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
+                            </li>
+                            <g:if test="${breadCrumb.size() > 1}">
+                                <g:each in="${breadCrumb[0..-1]}">
+                                    <li>
+                                        <span class="divider">${">"}</span>
+                                        <a href="${it.href}">${it.name}</a>
+                                    </li>
+                                </g:each>
                             </g:if>
-                            <g:else>
-                                <h1 class="font-koodak">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+                        </ul>
+                    </td>
+                </tr>
 
-                                <h2 class="small"><span class="font-koodak"><g:message code="productModel"/></span> <span class="font-calibri">${product?.name ?: ""}</span></h2>
-                            </g:else>
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <table class="table-simulated">
+                            <tr class="table-row">
+                                <td class="table-cell" id="product-description-area">
 
-                            <p>
-                                <g:message code="rate"/>:
-                                <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
-                            </p>
+                                    <div class="white-panel">
 
-                            <p class="brand-badge">
-                                <img width="80px" height="80px"
-                                     src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
-                                     alt="${product?.brand}"/>
-                            </p>
+                                        <g:if test="${product?.pageTitle}">
+                                            <h1>${product?.pageTitle}</h1>
+                                        </g:if>
+                                        <g:else>
+                                            <h1 class="font-koodak">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                            <g:render template="product/variation"/>
+                                            <h2 class="small"><span class="font-koodak"><g:message
+                                                    code="productModel"/></span> <span
+                                                    class="font-calibri">${product?.name ?: ""}</span></h2>
+                                        </g:else>
 
-                            <p>
-                                <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-                                <g:set var="price" value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
-                            </a>
-                            </p>
+                                        <p>
+                                            <g:message code="rate"/>:
+                                            <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
+                                        </p>
+
+                                        <p class="brand-badge">
+                                            <img width="80px" height="80px"
+                                                 src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
+                                                 alt="${product?.brand}"/>
+                                        </p>
+
+                                        <g:render template="product/variation"/>
+
+                                        <p>
+                                            <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+                                            <g:set var="price"
+                                                   value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
+                                        </a>
+                                        </p>
+                                    </div>
+                                </td>
+
+                                <td class="table-cell product-imageColumn">
+                                    <div><g:render template="product/zoom"/></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <div class="white-panel">
+                            <h3><g:message code="product.specifications"></g:message></h3>
+                            <g:render template="product/attributes"
+                                      model="${[categories: rootAttributeCategories]}"></g:render>
+
+                            <hr/>
+                            <g:render template="product/description"/>
+                            <g:render template="../customerReview/resources"
+                                      model="${['product': product]}"></g:render>
+                            <g:render template="../customerReview/list"
+                                      model="${['product': product]}"></g:render>
+                            <g:render template="../customerReview/create"
+                                      model="${['product': product]}"></g:render>
+                            <hr/>
+                            <g:render template="common/productCarousel"
+                                      model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"></g:render>
                         </div>
-                    </div>
-
-                    <div class="table-cell product-imageColumn">
-                        <div><g:render template="product/zoom"/></div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="table-row">
-                <div class="table-cell">
-                    <div class="white-panel">
-                        <h3><g:message code="product.specifications"></g:message></h3>
-                        <g:render template="product/attributes"
-                                  model="${[categories: rootAttributeCategories]}"></g:render>
-
-                        <hr/>
-                        <g:render template="product/description"/>
-                        <g:render template="../customerReview/resources" model="${['product': product]}"></g:render>
-                        <g:render template="../customerReview/list" model="${['product': product]}"></g:render>
-                        <g:render template="../customerReview/create" model="${['product': product]}"></g:render>
-                        <hr/>
-                        <g:render template="common/productCarousel"
-                                  model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"></g:render>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>

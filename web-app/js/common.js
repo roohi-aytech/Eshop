@@ -2,8 +2,9 @@ $(document).ready(function () {
 
     $(".showbiz .thumbnail").hoverIntent(function () {
 
+        $(this).find('img').first().css('position', 'absolute');
+
         $(this).find('img').first().stop().animate({
-            'position': 'absolute',
             'right': '0',
             'margin-right': '0',
             'margin-left': '0',
@@ -14,9 +15,10 @@ $(document).ready(function () {
         });
 
         $(this).find('.title').first().stop().animate({
-            'top': '0',
+//            'top': '0',
             'margin-right': '60px',
-            'margin-left': '0'
+            'margin-left': '0',
+            'margin-top': '0'
         });
 
         $(this).find('.attributes').first().stop().animate({
@@ -32,7 +34,7 @@ $(document).ready(function () {
     }, function () {
 
         $(this).find('img').first().stop().animate({
-            'right': 'auto',
+//            'right': 'auto',
             'margin-right': $(this).width()/2 - 80,
             'margin-left': $(this).width()/2 - 80,
             'border-radius': '4px',
@@ -44,7 +46,8 @@ $(document).ready(function () {
         $(this).find('.title').first().stop().animate({
             'top': '168px',
             'margin-right': '30px',
-            'margin-left': '30px'
+            'margin-left': '30px',
+            'margin-top': '168px'
         });
 
         $(this).find('.attributes').first().stop().animate({
@@ -91,6 +94,8 @@ $(document).ready(function () {
 
 
     });
+
+//    angular.bootstrap(document);
 });
 
 
@@ -131,6 +136,8 @@ function resizeThumbnails() {
     }, function(){
         lastHoveredCarouselButton = null;
     });
+
+//    $('#searchPhrase').css('width', ($('.search-input-box').width() - 5) + 'px');
 }
 
 var lastHoveredCarouselButton;
