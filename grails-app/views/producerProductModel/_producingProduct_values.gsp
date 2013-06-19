@@ -1,7 +1,7 @@
 <%@ page import="eshop.Brand" %>
-<div style="display:table;">
-    <div style="display: table-row">
-        <div style="padding-left: 60px; display: table-cell" >
+<table style="display:table;">
+    <tr style="display: table-row">
+        <td style="padding-left: 60px; display: table-cell" >
 
             <fieldset>
                 <legend><g:message code="cooperationWay"/></legend>
@@ -87,9 +87,9 @@
 
             </fieldset>
 
-        </div>
+        </td>
 
-        <div style="display: table-cell">
+        <td style="display: table-cell">
 
             <div class="fieldcontain ${hasErrors(bean: producerProductModelInstance, field: 'settlement', 'error')} ">
                 <label for="settlement">
@@ -157,9 +157,9 @@
             </div>
 
 
-        </div>
-    </div>
-</div>
+        </td>
+    </tr>
+</table>
 
 
 

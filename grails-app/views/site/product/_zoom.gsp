@@ -30,6 +30,8 @@
                 $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor, function() {});
             }
         });
+
+        $(".etalage_small_thumbs ul li img[src$='50x50']").parent().fadeIn();
     });
 </g:javascript>
 

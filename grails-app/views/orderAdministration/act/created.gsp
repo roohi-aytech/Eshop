@@ -62,7 +62,7 @@
 <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
 <div>
     <g:render template="show" model="${[orderInstance:order]}"/>
-    <table class="clear table" dir="rtl">
+    <table class="clear table-simulated" dir="rtl">
         <tr>
             <th><g:message code="orderItem.product"/></th>
             <th><g:message code="orderItem.productModel"/></th>

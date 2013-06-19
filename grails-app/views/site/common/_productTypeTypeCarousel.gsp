@@ -2,39 +2,43 @@
 <g:javascript src="jquery.themepunch.plugins.js"></g:javascript>
 <g:javascript src="jquery.themepunch.showbizpro.js"></g:javascript>
 <g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
-<div class="table productTypeType-carousel-container">
-    <div class="showbiz-navigation center sb-nav-dark table-cell">
+<table class="table-simulated productTypeType-carousel-container">
+    <tr>
+        <td class="showbiz-navigation center sb-nav-dark table-cell">
 
-        <div class="sb-navigation-right" id="showbiz_right_${id}"><i class="icon-right-open"></i></div>
+            <div class="sb-navigation-right" id="showbiz_right_${id}"><i class="icon-right-open"></i></div>
 
-    </div>
+        </td>
 
-    <div id="carousel_${id}" class="showbiz-container table-cell">
-        <div class="showbiz" data-left="#showbiz_left_${id}" data-right="#showbiz_right_${id}">
-            <div class="overflowholder">
-                <ul class="productTypeType-carousel">
-                    <g:each in="${productTypeTypeLinks}" var="productTypeTypeLink">
-                        <li class="sb-showcase-skin">
-                            <a href="${productTypeTypeLink.href}">
-                                <img src="${createLink(controller: 'image', params: [type:'productTypeType', id:productTypeTypeLink.id, wh:'100x100'])}" alt="${productTypeTypeLink.name}">
-                                <div>${productTypeTypeLink.name}</div>
-                            </a>
-                        </li>
-                    </g:each>
-                </ul>
+        <td id="carousel_${id}" class="showbiz-container table-cell">
+            <div class="showbiz" data-left="#showbiz_left_${id}" data-right="#showbiz_right_${id}">
+                <div class="overflowholder">
+                    <ul class="productTypeType-carousel">
+                        <g:each in="${productTypeTypeLinks}" var="productTypeTypeLink">
+                            <li class="sb-showcase-skin">
+                                <a href="${productTypeTypeLink.href}">
+                                    <img src="${createLink(controller: 'image', params: [type: 'productTypeType', id: productTypeTypeLink.id, wh: '100x100'])}"
+                                         alt="${productTypeTypeLink.name}">
+
+                                    <div>${productTypeTypeLink.name}</div>
+                                </a>
+                            </li>
+                        </g:each>
+                    </ul>
+
+                    <div class="sbclear"></div>
+                </div>
 
                 <div class="sbclear"></div>
             </div>
+        </td>
 
-            <div class="sbclear"></div>
-        </div>
-    </div>
+        <td class="showbiz-navigation center sb-nav-dark table-cell">
+            <div class="sb-navigation-left" id="showbiz_left_${id}"><i class="icon-left-open"></i></div>
 
-    <div class="showbiz-navigation center sb-nav-dark table-cell">
-        <div class="sb-navigation-left" id="showbiz_left_${id}"><i class="icon-left-open"></i></div>
-
-    </div>
-</div>
+        </td>
+    </tr>
+</table>
 
 <div class="sb-clear"></div>
 
@@ -73,7 +77,7 @@
                 carousel: "on"
             });
         }
-        else{
+        else {
             var carousel = $('#carousel_${id} .productTypeType-carousel');
             carousel.parent().parent().parent().parent().replaceWith(carousel);
             carousel.removeClass('productTypeType-carousel').addClass('static-productTypeType-carousel');

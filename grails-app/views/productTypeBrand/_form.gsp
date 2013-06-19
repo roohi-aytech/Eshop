@@ -10,7 +10,7 @@
 <g:hiddenField name="id" value="${productTypeBrandInstance?.id}" />
 <g:hiddenField name="version" value="${productTypeBrandInstance?.version}" />
 
-<div style="display:table;">
+<div>
     <div class="fieldcontain ${hasErrors(bean: productTypeBrandInstance, field: 'productTypes', 'error')} ">
        <label for="productTypes">
            <g:message code="productTypeBrand.productTypes.label" default="Product Types"/>

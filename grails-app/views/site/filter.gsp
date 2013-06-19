@@ -38,27 +38,29 @@
 
 <body>
 
-<div class="layout-container table">
-    <div class="table-row">
-        <div class="span180 table-cell">
+<table class="layout-container table-simulated">
+    <tr class="table-row">
+        <td class="span180 table-cell">
             <div class="well sidebar-nav">
                 <g:render template="common/filteringTextualMenu"></g:render>
             </div>
             <g:render template="productType/article_list"/>
             <g:render template="banners/rightsideBanners"/>
-        </div>
+        </td>
 
-        <div class="table-cell">
-            <div class="table">
-                <div class="table-row">
-                    <g:render template="common/slideshowMain"></g:render>
-                </div>
+        <td class="table-cell">
+            <table class="table-simulated">
+                <tr class="table-row">
+                    <td>
+                        <g:render template="common/slideshowMain"></g:render>
+                    </td>
+                </tr>
 
-                <div class="table-row">
-                    <div class="table-cell">
-                        <div class="table">
-                            <div class="table-row">
-                                <div class="span600 table-cell">
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <table class="table-simulated">
+                            <tr class="table-row">
+                                <td class="span600 table-cell">
                                     <ul class="breadcrumb">
                                         <li>
                                             <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
@@ -83,20 +85,20 @@
                                                   model="${[productIds: filters.products.productIds]}"></g:render>
                                     %{--</g:if>--}%
 
-                                </div>
+                                </td>
 
-                                <div class="span200 table-cell">
+                                <td class="span200 table-cell">
                                     <g:render template="banners/enamad"></g:render>
                                     <g:render template="banners/leftsideBanners"></g:render>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 <script type="text/javascript">
     (function ($) {

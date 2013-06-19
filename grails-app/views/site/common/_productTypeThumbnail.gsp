@@ -1,8 +1,7 @@
 <div class="thumbnail">
-    <a class="thumbnail-link" href="${link.href}"
-       class="title">
-        <div class="content">
-            <div class="main">
+    <a class="thumbnail-link title" href="${link.href}">
+        %{--<div class="content">--}%
+            %{--<div class="main">--}%
                 <span class="image">
                     <span>
                         <span>
@@ -13,7 +12,7 @@
                 <h4>
                     ${link.name}
                 </h4>
-            </div>
-        </div>
+            %{--</div>--}%
+        %{--</div>--}%
     </a>
 </div>
