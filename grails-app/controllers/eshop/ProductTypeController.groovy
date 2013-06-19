@@ -109,44 +109,51 @@ class ProductTypeController {
 
         def productType = attributeType?.productType
         def setNewValue = params.setNewValue
-        boolean nA = params.nA
-        def newValue = params.newValue
-        boolean hasAttr
-
+        def newValue = (params.nA == "on") ? "N/A" : params.newValue
 
         productType.products.findAll().each {
-            hasAttr = false
-            for (attr in it.attributes.findAll()) {
-                if (attr.attributeType == attributeType) {
-                    hasAttr = true
-                    break
-                }
-            }
+            def attribute = it.attributes.find {atr -> atr.attributeType.id == attributeType.id}
+            if (!attribute){
+                attribute = new Attribute(attributeType: attributeType, product: it)
 
-            if (!hasAttr) {
-                def attributeValue
-                if(!attributeType.values.collect{it.value}.contains((nA) ? "N/A" : newValue)){
-                    attributeValue = new AttributeValue()
-                    attributeValue.value = (nA) ? "N/A" : newValue
-                    attributeValue.save()
+            def attributeValue = AttributeValue.findByValue(newValue)
 
-                    attributeType.addToValues(attributeValue)
+            attribute.value = attributeValue ?: new AttributeValue(value: newValue).save()
+                if (!attributeValue){
+                    attributeType.addToValues(attribute.value)
                     attributeType.save()
                 }
-                else{
-                    attributeValue = attributeType.values.find {v -> v.value == ((nA) ? "N/A" : newValue)}
-                }
 
-                def newAttr = new Attribute()
-                newAttr.attributeType = attributeType
-                newAttr.product = it
-                newAttr.value = attributeValue
+            attribute.save()
 
-                if (newAttr.save()) {
-                    it.attributes.add(newAttr)
-                    mongoService.storeProduct(it)
-                }
-            }
+        //    it.attributes.add(attribute)
+
+            mongoService.storeProduct(it)
+
+//            if (!attribute) {
+//                def attributeValue
+//                if(!attributeType.values.collect{it.value}.contains((nA) ? "N/A" : newValue)){
+//                    attributeValue = new AttributeValue()
+//                    attributeValue.value = (nA) ? "N/A" : newValue
+//                    attributeValue.save()
+//
+//                    attributeType.addToValues(attributeValue)
+//                    attributeType.save()
+//                }
+//                else{
+//                    attributeValue = attributeType.values.find {v -> v.value == ((nA) ? "N/A" : newValue)}
+//                }
+//
+//                def newAttr = new Attribute()
+//                newAttr.attributeType = attributeType
+//                newAttr.product = it
+//                newAttr.value = attributeValue
+//
+//                if (newAttr.save()) {
+//                    mongoService.storeProduct(it)
+//                }
+//            }
+        }
         }
     }
 
