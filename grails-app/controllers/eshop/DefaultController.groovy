@@ -22,6 +22,10 @@ class DefaultController {
         render(view: "/changeLog")
     }
 
+    def samandehi(){
+        render view: "/samandehi"
+    }
+
     def test(){
         render(view: "/test")
     }

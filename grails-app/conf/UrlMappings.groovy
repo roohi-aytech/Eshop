@@ -52,6 +52,11 @@ class UrlMappings {
             action = "contactUs"
         }
 
+        "/actfil.up"{
+            controller = "/default"
+            action = "samandehi"
+        }
+
 //        default mapping
         "/$controller/$action?/$id?"{
 			constraints {
