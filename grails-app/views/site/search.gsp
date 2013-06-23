@@ -38,30 +38,32 @@
 
 <body>
 
-<div class="layout-container table">
-    <div class="table-row">
+<table class="layout-container table-simulated">
+    <tr class="table-row">
 
         <g:if test="${filters.products.productIds.isEmpty()}">
         </g:if>
         <g:else>
-            <div class="span180 table-cell">
+            <td class="span180 table-cell">
                 <div class="well sidebar-nav">
                     <g:render template="common/filteringTextualMenu"></g:render>
                 </div>
-            </div>
+            </td>
         </g:else>
 
-        <div class="table-cell" ${filters.products.productIds.isEmpty()? "style='padding-right:5px;'":""}>
-            <div class="table">
-                <div class="table-row">
-                    <g:render template="common/slideshowMain"></g:render>
-                </div>
+        <td class="table-cell" ${filters.products.productIds.isEmpty() ? "style='padding-right:5px;'" : ""}>
+            <table class="table-simulated">
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <g:render template="common/slideshowMain"></g:render>
+                    </td>
+                </tr>
 
-                <div class="table-row">
-                    <div class="table-cell">
-                        <div class="table">
-                            <div class="table-row">
-                                <div class="span600 table-cell">
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <table class="table-simulated">
+                            <tr class="table-row">
+                                <td class="span600 table-cell">
                                     <ul class="breadcrumb">
                                         <li class="active">
                                             <g:message code="search"/>
@@ -86,20 +88,20 @@
                                         <g:render template="common/productGrid"
                                                   model="${[productIds: filters.products.productIds]}"></g:render>
                                     </g:else>
-                                </div>
+                                </td>
 
-                                <div class="span200 table-cell">
+                                <td class="span200 table-cell">
                                     <g:render template="banners/enamad"></g:render>
                                     <g:render template="banners/leftsideBanners"></g:render>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 <script type="text/javascript">
     (function ($) {

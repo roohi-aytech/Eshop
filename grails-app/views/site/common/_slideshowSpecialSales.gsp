@@ -68,15 +68,15 @@
                 keyboardNav: true
             });
 
-        <g:each in="${specialSaleSlides}" var="specialSaleSlide">
-            $('#countdown${specialSaleSlide.id}').jCountdown({
-                    timeText: '2013/12/01 12:15:16',
-                    displayLabel: false,
-                    displayDay: false,
-                    width:200,
-                    reflection: false
-                });
-        </g:each>
+        %{--<g:each in="${specialSaleSlides}" var="specialSaleSlide">--}%
+            %{--$('#countdown${specialSaleSlide.id}').jCountdown({--}%
+                    %{--timeText: '2013/12/01 12:15:16',--}%
+                    %{--displayLabel: false,--}%
+                    %{--displayDay: false,--}%
+                    %{--width:200,--}%
+                    %{--reflection: false--}%
+                %{--});--}%
+        %{--</g:each>--}%
         });
     </g:javascript>
 </g:if>

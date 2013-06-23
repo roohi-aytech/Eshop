@@ -52,6 +52,16 @@ class UrlMappings {
             action = "contactUs"
         }
 
+        "/termsAndConditions"{
+            controller = "site"
+            action = "termsAndConditions"
+        }
+
+        "/actfil.up"{
+            controller = "/default"
+            action = "samandehi"
+        }
+
 //        default mapping
         "/$controller/$action?/$id?"{
 			constraints {

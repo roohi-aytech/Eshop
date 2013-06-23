@@ -16,56 +16,62 @@
 </head>
 
 <body>
-<div class="layout-container table">
-    <div class="table-cell span180">
-        <g:render template="productType/article_list"/>
-        <div class="well sidebar-nav">
-            <g:render template="common/browsingTextualMenu"></g:render>
-        </div>
-    </div>
-
-    <div class="table-cell">
-        <div class="table">
-            <div class="table-row">
-                <div class="table-cell" style="padding-left:5px;">
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
-                            <span class="divider">${">"}</span>
-                        </li>
-                        <g:if test="${breadCrumb.size() > 1}">
-                            <g:each in="${breadCrumb[0..-1]}">
-                                <li>
-                                    <a href="${it.href}">${it.name}</a>
-                                    <span class="divider">${">"}</span>
-                                </li>
-                            </g:each>
-                        </g:if>
-                        <li class="active">${article.name}</li>
-                    </ul>
-                </div>
+<table class="layout-container table-simulated">
+    <tr class="table-row">
+        <td class="table-cell span180">
+            <g:render template="productType/article_list"/>
+            <div class="well sidebar-nav">
+                <g:render template="common/browsingTextualMenu"></g:render>
             </div>
+        </td>
 
-            <div class="table-row">
-                <div class="table">
-                    <div class="table-cell" id="product-description-area">
+        <td class="table-cell">
+            <table class="table-simulated">
+                <tr class="table-row">
+                    <td class="table-cell" style="padding-left:5px;">
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
+                                <span class="divider">${">"}</span>
+                            </li>
+                            <g:if test="${breadCrumb.size() > 1}">
+                                <g:each in="${breadCrumb[0..-1]}">
+                                    <li>
+                                        <a href="${it.href}">${it.name}</a>
+                                        <span class="divider">${">"}</span>
+                                    </li>
+                                </g:each>
+                            </g:if>
+                            <li class="active">${article.name}</li>
+                        </ul>
+                    </td>
+                </tr>
 
-                        <div class="white-panel">
-                            <h2>${article.name}</h2>
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <table class="table-simulated">
+                            <tr class="table-row">
+                                <td class="table-cell" id="product-description-area">
 
-                            <div class="article-summary">
-                                ${article.summary}
-                            </div>
+                                    <div class="white-panel">
+                                        <h2>${article.name}</h2>
 
-                            <div class="article-text">
-                                ${article.text}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                        <div class="article-summary">
+                                            ${article.summary}
+                                        </div>
+
+                                        <div class="article-text">
+                                            ${article.text}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

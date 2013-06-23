@@ -33,28 +33,28 @@
     }
 </script>
 
-<div class="table product-slideShow">
-    <div class="table-row">
-        <div class="table-cell image-list">
-            <div class="table">
-                <div class="table-row">
-                    <div class="table-cell">
+<table class="table-simulated product-slideShow">
+    <tr class="table-row">
+        <td class="table-cell image-list">
+            <table class="table-simulated">
+                <tr class="table-row">
+                    <td class="table-cell">
                         <g:each in="${product.images}" var="image">
                             <img onclick="expandThumbnail(${image.id}, '${image.name}')" id="productThumbnail${image.id}" class="${selectedImage.id == image.id ? 'active' : ''}"
                                  src="${createLink(controller: 'image', params: [id: product.id, name: image.name, wh: '50x50'])}"/>
 
                         </g:each>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-        <div class="table-cell">
+        <td class="table-cell">
 
             <span id="zommArea" class="zoom">
                 <img src="${createLink(controller: 'image', params: [id: product.id, name: selectedImage.name, wh: '500x500'])}"
                      id='zoomAreaImage'/>
             </span>
-        </div>
-    </div>
-</div>
+        </td>
+    </tr>
+</table>
