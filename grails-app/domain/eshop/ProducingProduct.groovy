@@ -29,7 +29,7 @@ class ProducingProduct {
     String transportationCost
 
     String addedValue
-    double addedValueDescription
+    Double addedValueDescription
 
     static belongsTo = [Producer]
 
@@ -79,6 +79,6 @@ class ProducingProduct {
     String toString(){
         def res = ""
         productTypes.each {res = res + " " + it}
-        res + ": " + (brand != null ? brand.toString() : "") + ", " + guarantee
+        res
     }
 }
