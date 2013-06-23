@@ -531,6 +531,10 @@ class SiteController {
         render view: '/site/statics/contact_us'
     }
 
+    def termsAndConditions() {
+        render view: '/site/statics/rights_and_laws'
+    }
+
     def sendMail() {
 
         if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
