@@ -13,7 +13,6 @@ class ProducingProductController {
         redirect(action: "list", params: params)
     }
 
-
     def form(){
         def producingProductInstance
         if(params.id)
@@ -60,8 +59,12 @@ class ProducingProductController {
             brand = null
 
         if (params.productTypes){
-            params.productTypes.each{
-                producerProductTypes.add(it.toLong())
+            if(params.productTypes instanceof String)
+                producerProductTypes.add(params.productTypes.toLong())
+            else{
+                for (ptId in params.productTypes) {
+                    producerProductTypes.add(ptId.toLong())
+                }
             }
         }
         else

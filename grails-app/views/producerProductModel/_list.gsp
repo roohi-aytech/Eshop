@@ -17,7 +17,7 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${ProducerProductModel}"
              showCommand="false"
-             maxColumns="5"
+             maxColumns="3"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerProductModelGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form",controller: "producerProductModel", params: ['productModel.id': productModelInstance.id])}&id=#id#",saveAction:"${g.createLink(action: "save",controller: "producerProductModel")}", icon: "application_edit"], [handler: "deleteProducerProductModel(#id#)", icon: "application_delete"]]}">
         <rg:criteria>

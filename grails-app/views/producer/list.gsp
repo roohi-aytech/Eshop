@@ -35,7 +35,17 @@
                 <rg:nest name="brand">
                     <rg:like name="name" label='brand'/>
                 </rg:nest>
+                <rg:nest name="productTypes">
+                    <rg:like name="name" label='productType'/>
+                </rg:nest>
             </rg:nest>
+            <rg:nest name="producerStaffs">
+
+                    <rg:like name="lastName" label='lastName'/>
+
+            </rg:nest>
+
+
 
             <rg:filterGrid grid="ProducerGrid" label='search'/>
         </rg:criteria>
