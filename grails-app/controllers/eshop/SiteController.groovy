@@ -555,8 +555,15 @@ class SiteController {
 
         mailService.sendMail {
             to params.department
-            subject "${message(code: 'contactUs.email.subject')} ${params.firstName} ${params.lastName}"
-            body params.body
+            subject "${message(code: 'contactUs.email.subject')}"
+            html(view: "/messageTemplates/mail/contactUs",
+                    model: [
+                            firstName: params.firstName,
+                            lastName: params.lastName,
+                            email: params.email,
+                            phone: params.phone,
+                            body: params.body
+                    ])
         }
 
         flash.message = message(code: 'contactUs.email.successMessage')

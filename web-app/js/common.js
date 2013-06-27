@@ -72,7 +72,6 @@ $(document).ready(function () {
     $('.scrollable').rollbar({zIndex:80,wheelSpeed:10});
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live:true});
-//    $('.price-last-update').tipsy({live:true});
 
     $('.has-tipsy').each(function(){
         var tipContainer = $(this).parent().parent().find('.tips-container');
@@ -95,8 +94,17 @@ $(document).ready(function () {
 
     });
 
-//    angular.bootstrap(document);
+    $(document).scroll(function(e){
+        setProductCartPosition()
+    });
+
 });
+
+function setProductCartPosition(){
+    $('.product-card').first().stop().animate({
+            'top': $(window).scrollTop() + "px"
+    }, 200);
+}
 
 
 function changeAddToBasketButtonLabel() {

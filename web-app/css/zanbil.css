@@ -2275,8 +2275,9 @@ ul.nav.nav-tabs {
 /*product card*/
 .product-card {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-    position: fixed;
+    position: absolute;
     right: 5px;
+    top: 0;
     width: 180px;
 }
 
@@ -2792,6 +2793,10 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     border-radius: 4px;
     padding: 4px;
     padding-right: 8px;
+}
+
+.static-product-carousel li{
+    max-width: 220px;
 }
 
 .footer1 .showbiz .thumbnail .attributes {
