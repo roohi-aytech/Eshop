@@ -82,8 +82,14 @@ class VariationGroupController {
             if (baseProduct instanceof Product) {
                 def parentproductvariation = baseProduct?.productTypes.find { true }?.variations?.find { it.variationGroup == variationGroup }
                 variationValues = parentproductvariation?.variationValues
+
+                variation?.variationValues?.each {
+                    if(!variationValues.contains(it))
+                        variationValues.add(it)
+                }
             }
         }
+
         if (!variationGroup)
             variationGroup = new VariationGroup()
         if (!variation)
