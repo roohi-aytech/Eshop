@@ -28,11 +28,11 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/mail-1.0.1/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -207,7 +207,6 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ws-client-1.0/lib" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/burning-image-0.5.1/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.5.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
@@ -240,6 +239,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.activation/activation/jars/activation-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.mail/mail/jars/mail-1.4.3.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.atmosphere/atmosphere-runtime/jars/atmosphere-runtime-1.1.0-SNAPSHOT.jar!/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
