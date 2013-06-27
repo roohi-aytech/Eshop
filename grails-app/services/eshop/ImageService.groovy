@@ -7,6 +7,7 @@ import javax.imageio.ImageIO
 import java.awt.Image
 
 class ImageService {
+
     def fileService
     def burningImageService
     def grailsApplication
@@ -19,6 +20,19 @@ class ImageService {
             [width: 100, height: 100],
             [width: 50, height: 50]
     ]
+
+    def getImageSize(Content img, Product product) {
+        byte[] bytes = fileService.getFileContent(img.name, "image", fileService.filePath(product).toString()) as byte[]
+        def image = ImageIO.read(new ByteInputStream(bytes, bytes.length))
+        if (!image){
+            img.dynamicProperties.width = 0
+            img.dynamicProperties.height = 0
+        }
+        else{
+            img.dynamicProperties.width = image.width
+            img.dynamicProperties.height = image.height
+        }
+    }
 
     def getImage(Content img, String wh, String parent, def watermark) {
         byte[] bytes

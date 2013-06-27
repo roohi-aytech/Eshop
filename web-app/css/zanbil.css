@@ -2417,6 +2417,10 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     margin-right: 5px;
 }
 
+.etalage_thumb_active a{
+    cursor: default !important;
+}
+
 .loading {
     margin: auto;
     margin-top: 20px;
