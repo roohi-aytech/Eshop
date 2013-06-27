@@ -472,10 +472,16 @@ class ProductTypeController {
                 mustRemove << it
             }
         }
-        mustRemove.each {
-            attributeType.groups?.removeFromGroups(it)
-            it.delete()
+
+        attributeType.groups = attributeType.groups.findAll {group ->
+            !mustRemove.collect {it.id}.contains(group.id)
         }
+        mustRemove.each {
+//            attributeType.groups == attributeType.groups.findAll{group -> group.id != it.id}
+            it.deleted = true
+            it.save()
+        }
+
         if (params.valueGroups_ instanceof String) {
             attributeType.addToGroups(new AttributeValueGroup(value: params.valueGroups_).save())
         } else {
@@ -527,9 +533,9 @@ class ProductTypeController {
 
         //save product type
         attributeType.save()
-        attributeType.productType.products.each {
-            mongoService.storeProduct(it)
-        }
+//        attributeType.productType.products.each {
+//            mongoService.storeProduct(it)
+//        }
         render "0"
     }
 

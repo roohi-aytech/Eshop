@@ -208,15 +208,17 @@ class EshopTagLib {
                             <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
                             """
                 } else {
-                    out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
+                    out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
                 }
             } else if (defaultModel.status == 'not-exists') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
+            } else if (defaultModel.status == 'inquiry-required') {
+                out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
             } else if (defaultModel.status == 'coming-soon') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.comingSoon'))
             }
         } else
-            out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
+            out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
     }
 
     def addToWishList = { attrs, body ->
