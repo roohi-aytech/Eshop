@@ -94,6 +94,12 @@ class ImageController {
                     content = account.bankLogo
                 }
                 break;
+            case 'banner':
+                def banner = Banner.get(params.id)
+                if (banner) {
+                   content = banner.image
+                }
+                break;
         }
 
         if (content) {

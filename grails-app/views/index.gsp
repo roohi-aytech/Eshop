@@ -19,17 +19,20 @@
             </h3>
             <ul>
                 <li>
-                    <g:link controller="orderAdministration" action="list" params="${[status:OrderHelper.STATUS_CREATED]}"><img
+                    <g:link controller="orderAdministration" action="list"
+                            params="${[status: OrderHelper.STATUS_CREATED]}"><img
                             src="images/inquire.png"/><span><g:message
                             code="navigation.manage.order.created"
                             default="Users"/></span></g:link></li>
                 <li>
-                    <g:link controller="orderAdministration" action="list" params="${[status:OrderHelper.STATUS_PAID]}"><img
+                    <g:link controller="orderAdministration" action="list"
+                            params="${[status: OrderHelper.STATUS_PAID]}"><img
                             src="images/send.png"/><span><g:message
                             code="navigation.manage.order.paid"
                             default="Users"/></span></g:link></li>
                 <li>
-                    <g:link controller="orderAdministration" action="list" params="${[status:OrderHelper.STATUS_TRANSMITTED]}"><img
+                    <g:link controller="orderAdministration" action="list"
+                            params="${[status: OrderHelper.STATUS_TRANSMITTED]}"><img
                             src="images/deliver.png"/><span><g:message
                             code="navigation.manage.order.transmitted"
                             default="Users"/></span></g:link></li>
@@ -79,7 +82,6 @@
                                 src="images/staff.png"/><span><g:message
                                 code="staffRole.label"
                                 default="Staff Roles"/></span></g:link></li>
-
 
                 </sec:ifAnyGranted>
             </ul>
@@ -136,7 +138,6 @@
                             code="navigation.manage.waitingPaymentRequests"
                             default="Users"/></span></g:link></li>
 
-
             </ul>
 
         </sec:ifAllGranted>
@@ -155,6 +156,10 @@
                             src="images/slideshow.png"/><span><g:message
                             code="navigation.manage.slideshow"
                             default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="banner" action="list"><img
+                            src="images/banners.png"/><span><g:message
+                            code="navigation.manage.banners"/></span></g:link></li>
                 <li>
                     <g:link controller="province" action="list"><img
                             src="images/globe.png"/><span><g:message
