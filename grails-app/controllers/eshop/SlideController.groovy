@@ -42,7 +42,8 @@ class SlideController {
 
     def delete() {
         def slideInstance = Slide.get(params.id)
-        slideInstance.delete(flush: true)
+        slideInstance.deleted = true
+        slideInstance.save()
         render 0
     }
 

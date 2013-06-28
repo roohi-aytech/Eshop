@@ -1,4 +1,4 @@
-<%@ page import="eshop.Order" %>
+<%@ page import="eshop.OrderHelper; eshop.Order" %>
 
 
 <div id="show-order" class="content scaffold-show" role="main">
@@ -73,6 +73,16 @@
 
                 <span class="property-value" aria-labelledby="ownerEmail-label"><g:fieldValue bean="${orderInstance}"
                                                                                               field="ownerEmail"/></span>
+
+            </li>
+        </g:if>
+
+        <g:set var="creationTrackingLogItem" value="${orderInstance?.trackingLogs.find{it?.action == OrderHelper.ACTION_CREATION}}"/>
+        <g:if test="${creationTrackingLogItem}">
+            <li class="fieldcontain">
+                <span id="creationDate-label" class="property-label"><g:message code="order.created.date"/></span>
+
+                <span class="property-value" aria-labelledby="creationDate-label"><rg:formatJalaliDate date="${creationTrackingLogItem?.date}" hm="true" /></span>
 
             </li>
         </g:if>

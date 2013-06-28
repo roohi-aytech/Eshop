@@ -12,7 +12,7 @@ class EshopTagLib {
         request.setAttribute("product", product)
         HashSet definedProductTypes = new HashSet()
         request.setAttribute("definedProductTypes", definedProductTypes)
-        product.productTypes?.sort { it.name }?.each {
+        product.productTypes?.findAll {!it.deleted}?.sort { it.name }?.each {
             request.setAttribute("productType", it)
             out << renderProductTypeAttributes()
             request.removeAttribute("productType")
@@ -31,7 +31,7 @@ class EshopTagLib {
         out << "<fieldset class='form'>"
         out << "<legend>${productType.name}</legend>"
 
-        def attributeTypes = AttributeType.findAllByProductTypeAndCategoryIsNull(productType)
+        def attributeTypes = AttributeType.findAllByProductTypeAndCategoryIsNullAndDeleted(productType,false)
         attributeTypes?.sort { it.sortIndex }?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
@@ -61,14 +61,14 @@ class EshopTagLib {
         out << "<fieldset class='form'>"
         out << "<legend>${attributeCategory?.name}</legend>"
 
-        def attributeTypes = AttributeType.findAllByCategory(attributeCategory)
+        def attributeTypes = AttributeType.findAllByCategoryAndDeleted(attributeCategory,false)
         attributeTypes?.sort { it.sortIndex }?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
             request.removeAttribute("attribute")
         }
 
-        def attributeCategories = AttributeCategory.findAllByParentCategory(attributeCategory)
+        def attributeCategories = AttributeCategory.findAllByParentCategoryAndDeleted(attributeCategory,false)
         attributeCategories.sort { it.name }.each {
             request.setAttribute("attributeCategory", it)
             out << renderAttributeCategory()
@@ -208,15 +208,17 @@ class EshopTagLib {
                             <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
                             """
                 } else {
-                    out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
+                    out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
                 }
             } else if (defaultModel.status == 'not-exists') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
+            } else if (defaultModel.status == 'inquiry-required') {
+                out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
             } else if (defaultModel.status == 'coming-soon') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.comingSoon'))
             }
         } else
-            out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
+            out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
     }
 
     def addToWishList = { attrs, body ->

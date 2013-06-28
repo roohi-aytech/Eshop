@@ -106,6 +106,9 @@
                                                  src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
                                                  alt="${product?.brand}"/>
                                         </p>
+                                        <p>
+                                            <g:message code="productCode.label"/>: <b>${params.id}</b>
+                                        </p>
 
                                         <g:render template="product/variation"/>
 

@@ -10,6 +10,7 @@ class Slide {
     byte[] image1280
     byte[] image1440
     String url
+    Boolean deleted = false
 
     static hasMany = [productTypes: ProductType]
 

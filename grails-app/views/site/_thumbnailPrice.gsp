@@ -13,6 +13,6 @@
         </g:if>
     </g:if>
     <g:else>
-        <g:message code="product.price.notExists"/>
+        <g:message code="product.price.inquiryRequired"/>
     </g:else>
 </span>

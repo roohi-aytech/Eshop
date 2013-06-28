@@ -22,6 +22,14 @@
                 $('#lastNameValidator').css('display', 'inline-block');
                 isValid = false;
             }
+            if ($('#email').val().trim() == '') {
+                $('#emailValidator').css('display', 'inline-block');
+                isValid = false;
+            }
+//            if ($('#phone').val().trim() == '') {
+//                $('#phoneValidator').css('display', 'inline-block');
+//                isValid = false;
+//            }
 
             if ($('#body').val().trim() == '') {
                 $('#bodyValidator').css('display', 'inline-block');
@@ -50,7 +58,7 @@
             <h3>
                 تلفن تماس
             </h3>
-            42328-021
+            021-42328
         </div>
         <ul>
             <li>
@@ -123,6 +131,20 @@
                 <input type="text" name="lastName" id="lastName"/>
                 <span class="validator" id="lastNameValidator"><g:message
                         code="contactUs.email.lastName.validation.label"></g:message></span>
+            </div>
+
+            <div>
+                <label><g:message code="contactUs.email.email"/></label>
+                <input type="text" name="email" id="email"/>
+                <span class="validator" id="emailValidator"><g:message
+                        code="contactUs.email.email.validation.label"></g:message></span>
+            </div>
+
+            <div>
+                <label><g:message code="contactUs.email.phone"/></label>
+                <input type="text" name="phone" id="phone"/>
+                <span class="validator" id="phoneValidator"><g:message
+                        code="contactUs.email.phone.validation.label"></g:message></span>
             </div>
 
             <div>

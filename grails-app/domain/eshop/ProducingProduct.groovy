@@ -78,7 +78,7 @@ class ProducingProduct {
     }
     String toString(){
         def res = ""
-        productTypes.each {res = res + " " + it}
+        productTypes.each {res = res + ", " + it}
         res
     }
 }

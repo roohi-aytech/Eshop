@@ -248,6 +248,13 @@ ul.errors {
     display: block;
 }
 
+.inquiry-required-label {
+    color: #ff4500;
+    padding: 3px;
+    display: block;
+}
+
+
 .coming-soon-label {
     color: #ff4500;
     padding: 3px;
@@ -2268,8 +2275,9 @@ ul.nav.nav-tabs {
 /*product card*/
 .product-card {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-    position: fixed;
+    position: absolute;
     right: 5px;
+    top: 0;
     width: 180px;
 }
 
@@ -2415,6 +2423,10 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 #etalage {
     float: right;
     margin-right: 5px;
+}
+
+.etalage_thumb_active a{
+    cursor: default !important;
 }
 
 .loading {
@@ -2751,6 +2763,11 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     padding: 0;
 }
 
+.showbiz .thumbnail .title .inquiry-required-label {
+    padding: 0;
+    font-size:10px;
+}
+
 .showbiz .thumbnail a {
     height: 260px;
     display: block;
@@ -2776,6 +2793,10 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     border-radius: 4px;
     padding: 4px;
     padding-right: 8px;
+}
+
+.static-product-carousel li{
+    max-width: 220px;
 }
 
 .footer1 .showbiz .thumbnail .attributes {

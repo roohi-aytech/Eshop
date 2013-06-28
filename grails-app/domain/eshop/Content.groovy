@@ -5,6 +5,9 @@ class Content {
     String name
     String contentType
     byte[] fileContent
+    Map dynamicProperties = [:]
+
+    static transients = ['dynamicProperties']
 
     static hasMany = [variationValues:VariationValue]
 
