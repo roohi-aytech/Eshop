@@ -323,6 +323,9 @@ class SiteController {
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
+        def customerReviews = CustomerReview.findAllByProduct product
+        model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, { it.rate }) / customerReviews.count { it })
+
         model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []

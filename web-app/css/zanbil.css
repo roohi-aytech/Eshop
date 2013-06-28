@@ -2871,6 +2871,10 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     position: inherit;
 }
 
+.meta{
+    display: none;
+}
+
 
 
 

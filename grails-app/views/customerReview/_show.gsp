@@ -25,8 +25,13 @@
             </g:if>
 
             <g:if test="${customerReviewInstance?.rate}">
-                <eshop:rate identifier="hidCustomerReviewRate${customerReviewInstance.id}"
-                            currentValue="${customerReviewInstance.rate}" readOnly="true"/>
+                <div itemprop="aggregateRating" itemscope itemtype="http://data-vocabulary.org/Rating">
+                    <g:message code="rate"/>:
+                    <span class="meta" itemprop="value">${customerReviewInstance?.rate}</span>
+                    <meta itemprop="best" content="5"/>
+                    <eshop:rate identifier="hidCustomerReviewRate${customerReviewInstance.id}"
+                                currentValue="${customerReviewInstance.rate}" readOnly="true"/>
+                </div>
             </g:if>
 
             <g:if test="${customerReviewInstance?.body}">
@@ -53,8 +58,8 @@
             </div>
 
             <div class="childCustomerReviews">
-                <g:each in="${customerReviewInstance.customerReviewReviews.findAll {it.status == 'approved'}.sort {-it.totalVotes}}">
-                    <g:render template="/customerReview/show" model="${[customerReviewInstance:it]}"/>
+                <g:each in="${customerReviewInstance.customerReviewReviews.findAll { it.status == 'approved' }.sort { -it.totalVotes }}">
+                    <g:render template="/customerReview/show" model="${[customerReviewInstance: it]}"/>
                 </g:each>
             </div>
 

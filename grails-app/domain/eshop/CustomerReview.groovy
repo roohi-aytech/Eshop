@@ -13,8 +13,11 @@ class CustomerReview {
     CustomerReview parentReview
     String status
 
-    Integer getTotalVotes(){
-        votes.sum(0) {it.value} as Integer
+    Integer getTotalVotes() {
+        if (votes?.count { it } > 0)
+            return votes.sum(0, { it.value }) as Integer
+        else
+            return 0
     }
 
     static transients = ['totalVotes']
@@ -25,7 +28,7 @@ class CustomerReview {
 
     static searchable = {
 //        root false
-        only = ['title','body']
+        only = ['title', 'body']
     }
 
     static mapping = {
@@ -48,7 +51,7 @@ class CustomerReview {
     }
 
     @Override
-    String toString(){
+    String toString() {
         title
     }
 }
