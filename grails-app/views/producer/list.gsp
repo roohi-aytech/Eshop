@@ -58,6 +58,7 @@
     </script>
     <rg:grid domainClass="${Producer}"
              maxColumns="8"
+             sortname="name"
              showCommand="true"
              commands="${actions}"
              firstColumnWidth="50"

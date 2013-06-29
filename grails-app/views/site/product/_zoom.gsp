@@ -22,8 +22,8 @@
             zoom_easing: true,
             show_hint: true,
             click_callback: function (image_anchor, instance_id) {
-                if($('a[href=' + image_anchor + '] img.etalage_thumb_image').attr('zoomable') == '0')
-                    return;
+//                if($('a[href=' + image_anchor + '] img.etalage_thumb_image').attr('zoomable') == '0')
+//                    return;
                 $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
                 $("#myModal").modal({
                         backdrop: false,

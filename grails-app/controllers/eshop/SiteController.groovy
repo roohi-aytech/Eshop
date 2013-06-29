@@ -372,10 +372,10 @@ class SiteController {
 
         //fill zoomable property of images
         imageService.getImageSize(product.mainImage, product)
-        product.mainImage.dynamicProperties.zoomable = product.mainImage.dynamicProperties.width >= 700 && product.mainImage.dynamicProperties.height >= 700
+        product.mainImage.dynamicProperties.zoomable = product.mainImage.dynamicProperties.width >= 700 || product.mainImage.dynamicProperties.height >= 700
         product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
             imageService.getImageSize(it, product)
-            it.dynamicProperties.zoomable = it.dynamicProperties.width >= 700 && it.dynamicProperties.height >= 700
+            it.dynamicProperties.zoomable = it.dynamicProperties.width >= 700 || it.dynamicProperties.height >= 700
         }
 
         //update last visited products

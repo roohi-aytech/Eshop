@@ -2116,9 +2116,11 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-brand-carousel {
     margin-right: 0;
+    margin-bottom:0;
     list-style: none;
-    border: 1px solid #eeeeee;
+    /*border: 1px solid #eeeeee;*/
     border-radius: 3px;
+    text-align: center;
 }
 
 .static-brand-carousel li {
@@ -2136,9 +2138,11 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-productTypeType-carousel {
     margin-right: 0;
+    margin-bottom:0;
     list-style: none;
-    border: 1px solid #eeeeee;
+    /*border: 1px solid #eeeeee;*/
     border-radius: 3px;
+    text-align: center;
 }
 
 .static-productTypeType-carousel li {
@@ -2166,6 +2170,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
     width: 99%;
     margin: auto;
     margin-top: 5px;
+    text-align: center;
 }
 
 .productTypeType-carousel-container .showbiz-navigation {
