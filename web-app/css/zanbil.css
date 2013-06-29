@@ -1057,8 +1057,16 @@ input.search-query {
 }
 
 #link-wishList a span.counter {
-    margin-right: 19px;
-    margin-top: -25px;
+    background-color: #FF8C00;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 0 5px 2px 5px;
+    line-height: 14px;
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    opacity: 0.7;
     display: none;
 }
 
@@ -1075,8 +1083,16 @@ input.search-query {
 }
 
 #link-compareList a span.counter {
-    margin-right: 19px;
-    margin-top: -25px;
+    background-color: #FF8C00;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 0 5px 2px 5px;
+    line-height: 14px;
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    opacity: 0.7;
     display: none;
 }
 
@@ -1299,6 +1315,7 @@ table.attribute-list td {
 }
 
 .attribute-list.comparison .imageBorder {
+    text-align: center;
 }
 
 .attribute-list.comparison .imageBorder img {

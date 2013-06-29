@@ -50,8 +50,8 @@
                     <tr>
                         <td class="attributeName"><g:message code="product.type"/></td>
                         <g:each in="${productType.products}" var="product">
-                            <td class="attributeValue">
-                                ${product.type ?: '-'}
+                            <td class="attributeValue" ${productType.products.any{it.type?.title != productType.products.first().type?.title}? 'style="font-weight:bold"':''}>
+                                ${product.type?.title ?: '-'}
                             </td>
                         </g:each>
                     </tr>
@@ -85,7 +85,7 @@
                                     <b>${attributeType.item.name}</b>
                                 </td>
                                 <g:each in="${attributeType.values}" var="attribute">
-                                    <td class="attributeValue">
+                                    <td class="attributeValue" ${attributeType.values.any{it != attributeType.values.first()}? 'style="font-weight:bold"':''}>
                                         ${attribute ? attribute.replace('\n', '<br/>') : '-'}
                                     </td>
                                 </g:each>
