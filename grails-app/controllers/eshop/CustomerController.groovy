@@ -67,6 +67,9 @@ class CustomerController {
     def saveBasicInfo() {
         def customerInstance = new Customer()
 
+        customerInstance.firstName = params.firstName
+        customerInstance.lastName = params.lastName
+        customerInstance.sex = params.sex
         customerInstance.username = params.username
         customerInstance.password = params.password
         customerInstance.email = params.username

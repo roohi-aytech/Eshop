@@ -533,9 +533,9 @@ class ProductTypeController {
 
         //save product type
         attributeType.save()
-//        attributeType.productType.products.each {
-//            mongoService.storeProduct(it)
-//        }
+        attributeType.productType.products.each {
+            mongoService.storeProduct(it)
+        }
         render "0"
     }
 

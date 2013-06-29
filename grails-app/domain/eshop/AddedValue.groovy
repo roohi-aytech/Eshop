@@ -10,6 +10,7 @@ class AddedValue {
     Date startDate
     Date endDate
     int remainCount
+    Brand brand
     static hasMany = [variationValues: VariationValue]
 
     static mapping = {
@@ -23,6 +24,7 @@ class AddedValue {
         value()
         processTime()
         variationValues()
+        brand(nullable: true)
         startDate(nullable: true)
         endDate(nullable: true)
         remainCount(nullable: true)

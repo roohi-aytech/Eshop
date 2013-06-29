@@ -55,7 +55,7 @@
             </a>
         </li>
     </g:if>
-    <g:each in="${product?.images?.findAll { it?.id != product?.mainImage?.id }}">
+    <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name }}">
         <li>
             <a ${it?.dynamicProperties?.zoomable ? 'href=' + it?.id :''} >
                 <g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>
