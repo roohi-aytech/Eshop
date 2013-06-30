@@ -35,6 +35,29 @@
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
     <g:javascript src="browse.js"></g:javascript>
     <g:javascript src="jquery.raty.js"></g:javascript>
+    <script language="javascript" type="text/javascript">
+        var modal;
+        function showPriceHistogram(id) {
+            $("#priceHistogramModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
+            if (modal) {
+                modal.show();
+                $('#priceHistogramModal').addClass('in');
+            }
+            else {
+                modal = $("#priceHistogramModal").modal({
+                    backdrop: false,
+                    show: true
+                });
+            }
+            $("#priceHistogramModal .modal-body").load('${createLink(controller: 'productModel', action: 'priceHistogram')}/' + id, function () {
+            });
+        }
+
+        function hidePriceHistogram() {
+            $('#priceHistogramModal').removeClass('in');
+            modal.hide();
+        }
+    </script>
 </head>
 
 <body>
@@ -53,6 +76,17 @@
                                             productTitle="${product.toString()}"></eshop:addToCompareList>
                     <eshop:addToWishList prodcutId="${product.id}"
                                          productTitle="${product.toString()}"></eshop:addToWishList>
+                </div>
+
+                <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
+                     aria-labelledby="priceHistogramModalLabel" aria-hidden="true" style="width: 700px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                onclick="hidePriceHistogram();">×</button>
+                    </div>
+
+                    <div class="modal-body">
+                    </div>
                 </div>
             </div>
         </td>

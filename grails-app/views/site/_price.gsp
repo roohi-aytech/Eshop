@@ -1,3 +1,5 @@
+
+
 <span class="price">
 %{--<g:if test="${mainVal}">--}%
 %{--<span class="old"><g:formatNumber number="${mainVal}" type="number"/></span>--}%
@@ -11,5 +13,11 @@
                 <rg:formatJalaliDate date="${lastUpdate}"></rg:formatJalaliDate>
             </span>
         </g:if>
+        <a id="priceHistogram" class="priceHistogram"
+        %{--href="#priceHistogram"--}%
+           onclick="showPriceHistogram(${productModel.id});">
+            <g:message code="productModel.priceHistogram"/>
+        </a>
     </g:if>
 </span>
+

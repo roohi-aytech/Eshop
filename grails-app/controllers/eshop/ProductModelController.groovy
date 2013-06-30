@@ -200,4 +200,11 @@ class ProductModelController {
         [productModelInstance : productModelInstance]
     }
 
+
+
+    def priceHistogram(){
+        def productModel = ProductModel.get(params.id)
+        render template: 'priceHistogram', model: [productModel: productModel, priceList: Price.findAllByProductModel(productModel).sort{it.startDate}]
+    }
+
 }

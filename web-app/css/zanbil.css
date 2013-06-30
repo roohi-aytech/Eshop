@@ -1152,7 +1152,7 @@ h1 {
 }
 
 h2 {
-    font-family: times !important;
+    font-family: 'b koodak', koodak, times !important;
     font-size: 24px;
     margin-bottom: 10px;
 }
@@ -2301,6 +2301,7 @@ ul.nav.nav-tabs {
     right: 5px;
     top: 0;
     width: 180px;
+    z-index: 10000;
 }
 
 .product-card-content {
@@ -2387,7 +2388,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 }
 
 /*product image slideshow*/
-.modal {
+#myModal {
     position: fixed;
     top: 65px;
     right: 5px;
@@ -2398,7 +2399,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     /*height: 90%;*/
 }
 
-.modal-body {
+.modal .modal-body {
     /*top: 10% !important;*/
     max-height: 90% !important;
     /*bottom: 5% !important;*/
@@ -2408,17 +2409,21 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     margin-left: 25px !important;
 }
 
-.modal.fade.in {
+#myModal.fade.in {
     top: 65px;
 }
 
-.modal-header {
+.modal.fade.in {
+    top: 350px;
+}
+
+.modal .modal-header {
     border-bottom-width: 0 !important;
     height: 0 !important;
     padding: 0 !important;
 }
 
-.modal-header .close {
+.modal .modal-header .close {
     margin-left: 5px;
 }
 
@@ -2895,6 +2900,16 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
 
 .meta{
     display: none;
+}
+
+.priceHistogram{
+    background-image: url("../images/histogram.png");
+    display: block;
+    font-weight: normal;
+    padding-right: 20px;
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
 }
 
 
