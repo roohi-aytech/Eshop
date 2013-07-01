@@ -17,7 +17,7 @@ class PriceService {
             return [mainVal: 0D, showVal: 0D]
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
-        if(!price)
+        if (!price)
             return [mainVal: 0D, showVal: 0D]
 
         def priceVal = price?.rialPrice
@@ -26,9 +26,14 @@ class PriceService {
         //addedValues - everyWhere
         def addedValues = []
         addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "everyWhere"))
+        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
         productModel?.product?.productTypes?.each {
-            addedValues.addAll(getAddedvalues(it))
+            getAddedvalues(it).each {
+                if (!it.brand || it.brand.id == productModel.product.brand.id)
+                    addedValues.add(it)
+            }
         }
+
         addedValues?.each {
             if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
                 def val
@@ -40,14 +45,18 @@ class PriceService {
             }
         }
 
-
         def valueAddedVal = priceVal
         //addedValues - orderTime
         addedValues = []
         addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "orderTime"))
+        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
         productModel?.product?.productTypes?.each {
-            addedValues.addAll(getOrderTimeAddedValues(it))
+            getOrderTimeAddedValues(it).each {
+                if (!it.brand || it.brand.id == productModel.product.brand.id)
+                    addedValues.add(it)
+            }
         }
+
         addedValues?.each {
             if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
                 def val

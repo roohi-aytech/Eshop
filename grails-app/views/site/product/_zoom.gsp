@@ -22,8 +22,8 @@
             zoom_easing: true,
             show_hint: true,
             click_callback: function (image_anchor, instance_id) {
-                if($('a[href=' + image_anchor + '] img.etalage_thumb_image').attr('zoomable') == '0')
-                    return;
+//                if($('a[href=' + image_anchor + '] img.etalage_thumb_image').attr('zoomable') == '0')
+//                    return;
                 $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
                 $("#myModal").modal({
                         backdrop: false,
@@ -46,7 +46,7 @@
                 <g:set var="image"
                        value="${ImageIO.read(new ByteInputStream(mainImage?.fileContent, mainImage?.fileContent?.length))}"/>
                 <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
-                     width="50" height="50"
+                     width="50" height="50" itemprop="image"
                      src="<g:createLink controller="image"
                                         params="[id: product?.id, name: mainImage?.name, wh: '300x300']"/>"/>
                 <img class="etalage_source_image"
@@ -55,7 +55,7 @@
             </a>
         </li>
     </g:if>
-    <g:each in="${product?.images?.findAll { it?.id != product?.mainImage?.id }}">
+    <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name }}">
         <li>
             <a ${it?.dynamicProperties?.zoomable ? 'href=' + it?.id :''} >
                 <g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>

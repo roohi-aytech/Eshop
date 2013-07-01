@@ -17,7 +17,7 @@ class AddedValueController {
             addedValueInstance = AddedValue.get(params.id)
         else
             addedValueInstance = new AddedValue(params)
-        render(template: "form", model: [addedValueInstance: addedValueInstance])
+        render(template: "form", model: [addedValueInstance: addedValueInstance, showBrand: addedValueInstance.baseProduct instanceof ProductType])
     }
 
     def variation() {
@@ -40,7 +40,11 @@ class AddedValueController {
     }
 
     private def collectVariations(baseProduct) {
-        def variations = baseProduct.variations
+        def variations = []
+        baseProduct.variations.each(){ variation ->
+            if (!variations.any { it.variationGroup == variation.variationGroup })
+                variations.add(variation)
+        }
         if (baseProduct instanceof Product) {
             baseProduct.productTypes.each {
                 collectVariations(it).each { variation ->

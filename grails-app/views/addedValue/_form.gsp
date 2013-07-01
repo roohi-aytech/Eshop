@@ -69,6 +69,16 @@
              value="${addedValueInstance.remainCount?:0}"/>
 </div>
 
+<g:if test="${showBrand}">
+    <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'brand', 'error')} ">
+        <label for="brand">
+            <g:message code="addedValueInstance.brand.label" default="Brand"/>
+        </label>
+        <rg:autocomplete  domainClass="eshop.Brand" id="brand" like="true" value="${addedValueInstance?.brand?.id}" display="${addedValueInstance?.brand}"/>
+
+    </div>
+</g:if>
+
 
 <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'value', 'error')} required">
     <label for="value">

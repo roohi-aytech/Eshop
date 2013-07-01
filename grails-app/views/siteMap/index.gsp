@@ -17,6 +17,9 @@
         <a href="${createLink(action: 'products')}">Products</a>
     </li>
     <li>
+        <a href="${createLink(action: 'images')}">Images</a>
+    </li>
+    <li>
         <a href="${createLink(action: 'searches')}">Searches</a>
     </li>
 </ol>

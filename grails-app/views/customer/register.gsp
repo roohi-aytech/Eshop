@@ -109,6 +109,11 @@
     #register textarea {
         height: 83px;
     }
+
+    select {
+        display: block;
+        width: 373px;
+    }
     </style>
     <g:javascript>
 
@@ -159,8 +164,30 @@
             return true;
         }
 
+        function validateFirstName(){
+            $('#firstNameValidationMessage').html('');
+
+            var password = $('#firstName').val();
+            if(!password || password == '') {
+                $('#firstNameValidationMessage').html('${message(code: 'profile.firstName.notEmpty')}')
+                return false;
+            }
+            return true;
+        }
+
+        function validateLastName(){
+            $('#lastNameValidationMessage').html('');
+
+            var password = $('#lastName').val();
+            if(!password || password == '') {
+                $('#lastNameValidationMessage').html('${message(code: 'profile.lastName.notEmpty')}')
+                return false;
+            }
+            return true;
+        }
+
         function validate(){
-            if(validateUsername() && validatePassword() && validateConfirmPassword())
+            if(validateFirstName() && validateLastName() && validateUsername() && validatePassword() && validateConfirmPassword())
                 return true;
             return false;
         }
@@ -183,9 +210,35 @@
         <g:hiddenField name="id" value="${customerInstance?.id}"/>
         <g:hiddenField name="version" value="${customerInstance?.version}"/>
 
-        <g:form controller="customer" action='saveBasicInfo' method='POST' id='registerForm' name='registerForm' class='cssform'
+        <g:form controller="customer" action='saveBasicInfo' method='POST' id='registerForm' name='registerForm'
+                class='cssform'
                 autocomplete='off'>
         %{--<div class="column1">--}%
+            <p>
+                <label for='firstName'><g:message code="springSecurity.register.firstName.label"/>:</label>
+                <span id="firstNameValidationMessage"></span>
+                <input type='text' onblur="validateFirstName()" class='text_' name='firstName' id='firstName'
+                       value="${customerInstance.firstName}"/>
+            </p>
+
+            <p>
+                <label for='lastName'><g:message code="springSecurity.register.lastName.label"/>:</label>
+                <span id="lastNameValidationMessage"></span>
+                <input type='text' onblur="validateLastName()" class='text_' name='lastName' id='lastName'
+                       value="${customerInstance.lastName}"/>
+            </p>
+
+            <p>
+                <label for='sex'><g:message code="springSecurity.register.sex.label"/>:</label>
+                <span id="sexValidationMessage"></span>
+                <select name="sex" id="sex" style="display: block">
+                    <option value="female" ${customerInstance.sex == 'female' ? 'selected' : ''}><g:message
+                            code="sex.female"></g:message></option>
+                    <option value="male" ${customerInstance.sex == 'male' ? 'selected' : ''}><g:message
+                            code="sex.male"></g:message></option>
+                </select>
+            </p>
+
             <p>
                 <label for='username'><g:message code="springSecurity.register.username.label"/>:</label>
                 <span id="usernameValidationMessage"></span>
@@ -257,7 +310,7 @@
 <script type='text/javascript'>
     <!--
     (function () {
-        document.forms['registerForm'].elements['username'].focus();
+        document.forms['registerForm'].elements['firstName'].focus();
     })();
     // -->
 </script>

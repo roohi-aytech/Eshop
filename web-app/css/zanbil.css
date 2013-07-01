@@ -1057,8 +1057,16 @@ input.search-query {
 }
 
 #link-wishList a span.counter {
-    margin-right: 19px;
-    margin-top: -25px;
+    background-color: #FF8C00;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 0 5px 2px 5px;
+    line-height: 14px;
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    opacity: 0.7;
     display: none;
 }
 
@@ -1075,8 +1083,16 @@ input.search-query {
 }
 
 #link-compareList a span.counter {
-    margin-right: 19px;
-    margin-top: -25px;
+    background-color: #FF8C00;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 0 5px 2px 5px;
+    line-height: 14px;
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    opacity: 0.7;
     display: none;
 }
 
@@ -1136,7 +1152,7 @@ h1 {
 }
 
 h2 {
-    font-family: times !important;
+    font-family: 'b koodak', koodak, times !important;
     font-size: 24px;
     margin-bottom: 10px;
 }
@@ -1299,6 +1315,7 @@ table.attribute-list td {
 }
 
 .attribute-list.comparison .imageBorder {
+    text-align: center;
 }
 
 .attribute-list.comparison .imageBorder img {
@@ -2116,9 +2133,11 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-brand-carousel {
     margin-right: 0;
+    margin-bottom:0;
     list-style: none;
-    border: 1px solid #eeeeee;
+    /*border: 1px solid #eeeeee;*/
     border-radius: 3px;
+    text-align: center;
 }
 
 .static-brand-carousel li {
@@ -2136,9 +2155,11 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-productTypeType-carousel {
     margin-right: 0;
+    margin-bottom:0;
     list-style: none;
-    border: 1px solid #eeeeee;
+    /*border: 1px solid #eeeeee;*/
     border-radius: 3px;
+    text-align: center;
 }
 
 .static-productTypeType-carousel li {
@@ -2166,6 +2187,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
     width: 99%;
     margin: auto;
     margin-top: 5px;
+    text-align: center;
 }
 
 .productTypeType-carousel-container .showbiz-navigation {
@@ -2279,6 +2301,7 @@ ul.nav.nav-tabs {
     right: 5px;
     top: 0;
     width: 180px;
+    z-index: 10000;
 }
 
 .product-card-content {
@@ -2365,7 +2388,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 }
 
 /*product image slideshow*/
-.modal {
+#myModal {
     position: fixed;
     top: 65px;
     right: 5px;
@@ -2376,7 +2399,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     /*height: 90%;*/
 }
 
-.modal-body {
+.modal .modal-body {
     /*top: 10% !important;*/
     max-height: 90% !important;
     /*bottom: 5% !important;*/
@@ -2386,17 +2409,21 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     margin-left: 25px !important;
 }
 
-.modal.fade.in {
+#myModal.fade.in {
     top: 65px;
 }
 
-.modal-header {
+.modal.fade.in {
+    top: 350px;
+}
+
+.modal .modal-header {
     border-bottom-width: 0 !important;
     height: 0 !important;
     padding: 0 !important;
 }
 
-.modal-header .close {
+.modal .modal-header .close {
     margin-left: 5px;
 }
 
@@ -2869,6 +2896,20 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
 .banner-rotator, .wt-rotator {
     margin: auto;
     position: inherit;
+}
+
+.meta{
+    display: none;
+}
+
+.priceHistogram{
+    background-image: url("../images/histogram.png");
+    display: block;
+    font-weight: normal;
+    padding-right: 20px;
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
 }
 
 
