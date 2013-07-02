@@ -544,7 +544,7 @@ ul.thumbnailGrid {
 
 /*Navigation*/
 .sidebar-nav {
-    margin-bottom: 0;
+    /*margin-bottom: 0;*/
 }
 
 .sidebar-nav.home {
@@ -2376,7 +2376,7 @@ ul.nav.nav-tabs {
 }
 
 .banners img {
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 a.btn.btn-primary.dropdown-toggle:hover + ul.dropdown-menu {

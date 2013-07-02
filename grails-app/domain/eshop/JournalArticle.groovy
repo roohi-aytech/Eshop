@@ -3,6 +3,7 @@ package eshop
 class JournalArticle {
     static auditable = true
     String name
+    String title
     String summary
     String keywords
     String text
@@ -14,6 +15,7 @@ class JournalArticle {
     }
     static constraints = {
         name()
+        title()
         summary(maxSize: 200000)
         keywords(maxSize: 200000)
         text()
