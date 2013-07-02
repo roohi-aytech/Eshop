@@ -7,72 +7,82 @@ class MongoService {
     def priceService
 
     def storeProduct(Product product) {
+        storeProduct(product, 0)
+    }
 
-        def mongoProduct = MongoProduct.findByBaseProductId(product.id)
+    private def storeProduct(Product product, int cnt) {
+        synchronized (product) {
+            def mongoProducts = MongoProduct.findAllByBaseProductId(product.id)
 
-        if (mongoProduct) {
-            mongoProduct.delete(flush: true)
-        }
-        if (product?.deleted)
-            return
-
-        mongoProduct = new MongoProduct(baseProductId: product.id)
-
-        product.properties.each {
-            if (it.value instanceof String)
-                mongoProduct[it.key] = it.value
-        }
-        mongoProduct['isVisible'] = product.isVisible || product.isVisible == null
-        mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
-        mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
-        mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
-        mongoProduct['visitCount'] = product?.visitCount ?: 0
-        mongoProduct['saleCount'] = product?.saleCount
-        def productTypeId = product?.productTypes?.count { it } > 0 ? product?.productTypes?.toArray()?.first()?.id : 0.toLong()
-        mongoProduct['sortOrder'] = Product.createCriteria().count {
-            eq('deleted', false)
-            or {
-                eq('isVisible', true)
-                isNull('isVisible')
+            if (mongoProducts) {
+                mongoProducts.each {it.delete(flush: true)}
             }
-            productTypes {
-                eq('id', productTypeId)
+            if (product?.deleted)
+                return
+
+            def mongoProduct = new MongoProduct(baseProductId: product.id)
+
+            product.properties.each {
+                if (it.value instanceof String)
+                    mongoProduct[it.key] = it.value
             }
-            or {
-                gt('saleCount', product?.saleCount)
-                and {
-                    eq('saleCount', product?.saleCount)
-                    gt('visitCount', product?.visitCount)
+            mongoProduct['isVisible'] = product.isVisible || product.isVisible == null
+            mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
+            mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
+            mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
+            mongoProduct['visitCount'] = product?.visitCount ?: 0
+            mongoProduct['saleCount'] = product?.saleCount
+            def productTypeId = product?.productTypes?.count { it } > 0 ? product?.productTypes?.toArray()?.first()?.id : 0.toLong()
+            mongoProduct['sortOrder'] = Product.createCriteria().count {
+                eq('deleted', false)
+                or {
+                    eq('isVisible', true)
+                    isNull('isVisible')
+                }
+                productTypes {
+                    eq('id', productTypeId)
+                }
+                or {
+                    gt('saleCount', product?.saleCount)
+                    and {
+                        eq('saleCount', product?.saleCount)
+                        gt('visitCount', product?.visitCount)
+                    }
                 }
             }
-        }
-        def productTypes = collectProductTypes(product)
-        mongoProduct['productTypes'] = productTypes.collect { [id: it.id, name: it.name, parentId: it?.parentId] }
+            def productTypes = collectProductTypes(product)
+            mongoProduct['productTypes'] = productTypes.collect { [id: it.id, name: it.name, parentId: it?.parentId] }
 
-        product.attributes.findAll { it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted }.each {
-            if (it.value)
-                if (it.value?.group)
-                    mongoProduct["a${it.attributeType.id}"] = it.value?.group?.value
-                else
-                    mongoProduct["a${it.attributeType.id}"] = it.value?.value
-            else if (it.attributeType.defaultValue)
-                mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
-        }
+            product.attributes.findAll { it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted }.each {
+                if (it.value)
+                    if (it.value?.group)
+                        mongoProduct["a${it.attributeType.id}"] = it.value?.group?.value
+                    else
+                        mongoProduct["a${it.attributeType.id}"] = it.value?.value
+                else if (it.attributeType.defaultValue)
+                    mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
+            }
 
-        def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll { it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted }.collect { it.attributeType.category.id })
-        attributeCategories.each {
-            def attributes = Attribute.findAllByProductAndAttributeTypeInListAndValueIsNotNull(product, AttributeType.findAllByCategory(it))
-            mongoProduct["ac${it.id}"] = attributes.collect { [id: it.attributeType.id, name: it.attributeType.name, valueId: it.value?.id, value: it.value?.value] }
-        }
+            def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll { it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted }.collect { it.attributeType.category.id })
+            attributeCategories.each {
+                def attributes = Attribute.findAllByProductAndAttributeTypeInListAndValueIsNotNull(product, AttributeType.findAllByCategory(it))
+                mongoProduct["ac${it.id}"] = attributes.collect { [id: it.attributeType.id, name: it.attributeType.name, valueId: it.value?.id, value: it.value?.value] }
+            }
 
-        product.variations
+            product.variations
 //                .findAll {it?.variationGroup?.showInFilter}
-        .each{
-            if(it.variationValues.count {it} > 0)
-            mongoProduct["v${it.variationGroup?.id}"] = it.variationValues.collect {[id: it.id, name:it.value]}
+                    .each {
+                if (it.variationValues.count {it} > 0)
+                    mongoProduct["v${it.variationGroup?.id}"] = it.variationValues.collect {[id: it.id, name: it.value]}
+            }
+            try {
+                mongoProduct.save(flush: true)
+            } catch (e) {
+                e.printStackTrace()
+                if (cnt < 5)
+                    storeProduct(product, cnt + 1)
+            }
         }
-
-        mongoProduct.save(flush: true)
     }
 
     private def collectProductTypes(Product product) {
