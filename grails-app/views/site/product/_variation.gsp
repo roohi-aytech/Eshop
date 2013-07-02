@@ -40,7 +40,7 @@
                         ${it.name}:
                         <g:set var="curVariation"
                                value="${defaultModel?.variationValues?.find { value -> value?.variationGroup?.id == it?.variationGroup?.id }}"/>
-                        <div ${curVariation.variationGroup.representationType == 'Color' ? 'itemprop="color"' : ''}
+                        <div ${curVariation?.variationGroup?.representationType == 'Color' ? 'itemprop="color"' : ''}
                                 class="cur-variation"
                                 id="cur-variation-${it.id}">${curVariation}</div>
 

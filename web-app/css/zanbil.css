@@ -224,10 +224,15 @@ ul.errors {
 
 .thumbnails.productTypes {
     margin: 0;
+    text-align: center;
 }
 
 .thumbnails.productTypes > li {
-    height: 140px;
+    height: 140px !important;
+    display: inline-block !important;
+    float: none !important;
+    min-height: auto;
+    width: 24%;
 }
 
 .thumbnails > li {

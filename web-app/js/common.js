@@ -72,6 +72,7 @@ $(document).ready(function () {
     $('.scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live: true});
+    $('.price-last-update').tipsy({live: true});
 
     $('.has-tipsy').each(function () {
         var tipContainer = $(this).parent().parent().find('.tips-container');
@@ -116,11 +117,11 @@ function changeAddToBasketButtonLabel() {
 function resizeThumbnails() {
     var currentWidth = $('.span600').first().width();
     if (currentWidth > 700) {
-        $('.thumbnails.productTypes .span3').css('width', '20%');
+        $('.thumbnails.productTypes .span3').css('width', '19%');
         $('.thumbnailGrid .span3').css('width', (currentWidth - 30) / 4);
     }
     else {
-        $('.thumbnails.productTypes .span3').css('width', '25%');
+        $('.thumbnails.productTypes .span3').css('width', '24%');
         $('.thumbnailGrid .span3').css('width', (currentWidth - 25) / 3);
     }
 
