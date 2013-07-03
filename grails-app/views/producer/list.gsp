@@ -18,6 +18,8 @@
 </head>
 
 <body>
+<g:javascript src="jquery.quickselect.pack.js"/>
+
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <g:set var="actions" value="[]"/>
@@ -40,12 +42,8 @@
                 </rg:nest>
             </rg:nest>
             <rg:nest name="producerStaffs">
-
-                    <rg:like name="lastName" label='lastName'/>
-
+                <rg:like name="lastName" label='lastName'/>
             </rg:nest>
-
-
 
             <rg:filterGrid grid="ProducerGrid" label='search'/>
         </rg:criteria>
@@ -93,10 +91,8 @@
                     else {
                     }
                 });
-            }
+             }
         }
-
-
     </g:javascript>
 </div>
 </body>

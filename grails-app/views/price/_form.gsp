@@ -14,24 +14,24 @@
 
 
 <div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'currency', 'error')} required">
-	<label for="currency">
-		<g:message code="price.currency.label" default="Currency" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="currency" name="currency" from="${eshop.Currency.list()}"
+    <label for="currency">
+        <g:message code="price.currency.label" default="Currency" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:select id="currency" name="currency" from="${eshop.Currency.list()}"
               optionKey="id"  noSelection="['':message(code: 'rial')]"
               value="${priceInstance?.currency?.id}" class="many-to-one"/>
 </div>
 
 
-
 <div class="fieldcontain ${hasErrors(bean: priceInstance, field: 'price', 'error')} required">
-	<label for="price">
-		<g:message code="price.price.label" default="Price" />
-		<span class="required-indicator">*</span>
-	</label>
-
-	<g:field id="price" type="number" name="price" step="any" value="${priceInstance.price}" />
+    <label for="price">
+        <g:message code="price.price.label" default="Price" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:field id="price" type="number" name="price" step="any"
+             value='<g:formatNumber number="${fieldValue(bean: priceInstance, field: 'price')}" format="######" />'
+    />
 </div>
 
 

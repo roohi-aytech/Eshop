@@ -2,7 +2,6 @@ package eshop
 
 class ProducerStaff {
     static auditable = true
-    //1.3.	اطلاعات افراد (سمت/ نام/ تلفن/ فکس/ تلفن همراه/ایمیل/مسئول دفتر)
     StaffRole role
     String sex
     String name

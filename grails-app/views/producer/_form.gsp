@@ -50,15 +50,6 @@
 
         </label>
         <g:textField name="fax" value="${producerInstance?.fax}"/>
-    </div>
-
-        <div class="fieldcontain ${hasErrors(bean: producerInstance, field: 'producerStaffs', 'error')} ">
-            <label for="producerStaffs">
-                <g:message code="producer.producerStaffs.label" default="Staffs"/>
-
-            </label>
-            <g:select name="producerStaffs" from="${ProducerStaff.list()}" multiple="multiple"
-                      optionKey="id" size="5" value="" class="many-to-many"/>
         </div>
 
     </div>

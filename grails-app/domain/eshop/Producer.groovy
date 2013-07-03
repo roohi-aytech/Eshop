@@ -12,11 +12,13 @@ class Producer {
     String phone
     String fax
 
-    static hasMany = [producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
+    static hasMany = [producerAccounts: ProducerAccount, producerStaffs : ProducerStaff, producingProducts: ProducingProduct]
+
 
     static mapping = {
         sort 'id'
         producerStaffs cascade: "all-delete-orphan"
+        producerAccounts cascade: "all-delete-orphan"
     }
 
     static searchable = true
