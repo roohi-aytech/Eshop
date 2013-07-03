@@ -35,6 +35,29 @@
     %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
     <g:javascript src="browse.js"></g:javascript>
     <g:javascript src="jquery.raty.js"></g:javascript>
+    <script language="javascript" type="text/javascript">
+        var modal;
+        function showPriceHistogram(id) {
+            $("#priceHistogramModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
+            if (modal) {
+                modal.show();
+                $('#priceHistogramModal').addClass('in');
+            }
+            else {
+                modal = $("#priceHistogramModal").modal({
+                    backdrop: false,
+                    show: true
+                });
+            }
+            $("#priceHistogramModal .modal-body").load('${createLink(controller: 'productModel', action: 'priceHistogram')}/' + id, function () {
+            });
+        }
+
+        function hidePriceHistogram() {
+            $('#priceHistogramModal').removeClass('in');
+            modal.hide();
+        }
+    </script>
 </head>
 
 <body>
@@ -54,6 +77,17 @@
                     <eshop:addToWishList prodcutId="${product.id}"
                                          productTitle="${product.toString()}"></eshop:addToWishList>
                 </div>
+
+                <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
+                     aria-labelledby="priceHistogramModalLabel" aria-hidden="true" style="width: 700px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                onclick="hidePriceHistogram();">×</button>
+                    </div>
+
+                    <div class="modal-body">
+                    </div>
+                </div>
             </div>
         </td>
 
@@ -62,67 +96,103 @@
                 <tr class="table-row">
                     <td class="table-cell" style="padding-left:5px;">
                         <ul class="breadcrumb">
-                            <li>
-                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
+                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a itemprop="url" href="${createLink(uri: '/')}">
+                                    <span itemprop="title">
+                                        <g:message code="home"/>
+                                    </span>
+                                </a>
                             </li>
                             <g:if test="${breadCrumb.size() > 1}">
                                 <g:each in="${breadCrumb[0..-1]}">
-                                    <li>
+                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                         <span class="divider">${">"}</span>
-                                        <a href="${it.href}">${it.name}</a>
+                                        <a itemprop="url" href="${it.href}">
+                                            <span itemprop="title">${it.name}</span>
+                                        </a>
                                     </li>
                                 </g:each>
                             </g:if>
+                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <span class="divider">${">"}</span>
+                                <a href="${createLink(uri: '/product')}/${params.id}"
+                                   itemprop="url">
+                                    <span itemprop="title">
+                                        ${product.manualTitle ? product.pageTitle : title}
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
 
                 <tr class="table-row">
                     <td class="table-cell">
-                        <table class="table-simulated">
-                            <tr class="table-row">
-                                <td class="table-cell" id="product-description-area">
+                        <div itemscope itemtype="http://schema.org/Product">
+                            <table class="table-simulated">
+                                <tr class="table-row">
+                                    <td class="table-cell" id="product-description-area">
 
-                                    <div class="white-panel">
+                                        <div class="white-panel">
+                                            <div>
+                                                <g:if test="${product?.pageTitle}">
+                                                    <h1 itemprop="name">${product?.pageTitle}</h1>
+                                                </g:if>
+                                                <g:else>
+                                                    <h1 class="font-koodak"
+                                                        itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                                        <g:if test="${product?.pageTitle}">
-                                            <h1>${product?.pageTitle}</h1>
-                                        </g:if>
-                                        <g:else>
-                                            <h1 class="font-koodak">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+                                                    <h2 class="small" itemprop="model"><span
+                                                            class="font-koodak"><g:message
+                                                                code="productModel"/></span> <span
+                                                            class="font-calibri">${product?.name ?: ""}</span></h2>
+                                                </g:else>
+                                            </div>
 
-                                            <h2 class="small"><span class="font-koodak"><g:message
-                                                    code="productModel"/></span> <span
-                                                    class="font-calibri">${product?.name ?: ""}</span></h2>
-                                        </g:else>
+                                            <p>
 
-                                        <p>
-                                            <g:message code="rate"/>:
-                                            <eshop:rate identifier="hidProductRate" currentValue="3" readOnly="true"/>
+                                            <div itemprop="aggregateRating">
+                                                <g:message code="rate"/>:
+                                                <span class="meta" itemprop="value">${rate}</span>
+                                                <meta itemprop="best" content="5"/>
+                                                <eshop:rate identifier="hidProductRate" currentValue="${rate}"
+                                                            readOnly="true"/>
+                                            </div>
                                         </p>
 
-                                        <p class="brand-badge">
-                                            <img width="80px" height="80px"
-                                                 src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
-                                                 alt="${product?.brand}"/>
-                                        </p>
+                                            <p class="brand-badge">
+                                                <img width="80px" height="80px" itemprop="brand"
+                                                     src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
+                                                     alt="${product?.brand}"/>
+                                            </p>
 
-                                        <g:render template="product/variation"/>
+                                            <p>
+                                                <g:message code="productCode.label"/>: <b>${params.id}</b>
+                                            </p>
 
-                                        <p>
-                                            <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-                                            <g:set var="price"
-                                                   value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
-                                        </a>
-                                        </p>
-                                    </div>
-                                </td>
+                                            <g:if test="${product.description}">
+                                                <p itemprop="description">
+                                                    ${product.description}
+                                                </p>
+                                            </g:if>
 
-                                <td class="table-cell product-imageColumn">
-                                    <div><g:render template="product/zoom"/></div>
-                                </td>
-                            </tr>
-                        </table>
+                                            <g:render template="product/variation"/>
+
+                                            <p>
+                                                <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+                                                <g:set var="price"
+                                                       value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
+                                            </a>
+                                            </p>
+                                        </div>
+                                    </td>
+
+                                    <td class="table-cell product-imageColumn">
+                                        <div><g:render template="product/zoom"/></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                 </tr>
 

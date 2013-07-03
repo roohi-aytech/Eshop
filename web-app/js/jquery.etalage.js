@@ -548,6 +548,9 @@
                     }
                 };
                 v.add(aL).add(D).mouseenter(function () {
+                    if(av.attr('zoomable') == '0')
+                        return;
+
                     if (c.show_hint) {
                         q.hide()
                     }
@@ -555,10 +558,14 @@
                         S()
                     }
                 }).mouseleave(function () {
+                        if(av.attr('zoomable') == '0')
+                            return;
                     aS()
                 });
                 var aQ = -(c.source_image_width - R), aP = -(c.source_image_height - aW);
                 v.add(aL).add(D).mousemove(function (a1) {
+                    if(av.attr('zoomable') == '0')
+                        return;
                     var j = Math.round(a1.pageX - av.offset().left + aj), i = Math.round(a1.pageY - av.offset().top + aH);
                     var a0 = (j - ac), aZ = (i - ab);
                     if (a0 < aj) {

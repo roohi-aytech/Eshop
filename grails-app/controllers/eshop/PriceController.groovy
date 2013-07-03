@@ -35,6 +35,7 @@ class PriceController {
 
     def save() {
         def priceInstance
+        params.price = params.price.toString().replace(',', '').toDouble()
         if (params.id) {
             priceInstance = Price.get(params.id)
             priceInstance.properties = params
@@ -51,7 +52,6 @@ class PriceController {
         }
         priceInstance.startDate = new Date()
         priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
-
 
         if (priceInstance.validate() && priceInstance.save()) {
             mongoService.storeProduct(priceInstance.productModel.product)

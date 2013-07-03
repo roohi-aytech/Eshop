@@ -4,7 +4,7 @@
         <g:checkBox name="notAvailable_${attributeType.id}" checked="${attributeValue?.value == 'N/A'}"/>N/A
     </span>
 %{--<g:if test="${attributeType.values}">--}%
-    <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values?.sort {it.value}}"
+    <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values?.findAll{!it.deleted}?.sort {it.value}}"
               optionKey="id" optionValue="value" noSelection="['': '']" value="${attributeValue?.id}"/>
     %{--<sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">--}%
         <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">

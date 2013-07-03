@@ -926,3 +926,7 @@ div.skinned-select select option {
 div.ui-tabs ul.ui-tabs-nav li{
     float: right;
 }
+
+table#GuaranteeGrid td{
+    direction: rtl;
+}

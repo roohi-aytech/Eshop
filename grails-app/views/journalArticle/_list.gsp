@@ -5,7 +5,7 @@
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${JournalArticle}"
              showCommand="false"
-             maxColumns="2"
+             maxColumns="3"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToJournalGrid", icon: "plus"]]}"
              commands="${[[handler: "addToJournalGrid(#id#)", icon: "application_edit"], [handler: "deleteJournalArticle(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
@@ -34,13 +34,26 @@
             if(CKEDITOR.instances['text']){
                 CKEDITOR.remove(CKEDITOR.instances['text'])
             }
-            var url='<g:createLink controller="journalArticle" action="form" params="['baseProduct.id': baseProductInstance.id]"/>';
+            var url='<g:createLink controller="journalArticle" action="form"
+                                   params="['baseProduct.id': baseProductInstance.id]"/>';
             if(id)
                 url+='&id='+id
             loadOverlay(url,'<g:createLink
-             controller="journalArticle" action="save"/>',function(){
+            controller="journalArticle" action="save"/>',function(){
                 $("#JournalArticleGrid").trigger("reloadGrid")
-            },undefined,{
+            },function(){
+                $(".count-words").keypress(function(){
+                    var inp=$(this)
+                    inp.parent().find(".word-counter").html(inp.val().length)
+                }).each(function(){
+                    $("<span class='word-counter'></span>").insertAfter($(this))
+                    $(this).keypress()
+
+                });
+
+                //prepare combotrees
+
+            },{
             width:970,
             afterSave:function(){
                     CKEDITOR.remove(CKEDITOR.instances['text'])

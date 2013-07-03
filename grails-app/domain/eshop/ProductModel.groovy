@@ -29,7 +29,7 @@ class ProductModel {
         name(nullable: true)
         guarantee()
         variationValues(nullable: true)
-        status(inList: ['exists', 'not-exists', 'coming-soon'])
+        status(inList: ['exists', 'not-exists', 'coming-soon', 'inquiry-required'])
         isDefaultModel()
     }
 

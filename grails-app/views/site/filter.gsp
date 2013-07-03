@@ -62,27 +62,32 @@
                             <tr class="table-row">
                                 <td class="span600 table-cell">
                                     <ul class="breadcrumb">
-                                        <li>
-                                            <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
-                                            <span class="divider">${">"}</span>
+                                        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                            <a href="${createLink(uri: '/')}" itemprop="url">
+                                                <span itemprop="title">
+                                                    <g:message code="home"/>
+                                                </span>
+                                            </a>
+                                            %{--<span class="divider">${">"}</span>--}%
                                         </li>
-                                        <g:if test="${filters.breadcrumb.size() > 1}">
-                                            <g:each in="${filters.breadcrumb[0..-2]}">
-                                                <li>
-                                                    <a href="${commonLink}${it.linkTail}">${it.linkTitle}</a>
+                                        <g:if test="${filters.breadcrumb.size() > 0}">
+                                            <g:each in="${filters.breadcrumb[0..-1]}">
+                                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                                     <span class="divider">${">"}</span>
+                                                    <a href="${commonLink}${it.linkTail}"
+                                                       itemprop="url"><span itemprop="title">${it.linkTitle}</span></a>
                                                 </li>
                                             </g:each>
                                         </g:if>
-                                        <li class="active">${filters.breadcrumb[-1].linkTitle}</li>
+                                    %{--<li class="active">${filters.breadcrumb[-1].linkTitle}</li>--}%
                                     </ul>
 
                                     <g:render template="common/filteringGraphicalMenu"></g:render>
 
 
                                     %{--<g:if test="${filters.productTypes?.isEmpty()}">--}%
-                                        <g:render template="common/productGrid"
-                                                  model="${[productIds: filters.products.productIds]}"></g:render>
+                                    <g:render template="common/productGrid"
+                                              model="${[productIds: filters.products.productIds]}"></g:render>
                                     %{--</g:if>--}%
 
                                 </td>

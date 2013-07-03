@@ -74,26 +74,47 @@ class SiteMapController {
         }
     }
 
+    def images() {
+        render(contentType: 'text/xml', encoding: 'UTF-8') {
+            mkp.yieldUnescaped '<?xml version="1.0" encoding="UTF-8"?>'
+            urlset(xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+                    'xmlns:image': "http://www.google.com/schemas/sitemap-image/1.1") {
+                Product.findAllByIsVisible(true).each { product ->
+                    url {
+                        loc(g.createLink(absolute: true, uri: "/product/${product.id}"))
+                        product.images.each { image ->
+                            'image:image' {
+                                'image:loc'(g.createLink(absolute: true, controller: 'image', params:[id: product?.id, name: image?.name, wh: 'max']))
+                                'image:caption'(image.name)
+                                'image:title'(product.manualTitle ? product.pageTitle : product.toString())
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     def searches() {
         render(contentType: 'text/xml', encoding: 'UTF-8') {
             mkp.yieldUnescaped '<?xml version="1.0" encoding="UTF-8"?>'
             urlset(xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
                     'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
                     'xsi:schemaLocation': "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd") {
-                def phraseList = SearchTrackingLog.createCriteria().list{
+                def phraseList = SearchTrackingLog.createCriteria().list {
                     isNotNull('phrase')
                     notEqual('phrase', '')
-                    projections{
+                    projections {
                         groupProperty "phrase"
-                        count "id",'searchCount'
+                        count "id", 'searchCount'
 
                     }
-                    order('searchCount','desc')
+                    order('searchCount', 'desc')
                 }
 
                 phraseList.each { searchTrackingLog ->
                     url {
-                        loc(g.createLink(absolute: true, controller: 'site', action: 'search', params:[f: 'p0', phrase:searchTrackingLog[0]]))
+                        loc(g.createLink(absolute: true, controller: 'site', action: 'search', params: [f: 'p0', phrase: searchTrackingLog[0]]))
                         changefreq(SiteMapHelper.CHANGE_FREQUENCY_MONTHLY)
                         priority(0.5)
                     }

@@ -40,8 +40,9 @@
                         ${it.name}:
                         <g:set var="curVariation"
                                value="${defaultModel?.variationValues?.find { value -> value?.variationGroup?.id == it?.variationGroup?.id }}"/>
-                        <div class="cur-variation"
-                             id="cur-variation-${it.id}">${curVariation}</div>
+                        <div ${curVariation?.variationGroup?.representationType == 'Color' ? 'itemprop="color"' : ''}
+                                class="cur-variation"
+                                id="cur-variation-${it.id}">${curVariation}</div>
 
                         <div class="hover-variation"></div>
                         <g:hiddenField id="variation${it.id}" name="variation${it.id}" value="${curVariation?.id}"/>

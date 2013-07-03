@@ -374,6 +374,16 @@
             $("#move-product-type-form").attr("curProductTypeId",id)
             $("#move-product-type-form").dialog("open")
         }
+        function synchProductType(id){
+            var url = "<g:createLink action="synchProductType"/>";
+            $.ajax({
+                type:"POST",
+                url:url,
+                data:{ id:id }
+            }).done(function (response) {
+                alert("<g:message code="success" />")
+            })
+        }
         function attributeCategorySaved(attributeCategory){
             if(attributeCategory.parentCategory)
                 reloadAttributeCategoryGridNode(attributeCategory.parentCategory.id)
@@ -432,6 +442,7 @@
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProductType}" maxColumns="4"
                  firstColumnWidth="60" showCommand="false"
+                 columns="${[[name:"name"],[name:"description"],[name:"keywords"],[name:"pageTitle"],[name:"godFathers"]]}"
                  tree="parentProduct"
                  childGrid="${["AttributeType":"productType","AttributeCategory":"productType"]}"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductTypeGrid", icon: "plus"]]}"
@@ -441,7 +452,8 @@
                          [handler: "editProductTypeGrid(#id#)", icon: "application_edit",title:"${message(code: "edit-product-type")}"],
                          [controller: "productType", action: "details", param: "id=#id#", icon: "application_form",title:"${message(code: "product-type-details")}"],
                          [handler: "deleteProductTypeGrid(#id#)", icon: "application_delete",title:"${message(code: "delete-product-type")}"],
-                         [handler: "moveProductType(#id#)", icon: "cut",title:"${message(code: "move-product-type")}"]]}"/>
+                         [handler: "moveProductType(#id#)", icon: "cut",title:"${message(code: "move-product-type")}"],
+                         [handler: "synchProductType(#id#)", icon: "arrow_refresh",title:"${message(code: "synch-product-type")}"]]}"/>
     </div>
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.AttributeCategory}" maxColumns="2"

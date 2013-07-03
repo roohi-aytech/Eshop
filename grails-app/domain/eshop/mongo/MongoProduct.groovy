@@ -15,5 +15,6 @@ class MongoProduct {
         this['productTypes']?.collect{it?.name}
     }
     static constraints = {
+        baseProductId(unique: true)
     }
 }

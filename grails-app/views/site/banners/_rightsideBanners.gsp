@@ -1,4 +1,12 @@
+<%@ page import="eshop.Banner" %>
 <div class="banners">
-    <img src="${resource(dir: 'images/banners', file: 'contact.jpg')}"/>
-    <img src="${resource(dir: 'images/banners', file: 'rules.jpg')}"/>
+    <g:each in="${Banner.findAllByPositionAndDeleted('right', false)}">
+        <g:if test="${it.url}">
+            <a href="${it.url}">
+        </g:if>
+        <img src="${createLink(controller: 'image', params:[type:'banner', id:it.id])}"/>
+        <g:if test="${it.url}">
+            </a>
+        </g:if>
+    </g:each>
 </div>

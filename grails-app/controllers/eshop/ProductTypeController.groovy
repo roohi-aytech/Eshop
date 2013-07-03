@@ -232,11 +232,11 @@ class ProductTypeController {
             render 1;
             return
         }
-        if (productTypeInstance.products.size() > 0) {
+        if (productTypeInstance.products.count {!it.deleted} > 0) {
             render(message(code: "producttype.contains.products"))
             return
         }
-        if (productTypeInstance.children.size() > 0) {
+        if (productTypeInstance.children.count {!it.deleted}> 0) {
             render(message(code: "producttype.contains.children"))
             return
         }
@@ -259,7 +259,13 @@ class ProductTypeController {
             render 1;
         }
     }
-
+    def synchProductType(){
+        def pt=ProductType.get(params.id)
+        pt.products.each {
+            mongoService.storeProduct(it)
+        }
+        render 0;
+    }
     def deleteAttributeType() {
         def attributeTypeInstance = AttributeType.get(params.id)
         if (!attributeTypeInstance) {
@@ -466,10 +472,16 @@ class ProductTypeController {
                 mustRemove << it
             }
         }
-        mustRemove.each {
-            attributeType.groups?.removeFromGroups(it)
-            it.delete()
+
+        attributeType.groups = attributeType.groups.findAll {group ->
+            !mustRemove.collect {it.id}.contains(group.id)
         }
+        mustRemove.each {
+//            attributeType.groups == attributeType.groups.findAll{group -> group.id != it.id}
+            it.deleted = true
+            it.save()
+        }
+
         if (params.valueGroups_ instanceof String) {
             attributeType.addToGroups(new AttributeValueGroup(value: params.valueGroups_).save())
         } else {
