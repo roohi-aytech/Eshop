@@ -87,5 +87,18 @@
             </li>
         </g:if>
 
+        <li class="fieldcontain">
+            <span id="vendors-label" class="property-label"><g:message code="order.vendors"/></span>
+
+            <div class="property-value" aria-labelledby="vendors-label" style="line-height: 18px">
+                <% def orderTrackingService = grailsApplication.classLoader.loadClass('eshop.OrderTrackingService').newInstance() %>
+                <g:set var="vendors" value="${orderTrackingService.findAllVendorsOfOrder(orderInstance)}"></g:set>
+                <g:each in="${vendors}">
+                    <div>${it}</div>
+                </g:each>
+            </div>
+
+        </li>
+
     </ol>
 </div>

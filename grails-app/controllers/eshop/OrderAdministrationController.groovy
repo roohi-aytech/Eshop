@@ -7,9 +7,11 @@ class OrderAdministrationController {
     def priceService
     def springSecurityService
     def mongoService
+    def orderTrackingService
 
     def list() {
-        render view: '/orderAdministration/list'
+        def orderList = orderTrackingService.filterOrderListForUser(Order.findAllByStatus(params.status), springSecurityService.currentUser)
+        render view: '/orderAdministration/list', model:[orderList:orderList.collect{it.id.toLong()}]
     }
 
     def act() {

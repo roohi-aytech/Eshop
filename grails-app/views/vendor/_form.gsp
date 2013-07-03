@@ -43,7 +43,16 @@
 
     <g:message code="vendor.brands.label" default="Brands"/>
     <div class="checkBoxList">
-        <g:each in="${eshop.Brand.list().sort {it.name}}" var="brand">
+    <g:each in="${vendorInstance?.brands?.sort {it.name}}" var="brand">
+        <div>
+            <g:checkBox name="brands" id="brand${brand.id}" value="${brand.id}" checked="${vendorInstance?.brands?.contains(brand)}"
+                        title="${brand.name}"/>
+            <label for="brand${brand.id}">
+                ${brand.name}
+            </label>
+        </div>
+    </g:each>
+        <g:each in="${eshop.Brand.list().findAll{!vendorInstance?.brands?.contains(it)}.sort {it.name}}" var="brand">
             <div>
                 <g:checkBox name="brands" id="brand${brand.id}" value="${brand.id}" checked="${vendorInstance?.brands?.contains(brand)}"
                             title="${brand.name}"/>
