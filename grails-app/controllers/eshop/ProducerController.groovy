@@ -4,7 +4,7 @@ import grails.converters.JSON
 
 class ProducerController {
 
-//    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -28,6 +28,17 @@ class ProducerController {
             producerStaffInstance = new ProducerStaff()
 
         render(template: "producerStaffs_form", model: [producerStaffInstance: producerStaffInstance, producerId: params.producerId])
+    }
+
+    def producerAccountForm(){
+        def producerAccountInstance
+        if(params.id)
+            producerAccountInstance = ProducerAccount.get(params.id)
+        else
+            producerAccountInstance = new ProducerAccount()
+
+        render(template: "producerAccounts_form", model: [producerAccountInstance: producerAccountInstance, producerId: params.producerId])
+
     }
 
     def showProducingProduct(){
@@ -66,6 +77,22 @@ class ProducerController {
     def list() {
     }
 
+    def saveProducerAccount(){
+        def producerAccount
+        if(params.id){
+            producerAccount = ProducerAccount.get(params.id)
+            producerAccount.properties = params
+        }
+        else
+            producerAccount = new ProducerAccount(params)
+
+        if(producerAccount.validate() && producerAccount.save()){
+            render producerAccount as JSON
+        }
+        else
+            render producerAccount.errors.toString()
+    }
+
     def saveProducerStaff(){
         def producerStaff
         if(params.id){
@@ -80,6 +107,7 @@ class ProducerController {
         else
             render producerStaff.errors.toString()
     }
+
 
     def saveStaffRole(){
         def staffRole
@@ -134,6 +162,12 @@ class ProducerController {
     def deleteProducerStaff(){
         def producerStaff = ProducerStaff.get(params.id)
         producerStaff.delete(flush: true)
+        render 0
+    }
+
+    def deleteProducerAccount(){
+        def producerAccount = ProducerAccount.get(params.id)
+        producerAccount.delete(flush: true)
         render 0
     }
 

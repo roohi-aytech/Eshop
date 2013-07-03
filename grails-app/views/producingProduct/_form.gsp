@@ -171,7 +171,7 @@
             <g:select name="priceType" from="${producingProductInstance.constraints.priceType.inList}" value="${producingProductInstance?.priceType}"
                       valueMessagePrefix="producingProduct.priceType" noSelection="['': '']"/>
 
-            <g:textArea name="priceDescription"  value="${producingProductInstance.priceDescription}"/>
+            <g:textArea name="priceDescription" rows="2" value="${producingProductInstance.priceDescription}"/>
         </div>
 
         <div class="fieldcontain ${hasErrors(bean: producingProductInstance, field: 'discountType', 'error')} ">

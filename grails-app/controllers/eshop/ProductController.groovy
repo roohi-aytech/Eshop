@@ -516,8 +516,6 @@ class ProductController {
         productInstance.isVisible = params.isVisible == "on"
 
         if (productInstance.save(flush: true)) {
-
-
         def productTypeIds = []
             productInstance.productTypes.each {
                 productTypeIds << it.id
