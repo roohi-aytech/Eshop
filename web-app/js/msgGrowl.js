@@ -25,9 +25,9 @@
         content = $('<div>', {
             'class': 'msgGrowl-content'
         }).appendTo(msgGrowl);
-        text = $('<span>', {
-            text: options.text
-        }).appendTo(content);
+        text = $('<span>');
+        text.html(options.text);
+        text.appendTo(content);
         if (options.closeTrigger) {
             close = $('<div>', {
                 'class': 'msgGrowl-close',
