@@ -231,7 +231,7 @@ ul.errors {
     height: 140px !important;
     display: inline-block !important;
     float: none !important;
-    min-height: auto;
+    min-height: 0;
     width: 24%;
 }
 
@@ -2210,6 +2210,10 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 .productTypeType-carousel li a img {
     height: 80px;
     height: 80px;
+}
+
+.productTypeType-carousel li a div {
+    text-align: center;
 }
 
 .productTypeType-carousel li a .tick {
