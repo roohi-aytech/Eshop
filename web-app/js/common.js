@@ -102,8 +102,12 @@ $(document).ready(function () {
 });
 
 function setProductCartPosition() {
+    var position = $(window).scrollTop();
+    var maxPosition = $('.footer1').position().top - $('.product-card').height();
+    if (position > maxPosition)
+        position = maxPosition;
     $('.product-card').first().stop().animate({
-        'top': $(window).scrollTop() + "px"
+        'top': position + "px"
     }, 200);
 }
 
