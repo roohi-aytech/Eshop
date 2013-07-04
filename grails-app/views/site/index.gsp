@@ -3,6 +3,7 @@
 <html dir="rtl">
 <head>
     <title><g:message code="site.mainPage.title"/></title>
+    <!-- E7zma1ATwR6TvWerhh0l7txRVh0 -->
     <meta name="description" content="${message(code:'site.mainPage.description')}">
     <meta name="keywords" content="${message(code:'site.mainPage.keywords')}">
     <meta charset="utf-8">
