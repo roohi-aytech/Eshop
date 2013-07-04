@@ -35,8 +35,8 @@ class SiteController {
     def browse() {
         def productType = params.productType ? ProductType.findBySeoFriendlyName(params.productType) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
         if (!productType || productType.deleted) {
-            flash.message = message(code: "productType.not.found")
-            redirect(action: "index")
+            redirect(uri:"/notFound")
+            return
         }
 
         trackingService.trackExplore(productType)
@@ -317,6 +317,10 @@ class SiteController {
     def product() {
         def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
+        if (!product || product.deleted) {
+            redirect(uri:"/notFound")
+            return
+        }
 
         trackingService.trackProductVisit(product)
 
@@ -577,6 +581,11 @@ class SiteController {
         def model = [:]
 
         model.article = JournalArticle.get(params.id)
+        if (!model.article) {
+            redirect(uri:"/notFound")
+            return
+        }
+
 
         model.productType = model.article.baseProduct as ProductType
         model.articles = JournalArticle.findAllByBaseProduct model.productType

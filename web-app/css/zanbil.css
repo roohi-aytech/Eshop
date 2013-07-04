@@ -2420,6 +2420,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 #myModal.fade.in {
     top: 65px;
+    z-index:1000000;
 }
 
 .modal.fade.in {

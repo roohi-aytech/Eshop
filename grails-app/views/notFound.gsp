@@ -10,13 +10,13 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-    <title><g:message code="underConstruction"></g:message></title>
+    <title><g:message code="notFound"></g:message></title>
     <meta http-equiv="refresh" content="5;URL=${createLink(absolute: true, uri: "/")}">
 </head>
 
 <body>
 <div class="page-content">
-    <h3><g:message code="underConstruction"></g:message></h3>
+    <h3><g:message code="notFound"></g:message></h3>
     <div>
         تا لحظاتی دیگری به صورت خودکار به
          <a href="${createLink(uri: '/')}">

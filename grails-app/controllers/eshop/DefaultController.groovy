@@ -14,8 +14,9 @@ class DefaultController {
             render(view: "/index")
     }
 
-    def underConstruction(){
-        render(view: "/underConstruction")
+    def notFound(){
+        response.status = 404
+        render(view: "/notFound")
     }
 
     def changeLog(){
