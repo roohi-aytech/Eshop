@@ -1336,6 +1336,22 @@ table.attribute-list td {
     box-shadow: 0 0 3px #98b6ec;
 }
 
+.attribute-list .removeThisRow{
+    width: 16px;
+    padding: 0;
+    padding-left: 5px;
+    border-width:0;
+}
+
+.attribute-list .removeThisRow div{
+    display: none;
+    background-color: red;
+    height: 16px;
+    width: 16px;
+    background: url(../images/hide.png);
+    cursor: pointer;
+}
+
 /*basket items*/
 #basketItems ul {
     max-height: 200px;
