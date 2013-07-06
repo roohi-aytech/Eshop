@@ -5,9 +5,9 @@
     <g:if test="${showVal}">
         <span class='current'
             %{--${lastUpdate?" price-last-update' original-title='${rg.formatJalaliDate(date:lastUpdate)}'":"'"}--}%
-        ><g:formatNumber number="${showVal}" type="number"/></span>
+        ><g:formatNumber number="${showVal}" type="number"/> <g:message code="rial"/></span>
         <g:if test="${lastUpdate}">
-        <span class="price-last-update">
+        <span class="price-last-update" original-title="${message(code:'price.lastUpdate')}">
             <rg:formatJalaliDate date="${lastUpdate}"></rg:formatJalaliDate>
         </span>
         </g:if>

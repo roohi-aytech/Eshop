@@ -10,6 +10,7 @@
     <canonical:show/>
     <meta name="robots" content="index, follow"/>
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
+    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'logo.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
     <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'ieFix.js')}"></script>
     <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'json3.js')}"></script>

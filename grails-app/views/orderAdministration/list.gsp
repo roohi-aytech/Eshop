@@ -5,7 +5,7 @@
   Time: 8:51 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="eshop.Order" %>
+<%@ page import="grails.converters.JSON; eshop.Order" %>
 <!doctype html>
 <html>
 <head>
@@ -25,7 +25,7 @@
              commands="${[[handler: "viewOrder(#id#)", icon: "application_form"]]}"
     >
         <rg:criteria>
-            <rg:eq name="status" value="${params.status}"/>
+            <rg:inCrit name="id" value="${orderList}"/>
         </rg:criteria>
     </rg:grid>
     <g:javascript>

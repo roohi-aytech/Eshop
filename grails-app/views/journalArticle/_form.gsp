@@ -19,23 +19,31 @@
         <g:message code="journalArticle.name.label" default="Name"/>
 
     </label>
-    <g:textField name="name" value="${journalArticleInstance?.name}"/>
+    <g:textField name="name" value="${journalArticleInstance?.name}" class="count-words"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'title', 'error')} ">
+    <label for="title">
+        <g:message code="journalArticle.title" default="Title"/>
+
+    </label>
+    <g:textField name="title" value="${journalArticleInstance?.title}" class="count-words"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'summary', 'error')} ">
     <label for="summary">
-        <g:message code="journalArticle.summary.label" default="Summary"/>
+        <g:message code="journalArticle.summary.label" default="Summary" class="count-words"/>
 
     </label>
-    <g:textArea name="summary" value="${journalArticleInstance?.summary}" style="width: 400px"/>
+    <g:textArea name="summary" value="${journalArticleInstance?.summary}" class="count-words" style="width: 400px" cols="20"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'keywords', 'error')} ">
     <label for="summary">
-        <g:message code="journalArticle.keywords.label" default="keywords"/>
+        <g:message code="journalArticle.keywords.label" default="keywords" class="count-words"/>
 
     </label>
-    <g:textArea name="keywords" value="${journalArticleInstance?.keywords}" style="width: 400px"/>
+    <g:textArea name="keywords" value="${journalArticleInstance?.keywords}" class="count-words" style="width: 400px" cols="20"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'text', 'error')} ">

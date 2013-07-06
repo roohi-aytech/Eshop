@@ -96,17 +96,32 @@
                 <tr class="table-row">
                     <td class="table-cell" style="padding-left:5px;">
                         <ul class="breadcrumb">
-                            <li>
-                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
+                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a itemprop="url" href="${createLink(uri: '/')}">
+                                    <span itemprop="title">
+                                        <g:message code="home"/>
+                                    </span>
+                                </a>
                             </li>
                             <g:if test="${breadCrumb.size() > 1}">
                                 <g:each in="${breadCrumb[0..-1]}">
-                                    <li>
+                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                         <span class="divider">${">"}</span>
-                                        <a href="${it.href}">${it.name}</a>
+                                        <a itemprop="url" href="${it.href}">
+                                            <span itemprop="title">${it.name}</span>
+                                        </a>
                                     </li>
                                 </g:each>
                             </g:if>
+                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <span class="divider">${">"}</span>
+                                <a href="${createLink(uri: '/product')}/${params.id}"
+                                   itemprop="url">
+                                    <span itemprop="title">
+                                        ${product.manualTitle ? product.pageTitle : title}
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -124,10 +139,12 @@
                                                     <h1 itemprop="name">${product?.pageTitle}</h1>
                                                 </g:if>
                                                 <g:else>
-                                                    <h1 class="font-koodak" itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+                                                    <h1 class="font-koodak"
+                                                        itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                                                    <h2 class="small" itemprop="model"><span class="font-koodak"><g:message
-                                                            code="productModel"/></span> <span
+                                                    <h2 class="small" itemprop="model"><span
+                                                            class="font-koodak"><g:message
+                                                                code="productModel"/></span> <span
                                                             class="font-calibri">${product?.name ?: ""}</span></h2>
                                                 </g:else>
                                             </div>

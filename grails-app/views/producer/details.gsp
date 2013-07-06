@@ -15,6 +15,7 @@
     <ul>
         <li><a href="#producingProducts"><g:message code="producingProducts"/></a></li>
         <li><a href="#producerStaffs"><g:message code="producerStaff"/></a></li>
+        <li><a href="#producerAccounts"><g:message code="producerAccount"/></a></li>
 
     </ul>
 
@@ -26,6 +27,9 @@
         <g:render template="producerStaffs"/>
     </div>
 
+    <div id="producerAccounts">
+        <g:render template="producerAccounts"/>
+    </div>
 
 </div>
 <g:javascript>

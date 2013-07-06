@@ -54,7 +54,7 @@
                                 <td class="table-cell" id="product-description-area">
 
                                     <div class="white-panel">
-                                        <h2>${article.name}</h2>
+                                        <a href="${createLink(uri:'/article')}/${params.id}"><h2>${article.title}</h2></a>
 
                                         <div class="article-summary">
                                             ${article.summary}

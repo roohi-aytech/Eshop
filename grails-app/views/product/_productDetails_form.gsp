@@ -1,17 +1,27 @@
 <g:form action="saveProductAndReturnToDetailsPage" params="${[curtab: 0, ptid: ptid]}">
     <g:render template="form"/>
+
     <fieldset class="buttons">
-        <g:submitButton name="create" class="save"
+        <g:submitButton name="create" class="save" onclick="return checkProductType();"
                         value="${message(code: 'default.button.save.label', default: 'Save')}"/>
-        <g:actionSubmit action="saveProductAndExit" name="createAndExit" class="save"
+        <g:actionSubmit action="saveProductAndExit" name="createAndExit" class="save" onclick="return checkProductType();"
                         value="${message(code: "default.button.save.and.exit.label", default: "Save And Exit")}"/>
-        <g:actionSubmit action="saveProductAndNew" name="createAndNew" class="save"
+        <g:actionSubmit action="saveProductAndNew" name="createAndNew" class="save" onclick="return checkProductType()"
                         value="${message(code: "default.button.save.and.new.label", default: "Save And New")}"/>
-        <g:link class="list" action="list" params="[ptid: ptid]"><g:message code="default.product.list"
+        <g:link class="list" action="list"  params="[ptid: ptid]"><g:message code="default.product.list"
                                                                             default="Product List"/></g:link>
     </fieldset>
 </g:form>
 <script type="text/javascript">
+    function checkProductType(){
+        var pt = $(document.getElementsByName("producttypes")).val();
+        if(pt == ""){
+            window.alert('لطفا نوع محصولات را وارد کنید');
+            return false;
+        }
+        return true;
+    }
+
     function addTree() {
         var buttons = $(".ui-dialog-content").dialog('option', 'buttons')
         var newButtons = {'<g:message code="save-and-edit-details"/>':function () {

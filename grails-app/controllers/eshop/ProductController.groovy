@@ -358,10 +358,15 @@ class ProductController {
 
     def deleteimage() {
         def success = productService.deleteProductImage(params.id, params.name)
+
         if (success) {
             def product = Product.get(params.id)
             if (product.images.count {it} == 0) {
                 product.mainImage = null
+                product.save()
+            }
+            else if(params.name == product?.mainImage?.name){
+                product.mainImage = product.images.toArray().first()
                 product.save()
             }
         }
@@ -511,8 +516,6 @@ class ProductController {
         productInstance.isVisible = params.isVisible == "on"
 
         if (productInstance.save(flush: true)) {
-
-
         def productTypeIds = []
             productInstance.productTypes.each {
                 productTypeIds << it.id
