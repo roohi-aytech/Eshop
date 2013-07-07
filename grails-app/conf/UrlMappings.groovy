@@ -77,7 +77,9 @@ class UrlMappings {
 
         "/test/$id?"(controller: "/default", action: "test")
 
+        "/notFound"(controller: "/default", action: "notFound")
+
 		"500"(view:'/error')
-        "404"(controller: "/default", action:"underConstruction")
+        "404"(controller: "/default", action:"notFound")
 	}
 }

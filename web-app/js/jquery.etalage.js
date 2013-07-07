@@ -53,16 +53,17 @@
                     }
                     if (aY.length) {
                         a0.find(".etalage_thumb_image").data("anchor", aY.attr("href"))
+                        aY.attr("href", "");
                     }
                 });
                 var widthRatio = parseInt(v.find(".etalage_thumb_image").attr('width'));
                 var heightRatio = parseInt(v.find(".etalage_thumb_image").attr('height'));
 
-                if(widthRatio >= heightRatio){
+                if (widthRatio >= heightRatio) {
                     c.thumb_image_width = 300;
                     c.thumb_image_height = (300 * heightRatio) / widthRatio;
                 }
-                else{
+                else {
                     c.thumb_image_height = 300;
                     c.thumb_image_width = (300 * widthRatio) / heightRatio;
                 }
@@ -548,59 +549,65 @@
                     }
                 };
                 v.add(aL).add(D).mouseenter(function () {
-                    if(av.attr('zoomable') == '0')
-                        return;
+                    if (av.attr('zoomable') != '0') {
 
-                    if (c.show_hint) {
-                        q.hide()
+                        if (c.show_hint) {
+                            q.hide()
+                        }
+                        if (!c.click_to_zoom || z) {
+                            S()
+                        }
                     }
-                    if (!c.click_to_zoom || z) {
-                        S()
+                    else{
+                        av.click(function(){
+                            c.click_callback(av.data('anchor'), '');
+                        });
+                        av.attr('href', '');
                     }
                 }).mouseleave(function () {
-                        if(av.attr('zoomable') == '0')
-                            return;
-                    aS()
-                });
+                        if (av.attr('zoomable') != '0') {
+                            aS()
+                        }
+                    });
                 var aQ = -(c.source_image_width - R), aP = -(c.source_image_height - aW);
                 v.add(aL).add(D).mousemove(function (a1) {
-                    if(av.attr('zoomable') == '0')
-                        return;
-                    var j = Math.round(a1.pageX - av.offset().left + aj), i = Math.round(a1.pageY - av.offset().top + aH);
-                    var a0 = (j - ac), aZ = (i - ab);
-                    if (a0 < aj) {
-                        a0 = aj
-                    }
-                    if (a0 > o) {
-                        a0 = o
-                    }
-                    if (aZ < aH) {
-                        aZ = aH
-                    }
-                    if (aZ > K) {
-                        aZ = K
-                    }
-                    aL.css({left: a0, top: aZ});
-                    if (c.magnifier_invert) {
-                        var aY = a0 - aj, aX = aZ - aH;
-                        h.css({left: -aY, top: -aX})
-                    }
-                    W = -((a0 - aj) * (1 / (c.thumb_image_width / c.source_image_width)));
-                    V = -((aZ - aH) * (1 / (c.thumb_image_height / c.source_image_height)));
-                    if (W < aQ) {
-                        W = aQ
-                    }
-                    if (V < aP) {
-                        V = aP
-                    }
-                    if (c.zoom_easing) {
-                        clearTimeout(w);
-                        aU()
-                    } else {
-                        if (al) {
-                            ak.css({left: W, top: V})
+                    if (av.attr('zoomable') != '0') {
+                        var j = Math.round(a1.pageX - av.offset().left + aj), i = Math.round(a1.pageY - av.offset().top + aH);
+                        var a0 = (j - ac), aZ = (i - ab);
+                        if (a0 < aj) {
+                            a0 = aj
                         }
-                        ay.css({left: W, top: V})
+                        if (a0 > o) {
+                            a0 = o
+                        }
+                        if (aZ < aH) {
+                            aZ = aH
+                        }
+                        if (aZ > K) {
+                            aZ = K
+                        }
+                        aL.css({left: a0, top: aZ});
+                        if (c.magnifier_invert) {
+                            var aY = a0 - aj, aX = aZ - aH;
+                            h.css({left: -aY, top: -aX})
+                        }
+                        W = -((a0 - aj) * (1 / (c.thumb_image_width / c.source_image_width)));
+                        V = -((aZ - aH) * (1 / (c.thumb_image_height / c.source_image_height)));
+                        if (W < aQ) {
+                            W = aQ
+                        }
+                        if (V < aP) {
+                            V = aP
+                        }
+                        if (c.zoom_easing) {
+                            clearTimeout(w);
+                            aU()
+                        } else {
+                            if (al) {
+                                ak.css({left: W, top: V})
+                            }
+                            ay.css({left: W, top: V})
+                        }
                     }
                 });
                 if (p > 1 || !c.smallthumb_hide_single) {

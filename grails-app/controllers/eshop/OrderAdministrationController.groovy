@@ -9,9 +9,23 @@ class OrderAdministrationController {
     def mongoService
     def orderTrackingService
 
+    def orderNotification() {
+        def order = Order.get(params.id)
+        if (orderTrackingService.checkIfOrderIsVisibleToUser(order, springSecurityService.currentUser)) {
+            String result = ""
+            order.items.each {
+                result += it.productModel.toString()
+                result += "<br/>"
+            }
+            result += "<a target='_blank' href='${createLink(controller: 'orderAdministration', action: 'act', params:[id: order.id])}'>${message(code:'order.notification.link')}</a>"
+            render result
+        } else
+            render 0
+    }
+
     def list() {
         def orderList = orderTrackingService.filterOrderListForUser(Order.findAllByStatus(params.status), springSecurityService.currentUser)
-        render view: '/orderAdministration/list', model:[orderList:orderList.collect{it.id.toLong()}]
+        render view: '/orderAdministration/list', model: [orderList: orderList.collect { it.id.toLong() }]
     }
 
     def act() {
@@ -39,20 +53,20 @@ class OrderAdministrationController {
 
         //update order item
         def orderItem = OrderItem.get(params.orderItem.id)
-        orderItem.unitPrice = priceService.calcProductModelPrice(priceInstance.productModel.id).showVal?:0
+        orderItem.unitPrice = priceService.calcProductModelPrice(priceInstance.productModel.id).showVal ?: 0
 
-        redirect(action: 'act', params: [id:params.order.id])
+        redirect(action: 'act', params: [id: params.order.id])
     }
 
-    def updateProductModelStatus(){
+    def updateProductModelStatus() {
 
         def productModel = ProductModel.get(params.productModel.id)
         productModel.status = params.status
 
-        redirect(action: 'act', params: [id:params.order.id])
+        redirect(action: 'act', params: [id: params.order.id])
     }
 
-    def actcreated(){
+    def actcreated() {
         def order = Order.get(params.id)
         order.status = OrderHelper.STATUS_INQUIRED
         order.save()
@@ -69,10 +83,10 @@ class OrderAdministrationController {
             return
         }
 
-        redirect(action: 'list', params:[status:OrderHelper.STATUS_CREATED])
+        redirect(action: 'list', params: [status: OrderHelper.STATUS_CREATED])
     }
 
-    def actpaid(){
+    def actpaid() {
         def order = Order.get(params.id)
         order.status = OrderHelper.STATUS_TRANSMITTED
         order.save()
@@ -89,14 +103,14 @@ class OrderAdministrationController {
             return
         }
 
-        redirect(action: 'list', params:[status:OrderHelper.STATUS_PAID])
+        redirect(action: 'list', params: [status: OrderHelper.STATUS_PAID])
     }
 
-    def acttransmitted(){
+    def acttransmitted() {
         def order = Order.get(params.id)
         order.status = OrderHelper.STATUS_DELIVERED
         order.save()
-        order.items.each{
+        order.items.each {
             def product = Product.get it.productModel.product.id
             product.saleCount = product.saleCount ? product.saleCount + 1 : 0
             product.save()
@@ -115,6 +129,6 @@ class OrderAdministrationController {
             return
         }
 
-        redirect(action: 'list', params:[status:OrderHelper.STATUS_TRANSMITTED])
+        redirect(action: 'list', params: [status: OrderHelper.STATUS_TRANSMITTED])
     }
 }

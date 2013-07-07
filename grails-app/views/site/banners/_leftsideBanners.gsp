@@ -1,6 +1,6 @@
 <%@ page import="eshop.Banner" %>
 <div class="banners">
-    <g:each in="${Banner.findAllByPositionAndDeleted('left', false)}">
+    <g:each in="${Banner.findAllByPositionAndDeleted('left', false).sort {it.sortIndex}}">
         <g:if test="${it.url}">
             <a href="${it.url}">
         </g:if>

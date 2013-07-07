@@ -53,8 +53,8 @@
 
 
     %{--easy ui--}%
-    <link rel="stylesheet" href="${resource(dir:'css/jquery.easyui/metro', file:'easyui.css')}" />
-    <link rel="stylesheet" href="${resource(dir:'css/jquery.easyui', file:'easyui-rtl.css')}" />
+    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}"/>
     <g:javascript src="jquery.easyui/jquery.panel.js"></g:javascript>
     <g:javascript src="jquery.easyui/jquery.parser.js"></g:javascript>
     <g:javascript src="jquery.easyui/jquery.validatebox.js"></g:javascript>
@@ -100,7 +100,8 @@
 
 <div id="footer" role="contentinfo">
     <g:message code="application.name" default="EShop"/> | <g:message code="application.copyRight"
-                                                                      default="© AGAH-IT 2012"/> | <g:message code="version"/>
+                                                                      default="© AGAH-IT 2012"/> | <g:message
+            code="version"/>
 </div><!-- end #footer -->
 
 <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt"
@@ -112,27 +113,28 @@
 
     function msgSuccess(text) {
         $.msgGrowl({
-            type:'success', 'text':text, position:'bottom-left'
+            type: 'success', 'text': text, position: 'bottom-left'
         });
     }
 
     function msgInfo(text) {
         $.msgGrowl({
-            type:'info', 'text':text, position:'bottom-left'
+            type: 'info', 'text': text, position: 'bottom-left'
         });
     }
 
     function msgWarning(text) {
         $.msgGrowl({
-            type:'warning', 'text':text, position:'bottom-left'
+            type: 'warning', 'text': text, position: 'bottom-left'
         });
     }
 
     function msgError(text) {
         $.msgGrowl({
-            type:'error', 'text':text, position:'bottom-left'
+            type: 'error', 'text': text, position: 'bottom-left'
         });
     }
 </script>
+<g:render template="/events_push"/>
 </body>
 </html>

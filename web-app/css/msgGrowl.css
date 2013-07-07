@@ -57,7 +57,7 @@
 	border-radius:5px
 }
 .msgGrowl h4 {
-	font-size:13px;
+	font-size:11px;
 	color:#333;
 	margin-bottom:.5em;
 	-webkit-text-shadow:0 0 1px #FFF;
@@ -70,6 +70,7 @@
     direction:rtl;
     padding-left:30px;
     min-height: 35px;
+    line-height: 18px;
 }
 .msgGrowl-close {
 	background:url(../images/msgGrowl_close.png) no-repeat 50% 50%;

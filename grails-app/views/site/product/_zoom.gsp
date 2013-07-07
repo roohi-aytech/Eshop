@@ -42,7 +42,7 @@
     <g:set var="mainImage" value="${product?.mainImage}"/>
     <g:if test="${mainImage}">
         <li>
-            <a ${mainImage?.dynamicProperties?.zoomable ? 'href=' + mainImage?.id :''} >
+            <a href='${mainImage?.id}' >
                 <g:set var="image"
                        value="${ImageIO.read(new ByteInputStream(mainImage?.fileContent, mainImage?.fileContent?.length))}"/>
                 <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
@@ -57,7 +57,7 @@
     </g:if>
     <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name }}">
         <li>
-            <a ${it?.dynamicProperties?.zoomable ? 'href=' + it?.id :''} >
+            <a href='#${mainImage?.id}' >
                 <g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>
                 <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
                      width="50" height="50"

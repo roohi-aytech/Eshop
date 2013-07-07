@@ -231,7 +231,7 @@ ul.errors {
     height: 140px !important;
     display: inline-block !important;
     float: none !important;
-    min-height: auto;
+    min-height: 0;
     width: 24%;
 }
 
@@ -1336,6 +1336,22 @@ table.attribute-list td {
     box-shadow: 0 0 3px #98b6ec;
 }
 
+.attribute-list .removeThisRow{
+    width: 16px;
+    padding: 0;
+    padding-left: 5px;
+    border-width:0;
+}
+
+.attribute-list .removeThisRow div{
+    display: none;
+    background-color: red;
+    height: 16px;
+    width: 16px;
+    background: url(../images/hide.png);
+    cursor: pointer;
+}
+
 /*basket items*/
 #basketItems ul {
     max-height: 200px;
@@ -2212,6 +2228,10 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
     height: 80px;
 }
 
+.productTypeType-carousel li a div {
+    text-align: center;
+}
+
 .productTypeType-carousel li a .tick {
     background-image: url(../images/tick.png);
     width: 24px;
@@ -2416,6 +2436,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 #myModal.fade.in {
     top: 65px;
+    z-index:1000000;
 }
 
 .modal.fade.in {

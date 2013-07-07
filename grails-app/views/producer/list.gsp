@@ -67,6 +67,8 @@
             <rg:modify>
                 <rg:ignoreField field="producingProducts"/>
                 <rg:ignoreField field="producerStaffs"/>
+                <rg:ignoreField field="producerAccounts"/>
+
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${eshop.Producer}" />
