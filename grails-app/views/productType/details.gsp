@@ -17,7 +17,7 @@
         <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
         <li><a href="#articles"><g:message code="articles"/></a></li>
         <li><a href="#gift"><g:message code="gift"/></a></li>
-        %{--<li><a href="#vendors"><g:message code="vendors"/></a></li>--}%
+        <li><a href="#vendors"><g:message code="vendors"/></a></li>
     </ul>
 
     <div id="godFathers" style="width: 98%">
