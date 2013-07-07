@@ -50,7 +50,9 @@ grails.project.dependency.resolution = {
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
 
-        compile ":atmosphere:0.4.2.3"
+//        compile ":tomcatnio:1.3.4"
+//
+//        compile ":atmosphere:0.4.2.3"
     }
 
     plugins {
@@ -73,9 +75,10 @@ grails.project.dependency.resolution = {
             excludes 'mongo-java-driver', 'gmongo'
         }
 
-        runtime (":atmosphere:0.4.2.3") {
-            exclude 'atmosphere-runtime'
-        }
+//        runtime (":atmosphere:0.4.2.3") {
+//            exclude 'atmosphere-runtime'
+//        }
+        compile ":events-push:1.0.M7"
     }
 }
 grails.plugin.location.RapidGrails = "../RapidGrails"
