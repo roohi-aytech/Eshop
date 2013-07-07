@@ -14,7 +14,7 @@ class OrderController {
 
     static exposes = ['jms']
 
-    @grails.plugin.jms.Queue(name='order.new')
+//    @grails.plugin.jms.Queue(name='order.new')
     def create() {
 
         //save order
@@ -64,15 +64,16 @@ class OrderController {
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
 
-        jmsService.send(topic:'order_event', [id:order.id])
+        event(topic:'order_event', data:[id:order.id], namespace:'browser')
 
         flash.message = message(code: 'order.creation.success.message')
         redirect(controller: 'customer', action: 'panel')
     }
 
-    @grails.plugin.jms.Queue(name='order.new')
+//    @grails.plugin.jms.Queue(name='order.new')
     def testEvents(){
-        jmsService.send(topic:'order_event', [id:8])
+        event(topic:'order_event', data:[id:8], namespace:'browser')
+//        jmsService.send(topic:'order_event', [id:8])
         render 0
     }
 

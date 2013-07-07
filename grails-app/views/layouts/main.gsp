@@ -23,6 +23,7 @@
 
     <ckeditor:resources/>
     <g:javascript library="jquery"></g:javascript>
+    <g:render template="/events_push"/>
     <r:layoutResources/>
 
     <g:layoutHead/>
@@ -135,6 +136,5 @@
         });
     }
 </script>
-<g:render template="/events_push"/>
 </body>
 </html>
