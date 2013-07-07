@@ -1,8 +1,10 @@
 %{--<atmosphere:resources/>--}%
 <r:require module="grailsEvents"/>
+<g:set var="rootPath" value="${createLink(uri: '/', absolute: true).toString()}"/>
+<g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
 <r:script>
     var receivedOrders = new Array();
-    var grailsEvents = new grails.Events("http://localhost:8080/EShop",
+    var grailsEvents = new grails.Events("${rootPath}",
     {
         transport: 'long-polling',
         fallbackTransport: 'polling',
@@ -33,30 +35,9 @@
                 // Atmosphere sends commented out data to WebKit based browsers
             }
         }
-    });//${createLink(uri: '/', absolute: true)}");
+    });
 
-    grailsEvents.on('order_event', function(data){
-        try {
-            var order = jQuery.parseJSON(data);
-            if (receivedOrders.indexOf(order.id) == -1) {
-            receivedOrders[receivedOrders.length] = order.id;
-            var url = "<g:createLink controller="orderAdministration" action="orderNotification"/>";
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: { id: order.id }
-            }).done(function (response) {
-                        if (response != "0") {
-                            $.msgGrowl({
-                                type: 'info', sticky: true, 'title': '${message(code: 'order.notification.title')}', 'text': response, lifetime: 5000
-                            });
-                        }
-                    });
-            }
-        } catch (e) {
-            // Atmosphere sends commented out data to WebKit based browsers
-        }
-    }); //will listen for server events on 'savedTodo' topic
+    grailsEvents.on('order_event', function(data){});
 </r:script>
 %{--<script type="text/javascript">--}%
 
