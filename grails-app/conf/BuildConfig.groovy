@@ -49,7 +49,10 @@ grails.project.dependency.resolution = {
         runtime "com.gmongo:gmongo:1.0"
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
-//        compile ":atmosphere:1.0.13"
+
+        compile('org.atmosphere:atmosphere-runtime:1.0.0.beta5') {
+            excludes 'slf4j-api', 'atmosphere-ping'
+        }
     }
 
     plugins {
@@ -70,6 +73,10 @@ grails.project.dependency.resolution = {
         compile ":ckeditor:3.6.2.2"
         compile (":mongodb:1.0.0.GA"){
             excludes 'mongo-java-driver', 'gmongo'
+        }
+
+        runtime (":atmosphere:0.4.2.3") {
+            exclude 'atmosphere-runtime'
         }
     }
 }
