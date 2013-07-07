@@ -6,7 +6,7 @@
     var receivedOrders = new Array();
     var grailsEvents = new grails.Events("${rootPath}",
     {
-        transport: 'long-polling',
+        transport: 'streaming',
         fallbackTransport: 'polling',
         timeout: 10000,
         onMessage: function(data){
