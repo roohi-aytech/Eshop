@@ -2,7 +2,7 @@
 <r:require module="grailsEvents"/>
 <r:script>
     var receivedOrders = new Array();
-    var grailsEvents = new grails.Events("http://localhost:8080/EShop/");
+    var grailsEvents = new grails.Events("${createLink(uri:'/', absolute: true)}");
 //    grailsEvents.send('saveTodo', data); //will send data to server topic 'saveTodo'
     grailsEvents.on('order_event', function(data){
         try {
