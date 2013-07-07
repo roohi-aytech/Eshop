@@ -4,6 +4,7 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+grails.tomcat.nio = true
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.war.resources = { stagingDir ->
     delete(file:"${stagingDir}/WEB-INF/lib/ext-impl.jar")
@@ -48,6 +49,7 @@ grails.project.dependency.resolution = {
         runtime "com.gmongo:gmongo:1.0"
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
+        compile ":atmosphere:1.0.13"
     }
 
     plugins {
