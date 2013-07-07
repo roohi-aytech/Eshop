@@ -105,7 +105,6 @@
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <g:render template="banners/enamad"></g:render>
                                     <g:render template="banners/leftsideBanners"></g:render>
                                 </td>
                             </tr>

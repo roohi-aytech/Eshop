@@ -35,7 +35,7 @@ class SiteController {
     def browse() {
         def productType = params.productType ? ProductType.findBySeoFriendlyName(params.productType) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
         if (!productType || productType.deleted) {
-            redirect(uri:"/notFound")
+            redirect(uri: "/notFound")
             return
         }
 
@@ -318,7 +318,7 @@ class SiteController {
         def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
         if (!product || product.deleted) {
-            redirect(uri:"/notFound")
+            redirect(uri: "/notFound")
             return
         }
 
@@ -358,7 +358,7 @@ class SiteController {
 
         //attributes
         model.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(product.productTypes.toArray().first()).toList()
-                .collect { [item: it] }
+                .collect { [item: it, hasAttribute: false] }
 //                .collect { [id: it.id, name: it.name, categories: [], attributes: []] }
 
 
@@ -447,12 +447,21 @@ class SiteController {
 
         parentCategory.attributes = product.attributes.findAll {
             attr ->
-                attr?.attributeType?.category?.id == parentCategory.item.id
+                (attr?.attributeType?.category?.id == parentCategory.item.id
+                        && !attr?.attributeType?.deleted
+                        && (attr?.attributeType?.showPositions?.contains('productDetails')
+                        || attr?.attributeType?.showPositions?.contains('productFullDetails'))
+                        && attr?.value
+                        && attr?.value?.toString()?.compareTo("N/A") != 0)
         }
+        if (parentCategory.attributes)
+            parentCategory.hasAttribute = parentCategory.attributes.count { it } > 0
 
-        parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it] }
+        parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it, hasAttribute: false] }
         parentCategory.childCategories.each { childCategory ->
             fillAttibuteCategoryChildren(product, childCategory)
+            if (childCategory.hasAttribute)
+                parentCategory.hasAttribute = true
         }
     }
 
@@ -582,7 +591,7 @@ class SiteController {
 
         model.article = JournalArticle.get(params.id)
         if (!model.article) {
-            redirect(uri:"/notFound")
+            redirect(uri: "/notFound")
             return
         }
 
