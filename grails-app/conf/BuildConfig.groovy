@@ -49,7 +49,7 @@ grails.project.dependency.resolution = {
         runtime "com.gmongo:gmongo:1.0"
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
-        compile ":atmosphere:1.0.13"
+//        compile ":atmosphere:1.0.13"
     }
 
     plugins {
