@@ -50,9 +50,7 @@ grails.project.dependency.resolution = {
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
 
-        compile('org.atmosphere:atmosphere-runtime:1.0.0.beta5') {
-            excludes 'slf4j-api', 'atmosphere-ping'
-        }
+        compile ":atmosphere:0.4.2.3"
     }
 
     plugins {
