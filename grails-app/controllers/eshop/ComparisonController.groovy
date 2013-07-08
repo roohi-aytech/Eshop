@@ -1,5 +1,7 @@
 package eshop
 
+import grails.converters.JSON
+
 class ComparisonController {
 
     def priceService
@@ -44,6 +46,9 @@ class ComparisonController {
 
     def show() {
 
+        if(params.productTypeId)
+            session["selected-nodes-${params.productTypeId}"] = params.selectedNodes.split(',')
+
         def model = [productTypeList: []]
 
         def compareList = session.getAttribute("compareList")
@@ -60,24 +65,33 @@ class ComparisonController {
 
         model.productTypeList.each { productType ->
 
-            productType.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType.item)
-                    .toList().collect { [item: it] }
+            def selectedList =  session["selected-nodes-${productType?.item?.id}"]
 
-            productType.rootAttributeCategories << [item: null]
+            productType.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType.item)
+                    .toList().collect { [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))] }
+
+            productType.rootAttributeCategories << [item: null, hasAttribute: false, selected: (!selectedList || selectedList.contains('c'))]
 
             productType.rootAttributeCategories.each {
                 category ->
-                    fillAttibuteCategoryChildren(productType.products, category)
+                    fillAttibuteCategoryChildren(productType.products, category, productType)
             }
         }
 
         model
     }
 
-    def fillAttibuteCategoryChildren(products, parentCategory) {
+    def fillAttibuteCategoryChildren(products, parentCategory, productType) {
+
+        def selectedList = session["selected-nodes-${productType?.item?.id}"] as Collection
 
         if (parentCategory.item) {
-            parentCategory.attributeTypes = AttributeType.findAllByCategory(parentCategory.item).findAll {it.showPositions.contains('compare')}.collect { [item: it] }
+            parentCategory.attributeTypes = AttributeType.findAllByCategory(parentCategory.item).findAll { it.showPositions.contains('compare') }.
+                    collect { [item: it, selected: (!selectedList || selectedList.contains(it.id.toString()))] }
+            if (parentCategory.attributeTypes){
+                parentCategory.hasAttribute = parentCategory.attributeTypes.count { it } > 0
+                parentCategory.selected = parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.item.id.toString())) } > 0
+            }
 
             parentCategory.attributeTypes.each { attributeType ->
                 attributeType.values = []
@@ -90,21 +104,27 @@ class ComparisonController {
                 }
             }
 
-            parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it] }
+            parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))] }
             parentCategory.childCategories.each { childCategory ->
-                fillAttibuteCategoryChildren(products, childCategory)
+                fillAttibuteCategoryChildren(products, childCategory, productType)
+                parentCategory.hasAttribute = parentCategory.hasAttribute || childCategory.hasAttribute
+                parentCategory.selected = parentCategory.selected || childCategory.selected
             }
         } else {
             parentCategory.attributeTypes = []
             products.each { product ->
                 product.attributes.each { attribute ->
                     if (attribute.attributeType.category == null && attribute.attributeType.showPositions.contains('compare')) {
-                        def item = [item: attribute.attributeType]
+                        def item = [item: attribute.attributeType, selected: (!selectedList || selectedList.contains(attribute.attributeType.id.toString()))]
                         if (!parentCategory.attributeTypes.contains(item)) {
                             parentCategory.attributeTypes << item
                         }
                     }
                 }
+            }
+            if (parentCategory.attributeTypes) {
+                parentCategory.hasAttribute = parentCategory.attributeTypes.count { it } > 0
+                parentCategory.selected = parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.id.toString())) } > 0
             }
 
             parentCategory.attributeTypes.each { attributeType ->
@@ -121,4 +141,5 @@ class ComparisonController {
             parentCategory.childCategories = [:]
         }
     }
+
 }

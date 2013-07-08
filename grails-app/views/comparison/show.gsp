@@ -11,6 +11,13 @@
 <head>
     <meta name="layout" content="site">
     <title><g:message code="compare"/></title>
+    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}"/>
+    <g:javascript src="jquery.easyui/jquery.panel.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.parser.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.validatebox.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.draggable.js"></g:javascript>
+    <g:javascript src="jquery.easyui/jquery.tree.js"></g:javascript>
 </head>
 
 <body>
@@ -27,106 +34,130 @@
     <div class="tab-content">
         <g:each in="${productTypeList}" var="productType">
             <div id="tab${productType.item.id}" class="tab-pane">
-                <table class="comparison attribute-list">
-                    <tr>
-                        <th></th>
-                        <g:each in="${productType.products}" var="product">
-                            <th class="attributeValue">
-                                <div class="imageBorder">
-                                    <img onclick="enlargeProductImage(${product.id})" src="${createLink(controller: 'image', params:[id:product.id, wh:'100x100'])}"/>
-                                </div>
-                                <b>
-                                    <a href="${createLink(controller: 'site', action: 'product', params: [id: product.id])}">${product}</a>
-                                </b>
-                                <span class="delete">
-                                    [ <a
-                                        href="${createLink(controller: 'comparison', action: 'remove', params: [id: product.id])}">
-                                    <g:message code="application_delete"></g:message>
-                                </a> ]
-                                </span>
-                            </th>
-                        </g:each>
-                    </tr>
-                    <tr>
-                        <td class="attributeName"><g:message code="product.type"/></td>
-                        <g:each in="${productType.products}" var="product">
-                            <td class="attributeValue" ${productType.products.any{it.type?.title != productType.products.first().type?.title}? 'style="font-weight:bold"':''}>
-                                ${product.type?.title ?: '-'}
-                            </td>
-                        </g:each>
-                    </tr>
-                    <tr>
-                        <td class="attributeName"><g:message code="product.brand"/></td>
-                        <g:each in="${productType.products}" var="product">
-                            <td class="attributeValue">
-                                <img width="80px"
-                                     src="${createLink(controller: 'image', params: [type: 'brand', id: product.brand.id])}"
-                                     title="${product.brand}"/>
-                            </td>
-                        </g:each>
-                    </tr>
-                    <tr>
-                        <td class="attributeName"><g:message code="productModel"/></td>
-                        <g:each in="${productType.products}" var="product">
-                            <td class="attributeValue">
-                                ${product.name ?: '-'}
-                            </td>
-                        </g:each>
-                    </tr>
-                    <g:each in="${productType.rootAttributeCategories}" var="category">
-                        <tr>
-                            <td colspan="${productType.products.toList().count { it } + 1}">
-                                <h4>${category?.item?.name ?: message(code: 'otherAttributes')}</h4>
-                            </td>
-                        </tr>
-                        <g:each in="${category.attributeTypes}" var="attributeType">
-                            <tr>
-                                <td class="attributeName">
-                                    <b>${attributeType.item.name}</b>
-                                </td>
-                                <g:each in="${attributeType.values}" var="attribute">
-                                    <td class="attributeValue" ${attributeType.values.any{it != attributeType.values.first()}? 'style="font-weight:bold"':''}>
-                                        ${attribute ? attribute.replace('\n', '<br/>') : '-'}
-                                    </td>
-                                </g:each>
-                            </tr>
-                        </g:each>
+            <div style="text-align: left;margin-bottom: 10px;">
+                <a class="btn btn-success" onclick="selectAttributes(${productType.item.id});"><g:message
+                        code="comparison.selectAttributes.link"/></a>
+            </div>
+            <table class="comparison attribute-list">
+                <tr>
+                    %{--<th></th>--}%
+                    <th></th>
+                    <g:each in="${productType.products}" var="product">
+                        <th class="attributeValue">
+                            <div class="imageBorder">
+                                <img onclick="enlargeProductImage(${product.id})"
+                                     src="${createLink(controller: 'image', params: [id: product.id, wh: '100x100'])}"/>
+                            </div>
+                            <b>
+                                <a href="${createLink(controller: 'site', action: 'product', params: [id: product.id])}">${product}</a>
+                            </b>
+                            <span class="delete">
+                                [ <a
+                                    href="${createLink(controller: 'comparison', action: 'remove', params: [id: product.id])}">
+                                <g:message code="application_delete"></g:message>
+                            </a> ]
+                            </span>
+                        </th>
                     </g:each>
-                    <tr>
-                        <td></td>
-                        <g:each in="${productType.products}" var="product">
-                            <td class="attributeValue">
-                                <div class="buttons">
-                                    <eshop:addToBasket prodcutId="${product.id}"
-                                                       productTitle="${product}"
-                                                       productPrice="price"></eshop:addToBasket>
-                                    <eshop:addToWishList prodcutId="${product.id}"
-                                                         productTitle="${product.toString()}"
-                                                         productPrice="price"></eshop:addToWishList>
-                                </div>
-                            </td>
-                        </g:each>
-                    </tr>
-                </table>
+                </tr>
+                <tr>
+                    %{--<td></td>--}%
+                    <td class="attributeName"><g:message code="product.type"/></td>
+                    <g:each in="${productType.products}" var="product">
+                        <td class="attributeValue" ${productType.products.any { it.type?.title != productType.products.first().type?.title } ? 'style="font-weight:bold"' : ''}>
+                            ${product.type?.title ?: '-'}
+                        </td>
+                    </g:each>
+                </tr>
+                <tr>
+                    %{--<td></td>--}%
+                    <td class="attributeName"><g:message code="product.brand"/></td>
+                    <g:each in="${productType.products}" var="product">
+                        <td class="attributeValue">
+                            <img width="80px"
+                                 src="${createLink(controller: 'image', params: [type: 'brand', id: product.brand.id])}"
+                                 title="${product.brand}"/>
+                        </td>
+                    </g:each>
+                </tr>
+                <tr>
+                    %{--<td></td>--}%
+                    <td class="attributeName"><g:message code="productModel"/></td>
+                    <g:each in="${productType.products}" var="product">
+                        <td class="attributeValue">
+                            ${product.name ?: '-'}
+                        </td>
+                    </g:each>
+                </tr>
+                <g:each in="${productType.rootAttributeCategories}" var="category">
+                    <g:render template="attributeList"
+                              model="${[indent: 0, category: category, productType: productType]}"/>
+                </g:each>
+                <tr>
+                    %{--<td></td>--}%
+                    <td></td>
+                    <g:each in="${productType.products}" var="product">
+                        <td class="attributeValue">
+                            <div class="buttons">
+                                <eshop:addToBasket prodcutId="${product.id}"
+                                                   productTitle="${product}"
+                                                   productPrice="price"></eshop:addToBasket>
+                                <eshop:addToWishList prodcutId="${product.id}"
+                                                     productTitle="${product.toString()}"
+                                                     productPrice="price"></eshop:addToWishList>
+                            </div>
+                        </td>
+                    </g:each>
+                </tr>
+            </table>
+
+            <div id="modal_${productType.item.id}" class="modal hide fade" tabindex="-1" role="window"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+
+                <div class="modal-body">
+                    <g:form controller="comparison" action="show">
+                        <h3 class="font-koodak"><g:message code="comparison.selectAttributes.link"/></h3>
+
+                        <div style="height: 400px;margin-bottom:10px;" class="scrollable">
+                            <ul class="easyui-tree" id="tree-${productType.item.id}">
+                                <g:each in="${productType.rootAttributeCategories}" var="category">
+                                    <g:render template="attributeTree"
+                                              model="${[category: category, productType: productType]}"/>
+                                </g:each>
+                            </ul>
+                        </div>
+                        <g:hiddenField name="productTypeId" value="${productType.item.id}"/>
+                        <g:hiddenField name="selectedNodes" id="selectedNodes-${productType.item.id}"/>
+                        <div>
+                            <input type="submit" onclick="gatherData(${productType.item.id})" class="btn btn-primary"
+                                   value="${message(code: 'comparison.selectAttributes.button')}"/>
+                        </div>
+                    </g:form>
+                </div>
             </div>
         </g:each>
     </div>
-</div>
-
-<!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     </div>
 
-    <div class="modal-body">
-    </div>
-</div>
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
 
-<g:javascript>
+        <div class="modal-body">
+        </div>
+    </div>
+
+    <g:javascript>
     $(document).ready(function () {
         $('ul.nav.nav-tabs li').first().addClass('active');
         $('div.tab-content div.tab-pane').first().addClass('active');
+        createRemoveButtons();
     });
 
     function enlargeProductImage(id){
@@ -138,6 +169,43 @@
         });
         $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage')}/' + id, function() {});
     }
-</g:javascript>
+
+    function createRemoveButtons(){
+        $('.attribute-list tr .removeThisRow').append('<div/>');
+        $('.attribute-list tr .removeThisRow div').click(function(){
+            if($(this).parent().attr('categoryId'))
+                $('.category_' + $(this).parent().attr('categoryId')).fadeOut();
+            $(this).parent().parent().fadeOut();
+        });
+        $('.attribute-list tr').hoverIntent(function(){
+            $(this).find('.removeThisRow div').fadeIn();
+        }, function(){
+            $(this).find('.removeThisRow div').fadeOut();
+        });
+    }
+
+    function selectAttributes(id){
+        $("#modal_" + id).modal({
+                backdrop: false,
+                show: true
+            });
+    }
+
+    $('.easyui-tree').tree({
+        checkbox: true,
+        cascadeCheck: true
+    });
+
+    function gatherData(productTypeId){
+        var input = $('#selectedNodes-' + productTypeId);
+        input.val('');
+        var nodes = $('#tree-' + productTypeId).tree('getChecked');
+        for(var i = 0; i < nodes.length; i++) {
+            if(input.val())
+                 input.val(input.val() + ',');
+            input.val(input.val() + nodes[i].id);
+        }
+    }
+    </g:javascript>
 </body>
 </html>
