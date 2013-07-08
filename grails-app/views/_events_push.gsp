@@ -30,6 +30,6 @@
         }
     }
 
-    grailsEvents.on('order_event', handleOrderEvent, {transport:'sse', fallbackTransport:'long-polling'});
+    grailsEvents.on('order_event', handleOrderEvent, {transport:'long-polling', fallbackTransport:'polling'});
 
 </r:script>
