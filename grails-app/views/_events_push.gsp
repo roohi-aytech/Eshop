@@ -4,40 +4,40 @@
 <g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
 <r:script>
     var receivedOrders = new Array();
-    var grailsEvents = new grails.Events("${rootPath}",
-    {
-        transport: 'sse',
-        fallbackTransport: 'long-polling',
-        timeout: 10000,
-        onMessage: function(data){
-            try{
-                if(data.responseBody.length > 0){
-                    var order = jQuery.parseJSON(data.responseBody).body;
-                    if(order.id){
-                        if (receivedOrders.indexOf(order.id) == -1) {
-                        receivedOrders[receivedOrders.length] = order.id;
-                        var url = "<g:createLink controller="orderAdministration" action="orderNotification"/>";
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: { id: order.id }
-                        }).done(function (response) {
-                                    if (response != "0") {
-                                        $.msgGrowl({
-                                            type: 'info', sticky: true, 'title': '${message(code: 'order.notification.title')}', 'text': response, lifetime: 5000
-                                        });
-                                    }
-                                });
-                        }
-                    }
-                }
-            } catch (e) {
-                // Atmosphere sends commented out data to WebKit based browsers
-            }
-        }
-    });
+    var grailsEvents = new grails.Events("${rootPath}");
+    %{--{--}%
+        %{--transport: 'sse',--}%
+        %{--fallbackTransport: 'long-polling',--}%
+        %{--timeout: 10000,--}%
+        %{--onMessage: function(data){--}%
+            %{--try{--}%
+                %{--if(data.responseBody.length > 0){--}%
+                    %{--var order = jQuery.parseJSON(data.responseBody).body;--}%
+                    %{--if(order.id){--}%
+                        %{--if (receivedOrders.indexOf(order.id) == -1) {--}%
+                        %{--receivedOrders[receivedOrders.length] = order.id;--}%
+                        %{--var url = "<g:createLink controller="orderAdministration" action="orderNotification"/>";--}%
+                        %{--$.ajax({--}%
+                            %{--type: "POST",--}%
+                            %{--url: url,--}%
+                            %{--data: { id: order.id }--}%
+                        %{--}).done(function (response) {--}%
+                                    %{--if (response != "0") {--}%
+                                        %{--$.msgGrowl({--}%
+                                            %{--type: 'info', sticky: true, 'title': '${message(code: 'order.notification.title')}', 'text': response, lifetime: 5000--}%
+                                        %{--});--}%
+                                    %{--}--}%
+                                %{--});--}%
+                        %{--}--}%
+                    %{--}--}%
+                %{--}--}%
+            %{--} catch (e) {--}%
+                %{--// Atmosphere sends commented out data to WebKit based browsers--}%
+            %{--}--}%
+        %{--}--}%
+    %{--});--}%
 
-    grailsEvents.on('order_event', function(data){});
+    grailsEvents.on('order_event', function(data){window.alert(data);});
 </r:script>
 %{--<script type="text/javascript">--}%
 
