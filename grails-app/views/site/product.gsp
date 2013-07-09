@@ -136,7 +136,7 @@
                                         <div class="white-panel">
                                             <div>
                                                 <g:if test="${product?.pageTitle}">
-                                                    <h1 itemprop="name">${product?.pageTitle}</h1>
+                                                    <h1 class="font-koodak" itemprop="name">${product?.pageTitle}</h1>
                                                 </g:if>
                                                 <g:else>
                                                     <h1 class="font-koodak"

@@ -29,7 +29,7 @@
     }
 
     function resizeZoomArea(){
-        $('#zommArea').height($('#zommArea').parent().parent().parent().parent().parent().height() - 80);
+        $('#zommArea').height($('#zommArea').parent().parent().parent().parent().parent().parent().height() - 80);
     }
 </script>
 

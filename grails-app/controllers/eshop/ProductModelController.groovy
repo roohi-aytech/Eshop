@@ -150,14 +150,13 @@ class ProductModelController {
         def productModelDefault = ProductModel.findByProductAndIsDefaultModel(modelInstance.product, true)
         
         if(modelInstance.getIsDefaultModel()){
-           if (productModelDefault){
+           if (productModelDefault && productModelDefault.id != modelInstance.id){
                productModelDefault.isDefaultModel = false
            }
         }
        //this is the first model of this group
         else if(productModelDefault == null)
             modelInstance.isDefaultModel = true
-
 
         if (modelInstance.validate() && modelInstance.save()) {
             render modelInstance as JSON

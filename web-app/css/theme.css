@@ -1194,8 +1194,8 @@ div.ui-tabs ul.ui-tabs-nav li {
     float: right;
 }
 
-table#GuaranteeGrid td {
-    direction: rtl;
+table.ui-jqgrid-btable td {
+    direction: rtl !important;
 }
 
 .msgGrowl-container h4 {
