@@ -4,7 +4,7 @@
 <g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
 <r:script>
     var receivedOrders = new Array();
-    var grailsEvents = new grails.Events("${rootPath}");
+    var grailsEvents = new grails.Events("${rootPath}", null, {transport:'long-polling', fallbackTransport:'polling'});
 
     function handleOrderEvent(data){
         try{
@@ -30,6 +30,6 @@
         }
     }
 
-    grailsEvents.on('order_event', handleOrderEvent, {transport:'sse', fallbackTransport:'long-polling'});
+    grailsEvents.on('order_event', handleOrderEvent, {transport:'long-polling', fallbackTransport:'polling'});
 
 </r:script>
