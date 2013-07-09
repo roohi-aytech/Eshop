@@ -8,6 +8,9 @@ class GeneralFilters {
                 if (request.serverName != 'localhost' && !request.serverName.toString().startsWith("www")) {
                     response.setStatus(301);
                     response.setHeader("Location", request.requestURL.toString()
+                            .replace('/grails', '')
+                            .replace('/default/', '/')
+                            .replace('.dispatch', '')
                             .replace('http://', 'http://www.')
                     )
                     response.flushBuffer()
