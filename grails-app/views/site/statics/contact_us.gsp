@@ -102,7 +102,7 @@
 پشتیبانی آنلاین
             </h3>
             ارتباط از طریق
-            <a href="javascript:void(window.open('http://support.zanbil.ir/chat.php?acid=26617','','width=590,height=760,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'))">پشتیبانی آنلاین</a>
+            <a href="javascript:void(window.open('http://support.zanbil.ir:81/chat.php?acid=26617','','width=590,height=760,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'))">پشتیبانی آنلاین</a>
         </div>
 
     </div>
