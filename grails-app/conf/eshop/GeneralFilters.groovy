@@ -7,7 +7,7 @@ class GeneralFilters {
     def filters = {
         all(controller: '*', action: '*') {
             before = {
-                if (request.serverName == 'localhost' && !request.serverName.toString().startsWith("www")) {
+                if (request.serverName != 'localhost' && !request.serverName.toString().startsWith("www")) {
                     def targetUrl = new ApplicationTagLib().createLink(
                             [
                                     controller: controllerName,
