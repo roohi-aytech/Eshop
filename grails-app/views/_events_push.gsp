@@ -1,10 +1,11 @@
 %{--<atmosphere:resources/>--}%
 <r:require module="grailsEvents"/>
+<g:javascript src="grailsEventsOverride.js"/>
 <g:set var="rootPath" value="${createLink(uri: '/', absolute: true).toString()}"/>
 <g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
 <r:script>
     var receivedOrders = new Array();
-    var grailsEvents = new grails.Events("${rootPath}", null, {transport:'long-polling', fallbackTransport:'polling'});
+    var grailsEvents = new grails.Events("${rootPath}");
 
     function handleOrderEvent(data){
         try{
@@ -30,6 +31,6 @@
         }
     }
 
-    grailsEvents.on('order_event', handleOrderEvent, {transport:'long-polling', fallbackTransport:'polling'});
+    grailsEvents.on('order_event', handleOrderEvent, {transport:'sse', fallbackTransport:'long-polling'});
 
 </r:script>

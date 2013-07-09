@@ -2228,7 +2228,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
     height: 80px;
 }
 
-.productTypeType-carousel li a div {
+.static-productTypeType-carousel li a div, .productTypeType-carousel li a div {
     text-align: center;
 }
 
