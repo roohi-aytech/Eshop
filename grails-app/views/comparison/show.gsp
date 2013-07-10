@@ -192,6 +192,7 @@
     }
 
     $('.easyui-tree').tree({
+        url: '${createLink()}',
         checkbox: true,
         cascadeCheck: true
     });

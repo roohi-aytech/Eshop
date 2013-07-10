@@ -161,6 +161,14 @@
                             src="images/banners.png"/><span><g:message
                             code="navigation.manage.banners"/></span></g:link></li>
                 <li>
+                    <g:link controller="newsLetterCategory" action="list"><img
+                            src="images/newsLetterCategory.png"/><span><g:message
+                            code="navigation.manage.newsLetterCategory"/></span></g:link></li>
+                <li>
+                    <g:link controller="newsLetter" action="list"><img
+                            src="images/newsLetter.png"/><span><g:message
+                            code="navigation.manage.newsLetter"/></span></g:link></li>
+                <li>
                     <g:link controller="province" action="list"><img
                             src="images/globe.png"/><span><g:message
                             code="navigation.manage.province"

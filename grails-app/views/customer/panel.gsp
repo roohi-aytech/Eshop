@@ -88,6 +88,8 @@
                 <div class="column2 items">
                     <h4><g:message code="controlPanel.settings.preferences.label"></g:message></h4>
                     <ul class="slave">
+                        <li><g:link controller="customer" action="newsLetter"><g:message
+                                code="controlPanel.settings.profile.newsLetters.label"></g:message></g:link></li>
                     </ul>
                 </div>
             </div>

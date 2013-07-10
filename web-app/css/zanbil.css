@@ -8,6 +8,14 @@
     clear: both;
 }
 
+label{
+    display: inline-block;
+}
+
+ul{
+    margin:0;
+}
+
 html {
     background: none;
 }
@@ -2221,6 +2229,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
     height: 100px;
     position: relative;
     border-radius: 3px;
+    text-align: center;
 }
 
 .productTypeType-carousel li a img {
