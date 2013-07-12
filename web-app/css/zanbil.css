@@ -2464,6 +2464,12 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 .product-slideShow .image-list {
     width: 230px;
+    border:1px solid #6DAEE1;
+    border-radius: 4px;
+    padding-right: 5px;
+}
+
+.product-slideShow .image-list td {
 }
 
 .product-slideShow .image-list img {
@@ -2482,8 +2488,37 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     border: 1px solid #eeeeee;
 }
 
+.product-slideShow h3{
+    background: none repeat scroll 0 0 #C0DBF2;
+    color: black;
+    font-family: tahoma !important;
+    font-size: 11px;
+    font-weight: normal;
+    margin: -5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: justify;
+    line-height: 18px;
+    padding-top: 3px;
+    margin-bottom: 10px;
+}
+
 #zommArea:hover #zoomAreaImage{
+    /*display: none;*/
+}
+
+#zoomArea{
+    overflow: hidden;
+}
+
+#zommArea img{
+    display: block;
+}
+
+#zoomArea .zoomed{
     display: none;
+    background-repeat: no-repeat;
 }
 
 #etalage {

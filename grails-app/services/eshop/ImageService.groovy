@@ -29,8 +29,8 @@ class ImageService {
             img.dynamicProperties.height = 0
         }
         else{
-            img.dynamicProperties.width = image.width
-            img.dynamicProperties.height = image.height
+            img.dynamicProperties.width = Math.max(image.width, image.height)
+            img.dynamicProperties.height = Math.max(image.width, image.height)
         }
     }
 
