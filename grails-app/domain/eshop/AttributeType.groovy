@@ -15,6 +15,7 @@ class AttributeType {
     AttributeValue defaultValue
     ProductType productType
     AttributeCategory category
+    Boolean required = false
     Boolean deleted=false
     int sortIndex
 

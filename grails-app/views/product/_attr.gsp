@@ -1,25 +1,32 @@
 <div class='fieldcontain'>
-    <label for='at_${attributeType.id}'>${attributeType.name}</label>
+    <label for='at_${attributeType.id}'>${attributeType.name}
+        <g:if test="${attributeType.required}">
+            <g:message code="required.flag.label"/>
+        </g:if>
+    </label>
+
     <span>
         <g:checkBox name="notAvailable_${attributeType.id}" checked="${attributeValue?.value == 'N/A'}"/>N/A
     </span>
-%{--<g:if test="${attributeType.values}">--}%
-    <g:select id="at_${attributeType.id}" name="at_${attributeType.id}" from="${attributeType?.values?.findAll{!it.deleted}?.sort {it.value}}"
+    %{--<g:if test="${attributeType.values}">--}%
+    <g:select id="at_${attributeType.id}" name="at_${attributeType.id}"
+              from="${attributeType?.values?.findAll { !it.deleted }?.sort { it.value }}"
               optionKey="id" optionValue="value" noSelection="['': '']" value="${attributeValue?.id}"/>
     %{--<sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN}">--}%
-        <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">
+    <input type="button" value="${message(code: "edit")}" onclick="editAttributeTypeValue${attributeType.id}()">
     %{--</sec:ifAllGranted>--}%
-%{--</g:if>--}%
-%{--<g:else>--}%
-%{--<g:if test="${attributeType?.attributeType=='Text'}">--}%
-%{--<g:textArea cols="50" rows="10" name="at_${attributeType.id}" value="${attributeValue}"/>--}%
-%{--</g:if>--}%
-%{--<g:else>--}%
-%{--<g:textField name="at_${attributeType.id}" value="${attributeValue}"/>--}%
-%{--</g:else>--}%
-%{--</g:else>--}%
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+    %{--<g:if test="${attributeType?.attributeType=='Text'}">--}%
+    %{--<g:textArea cols="50" rows="10" name="at_${attributeType.id}" value="${attributeValue}"/>--}%
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+    %{--<g:textField name="at_${attributeType.id}" value="${attributeValue}"/>--}%
+    %{--</g:else>--}%
+    %{--</g:else>--}%
     <input type="button" id="valuesBtn" value="${message(code: "add")}"
            onclick="addAttributeTypeValue${attributeType.id}()">
+
     <script type="text/javascript">
         function addAttributeTypeValue${attributeType.id}() {
             loadOverlay('<g:createLink controller="product" action="attrValueForm" params="['attributeTypeId': attributeType.id]"/>', '<g:createLink action="saveAttributeValue" controller="product"/>', function (obj) {
@@ -33,9 +40,9 @@
                         var attypsel = $("<select></select>")
                         attypsel.attr("id", "at_${attributeType.id}")
                         attypsel.attr("name", "at_${attributeType.id}")
-                    <g:if test="${attributeType.defaultValue}">
+                        <g:if test="${attributeType.defaultValue}">
                         attypsel.append("<option value='${attributeType.defaultValue?.id}'>${attributeType.defaultValue}</option>")
-                    </g:if>
+                        </g:if>
                         attypsel.append("<option value='" + obj.id + "'>" + obj.value + "</option>")
                         attypsel.val(obj.id)
                         attypsel.insertAfter(attypval)

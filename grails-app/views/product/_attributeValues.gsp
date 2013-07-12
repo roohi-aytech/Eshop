@@ -5,6 +5,9 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
+    <g:if test="${params.attributeValidationError}">
+        <div class="errors"><g:message code="attributeType.required.validator.label"/></div>
+    </g:if>
 
     <g:form method="post" action="saveAttributeValues" params="${[curtab: 1, ptid: ptid]}">
         <g:hiddenField name="id" value="${productInstance?.id}"/>
