@@ -20,7 +20,7 @@ class AddedValue {
     static constraints = {
         name()
         type(inList: ["percent", "fixed"])
-        processTime(inList: ["everyWhere","orderTime"])
+        processTime(inList: ["mandetory","optional"])
         value()
         processTime()
         variationValues()
