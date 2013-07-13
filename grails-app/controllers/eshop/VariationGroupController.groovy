@@ -31,8 +31,42 @@ class VariationGroupController {
             variation = Variation.findById(params.id)
         else
             variation = new Variation()
-
-        render(template: "variation_form", model: [variationInstance: variation, baseProductId: params.baseProductId])
+        def baseProduct = BaseProduct.get(params.baseProductId)
+        def parentProductTypes = []
+        if (baseProduct instanceof Product) {
+            def pt = baseProduct.productTypes.find()
+            while (pt) {
+                parentProductTypes << pt
+                pt = pt.parentProduct
+            }
+        }
+        else if (baseProduct instanceof ProductType) {
+            def pt = baseProduct
+            while (pt) {
+                parentProductTypes << pt
+                pt = pt.parentProduct
+            }
+        }
+        render(template: "variation_form", model: [variationInstance: variation, baseProductId: params.baseProductId, parentProductTypes: parentProductTypes])
+    }
+    def variationGroups(){
+        def baseProduct = BaseProduct.get(params.baseProductId)
+        def parentProductTypes = []
+        if (baseProduct instanceof Product) {
+            def pt = baseProduct.productTypes.find()
+            while (pt) {
+                parentProductTypes << pt
+                pt = pt.parentProduct
+            }
+        }
+        else if (baseProduct instanceof ProductType) {
+            def pt = baseProduct
+            while (pt) {
+                parentProductTypes << pt
+                pt = pt.parentProduct
+            }
+        }
+        render VariationGroup.findAllByProductTypeIsNullOrProductTypeInList(parentProductTypes).sort {it.name}.collect {[id:it.id,name: it.name]} as JSON
     }
 
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
@@ -84,7 +118,7 @@ class VariationGroupController {
                 variationValues = parentproductvariation?.variationValues
 
                 variation?.variationValues?.each {
-                    if(!variationValues.contains(it))
+                    if (!variationValues.contains(it))
                         variationValues.add(it)
                 }
             }

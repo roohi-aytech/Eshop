@@ -597,7 +597,7 @@ class SiteController {
         mailService.sendMail {
             to params.department
             subject "${message(code: 'contactUs.email.subject')}"
-            html(view: "/messageTemplates/mail/contactUs",
+            html(view: "/messageTemplates/mail/contactus",
                     model: [
                             firstName: params.firstName,
                             lastName: params.lastName,
