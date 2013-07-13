@@ -161,6 +161,10 @@
                             src="images/banners.png"/><span><g:message
                             code="navigation.manage.banners"/></span></g:link></li>
                 <li>
+                    <g:link controller="deliveryMethod" action="list"><img
+                            src="images/delivery.png"/><span><g:message
+                            code="navigation.manage.deliveryMethods"/></span></g:link></li>
+                <li>
                     <g:link controller="newsLetterCategory" action="list"><img
                             src="images/newsLetterCategory.png"/><span><g:message
                             code="navigation.manage.newsLetterCategory"/></span></g:link></li>
