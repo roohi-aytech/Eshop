@@ -25,7 +25,7 @@
     </g:form>
     <g:javascript>
         $(function(){
-            $("select").not('.ui-pg-selbox').searchable({
+            $("#list-product select").not('.ui-pg-selbox').searchable({
                maxListSize: 100,                       // if list size are less than maxListSize, show them all
                maxMultiMatch: 50,                      // how many matching entries should be displayed
                exactMatch: false,                      // Exact matching on search

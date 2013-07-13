@@ -26,7 +26,8 @@
         <g:message code="addedValue.type.label" default="Type"/>
 
     </label>
-    <g:select name="type" from="${addedValueInstance.constraints.type.inList}" value="${addedValueInstance?.type}"
+    <g:select name="type" from="${addedValueInstance.constraints.type.inList}"
+              value="${addedValueInstance?.type?:'fixed '}"
               valueMessagePrefix="addedValue.type" noSelection="['': '']"/>
 </div>
 
@@ -36,7 +37,7 @@
 
     </label>
     <g:select name="processTime" from="${addedValueInstance.constraints.processTime.inList}"
-              value="${addedValueInstance?.processTime}"
+              value="${addedValueInstance?.processTime?:"optional"}"
               valueMessagePrefix="addedValue.processTime" noSelection="['': '']"/>
 </div>
 
@@ -47,27 +48,27 @@
     <g:field type="number" style="direction: ltr;" name="value" step="any" required=""
              value="${addedValueInstance.value}"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'startDate', 'error')} ">
-    <label for="startDate">
-        <g:message code="addedValue.startDate.label" default="startDate"/>
-    </label>
-    <rg:datePicker name="startDate" value="${addedValueInstance.startDate}"/>
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'startDate', 'error')} ">--}%
+    %{--<label for="startDate">--}%
+        %{--<g:message code="addedValue.startDate.label" default="startDate"/>--}%
+    %{--</label>--}%
+    %{--<rg:datePicker name="startDate" value="${addedValueInstance.startDate}"/>--}%
+%{--</div>--}%
 
-<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'endDate', 'error')} ">
-    <label for="endDate">
-        <g:message code="addedValue.endDate.label" default="endDate"/>
-    </label>
-    <rg:datePicker name="endDate" value="${addedValueInstance.endDate}"/>
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'endDate', 'error')} ">--}%
+    %{--<label for="endDate">--}%
+        %{--<g:message code="addedValue.endDate.label" default="endDate"/>--}%
+    %{--</label>--}%
+    %{--<rg:datePicker name="endDate" value="${addedValueInstance.endDate}"/>--}%
+%{--</div>--}%
 
-<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'remainCount', 'error')}">
-    <label for="remainCount">
-        <g:message code="addedValue.remainCount.label" default="count"/>
-    </label>
-    <g:field type="number" style="direction: ltr;" name="remainCount" step="any" required=""
-             value="${addedValueInstance.remainCount?:0}"/>
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'remainCount', 'error')}">--}%
+    %{--<label for="remainCount">--}%
+        %{--<g:message code="addedValue.remainCount.label" default="count"/>--}%
+    %{--</label>--}%
+    %{--<g:field type="number" style="direction: ltr;" name="remainCount" step="any" required=""--}%
+             %{--value="${addedValueInstance.remainCount?:0}"/>--}%
+%{--</div>--}%
 
 <g:if test="${showBrand}">
     <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'brand', 'error')} ">

@@ -1,4 +1,4 @@
-<%@ page import="eshop.Variation" %>
+<%@ page import="eshop.VariationGroup; eshop.Variation" %>
 <rg:grid domainClass="${Variation}"
          maxColumns="3"
          showCommand="false"
@@ -8,7 +8,30 @@
         <rg:eq name="baseProduct.id" value="${baseProductInstance.id}"/>
     </rg:criteria>
 </rg:grid>
-
+<div ng-controller="variationGroupController" >
+    <rg:dialog id="variationGroup" title="${message(code: "variation")}">
+        <rg:fields bean="${new VariationGroup()}">
+            <rg:modify>
+                <rg:ignoreField field="variations"/>
+            </rg:modify>
+        </rg:fields>
+        <rg:saveButton domainClass="${VariationGroup}" params="[saveCallback:'variationGroupSaved']"/>
+        <rg:cancelButton/>
+    </rg:dialog>
+    <input id="vgc-button" style="display: none;" type="button" value="${message(code:"new-variation-group")}" ng-click="openVariationGroupCreateDialog()">
+    <g:javascript>
+        function variationGroupSaved(){
+            $.ajax({
+                url:'<g:createLink action="variationGroups" controller="variationGroup" params="[baseProductId: baseProductInstance.id]" />'
+            }).success(function(resp){
+                $("[name=variationGroup\\.id]").html("<option></option>")
+                $(resp).each(function(){
+                    $("[name=variationGroup\\.id]").append("<option value="+this.id+">"+this.name+"</option>")
+                })
+            })
+        }
+    </g:javascript>
+</div>
 <g:javascript>
 function deleteVariation(id){
      if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
@@ -32,7 +55,7 @@ function addToVariationGrid(){
                                params="[baseProductId: baseProductInstance.id]"/>','<g:createLink action="saveVariation"
                                                                                                   controller="variationGroup"/>',function(){
         $("#VariationGrid").trigger("reloadGrid")
-    });
+    },undefined,{width:400});
 }
 </g:javascript>
 

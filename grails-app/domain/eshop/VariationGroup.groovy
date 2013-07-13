@@ -7,6 +7,7 @@ class VariationGroup {
     static auditable = true
     String name
     String representationType
+    ProductType productType
     Boolean showInFilter
 
     static hasMany = [variationValues: VariationValue, variations: Variation]
@@ -17,7 +18,7 @@ class VariationGroup {
         variationValues cascade: "all-delete-orphan"
     }
 
-    static searchable={
+    static searchable = {
         root false
         only = ['name']
     }
@@ -25,10 +26,13 @@ class VariationGroup {
     static constraints = {
         name()
         representationType(inList: ["String", "Color"])
+        productType(nullable: true)
         showInFilter(nullable: true)
         variationValues()
+
     }
-    static ignoredFieldsInJSON=["variations"]
+    static ignoredFieldsInJSON = ["variations"]
+
     String toString() {
         name
     }
