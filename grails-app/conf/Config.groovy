@@ -199,10 +199,10 @@ grails {
     mail {
         ssl = "off"
         host = "91.99.98.70"
-        from = "info@zanbil.ir"
+        from = "no-reply@zanbil.ir"
         port = 8443
         ssl = "off"
-        username = "info"
+        username = "no-reply"
         password = "eshop@agah"
         props = [
 //                "mail.smtp.starttls.enable":"false",
