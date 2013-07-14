@@ -1,8 +1,12 @@
 package eshop
 
+import eshop.delivery.DeliveryMethod
+import eshop.delivery.DeliverySourceStation
+
 class BasketController {
     def springSecurityService
     def priceService
+    def deliveryService
 
     def index() {}
 
@@ -18,7 +22,7 @@ class BasketController {
             basketItem.count++;
         else {
             def price = priceService.calcProductModelPrice(productModel.id)
-            basketItem = [id: id, productId: productModel.product.id, name: productModel.toString(), count: 1, price: price.showVal, realPrice:price.valueAddedVal]
+            basketItem = [id: id, productId: productModel.product.id, name: productModel.toString(), count: 1, price: price.showVal, realPrice: price.valueAddedVal]
             basket << basketItem
         }
 
@@ -68,7 +72,7 @@ class BasketController {
         render "1"
     }
 
-    def invoice() {
+    def deliveryMethod() {
 
         Order order = new Order()
         order.ownerName = params.ownerName
@@ -91,11 +95,40 @@ class BasketController {
         billingAddress.city = City.get(params.city2)
         session["billingAddress"] = billingAddress
 
+        order.sendingAddress = sendingAddress
+        order.billingAddress = billingAddress
+
+        def basket = session.getAttribute("basket")
+        basket.each() { basketItem ->
+            def orderItem = new OrderItem()
+            orderItem.productModel = ProductModel.get(basketItem.id)
+            orderItem.order = order
+            orderItem.orderCount = basketItem.count
+            def price = priceService.calcProductModelPrice(basketItem.id).valueAddedVal
+            orderItem.unitPrice = price ? price : 0
+            order.addToItems(orderItem)
+        }
+
+
+        def deliveryMethods = deliveryService.findAllDeliveryMethods(order)
+
+        [
+                deliveryMethods: deliveryMethods
+        ]
+    }
+
+    def invoice() {
+
+        def order = session.getAttribute("order") as Order
+        order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation);
+        order.deliveryPrice = params.price.toDouble()
+        session["order"] = order
+
         [
                 basket: session.getAttribute("basket"),
-                order: order,
-                sendingAddress: sendingAddress,
-                billingAddress: billingAddress
+                order: session.getAttribute("order"),
+                sendingAddress: session.getAttribute("sendingAddress"),
+                billingAddress: session.getAttribute("billingAddress")
         ]
     }
 

@@ -21,7 +21,8 @@
             <td class="label"><g:message code="invoice.owner.name"></g:message>:</td>
             <td class="value">${order.ownerName}</td>
             <td class="label"><g:message code="invoice.billingAddress"></g:message>:</td>
-            <td rowspan="2" class="value"><g:render template="/site/formatters/address" model="${[address:billingAddress]}"></g:render></td>
+            <td rowspan="2" class="value"><g:render template="/site/formatters/address"
+                                                    model="${[address: billingAddress]}"></g:render></td>
         </tr>
         <tr>
             <td class="label"><g:message code="invoice.owner.email"></g:message>:</td>
@@ -32,7 +33,8 @@
             <td class="label"><g:message code="invoice.owner.mobile"></g:message>:</td>
             <td class="value">${order.ownerMobile}</td>
             <td class="label"><g:message code="invoice.sendingAddress"></g:message>:</td>
-            <td rowspan="2" class="value"><g:render template="/site/formatters/address" model="${[address:sendingAddress]}"></g:render></td>
+            <td rowspan="2" class="value"><g:render template="/site/formatters/address"
+                                                    model="${[address: sendingAddress]}"></g:render></td>
         </tr>
         <tr>
             <td class="label"><g:message code="invoice.owner.telephone"></g:message>:</td>
@@ -57,24 +59,37 @@
             <th><g:message code="invoice.item.totalPrice"></g:message></th>
         </tr>
         <g:each in="${basket}" var="basketItem" status="i">
-        <tr>
-            <td class="center">${i+1}</td>
-            <td>${basketItem.name}</td>
-            <td><g:formatNumber number="${basketItem.price?basketItem.price:0}" type="number"></g:formatNumber></td>
-            <td><g:formatNumber number="${basketItem.price?basketItem.realPrice - basketItem.price:0}" type="number"></g:formatNumber></td>
-            <td><g:formatNumber number="${basketItem.price?basketItem.realPrice:0}" type="number"></g:formatNumber></td>
-            <td class="center">${basketItem.count}</td>
-            <td><g:formatNumber number="${(basketItem.price?basketItem.realPrice:0) * basketItem.count}" type="number"></g:formatNumber></td>
-        </tr>
+            <tr>
+                <td class="center">${i + 1}</td>
+                <td>${basketItem.name}</td>
+                <td><g:formatNumber number="${basketItem.price ? basketItem.price : 0}"
+                                    type="number"></g:formatNumber></td>
+                <td><g:formatNumber number="${basketItem.price ? basketItem.realPrice - basketItem.price : 0}"
+                                    type="number"></g:formatNumber></td>
+                <td><g:formatNumber number="${basketItem.price ? basketItem.realPrice : 0}"
+                                    type="number"></g:formatNumber></td>
+                <td class="center">${basketItem.count}</td>
+                <td><g:formatNumber number="${(basketItem.price ? basketItem.realPrice : 0) * basketItem.count}"
+                                    type="number"></g:formatNumber></td>
+            </tr>
         </g:each>
         <tr>
+            <td colspan="6" align="left"><g:message code="deliveryPrice"></g:message></td>
+            <td><g:formatNumber number="${order.deliveryPrice}" type="number"></g:formatNumber></td>
+        </tr>
+        <tr>
             <td colspan="6" align="left"><g:message code="basket.totalPrice"></g:message></td>
-            <td><b><g:formatNumber number="${basket.sum{(it.realPrice?it.realPrice:0) * it.count}}" type="number"></g:formatNumber></b></td>
+            <td><b><g:formatNumber
+                    number="${basket.sum { (it.realPrice ? it.realPrice : 0) * it.count } + order.deliveryPrice}"
+                    type="number"></g:formatNumber></b></td>
         </tr>
     </table>
+
     <div>
         <g:link action="checkout" class="btn"><g:message code="invoice.return"/></g:link>
-        <g:link controller="order" action="create" class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
+        <g:link controller="order" action="create"
+                params="${[deliveryPrice: order.deliveryPrice, deliverySourceStation: order.deliverySourceStation.id]}"
+                class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
     </div>
 </div>
 </body>

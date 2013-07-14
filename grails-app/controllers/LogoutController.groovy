@@ -23,6 +23,8 @@ class LogoutController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
             new PersistentTokenBasedRememberMeServices().logout(request, response, auth);
 
+
+
             def url = params.forwardUri
             url = url.replace(request.contextPath, "")
             redirect url: url

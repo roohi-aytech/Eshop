@@ -17,7 +17,7 @@ class Customer extends User {
     Boolean profileSendingAddressFilled = false
 
 
-    static hasMany = [wishList:Product]
+    static hasMany = [wishList:Product, newsLetterCategories: NewsLetterCategory, newsLetterProductTypes: ProductType]
 
     static constraints = {
         sex(nullable:true, inList: ['female', 'male'])

@@ -275,4 +275,24 @@ class CustomerController {
             redirect(action: 'resetPassword', params: [id: params.userId, code: params.code])
         }
     }
+
+    def newsLetter(){
+        [customer: springSecurityService.currentUser as Customer]
+    }
+
+    def saveNewsLetter(){
+
+        def customer = springSecurityService.currentUser as Customer
+
+        customer.newsLetterCategories.clear()
+        customer.newsLetterCategories.addAll(NewsLetterCategory.findAllByIdInList(params.categories.collect{it.toLong()}).toArray())
+
+        customer.newsLetterProductTypes.clear()
+        customer.newsLetterProductTypes.addAll(ProductType.findAllByIdInList(params.newsLetterProductTypes.split(',').collect{it.toLong()}).toArray())
+
+        customer.save()
+
+        flash.message = message(code: "controlPanel.settings.profile.newsLetters.successMessage")
+        redirect(action: 'panel')
+    }
 }

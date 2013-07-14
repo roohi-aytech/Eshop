@@ -89,8 +89,7 @@ class ProductController {
             productTypeType = ProductTypeType.get(params.id)
             image = productTypeType.image
             productTypeType.properties = params
-        }
-        else
+        } else
             productTypeType = new ProductTypeType(params)
         productTypeType.image = null
         productTypeType = productTypeType.save()
@@ -98,7 +97,7 @@ class ProductController {
             if (params.image)
                 productTypeType.image = imageService.saveAndScaleImages(params.image.bytes, "image", fileService.filePath(productTypeType))
             else if (image)
-                productTypeType.image=image
+                productTypeType.image = image
             productTypeType.save()
         }
         if (params.productInstanceId) {
@@ -132,8 +131,7 @@ class ProductController {
             attributeValue = AttributeValue.get(params.id)
             attributeValue.properties = params
             attributeValue.save()
-        }
-        else {
+        } else {
             def attributeType = AttributeType.get(params.attributeTypeId)
             attributeValue = new AttributeValue(params).save()
             attributeType.addToValues(attributeValue)
@@ -159,8 +157,7 @@ class ProductController {
         if (variation) {
             def values = variation.variationValues
             render(template: "content/variation_values", model: [variationValues: values])
-        }
-        else
+        } else
             render ""
     }
 
@@ -171,8 +168,7 @@ class ProductController {
             image.properties = params;
             image.save()
             render image.variationValues as JSON
-        }
-        else
+        } else
             render 0
     }
 
@@ -195,11 +191,10 @@ class ProductController {
                 productTypeIds << it.id
                 productTypeTypes.addAll(it.types)
             }
-        }
-        else {
+        } else {
             productInstance = new Product()
         }
-        if (productInstance?.type && !productTypeTypes.collect {it.id}.contains(productInstance?.type?.id))
+        if (productInstance?.type && !productTypeTypes.collect { it.id }.contains(productInstance?.type?.id))
             productTypeTypes.add(productInstance?.type)
 
         if (productInstance.isVisible == null)
@@ -209,10 +204,10 @@ class ProductController {
     }
 
     def synchProductTypeTypes() {
-        Product.findAll().groupBy {it.productTypes.find()}.each {
+        Product.findAll().groupBy { it.productTypes.find() }.each {
             if (it.key) {
-                def types = it.value.collect {it.type}.unique()
-                types.each {type ->
+                def types = it.value.collect { it.type }.unique()
+                types.each { type ->
                     if (type && !it.key.types.contains(type))
                         it.key.addToTypes(type)
                 }
@@ -232,41 +227,62 @@ class ProductController {
     }
 
     def saveAttributeValues() {
-        saveAttributeValuesInternal(params)
+        if(saveAttributeValuesInternal(params))
         redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid])
+        else
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError:1])
     }
 
     def saveAttributeValuesAndExit() {
-        saveAttributeValuesInternal(params)
-        redirect(action: "list", params: [ptid: params.ptid])
+        if (saveAttributeValuesInternal(params))
+            redirect(action: "list", params: [ptid: params.ptid])
+        else
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError:1])
     }
 
     def saveAttributeValuesAndNew() {
-        saveAttributeValuesInternal(params)
-        redirect(action: "productDetails", params: [ptid: params.ptid])
+        if (saveAttributeValuesInternal(params))
+            redirect(action: "productDetails", params: [ptid: params.ptid])
+        else
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError:1])
     }
 
-    private void saveAttributeValuesInternal(params) {
+    private Boolean saveAttributeValuesInternal(params) {
         def productInstance = Product.findById(params.id)
-        def attributeTypes = productInstance?.productTypes.collect {attributeTypes(it)}.flatten()
-        if (params.type?.id) {
-            def type = ProductTypeType.get(params.type.id)
-            productInstance.type = type
-            productInstance.save()
-        }
-        Attribute.withTransaction {
-            attributeTypes.each { AttributeType attributeType ->
-                def attribute = productInstance.attributes.find { it.attributeType.id == attributeType.id }
-                if (!attribute)
-                    attribute = new Attribute(attributeType: attributeType, product: productInstance)
-                if (params."notAvailable_${attributeType.id}")
-                    attribute.value = AttributeValue.findByValue('N/A') ?: new AttributeValue(value: "N/A").save()
-                else
-                    attribute.value = AttributeValue.get(params."at_${attributeType.id}")
-                attribute.save()
+        def attributeTypes = productInstance?.productTypes.collect { attributeTypes(it) }.flatten()
+
+        //check required attributes
+        def requiredAttributeTypes = attributeTypes.findAll { it.required }
+        def isValid = true
+        requiredAttributeTypes.each {
+            if (!params["at_${it.id}"] && !params["notAvailable_${it.id}"]) {
+//                flash.message = message(code: 'attributeType.required.validator.label')
+                isValid = false
             }
         }
-        mongoService.storeProduct(productInstance)
+
+        if (isValid) {
+            if (params.type?.id) {
+                def type = ProductTypeType.get(params.type.id)
+                productInstance.type = type
+                productInstance.save()
+            }
+            Attribute.withTransaction {
+                attributeTypes.each { AttributeType attributeType ->
+                    def attribute = productInstance.attributes.find { it.attributeType.id == attributeType.id }
+                    if (!attribute)
+                        attribute = new Attribute(attributeType: attributeType, product: productInstance)
+                    if (params."notAvailable_${attributeType.id}")
+                        attribute.value = AttributeValue.findByValue('N/A') ?: new AttributeValue(value: "N/A").save()
+                    else
+                        attribute.value = AttributeValue.get(params."at_${attributeType.id}")
+                    attribute.save()
+                }
+            }
+            mongoService.storeProduct(productInstance)
+            return true
+        } else
+            return false
     }
 
     def editImageDetails() {
@@ -305,8 +321,7 @@ class ProductController {
         if (params.id) {
             relatedProduct = RelatedProduct.get(params.id)
             relatedProduct.properties = params
-        }
-        else
+        } else
             relatedProduct = new RelatedProduct(params)
 
         // variation.variationValues = request.getParameterValues('variationValues').collect {VariationValue.findById(it.toLong())}
@@ -336,8 +351,7 @@ class ProductController {
         if (variation) {
             def values = variation.variationValues
             render(template: "variation_values", model: [variationValues: values])
-        }
-        else
+        } else
             render ""
     }
 
@@ -361,11 +375,10 @@ class ProductController {
 
         if (success) {
             def product = Product.get(params.id)
-            if (product.images.count {it} == 0) {
+            if (product.images.count { it } == 0) {
                 product.mainImage = null
                 product.save()
-            }
-            else if(params.name == product?.mainImage?.name){
+            } else if (params.name == product?.mainImage?.name) {
                 product.mainImage = product.images.toArray().first()
                 product.save()
             }
@@ -443,11 +456,10 @@ class ProductController {
         if (params.id) {
             productInstance = Product.get(params.id)
             productInstance.properties = params
-        }
-        else
+        } else
             productInstance = new Product(params)
 
-        if (!productInstance.productTypes)  {
+        if (!productInstance.productTypes) {
             flash.message = message(code: "default.enter_guarantee")
             render(view: "create", model: [productInstance: productInstance])
 
@@ -496,8 +508,7 @@ class ProductController {
         if (params.id) {
             productInstance = Product.get(params.id)
             productInstance.properties = params
-        }
-        else
+        } else
             productInstance = new Product(params)
         def tmp = []
         productInstance.productTypes.each {
@@ -516,7 +527,7 @@ class ProductController {
         productInstance.isVisible = params.isVisible == "on"
 
         if (productInstance.save(flush: true)) {
-        def productTypeIds = []
+            def productTypeIds = []
             productInstance.productTypes.each {
                 productTypeIds << it.id
             }
@@ -634,7 +645,7 @@ class ProductController {
 
     def synchMongo() {
 //        Thread.start {
-        MongoProduct.findAll().each {it.delete()}
+        MongoProduct.findAll().each { it.delete() }
         def i = 0
         def ps = Product.findAll()
         ps.each {
@@ -663,7 +674,7 @@ class ProductController {
 
     def searchCountryValues() {
         def res = Product.executeQuery("select distinct manufactureCountry from Product where manufactureCountry like ? ", ["%${params.term}%"])
-        render res.collect {[id: it, label: it, value: it]} as JSON
+        render res.collect { [id: it, label: it, value: it] } as JSON
     }
 
     def countryForm() {
@@ -677,8 +688,7 @@ class ProductController {
                 it.save()
             }
             render([country: params.manufactureCountry] as JSON)
-        }
-        else {
+        } else {
             render(template: "countryForm", model: [country: params.manufactureCountryOld, hasError: true])
         }
     }
@@ -720,7 +730,7 @@ class ProductController {
             def pathOld = base + fileService.filePathOld(it)
             def old = new File(pathOld)
             if (!old.exists()) {
-                def pts = old.parentFile.list().findAll {file -> file?.contains(it?.name ?: '1234567890')}
+                def pts = old.parentFile.list().findAll { file -> file?.contains(it?.name ?: '1234567890') }
                 if (pts.size() == 1) {
                     println pathOld + "," + pts[0]
                     old = new File(old.parentFile.absolutePath + "/" + pts[0])

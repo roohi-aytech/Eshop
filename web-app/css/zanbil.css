@@ -8,6 +8,14 @@
     clear: both;
 }
 
+label{
+    display: inline-block;
+}
+
+ul{
+    margin:0;
+}
+
 html {
     background: none;
 }
@@ -738,6 +746,10 @@ input.search-query {
     width: 300px;
     margin-top: -1px;
     margin-bottom: 2px;
+}
+
+input.search-query:focus{
+    box-shadow: none;
 }
 
 .resultCounter {
@@ -1586,7 +1598,7 @@ span.cke_skin_kama {
 }
 
 .fusion .slideshowContainer .content {
-    height: 222px;
+    /*height: 222px;*/
 }
 
 /*Breadcrumb*/
@@ -2221,6 +2233,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
     height: 100px;
     position: relative;
     border-radius: 3px;
+    text-align: center;
 }
 
 .productTypeType-carousel li a img {
@@ -2455,6 +2468,12 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 .product-slideShow .image-list {
     width: 230px;
+    border:1px solid #6DAEE1;
+    border-radius: 4px;
+    padding-right: 5px;
+}
+
+.product-slideShow .image-list td {
 }
 
 .product-slideShow .image-list img {
@@ -2473,8 +2492,37 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     border: 1px solid #eeeeee;
 }
 
+.product-slideShow h3{
+    background: none repeat scroll 0 0 #C0DBF2;
+    color: black;
+    font-family: tahoma !important;
+    font-size: 11px;
+    font-weight: normal;
+    margin: -5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: justify;
+    line-height: 18px;
+    padding-top: 3px;
+    margin-bottom: 10px;
+}
+
 #zommArea:hover #zoomAreaImage{
+    /*display: none;*/
+}
+
+#zoomArea{
+    overflow: hidden;
+}
+
+#zommArea img{
+    display: block;
+}
+
+#zoomArea .zoomed{
     display: none;
+    background-repeat: no-repeat;
 }
 
 #etalage {
@@ -2940,6 +2988,18 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     background-repeat: no-repeat;
     background-position: center right;
     cursor: pointer;
+}
+
+.deliveryMethodList{
+
+}
+
+.deliveryMethodList li{
+    border:1px solid #eeeeee;
+    border-radius: 4px;
+    display: block;
+    background-color: #f8f8f8;
+    padding-right: 5px;
 }
 
 

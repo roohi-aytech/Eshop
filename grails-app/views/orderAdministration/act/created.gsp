@@ -142,7 +142,7 @@
                                     original-title="${producer.settlementDescription}">${producer.settlement}</td>
                                 <td>${producer.testPeriod}</td>
                                 <td>${producer.deliveryPlace}</td>
-                                <td><g:formatNumber number="${producer.transportationCost}" type="number"/></td>
+                                <td>${producer.transportationCost}</td>
                                 <td>${producer.addedValue}</td>
                             </tr>
                         </g:each>

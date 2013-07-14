@@ -71,6 +71,14 @@ select {
     %{--</g:else>--}%
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: attributeTypeInstance, field: 'required', 'error')} ">
+    <label for="required">
+        <g:message code="required.label" default="Required"/>
+
+    </label>
+    <g:checkBox name="required" checked="${attributeTypeInstance.required}"/>
+</div>
+
 
 <div class="fieldcontain attributeTypeButton">
 

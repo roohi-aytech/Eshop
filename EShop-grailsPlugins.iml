@@ -33,6 +33,7 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -153,6 +154,12 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/controllers" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/taglib" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9/grails-app/services" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3/src/java" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/resources-1.2.RC3/src/groovy" isTestSource="false" />
@@ -253,6 +260,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/commons-logging/commons-logging-api/jars/commons-logging-api-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.activemq/activemq-core/bundles/activemq-core-5.3.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.atmosphere/atmosphere-runtime/jars/atmosphere-runtime-1.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/c3p0/c3p0/jars/c3p0-0.9.1.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-2.1.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
