@@ -83,7 +83,7 @@ environments {
         grails.logging.jul.usebridge = false
         grails.plugin.databasemigration.updateOnStart = true
         grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://www.zanbil.ir"
     }
 }
 
@@ -182,7 +182,7 @@ grails {
     mail {
         host = "91.99.98.70"
         port = 8443
-        username = "info"
+        username = "no-reply"
         password = "eshop@agah"
         props = ["mail.smtp.auth": "true",
                 "mail.smtp.socketFactory.port": "8443",
@@ -194,15 +194,15 @@ grails {
 
 
 //mail configuration
-grails.mail.default.from="Zanbil.ir <info@zanbil.ir>"
+grails.mail.default.from="Zanbil.ir <no-reply@zanbil.ir>"
 grails {
     mail {
         ssl = "off"
         host = "91.99.98.70"
-        from = "info@zanbil.ir"
+        from = "no-reply@zanbil.ir"
         port = 8443
         ssl = "off"
-        username = "info"
+        username = "no-reply"
         password = "eshop@agah"
         props = [
 //                "mail.smtp.starttls.enable":"false",
