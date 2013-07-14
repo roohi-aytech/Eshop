@@ -111,7 +111,6 @@ class SiteController {
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-        model.slides = Slide.findAll()
 
         def brandList = new ArrayList<Brand>()
         def brand
@@ -128,6 +127,12 @@ class SiteController {
         if (productType && productType.children.isEmpty() && !params.f?.split(',')?.find { it.startsWith('t') }) {
             productType.types.each {
                 model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${params.f},t${it.id}"]), id: it.id]
+            }
+        }
+
+        model.slides = Slide.createCriteria().list {
+            productTypes {
+                eq('id', productType.id)
             }
         }
 
@@ -293,7 +298,7 @@ class SiteController {
 //        model.keywords = pageDetails?.keywords?.replace('$BRAND$', '')
 
         //slides
-        model.slides = Slide.findAll()
+        model.slides = Slide.findAllByVisibleOnFirstPage(true)
         model.specialSaleSlides = SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
 
         model
@@ -447,7 +452,7 @@ class SiteController {
         if (product.mainImage)
             imageService.getImageSize(product.mainImage, product)
 
-        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each{
+        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
             imageService.getImageSize(it, product)
         }
 
@@ -461,7 +466,7 @@ class SiteController {
         if (product.mainImage)
             imageService.getImageSize(product.mainImage, product)
 
-        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each{
+        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
             imageService.getImageSize(it, product)
         }
 
@@ -525,7 +530,7 @@ class SiteController {
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-        model.slides = Slide.findAll()
+        model.slides = Slide.findAllByVisibleOnFirstPage(true)
 
         def brandList = new ArrayList<Brand>()
         def brand

@@ -39,7 +39,15 @@
         <g:message code="slide.productTypes.label" default="Product Types"/>
     </label>
 
-    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px" cascadeCheck="true"></rg:tree>
+    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px" cascadeCheck="false"></rg:tree>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'visibleOnFirstPage', 'error')} ">
+    <label for="visibleOnFirstPage">
+        <g:message code="slide.visibleOnFirstPage.label" default="Visible On First Page"/>
+
+    </label>
+    <g:checkBox name="visibleOnFirstPage" value="${slideInstance.visibleOnFirstPage}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image1024', 'error')} required">

@@ -27,7 +27,16 @@ class SlideController {
         def slideInstance
         if (params.id) {
             slideInstance = Slide.get(params.id)
+            def image1024 = slideInstance.image1024
+            def image1280 = slideInstance.image1280
+            def image1440 = slideInstance.image1440
             slideInstance.properties = params
+            if(!params.image1024)
+                slideInstance.image1024 = image1024
+            if(!params.image1280)
+                slideInstance.image1280 = image1280
+            if(!params.image1440)
+                slideInstance.image1440 = image1440
             slideInstance.image = []
         } else {
             slideInstance = new Slide(params)
