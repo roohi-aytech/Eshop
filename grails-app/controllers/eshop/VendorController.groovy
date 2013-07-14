@@ -35,7 +35,7 @@ class VendorController {
             vendorInstance = new Vendor(params)
 
         vendorInstance.brands?.clear()
-        Brand.findAllByIdInList(params.brands.collect { it.toLong() }.toList()).each {
+        Brand.findAllByIdInList((params.brands instanceof String ? [params.brands] : params.brands).collect { it.toLong() }.toList()).each {
             vendorInstance.addToBrands(it)
         }
 
@@ -44,7 +44,6 @@ class VendorController {
         } else
             render(template: "form", model: [vendorInstance: vendorInstance])
     }
-
 
     def delete() {
         def vendorInstance = Vendor.get(params.id)
