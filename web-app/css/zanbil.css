@@ -2986,6 +2986,18 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     cursor: pointer;
 }
 
+.deliveryMethodList{
+
+}
+
+.deliveryMethodList li{
+    border:1px solid #eeeeee;
+    border-radius: 4px;
+    display: block;
+    background-color: #f8f8f8;
+    padding-right: 5px;
+}
+
 
 
 

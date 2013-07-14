@@ -9,7 +9,8 @@
                 <span id="status-label" class="property-label"><g:message code="order.status"
                                                                           default="Status"/></span>
 
-                <span class="property-value" aria-labelledby="status-label"><g:message code="status.${orderInstance.status}"/></span>
+                <span class="property-value" aria-labelledby="status-label"><g:message
+                        code="status.${orderInstance.status}"/></span>
 
             </li>
         </g:if>
@@ -19,7 +20,8 @@
                 <span id="customer-label" class="property-label"><g:message code="order.customer"
                                                                             default="Customer"/></span>
 
-                <span class="property-value" aria-labelledby="customer-label">${orderInstance?.customer?.encodeAsHTML()}</span>
+                <span class="property-value"
+                      aria-labelledby="customer-label">${orderInstance?.customer?.encodeAsHTML()}</span>
 
             </li>
         </g:if>
@@ -51,7 +53,8 @@
                 <span id="billingAddress-label" class="property-label"><g:message code="order.billingAddress"
                                                                                   default="Billing Address"/></span>
 
-                <span class="property-value" aria-labelledby="billingAddress-label">${orderInstance?.billingAddress?.encodeAsHTML()}</span>
+                <span class="property-value"
+                      aria-labelledby="billingAddress-label">${orderInstance?.billingAddress?.encodeAsHTML()}</span>
 
             </li>
         </g:if>
@@ -61,7 +64,8 @@
                 <span id="sendingAddress-label" class="property-label"><g:message code="order.sendingAddress"
                                                                                   default="Sending Address"/></span>
 
-                <span class="property-value" aria-labelledby="sendingAddress-label">${orderInstance?.sendingAddress?.encodeAsHTML()}</span>
+                <span class="property-value"
+                      aria-labelledby="sendingAddress-label">${orderInstance?.sendingAddress?.encodeAsHTML()}</span>
 
             </li>
         </g:if>
@@ -77,12 +81,14 @@
             </li>
         </g:if>
 
-        <g:set var="creationTrackingLogItem" value="${orderInstance?.trackingLogs.find{it?.action == OrderHelper.ACTION_CREATION}}"/>
+        <g:set var="creationTrackingLogItem"
+               value="${orderInstance?.trackingLogs.find { it?.action == OrderHelper.ACTION_CREATION }}"/>
         <g:if test="${creationTrackingLogItem}">
             <li class="fieldcontain">
                 <span id="creationDate-label" class="property-label"><g:message code="order.created.date"/></span>
 
-                <span class="property-value" aria-labelledby="creationDate-label"><rg:formatJalaliDate date="${creationTrackingLogItem?.date}" hm="true" /></span>
+                <span class="property-value" aria-labelledby="creationDate-label"><rg:formatJalaliDate
+                        date="${creationTrackingLogItem?.date}" hm="true"/></span>
 
             </li>
         </g:if>
@@ -99,6 +105,31 @@
             </div>
 
         </li>
+        <g:if test="${orderInstance?.deliverySourceStation}">
+            <li class="fieldcontain">
+                <span id="deliverySourceStation-label" class="property-label"><g:message code="deliveryMethod"/></span>
+
+                <span class="property-value" aria-labelledby="deliverySourceStation-label">
+                    ${orderInstance?.deliverySourceStation.method}: ${orderInstance?.deliverySourceStation}
+                </span>
+
+            </li>
+        </g:if>
+        <g:if test="${orderInstance?.deliveryPrice || orderInstance?.deliveryPrice == 0}">
+            <li class="fieldcontain">
+                <span id="deliveryPrice-label" class="property-label"><g:message code="deliveryPrice"/></span>
+
+                <span class="property-value" aria-labelledby="deliveryPrice-label">
+                    <g:if test="${orderInstance?.deliveryPrice == 0}">
+                        <g:message code="free"/>
+                    </g:if>
+                    <g:else>
+                        <g:formatNumber number="${orderInstance?.deliveryPrice}" type="number"/>
+                    </g:else>
+                </span>
+
+            </li>
+        </g:if>
 
     </ol>
 </div>

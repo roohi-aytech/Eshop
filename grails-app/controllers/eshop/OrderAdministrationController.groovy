@@ -8,6 +8,7 @@ class OrderAdministrationController {
     def springSecurityService
     def mongoService
     def orderTrackingService
+    def deliveryService
 
     def orderNotification() {
         def order = Order.get(params.id)

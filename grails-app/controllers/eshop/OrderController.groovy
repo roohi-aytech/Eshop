@@ -3,6 +3,7 @@ package eshop
 import eshop.accounting.Account
 import eshop.accounting.CustomerTransaction
 import eshop.accounting.Transaction
+import eshop.delivery.DeliverySourceStation
 
 class OrderController {
 
@@ -11,6 +12,7 @@ class OrderController {
     def mellatService
     def accountingService
     def jmsService
+    def deliveryService
 
     static exposes = ['jms']
 
@@ -30,6 +32,10 @@ class OrderController {
 
         order.sendingAddress = sendingAddress
         order.billingAddress = billingAddress
+
+        //delivery
+        order.deliveryPrice = params.deliveryPrice?.toDouble()
+        order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation)
 
         if (!order.validate() || !order.save()) {
             //order save error
@@ -162,7 +168,7 @@ class OrderController {
     def payOrderFromAccount(){
 
         def order = Order.get(params.order.id)
-        def orderPrice = order.items.sum{it.productModel.status == 'exists'? it.orderCount * it.unitPrice:0}
+        def orderPrice = order.items.sum(order.deliveryPrice?:0, {it.productModel.status == 'exists'? it.orderCount * it.unitPrice:0})
         def owner = springSecurityService.currentUser
 
         //save withdrawal customer transaction

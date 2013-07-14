@@ -1,6 +1,7 @@
 package eshop
 
 import eshop.accounting.Account
+import eshop.delivery.DeliveryMethod
 
 class ImageController {
     def imageService
@@ -98,6 +99,12 @@ class ImageController {
                 def banner = Banner.get(params.id)
                 if (banner) {
                    content = banner.image
+                }
+                break;
+            case 'deliveryMethod':
+                def deliveryMethod = DeliveryMethod.get(params.id)
+                if (deliveryMethod) {
+                    content = deliveryMethod.logo
                 }
                 break;
         }

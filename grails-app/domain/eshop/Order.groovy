@@ -1,5 +1,8 @@
 package eshop
 
+import eshop.delivery.DeliveryMethod
+import eshop.delivery.DeliverySourceStation
+
 class Order {
     static auditable = true
 
@@ -13,6 +16,9 @@ class Order {
     Address billingAddress
     Address sendingAddress
 
+    DeliverySourceStation deliverySourceStation
+    Double deliveryPrice = 0D
+
     String status
 
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
@@ -25,6 +31,9 @@ class Order {
         items()
         billingAddress(nullable: false)
         sendingAddress(nullable: false)
+
+        deliverySourceStation(nullable: true)
+        deliveryPrice(nullable: true)
     }
 
     static mapping = {

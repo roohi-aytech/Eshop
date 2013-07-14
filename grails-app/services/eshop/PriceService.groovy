@@ -88,7 +88,7 @@ class PriceService {
     }
 
     def calculateOrderPrice(Order order) {
-        Integer price = 0
+        Integer price = order.deliveryPrice ?: 0
         order.items.each {
             price += it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0
         }

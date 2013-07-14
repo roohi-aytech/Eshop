@@ -116,7 +116,7 @@
 
 <sec:ifLoggedIn>
     <h2><g:message code="order.owner.info"/></h2>
-    <g:form action="invoice" method="post">
+    <g:form action="deliveryMethod" method="post">
         <div class="group form">
             <table class="table-simulated">
                 <tr class="table-row">

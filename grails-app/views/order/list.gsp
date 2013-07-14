@@ -29,7 +29,7 @@
                 <h3>#${order.id}</h3>
 
                 <div class="comment"><g:message code="order.totalPrice"></g:message>: <g:formatNumber
-                        number="${order.items.sum { it.productModel.status == 'exists'?  it.unitPrice * it.orderCount:0 }}"
+                        number="${order.items.sum (order.deliveryPrice ?: 0, { it.productModel.status == 'exists'?  it.unitPrice * it.orderCount:0 })}"
                         type="number"></g:formatNumber></div>
 
                 <div class="comment"><g:message code="order.${status}.date"></g:message>: <rg:formatJalaliDate
