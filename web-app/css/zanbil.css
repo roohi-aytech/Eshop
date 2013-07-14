@@ -748,6 +748,10 @@ input.search-query {
     margin-bottom: 2px;
 }
 
+input.search-query:focus{
+    box-shadow: none;
+}
+
 .resultCounter {
     background-color: #F5F5F5;
     border-radius: 4px 4px 4px 4px;
@@ -1594,7 +1598,7 @@ span.cke_skin_kama {
 }
 
 .fusion .slideshowContainer .content {
-    height: 222px;
+    /*height: 222px;*/
 }
 
 /*Breadcrumb*/

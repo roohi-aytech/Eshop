@@ -123,8 +123,9 @@ class ComparisonController {
                 }
             }
             if (parentCategory.attributeTypes) {
-                parentCategory.hasAttribute = parentCategory.attributeTypes.count { it } > 0
-                parentCategory.selected = parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.id.toString())) } > 0
+                parentCategory.hasAttribute = (parentCategory.attributeTypes.count { it } > 0)
+
+                parentCategory.selected = (parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.item.id.toString())) } > 0)
             }
 
             parentCategory.attributeTypes.each { attributeType ->
