@@ -6,7 +6,13 @@ class PriceService {
         def product = Product.get(productId)
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (!defaultModel)
-            return [mainVal: 0D, showVal: 0D]
+            return [mainVal: 0D, showVal: 0D, status: 'not-exists']
+
+        if (defaultModel.status != 'exists')
+            defaultModel = ProductModel.findByProductAndStatus(product, 'exists')
+
+        if (!defaultModel)
+            return [mainVal: 0D, showVal: 0D, status: 'not-exists']
 
         calcProductModelPrice(defaultModel?.id)
     }
@@ -14,11 +20,11 @@ class PriceService {
     def calcProductModelPrice(productModelId) {
         def productModel = ProductModel.get(productModelId)
         if (!productModel)
-            return [mainVal: 0D, showVal: 0D]
+            return [mainVal: 0D, showVal: 0D, status: 'not-exists']
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
         if (!price)
-            return [mainVal: 0D, showVal: 0D]
+            return [mainVal: 0D, showVal: 0D, status: productModel.status]
 
         def priceVal = price?.rialPrice
         def mainVal = price?.rialPrice
@@ -68,7 +74,7 @@ class PriceService {
             }
         }
 
-        [mainVal: mainVal, showVal: priceVal, valueAddedVal: valueAddedVal, lastUpdate: price.startDate]
+        [mainVal: mainVal, showVal: priceVal, valueAddedVal: valueAddedVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
     def getAddedvalues(ProductType productType) {
