@@ -7,6 +7,29 @@
     </ul>
 </g:hasErrors>
 
+<script language="javascript" type="text/javascript">
+    function clearAll(){
+        var tree = $('#productTypes').combotree('tree');
+        var nodes = tree.tree('getChecked', 'checked');
+        for(var i = 0; i < nodes.length; i++)
+            tree.tree('uncheck', nodes[i].target);
+
+        $('#productTypesFieldContainer [name=productTypes]').remove();
+        var input = $('<input class="combo-value" type="hidden" name="productTypes" value=""/>');
+        $('#productTypesFieldContainer .combo').append(input); ZAN-273
+    }
+
+    function selectAll(){
+        var tree = $('#productTypes').combotree('tree');
+        var nodes = tree.tree('getChecked', 'unchecked');
+        for(var i = 0; i < nodes.length; i++){
+            tree.tree('check', nodes[i].target);
+            var input = $('<input class="combo-value" type="hidden" name="productTypes" value="' + nodes[i].id + '"/>');
+            $('#productTypesFieldContainer .combo').append(input);
+        }
+    }
+</script>
+
 <g:hiddenField name="id" value="${slideInstance?.id}" />
 <g:hiddenField name="version" value="${slideInstance?.version}" />
 
@@ -34,9 +57,11 @@
     <g:textField name="url" value="${slideInstance?.url}" class="count-words" size="50"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'productTypes', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'productTypes', 'error')} " id="productTypesFieldContainer">
     <label for="productTypes">
-        <g:message code="slide.productTypes.label" default="Product Types"/>
+        <span style="padding-left: 20px;"><g:message code="slide.productTypes.label" default="Product Types"/></span>
+        [<a onclick="selectAll();"><g:message code="selectAll"/></a>]
+        [<a onclick="clearAll();"><g:message code="clearAll"/></a>]
     </label>
 
     <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px" cascadeCheck="false"></rg:tree>
