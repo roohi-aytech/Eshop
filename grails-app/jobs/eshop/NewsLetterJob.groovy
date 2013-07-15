@@ -3,6 +3,9 @@ package eshop
 
 
 class NewsLetterJob {
+
+    def mailService
+
     static triggers = {
     }
 
@@ -21,6 +24,12 @@ class NewsLetterJob {
         }
         customerList.each { customer ->
             println(customer)
+            mailService.sendMail {
+                to customer.email
+                subject newsLetter.subject
+                html newsLetter.body
+            }
+            Thread.sleep(5000)
         }
     }
 
