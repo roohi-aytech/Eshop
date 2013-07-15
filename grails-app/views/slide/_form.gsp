@@ -16,7 +16,7 @@
 
         $('#productTypesFieldContainer [name=productTypes]').remove();
         var input = $('<input class="combo-value" type="hidden" name="productTypes" value=""/>');
-        $('#productTypesFieldContainer .combo').append(input); ZAN-273
+        $('#productTypesFieldContainer .combo').append(input);
     }
 
     function selectAll(){
