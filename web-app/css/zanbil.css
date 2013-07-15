@@ -8,12 +8,12 @@
     clear: both;
 }
 
-label{
+label {
     display: inline-block;
 }
 
-ul{
-    margin:0;
+ul {
+    margin: 0;
 }
 
 html {
@@ -266,7 +266,6 @@ ul.errors {
     padding: 3px;
     display: block;
 }
-
 
 .coming-soon-label {
     color: #ff4500;
@@ -748,7 +747,7 @@ input.search-query {
     margin-bottom: 2px;
 }
 
-input.search-query:focus{
+input.search-query:focus {
     box-shadow: none;
 }
 
@@ -1348,14 +1347,14 @@ table.attribute-list td {
     box-shadow: 0 0 3px #98b6ec;
 }
 
-.attribute-list .removeThisRow{
+.attribute-list .removeThisRow {
     width: 16px;
     padding: 0;
     padding-left: 5px;
-    border-width:0;
+    border-width: 0;
 }
 
-.attribute-list .removeThisRow div{
+.attribute-list .removeThisRow div {
     display: none;
     background-color: red;
     height: 16px;
@@ -2166,7 +2165,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-brand-carousel {
     margin-right: 0;
-    margin-bottom:0;
+    margin-bottom: 0;
     list-style: none;
     /*border: 1px solid #eeeeee;*/
     border-radius: 3px;
@@ -2188,7 +2187,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-productTypeType-carousel {
     margin-right: 0;
-    margin-bottom:0;
+    margin-bottom: 0;
     list-style: none;
     /*border: 1px solid #eeeeee;*/
     border-radius: 3px;
@@ -2449,7 +2448,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 #myModal.fade.in {
     top: 65px;
-    z-index:1000000;
+    z-index: 1000000;
 }
 
 .modal.fade.in {
@@ -2468,7 +2467,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 .product-slideShow .image-list {
     width: 230px;
-    border:1px solid #6DAEE1;
+    border: 1px solid #6DAEE1;
     border-radius: 4px;
     padding-right: 5px;
 }
@@ -2492,7 +2491,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     border: 1px solid #eeeeee;
 }
 
-.product-slideShow h3{
+.product-slideShow h3 {
     background: none repeat scroll 0 0 #C0DBF2;
     color: black;
     font-family: tahoma !important;
@@ -2508,21 +2507,42 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     margin-bottom: 10px;
 }
 
-#zommArea:hover #zoomAreaImage{
+#zommArea:hover #zoomAreaImage {
     /*display: none;*/
 }
 
-#zoomArea{
+#zoomArea {
     overflow: hidden;
 }
 
-#zommArea img{
+#zoomArea img {
     display: block;
+    cursor: pointer;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
 }
 
-#zoomArea .zoomed{
+#zoomArea.zoomed img {
+    display: none;
+    cursor: move;
+    cursor: -webkit-zoom-out;
+    cursor: -moz-zoom-out;
+}
+
+#zoomArea div {
     display: none;
     background-repeat: no-repeat;
+    cursor: pointer;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+}
+
+#zoomArea.zoomed div {
+    display: block;
+    background-repeat: no-repeat;
+    cursor: move;
+    cursor: -webkit-zoom-out;
+    cursor: -moz-zoom-out;
 }
 
 #etalage {
@@ -2530,7 +2550,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     margin-right: 5px;
 }
 
-.etalage_thumb_active a{
+.etalage_thumb_active a {
     cursor: default !important;
 }
 
@@ -2870,7 +2890,7 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
 
 .showbiz .thumbnail .title .inquiry-required-label {
     padding: 0;
-    font-size:10px;
+    font-size: 10px;
 }
 
 .showbiz .thumbnail a {
@@ -2900,7 +2920,7 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     padding-right: 8px;
 }
 
-.static-product-carousel li{
+.static-product-carousel li {
     max-width: 220px;
 }
 
@@ -2976,11 +2996,11 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     position: inherit;
 }
 
-.meta{
+.meta {
     display: none;
 }
 
-.priceHistogram{
+.priceHistogram {
     background-image: url("../images/histogram.png");
     display: block;
     font-weight: normal;
@@ -2990,12 +3010,12 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     cursor: pointer;
 }
 
-.deliveryMethodList{
+.deliveryMethodList {
 
 }
 
-.deliveryMethodList li{
-    border:1px solid #eeeeee;
+.deliveryMethodList li {
+    border: 1px solid #eeeeee;
     border-radius: 4px;
     display: block;
     background-color: #f8f8f8;
