@@ -75,18 +75,18 @@
         //show image
         $('#zoomArea').html('');
 
-        var originalImageTag = "<img class='original' src='${createLink(controller: 'image', params: [id: product.id])}?wh=" + imageSize + "&name=" + name + "' />";
-        $(originalImageTag).load(function () {
+        var imageTag = "<img src='${createLink(controller: 'image', params: [id: product.id])}?wh=" + imageSize + "&name=" + name + "' />";
+        $(imageTag).load(function () {
         }).appendTo($('#zoomArea'));
 
         $('#zoomArea img').css('margin-top', Math.round((zoomAreaHeight - imageHeight) / 2) + "px");
         $('#zoomArea img').css('margin-right', Math.round((zoomAreaWidth - imageWidth) / 2) + "px");
 
-        var zoomedTag = "<div class='zoomed'/>";
-        $(zoomedTag).appendTo($('#zoomArea'));
-        $('.zoomed').css('width', zoomAreaWidth + "px");
-        $('.zoomed').css('height', zoomAreaHeight + "px");
-        $('.zoomed').css('background-image', "url('${createLink(controller: 'image', params: [id: product.id])}?wh=max&name=" + name + "')");
+        var divTag = "<div/>";
+        $(divTag).appendTo($('#zoomArea'));
+        $('#zoomArea div').css('width', zoomAreaWidth + "px");
+        $('#zoomArea div').css('height', zoomAreaHeight + "px");
+        $('#zoomArea div').css('background-image', "url('${createLink(controller: 'image', params: [id: product.id])}?wh=max&name=" + name + "')");
 
 
     }
@@ -112,7 +112,8 @@
                     <td class="table-cell">
                         <h3>${product}</h3>
                         <g:each in="${product.images}" var="image">
-                            <img onclick="resetZoomArea();expandThumbnail(${image.id}, '${image.name}', ${image.dynamicProperties.width}, ${image.dynamicProperties.height})"
+                            <img onclick="resetZoomArea();
+                            expandThumbnail(${image.id}, '${image.name}', ${image.dynamicProperties.width}, ${image.dynamicProperties.height})"
                                  id="productThumbnail${image.id}"
                                  class="${selectedImage.id == image.id ? 'active' : ''}"
                                  src="${createLink(controller: 'image', params: [id: product.id, name: image.name, wh: '50x50'])}"/>
@@ -135,27 +136,39 @@
     currentSelectedThumbnailName = '${selectedImage.name}';
     resetZoomArea();
 
-    $('#zoomArea').hover(function () {
+    var zoomed = false;
+
+    $('#zoomArea').click(function (e) {
         if (!zoomEnabled)
             return;
-        currentImageX = Math.round((zoomAreaWidth - largeImageWidth) / 2);
-        currentImageY = Math.round((zoomAreaHeight - largeImageHeight) / 2);
-        $('#zoomArea .zoomed').css('background-position', currentImageX + "px " + currentImageY + "px ");
-        $('#zoomArea .zoomed').css('display', 'block');
-        $('#zoomArea .original').css('display', 'none');
-    }, function () {
-        if (!zoomEnabled)
-            return;
-        $('#zoomArea .original').css('display', 'block');
-        $('#zoomArea .zoomed').css('display', 'none');
+        zoomed = !zoomed;
+        if (zoomed) {
+            setCurrentImagePositions(e);
+            $('#zoomArea div').css('background-position', currentImageX + "px " + currentImageY + "px ");
+
+            $('#zoomArea').addClass('zoomed');
+        }
+        else {
+            $('#zoomArea').removeClass('zoomed');
+        }
     });
 
     $('#zoomArea').mousemove(function (e) {
-        var x = e.pageX - $('#zoomArea').offset().left;
-        var y = e.pageY - $('#zoomArea').offset().top;
 
-        var centerX = Math.round(zoomAreaWidth / 2);
-        var centerY = Math.round(zoomAreaHeight / 2);
+        if (!zoomed)
+            return;
+
+        setCurrentImagePositions(e);
+
+        $('#zoomArea div').css('background-position', currentImageX + "px " + currentImageY + "px ");
+    });
+
+    function setCurrentImagePositions(e) {
+        var x = e.pageX;// - $('#zoomArea').offset().left;
+        var y = e.pageY;// - $('#zoomArea').offset().top;
+
+        var centerX = Math.round($('#zoomArea').offset().left + zoomAreaWidth / 2);
+        var centerY = Math.round($('#zoomArea').offset().top + zoomAreaHeight / 2);
 
         var centerDistanceX = x - centerX;
         var centerDistanceY = y - centerY;
@@ -163,10 +176,17 @@
         var imageX = Math.round((zoomAreaWidth - largeImageWidth) / 2 - (centerDistanceX * largeImageWidth) / zoomAreaWidth);
         if (imageX <= 0 && imageX + largeImageWidth >= zoomAreaWidth)
             currentImageX = imageX;
+        else if(imageX > 0)
+            currentImageX = 0;
+        else
+            currentImageX = zoomAreaWidth - largeImageWidth;
+
         var imageY = Math.round((zoomAreaHeight - largeImageHeight) / 2 - (centerDistanceY * largeImageHeight) / zoomAreaHeight);
         if (imageY <= 0 && imageY + largeImageHeight >= zoomAreaHeight)
             currentImageY = imageY;
-
-        $('#zoomArea .zoomed').css('background-position', currentImageX + "px " + currentImageY + "px ");
-    });
+        else if(imageY > 0)
+            currentImageY = 0;
+        else
+            currentImageY = zoomAreaHeight - largeImageHeight;
+    }
 </script>
