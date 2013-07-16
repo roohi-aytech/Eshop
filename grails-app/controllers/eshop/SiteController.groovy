@@ -87,10 +87,14 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
 
-        model.slides = Slide.createCriteria().list {
-            productTypes {
-                eq('id', productType.id)
+        if (productType) {
+            model.slides = Slide.createCriteria().list {
+                productTypes {
+                    eq('id', productType.id)
+                }
             }
+        } else {
+            model.slides = Slide.findAllByVisibleOnFirstPage(true)
         }
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
@@ -129,12 +133,16 @@ class SiteController {
                 model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${params.f},t${it.id}"]), id: it.id]
             }
         }
-
-        model.slides = Slide.createCriteria().list {
-            productTypes {
-                eq('id', productType.id)
+        if (productType) {
+            model.slides = Slide.createCriteria().list {
+                productTypes {
+                    eq('id', productType.id)
+                }
             }
+        } else {
+            model.slides = Slide.findAllByVisibleOnFirstPage(true)
         }
+
 
         trackingService.trackExplore(productType, brandList)
 
@@ -369,7 +377,7 @@ class SiteController {
 
         model.rootAttributeCategories.each {
             category ->
-                fillAttibuteCategoryChildren(product, category)
+            fillAttibuteCategoryChildren(product, category)
         }
 
         //update product visit count
@@ -477,12 +485,12 @@ class SiteController {
 
         parentCategory.attributes = product.attributes.findAll {
             attr ->
-                (attr?.attributeType?.category?.id == parentCategory.item.id
-                        && !attr?.attributeType?.deleted
-                        && (attr?.attributeType?.showPositions?.contains('productDetails')
-                        || attr?.attributeType?.showPositions?.contains('productFullDetails'))
-                        && attr?.value
-                        && attr?.value?.toString()?.compareTo("N/A") != 0)
+            (attr?.attributeType?.category?.id == parentCategory.item.id
+                    && !attr?.attributeType?.deleted
+                    && (attr?.attributeType?.showPositions?.contains('productDetails')
+                    || attr?.attributeType?.showPositions?.contains('productFullDetails'))
+                    && attr?.value
+                    && attr?.value?.toString()?.compareTo("N/A") != 0)
         }
         if (parentCategory.attributes)
             parentCategory.hasAttribute = parentCategory.attributes.count { it } > 0
