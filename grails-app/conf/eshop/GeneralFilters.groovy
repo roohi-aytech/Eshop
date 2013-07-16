@@ -15,9 +15,11 @@ class GeneralFilters {
                                     params: params,
                                     absolute: true
                             ]).toString()
-                            .replace("http://", "http://www.")
+//                            .replace("http://", "http://www.")
                             .replace("/site/index", "/")
                             .replace("/default/", "/")
+                    if (!targetUrl.startsWith("http://www."))
+                        targetUrl = targetUrl.replace("http://", "http://www.")
 
                     response.setStatus(301);
                     response.setHeader("Location", targetUrl)
