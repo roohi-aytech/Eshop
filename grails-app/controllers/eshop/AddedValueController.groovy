@@ -45,20 +45,20 @@ class AddedValueController {
             if (!variations.any { it.variationGroup == variation.variationGroup })
                 variations.add(variation)
         }
-        if (baseProduct instanceof Product) {
-            baseProduct.productTypes.each {
-                collectVariations(it).each { variation ->
-                    if (!variations.any { it.variationGroup == variation.variationGroup })
-                        variations.add(variation)
-                }
-            }
-        } else if (baseProduct instanceof ProductType) {
-            if (baseProduct.parentProduct)
-                collectVariations(baseProduct.parentProduct).each { variation ->
-                    if (!variations.any { it.variationGroup == variation.variationGroup })
-                        variations.add(variation)
-                }
-        }
+//        if (baseProduct instanceof Product) {
+//            baseProduct.productTypes.each {
+//                collectVariations(it).each { variation ->
+//                    if (!variations.any { it.variationGroup == variation.variationGroup })
+//                        variations.add(variation)
+//                }
+//            }
+//        } else if (baseProduct instanceof ProductType) {
+//            if (baseProduct.parentProduct)
+//                collectVariations(baseProduct.parentProduct).each { variation ->
+//                    if (!variations.any { it.variationGroup == variation.variationGroup })
+//                        variations.add(variation)
+//                }
+//        }
         return variations
     }
 
@@ -77,14 +77,14 @@ class AddedValueController {
         if(variation)
             variationValues.addAll(variation.variationValues)
 
-        if (baseProduct instanceof Product) {
-            baseProduct.productTypes.each {
-                variationValues.addAll(collectVariationValues(it, variationGroup))
-            }
-        } else if (baseProduct instanceof ProductType) {
-            if (baseProduct.parentProduct)
-                variationValues.addAll(collectVariationValues(baseProduct.parentProduct, variationGroup))
-        }
+//        if (baseProduct instanceof Product) {
+//            baseProduct.productTypes.each {
+//                variationValues.addAll(collectVariationValues(it, variationGroup))
+//            }
+//        } else if (baseProduct instanceof ProductType) {
+//            if (baseProduct.parentProduct)
+//                variationValues.addAll(collectVariationValues(baseProduct.parentProduct, variationGroup))
+//        }
         return variationValues.unique {it.id}.sort {it.value}
     }
 
