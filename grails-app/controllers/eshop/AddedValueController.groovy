@@ -28,7 +28,9 @@ class AddedValueController {
             def addedValueInstance = AddedValue.get(params.addedValueId)
             variations = collectVariations(addedValueInstance?.baseProduct)
             variationValue = VariationValue.get(params.variationValueId)
-            variation = addedValueInstance?.baseProduct?.variations?.find { it.variationValues.contains(variationValue) }
+            variation = addedValueInstance?.baseProduct?.variations?.find {
+                it?.variationValues?.id?.contains(variationValue?.id)
+            }
         } else {
             def baseProductInstance = BaseProduct.get(params.baseProduct.id)
             variations = collectVariations(baseProductInstance)
