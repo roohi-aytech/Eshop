@@ -362,6 +362,10 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+            }
             productTypes {
                 eq('id', model.breadCrumb.last().id)
             }
@@ -377,7 +381,7 @@ class SiteController {
 
         model.rootAttributeCategories.each {
             category ->
-            fillAttibuteCategoryChildren(product, category)
+                fillAttibuteCategoryChildren(product, category)
         }
 
         //update product visit count
@@ -485,12 +489,12 @@ class SiteController {
 
         parentCategory.attributes = product.attributes.findAll {
             attr ->
-            (attr?.attributeType?.category?.id == parentCategory.item.id
-                    && !attr?.attributeType?.deleted
-                    && (attr?.attributeType?.showPositions?.contains('productDetails')
-                    || attr?.attributeType?.showPositions?.contains('productFullDetails'))
-                    && attr?.value
-                    && attr?.value?.toString()?.compareTo("N/A") != 0)
+                (attr?.attributeType?.category?.id == parentCategory.item.id
+                        && !attr?.attributeType?.deleted
+                        && (attr?.attributeType?.showPositions?.contains('productDetails')
+                        || attr?.attributeType?.showPositions?.contains('productFullDetails'))
+                        && attr?.value
+                        && attr?.value?.toString()?.compareTo("N/A") != 0)
         }
         if (parentCategory.attributes)
             parentCategory.hasAttribute = parentCategory.attributes.count { it } > 0
