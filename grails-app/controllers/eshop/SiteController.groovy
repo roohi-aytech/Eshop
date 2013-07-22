@@ -590,40 +590,6 @@ class SiteController {
         result
     }
 
-    def contactUs() {
-        render view: '/site/statics/contact_us'
-    }
-
-    def termsAndConditions() {
-        render view: '/site/statics/rights_and_laws'
-    }
-
-    def sendMail() {
-
-        if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
-
-            flash.message = message(code: 'contactUs.email.invalidCaptcha')
-            redirect(uri: '/contactUs')
-            return
-        }
-
-        mailService.sendMail {
-            to params.department
-            subject "${message(code: 'contactUs.email.subject')}"
-            html(view: "/messageTemplates/mail/contactus",
-                    model: [
-                            firstName: params.firstName,
-                            lastName: params.lastName,
-                            email: params.email,
-                            phone: params.phone,
-                            body: params.body
-                    ])
-        }
-
-        flash.message = message(code: 'contactUs.email.successMessage')
-        redirect(uri: '/contactUs')
-    }
-
     def article() {
         def model = [:]
 
@@ -661,6 +627,60 @@ class SiteController {
         }
 
         model
+    }
+
+    def contactUs() {
+        render view: '/site/statics/contact_us'
+    }
+
+    def sendMail() {
+
+        if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
+
+            flash.message = message(code: 'contactUs.email.invalidCaptcha')
+            redirect(uri: '/contactUs')
+            return
+        }
+
+        mailService.sendMail {
+            to params.department
+            subject "${message(code: 'contactUs.email.subject')}"
+            html(view: "/messageTemplates/mail/contactus",
+                    model: [
+                            firstName: params.firstName,
+                            lastName: params.lastName,
+                            email: params.email,
+                            phone: params.phone,
+                            body: params.body
+                    ])
+        }
+
+        flash.message = message(code: 'contactUs.email.successMessage')
+        redirect(uri: '/contactUs')
+    }
+
+    def termsAndConditions() {
+        render view: '/site/statics/rights_and_laws'
+    }
+
+    def aboutUs() {
+        render view: '/site/statics/about_us'
+    }
+
+    def moneyBackConditions() {
+        render view: '/site/statics/money_back_conditions'
+    }
+
+    def guarantee() {
+        render view: '/site/statics/guarantee'
+    }
+
+    def addedValue() {
+        render view: '/site/statics/added_value'
+    }
+
+    def deliveryPrice() {
+        render view: '/site/statics/delivery_price'
     }
 
 }

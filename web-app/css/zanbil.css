@@ -2035,6 +2035,7 @@ span.cke_skin_kama {
 .footer1 h3 {
     color: #696969;
     margin-right: 10px;
+    font-family: 'b koodak', koodak, times, serif !important;
 }
 
 .footer1 .thumbnail .image {
@@ -2064,6 +2065,28 @@ span.cke_skin_kama {
     border-top: 2px solid #ff8c00;
     text-align: center;
     color: #eeeeee;
+}
+
+.footer3 table{
+    width:90%;
+    display: block;
+    margin:auto;
+}
+
+.footer3 table td{
+}
+
+.footer3 a{
+    color: #cccccc;
+}
+
+.footer3 a:hover{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.footer3 li{
+    list-style: none;
 }
 
 /*brand carousel*/

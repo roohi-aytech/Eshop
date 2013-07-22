@@ -16,7 +16,38 @@
 </div>
 
 <div class="footer3">
-    <g:message code="rulesFullFillment"/>
+    <table>
+        <tr>
+            <td>
+                <ul class="column">
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message code="footerItems.about"/></a>
+                    </li>
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'moneyBackConditions')}"><g:message code="footerItems.returnRules"/></a>
+                    </li>
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'guarantee')}"><g:message code="footerItems.guarantee"/></a>
+                    </li>
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'addedValue')}"><g:message code="footerItems.addedValue"/></a>
+                    </li>
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'deliveryPrice')}"><g:message code="footerItems.deliveryPrice"/></a>
+                    </li>
+                </ul>
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
 </div>
 
 
@@ -42,10 +73,13 @@
     _gaq.push(['_setAccount', 'UA-33318835-1']);
     _gaq.push(['_trackPageview']);
 
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
     })();
 
 </script>
