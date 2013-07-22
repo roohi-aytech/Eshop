@@ -33,6 +33,8 @@ $(document).ready(function () {
 
     }, function () {
 
+        $('.manual-tip').css('opacity', 0)
+
         $(this).find('img').first().stop().animate({
 //            'right': 'auto',
             'margin-right': $(this).width() / 2 - 80,
@@ -85,7 +87,7 @@ $(document).ready(function () {
             tip.css('top', $(this).parent().parent().find('.title').first().height() + 30);
             tip.css('left', $(this).position().left + 15);
             tip.animate({
-                'opacity': 0.7
+                'opacity': 0.9
             });
         }, function () {
             var tip = $(this).parent().parent().find('.tips-container .manual-tip.' + $(this).attr('type'));

@@ -57,6 +57,31 @@ class UrlMappings {
             action = "termsAndConditions"
         }
 
+        "/aboutUs"{
+            controller = "site"
+            action = "aboutUs"
+        }
+
+        "/moneyBackConditions"{
+            controller = "site"
+            action = "moneyBackConditions"
+        }
+
+        "/guarantee"{
+            controller = "site"
+            action = "guarantee"
+        }
+
+        "/addedValue"{
+            controller = "site"
+            action = "addedValue"
+        }
+
+        "/deliveryPrice"{
+            controller = "site"
+            action = "deliveryPriceß"
+        }
+
         "/actfil.up"{
             controller = "/default"
             action = "samandehi"

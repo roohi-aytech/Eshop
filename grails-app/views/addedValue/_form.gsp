@@ -27,7 +27,7 @@
 
     </label>
     <g:select name="type" from="${addedValueInstance.constraints.type.inList}"
-              value="${addedValueInstance?.type?:'fixed '}"
+              value="${(addedValueInstance?.type)?:"fixed"}"
               valueMessagePrefix="addedValue.type" noSelection="['': '']"/>
 </div>
 

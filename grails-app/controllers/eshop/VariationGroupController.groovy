@@ -49,7 +49,8 @@ class VariationGroupController {
         }
         render(template: "variation_form", model: [variationInstance: variation, baseProductId: params.baseProductId, parentProductTypes: parentProductTypes])
     }
-    def variationGroups(){
+
+    def variationGroups() {
         def baseProduct = BaseProduct.get(params.baseProductId)
         def parentProductTypes = []
         if (baseProduct instanceof Product) {
@@ -66,7 +67,7 @@ class VariationGroupController {
                 pt = pt.parentProduct
             }
         }
-        render VariationGroup.findAllByProductTypeIsNullOrProductTypeInList(parentProductTypes).sort {it.name}.collect {[id:it.id,name: it.name]} as JSON
+        render VariationGroup.findAllByProductTypeIsNullOrProductTypeInList(parentProductTypes).sort {it.name}.collect {[id: it.id, name: it.name]} as JSON
     }
 
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
@@ -114,12 +115,16 @@ class VariationGroupController {
                 }
             }
             if (baseProduct instanceof Product) {
-                def parentproductvariation = baseProduct?.productTypes.find { true }?.variations?.find { it.variationGroup == variationGroup }
-                variationValues = parentproductvariation?.variationValues
+                if (variationGroup.productType) {
+                    variationValues=variationGroup.variationValues
+                } else {
+                    def parentproductvariation = baseProduct?.productTypes.find { true }?.variations?.find { it.variationGroup == variationGroup }
+                    variationValues = parentproductvariation?.variationValues
 
-                variation?.variationValues?.each {
-                    if (!variationValues.contains(it))
-                        variationValues.add(it)
+                    variation?.variationValues?.each {
+                        if (!variationValues.contains(it))
+                            variationValues.add(it)
+                    }
                 }
             }
         }

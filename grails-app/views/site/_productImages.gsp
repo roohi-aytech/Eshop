@@ -174,19 +174,30 @@
         var centerDistanceY = y - centerY;
 
         var imageX = Math.round((zoomAreaWidth - largeImageWidth) / 2 - (centerDistanceX * largeImageWidth) / zoomAreaWidth);
-        if (imageX <= 0 && imageX + largeImageWidth >= zoomAreaWidth)
-            currentImageX = imageX;
-        else if(imageX > 0)
-            currentImageX = 0;
-        else
-            currentImageX = zoomAreaWidth - largeImageWidth;
+        if (largeImageWidth > zoomAreaWidth) {
+            if (imageX <= 0 && imageX + largeImageWidth >= zoomAreaWidth)
+                currentImageX = imageX;
+            else if (imageX > 0)
+                currentImageX = 0;
+            else
+                currentImageX = zoomAreaWidth - largeImageWidth;
+        }
+        else{
+            currentImageX = (zoomAreaWidth - largeImageWidth) / 2
+        }
 
         var imageY = Math.round((zoomAreaHeight - largeImageHeight) / 2 - (centerDistanceY * largeImageHeight) / zoomAreaHeight);
-        if (imageY <= 0 && imageY + largeImageHeight >= zoomAreaHeight)
-            currentImageY = imageY;
-        else if(imageY > 0)
-            currentImageY = 0;
-        else
-            currentImageY = zoomAreaHeight - largeImageHeight;
+
+        if (largeImageHeight > zoomAreaHeight) {
+            if (imageY <= 0 && imageY + largeImageHeight >= zoomAreaHeight)
+                currentImageY = imageY;
+            else if (imageY > 0)
+                currentImageY = 0;
+            else
+                currentImageY = zoomAreaHeight - largeImageHeight;
+        }
+        else{
+            currentImageY = (zoomAreaHeight - largeImageHeight) / 2
+        }
     }
 </script>
