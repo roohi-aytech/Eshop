@@ -6,6 +6,9 @@ class DeliveryMethod {
 
     String name
     String description
+    Boolean insuranceIsRequired = false
+    Double insurancePercent = 0D
+    Double addedValuePercent = 0D
     byte[] logo
 
     Boolean deleted = false
@@ -20,6 +23,9 @@ class DeliveryMethod {
         name()
         description(nullable: true)
         sourceStations()
+        insuranceIsRequired(nullable: true)
+        insurancePercent(nullable: true)
+        addedValuePercent(nullable: true)
         logo(nullable: true, maxSize: 20000000)
     }
 

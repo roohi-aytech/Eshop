@@ -291,7 +291,7 @@
             </table>
 
             <div class="check-out">
-                <input type="submit" class="btn btn-primary" value="<g:message code="basket.invoice"/>"/>
+                <input type="submit" class="btn btn-primary" value="<g:message code="deliveryMethod.selection"/>"/>
             </div>
         </div>
     </g:form>

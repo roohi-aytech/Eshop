@@ -23,7 +23,9 @@ class DeliveryService {
             }
 
             methods.each { deliveryMethod ->
-                deliveryMethods << calculateDeliveryMethodPrice(order, deliveryMethod)
+                def result = calculateDeliveryMethodPrice(order, deliveryMethod)
+                if (result.sourceStation)
+                    deliveryMethods << result
             }
         }
 
@@ -32,13 +34,14 @@ class DeliveryService {
 
     def calculateDeliveryMethodPrice(Order order, DeliveryMethod deliveryMethod) {
 
-        def result = [deliveryMethod: deliveryMethod, sourceStation: null, price: 0]
+        def result = [deliveryMethod: deliveryMethod, sourceStation: null, price: 0, priceWithInsurance: 0]
 
         def targetCity = order?.sendingAddress?.city
         if (targetCity) {
 
             def totalWeight = order.items.sum(0, { it?.productModel?.product?.weight ?: 0 })
             def totalVolume = order.items.sum(0, { (it?.productModel?.product?.width ?: 0) * (it?.productModel?.product?.height ?: 0) * (it?.productModel?.product?.length ?: 0) })
+            def totalPrice = order.items.sum(0, { it?.orderCount * it?.unitPrice ?: 0 })
 
             deliveryMethod.sourceStations.each { sourceStation ->
                 def pricingRule = sourceStation.targetZones.find { it.cities.collect { it.id }.contains(targetCity.id) }.pricingRules.find { pricingRule ->
@@ -49,15 +52,27 @@ class DeliveryService {
                 }
 
                 if (pricingRule) {
-                    def price = pricingRule.factor
-                    if (pricingRule.type == 'weight')
-                        price *= totalWeight
-                    else if (pricingRule.type == 'volume')
-                        price *= totalWeight
+                    def price = pricingRule.netFactor
+                    if (pricingRule.factorCalculationType == 'weight')
+                        price = pricingRule.weightFactor * totalWeight
+                    else if (pricingRule.factorCalculationType == 'volume')
+                        price = pricingRule.volumeFactor * totalWeight
+                    else if (pricingRule.factorCalculationType == 'max')
+                        price = [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight].max()
+                    else if (pricingRule.factorCalculationType == 'min')
+                        price *= [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight].min()
+
+                    if(deliveryMethod.insuranceIsRequired || order.optionalInsurance)
+                        price = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
+
+                    price = (price * deliveryMethod.addedValuePercent) / 100
 
                     if (price <= result.price) {
                         result.sourceStation = sourceStation
                         result.price = price
+
+                        result.priceWithInsurance = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
+                        result.priceWithInsurance = (result.priceWithInsurance * deliveryMethod.addedValuePercent) / 100
                     }
                 }
             }

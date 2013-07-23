@@ -36,6 +36,7 @@ class OrderController {
         //delivery
         order.deliveryPrice = params.deliveryPrice?.toDouble()
         order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation)
+        order.optionalInsurance = params.optionalInsurance.toBoolean()
 
         if (!order.validate() || !order.save()) {
             //order save error

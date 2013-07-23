@@ -122,6 +122,7 @@ class BasketController {
         def order = session.getAttribute("order") as Order
         order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation);
         order.deliveryPrice = params.price.toDouble()
+        order.optionalInsurance = params["insurance${order.deliverySourceStation?.id}"]
         session["order"] = order
 
         [

@@ -78,9 +78,9 @@
             <td><g:formatNumber number="${order.deliveryPrice}" type="number"></g:formatNumber></td>
         </tr>
         <tr>
-            <td colspan="6" align="left"><g:message code="basket.totalPrice"></g:message></td>
+            <td colspan="6" align="left"><g:message code="basket.totalRoundedPrice"></g:message></td>
             <td><b><g:formatNumber
-                    number="${basket.sum { (it.realPrice ? it.realPrice : 0) * it.count } + order.deliveryPrice}"
+                    number="${Math.round((basket.sum { (it.realPrice ? it.realPrice : 0) * it.count } + order.deliveryPrice) / 10000) * 10000}"
                     type="number"></g:formatNumber></b></td>
         </tr>
     </table>
@@ -88,7 +88,7 @@
     <div>
         <g:link action="checkout" class="btn"><g:message code="invoice.return"/></g:link>
         <g:link controller="order" action="create"
-                params="${[deliveryPrice: order.deliveryPrice, deliverySourceStation: order.deliverySourceStation.id]}"
+                params="${[deliveryPrice: order.deliveryPrice, deliverySourceStation: order.deliverySourceStation.id, optionalInsurance: order.optionalInsurance ?: false]}"
                 class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
     </div>
 </div>
