@@ -687,4 +687,8 @@ class SiteController {
         render view: '/site/statics/delivery_price'
     }
 
+    def trust() {
+        render view: '/site/statics/trust'
+    }
+
 }

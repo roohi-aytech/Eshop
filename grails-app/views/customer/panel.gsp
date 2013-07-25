@@ -38,22 +38,36 @@
                     <ul class="master">
                         <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_CREATED]}"><g:message
-                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_CREATED}.label"></g:message></g:link></li>
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_CREATED}"/></g:link></li>
+                        <li><g:link controller="order" action="list"
+                                    params="${[status: OrderHelper.STATUS_INCORRECT]}"><g:message
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_INCORRECT}"/></g:link></li>
+                        <li><g:link controller="order" action="list"
+                                    params="${[status: OrderHelper.STATUS_UPDATING]}"><g:message
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_UPDATING}"/></g:link></li>
                         <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_INQUIRED]}"><g:message
-                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_INQUIRED}.label"></g:message></g:link></li>
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_INQUIRED}"/></g:link></li>
                         <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_PAID]}"><g:message
-                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_PAID}.label"></g:message></g:link></li>
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_PAID}"/></g:link></li>
+                        <li><g:link controller="order" action="list"
+                                    params="${[status: OrderHelper.STATUS_INCOMPLETE]}"><g:message
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_INCOMPLETE}"/></g:link></li>
                         <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_TRANSMITTED]}"><g:message
-                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_TRANSMITTED}.label"></g:message></g:link></li>
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_TRANSMITTED}"/></g:link></li>
                         <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_DELIVERED]}"><g:message
-                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_DELIVERED}.label"></g:message></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_CANCELLED]}"><g:message
-                                    code="controlPanel.orders.yourOrders.${OrderHelper.STATUS_CANCELLED}.label"></g:message></g:link></li>
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_DELIVERED}"/></g:link></li>
                     </ul>
                 </div>
 
@@ -71,7 +85,8 @@
 
                     <h3><g:message code="controlPanel.settings.label"></g:message></h3>
 
-                    <div class="comment"><g:message code="controlPanel.settings.description"></g:message></div>
+                    <div class="comment"><g:message
+                            code="controlPanel.settings.description"></g:message></div>
                 </div>
 
                 <div class="column1 items">
@@ -86,7 +101,8 @@
                 </div>
 
                 <div class="column2 items">
-                    <h4><g:message code="controlPanel.settings.preferences.label"></g:message></h4>
+                    <h4><g:message
+                            code="controlPanel.settings.preferences.label"></g:message></h4>
                     <ul class="slave">
                         <li><g:link controller="customer" action="newsLetter"><g:message
                                 code="controlPanel.settings.profile.newsLetters.label"></g:message></g:link></li>

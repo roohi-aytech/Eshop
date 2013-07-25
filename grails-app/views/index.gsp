@@ -19,23 +19,9 @@
             </h3>
             <ul>
                 <li>
-                    <g:link controller="orderAdministration" action="list"
-                            params="${[status: OrderHelper.STATUS_CREATED]}"><img
-                            src="images/inquire.png"/><span><g:message
-                            code="navigation.manage.order.created"
-                            default="Users"/></span></g:link></li>
-                <li>
-                    <g:link controller="orderAdministration" action="list"
-                            params="${[status: OrderHelper.STATUS_PAID]}"><img
+                    <g:link controller="orderAdministration" action="console"><img
                             src="images/send.png"/><span><g:message
-                            code="navigation.manage.order.paid"
-                            default="Users"/></span></g:link></li>
-                <li>
-                    <g:link controller="orderAdministration" action="list"
-                            params="${[status: OrderHelper.STATUS_TRANSMITTED]}"><img
-                            src="images/deliver.png"/><span><g:message
-                            code="navigation.manage.order.transmitted"
-                            default="Users"/></span></g:link></li>
+                            code="orderAdministration.console"/></span></g:link></li>
             </ul>
         </sec:ifAllGranted>
         <sec:ifAnyGranted

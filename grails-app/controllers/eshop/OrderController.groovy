@@ -49,7 +49,7 @@ class OrderController {
         trackingLog.date = new Date()
         trackingLog.order = order
         trackingLog.user = (User) springSecurityService.currentUser
-        trackingLog.title = message(code: 'order.trackingLog.action.creation.title', params: [trackingLog.date, trackingLog.user])
+        trackingLog.title = "order.actions.${OrderHelper.ACTION_CREATION}"
         if (!trackingLog.validate() || !trackingLog.save()) {
             //tracking log save error
             return
@@ -117,31 +117,8 @@ class OrderController {
         def actions = []
         def suggestedActions = []
 
-        switch (status) {
-            case OrderHelper.STATUS_CREATED:
-                suggestedActions = []
-                actions = [OrderHelper.ACTION_CANCELLATION]
-                break;
-            case OrderHelper.STATUS_INQUIRED:
-                suggestedActions = [OrderHelper.ACTION_PAYMENT]
-                actions = [OrderHelper.ACTION_CANCELLATION]
-                break;
-            case OrderHelper.STATUS_PAID:
-                suggestedActions = []
-                actions = []
-                break;
-            case OrderHelper.STATUS_TRANSMITTED:
-                suggestedActions = []
-                actions = []
-                break;
-            case OrderHelper.STATUS_DELIVERED:
-                suggestedActions = []
-                actions = []
-                break;
-            case OrderHelper.STATUS_CANCELLED:
-                suggestedActions = [OrderHelper.ACTION_REACTIVATION]
-                break;
-        }
+        if(status == OrderHelper.STATUS_INQUIRED)
+            suggestedActions = [OrderHelper.ACTION_PAYMENT]
 
         render view: '/order/list', model: [
                 orderList: orderList.sort { -it.id },
@@ -200,47 +177,47 @@ class OrderController {
         trackingLog.date = new Date()
         trackingLog.order = order
         trackingLog.user = owner
-        trackingLog.title = message(code: 'order.trackingLog.action.payment.title', params: [trackingLog.date, trackingLog.user])
+        trackingLog.title = "order.actions.${OrderHelper.ACTION_PAYMENT}"
         if (trackingLog.validate() && trackingLog.save()) {
             flash.message = message(code:'order.payment.completed')
             redirect(controller: 'customer', action: 'panel')
         }
     }
 
-    def cancellation(){
-        def order = Order.get(params.id)
-        order.status = OrderHelper.STATUS_CANCELLED
-        order.save()
+//    def cancellation(){
+//        def order = Order.get(params.id)
+//        order.status = OrderHelper.STATUS_CANCELLED
+//        order.save()
+//
+//        //save order tracking log
+//        def trackingLog = new OrderTrackingLog()
+//        trackingLog.action = OrderHelper.ACTION_CANCELLATION
+//        trackingLog.date = new Date()
+//        trackingLog.order = order
+//        trackingLog.user = springSecurityService.currentUser
+//        trackingLog.title = "order.actions.cancellation"
+//        if (trackingLog.validate() && trackingLog.save()) {
+//            flash.message = message(code:'order.cancellation.completed')
+//            redirect(controller: 'customer', action: 'panel')
+//        }
+//    }
 
-        //save order tracking log
-        def trackingLog = new OrderTrackingLog()
-        trackingLog.action = OrderHelper.ACTION_CANCELLATION
-        trackingLog.date = new Date()
-        trackingLog.order = order
-        trackingLog.user = springSecurityService.currentUser
-        trackingLog.title = message(code: 'order.trackingLog.action.cancellation.title', params: [trackingLog.date, trackingLog.user])
-        if (trackingLog.validate() && trackingLog.save()) {
-            flash.message = message(code:'order.cancellation.completed')
-            redirect(controller: 'customer', action: 'panel')
-        }
-    }
-
-    def reactivation(){
-        def order = Order.get(params.id)
-        order.status = OrderHelper.STATUS_CREATED
-        order.save()
-
-        //save order tracking log
-        def trackingLog = new OrderTrackingLog()
-        trackingLog.action = OrderHelper.ACTION_REACTIVATION
-        trackingLog.date = new Date()
-        trackingLog.order = order
-        trackingLog.user = springSecurityService.currentUser
-        trackingLog.title = message(code: 'order.trackingLog.action.reactivation.title', params: [trackingLog.date, trackingLog.user])
-        if (trackingLog.validate() && trackingLog.save()) {
-            flash.message = message(code:'order.reactivation.completed')
-            redirect(controller: 'customer', action: 'panel')
-        }
-    }
+//    def reactivation(){
+//        def order = Order.get(params.id)
+//        order.status = OrderHelper.STATUS_CREATED
+//        order.save()
+//
+//        //save order tracking log
+//        def trackingLog = new OrderTrackingLog()
+//        trackingLog.action = OrderHelper.ACTION_REACTIVATION
+//        trackingLog.date = new Date()
+//        trackingLog.order = order
+//        trackingLog.user = springSecurityService.currentUser
+//        trackingLog.title = message(code: 'order.trackingLog.action.reactivation.title', params: [trackingLog.date, trackingLog.user])
+//        if (trackingLog.validate() && trackingLog.save()) {
+//            flash.message = message(code:'order.reactivation.completed')
+//            redirect(controller: 'customer', action: 'panel')
+//        }
+//    }
 
 }

@@ -18,23 +18,43 @@ class OrderAdministrationController {
                 result += it.productModel.toString()
                 result += "<br/>"
             }
-            result += "<a target='_blank' href='${createLink(controller: 'orderAdministration', action: 'act', params:[id: order.id])}'>${message(code:'order.notification.link')}</a>"
+            result += "<a target='_blank' href='${createLink(controller: 'orderAdministration', action: 'act', params: [id: order.id])}'>${message(code: 'order.notification.link')}</a>"
             render result
         } else
             render 0
     }
 
+    def console() {
+
+    }
+
     def list() {
         def orderList = orderTrackingService.filterOrderListForUser(Order.findAllByStatus(params.status), springSecurityService.currentUser)
-        render view: '/orderAdministration/list', model: [orderList: orderList.collect { it.id.toLong() }]
+        render view: '/orderAdministration/list', model: [orderList: orderList.size() > 0 ? orderList.collect { it.id.toLong() } : [0]]
     }
 
     def act() {
         def order = Order.get(params.id)
-        render(
-                view: "/orderAdministration/act/${order.status}",
-                model: [order: order]
-        )
+        def availableActions = []
+        switch (order.status) {
+            case OrderHelper.STATUS_CREATED:
+                availableActions = [OrderHelper.ACTION_MARK_AS_INCORRECT, OrderHelper.ACTION_APPROVE]
+                break
+            case OrderHelper.STATUS_UPDATING:
+                availableActions = [OrderHelper.ACTION_INQUIRY]
+                break
+            case OrderHelper.STATUS_PAID:
+                availableActions = [OrderHelper.ACTION_TRANSMISSION]
+                break
+            case OrderHelper.STATUS_TRANSMITTED:
+                availableActions = [OrderHelper.ACTION_DELIVERY]
+                break
+        }
+
+        model: [
+                order: order,
+                actions: availableActions
+        ]
     }
 
     def updatePrice() {
@@ -67,69 +87,78 @@ class OrderAdministrationController {
         redirect(action: 'act', params: [id: params.order.id])
     }
 
-    def actcreated() {
+    def actOnOrder(oldStatus, newStatus, action) {
         def order = Order.get(params.id)
-        order.status = OrderHelper.STATUS_INQUIRED
+        order.status = newStatus
         order.save()
 
         def trackingLog = new OrderTrackingLog()
-        trackingLog.action = OrderHelper.ACTION_INQUIRY
+        trackingLog.action = action
         trackingLog.date = new Date()
         trackingLog.order = order
         trackingLog.user = (User) springSecurityService.currentUser
-        trackingLog.title = message(code: 'order.trackingLog.action.inquiry.title', params: [trackingLog.date, trackingLog.user])
+        trackingLog.title = "order.actions.${action}"
         trackingLog.description = params.description
         if (!trackingLog.validate() || !trackingLog.save()) {
             //tracking log save error
             return
         }
 
-        redirect(action: 'list', params: [status: OrderHelper.STATUS_CREATED])
+        redirect(action: 'list', params: [status: oldStatus])
     }
 
-    def actpaid() {
-        def order = Order.get(params.id)
-        order.status = OrderHelper.STATUS_TRANSMITTED
-        order.save()
+    def act_markAsIncorrect() {
+        actOnOrder(
+                OrderHelper.STATUS_CREATED,
+                OrderHelper.STATUS_INCORRECT,
+                OrderHelper.ACTION_MARK_AS_INCORRECT)
+    }
 
-        def trackingLog = new OrderTrackingLog()
-        trackingLog.action = OrderHelper.ACTION_TRANSMISSION
-        trackingLog.date = new Date()
-        trackingLog.order = order
-        trackingLog.user = (User) springSecurityService.currentUser
-        trackingLog.title = message(code: 'order.trackingLog.action.transmission.title', params: [trackingLog.date, trackingLog.user])
-        trackingLog.description = params.description
-        if (!trackingLog.validate() || !trackingLog.save()) {
-            //tracking log save error
-            return
+    def act_approve() {
+        actOnOrder(
+                OrderHelper.STATUS_CREATED,
+                OrderHelper.STATUS_UPDATING,
+                OrderHelper.ACTION_APPROVE)
+    }
+
+    def act_inquiry() {
+
+        def validityDate = params.ValidityDate
+        if (params.ValidityTime) {
+            def hours = params.ValidityTime.toString().split(':')[0].toInteger()
+            def minutes = params.ValidityTime.toString().split(':')[1].toInteger()
+            validityDate.hours = hours
+            validityDate.minutes = minutes
         }
 
-        redirect(action: 'list', params: [status: OrderHelper.STATUS_PAID])
+        OrderJob.schedule(validityDate, [orderId: params.id])
+
+        actOnOrder(
+                OrderHelper.STATUS_UPDATING,
+                OrderHelper.STATUS_INQUIRED,
+                OrderHelper.ACTION_INQUIRY)
     }
 
-    def acttransmitted() {
+    def act_transmission() {
+        actOnOrder(
+                OrderHelper.STATUS_PAID,
+                OrderHelper.STATUS_TRANSMITTED,
+                OrderHelper.ACTION_TRANSMISSION)
+    }
+
+    def act_delivery() {
+
+        actOnOrder(
+                OrderHelper.STATUS_TRANSMITTED,
+                OrderHelper.STATUS_DELIVERED,
+                OrderHelper.ACTION_DELIVERY)
+
         def order = Order.get(params.id)
-        order.status = OrderHelper.STATUS_DELIVERED
-        order.save()
         order.items.each {
             def product = Product.get it.productModel.product.id
             product.saleCount = product.saleCount ? product.saleCount + 1 : 0
             product.save()
             mongoService.storeProduct(product)
         }
-
-        def trackingLog = new OrderTrackingLog()
-        trackingLog.action = OrderHelper.ACTION_DELIVERY
-        trackingLog.date = new Date()
-        trackingLog.order = order
-        trackingLog.user = (User) springSecurityService.currentUser
-        trackingLog.title = message(code: 'order.trackingLog.action.delivery.title', params: [trackingLog.date, trackingLog.user])
-        trackingLog.description = params.description
-        if (!trackingLog.validate() || !trackingLog.save()) {
-            //tracking log save error
-            return
-        }
-
-        redirect(action: 'list', params: [status: OrderHelper.STATUS_TRANSMITTED])
     }
 }

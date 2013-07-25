@@ -20,7 +20,24 @@ class VendorController {
             vendorInstance.productType = ProductType.get(params["productType.id"])
         }
 
-        render(template: "form", model: [vendorInstance: vendorInstance])
+        def brands = getBrands(vendorInstance.productType)?.findAll{it}
+
+
+        render(template: "form", model: [vendorInstance: vendorInstance, brands: brands])
+    }
+
+    List<Brand> getBrands(ProductType productType){
+        def brands = Product.createCriteria().list {
+            productTypes {
+                eq('id', productType.id)
+            }
+        }.collect {it.brand}
+
+        productType.children?.each {
+            brands.addAll(getBrands(it))
+        }
+
+        brands.unique {it?.id}
     }
 
     def list() {

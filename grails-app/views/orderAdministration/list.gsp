@@ -9,17 +9,16 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: "controlPanel.orders.yourOrders.${params.status}.label", default: 'Order')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
 </head>
 
 <body>
-<h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <div class="content scaffold-list" role="main">
 
     <rg:grid domainClass="${Order}"
+             sortname="id"
              maxColumns="5"
              showCommand="false"
              commands="${[[handler: "viewOrder(#id#)", icon: "application_form"]]}"
@@ -28,11 +27,6 @@
             <rg:inCrit name="id" value="${orderList}"/>
         </rg:criteria>
     </rg:grid>
-    <g:javascript>
-        function viewOrder(id){
-             window.location.href = "${createLink(controller: 'orderAdministration', action:'act')}/" + id
-        }
-    </g:javascript>
 </div>
 </body>
 </html>

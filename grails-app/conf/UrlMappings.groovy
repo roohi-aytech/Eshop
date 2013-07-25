@@ -79,7 +79,12 @@ class UrlMappings {
 
         "/deliveryPrice"{
             controller = "site"
-            action = "deliveryPriceß"
+            action = "deliveryPrice"
+        }
+
+        "/trust"{
+            controller = "site"
+            action = "trust"
         }
 
         "/actfil.up"{

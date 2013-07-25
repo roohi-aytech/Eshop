@@ -9,8 +9,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="main">
-    <title><g:message code="order"></g:message> <g:message code="status.${order.status}"></g:message></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.tipsy.css')}"/>
     <g:javascript src="jquery.tipsy.js"/>
     <style>
@@ -58,7 +56,6 @@
 </head>
 
 <body>
-<h2><g:message code="order"></g:message> <g:message code="status.${order.status}"></g:message></h2>
 <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
 <div>
     <g:render template="show" model="${[orderInstance:order]}"/>
