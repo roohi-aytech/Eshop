@@ -127,6 +127,8 @@ class CustomerController {
         if (customer.profilePersonalInfoFilled && customer.profileSendingAddressFilled && customer.registrationLevel == 'basic')
             customer.registrationLevel = 'profile'
         customer.save()
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
         redirect(action: 'profile')
     }
 
@@ -150,6 +152,8 @@ class CustomerController {
                 customer.registrationLevel = 'profile'
             customer.save()
         }
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
         redirect(action: 'profile')
     }
 
@@ -212,10 +216,26 @@ class CustomerController {
             def customer = springSecurityService.currentUser as Customer
             if (customer) {
                 customer.reagent = reagent
+                customer.wayOfKnowing = params.wayOfKnowing
                 customer.save()
+
+                flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
                 redirect(action: 'profile')
             }
         }
+    }
+
+    def saveFavorites() {
+        def customer = springSecurityService.currentUser as Customer
+        customer.favoriteStyle = params.favoriteStyle
+
+        customer.favoriteProductTypes.clear()
+        customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect{it.toLong()}).toArray())
+
+        customer.save()
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
+        redirect(action: 'profile')
     }
 
     def forgetPassword() {
@@ -294,7 +314,7 @@ class CustomerController {
 
         customer.save()
 
-        flash.message = message(code: "controlPanel.settings.profile.newsLetters.successMessage")
-        redirect(action: 'panel')
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
+        redirect(action: 'profile')
     }
 }

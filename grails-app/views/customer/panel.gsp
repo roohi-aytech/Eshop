@@ -104,7 +104,13 @@
                     <h4><g:message
                             code="controlPanel.settings.preferences.label"></g:message></h4>
                     <ul class="slave">
-                        <li><g:link controller="customer" action="newsLetter"><g:message
+                        <li><g:link controller="customer" action="profile" params="${[tab:'address']}"><g:message
+                                code="springSecurity.register.sendingAddress.label"></g:message></g:link></li>
+                        <li><g:link controller="customer" action="profile" params="${[tab:'reagent']}"><g:message
+                                code="customer.reagent.label"></g:message></g:link></li>
+                        <li><g:link controller="customer" action="profile" params="${[tab:'favorites']}"><g:message
+                                code="customer.favorites.label"></g:message></g:link></li>
+                        <li><g:link controller="customer" action="profile" params="${[tab:'newsLetter']}"><g:message
                                 code="controlPanel.settings.profile.newsLetters.label"></g:message></g:link></li>
                     </ul>
                 </div>
