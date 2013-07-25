@@ -42,10 +42,8 @@ class ProducingProduct {
         brand(nullable: true)
 
         volume()
-        volumeDescription(nullable: true)
 
         retail()
-        retailDescription(nullable: true)
 
         priceType(inList: ["determined", "free"], nullable: true)
         priceDescription(nullable: true)
@@ -56,7 +54,6 @@ class ProducingProduct {
         cooperationPrice(nullable: true)
 
         settlement(nullable: true)
-        settlementDescription(nullable: true)
 
         refundable(inList: ["Yes", "No"], nullable: true)
         refundableDescription(nullable: true)
@@ -68,6 +65,10 @@ class ProducingProduct {
         deliveryPlace(nullable: true)
         transportationCost(nullable: true)
         addedValue(inList: ["Yes", "No", "Conditionally"], nullable: true)
+
+        retailDescription(nullable: true)
+        volumeDescription(nullable: true)
+        settlementDescription(nullable: true)
         addedValueDescription(nullable: true)
     }
 
