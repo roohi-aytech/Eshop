@@ -95,7 +95,9 @@
         <p>
             <label for='jobTitle'><g:message
                     code="springSecurity.register.jobTitle.label"/>:</label>
-            <input type='text' class='text_' name='jobTitle' id='jobTitle' value="${customerInstance.jobTitle}"/>
+            <g:select name="jobTitle" from="${customerInstance.constraints.jobTitle.inList}"
+                      value="${customerInstance?.jobTitle}"
+                      valueMessagePrefix="customer.jobTitle" noSelection="['': '']"/>
         </p>
 
         <p>

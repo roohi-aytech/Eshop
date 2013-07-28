@@ -21,10 +21,15 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            def price = priceService.calcProductModelPrice(productModel.id)
-            basketItem = [id: id, productId: productModel.product.id, name: productModel.toString(), count: 1, price: price.showVal, realPrice: price.valueAddedVal]
+            basketItem = [id: id, productId: productModel.product.id, name: productModel.toString(), count: 1]
             basket << basketItem
         }
+
+        basketItem.selectedAddedValues = params.addedValues?.toString().split(',')
+        basketItem.selectedAddedValueNames = basketItem.selectedAddedValues.collect{AddedValue.get(it.toLong()).name}
+        def price = priceService.calcProductModelPrice(productModel.id, basketItem.selectedAddedValues)
+        basketItem.price = price.showVal
+        basketItem.realPrice = price.valueAddedVal
 
 
         def basketCounter = 0
@@ -122,6 +127,7 @@ class BasketController {
         def order = session.getAttribute("order") as Order
         order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation);
         order.deliveryPrice = params.price.toDouble()
+        order.optionalInsurance = params["insurance${order.deliverySourceStation?.id}"]
         session["order"] = order
 
         [

@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.context.SecurityContextHolder
 
-@Secured([RoleHelper.ROLE_CUSTOMER])
 class CustomerController {
 
     def springSecurityService
@@ -14,13 +13,16 @@ class CustomerController {
 
     def index() {}
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def panel() {
         [customer: Customer.findByUsername(((User) springSecurityService.currentUser).username)]
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def changePassword() {
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveNewPassword() {
         def user = (User) springSecurityService.currentUser
         if (user.password == springSecurityService.encodePassword(params.oldPassword)) {
@@ -112,10 +114,12 @@ class CustomerController {
         render "code error"
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def profile() {
         [customerInstance: Customer.findByUsername(((User) springSecurityService.currentUser).username)]
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def savePersonalInfo() {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         customer.properties = params
@@ -127,9 +131,12 @@ class CustomerController {
         if (customer.profilePersonalInfoFilled && customer.profileSendingAddressFilled && customer.registrationLevel == 'basic')
             customer.registrationLevel = 'profile'
         customer.save()
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
         redirect(action: 'profile')
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveAddress() {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         Address address = customer.address
@@ -150,9 +157,12 @@ class CustomerController {
                 customer.registrationLevel = 'profile'
             customer.save()
         }
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
         redirect(action: 'profile')
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveProfile() {
         def customerInstance = new Customer()
 
@@ -198,6 +208,7 @@ class CustomerController {
 
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def validateReagent() {
         def reagent = Customer.findByUsername(params.email)
         if (reagent)
@@ -206,16 +217,34 @@ class CustomerController {
             render 0
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveReagent() {
         def reagent = Customer.findByUsername(params.email)
         if (reagent) {
             def customer = springSecurityService.currentUser as Customer
             if (customer) {
                 customer.reagent = reagent
+                customer.wayOfKnowing = params.wayOfKnowing
                 customer.save()
+
+                flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
                 redirect(action: 'profile')
             }
         }
+    }
+
+    @Secured([RoleHelper.ROLE_CUSTOMER])
+    def saveFavorites() {
+        def customer = springSecurityService.currentUser as Customer
+        customer.favoriteStyle = params.favoriteStyle
+
+        customer.favoriteProductTypes.clear()
+        customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect{it.toLong()}).toArray())
+
+        customer.save()
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
+        redirect(action: 'profile')
     }
 
     def forgetPassword() {
@@ -278,10 +307,12 @@ class CustomerController {
         }
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def newsLetter(){
-        [customer: springSecurityService.currentUser as Customer]
+        [customerInstance: springSecurityService.currentUser as Customer]
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])v
     def saveNewsLetter(){
 
         def customer = springSecurityService.currentUser as Customer
@@ -294,7 +325,12 @@ class CustomerController {
 
         customer.save()
 
-        flash.message = message(code: "controlPanel.settings.profile.newsLetters.successMessage")
-        redirect(action: 'panel')
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
+        redirect(action: 'profile')
+    }
+
+    @Secured([RoleHelper.ROLE_CUSTOMER])
+    def personalEvents(){
+        [customerInstance: springSecurityService.currentUser as Customer]
     }
 }

@@ -128,6 +128,11 @@
                 return false;
             }
 
+            if(username.startsWith('www.')){
+                $('#usernameValidationMessage').html('${message(code: 'springSecurity.register.username.invalid')}')
+                return false;
+            }
+
             $.ajax({
                 type:"POST",
                 url:"<g:createLink action="checkUserNameIsRepetitive"/>",

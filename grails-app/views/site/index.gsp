@@ -47,6 +47,9 @@
                                               model="[specialSaleSlides: specialSaleSlides]"></g:render>
 
                                     <g:render template="common/browsingGraphicalMenu"></g:render>
+
+                                    <g:render template="common/productGrid"
+                                              model="${[productIds: filters.products.productIds]}"></g:render>
                                 </td>
 
                                 <td class="span200 table-cell">

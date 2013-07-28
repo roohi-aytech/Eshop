@@ -2,7 +2,7 @@
 
 
 <div id="show-order" class="content scaffold-show" role="main">
-    <ol class="property-list order">
+    <ol class="property-list order" style="padding: 0;margin: 0;margin-bottom:10px;">
 
         <g:if test="${orderInstance?.status}">
             <li class="fieldcontain">
@@ -10,7 +10,7 @@
                                                                           default="Status"/></span>
 
                 <span class="property-value" aria-labelledby="status-label"><g:message
-                        code="status.${orderInstance.status}"/></span>
+                        code="order.status.${orderInstance.status}"/></span>
 
             </li>
         </g:if>

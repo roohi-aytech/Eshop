@@ -10,6 +10,8 @@ class OrderItem {
 
     static belongsTo = [Order]
 
+    static hasMany = [addedValues: AddedValue]
+
     static constraints = {
         order()
         productModel()

@@ -17,7 +17,7 @@ class ProducerController {
             return
         }
 
-      [producerInstance: producerInstance]
+      [producer: producerInstance]
     }
 
     def producerStaffForm(){

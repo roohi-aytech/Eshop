@@ -8,8 +8,11 @@ class PriceService {
         if (!defaultModel)
             return [mainVal: 0D, showVal: 0D, status: 'not-exists']
 
-        if (defaultModel.status != 'exists')
-            defaultModel = ProductModel.findByProductAndStatus(product, 'exists')
+        if (defaultModel.status != 'exists'){
+            def alternateModel = ProductModel.findByProductAndStatus(product, 'exists')
+            if(alternateModel)
+            defaultModel = alternateModel
+        }
 
         if (!defaultModel)
             return [mainVal: 0D, showVal: 0D, status: 'not-exists']
@@ -31,7 +34,7 @@ class PriceService {
 
         //addedValues - everyWhere
         def addedValues = []
-        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "everyWhere"))
+        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "mandetory"))
         addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
         productModel?.product?.productTypes?.each {
             getAddedvalues(it).each {
@@ -51,47 +54,69 @@ class PriceService {
             }
         }
 
-        def valueAddedVal = priceVal
+//        def valueAddedVal = priceVal
         //addedValues - orderTime
-        addedValues = []
-        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "orderTime"))
-        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
-        productModel?.product?.productTypes?.each {
-            getOrderTimeAddedValues(it).each {
-                if (!it.brand || it.brand.id == productModel.product.brand.id)
-                    addedValues.add(it)
-            }
+//        addedValues = []
+//        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "orderTime"))
+//        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
+//        productModel?.product?.productTypes?.each {
+//            getOrderTimeAddedValues(it).each {
+//                if (!it.brand || it.brand.id == productModel.product.brand.id)
+//                    addedValues.add(it)
+//            }
+//        }
+
+//        addedValues?.each {
+//            if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
+//                def val
+//                if (it.type == "percent")
+//                    val = priceVal * it.value / 100
+//                else if (it.type == "fixed")
+//                    val = it.value
+//                valueAddedVal += val
+//            }
+//        }
+
+        [mainVal: mainVal, showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
+    }
+
+
+    def calcProductModelPrice(productModelId, selectedAddedValues) {
+        def result = calcProductModelPrice(productModelId)
+
+        if (!result.mainVal)
+            return result
+
+        def valueAddedVal = result.showVal
+        selectedAddedValues.collect{AddedValue.get(it.toLong())}.each { addedValue ->
+            def value = 0
+            if (addedValue.type == "percent")
+                value = result.mainVal * addedValue.value / 100
+            else if (addedValue.type == "fixed")
+                value = addedValue.value
+            valueAddedVal += value
         }
 
-        addedValues?.each {
-            if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
-                def val
-                if (it.type == "percent")
-                    val = priceVal * it.value / 100
-                else if (it.type == "fixed")
-                    val = it.value
-                valueAddedVal += val
-            }
-        }
+        result.valueAddedVal = valueAddedVal
 
-        [mainVal: mainVal, showVal: priceVal, valueAddedVal: valueAddedVal, lastUpdate: price.startDate, status: productModel.status]
+        result
     }
 
     def getAddedvalues(ProductType productType) {
         def addedValues = []
         if (productType.parentProduct)
             addedValues.addAll(getAddedvalues(productType.parentProduct))
-        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "everyWhere"))
+        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "mandetory"))
         addedValues
     }
 
-    def getOrderTimeAddedValues(ProductType productType) {
-        def addedValues = []
-        if (productType.parentProduct)
-            addedValues.addAll(getAddedvalues(productType.parentProduct))
-        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "orderTime"))
-        addedValues
-    }
+//    def getOrderTimeAddedValues(ProductType productType) {
+//        def addedValues = []
+//        if (productType.parentProduct)
+//            addedValues.addAll(getAddedvalues(productType.parentProduct))
+//        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "orderTime"))
+//        addedValues
+//    }
 
     def calculateOrderPrice(Order order) {
         Integer price = order.deliveryPrice ?: 0

@@ -16,31 +16,54 @@
 <br/>
 <div style="padding: 3px;text-align: center;">
     <g:field type="number" name="weightMin" step="any" value="${deliveryPricingRuleInstance.weightMin}"
-             style="width:100px;text-align: center;margin-left: 3px;"/>
+             style="width:90px;text-align: center;margin-left: 3px;"/>
     ≤
     <g:message code="deliveryPricingRule.weight.label" default="Weight"/>
     ≤
     <g:field type="number" name="weightMax" step="any" value="${deliveryPricingRuleInstance.weightMax}"
-             style="width:100px;text-align: center;margin-right: 3px;"/>
+             style="width:90px;text-align: center;margin-right: 3px;"/>
 </div>
 <div style="padding: 3px;text-align: center;">
     <g:field type="number" name="volumeMin" step="any" value="${deliveryPricingRuleInstance.volumeMin}"
-             style="width:100px;text-align: center;"/>
+             style="width:90px;text-align: center;"/>
     ≤
     <g:message code="deliveryPricingRule.volume.label" default="Volume"/>
     ≤
     <g:field type="number" name="volumeMax" step="any" value="${deliveryPricingRuleInstance.volumeMax}"
-             style="width:100px;text-align: center;"/>
+             style="width:90px;text-align: center;"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: deliveryPricingRuleInstance, field: 'factor', 'error')} required">
-    <label for="factor">
-        <g:message code="deliveryPricingRule.factor.label" default="Factor"/>
+<div class="fieldcontain ${hasErrors(bean: deliveryPricingRuleInstance, field: 'weightFactor', 'error')} required">
+    <label for="weightFactor">
+        <g:message code="deliveryPricingRule.weightFactor.label" default="weightFactor"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:field type="number" name="factor" step="any" required="" value="${deliveryPricingRuleInstance.factor}" style="width:160px;"/>
-    <g:select name="type" from="${deliveryPricingRuleInstance.constraints.type.inList}" style="width:100px;"
-              value="${deliveryPricingRuleInstance?.type}" valueMessagePrefix="deliveryPricingRule.type"/>
+    <g:field type="number" name="weightFactor" step="any" required="" value="${deliveryPricingRuleInstance.weightFactor}" style="width:160px;"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: deliveryPricingRuleInstance, field: 'volumeFactor', 'error')} required">
+    <label for="volumeFactor">
+        <g:message code="deliveryPricingRule.volumeFactor.label" default="volumeFactor"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:field type="number" name="volumeFactor" step="any" required="" value="${deliveryPricingRuleInstance.volumeFactor}" style="width:160px;"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: deliveryPricingRuleInstance, field: 'netFactor', 'error')} required">
+    <label for="netFactor">
+        <g:message code="deliveryPricingRule.netFactor.label" default="Factor"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:field type="number" name="netFactor" step="any" required="" value="${deliveryPricingRuleInstance.netFactor}" style="width:160px;"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: deliveryPricingRuleInstance, field: 'factorCalculationType', 'error')} required">
+    <label for="factorCalculationType">
+        <g:message code="deliveryPricingRule.factorCalculationType.label" default="factorCalculationType"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:select name="factorCalculationType" from="${deliveryPricingRuleInstance.constraints.factorCalculationType.inList}" style="width:100px;"
+              value="${deliveryPricingRuleInstance?.factorCalculationType}" valueMessagePrefix="deliveryPricingRule.factorCalculationType"/>
 </div>
 
 

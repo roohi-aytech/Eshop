@@ -26,12 +26,6 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<!-- Le fav and touch icons -->
-%{--<link rel="shortcut icon" href="../assets/ico/favicon.ico">--}%
-%{--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">--}%
-%{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
-%{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
-%{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
 
     <g:javascript>
         function updateBasketItemCount(id, count) {
@@ -90,14 +84,17 @@
 
 <div class="group">
     <ul>
-        <li ng-repeat="basketItem in basket">
+        <li ng-repeat="basketItem in basket" class="basketItem">
             <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?type=productModel&wh=100x100"/>
             </span>
-            <span class="name"><h3><a
+            <span class="name"><h3 style="display: inline-block"><a
                     ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">{{basketItem.name}}</a>
             </h3>
+                <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
+                    <span class="plus">+</span> {{addedValueName}}
+                </span>
             </span>
-            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.price}}</b></span>
+            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.realPrice}}</b></span>
             <span class="count"><g:message code="count"></g:message>: <input type="text"
                                                                              value="{{basketItem.count}}"
                                                                              onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
@@ -291,7 +288,7 @@
             </table>
 
             <div class="check-out">
-                <input type="submit" class="btn btn-primary" value="<g:message code="basket.invoice"/>"/>
+                <input type="submit" class="btn btn-primary" value="<g:message code="deliveryMethod.selection"/>"/>
             </div>
         </div>
     </g:form>

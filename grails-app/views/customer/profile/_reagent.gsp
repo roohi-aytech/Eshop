@@ -1,6 +1,15 @@
 <g:javascript>
     function validateReagent(){
 
+
+        $('#wayOfKnowingValidationMessage').html('');
+
+        var wayOfKnowing = $('#wayOfKnowing').val();
+        if(!wayOfKnowing || wayOfKnowing == '') {
+            $('#wayOfKnowingValidationMessage').html('${message(code: 'customer.wayOfKnowing.notEmpty')}')
+            return false;
+        }
+
         $('#reagentEmailValidationMessage').html('');
 
         var reagentEmail = $('#reagentEmail').val();
@@ -41,7 +50,17 @@
         return false;
     }
 </g:javascript>
-<form id='reagentForm' class='cssform' autocomplete='off' method="POST" action="${createLink(controller: 'customer', action: 'saveReagent')}">
+<form id='reagentForm' class='cssform' autocomplete='off' method="POST"
+      action="${createLink(controller: 'customer', action: 'saveReagent')}">
+
+    <p>
+        <label for='wayOfKnowing'><g:message
+                code="customer.wayOfKnowing.label"/>:</label> *
+        <span id="wayOfKnowingValidationMessage"></span>
+        <g:select name="wayOfKnowing" id="wayOfKnowing" from="${customerInstance.constraints.wayOfKnowing.inList}"
+                  value="${customerInstance?.wayOfKnowing}"
+                  valueMessagePrefix="customer.wayOfKnowing" noSelection="['': '']"/>
+    </p>
 
     <p>
         <label for='reagentEmail'><g:message
@@ -55,7 +74,7 @@
     </p>
 
     <p>
-        <span class="border" id="reagentFrame" ${customerInstance?.reagent?'style="display:inline-block;"':''}>
+        <span class="border" id="reagentFrame" ${customerInstance?.reagent ? 'style="display:inline-block;"' : ''}>
             <img src="${resource(dir: 'images', file: 'yes.png')}"/>
             <span><g:message
                     code="customer.reagent.name.label"/>:</span>

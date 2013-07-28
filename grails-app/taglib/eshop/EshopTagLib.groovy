@@ -201,11 +201,11 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a type="basket" original-title="${message(code: "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a type="basket" original-title="${message(code: "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                     else
                         out << """
-                            <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}');"><span>${g.message(code: "add-to-basket")}</span></a>
+                            <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><span>${g.message(code: "add-to-basket")}</span></a>
                             """
                 } else {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
