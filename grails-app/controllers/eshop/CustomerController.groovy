@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.context.SecurityContextHolder
 
-@Secured([RoleHelper.ROLE_CUSTOMER])
 class CustomerController {
 
     def springSecurityService
@@ -14,13 +13,16 @@ class CustomerController {
 
     def index() {}
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def panel() {
         [customer: Customer.findByUsername(((User) springSecurityService.currentUser).username)]
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def changePassword() {
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveNewPassword() {
         def user = (User) springSecurityService.currentUser
         if (user.password == springSecurityService.encodePassword(params.oldPassword)) {
@@ -112,10 +114,12 @@ class CustomerController {
         render "code error"
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def profile() {
         [customerInstance: Customer.findByUsername(((User) springSecurityService.currentUser).username)]
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def savePersonalInfo() {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         customer.properties = params
@@ -132,6 +136,7 @@ class CustomerController {
         redirect(action: 'profile')
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveAddress() {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         Address address = customer.address
@@ -157,6 +162,7 @@ class CustomerController {
         redirect(action: 'profile')
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveProfile() {
         def customerInstance = new Customer()
 
@@ -202,6 +208,7 @@ class CustomerController {
 
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def validateReagent() {
         def reagent = Customer.findByUsername(params.email)
         if (reagent)
@@ -210,6 +217,7 @@ class CustomerController {
             render 0
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveReagent() {
         def reagent = Customer.findByUsername(params.email)
         if (reagent) {
@@ -225,6 +233,7 @@ class CustomerController {
         }
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveFavorites() {
         def customer = springSecurityService.currentUser as Customer
         customer.favoriteStyle = params.favoriteStyle
@@ -298,10 +307,12 @@ class CustomerController {
         }
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])
     def newsLetter(){
-        [customer: springSecurityService.currentUser as Customer]
+        [customerInstance: springSecurityService.currentUser as Customer]
     }
 
+    @Secured([RoleHelper.ROLE_CUSTOMER])v
     def saveNewsLetter(){
 
         def customer = springSecurityService.currentUser as Customer
@@ -316,5 +327,10 @@ class CustomerController {
 
         flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
         redirect(action: 'profile')
+    }
+
+    @Secured([RoleHelper.ROLE_CUSTOMER])
+    def personalEvents(){
+        [customerInstance: springSecurityService.currentUser as Customer]
     }
 }

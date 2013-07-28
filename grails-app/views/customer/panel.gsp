@@ -110,8 +110,10 @@
                                 code="customer.reagent.label"></g:message></g:link></li>
                         <li><g:link controller="customer" action="profile" params="${[tab:'favorites']}"><g:message
                                 code="customer.favorites.label"></g:message></g:link></li>
-                        <li><g:link controller="customer" action="profile" params="${[tab:'newsLetter']}"><g:message
+                        <li><g:link controller="customer" action="newsLetter"><g:message
                                 code="controlPanel.settings.profile.newsLetters.label"></g:message></g:link></li>
+                        <li><g:link controller="customer" action="personalEvents"><g:message
+                                code="controlPanel.settings.personalEvents.label"></g:message></g:link></li>
                     </ul>
                 </div>
             </div>

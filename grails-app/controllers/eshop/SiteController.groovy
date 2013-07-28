@@ -384,6 +384,16 @@ class SiteController {
                 fillAttibuteCategoryChildren(product, category)
         }
 
+        def productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        model.addedValues = AddedValue.findAllByBaseProductAndProcessTime(product, 'optional').findAll { addedValue ->
+            !addedValue.variationValues.any { variationValue ->
+                variationValue.value != productModel.variationValues
+                        .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
+            }
+        }
+        model.selectedAddedValues = model.addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
+
+
         //update product visit count
         if (!product.visitCount)
             product.visitCount = 0;
@@ -454,7 +464,41 @@ class SiteController {
                 productModel = model
         }
 
-        render(template: 'product/card', model: [product: product, productModel: productModel])
+        def addedValues = AddedValue.findAllByBaseProductAndProcessTime(product, 'optional').findAll { addedValue ->
+            !addedValue.variationValues.any { variationValue ->
+                variationValue.value != productModel.variationValues
+                        .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
+            }
+        }
+
+        def selectedAddedValues = addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
+
+        render(template: 'product/card', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
+    }
+
+    def productPrice() {
+        def product = Product.get(params.productId)
+
+        def models = ProductModel.findAllByProduct(product)
+        def productModel
+        models.each {
+            def model = it
+            Boolean selected = true
+            product.variations.each { variation ->
+                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
+                if (modelVariationId != selectedVariationId)
+                    selected = false
+            }
+
+            if (model.guarantee.id.toLong() != params.guarantee.toLong())
+                selected = false
+
+            if (selected)
+                productModel = model
+        }
+
+        render(template: 'product/price', model: [product: product, productModel: productModel])
     }
 
     def productImage() {

@@ -38,9 +38,24 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
                 );
             });
     }
+    $scope.reloadProductPrice = function(url, serializedData, productPrice){
+        $http({
+            url: url,
+            method: "POST",
+            data: serializedData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config){
+                productPrice.html(data);
+            }).error(function (data, status, headers, config){
+                console.error(
+                    "The following error occured: "+
+                        textStatus, errorThrown
+                );
+            });
+    }
 
     //    basket
-    $scope.addToBasket = function (id, name, price) {
+    $scope.addToBasket = function (id, name, price, selectedAddedValues) {
         $('#link-basket').addClass('full');
         $scope.basketCounter++;
         var found = false;
@@ -53,7 +68,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         if (!found)
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, price: price};
-            $http.post(contextRoot + "basket/add/" + id).success(function (response) {
+            $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
         });
 
         return false;
@@ -79,7 +94,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         var totalPrice = 0;
 
         angular.forEach($scope.basket, function (item) {
-            totalPrice += item.price * item.count;
+            totalPrice += item.realPrice * item.count;
         });
 
         return totalPrice;

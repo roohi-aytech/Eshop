@@ -20,14 +20,14 @@ class OrderController {
     def create() {
 
         //save order
-        def order = (Order)session["order"]
+        def order = (Order) session["order"]
         order.customer = (Customer) springSecurityService.currentUser
         order.status = OrderHelper.STATUS_CREATED
 
-        def sendingAddress = (Address)session["sendingAddress"]
+        def sendingAddress = (Address) session["sendingAddress"]
         sendingAddress.save()
 
-        def billingAddress = (Address)session["billingAddress"]
+        def billingAddress = (Address) session["billingAddress"]
         billingAddress.save()
 
         order.sendingAddress = sendingAddress
@@ -38,6 +38,7 @@ class OrderController {
         order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation)
         order.optionalInsurance = params.optionalInsurance.toBoolean()
 
+        order.items?.clear();
         if (!order.validate() || !order.save()) {
             //order save error
             return
@@ -61,7 +62,13 @@ class OrderController {
             orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
             orderItem.orderCount = basketItem.count
-            def price = priceService.calcProductModelPrice(basketItem.id).valueAddedVal
+
+            //added values
+            basketItem.selectedAddedValues?.each { addedValue ->
+                orderItem.addToAddedValues(AddedValue.get(addedValue.toLong()))
+            }
+
+            def price = priceService.calcProductModelPrice(basketItem.id, orderItem.addedValues?.collect {it.id}).valueAddedVal
             orderItem.unitPrice = price ? price : 0
             if (!orderItem.validate() || !orderItem.save()) {
                 //order item save error
@@ -71,22 +78,22 @@ class OrderController {
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
 
-        event(topic:'order_event', data:[id:order.id], namespace:'browser')
+        event(topic: 'order_event', data: [id: order.id], namespace: 'browser')
 
         flash.message = message(code: 'order.creation.success.message')
         redirect(controller: 'customer', action: 'panel')
     }
 
 //    @grails.plugin.jms.Queue(name='order.new')
-    def testEvents(){
-        event(topic:'order_event', data:[id:8], namespace:'browser')
+    def testEvents() {
+        event(topic: 'order_event', data: [id: 8], namespace: 'browser')
 //        jmsService.send(topic:'order_event', [id:8])
         render 0
     }
 
-    def payment(){
+    def payment() {
         [
-                orderPrice:Order.get(params.id).items.sum{it.productModel.status == 'exists'? it.orderCount * it.unitPrice:0},
+                orderPrice: Order.get(params.id).items.sum { it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0 },
                 accountsForOnlinePayment: Account.findAllByHasOnlinePayment(true),
                 accounts: Account.findAll(),
                 customerAccountValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
@@ -117,7 +124,7 @@ class OrderController {
         def actions = []
         def suggestedActions = []
 
-        if(status == OrderHelper.STATUS_INQUIRED)
+        if (status == OrderHelper.STATUS_INQUIRED)
             suggestedActions = [OrderHelper.ACTION_PAYMENT]
 
         render view: '/order/list', model: [
@@ -128,25 +135,25 @@ class OrderController {
         ]
     }
 
-    def savePaymentRequest(){
+    def savePaymentRequest() {
         def paymentRequest = new PaymentRequest()
         paymentRequest.value = params.value.toInteger()
         paymentRequest.trackingCode = params.trackingCode
         paymentRequest.creationDate = new Date()
-        paymentRequest.owner = (Customer)springSecurityService.currentUser
+        paymentRequest.owner = (Customer) springSecurityService.currentUser
         paymentRequest.account = Account.get(params.account)
         paymentRequest.order = Order.get(params.order.id)
         paymentRequest.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
-        if(paymentRequest.validate() && paymentRequest.save()){
-            flash.message = message(code:"order.payment.paymentRequest.succeed")
-            redirect(action: 'payment', params: [id:params.order.id])
+        if (paymentRequest.validate() && paymentRequest.save()) {
+            flash.message = message(code: "order.payment.paymentRequest.succeed")
+            redirect(action: 'payment', params: [id: params.order.id])
         }
     }
 
-    def payOrderFromAccount(){
+    def payOrderFromAccount() {
 
         def order = Order.get(params.order.id)
-        def orderPrice = order.items.sum(order.deliveryPrice?:0, {it.productModel.status == 'exists'? it.orderCount * it.unitPrice:0})
+        def orderPrice = order.items.sum(order.deliveryPrice ?: 0, { it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0 })
         def owner = springSecurityService.currentUser
 
         //save withdrawal customer transaction
@@ -179,7 +186,7 @@ class OrderController {
         trackingLog.user = owner
         trackingLog.title = "order.actions.${OrderHelper.ACTION_PAYMENT}"
         if (trackingLog.validate() && trackingLog.save()) {
-            flash.message = message(code:'order.payment.completed')
+            flash.message = message(code: 'order.payment.completed')
             redirect(controller: 'customer', action: 'panel')
         }
     }

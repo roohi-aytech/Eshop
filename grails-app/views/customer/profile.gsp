@@ -54,6 +54,7 @@
 
     .tab-pane {
         padding-right: 10px;
+        padding-left: 10px;
     }
     </style>
     <link href="${resource(plugin: 'jquery-ui', dir: 'jquery-ui/themes/cobalt', file: 'jquery-ui-1.8.15.custom.css')}"
@@ -91,7 +92,6 @@
                 <li class="${params.tab == 'address' ? 'active': ''}"><a href="#tab2" data-toggle="tab"><g:message code="springSecurity.register.sendingAddress.label"/></a></li>
                 <li class="${params.tab == 'reagent' ? 'active': ''}"><a href="#tab3" data-toggle="tab"><g:message code="customer.reagent.label"/></a></li>
                 <li class="${params.tab == 'favorites' ? 'active': ''}"><a href="#tab4" data-toggle="tab"><g:message code="customer.favorites.label"/></a></li>
-                <li class="${params.tab == 'newsLetter' ? 'active': ''}"><a href="#tab5" data-toggle="tab"><g:message code="controlPanel.settings.profile.newsLetters.label"/></a></li>
             </ul>
 
             <div class="tab-content">
@@ -109,10 +109,6 @@
 
                 <div id="tab4" class="tab-pane ${params.tab == 'favorites' ? 'active': ''}">
                     <g:render template="profile/favorites"></g:render>
-                </div>
-
-                <div id="tab5" class="tab-pane ${params.tab == 'newsLetter' ? 'active': ''}">
-                    <g:render template="profile/newsLetter"></g:render>
                 </div>
             </div>
         </div>

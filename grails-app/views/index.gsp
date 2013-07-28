@@ -164,6 +164,10 @@
                             code="navigation.manage.province"
                             default="Province"/></span></g:link></li>
                 <li>
+                    <g:link controller="relationship" action="list"><img
+                            src="images/relashionship.png"/><span><g:message
+                            code="relationship.label"/></span></g:link></li>
+                <li>
                     <g:link controller="cultureEvent" action="list"><img
                             src="images/cultureEvent.png"/><span><g:message
                             code="cultureEvent.label"

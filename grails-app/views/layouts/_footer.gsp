@@ -21,19 +21,24 @@
             <td>
                 <ul class="column">
                     <li>
-                        <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message code="footerItems.about"/></a>
+                        <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message
+                                code="footerItems.about"/></a>
                     </li>
                     <li>
-                        <a href="${createLink(controller: 'site', action: 'moneyBackConditions')}"><g:message code="footerItems.returnRules"/></a>
+                        <a href="${createLink(controller: 'site', action: 'moneyBackConditions')}"><g:message
+                                code="footerItems.returnRules"/></a>
                     </li>
                     <li>
-                        <a href="${createLink(controller: 'site', action: 'guarantee')}"><g:message code="footerItems.guarantee"/></a>
+                        <a href="${createLink(controller: 'site', action: 'guarantee')}"><g:message
+                                code="footerItems.guarantee"/></a>
                     </li>
                     <li>
-                        <a href="${createLink(controller: 'site', action: 'addedValue')}"><g:message code="footerItems.addedValue"/></a>
+                        <a href="${createLink(controller: 'site', action: 'addedValue')}"><g:message
+                                code="footerItems.addedValue"/></a>
                     </li>
                     <li>
-                        <a href="${createLink(controller: 'site', action: 'deliveryPrice')}"><g:message code="footerItems.deliveryPrice"/></a>
+                        <a href="${createLink(controller: 'site', action: 'deliveryPrice')}"><g:message
+                                code="footerItems.deliveryPrice"/></a>
                     </li>
                 </ul>
             </td>

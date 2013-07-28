@@ -61,7 +61,12 @@
         <g:each in="${basket}" var="basketItem" status="i">
             <tr>
                 <td class="center">${i + 1}</td>
-                <td>${basketItem.name}</td>
+                <td>
+                    ${basketItem.name}
+                    <g:each in="${basketItem.selectedAddedValueNames}">
+                        + ${it}
+                    </g:each>
+                </td>
                 <td><g:formatNumber number="${basketItem.price ? basketItem.price : 0}"
                                     type="number"></g:formatNumber></td>
                 <td><g:formatNumber number="${basketItem.price ? basketItem.realPrice - basketItem.price : 0}"
