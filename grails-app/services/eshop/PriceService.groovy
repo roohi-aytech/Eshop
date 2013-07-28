@@ -8,8 +8,11 @@ class PriceService {
         if (!defaultModel)
             return [mainVal: 0D, showVal: 0D, status: 'not-exists']
 
-        if (defaultModel.status != 'exists')
-            defaultModel = ProductModel.findByProductAndStatus(product, 'exists')
+        if (defaultModel.status != 'exists'){
+            def alternateModel = ProductModel.findByProductAndStatus(product, 'exists')
+            if(alternateModel)
+            defaultModel = alternateModel
+        }
 
         if (!defaultModel)
             return [mainVal: 0D, showVal: 0D, status: 'not-exists']

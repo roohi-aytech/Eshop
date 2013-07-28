@@ -5,6 +5,7 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'newsLetter.label', default: 'NewsLetter')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <g:javascript src="jquery.ui.modal.ckEditorFix.js"/>
 </head>
 
 <body>
@@ -12,7 +13,7 @@
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${NewsLetter}"
-             maxColumns="5"
+             maxColumns="4"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToNewsLetterGrid", icon: "plus"]]}"
              commands="${[[handler: "addToNewsLetterGrid(#id#)", icon: "application_edit"], [handler: "deleteNewsLetter(#id#)", icon: "application_delete"]]}"/>
