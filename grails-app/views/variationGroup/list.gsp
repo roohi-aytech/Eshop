@@ -13,15 +13,19 @@
 
 <div class="content scaffold-list" ng-controller="variationGroupController" role="main">
     <rg:grid domainClass="${VariationGroup}"
-             maxColumns="3"
+             maxColumns="2"
              showCommand="false"
              commands="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"]]}"
-    />
+    >
+        <rg:criteria>
+            <rg:isNull name="productType"/>
+        </rg:criteria>
+    </rg:grid>
     <rg:dialog id="variationGroup" title="${message(code: "variation")}">
         <rg:fields bean="${new VariationGroup()}">
             <rg:modify>
                 <rg:ignoreField field="variations"/>
-                <rg:ignoreField field="variations"/>
+                <rg:ignoreField field="productType"/>
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${VariationGroup}" />

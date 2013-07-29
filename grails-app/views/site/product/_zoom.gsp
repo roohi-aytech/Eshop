@@ -22,14 +22,13 @@
             zoom_easing: true,
             show_hint: true,
             click_callback: function (image_anchor, instance_id) {
-//                if($('a[href=' + image_anchor + '] img.etalage_thumb_image').attr('zoomable') == '0')
-//                    return;
+
                 $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
                 $("#myModal").modal({
                         backdrop: false,
                         show: true
                         });
-                $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor, function() {});
+                $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor.replace('#', ''), function() {});
             }
         });
 
@@ -57,7 +56,7 @@
     </g:if>
     <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name }}">
         <li>
-            <a href='#${mainImage?.id}' >
+            <a href='#${it?.id}' >
                 <g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>
                 <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
                      width="50" height="50"

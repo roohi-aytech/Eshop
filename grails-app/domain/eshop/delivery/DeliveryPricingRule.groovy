@@ -9,8 +9,10 @@ class DeliveryPricingRule {
     Double weightMax
     Double volumeMin
     Double volumeMax
-    Double factor
-    String type
+    Double weightFactor
+    Double volumeFactor
+    Double netFactor
+    String factorCalculationType
 
     Boolean deleted = false
 
@@ -21,7 +23,9 @@ class DeliveryPricingRule {
         weightMax(nullable: true)
         volumeMin(nullable: true)
         volumeMax(nullable: true)
-        factor()
-        type(inList: ['weight', 'volume', 'fixed'])
+        weightFactor()
+        volumeFactor()
+        netFactor()
+        factorCalculationType(inList: ['weight', 'volume', 'fixed', 'max', 'min'])
     }
 }

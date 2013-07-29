@@ -37,5 +37,30 @@
     <img src="<g:createLink controller="deliveryMethod" action="getImage" params="${[id:deliveryMethodInstance?.id]}"/>" style="max-width: 100px"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: deliveryMethodInstance, field: 'insuranceIsRequired', 'error')} ">
+    <label for="insuranceIsRequired">
+        <g:message code="deliveryMethod.insuranceIsRequired.label" default="insuranceIsRequired" />
+
+    </label>
+    <g:checkBox name="insuranceIsRequired" value="${deliveryMethodInstance?.insuranceIsRequired}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: deliveryMethodInstance, field: 'insurancePercent', 'error')} ">
+    <label for="insurancePercent">
+        <g:message code="deliveryMethod.insurancePercent.label" default="insurancePercent" />
+
+    </label>
+    <g:textField size="35" name="insurancePercent" value="${deliveryMethodInstance?.insurancePercent}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: deliveryMethodInstance, field: 'addedValuePercent', 'error')} ">
+    <label for="addedValuePercent">
+        <g:message code="deliveryMethod.addedValuePercent.label" default="addedValuePercent" />
+
+    </label>
+    <g:textField size="35" name="addedValuePercent" value="${deliveryMethodInstance?.addedValuePercent}"/>
+</div>
+
+
 
 

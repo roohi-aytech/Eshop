@@ -176,6 +176,9 @@ class ProductModelController {
             productModelInstance.variationValues = null
 
         productModelInstance.save()
+
+        ProducerProductModel.list().findAll{it -> it.productModelId == productModelInstance.id}.each {it.delete(flush: true)}
+
         productModelInstance.delete(flush: true)
         render 0
     }

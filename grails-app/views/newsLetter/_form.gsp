@@ -34,7 +34,7 @@ td {
     display: inline;
 }
 
-#sendDateContainer input{
+#sendDateContainer input {
     width: 148px;
     text-align: center !important;
 }
@@ -112,7 +112,8 @@ td {
     <rg:datePicker name="sendDate" value="${newsLetterInstance.sendDate}"/>
     <g:message code="newsLetter.sendTime.label" default="Send Date"/>
 
-    <input type="text" id="sendTime" name="sendTime" value="${newsLetterInstance.sendDate? "${newsLetterInstance.sendDate.hours}:${newsLetterInstance.sendDate.minutes}" :''}"/>
+    <input type="text" id="sendTime" name="sendTime"
+           value="${newsLetterInstance.sendDate ? "${newsLetterInstance.sendDate.hours}:${newsLetterInstance.sendDate.minutes}" : ''}"/>
     <script>
         $('#sendTime').timepicker();
     </script>
@@ -133,7 +134,7 @@ td {
         <g:message code="newsLetter.body.label" default="Body"/>
 
     </label>
-    <g:hiddenField name="body" />
+    <g:hiddenField name="body"/>
     <ckeditor:editor name="body_editor" width="99%" height="200px">
         ${newsLetterInstance?.body}
     </ckeditor:editor>

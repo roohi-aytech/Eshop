@@ -14,7 +14,7 @@ class OrderTrackingLog {
 
     static constraints = {
         order(nullable: false)
-        user(nullable: false)
+        user(nullable: true)
         action(nullable: false, inList: OrderHelper.ACTION_LIST)
         date(nullable: false)
         title(nullable: false)

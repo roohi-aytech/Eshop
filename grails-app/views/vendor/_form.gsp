@@ -52,7 +52,7 @@
             </label>
         </div>
     </g:each>
-        <g:each in="${eshop.Brand.list().findAll{!vendorInstance?.brands?.contains(it)}.sort {it.name}}" var="brand">
+        <g:each in="${brands.findAll{!vendorInstance?.brands?.contains(it)}.sort {it.name}}" var="brand">
             <div>
                 <g:checkBox name="brands" id="brand${brand.id}" value="${brand.id}" checked="${vendorInstance?.brands?.contains(brand)}"
                             title="${brand.name}"/>

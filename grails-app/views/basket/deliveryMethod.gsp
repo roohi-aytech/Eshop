@@ -15,7 +15,7 @@
 
 <body>
 <div class="control-panel">
-    <h2><g:message code="deliveryMethod"></g:message></h2>
+    <h2><g:message code="deliveryMethod.selection"></g:message></h2>
     <g:form action="invoice">
         <g:hiddenField id="price" name="price"/>
         <ul class="deliveryMethodList">
@@ -28,12 +28,12 @@
                 <li>
                     <table cellspacing="5" cellpadding="5">
                         <tr>
-                            <td rowspan="2">
+                            <td rowspan="3">
                                 <input type="radio" id="deliverySourceStation${deliveryMethod.sourceStation?.id}"
                                        name="deliverySourceStation" ${indexer == 0 ? 'checked' : ''}
-                                       value="${deliveryMethod.sourceStation?.id}" onchange="if(this.checked){$('#price').val('${deliveryMethod.price}');}"/>
+                                       value="${deliveryMethod.sourceStation?.id}" onchange="if (this.checked) { $('#price').val('${deliveryMethod.price}'); }"/>
                             </td>
-                            <td rowspan="2">
+                            <td rowspan="3">
                                 <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
                                     <img src="${createLink(controller: 'image', params: [id: deliveryMethod.deliveryMethod.id, type: 'deliveryMethod'])}"/>
                                 </label>
@@ -46,9 +46,20 @@
                         </tr>
                         <tr>
                             <td>
+                                <g:if test="${!deliveryMethod.deliveryMethod.insuranceIsRequired && deliveryMethod.deliveryMethod.insurancePercent > 0}">
+                                    <input type="checkbox" id="insurance${deliveryMethod.sourceStation?.id}" name="insurance${deliveryMethod.sourceStation?.id}"
+                                        onchange="if (this.checked) { $('#price').val('${deliveryMethod.priceWithInsurance}'); } else { $('#price').val('${deliveryMethod.price}'); }" />
+                                    <label for="insurance${deliveryMethod.sourceStation?.id}">
+                                        <g:message code="applyInsurance"/> (${deliveryMethod.deliveryMethod.insurancePercent}%)
+                                    </label>
+                                </g:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
                                     <g:message
-                                            code="deliveryPricingRule.factor"/>: ${deliveryMethod.price == 0 ? message(code: 'free') : deliveryMethod.price + ' ' + message(code: 'rial')}
+                                            code="deliveryPrice"/>: ${(deliveryMethod.price) == 0 ? message(code: 'free') : deliveryMethod.price + ' ' + message(code: 'rial')}
                                 </label>
                             </td>
                         </tr>
@@ -65,7 +76,8 @@
         <div>
             <g:link action="checkout" class="btn"><g:message code="invoice.return"/></g:link>
             <g:if test="${deliveryMethods.size > 0}">
-                <input type="submit" class="btn btn-primary" style="height:30px;" value="<g:message code="basket.invoice"/>"/>
+                <input type="submit" class="btn btn-primary" style="height:30px;"
+                       value="<g:message code="basket.invoice"/>"/>
             </g:if>
         </div>
     </g:form>

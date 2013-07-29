@@ -7,10 +7,11 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" ng-app='eshop'><!--<![endif]-->
 <head>
     <title><g:layoutTitle></g:layoutTitle></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <canonical:show/>
     <meta name="robots" content="index, follow"/>
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
-    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'logo.ico')}" type="image/x-icon">
+    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
     <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'ieFix.js')}"></script>
     <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'json3.js')}"></script>
@@ -80,19 +81,30 @@
     <g:layoutHead/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
 
+    <g:javascript src="jquery.watch.js"/>
     <g:javascript src="jquery.hoverIntent.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
 </head>
 
-<body dir="rtl">
-<div id="main-container" ng-controller="eshopCtrl">
-    <g:render template="/layouts/header"></g:render>
-    <div id="body-container">
-        <g:layoutBody/>
-        <g:render template="/layouts/footer"></g:render>
-    </div>
-    <r:layoutResources/>
-</div>
+<body dir="rtl" class="main" ng-controller="eshopCtrl">
+<g:render template="/layouts/header"></g:render>
+<table id="main-container" class="table-simulated">
+    <tr>
+        <td id="body-container">
+            <div id="body-container-inner">
+                <div id="body-size-watch">
+                    <g:layoutBody/>
+                </div>
+            </div>
+            <r:layoutResources/>
+        </td>
+    </tr>
+    <tr>
+        <td class="totalFooter">
+            <g:render template="/layouts/footer"></g:render>
+        </td>
+    </tr>
+</table>
 <g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 

@@ -30,29 +30,29 @@
                     .css('margin','3px');
         </script>
     </div>
-    <rg:grid domainClass="${Producer}"
-             maxColumns="8"
-             showCommand="false"
-             onSelectRow="loadProducerStaffs"
-    />
-    <g:javascript>
-        var curSelectedProducer=${producer?:0}
-        var loadProducerStaffs = function (rowId) {
-            curSelectedProducer = rowId
-            var criteria = "[{'op':'eq', 'field':'producer.id', 'val':" + rowId + "}]"
-            loadGridWithCriteria("ProducerStaffGrid", criteria)
-            loadGridWithCriteria("ProducingProductGrid", criteria)
-            loadGridWithCriteria("ProducerAccountGrid", criteria)
+    %{--<rg:grid domainClass="${Producer}"--}%
+             %{--maxColumns="8"--}%
+             %{--showCommand="false"--}%
+             %{--onSelectRow="loadProducerStaffs"--}%
+    %{--/>--}%
+    %{--<g:javascript>--}%
+        %{--var curSelectedProducer=${producer?:0}--}%
+        %{--var loadProducerStaffs = function (rowId) {--}%
+            %{--curSelectedProducer = rowId--}%
+            %{--var criteria = "[{'op':'eq', 'field':'producer.id', 'val':" + rowId + "}]"--}%
+            %{--loadGridWithCriteria("ProducerStaffGrid", criteria)--}%
+            %{--loadGridWithCriteria("ProducingProductGrid", criteria)--}%
+            %{--loadGridWithCriteria("ProducerAccountGrid", criteria)--}%
 
-        }
-    </g:javascript>
+        %{--}--}%
+    %{--</g:javascript>--}%
 
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProducerStaff}"
                  showCommand="false"
-                 maxColumns="8">
+                 maxColumns="9">
             <rg:criteria>
-                <rg:inCrit name="producer.id" value="${producer as Long}"/>
+                <rg:inCrit name="producer.id" value="${producer.id as Long}"/>
             </rg:criteria>
 
         </rg:grid>
@@ -61,9 +61,9 @@
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProducingProduct}"
                  showCommand="false"
-                 maxColumns="22">
+                 maxColumns="18">
             <rg:criteria>
-                <rg:inCrit name="producer.id" value="${producer as Long}"/>
+                <rg:inCrit name="producer.id" value="${producer.id as Long}"/>
             </rg:criteria>
 
         </rg:grid>
@@ -74,7 +74,7 @@
                  showCommand="false"
                  maxColumns="7">
             <rg:criteria>
-                <rg:inCrit name="producer.id" value="${producer as Long}"/>
+                <rg:inCrit name="producer.id" value="${producer.id as Long}"/>
             </rg:criteria>
 
         </rg:grid>

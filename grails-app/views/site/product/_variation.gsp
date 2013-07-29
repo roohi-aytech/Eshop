@@ -26,6 +26,7 @@
 
         $('#product-card').html('${message(code: 'waiting')}');
         angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
+        angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
     });
 </g:javascript>
 <div class="product-variations">
@@ -33,6 +34,7 @@
     <g:if test="${defaultModel}">
         <form id="productVariationForm">
             <g:hiddenField name="productId" value="${product.id}"/>
+            <g:hiddenField name="selectedAddedValues" id="selectedAddedValues" value=""/>
         %{--variation select--}%
             <g:each in="${product?.variations}">
                 <div class="product-variation">
@@ -87,3 +89,6 @@
         </form>
     </g:if>
 </div>
+<g:javascript>
+
+</g:javascript>

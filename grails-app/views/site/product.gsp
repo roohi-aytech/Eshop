@@ -27,12 +27,6 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Le fav and touch icons -->
-    %{--<link rel="shortcut icon" href="../assets/ico/favicon.ico">--}%
-    %{--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">--}%
-    %{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">--}%
-    %{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">--}%
-    %{--<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">--}%
     <g:javascript src="browse.js"></g:javascript>
     <g:javascript src="jquery.raty.js"></g:javascript>
     <script language="javascript" type="text/javascript">
@@ -68,7 +62,7 @@
             <div class="product-card">
                 <div class="product-card-content" id="product-card">
                     <g:render template="product/card"
-                              model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
+                              model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
                 </div>
 
                 <div class="product-card-footer">
@@ -169,6 +163,14 @@
                                             <p>
                                                 <g:message code="productCode.label"/>: <b>${params.id}</b>
                                             </p>
+
+                                            <p>
+
+                                            <div id="product-price">
+                                                <g:render template="product/price"
+                                                          model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
+                                            </div>
+                                        </p>
 
                                             <g:if test="${product.description}">
                                                 <p itemprop="description">

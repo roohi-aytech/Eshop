@@ -25,8 +25,6 @@
     <g:javascript library="jquery"></g:javascript>
     <g:render template="/events_push"/>
     <r:layoutResources/>
-
-    <g:layoutHead/>
     <jqui:resources theme="cobalt"></jqui:resources>
 
     <g:javascript plugin="rapid-grails" src="angular.min.js"></g:javascript>
@@ -48,6 +46,10 @@
     <g:javascript src="jquery.labelify.js"></g:javascript>
     <g:javascript src="theme.js"></g:javascript>
 
+    <g:javascript src="jquery.maskinput.js"/>
+
+
+    <g:layoutHead/>
     <rg:jstreeResources/>
 
     <script language="javascript" src="${resource(dir: 'js', file: 'msgGrowl.js')}" type="text/javascript"></script>

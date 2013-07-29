@@ -27,6 +27,28 @@ class ComparisonController {
         render "1"
     }
 
+    def addAndShow(){
+        def id = params.id
+        def product = Product.get(id)
+
+        def compareList = session.getAttribute("compareList")
+        if (!compareList)
+            compareList = [];
+        def compareListItem = compareList.find { it -> it.id == id }
+        if (!compareListItem) {
+            compareListItem = [id: id, title: product.toString(), price: priceService.calcProductPrice(product.id).showVal]
+            compareList << compareListItem
+        }
+
+        def compareListCounter = 0
+        compareList.each { compareListCounter += 1 }
+
+        session.setAttribute("compareListCounter", compareListCounter)
+        session.setAttribute("compareList", compareList)
+
+        redirect(action: 'show')
+    }
+
     def remove() {
         def id = params.id
 
@@ -46,7 +68,7 @@ class ComparisonController {
 
     def show() {
 
-        if(params.productTypeId)
+        if (params.productTypeId)
             session["selected-nodes-${params.productTypeId}"] = params.selectedNodes.split(',')
 
         def model = [productTypeList: []]
@@ -65,7 +87,7 @@ class ComparisonController {
 
         model.productTypeList.each { productType ->
 
-            def selectedList =  session["selected-nodes-${productType?.item?.id}"]
+            def selectedList = session["selected-nodes-${productType?.item?.id}"]
 
             productType.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType.item)
                     .toList().collect { [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))] }
@@ -76,6 +98,14 @@ class ComparisonController {
                 category ->
                     fillAttibuteCategoryChildren(productType.products, category, productType)
             }
+
+            productType.brands = Product.createCriteria().list {
+                productTypes {
+                    eq('id', productType.item.id)
+                }
+                eq('isVisible', true)
+                eq('deleted', false)
+            }.collect { it.brand }.unique { it.id }.sort { it.name };
         }
 
         model
@@ -88,7 +118,7 @@ class ComparisonController {
         if (parentCategory.item) {
             parentCategory.attributeTypes = AttributeType.findAllByCategory(parentCategory.item).findAll { it.showPositions.contains('compare') }.
                     collect { [item: it, selected: (!selectedList || selectedList.contains(it.id.toString()))] }
-            if (parentCategory.attributeTypes){
+            if (parentCategory.attributeTypes) {
                 parentCategory.hasAttribute = parentCategory.attributeTypes.count { it } > 0
                 parentCategory.selected = parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.item.id.toString())) } > 0
             }
@@ -143,4 +173,21 @@ class ComparisonController {
         }
     }
 
+    def productSelector() {
+
+        render(
+                template: 'productSelector',
+                model: [
+                        products: Product.createCriteria().list {
+                            productTypes {
+                                eq('id', params.productTypeId.toLong())
+                            }
+                            eq('brand', Brand.get(params.brandId.toLong()))
+                            eq('isVisible', true)
+                            eq('deleted', false)
+                        }.unique { it.id }.sort { it.name },
+                        productTypeId: params.productTypeId.toLong()
+                ]
+        )
+    }
 }

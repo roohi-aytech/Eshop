@@ -362,6 +362,10 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+            }
             productTypes {
                 eq('id', model.breadCrumb.last().id)
             }
@@ -377,8 +381,18 @@ class SiteController {
 
         model.rootAttributeCategories.each {
             category ->
-            fillAttibuteCategoryChildren(product, category)
+                fillAttibuteCategoryChildren(product, category)
         }
+
+        def productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        model.addedValues = AddedValue.findAllByBaseProductAndProcessTime(product, 'optional').findAll { addedValue ->
+            !addedValue.variationValues.any { variationValue ->
+                variationValue.value != productModel.variationValues
+                        .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
+            }
+        }
+        model.selectedAddedValues = model.addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
+
 
         //update product visit count
         if (!product.visitCount)
@@ -450,7 +464,41 @@ class SiteController {
                 productModel = model
         }
 
-        render(template: 'product/card', model: [product: product, productModel: productModel])
+        def addedValues = AddedValue.findAllByBaseProductAndProcessTime(product, 'optional').findAll { addedValue ->
+            !addedValue.variationValues.any { variationValue ->
+                variationValue.value != productModel.variationValues
+                        .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
+            }
+        }
+
+        def selectedAddedValues = addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
+
+        render(template: 'product/card', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
+    }
+
+    def productPrice() {
+        def product = Product.get(params.productId)
+
+        def models = ProductModel.findAllByProduct(product)
+        def productModel
+        models.each {
+            def model = it
+            Boolean selected = true
+            product.variations.each { variation ->
+                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
+                if (modelVariationId != selectedVariationId)
+                    selected = false
+            }
+
+            if (model.guarantee.id.toLong() != params.guarantee.toLong())
+                selected = false
+
+            if (selected)
+                productModel = model
+        }
+
+        render(template: 'product/price', model: [product: product, productModel: productModel])
     }
 
     def productImage() {
@@ -485,12 +533,12 @@ class SiteController {
 
         parentCategory.attributes = product.attributes.findAll {
             attr ->
-            (attr?.attributeType?.category?.id == parentCategory.item.id
-                    && !attr?.attributeType?.deleted
-                    && (attr?.attributeType?.showPositions?.contains('productDetails')
-                    || attr?.attributeType?.showPositions?.contains('productFullDetails'))
-                    && attr?.value
-                    && attr?.value?.toString()?.compareTo("N/A") != 0)
+                (attr?.attributeType?.category?.id == parentCategory.item.id
+                        && !attr?.attributeType?.deleted
+                        && (attr?.attributeType?.showPositions?.contains('productDetails')
+                        || attr?.attributeType?.showPositions?.contains('productFullDetails'))
+                        && attr?.value
+                        && attr?.value?.toString()?.compareTo("N/A") != 0)
         }
         if (parentCategory.attributes)
             parentCategory.hasAttribute = parentCategory.attributes.count { it } > 0
@@ -590,40 +638,6 @@ class SiteController {
         result
     }
 
-    def contactUs() {
-        render view: '/site/statics/contact_us'
-    }
-
-    def termsAndConditions() {
-        render view: '/site/statics/rights_and_laws'
-    }
-
-    def sendMail() {
-
-        if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
-
-            flash.message = message(code: 'contactUs.email.invalidCaptcha')
-            redirect(uri: '/contactUs')
-            return
-        }
-
-        mailService.sendMail {
-            to params.department
-            subject "${message(code: 'contactUs.email.subject')}"
-            html(view: "/messageTemplates/mail/contactus",
-                    model: [
-                            firstName: params.firstName,
-                            lastName: params.lastName,
-                            email: params.email,
-                            phone: params.phone,
-                            body: params.body
-                    ])
-        }
-
-        flash.message = message(code: 'contactUs.email.successMessage')
-        redirect(uri: '/contactUs')
-    }
-
     def article() {
         def model = [:]
 
@@ -661,6 +675,64 @@ class SiteController {
         }
 
         model
+    }
+
+    def contactUs() {
+        render view: '/site/statics/contact_us'
+    }
+
+    def sendMail() {
+
+        if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
+
+            flash.message = message(code: 'contactUs.email.invalidCaptcha')
+            redirect(uri: '/contactUs')
+            return
+        }
+
+        mailService.sendMail {
+            to params.department
+            subject "${message(code: 'contactUs.email.subject')}"
+            html(view: "/messageTemplates/mail/contactus",
+                    model: [
+                            firstName: params.firstName,
+                            lastName: params.lastName,
+                            email: params.email,
+                            phone: params.phone,
+                            body: params.body
+                    ])
+        }
+
+        flash.message = message(code: 'contactUs.email.successMessage')
+        redirect(uri: '/contactUs')
+    }
+
+    def termsAndConditions() {
+        render view: '/site/statics/rights_and_laws'
+    }
+
+    def aboutUs() {
+        render view: '/site/statics/about_us'
+    }
+
+    def moneyBackConditions() {
+        render view: '/site/statics/money_back_conditions'
+    }
+
+    def guarantee() {
+        render view: '/site/statics/guarantee'
+    }
+
+    def addedValue() {
+        render view: '/site/statics/added_value'
+    }
+
+    def deliveryPrice() {
+        render view: '/site/statics/delivery_price'
+    }
+
+    def trust() {
+        render view: '/site/statics/trust'
     }
 
 }

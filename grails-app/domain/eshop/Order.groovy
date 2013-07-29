@@ -18,6 +18,7 @@ class Order {
 
     DeliverySourceStation deliverySourceStation
     Double deliveryPrice = 0D
+    Boolean optionalInsurance = false
 
     String status
 

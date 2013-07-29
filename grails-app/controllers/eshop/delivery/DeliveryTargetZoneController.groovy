@@ -53,9 +53,11 @@ class DeliveryTargetZoneController {
     def cityTree() {
         def selectedCityIdList = DeliveryTargetZone.get(params["deliveryTargetZoneId"])?.cities?.collect { it.id.toLong() }
         render Province.findAll().collect { province ->
-            [id: 'p' + province.id, text: province.title, state: province.cities.any { c -> selectedCityIdList.any { it == c.id } } ? 'open' : 'closed', children: province.cities.collect { city ->
-                [id: city.id, text: city.title, checked: selectedCityIdList.contains(city.id)]
+            [id: 'p' + province.id, text: province.title, state: province.cities
+                    .any { c -> selectedCityIdList.any { it == c.id } } ? 'open' : 'closed', children: province.cities.collect { city ->
+                [id: city.id, text: city.title, checked: selectedCityIdList?.contains(city.id)]
             }] as grails.converters.JSON
         }
+
     }
 }

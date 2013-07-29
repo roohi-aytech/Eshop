@@ -165,7 +165,7 @@ class BrowseService {
                 if (lastbc == "t")
                     breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${ProductTypeType.get(typeId).title}"]
                 else
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId)?.title]
                 lastbc = "t"
             } else if (filter.startsWith("c")) {
                 def filterParts = filter.split("\\|")
@@ -481,7 +481,7 @@ class BrowseService {
                 if (lastbc == "t")
                     breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${ProductTypeType.get(typeId).title}"]
                 else
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId).title]
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: ProductTypeType.get(typeId)?.title]
                 lastbc = "t"
             } else if (filter.startsWith("c")) {
                 def filterParts = filter.split("\\|")

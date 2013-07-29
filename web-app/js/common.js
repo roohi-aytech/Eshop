@@ -33,6 +33,8 @@ $(document).ready(function () {
 
     }, function () {
 
+        $('.manual-tip').css('opacity', 0)
+
         $(this).find('img').first().stop().animate({
 //            'right': 'auto',
             'margin-right': $(this).width() / 2 - 80,
@@ -64,6 +66,7 @@ $(document).ready(function () {
     $(window).resize(function () {
         changeAddToBasketButtonLabel();
         resizeThumbnails();
+        setupFooter();
     });
 
     changeAddToBasketButtonLabel();
@@ -73,6 +76,7 @@ $(document).ready(function () {
 
     $('.topNavigationItem a.dropdown-toggle').tipsy({live: true});
     $('.price-last-update').tipsy({live: true});
+    $('.addedValues .item').tipsy({live: true, gravity: 'e'});
 
     $('.has-tipsy').each(function () {
         var tipContainer = $(this).parent().parent().find('.tips-container');
@@ -85,7 +89,7 @@ $(document).ready(function () {
             tip.css('top', $(this).parent().parent().find('.title').first().height() + 30);
             tip.css('left', $(this).position().left + 15);
             tip.animate({
-                'opacity': 0.7
+                'opacity': 0.9
             });
         }, function () {
             var tip = $(this).parent().parent().find('.tips-container .manual-tip.' + $(this).attr('type'));
@@ -99,11 +103,15 @@ $(document).ready(function () {
         setProductCartPosition()
     });
 
+    setExternalLinksTarget();
+    setupFooter();
+
+
 });
 
 function setProductCartPosition() {
     var position = $(window).scrollTop();
-    var maxPosition = $('.footer1').position().top - $('.product-card').height();
+    var maxPosition = $('.totalFooter').position().top - $('.product-card').height() - 75;
     if (position > maxPosition)
         position = maxPosition;
     $('.product-card').first().stop().animate({
@@ -161,5 +169,17 @@ function hoverCarouselButton() {
         lastHoveredCarouselButton.click();
         setTimeout(hoverCarouselButton, 300);
     }
+}
+
+function setupFooter(){
+    $('.totalFooter').height($('.footer1').height() + $('.footer2').height() + $('.footer3').height())
+}
+
+function setExternalLinksTarget(){
+    jQuery(function($){
+        $('a[href^="http://"]')
+            .not('[href*="richardneililagan.com"]')
+            .attr('target','_blank');
+    });
 }
 

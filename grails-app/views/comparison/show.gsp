@@ -18,6 +18,30 @@
     <g:javascript src="jquery.easyui/jquery.validatebox.js"></g:javascript>
     <g:javascript src="jquery.easyui/jquery.draggable.js"></g:javascript>
     <g:javascript src="jquery.easyui/jquery.tree.js"></g:javascript>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msdropdown.css')}"/>
+    <g:javascript src="jquery.msdropdown.js"></g:javascript>
+    <style>
+    .ddcommon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .ddlabel {
+        margin-right: 5px;
+    }
+    </style>
+    <g:javascript>
+        function showProducts(productTypeId, brandId){
+            $("#productSelectorContainer").html('<img style="margin:auto;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
+            $("#productSelectorContainer").load('${createLink(controller: 'comparison', action: 'productSelector')}?productTypeId=' + productTypeId + "&brandId=" + brandId, function () {
+            });
+        }
+
+        function addProductToCompareListAndShow(productTypeId){
+            var productId = $("#productCombo" + productTypeId).val();
+            window.location.href = "${createLink(controller: 'comparison', action: 'addAndShow')}/" + productId;
+        }
+    </g:javascript>
 </head>
 
 <body>
@@ -34,11 +58,28 @@
     <div class="tab-content">
         <g:each in="${productTypeList}" var="productType">
             <div id="tab${productType.item.id}" class="tab-pane">
-            <div style="text-align: left;margin-bottom: 10px;">
-                <a class="btn btn-success" onclick="selectAttributes(${productType.item.id});"><g:message
+            <div style="float: right;margin-bottom: 10px;">
+                <select name="brand" id="brandCombo${productType.item.id}" class="imageCombo" onchange="showProducts(${productType.item.id}, $(this).val())">
+                    <g:each in="${productType.brands}" var="brand">
+                        <option value="${brand.id}"
+                                data-image="${createLink(controller: 'image', params: [type: 'brand', id: brand.id])}">${brand.name}</option>
+                    </g:each>
+                </select>
+
+                <span id="productSelectorContainer"></span>
+
+                <g:javascript>
+                    $(document).ready(function(){
+                        showProducts(${productType.item.id}, $('#brandCombo${productType.item.id}').val());
+                    });
+                </g:javascript>
+            </div>
+
+            <div style="float: left;margin-bottom: 10px;">
+                <a class="btn btn-success" onclick="selectAttributes(${productType.item.id});" style="height: 23px;"><g:message
                         code="comparison.selectAttributes.link"/></a>
             </div>
-            <table class="comparison attribute-list">
+            <table class="comparison attribute-list" style="clear: both">
                 <tr>
                     %{--<th></th>--}%
                     <th></th>

@@ -110,7 +110,7 @@ class PaymentResponseController {
                         trackingLog.date = new Date()
                         trackingLog.order = request.order
                         trackingLog.user = request.owner
-                        trackingLog.title = message(code: 'order.trackingLog.action.payment.title', params: [trackingLog.date, trackingLog.user])
+                        trackingLog.title = "order.actions.${OrderHelper.ACTION_PAYMENT}"
                         if (!trackingLog.validate() || !trackingLog.save()) {
                             //tracking log save error
                             return

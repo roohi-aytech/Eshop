@@ -16,7 +16,7 @@
     <rg:grid domainClass="${DeliveryPricingRule}"
              firstColumnWidth="30"
              showCommand="false"
-             columns="[[name: 'weightMin', formatoptions:[decimalPlaces:2]],[name: 'weightMax', formatoptions:[decimalPlaces:2]],[name: 'volumeMin', formatoptions:[decimalPlaces:2]],[name: 'volumeMax', formatoptions:[decimalPlaces:2]],[name: 'factor', formatoptions:[decimalPlaces:2]],[name: 'type']]"
+             columns="[[name: 'weightMin', formatoptions:[decimalPlaces:2]],[name: 'weightMax', formatoptions:[decimalPlaces:2]],[name: 'volumeMin', formatoptions:[decimalPlaces:2]],[name: 'volumeMax', formatoptions:[decimalPlaces:2]],[name: 'weightFactor', formatoptions:[decimalPlaces:2]],[name: 'volumeFactor', formatoptions:[decimalPlaces:2]],[name: 'netFactor', formatoptions:[decimalPlaces:2]],[name: 'factorCalculationType']]"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToDeliveryPricingRuleGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#?deliveryTargetZone.id=${params["deliveryTargetZone.id"]}", saveAction: "${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteDeliveryPricingRule(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
