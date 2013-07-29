@@ -27,6 +27,7 @@ class NewsLetterController {
         NewsLetter newsLetterInstance
         if (params.id) {
             newsLetterInstance = NewsLetter.get(params.id)
+            newsLetterInstance.productTypes.clear()
             newsLetterInstance.properties = params
         } else
             newsLetterInstance = new NewsLetter(params)

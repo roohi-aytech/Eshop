@@ -26,7 +26,10 @@ class BannerController {
         Banner bannerInstance
         if (params.id) {
             bannerInstance = Banner.get(params.id)
+            def image = bannerInstance.image
             bannerInstance.properties = params
+            if(!params.image)
+                bannerInstance.image = image
         } else {
             bannerInstance = new Banner(params)
         }

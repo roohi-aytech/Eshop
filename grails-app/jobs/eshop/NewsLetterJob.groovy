@@ -15,13 +15,14 @@ class NewsLetterJob {
         def customerList = Customer.createCriteria().list {
             or {
                 newsLetterCategories {
-                    'in'(id, newsLetter.categories.collect { it.id })
+                    'in'('id', newsLetter.categories.collect { it.id } ?: [0.toLong()])
                 }
                 newsLetterProductTypes {
-                    'in'(id, newsLetter.productTypes.collect { it.id })
+                    'in'('id', newsLetter.productTypes.collect { it.id } ?: [0.toLong()])
                 }
             }
         }
+
         customerList.each { customer ->
             println(customer)
             mailService.sendMail {
@@ -32,5 +33,4 @@ class NewsLetterJob {
             Thread.sleep(5000)
         }
     }
-
 }
