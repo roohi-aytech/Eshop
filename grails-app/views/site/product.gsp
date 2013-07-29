@@ -143,7 +143,6 @@
                                                 </g:else>
                                             </div>
 
-                                            <p>
 
                                             <div itemprop="aggregateRating">
                                                 <g:message code="rate"/>:
@@ -152,7 +151,6 @@
                                                 <eshop:rate identifier="hidProductRate" currentValue="${rate}"
                                                             readOnly="true"/>
                                             </div>
-                                        </p>
 
                                             <p class="brand-badge">
                                                 <img width="80px" height="80px" itemprop="brand"
@@ -164,13 +162,11 @@
                                                 <g:message code="productCode.label"/>: <b>${params.id}</b>
                                             </p>
 
-                                            <p>
 
                                             <div id="product-price">
                                                 <g:render template="product/price"
                                                           model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
                                             </div>
-                                        </p>
 
                                             <g:if test="${product.description}">
                                                 <p itemprop="description">
@@ -179,13 +175,6 @@
                                             </g:if>
 
                                             <g:render template="product/variation"/>
-
-                                            <p>
-                                                <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-                                                <g:set var="price"
-                                                       value="${priceService.calcProductPrice(product.id).showVal}"></g:set>
-                                            </a>
-                                            </p>
                                         </div>
                                     </td>
 
