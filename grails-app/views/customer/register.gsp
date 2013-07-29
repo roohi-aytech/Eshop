@@ -122,7 +122,7 @@
 
             var usernameField = $('#usernameField').val();
 
-            if(usernameField.indexOf('www.') != -1){
+            if(usernameField.toLowerCase().indexOf('www.') != -1){
                 $('#usernameValidationMessage').html('${message(code: 'springSecurity.register.username.invalid')}')
                 return false;
             }
