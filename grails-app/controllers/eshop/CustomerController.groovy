@@ -326,7 +326,7 @@ class CustomerController {
         customer.save()
 
         flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'profile')
+        redirect(action: 'panel')
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])

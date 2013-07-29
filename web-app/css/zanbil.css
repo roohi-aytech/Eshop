@@ -2159,6 +2159,7 @@ span.cke_skin_kama {
     position: relative;
     border-radius: 3px;
     background: url(../images/loading.gif) center center no-repeat;
+    text-align: center;
 }
 
 .brand-carousel li a img {
