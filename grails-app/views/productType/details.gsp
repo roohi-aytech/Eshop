@@ -13,7 +13,7 @@
 <div id="details-tabs">
     <ul>
         <li><a href="#godFathers"><g:message code="godFathers"/></a></li>
-        %{--<li><a href="#variations"><g:message code="variations"/></a></li>--}%
+        <li><a href="#variations"><g:message code="variations"/></a></li>
         <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
         <li><a href="#articles"><g:message code="articles"/></a></li>
         <li><a href="#gift"><g:message code="gift"/></a></li>
@@ -24,9 +24,9 @@
         <g:render template="godFathers"/>
     </div>
 
-    %{--<div id="variations" style="width: 98%">--}%
-        %{--<g:render template="../variationGroup/variations"/>--}%
-    %{--</div>--}%
+    <div id="variations" style="width: 98%">
+        <g:render template="../variationGroup/list_productType"/>
+    </div>
     <div id="addedValue" style="width: 98%">
         <g:render template="../addedValue/list"/>
     </div>
