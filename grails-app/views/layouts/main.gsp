@@ -46,6 +46,8 @@
     <g:javascript src="jquery.labelify.js"></g:javascript>
     <g:javascript src="theme.js"></g:javascript>
 
+    <g:javascript src="jquery.maskinput.js"/>
+
 
     <g:layoutHead/>
     <rg:jstreeResources/>

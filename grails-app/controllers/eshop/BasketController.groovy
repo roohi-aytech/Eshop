@@ -25,8 +25,13 @@ class BasketController {
             basket << basketItem
         }
 
-        basketItem.selectedAddedValues = params.addedValues?.toString().split(',')
-        basketItem.selectedAddedValueNames = basketItem.selectedAddedValues.collect{AddedValue.get(it.toLong()).name}
+        if (params.addedValues) {
+            basketItem.selectedAddedValues = params.addedValues?.toString().split(',')
+            basketItem.selectedAddedValueNames = basketItem.selectedAddedValues.collect { AddedValue.get(it.toLong()).name }
+        } else {
+            basketItem.selectedAddedValues = []
+            basketItem.selectedAddedValueNames = []
+        }
         def price = priceService.calcProductModelPrice(productModel.id, basketItem.selectedAddedValues)
         basketItem.price = price.showVal
         basketItem.realPrice = price.valueAddedVal

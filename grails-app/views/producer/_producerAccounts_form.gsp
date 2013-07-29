@@ -50,7 +50,10 @@
             <g:message code="producerAccount.shebaNo.label" default="ShebaNo"/>
 
         </label>
-        <g:textField  name="shebaNo" value="${producerAccountInstance?.shebaNo}"/>
+        <g:textField  name="shebaNo" id="shebaNo" style="direction:ltr" value="${producerAccountInstance?.shebaNo}"/>
+        <script type="text/javascript" language="javascript">
+            $('#shebaNo').maskInput('IR99-9999-9999-9999-9999-9999-99');
+        </script>
     </div>
 
     <div class="fieldcontain ${hasErrors(bean: producerAccountInstance, field: 'cardNo', 'error')} ">
@@ -58,7 +61,10 @@
             <g:message code="producerAccount.cardNo.label" default="cardNo"/>
 
         </label>
-        <g:textField  name="cardNo"  value="${producerAccountInstance?.cardNo}"/>
+        <g:textField  name="cardNo" id="cardNo" style="direction:ltr"  value="${producerAccountInstance?.cardNo}"/>
+        <script type="text/javascript" language="javascript">
+            $('#cardNo').maskInput('9999 9999 9999 9999');
+        </script>
     </div>
 
     <div class="fieldcontain ${hasErrors(bean: producerAccountInstance, field: 'name', 'error')} ">

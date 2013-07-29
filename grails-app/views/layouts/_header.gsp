@@ -190,7 +190,7 @@
 
 <td class="table-cell">
     <div class="search-box">
-        <g:form url="${createLink(uri: '/search')}" method="get">
+        <g:form url="${createLink(uri: '/search')}" method="get" id="searchForm">
             <g:hiddenField name="f" id="hidCategory" value="p${productTypeId ? productTypeId.toString() : '0'}"/>
         %{--<g:if test="${params.f}">--}%
         %{--<g:hiddenField name="f" id="hidFilter" value="${params.f}"/>--}%
@@ -227,7 +227,7 @@
                     </td>
 
                     <td class="navbar-search pull-right table-cell search-input-box">
-                        <input name="phrase" id="searchPhrase" type="text" class="input-large search-query"
+                        <input name="phrase" id="searchPhrase" type="text" class="input-large search-query" autocomplete="off"
                                value="${params.phrase ? params.phrase : ''}" placeholder="<g:message code="search"/>">
                     </td>
 
