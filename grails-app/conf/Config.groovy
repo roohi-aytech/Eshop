@@ -178,19 +178,19 @@ ckeditor {
 grails.rateable.rater.evaluator = { request.user }
 
 //mail configuration
-grails {
-    mail {
-        host = "91.99.98.70"
-        port = 8443
-        username = "no-reply"
-        password = "eshop@agah"
-        props = ["mail.smtp.auth": "true",
-                "mail.smtp.socketFactory.port": "8443",
-                "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
-                "mail.smtp.socketFactory.fallback": "false"]
-
-    }
-}
+//grails {
+//    mail {
+//        host = "91.99.98.70"
+//        port = 8443
+//        username = "no-reply@zanbil.ir"
+//        password = "eshop@agah"
+//        props = ["mail.smtp.auth": "true",
+//                "mail.smtp.socketFactory.port": "8443",
+//                "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
+//                "mail.smtp.socketFactory.fallback": "false"]
+//
+//    }
+//}
 
 
 //mail configuration
@@ -202,13 +202,13 @@ grails {
         from = "no-reply@zanbil.ir"
         port = 8443
         ssl = "off"
-        username = "no-reply"
+        username = "no-reply@zanbil.ir"
         password = "eshop@agah"
         props = [
 //                "mail.smtp.starttls.enable":"false",
 //                "mail.smtp.socketFactory.port": "8443",
 //                "mail.smtp.auth": "true",
-//                "mail.smtp.debug":"true",
+                "mail.debug":"true",
 //                "mail.smtp.starttls.enable":"true",
 //                "mail.smtp.socketFactory.port": "8443",
 //                "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
