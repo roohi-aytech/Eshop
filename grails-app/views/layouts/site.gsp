@@ -70,6 +70,8 @@
         var specialSaleSlideWidth = 0;
         var specialSaleSlideHeight = 0;
         var specialSaleSlideSize = 0;
+
+        var searchAutoCompleteUrl = '${createLink(controller: 'site', action: 'searchAutoComplete')}';
     </script>
     <g:javascript src="jquery.rollbar.js"></g:javascript>
     <g:javascript src="jquery.mousewheel.js"></g:javascript>
@@ -84,6 +86,7 @@
     <g:javascript src="jquery.watch.js"/>
     <g:javascript src="jquery.hoverIntent.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
+    <g:javascript src="search-auto-complete.js"/>
 </head>
 
 <body dir="rtl" class="main" ng-controller="eshopCtrl">

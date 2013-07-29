@@ -1,10 +1,7 @@
 package eshop
 
-import eshop.discout.Discount
 import grails.converters.JSON
 import groovy.sql.Sql
-import eshop.mongo.MongoProduct
-import org.compass.core.engine.SearchEngineQueryParseException
 
 import javax.servlet.http.Cookie
 
@@ -625,6 +622,22 @@ class SiteController {
         model.productTypeName = productType?.name
 
         render(view: 'search', model: model)
+    }
+
+    def searchAutoComplete() {
+
+        def model = [:]
+        def productIdList = []
+        if (params.phrase)
+            productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
+
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0).products.productIds
+        model.commonLink = createLink(uri: '/')
+
+        if(model.productIds?.size() > 0)
+            render(template: 'search_autoComplete', model: model)
+        else
+            render ''
     }
 
     def getAllChildProductTypes(ProductType productType) {
