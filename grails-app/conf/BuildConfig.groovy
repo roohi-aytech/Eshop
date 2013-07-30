@@ -5,8 +5,8 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.tomcat.nio = true
-grails.server.port.http = 80
-grails.server.host = "local.zanbil.ir"
+//grails.server.port.http = 80
+//grails.server.host = "local.zanbil.ir"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.war.resources = { stagingDir ->
     delete(file:"${stagingDir}/WEB-INF/lib/ext-impl.jar")
@@ -83,4 +83,5 @@ grails.project.dependency.resolution = {
         compile ":events-push:1.0.M7"
     }
 }
-grails.plugin.location.RapidGrails = "../RapidGrails"grails.plugin.location.SocialInviter = "../SocialInviter"
+grails.plugin.location.RapidGrails = "../RapidGrails"
+grails.plugin.location.SocialInviter = "../SocialInviter"
