@@ -30,4 +30,8 @@ class DefaultController {
     def test(){
         render(view: "/test")
     }
+
+    def socialAuth(){
+        render(view: "/socialAuth")
+    }
 }

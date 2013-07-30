@@ -333,4 +333,8 @@ class CustomerController {
     def personalEvents(){
         [customerInstance: springSecurityService.currentUser as Customer]
     }
+
+    @Secured([RoleHelper.ROLE_CUSTOMER])
+    def invite(){
+    }
 }
