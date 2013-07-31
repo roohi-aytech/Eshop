@@ -52,9 +52,8 @@ grails.project.dependency.resolution = {
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
 
-//        compile ":tomcatnio:1.3.4"
-//
-//        compile ":atmosphere:0.4.2.3"
+        build "org.scribe:scribe:1.2.1"
+        runtime "org.scribe:scribe:1.2.1"
     }
 
     plugins {
@@ -77,11 +76,16 @@ grails.project.dependency.resolution = {
             excludes 'mongo-java-driver', 'gmongo'
         }
 
-//        runtime (":atmosphere:0.4.2.3") {
-//            exclude 'atmosphere-runtime'
-//        }
         compile ":events-push:1.0.M7"
+
+        build(":release:2.0.4",
+                ":rest-client-builder:1.0.2") {
+            export = false
+        }
+
+        compile ":mail:1.0.1"
+        compile ":rest:0.6.1"
+        runtime ":resources:1.2.RC2"
     }
 }
 grails.plugin.location.RapidGrails = "../RapidGrails"
-grails.plugin.location.SocialInviter = "../SocialInviter"
