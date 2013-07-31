@@ -79,6 +79,19 @@ class CustomerController {
         customerInstance.email = params.username
         customerInstance.registrationLevel = 'basic'
 
+        if(session['invitation']){
+            def invitation = Invitation.findByIdentifier(session['invitation'].toString())
+            customerInstance.reagent = invitation.sender
+
+            if(!invitation.registrationRecorded)
+            {
+                invitation.registrationRecorded = true
+                invitation.save()
+
+                //grant points to invitation sender
+            }
+        }
+
         customerInstance.enabled = false
 
         if (customerInstance.validate() && customerInstance.save()) {

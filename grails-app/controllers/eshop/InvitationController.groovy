@@ -68,14 +68,27 @@ class InvitationController {
                 invitation.identifier = UUID.randomUUID().toString()
                 invitation.save()
 
-                if (params.provider.toString() == 'no-social' ||service.useEmail) {
+                if (params.provider.toString() == 'no-social' || service.useEmail) {
+                    def messageBody = g.render(
+                            template: 'templates/email',
+                            model: [
+                                    inviter: invitation.sender,
+                                    message: params.message.toString().replace('\n', '<br/>'),
+                                    identifier: invitation.identifier])
                     sendMail {
                         to address
                         subject params.subject
-                        text params.message
+                        html messageBody
                     }
                 } else {
-                    def response = service.sendMessage(accessToken: accessToken, link: params.link, message: params.message, description: params.description, contact: address, subject: params.subject)
+                    def messageBody = g.render(
+                            template: 'templates/message',
+                            model: [
+                                    inviter: invitation.sender,
+                                    message: params.message,
+                                    identifier: invitation.identifier])
+
+                    def response = service.sendMessage(accessToken: accessToken, link: params.link, message: messageBody, description: params.description, contact: address, subject: params.subject)
                     log.info "response = ${response}"
                 }
             }
