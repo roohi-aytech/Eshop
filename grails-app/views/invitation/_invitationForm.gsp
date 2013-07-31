@@ -1,4 +1,4 @@
-<g:form name="inviteForm" action="sendInvites" controller="inviter">
+<g:form name="inviteForm" action="sendInvites" controller="invitation">
 	<g:hiddenField name="provider" value="${provider}"/>
 	<g:hiddenField name="addresses" value=""/>
     <g:hiddenField name="names" value=""/>
@@ -17,5 +17,5 @@
 		<g:hiddenField name="message" value="${message}"/>
 	</g:else>
 
-	<g:submitButton id="inviter-invite-button" name="invite" value="${g.message(code: 'grails.plugin.inviter.invitationForm.submit')}" class="btn btn-primary"></g:submitButton>
+	<g:submitButton id="invitation-invite-button" name="invite" value="${g.message(code: 'grails.plugin.invitation.invitationForm.submit')}" class="btn btn-primary"></g:submitButton>
 </g:form>

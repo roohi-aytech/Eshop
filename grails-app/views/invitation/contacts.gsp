@@ -1,8 +1,9 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-    <title><g:message code="grails.plugin.inviter.pickForm.submit"/></title>
-    <r:require module="inviter"/>
+    <title><g:message code="grails.plugin.invitation.pickForm.submit"/></title>
+    <link rel="stylesheet" href="${resource(dir: 'css', file:'inviter.css')}"/>
+    <g:javascript src="inviter.js"/>
 </head>
 
 
@@ -10,16 +11,16 @@
 
 <div class="page-content">
 
-    <h2><g:message code="grails.plugin.inviter.pickForm.submit"/></h2>
+    <h2><g:message code="grails.plugin.invitation.pickForm.submit"/></h2>
 
     <iv:contacts contacts="${contacts}"/>
 
-    <h2><g:message code="grails.plugin.inviter.pickForm.title"/></h2>
+    <h2><g:message code="grails.plugin.invitation.pickForm.title"/></h2>
 
     <iv:messageForm provider="${provider}"
                     link="http://www.zanbil.ir"
-                    subject="${message(code:'grails.plugin.inviter.subject')}"
-                    description="grails inviter"
+                    subject="${message(code:'grails.plugin.invitation.subject')}"
+                    description="grails invitation"
                     caption="picture caption"
                     picture="http://www.grails.org/static/cXmUZIAv28XIiNgkRiz4RRl21TsGZ5HoGpZw1UITNyV.png"
                     redirectUrl="http://www.zanbil.ir/success"

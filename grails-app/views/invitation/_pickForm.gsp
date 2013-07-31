@@ -8,5 +8,5 @@
 	<g:hiddenField name="source" value="${source}"/>
 	<g:hiddenField name="picture" value="${picture}"/>
 	<g:hiddenField name="redirectUrl" value="${redirectUrl}"/>
-	<g:submitButton id="inviter-pick-button" name="pick" value="${g.message(code: 'grails.plugin.inviter.pickForm.submit')}" class="inviter-button"></g:submitButton>
+	<g:submitButton id="invitation-pick-button" name="pick" value="${g.message(code: 'grails.plugin.invitation.pickForm.submit')}" class="invitation-button"></g:submitButton>
 </g:form>

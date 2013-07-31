@@ -1,8 +1,8 @@
 <html>
 <head>
     <title>Pick Friends</title>
-    <r:require module="inviter"/>
-    <r:layoutResources/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file:'inviter.css')}"/>
+    <g:javascript src="inviter.js"/>
 </head>
 
 
@@ -20,12 +20,12 @@
 
 	<iv:pickForm controller="" action=""
                     provider="${ provider }"
-					link="http://inviter.cloudfoundry.com"
-					subject="join grails inviter"
-					description="grails inviter"
+					link="http://invitation.cloudfoundry.com"
+					subject="join grails invitation"
+					description="grails invitation"
 					caption="picture caption"
 					picture="http://www.grails.org/static/cXmUZIAv28XIiNgkRiz4RRl21TsGZ5HoGpZw1UITNyV.png"
-					redirectUrl="http://inviter.cloudfoundry.com/success"
+					redirectUrl="http://invitation.cloudfoundry.com/success"
 	/>
 <r:layoutResources/>
 </body>

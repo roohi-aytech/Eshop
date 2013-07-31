@@ -133,7 +133,6 @@
     <orderEntry type="module" module-name="EShop-grailsPlugins" />
     <orderEntry type="library" name="commons-math-1.0" level="project" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
-    <orderEntry type="module" module-name="SocialInviter" exported="" />
   </component>
 </module>
 

@@ -54,7 +54,7 @@
     </div>
 
     <div>
-        <g:form controller="inviter" action="emailList">
+        <g:form controller="invitation" action="emailList">
             <g:textArea name="mailList" rows="7" cols="200" style="width: 500px;margin-top:10px;direction: rtl;"/>
             <div class="btn-toolbar">
                 <input type="submit" class="btn btn-primary" value="${message(code: 'send')}"/>
