@@ -68,12 +68,10 @@ class OrderController {
                 orderItem.addToAddedValues(AddedValue.get(addedValue.toLong()))
             }
 
-            def price = priceService.calcProductModelPrice(basketItem.id, orderItem.addedValues?.collect {it.id}).valueAddedVal
-            orderItem.unitPrice = price ? price : 0
-            if (!orderItem.validate() || !orderItem.save()) {
-                //order item save error
-            }
+            orderItem.save()
         }
+
+        priceService.updateOrderPrice(order);
 
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
@@ -92,10 +90,13 @@ class OrderController {
     }
 
     def payment() {
+
+        def order = Order.get(params.id)
+        def accountsForOnlinePayment = []
         [
-                orderPrice: Order.get(params.id).items.sum { it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0 },
-                accountsForOnlinePayment: Account.findAllByHasOnlinePayment(true),
-                accounts: Account.findAll(),
+                orderPrice: order.totalPrice,
+                accountsForOnlinePayment: accountsForOnlinePayment,
+                accounts: Account.findAllByType('legal'),
                 customerAccountValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
         ]
     }
@@ -105,7 +106,7 @@ class OrderController {
             def order = Order.get(params.id)
             switch (params.bank) {
                 case 'mellat':
-                    def result = mellatService.prepareForPayment(order.id, order.items.sum { it.orderCount * it.unitPrice }, order.customerId)
+                    def result = mellatService.prepareForPayment(order.id, order.totalPrice, order.customerId)
                     if (result[0] == 0)
                         [refId: result[1]]
                     else
@@ -153,7 +154,7 @@ class OrderController {
     def payOrderFromAccount() {
 
         def order = Order.get(params.order.id)
-        def orderPrice = order.items.sum(order.deliveryPrice ?: 0, { it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0 })
+        def orderPrice = order.totalPrice
         def owner = springSecurityService.currentUser
 
         //save withdrawal customer transaction
@@ -189,6 +190,23 @@ class OrderController {
             flash.message = message(code: 'order.payment.completed')
             redirect(controller: 'customer', action: 'panel')
         }
+    }
+
+    def invoice() {
+        def order = Order.get(params.id)
+        def title = message(code: 'order.preInvoice.title')
+        switch (order.status) {
+            case OrderHelper.STATUS_PAID:
+                title = message(code: 'order.finalInvoice.title')
+                break
+            case OrderHelper.STATUS_TRANSMITTED:
+                title = message(code: 'order.finalInvoice.title')
+                break
+            case OrderHelper.STATUS_DELIVERED:
+                title = message(code: 'order.finalInvoice.title')
+                break
+        }
+        render template: 'invoice', model: [order: order, title: title]
     }
 
 //    def cancellation(){

@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-    <title></title>
+    <title><g:message code="controlPanel.orders.actions.payment.label"></g:message></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msdropdown.css')}"/>
     <g:javascript src="jquery.msdropdown.js"></g:javascript>
     <style>
@@ -18,11 +18,27 @@
         margin-bottom: 5px;
     }
     </style>
+    <g:javascript>
+    function showPreInvoice() {
+
+                $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
+                $("#myModal").modal({
+                        backdrop: false,
+                        show: true
+                        });
+                $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: params.id])}', function() {});
+            }
+    </g:javascript>
 </head>
 
 <body>
 <div class="control-panel">
     <h2><g:message code="controlPanel.orders.actions.payment.label"></g:message></h2>
+    <g:message code="order.payment.preInvoice.description"/>
+    <br/>
+    <input type="button" onclick="showPreInvoice();" value="<g:message code="order.payment.preInvoice.link"/>" class="btn btn-success" style="margin:10px;"/>
+    <br/>
+    <g:message code="order.payment.description"/>
     <g:if test="${flash.message}">
         <div class="info">
             <div>
@@ -31,7 +47,7 @@
         </div>
     </g:if>
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" style="margin-top:10px;">
         <li class="active">
             <a href="#tabOnline" data-toggle="tab">
                 <g:message code="payment.types.online"></g:message>
@@ -64,10 +80,6 @@
     </div>
     <g:javascript>
 
-    %{--function selectBank(value){--}%
-    %{--window.location.href = "${createLink(controller: 'order', action: 'payment', params: [id: params.id])}" + "?bank=" + value;--}%
-    %{--}--}%
-
         $(document).ready(function (e) {
             try {
                 $("body select").msDropDown();
@@ -75,6 +87,16 @@
             }
         });
     </g:javascript>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+
+    <div class="modal-body">
+    </div>
 </div>
 </body>
 </html>

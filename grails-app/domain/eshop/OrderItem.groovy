@@ -6,7 +6,11 @@ class OrderItem {
     Order order
     ProductModel productModel
     int orderCount
+    int baseUnitPrice = 0
+    int addedValuesPrice = 0
     int unitPrice = 0
+    int totalPrice = 0
+
 
     static belongsTo = [Order]
 

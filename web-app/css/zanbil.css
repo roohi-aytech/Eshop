@@ -1791,10 +1791,10 @@ span.cke_skin_kama {
     background-color: transparent;
     text-shadow: none;
     font-weight: normal;
-    color: #000000;
     width: 0%;
     color: #808080;
     white-space: nowrap;
+    line-height: 20px;
 }
 
 .invoice .value {

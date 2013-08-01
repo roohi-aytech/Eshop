@@ -27,6 +27,12 @@
     }
 </g:javascript>
 
+<style>
+    label{
+        display: block;
+    }
+</style>
+
 <g:form action="savePaymentRequest">
     <g:hiddenField name="order.id" id="order" value="${params.id}"></g:hiddenField>
     <label><g:message
@@ -34,7 +40,8 @@
     <select name="account" style="margin-bottom:10px;">
         <g:each in="${accounts}" var="account">
             <option value="${account.id}"
-                    data-image="${createLink(controller: 'image', params: [type: 'account', id: account.id])}">${account.bankName}</option>
+                    data-image="${createLink(controller: 'image', params: [type: 'account', id: account.id])}"><g:message
+                    code="order.payment.bank.${account.bankName}.label"/></option>
         </g:each>
     </select>
     <label><g:message code="order.payment.value"></g:message></label>

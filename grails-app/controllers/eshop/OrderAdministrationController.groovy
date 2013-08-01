@@ -72,9 +72,8 @@ class OrderAdministrationController {
         priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
         priceInstance.save()
 
-        //update order item
-        def orderItem = OrderItem.get(params.orderItem.id)
-        orderItem.unitPrice = priceService.calcProductModelPrice(priceInstance.productModel.id).showVal ?: 0
+        //update order
+        priceService.updateOrderPrice(OrderItem.get(params.orderItem.id).order)
 
         redirect(action: 'act', params: [id: params.order.id])
     }
@@ -83,6 +82,10 @@ class OrderAdministrationController {
 
         def productModel = ProductModel.get(params.productModel.id)
         productModel.status = params.status
+        productModel.save()
+
+        //update order
+        priceService.updateOrderPrice(OrderItem.get(params.orderItem.id).order)
 
         redirect(action: 'act', params: [id: params.order.id])
     }
@@ -122,6 +125,10 @@ class OrderAdministrationController {
     }
 
     def act_inquiry() {
+
+        //set new prices
+        def order = Order.get(params.id)
+        priceService.updateOrderPrice(order)
 
         def validityDate = params.ValidityDate
         if (params.ValidityTime) {

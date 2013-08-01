@@ -34,7 +34,7 @@ class DeliveryService {
 
     def calculateDeliveryMethodPrice(Order order, DeliveryMethod deliveryMethod) {
 
-        def result = [deliveryMethod: deliveryMethod, sourceStation: null, price: 0, priceWithInsurance: 0]
+        def result = [deliveryMethod: deliveryMethod, sourceStation: null, price: 999999999, priceWithInsurance: 0]
 
         def targetCity = order?.sendingAddress?.city
         if (targetCity) {
@@ -58,21 +58,24 @@ class DeliveryService {
                     else if (pricingRule.factorCalculationType == 'volume')
                         price = pricingRule.volumeFactor * totalWeight
                     else if (pricingRule.factorCalculationType == 'max')
-                        price = [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight].max()
+                        price = [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight, pricingRule.netFactor].max()
                     else if (pricingRule.factorCalculationType == 'min')
-                        price *= [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight].min()
+                        price *= [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight, pricingRule.netFactor].min()
 
-                    if(deliveryMethod.insuranceIsRequired || order.optionalInsurance)
+                    if (deliveryMethod.insuranceIsRequired || order.optionalInsurance)
                         price = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
 
-                    price = (price * deliveryMethod.addedValuePercent) / 100
+                    if (deliveryMethod.addedValuePercent)
+                        price = (price * deliveryMethod.addedValuePercent) / 100
 
                     if (price <= result.price) {
                         result.sourceStation = sourceStation
                         result.price = price
 
-                        result.priceWithInsurance = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
-                        result.priceWithInsurance = (result.priceWithInsurance * deliveryMethod.addedValuePercent) / 100
+                        if (deliveryMethod.insurancePercent)
+                            result.priceWithInsurance = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
+                        if (deliveryMethod.addedValuePercent)
+                            result.priceWithInsurance = (result.priceWithInsurance * deliveryMethod.addedValuePercent) / 100
                     }
                 }
             }
