@@ -1,5 +1,7 @@
 package eshop.accounting
 
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+
 class Account {
 
     static auditable = true
@@ -11,9 +13,12 @@ class Account {
     String accountNumber
     String shebaNumber
     String cardNumber
+    String type
+    String onlinePaymentConfiguration
 
     static constraints = {
-        bankName()
+        bankName inList: ['mellat', 'saman']
+        type(inList: ['legal', 'real'])
         branchName(nullable: true)
         ownerName(nullable: true)
         accountNumber(nullable: true)
@@ -21,9 +26,11 @@ class Account {
         cardNumber(nullable: true)
         hasOnlinePayment()
         bankLogo(nullable: true, maxSize: 1000000000)
+        onlinePaymentConfiguration nullable: true, maxSize: 100000
     }
 
     String toString(){
-        bankName
+        def g = ApplicationHolder.application.mainContext.getBean( 'org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib' )
+        g.message(code:"account.${bankName}.${type}")
     }
 }
