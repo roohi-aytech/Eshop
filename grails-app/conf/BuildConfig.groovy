@@ -54,6 +54,11 @@ grails.project.dependency.resolution = {
 
         build "org.scribe:scribe:1.2.1"
         runtime "org.scribe:scribe:1.2.1"
+
+//        compile ":ws-client:1.0"
+
+        build 'xerces:xercesImpl:2.9.0'
+        runtime 'xerces:xercesImpl:2.9.0'
     }
 
     plugins {
