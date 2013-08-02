@@ -1,6 +1,6 @@
-package eshop
+package eshop.accounting
 
-import org.springframework.dao.DataIntegrityViolationException
+import eshop.accounting.PaymentRequest
 import grails.converters.JSON
 
 class PaymentRequestController {

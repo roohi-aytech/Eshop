@@ -1,5 +1,7 @@
 package eshop.payment
 
+import eshop.*
+import eshop.accounting.OnlinePayment
 import org.grails.plugins.wsclient.service.WebService
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 
@@ -11,21 +13,22 @@ class MellatService {
     static String userName = "tajan"
     static String userPassword = "20796"
 
-    def prepareForPayment(id, amount, customerId) {
+    def prepareForPayment(eshop.accounting.Account account, id, amount, customerId) {
         def wsdl = ApplicationHolder.application.parentContext.getResource('WEB-INF/mellatService.wsdl')
         def bpService = webService.getClient(wsdl.getURL().toString())
+        def onlinePaymentConfiguration = new XmlParser().parseText(account.onlinePaymentConfiguration)
         def result = bpService.bpPayRequest(
-                terminalId,
-                userName,
-                userPassword,
-                id,
-                amount,
+                onlinePaymentConfiguration.terminalCode.text().toLong(),
+                onlinePaymentConfiguration.userName.text(),
+                onlinePaymentConfiguration.password.text(),
+                id.toLong(),
+                amount.toLong(),
                 new Date().format('yyyyMMdd'),
                 new Date().format('HHmmss'),
                 'OnlinePayment',
-                "http://www.tajan.it/order/paymentResult/mellat/",
-                customerId)
+                "http://local.zanbil.ir/EShop/order/onlinePaymentResult/",
+                0).toString().split(',')
 
-        return result.toString().split(',')
+        return result
     }
 }

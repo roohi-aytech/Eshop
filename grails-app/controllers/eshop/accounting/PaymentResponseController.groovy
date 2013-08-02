@@ -1,9 +1,8 @@
-package eshop
+package eshop.accounting
 
-import eshop.accounting.CustomerTransaction
-import eshop.accounting.Transaction
-import org.springframework.dao.DataIntegrityViolationException
-import grails.converters.JSON
+import eshop.AccountingHelper
+import eshop.OrderHelper
+import eshop.OrderTrackingLog
 
 class PaymentResponseController {
 

@@ -1,15 +1,17 @@
-package eshop
+package eshop.accounting
 
-import eshop.accounting.PaymentRequest
+
+
 import grails.test.mixin.*
+import org.junit.*
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(PaymentRequest)
-class PaymentRequestTests {
+@TestFor(OnlinePayment)
+class OnlinePaymentTests {
 
     void testSomething() {
-        fail "Implement me"
+       fail "Implement me"
     }
 }

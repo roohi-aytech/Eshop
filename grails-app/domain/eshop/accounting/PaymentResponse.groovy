@@ -1,4 +1,7 @@
-package eshop
+package eshop.accounting
+
+import eshop.User
+import eshop.accounting.PaymentRequest
 
 class PaymentResponse {
     static auditable = true

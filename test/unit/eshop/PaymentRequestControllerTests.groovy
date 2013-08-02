@@ -1,8 +1,7 @@
 package eshop
 
-
-
-import org.junit.*
+import eshop.accounting.PaymentRequest
+import eshop.accounting.PaymentRequestController
 import grails.test.mixin.*
 
 @TestFor(PaymentRequestController)

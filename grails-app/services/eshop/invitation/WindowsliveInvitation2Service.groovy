@@ -3,7 +3,7 @@ package eshop.invitation
 import grails.converters.deep.JSON
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.LiveApi
+//import org.scribe.builder.api.LiveApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Verb
 import org.scribe.model.Verifier
