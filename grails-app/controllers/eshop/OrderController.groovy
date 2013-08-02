@@ -141,7 +141,7 @@ class OrderController {
             switch (account.bankName) {
                 case 'mellat':
                     def result = mellatService.prepareForPayment(account, order.id, order.totalPrice, order.customerId)
-                    if (result[0] == 0)
+                    if (result[0] == "0")
                         model.refId = result[1]
                     else
                         flash.message = result[0]
