@@ -33,7 +33,7 @@
                 }
 
                 $(document).ready(function () {
-                    postRefId(${refId});
+                    postRefId('${refId}');
                 });
             </script>
         </g:if>
