@@ -55,7 +55,12 @@
     </g:if>
     <g:else>
         <div class="error">
-            <div><g:message code="onlinePayment.result.error"></g:message>: <b>${onlinePayment?.resultCode}</b></div>
+            <div>
+                <g:message code="onlinePayment.result.error"></g:message>
+                <g:if test="${onlinePayment?.resultCode}">
+                    <br/>code: <b>${onlinePayment?.resultCode}</b>
+                </g:if>
+            </div>
         </div>
     </g:else>
 

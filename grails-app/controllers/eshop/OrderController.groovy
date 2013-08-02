@@ -150,7 +150,7 @@ class OrderController {
                     onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
                     onlinePayment.save()
 
-                    def result = mellatService.prepareForPayment(account, onlinePayment.id, order.totalPrice, order.customerId)
+                    def result = mellatService.prepareForPayment(account, onlinePayment.id, params.value.toInteger(), order.customerId)
                     if (result[0] == "0")
                         model.refId = result[1]
                     else
