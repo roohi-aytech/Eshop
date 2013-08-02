@@ -1,4 +1,4 @@
-<%@ page import="eshop.PaymentRequest" %>
+<%@ page import="eshop.accounting.PaymentRequest" %>
 <!doctype html>
 <html>
 	<head>

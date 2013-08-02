@@ -1,4 +1,4 @@
-<%@ page import="eshop.PaymentResponse" %>
+<%@ page import="eshop.accounting.PaymentResponse" %>
 
 <h2><g:message code="paymentResponse"></g:message></h2>
 <g:form controller="paymentResponse" action="save">

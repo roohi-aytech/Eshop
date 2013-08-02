@@ -5,6 +5,8 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.tomcat.nio = true
+//grails.server.port.http = 80
+//grails.server.host = "local.zanbil.ir"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.war.resources = { stagingDir ->
     delete(file:"${stagingDir}/WEB-INF/lib/ext-impl.jar")
@@ -50,9 +52,13 @@ grails.project.dependency.resolution = {
 
         compile 'org.apache.activemq:activemq-core:5.3.0'
 
-//        compile ":tomcatnio:1.3.4"
-//
-//        compile ":atmosphere:0.4.2.3"
+        build "org.scribe:scribe:1.2.1"
+        runtime "org.scribe:scribe:1.2.1"
+
+//        compile ":ws-client:1.0"
+
+        build 'xerces:xercesImpl:2.9.0'
+        runtime 'xerces:xercesImpl:2.9.0'
     }
 
     plugins {
@@ -75,10 +81,16 @@ grails.project.dependency.resolution = {
             excludes 'mongo-java-driver', 'gmongo'
         }
 
-//        runtime (":atmosphere:0.4.2.3") {
-//            exclude 'atmosphere-runtime'
-//        }
         compile ":events-push:1.0.M7"
+
+        build(":release:2.0.4",
+                ":rest-client-builder:1.0.2") {
+            export = false
+        }
+
+        compile ":mail:1.0.1"
+        compile ":rest:0.6.1"
+        runtime ":resources:1.2.RC2"
     }
 }
 grails.plugin.location.RapidGrails = "../RapidGrails"

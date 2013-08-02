@@ -4,8 +4,9 @@
 <table class="clear table-simulated" dir="rtl">
     <tr class="ui-widget-header">
         <th><g:message code="orderItem.product"/></th>
-        <th><g:message code="orderItem.productModel"/></th>
-        <th><g:message code="orderItem.unitPrice"/></th>
+        <th><g:message code="invoice.item.price"></g:message></th>
+        <th><g:message code="invoice.item.addedValue"></g:message></th>
+        <th><g:message code="invoice.item.realPrice"></g:message></th>
         <th><g:message code="orderItem.orderCount"/></th>
         <th><g:message code="orderItem.totalPrice"/></th>
         <th><g:message code="productModel.status"/></th>
@@ -14,22 +15,20 @@
     <g:each in="${order.items}" var="orderItem">
         <tr>
             <td>
-                ${orderItem.productModel.product}
-            </td>
-            <td>
                 ${orderItem.productModel}
+                <g:each in="${orderItem.addedValues}">
+                    + ${it}
+                </g:each>
             </td>
-            <g:set var="price"
-                   value="${priceService.calcProductModelPrice(orderItem.productModel.id).valueAddedVal}"/>
-            <td>
-                <g:formatNumber number="${price ? price : 0}" type="number"/>
-            </td>
-            <td>
-                ${orderItem.orderCount}
-            </td>
-            <td>
-                <g:formatNumber number="${orderItem.orderCount * (price ? price : 0)}" type="number"/>
-            </td>
+            <td><g:formatNumber number="${orderItem.baseUnitPrice}"
+                                type="number"></g:formatNumber></td>
+            <td><g:formatNumber number="${orderItem.addedValuesPrice}"
+                                type="number"></g:formatNumber></td>
+            <td><g:formatNumber number="${orderItem.unitPrice}"
+                                type="number"></g:formatNumber></td>
+            <td class="center">${orderItem.orderCount}</td>
+            <td><g:formatNumber number="${orderItem.totalPrice}"
+                                type="number"></g:formatNumber></td>
             <td>
                 <g:message code="productModel.status.${orderItem.productModel.status}"/>
             </td>

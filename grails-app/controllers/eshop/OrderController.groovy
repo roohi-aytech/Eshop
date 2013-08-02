@@ -1,7 +1,10 @@
 package eshop
 
 import eshop.accounting.Account
+import eshop.accounting.AccountFilter
 import eshop.accounting.CustomerTransaction
+import eshop.accounting.OnlinePayment
+import eshop.accounting.PaymentRequest
 import eshop.accounting.Transaction
 import eshop.delivery.DeliverySourceStation
 
@@ -13,6 +16,8 @@ class OrderController {
     def accountingService
     def jmsService
     def deliveryService
+    def mailService
+    def messageService
 
     static exposes = ['jms']
 
@@ -68,12 +73,10 @@ class OrderController {
                 orderItem.addToAddedValues(AddedValue.get(addedValue.toLong()))
             }
 
-            def price = priceService.calcProductModelPrice(basketItem.id, orderItem.addedValues?.collect {it.id}).valueAddedVal
-            orderItem.unitPrice = price ? price : 0
-            if (!orderItem.validate() || !orderItem.save()) {
-                //order item save error
-            }
+            orderItem.save()
         }
+
+        priceService.updateOrderPrice(order);
 
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
@@ -92,27 +95,193 @@ class OrderController {
     }
 
     def payment() {
+
+        def order = Order.get(params.id)
+
+        def accountsForOnlinePayment = new ArrayList<Account>()
+        OrderItem.findAllByOrder(order).each { orderItem ->
+            def productType = orderItem.productModel.product.productTypes.toArray().first() as ProductType
+            while (productType) {
+                AccountFilter.findAllByProductType(productType).each { accountFilter ->
+                    if (accountFilter.account.type == 'real' &&
+                            accountFilter.account.hasOnlinePayment)
+                        if (!accountsForOnlinePayment.any { account ->
+                            account.id == accountFilter.account.id
+                        } && (!accountFilter.brands
+                                || accountFilter?.brands?.isEmpty()
+                                || accountFilter?.brands?.any { it.id == orderItem?.productModel?.product?.brand?.id }))
+                            accountsForOnlinePayment.add(accountFilter.account)
+                }
+
+                productType = productType.parentProduct
+            }
+        }
+
+        accountsForOnlinePayment.addAll(
+                Account.findAllByBankNameNotInListAndType(accountsForOnlinePayment.collect { it.bankName } ?: [''], 'legal'))
+
+        accountsForOnlinePayment.addAll(
+                Account.findAllByBankNameNotInList(accountsForOnlinePayment.collect { it.bankName } ?: ['']))
+
+        accountsForOnlinePayment.unique { it.bankName }
+
         [
-                orderPrice: Order.get(params.id).items.sum { it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0 },
-                accountsForOnlinePayment: Account.findAllByHasOnlinePayment(true),
-                accounts: Account.findAll(),
+                orderPrice: order.totalPrice,
+                accountsForOnlinePayment: accountsForOnlinePayment,
+                accounts: Account.findAllByType('legal'),
                 customerAccountValue: accountingService.calculateCustomerAccountValue(springSecurityService.currentUser)
         ]
     }
 
     def onlinePayment() {
-        if (params.bank) {
-            def order = Order.get(params.id)
-            switch (params.bank) {
+        if (params.accountId) {
+            def order = Order.get(params.order.id)
+            def account = Account.get(params.accountId)
+            def model = [bankName: account.bankName]
+            switch (account.bankName) {
                 case 'mellat':
-                    def result = mellatService.prepareForPayment(order.id, order.items.sum { it.orderCount * it.unitPrice }, order.customerId)
+                    def result = mellatService.prepareForPayment(account, order.id, order.totalPrice, order.customerId)
                     if (result[0] == 0)
-                        [refId: result[1]]
+                        model.refId = result[1]
                     else
                         flash.message = result[0]
+
+                    def onlinePayment = new OnlinePayment()
+                    onlinePayment.account = account
+                    onlinePayment.amount = order.totalPrice.toInteger()
+                    onlinePayment.customer = order.customer
+                    onlinePayment.date = new Date()
+                    onlinePayment.initialResultCode = result[0] ?: null
+                    onlinePayment.order = order
+                    onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
+                    if (result.size() > 1)
+                        onlinePayment.referenceId = result[1]
+                    onlinePayment.save()
+
                     break
-                case 'pasargad':
+                case 'saman':
                     break
+            }
+
+            model
+        }
+    }
+
+    def onlinePaymentResult() {
+
+        switch (params.bank) {
+            case 'mellat':
+                def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
+                if (onlinePayment) {
+                    onlinePayment.resultCode = params.ResCode.toString()
+                    onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
+                    onlinePayment.save()
+                    def model = [onlinePayment: onlinePayment]
+                    if (onlinePayment.resultCode == "0") {
+                        payOrder(onlinePayment, model)
+                    }
+                }
+                break
+        }
+
+    }
+
+    def payOrder(OnlinePayment payment, model) {
+        //add customer transaction
+        def customerTransaction = new CustomerTransaction()
+        customerTransaction.account = payment.account
+        customerTransaction.value = payment.amount
+        customerTransaction.date = new Date()
+        customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+        customerTransaction.order = payment.order
+        customerTransaction.creator = payment.customer
+        customerTransaction.save()
+
+        //add transaction
+        def transaction = new Transaction()
+        transaction.account = payment.account
+        transaction.value = payment.amount
+        transaction.date = new Date()
+        transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+        transaction.order = payment.order
+        transaction.creator = payment.customer
+        transaction.save()
+
+        //pay order
+        if (payment.order) {
+
+            def orderPrice = payment.order.totalPrice
+            def customerAccount = accountingService.calculateCustomerAccountValue(payment.customer)
+            def payableAmount = payment.usingCustomerAccountValueAllowed ? payment.amount + customerAccount : payment.amount
+
+            if (payableAmount >= orderPrice) {
+                //save withdrawal customer transaction
+                customerTransaction = new CustomerTransaction()
+                customerTransaction.value = orderPrice
+                customerTransaction.date = new Date()
+                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+                customerTransaction.order = payment.order
+                customerTransaction.creator = payment.customer
+                customerTransaction.save()
+
+                //save withdrawal transaction
+                transaction = new Transaction()
+                transaction.value = orderPrice
+                transaction.date = new Date()
+                transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+                transaction.order = payment.order
+                transaction.creator = payment.customer
+                transaction.save()
+
+                //set order status
+                payment.order.status = OrderHelper.STATUS_PAID
+                payment.order.save()
+
+                //save order tracking log
+                def trackingLog = new OrderTrackingLog()
+                trackingLog.action = OrderHelper.ACTION_PAYMENT
+                trackingLog.date = new Date()
+                trackingLog.order = payment.order
+                trackingLog.user = payment.customer
+                trackingLog.title = "order.actions.${OrderHelper.ACTION_PAYMENT}"
+                if (!trackingLog.validate() || !trackingLog.save()) {
+                    //tracking log save error
+                    return
+                }
+
+                //send alert to customer
+                mailService.sendMail {
+                    to springSecurityService.currentUser.email
+                    subject message(code: 'activationMail.subject')
+                    html(view: "/messageTemplates/mail/orderPaid",
+                            model: [customer: springSecurityService.currentUser, order: payment.order])
+                }
+
+                if (springSecurityService.currentUser.mobile)
+                    messageService.sendMessage(
+                            springSecurityService.currentUser.mobile,
+                            g.render(
+                                    template: '/messageTemplates/sms/orderPaid',
+                                    model: [customer: springSecurityService.currentUser, order: payment.order]).toString())
+
+                model.orderPaid = true
+            } else {
+                //send alert to customer
+                mailService.sendMail {
+                    to springSecurityService.currentUser.email
+                    subject message(code: 'activationMail.subject')
+                    html(view: "/messageTemplates/mail/orderNotPaid",
+                            model: [customer: springSecurityService.currentUser, order: payment.order])
+                }
+
+                if (springSecurityService.currentUser.mobile)
+                    messageService.sendMessage(
+                            springSecurityService.currentUser.mobile,
+                            g.render(
+                                    template: '/messageTemplates/sms/orderNotPaid',
+                                    model: [customer: springSecurityService.currentUser, order: payment.order]).toString())
+
+                model.orderPaid = false
             }
         }
     }
@@ -153,7 +322,7 @@ class OrderController {
     def payOrderFromAccount() {
 
         def order = Order.get(params.order.id)
-        def orderPrice = order.items.sum(order.deliveryPrice ?: 0, { it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0 })
+        def orderPrice = order.totalPrice
         def owner = springSecurityService.currentUser
 
         //save withdrawal customer transaction
@@ -189,6 +358,23 @@ class OrderController {
             flash.message = message(code: 'order.payment.completed')
             redirect(controller: 'customer', action: 'panel')
         }
+    }
+
+    def invoice() {
+        def order = Order.get(params.id)
+        def title = message(code: 'order.preInvoice.title')
+        switch (order.status) {
+            case OrderHelper.STATUS_PAID:
+                title = message(code: 'order.finalInvoice.title')
+                break
+            case OrderHelper.STATUS_TRANSMITTED:
+                title = message(code: 'order.finalInvoice.title')
+                break
+            case OrderHelper.STATUS_DELIVERED:
+                title = message(code: 'order.finalInvoice.title')
+                break
+        }
+        render template: 'invoice', model: [order: order, title: title]
     }
 
 //    def cancellation(){

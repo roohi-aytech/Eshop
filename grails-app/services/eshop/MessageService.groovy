@@ -12,6 +12,9 @@ class MessageService {
     static String senderNumber = '02142328'
 
     def sendMessage(String cellphones, String message) {
+
+        return
+
         def wsdl = ApplicationHolder.application.parentContext.getResource('WEB-INF/messageService.wsdl')
         def messageService = webService.getClient(wsdl.getURL().toString())
         def result = messageService.doSendSMS(

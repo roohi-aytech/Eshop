@@ -1,7 +1,6 @@
 <%@ page import="eshop.JournalArticle" %>
 <g:javascript src="jquery.ui.modal.ckEditorFix.js"/>
 <g:set var="entityName" value="${message(code: 'journalArticle.label', default: 'Journal Article')}"/>
-<h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${JournalArticle}"

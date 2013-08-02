@@ -46,6 +46,11 @@ class UrlMappings {
             action = "list"
         }
 
+        "/order/onlinePaymentResult/$bank/" {
+            controller = "order"
+            action = "onlinePaymentResult"
+        }
+
 //        static pages
         "/contactUs"{
             controller = "site"
@@ -110,6 +115,6 @@ class UrlMappings {
         "/notFound"(controller: "/default", action: "notFound")
 
 		"500"(view:'/error')
-        "404"(controller: "/default", action:"notFound")
+//        "404"(controller: "/default", action:"notFound")
 	}
 }

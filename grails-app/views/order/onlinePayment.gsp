@@ -10,8 +10,12 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-    <title></title>
-    <g:if test="${params.bank == 'mellat'}">
+    <title>
+        <g:if test="${bankName == 'mellat'}">
+            <g:message code="order.payment.mellat.title"></g:message>
+        </g:if>
+    </title>
+    <g:if test="${bankName == 'mellat'}">
         <g:if test="${!flash.message}">
             <script language="javascript" type="text/javascript">
                 function postRefId(refIdValue) {
@@ -38,7 +42,7 @@
 
 <body>
 <div class="control-panel">
-    <g:if test="${params.bank == 'mellat'}">
+    <g:if test="${bankName == 'mellat'}">
         <h2><g:message code="order.payment.mellat.title"></g:message></h2>
 
         <g:if test="${!flash.message}">

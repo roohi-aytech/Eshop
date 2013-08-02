@@ -17,7 +17,17 @@
 		<g:message code="account.bankName.label" default="Bank Name" />
 		
 	</label>
-	<g:textField name="bankName" value="${accountInstance?.bankName}"/>
+    <g:select name="bankName" value="${accountInstance?.bankName}"
+              valueMessagePrefix="account.bankName" from="${accountInstance.constraints.bankName.inList}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'type', 'error')} ">
+    <label for="type">
+        <g:message code="account.type.label" />
+
+    </label>
+    <g:select name="type" value="${accountInstance?.type}"
+              valueMessagePrefix="account.type" from="${accountInstance.constraints.type.inList}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'branchName', 'error')} ">
@@ -49,7 +59,10 @@
 		<g:message code="account.shebaNumber.label" default="Sheba Number" />
 		
 	</label>
-	<g:textField name="shebaNumber" value="${accountInstance?.shebaNumber}"/>
+	<g:textField name="shebaNumber" value="${accountInstance?.shebaNumber}" style="direction:ltr;width:180px"/>
+    <script type="text/javascript" language="javascript">
+        $('#shebaNumber').maskInput('IR99-9999-9999-9999-9999-9999-99');
+    </script>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'cardNumber', 'error')} ">
@@ -57,15 +70,10 @@
 		<g:message code="account.cardNumber.label" default="Card Number" />
 		
 	</label>
-	<g:textField name="cardNumber" value="${accountInstance?.cardNumber}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'hasOnlinePayment', 'error')} ">
-	<label for="hasOnlinePayment">
-		<g:message code="account.hasOnlinePayment.label" default="Has Online Payment" />
-		
-	</label>
-	<g:checkBox name="hasOnlinePayment" value="${accountInstance?.hasOnlinePayment}" />
+	<g:textField name="cardNumber" value="${accountInstance?.cardNumber}" style="direction:ltr;width:110px"/>
+    <script type="text/javascript" language="javascript">
+        $('#cardNumber').maskInput('9999 9999 9999 9999');
+    </script>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'bankLogo', 'error')} ">
@@ -74,5 +82,21 @@
 		
 	</label>
 	<input type="file" id="bankLogo" name="bankLogo" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'hasOnlinePayment', 'error')} ">
+    <label for="hasOnlinePayment">
+        <g:message code="account.hasOnlinePayment.label" default="Has Online Payment" />
+
+    </label>
+    <g:checkBox name="hasOnlinePayment" value="${accountInstance?.hasOnlinePayment}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: accountInstance, field: 'onlinePaymentConfiguration', 'error')} ">
+    <label for="onlinePaymentConfiguration">
+        <g:message code="account.onlinePaymentConfiguration.label" />
+
+    </label>
+    <g:textArea rows="10" cols="100" name="onlinePaymentConfiguration" style="direction: ltr" value="${accountInstance?.onlinePaymentConfiguration}" />
 </div>
 

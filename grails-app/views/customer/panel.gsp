@@ -81,6 +81,33 @@
         <li>
             <div class="group">
                 <div class="groupHeader">
+                    <img src="../images/points.png">
+
+                    <h3><g:message code="controlPanel.points.label"></g:message></h3>
+
+                    <div class="comment"><g:message
+                            code="controlPanel.points.description"></g:message></div>
+                </div>
+
+                <div class="column1 items">
+                    <h4><g:message code="controlPanel.points.gathering.label"></g:message></h4>
+                    <ul class="master">
+                        <li><g:link controller="customer" action="invite"><g:message
+                                code="controlPanel.points.invite.label"></g:message></g:link></li>
+                    </ul>
+                </div>
+
+                <div class="column2 items">
+                    <h4><g:message
+                            code="controlPanel.points.reports.label"></g:message></h4>
+                    <ul class="slave">
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="group">
+                <div class="groupHeader">
                     <img src="../images/settings.png">
 
                     <h3><g:message code="controlPanel.settings.label"></g:message></h3>

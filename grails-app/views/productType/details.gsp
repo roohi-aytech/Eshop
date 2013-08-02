@@ -18,6 +18,7 @@
         <li><a href="#articles"><g:message code="articles"/></a></li>
         <li><a href="#gift"><g:message code="gift"/></a></li>
         <li><a href="#vendors"><g:message code="vendors"/></a></li>
+        <li><a href="#accounts"><g:message code="accounts"/></a></li>
     </ul>
 
     <div id="godFathers" style="width: 98%">
@@ -38,6 +39,9 @@
     </div>
     <div id="vendors">
         <g:render template="../vendor/list"/>
+    </div>
+    <div id="accounts">
+        <g:render template="../accountFilter/list"/>
     </div>
 
 

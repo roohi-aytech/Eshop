@@ -1,9 +1,8 @@
-package eshop
+package eshop.accounting
 
-import eshop.accounting.CustomerTransaction
-import eshop.accounting.Transaction
-import org.springframework.dao.DataIntegrityViolationException
-import grails.converters.JSON
+import eshop.AccountingHelper
+import eshop.OrderHelper
+import eshop.OrderTrackingLog
 
 class PaymentResponseController {
 
@@ -77,7 +76,7 @@ class PaymentResponseController {
 
                 //pay order
                 if (request.order) {
-                    def orderPrice = priceService.calculateOrderPrice(request.order)
+                    def orderPrice = request.order.totalPrice
                     def customerAccount = accountingService.calculateCustomerAccountValue(request.owner)
                     def payableAmount = request.usingCustomerAccountValueAllowed ? request.value + customerAccount : request.value
 

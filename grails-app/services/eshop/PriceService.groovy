@@ -8,10 +8,10 @@ class PriceService {
         if (!defaultModel)
             return [mainVal: 0D, showVal: 0D, status: 'not-exists']
 
-        if (defaultModel.status != 'exists'){
+        if (defaultModel.status != 'exists') {
             def alternateModel = ProductModel.findByProductAndStatus(product, 'exists')
-            if(alternateModel)
-            defaultModel = alternateModel
+            if (alternateModel)
+                defaultModel = alternateModel
         }
 
         if (!defaultModel)
@@ -88,7 +88,7 @@ class PriceService {
             return result
 
         def valueAddedVal = result.showVal
-        selectedAddedValues.collect{AddedValue.get(it.toLong())}.each { addedValue ->
+        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.each { addedValue ->
             def value = 0
             if (addedValue.type == "percent")
                 value = result.mainVal * addedValue.value / 100
@@ -110,6 +110,29 @@ class PriceService {
         addedValues
     }
 
+
+
+    def updateOrderPrice(Order order) {
+
+        OrderItem.findAllByOrder(order).each { orderItem ->
+            def price = calcProductModelPrice(orderItem.productModel.id, orderItem.addedValues?.collect { it.id })
+            if (price.status == 'exists') {
+                orderItem.baseUnitPrice = price.showVal ?: 0
+                orderItem.addedValuesPrice = price.valueAddedVal ? price.valueAddedVal - price.showVal : 0
+                orderItem.unitPrice = price.valueAddedVal ?: 0
+                orderItem.totalPrice = orderItem.orderCount * orderItem.unitPrice
+            } else
+                orderItem.baseUnitPrice =
+                    orderItem.addedValuesPrice =
+                        orderItem.unitPrice =
+                            orderItem.totalPrice = 0
+            orderItem.save()
+        }
+
+        order.totalPrice = Math.round(((OrderItem.findAllByOrder(order).sum(0, { it.totalPrice }) as Integer) + order.deliveryPrice) / 1000) * 1000
+        order.save()
+    }
+
 //    def getOrderTimeAddedValues(ProductType productType) {
 //        def addedValues = []
 //        if (productType.parentProduct)
@@ -117,13 +140,4 @@ class PriceService {
 //        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "orderTime"))
 //        addedValues
 //    }
-
-    def calculateOrderPrice(Order order) {
-        Integer price = order.deliveryPrice ?: 0
-        order.items.each {
-            price += it.productModel.status == 'exists' ? it.orderCount * it.unitPrice : 0
-        }
-
-        price
-    }
 }

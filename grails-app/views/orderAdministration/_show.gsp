@@ -130,6 +130,16 @@
 
             </li>
         </g:if>
+        <g:if test="${orderInstance?.totalPrice}">
+            <li class="fieldcontain">
+                <span id="totalPrice-label" class="property-label"><g:message code="orderItem.totalPrice"/></span>
+
+                <span class="property-value" aria-labelledby="totalPrice-label">
+                    <g:formatNumber number="${orderInstance?.totalPrice}" type="number"/>
+                </span>
+
+            </li>
+        </g:if>
 
     </ol>
 </div>

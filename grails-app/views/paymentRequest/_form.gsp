@@ -1,4 +1,4 @@
-<%@ page import="eshop.PaymentRequest" %>
+<%@ page import="eshop.accounting.PaymentRequest" %>
 
 <g:hasErrors bean="${paymentRequestInstance}">
     <ul class="errors" role="alert">
