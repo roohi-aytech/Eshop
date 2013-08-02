@@ -140,20 +140,24 @@ class OrderController {
             def model = [bankName: account.bankName]
             switch (account.bankName) {
                 case 'mellat':
-                    def result = mellatService.prepareForPayment(account, order.id, order.totalPrice, order.customerId)
-                    if (result[0] == "0")
-                        model.refId = result[1]
-                    else
-                        flash.message = result[0]
 
                     def onlinePayment = new OnlinePayment()
                     onlinePayment.account = account
                     onlinePayment.amount = order.totalPrice.toInteger()
                     onlinePayment.customer = order.customer
                     onlinePayment.date = new Date()
-                    onlinePayment.initialResultCode = result[0] ?: null
                     onlinePayment.order = order
                     onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
+                    onlinePayment.save()
+
+                    def result = mellatService.prepareForPayment(account, onlinePayment.id, order.totalPrice, order.customerId)
+                    if (result[0] == "0")
+                        model.refId = result[1]
+                    else
+                        flash.message = result[0]
+
+
+                    onlinePayment.initialResultCode = result[0] ?: null
                     if (result.size() > 1)
                         onlinePayment.referenceId = result[1]
                     onlinePayment.save()
