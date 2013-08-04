@@ -172,17 +172,18 @@ class OrderController {
 
     def onlinePaymentResult() {
 
+        def model = [:]
         def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
         if (onlinePayment) {
             onlinePayment.resultCode = params.ResCode.toString()
             onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
             onlinePayment.save()
-            def model = [onlinePayment: onlinePayment]
+            model = [onlinePayment: onlinePayment]
             if (onlinePayment.resultCode == "0") {
                 payOrder(onlinePayment, model)
             }
         }
-
+        model
     }
 
     def payOrder(OnlinePayment payment, model) {
