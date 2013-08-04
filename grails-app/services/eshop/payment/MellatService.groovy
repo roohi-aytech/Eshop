@@ -14,6 +14,7 @@ class MellatService {
     static String userPassword = "20796"
 
     def prepareForPayment(eshop.accounting.Account account, id, amount, customerId) {
+        def g = ApplicationHolder.application.mainContext.getBean( 'org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib' )
         def wsdl = ApplicationHolder.application.parentContext.getResource('WEB-INF/mellatService.wsdl')
         def bpService = webService.getClient(wsdl.getURL().toString())
         def onlinePaymentConfiguration = new XmlParser().parseText(account.onlinePaymentConfiguration)
@@ -26,7 +27,7 @@ class MellatService {
                 new Date().format('yyyyMMdd'),
                 new Date().format('HHmmss'),
                 'OnlinePayment',
-                "http://local.zanbil.ir/EShop/order/onlinePaymentResult/",
+                "http://www.zanbil.ir/order/onlinePaymentResult/",
                 0).toString().split(',')
 
         return result
