@@ -143,7 +143,7 @@ class OrderController {
 
                     def onlinePayment = new OnlinePayment()
                     onlinePayment.account = account
-                    onlinePayment.amount = order.totalPrice.toInteger()
+                    onlinePayment.amount = params["value"].toInteger()
                     onlinePayment.customer = order.customer
                     onlinePayment.date = new Date()
                     onlinePayment.order = order
