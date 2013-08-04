@@ -150,12 +150,11 @@ class OrderController {
                     onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
                     onlinePayment.save()
 
-                    def result = mellatService.prepareForPayment(account, onlinePayment.id, params.value.toInteger(), order.customerId)
+                    def result = mellatService.prepareForPayment(account, onlinePayment.id, params.value, order.customerId)
                     if (result[0] == "0")
                         model.refId = result[1]
                     else
                         flash.message = result[0]
-
 
                     onlinePayment.initialResultCode = result[0] ?: null
                     if (result.size() > 1)
@@ -173,19 +172,15 @@ class OrderController {
 
     def onlinePaymentResult() {
 
-        switch (params.bank) {
-            case 'mellat':
-                def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
-                if (onlinePayment) {
-                    onlinePayment.resultCode = params.ResCode.toString()
-                    onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
-                    onlinePayment.save()
-                    def model = [onlinePayment: onlinePayment]
-                    if (onlinePayment.resultCode == "0") {
-                        payOrder(onlinePayment, model)
-                    }
-                }
-                break
+        def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
+        if (onlinePayment) {
+            onlinePayment.resultCode = params.ResCode.toString()
+            onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
+            onlinePayment.save()
+            def model = [onlinePayment: onlinePayment]
+            if (onlinePayment.resultCode == "0") {
+                payOrder(onlinePayment, model)
+            }
         }
 
     }
