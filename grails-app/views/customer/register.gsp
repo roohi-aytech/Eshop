@@ -169,17 +169,6 @@
             return true;
         }
 
-        function validateFirstName(){
-            $('#firstNameValidationMessage').html('');
-
-            var password = $('#firstName').val();
-            if(!password || password == '') {
-                $('#firstNameValidationMessage').html('${message(code: 'profile.firstName.notEmpty')}')
-                return false;
-            }
-            return true;
-        }
-
         function validateLastName(){
             $('#lastNameValidationMessage').html('');
 
@@ -192,7 +181,7 @@
         }
 
         function validate(){
-            if(validateFirstName() && validateLastName() && validateUsernameField() && validatePassword() && validateConfirmPassword())
+            if(validateLastName() && validateUsernameField() && validatePassword() && validateConfirmPassword())
                 return true;
             return false;
         }
@@ -221,8 +210,7 @@
         %{--<div class="column1">--}%
             <p>
                 <label for='firstName'><g:message code="springSecurity.register.firstName.label"/>:</label>
-                <span id="firstNameValidationMessage"></span>
-                <input type='text' onblur="validateFirstName()" class='text_' name='firstName' id='firstName'
+                <input type='text' class='text_' name='firstName' id='firstName'
                        value="${customerInstance.firstName}"/>
             </p>
 
@@ -264,46 +252,6 @@
                 <input type='password' onblur="validateConfirmPassword()" class='text_' name='confirmPassword'
                        id='confirmPassword'/>
             </p>
-
-        %{--<p>--}%
-        %{--<label for='firstName'><g:message code="springSecurity.register.firstName.label"/>:</label>--}%
-        %{--<input type='text' class='text_' name='firstName' id='firstName'/>--}%
-        %{--</p>--}%
-
-        %{--<p>--}%
-        %{--<label for='lastName'><g:message code="springSecurity.register.lastName.label"/>:</label>--}%
-        %{--<input type='text' class='text_' name='lastName' id='lastName'/>--}%
-        %{--</p>--}%
-
-        %{--<p>--}%
-        %{--<label for='email'><g:message code="springSecurity.register.email.label"/>:</label>--}%
-        %{--<input type='text' class='text_' name='email' id='email'/>--}%
-        %{--</p>--}%
-        %{--</div>--}%
-
-        %{--<div class="column2">--}%
-        %{--<p>--}%
-        %{--<label for='mobile'><g:message code="springSecurity.register.mobile.label"/>:</label>--}%
-        %{--<input type='text' class='text_' name='mobile' id='mobile'/>--}%
-        %{--</p>--}%
-
-        %{--<p>--}%
-        %{--<label for='telephone'><g:message code="springSecurity.register.telephone.label"/>:</label>--}%
-        %{--<input type='text' class='text_' name='telephone' id='telephone'/>--}%
-        %{--</p>--}%
-
-        %{--<p>--}%
-        %{--<label for='sendingAddress'><g:message--}%
-        %{--code="springSecurity.register.sendingAddress.label"/>:</label>--}%
-        %{--<textarea type='text' class='text_' name='sendingAddress' id='sendingAddress'></textarea>--}%
-        %{--</p>--}%
-
-        %{--<p>--}%
-        %{--<label for='billingAddress'><g:message--}%
-        %{--code="springSecurity.register.billingAddress.label"/>:</label>--}%
-        %{--<textarea type='text' class='text_' name='billingAddress' id='billingAddress'></textarea>--}%
-        %{--</p>--}%
-        %{--</div>--}%
 
             <p class="toolbar">
                 <input type='submit' id="submit" onclick="return validate();" class="btn btn-primary" width="80px"

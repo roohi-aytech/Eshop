@@ -9,7 +9,7 @@
 <body>
 <div class="control-panel">
     <h2><g:message code="controlPanel.title" default="Control Panel"/></h2>
-    <g:if test="${!customer?.registrationLevel || customer?.registrationLevel == 'basic'}">
+    <g:if test="${customer?.registrationLevel != 'full'}">
         <div class="info">
             <div>
                 <g:message code="springSecurity.completeRegistration.description"></g:message>
@@ -131,15 +131,13 @@
                     <h4><g:message
                             code="controlPanel.settings.preferences.label"></g:message></h4>
                     <ul class="slave">
-                        <li><g:link controller="customer" action="profile" params="${[tab:'address']}"><g:message
-                                code="springSecurity.register.sendingAddress.label"></g:message></g:link></li>
                         <li><g:link controller="customer" action="profile" params="${[tab:'reagent']}"><g:message
                                 code="customer.reagent.label"></g:message></g:link></li>
                         <li><g:link controller="customer" action="profile" params="${[tab:'favorites']}"><g:message
                                 code="customer.favorites.label"></g:message></g:link></li>
-                        <li><g:link controller="customer" action="newsLetter"><g:message
+                        <li><g:link controller="customer" action="profile" params="${[tab:'newsLetters']}"><g:message
                                 code="controlPanel.settings.profile.newsLetters.label"></g:message></g:link></li>
-                        <li><g:link controller="customer" action="personalEvents"><g:message
+                        <li><g:link controller="customer" action="profile" params="${[tab:'personalEvents']}"><g:message
                                 code="controlPanel.settings.personalEvents.label"></g:message></g:link></li>
                     </ul>
                 </div>

@@ -85,30 +85,56 @@
                 </g:eachError>
             </ul>
         </g:hasErrors>
+        <g:set var="tab" value="${params.tab}"/>
+        <g:if test="${!tab}">
+            <g:set var="tab" value="${'personal'}"/>
+            <g:if test="${customerInstance.profilePersonalInfoFilled}">
+                <g:set var="tab" value="${'reagent'}"/>
+            </g:if>
+            <g:if test="${customerInstance.profileReagentFilled}">
+                <g:set var="tab" value="${'favorites'}"/>
+            </g:if>
+            <g:if test="${customerInstance.profileFavoritesFilled}">
+                <g:set var="tab" value="${'newsLetters'}"/>
+            </g:if>
+            <g:if test="${customerInstance.profileNewsLettersFilled}">
+                <g:set var="tab" value="${'personal'}"/>
+            </g:if>
+        </g:if>
 
         <div class="tabbable">
             <ul class="nav nav-tabs">
-                <li class="${!params.tab || params.tab == 'personal' ? 'active': ''}"><a href="#tab1" data-toggle="tab"><g:message code="edit.profile.label"/></a></li>
-                <li class="${params.tab == 'address' ? 'active': ''}"><a href="#tab2" data-toggle="tab"><g:message code="springSecurity.register.sendingAddress.label"/></a></li>
-                <li class="${params.tab == 'reagent' ? 'active': ''}"><a href="#tab3" data-toggle="tab"><g:message code="customer.reagent.label"/></a></li>
-                <li class="${params.tab == 'favorites' ? 'active': ''}"><a href="#tab4" data-toggle="tab"><g:message code="customer.favorites.label"/></a></li>
+                <li class="${tab == 'personal' ? 'active': ''}"><a href="#tab1" data-toggle="tab"><g:message code="edit.profile.label"/></a></li>
+                %{--<li class="${params.tab == 'address' ? 'active': ''}"><a href="#tab2" data-toggle="tab"><g:message code="springSecurity.register.sendingAddress.label"/></a></li>--}%
+                <li class="${tab == 'reagent' ? 'active': ''}"><a href="#tab3" data-toggle="tab"><g:message code="customer.reagent.label"/></a></li>
+                <li class="${tab == 'favorites' ? 'active': ''}"><a href="#tab4" data-toggle="tab"><g:message code="customer.favorites.label"/></a></li>
+                <li class="${tab == 'newsLetters' ? 'active': ''}"><a href="#tab5" data-toggle="tab"><g:message code="controlPanel.settings.profile.newsLetters.label"/></a></li>
+                <li class="${tab == 'personalEvents' ? 'active': ''}"><a href="#tab6" data-toggle="tab"><g:message code="controlPanel.settings.personalEvents.label"/></a></li>
             </ul>
 
             <div class="tab-content">
-                <div id="tab1" class="tab-pane ${!params.tab || params.tab == 'personal' ? 'active': ''}">
+                <div id="tab1" class="tab-pane ${tab == 'personal' ? 'active': ''}">
                     <g:render template="profile/personalInfo"></g:render>
                 </div>
 
-                <div id="tab2" class="tab-pane ${params.tab == 'address' ? 'active': ''}">
-                    <g:render template="profile/address"></g:render>
-                </div>
+                %{--<div id="tab2" class="tab-pane ${params.tab == 'address' ? 'active': ''}">--}%
+                    %{--<g:render template="profile/address"></g:render>--}%
+                %{--</div>--}%
 
-                <div id="tab3" class="tab-pane ${params.tab == 'reagent' ? 'active': ''}">
+                <div id="tab3" class="tab-pane ${tab == 'reagent' ? 'active': ''}">
                     <g:render template="profile/reagent"></g:render>
                 </div>
 
-                <div id="tab4" class="tab-pane ${params.tab == 'favorites' ? 'active': ''}">
+                <div id="tab4" class="tab-pane ${tab == 'favorites' ? 'active': ''}">
                     <g:render template="profile/favorites"></g:render>
+                </div>
+
+                <div id="tab5" class="tab-pane ${tab == 'newsLetters' ? 'active': ''}">
+                    <g:render template="profile/newsLetter"></g:render>
+                </div>
+
+                <div id="tab6" class="tab-pane ${tab == 'personalEvents' ? 'active': ''}">
+                    <g:render template="profile/personalEvents"></g:render>
                 </div>
             </div>
         </div>

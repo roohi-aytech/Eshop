@@ -37,7 +37,7 @@ class PersonalEventController {
 
         if (personalEventInstance.validate() && personalEventInstance.save()) {
 //            render personalEventInstance as JSON
-            redirect(controller: 'customer', action: 'personalEvents')
+            redirect(controller: 'customer', action: 'profile', params: [tab:'personalEvents'])
         } else
             render(template: "form", model: [personalEventInstance: personalEventInstance])
     }

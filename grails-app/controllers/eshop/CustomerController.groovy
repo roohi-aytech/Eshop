@@ -136,16 +136,14 @@ class CustomerController {
         def customer = Customer.findByUsername(((User) springSecurityService.currentUser).username)
         customer.properties = params
 
-        if (!customer.registrationLevel)
-            customer.registrationLevel = 'basic'
-
         customer.profilePersonalInfoFilled = true
-        if (customer.profilePersonalInfoFilled && customer.profileSendingAddressFilled && customer.registrationLevel == 'basic')
-            customer.registrationLevel = 'profile'
+        customer.registrationLevel = 'profile'
         customer.save()
 
+        saveAddress()
+
         flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'profile')
+        redirect(action: 'profile', params: [tab: 'reagent'])
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
@@ -159,19 +157,10 @@ class CustomerController {
         address.telephone = params.telephone
         address.city = City.get(params.city)
 
-        if (!customer.registrationLevel)
-            customer.registrationLevel = 'basic'
-
         if (address.validate() && address.save()) {
             customer.address = address
-            customer.profileSendingAddressFilled = true
-            if (customer.profilePersonalInfoFilled && customer.profileSendingAddressFilled && customer.registrationLevel == 'basic')
-                customer.registrationLevel = 'profile'
             customer.save()
         }
-
-        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'profile')
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
@@ -231,18 +220,16 @@ class CustomerController {
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
     def saveReagent() {
+        def customer = springSecurityService.currentUser as Customer
         def reagent = Customer.findByUsername(params.email)
-        if (reagent) {
-            def customer = springSecurityService.currentUser as Customer
-            if (customer) {
-                customer.reagent = reagent
-                customer.wayOfKnowing = params.wayOfKnowing
-                customer.save()
+        customer.reagent = reagent
+        customer.wayOfKnowing = params.wayOfKnowing
 
-                flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-                redirect(action: 'profile')
-            }
-        }
+        customer.profileReagentFilled = true
+        customer.save()
+
+        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
+        redirect(action: 'profile', params:[tab:'favorites'])
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
@@ -253,10 +240,11 @@ class CustomerController {
         customer.favoriteProductTypes.clear()
         customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect { it.toLong() }).toArray())
 
+        customer.profileFavoritesFilled = true
         customer.save()
 
         flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'profile')
+        redirect(action: 'profile', params: [tab:'newsLetters'])
     }
 
     def forgetPassword() {
@@ -338,10 +326,11 @@ class CustomerController {
         if (params.newsLetterProductTypes)
             customer.newsLetterProductTypes.addAll(ProductType.findAllByIdInList(params.newsLetterProductTypes.split(',').collect { it.toLong() }).toArray())
 
+        customer.profileNewsLettersFilled = true
+        customer.registrationLevel = 'full'
         customer.save()
 
-        flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'panel')
+        redirect(action: 'profile', params: [tab:'personalEvents'])
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
