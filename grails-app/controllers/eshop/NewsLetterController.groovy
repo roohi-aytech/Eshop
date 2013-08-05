@@ -40,12 +40,29 @@ class NewsLetterController {
         }
 
         if (newsLetterInstance.validate() && newsLetterInstance.save()) {
-            if (newsLetterInstance.sendDate > new Date()){
-                NewsLetterJob.schedule(newsLetterInstance.sendDate, [newsLetter: newsLetterInstance])
-            }
+            scheduleNewsLetter(newsLetterInstance)
             render newsLetterInstance as JSON
         } else
             render(template: "form", model: [newsLetterInstance: newsLetterInstance])
+    }
+
+    def scheduleNewsLetter(NewsLetter newsLetter){
+        if (newsLetter.sendDate > new Date()){
+
+            NewsLetterInstance.findAllByNewsLetterAndStatusInList(newsLetter, ['scheduled', 'started']).each {newsLetterInstance ->
+                newsLetterInstance.status = 'suspended'
+                newsLetterInstance.finishDate = new Date()
+                newsLetterInstance.save()
+            }
+
+            def newsLetterInstance = new NewsLetterInstance()
+            newsLetterInstance.newsLetter = newsLetter
+            newsLetterInstance.status = 'scheduled'
+            newsLetterInstance.startDate = newsLetter.sendDate
+            newsLetterInstance.save()
+
+            NewsLetterJob.schedule(newsLetter.sendDate, [newsLetterInstance: newsLetterInstance])
+        }
     }
 
 

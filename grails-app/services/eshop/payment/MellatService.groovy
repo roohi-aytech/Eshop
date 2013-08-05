@@ -1,6 +1,7 @@
 package eshop.payment
 
 import eshop.*
+import eshop.accounting.Account
 import eshop.accounting.OnlinePayment
 import org.grails.plugins.wsclient.service.WebService
 import org.codehaus.groovy.grails.commons.ApplicationHolder
@@ -13,12 +14,14 @@ class MellatService {
     static String userName = "tajan"
     static String userPassword = "20796"
 
-    def prepareForPayment(eshop.accounting.Account account, id, amount, customerId) {
-        def g = ApplicationHolder.application.mainContext.getBean( 'org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib' )
+    def getService(){
         def wsdl = ApplicationHolder.application.parentContext.getResource('WEB-INF/mellatService.wsdl')
-        def bpService = webService.getClient(wsdl.getURL().toString())
+        webService.getClient(wsdl.getURL().toString())
+    }
+
+    def prepareForPayment(Account account, id, amount, customerId) {
         def onlinePaymentConfiguration = new XmlParser().parseText(account.onlinePaymentConfiguration)
-        def result = bpService.bpPayRequest(
+        def result = getService().bpPayRequest(
                 onlinePaymentConfiguration.terminalCode.text().toLong(),
                 onlinePaymentConfiguration.userName.text(),
                 onlinePaymentConfiguration.password.text(),
@@ -27,8 +30,21 @@ class MellatService {
                 new Date().format('yyyyMMdd'),
                 new Date().format('HHmmss'),
                 'OnlinePayment',
-                "http://www.zanbil.ir/order/onlinePaymentResult/",
+                "http://www.zanbil.ir/order/onlinePaymentResult/mellat",
                 0).toString().split(',')
+
+        return result
+    }
+
+    def verifyPayment(Account account, orderId, saleOrderId, saleReferenceId){
+        def onlinePaymentConfiguration = new XmlParser().parseText(account.onlinePaymentConfiguration)
+        def result = getService().bpPayRequest(
+                onlinePaymentConfiguration.terminalCode.text().toLong(),
+                onlinePaymentConfiguration.userName.text(),
+                onlinePaymentConfiguration.password.text(),
+                orderId.toLong(),
+                saleOrderId.toLong(),
+                saleReferenceId.toLing()).toString()
 
         return result
     }

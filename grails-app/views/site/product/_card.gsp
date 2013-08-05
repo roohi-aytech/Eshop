@@ -63,19 +63,19 @@
                 <div class="item"
                     ${addedValue.processTime == 'mandetory' ? 'original-title="' + message(code: "product.addedValues.${addedValue.processTime}.tip") + '"' : ''}>
                     <div>
-                        <g:if test="${addedValue.processTime == 'optional'}">
-                            <input type="checkbox" name="addedValues" id="addedValues_${addedValue.id}"
+                        %{--<g:if test="${addedValue.processTime == 'optional'}">--}%
+                            <input type="checkbox" name="addedValues" id="addedValues_${addedValue.id}" ${addedValue.processTime == 'mandetory' ? 'disabled' : ''}
                                    value="${addedValue.id}" onchange="addOrRemoveAddedValue(this);"
                                 ${selectedAddedValues.collect { it.id }.contains(addedValue.id) ? 'checked' : ''}/>
                             <label for="addedValues_${addedValue.id}">
                                 ${addedValue.name}
                             </label>
-                        </g:if>
-                        <g:else>
-                            <div class="requiredItem">
-                                ${addedValue.name}
-                            </div>
-                        </g:else>
+                        %{--</g:if>--}%
+                        %{--<g:else>--}%
+                            %{--<div class="requiredItem">--}%
+                                %{--${addedValue.name}--}%
+                            %{--</div>--}%
+                        %{--</g:else>--}%
                     </div>
 
                     <div class="price">

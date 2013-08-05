@@ -1,6 +1,7 @@
 package eshop
 
 import grails.converters.JSON
+import grails.plugins.springsecurity.Secured
 
 class OrderAdministrationController {
 
@@ -24,6 +25,7 @@ class OrderAdministrationController {
             render 0
     }
 
+    @Secured([RoleHelper.ROLE_VENDOR])
     def console() {
 
     }
