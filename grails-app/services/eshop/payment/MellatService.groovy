@@ -38,13 +38,13 @@ class MellatService {
 
     def verifyPayment(Account account, orderId, saleOrderId, saleReferenceId){
         def onlinePaymentConfiguration = new XmlParser().parseText(account.onlinePaymentConfiguration)
-        def result = getService().bpPayRequest(
+        def result = getService().bpVerifyRequest(
                 onlinePaymentConfiguration.terminalCode.text().toLong(),
                 onlinePaymentConfiguration.userName.text(),
                 onlinePaymentConfiguration.password.text(),
                 orderId.toLong(),
                 saleOrderId.toLong(),
-                saleReferenceId.toLing()).toString()
+                saleReferenceId.toLong()).toString()
 
         return result
     }
