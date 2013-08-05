@@ -181,10 +181,11 @@ class OrderController {
                 onlinePayment.save()
                 model = [onlinePayment: onlinePayment]
                 if (onlinePayment.resultCode == "0") {
-                    onlinePayment.resultCode = "0-${mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)}"
+                    def verificationResult = mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)
+                    onlinePayment.resultCode = "0-${verificationResult}"
                     onlinePayment.save()
-                    if (onlinePayment.resultCode == "0-0"){
-                        model.resultCode = "0"
+                    model.verificationResult = verificationResult
+                    if (verificationResult == "0"){
                         payOrder(onlinePayment, model)
                     }
                 }

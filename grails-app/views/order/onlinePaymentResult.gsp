@@ -17,7 +17,7 @@
 <div class="page-content">
     <h2><g:message code="onlinePayment.result"/></h2>
 
-    <g:if test="${resultCode == "0"}">
+    %{--<g:if test="${verificationResult == "0"}">--}%
         <div class="info">
             <div><g:message code="onlinePayment.result.success"></g:message></div>
         </div>
@@ -52,17 +52,18 @@
                 </div>
             </g:if>
         </div>
-    </g:if>
-    <g:else>
+    %{--</g:if>--}%
+    %{--<g:else>--}%
         <div class="error">
             <div>
                 <g:message code="onlinePayment.result.error"></g:message>
-                <g:if test="${onlinePayment?.resultCode}">
+                %{--<g:if test="${onlinePayment?.resultCode}">--}%
                     <br/>code: <b>${onlinePayment?.resultCode}</b>
-                </g:if>
+                <div>${verificationResult}</div>
+                %{--</g:if>--}%
             </div>
         </div>
-    </g:else>
+    %{--</g:else>--}%
 
 </div>
 </body>
