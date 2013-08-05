@@ -183,8 +183,10 @@ class OrderController {
                 if (onlinePayment.resultCode == "0") {
                     onlinePayment.resultCode = "0-${mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)}"
                     onlinePayment.save()
-                    if (onlinePayment.resultCode == "0-0")
+                    if (onlinePayment.resultCode == "0-0"){
+                        model.resultCode = "0"
                         payOrder(onlinePayment, model)
+                    }
                 }
             }
         }
