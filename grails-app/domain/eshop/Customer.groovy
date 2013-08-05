@@ -16,7 +16,9 @@ class Customer extends User {
 
     String registrationLevel = 'basic'
     Boolean profilePersonalInfoFilled = false
-    Boolean profileSendingAddressFilled = false
+    Boolean profileReagentFilled = false
+    Boolean profileFavoritesFilled = false
+    Boolean profileNewsLettersFilled = false
     Boolean favoritesFilled = false
 
 
@@ -31,9 +33,11 @@ class Customer extends User {
         mobile(nullable: true)
         favoriteStyle nullable: true, inList: ['traditional', 'classic', 'modern']
         address(nullable: true)
-        registrationLevel(nullable: true, inList: ['basic', 'profile', 'favorites'])
+        registrationLevel(nullable: true, inList: ['basic', 'profile', 'full'])
         profilePersonalInfoFilled(nullable: true)
-        profileSendingAddressFilled(nullable: true)
+        profileReagentFilled(nullable: true)
+        profileFavoritesFilled(nullable: true)
+        profileNewsLettersFilled(nullable: true)
         favoritesFilled(nullable: true)
         wayOfKnowing nullable: true, inList: ['friends', 'search-engines', 'websites', 'news', 'email', 'advertisements', 'other']
         reagent nullable:true

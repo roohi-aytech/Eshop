@@ -10,45 +10,45 @@
             return false;
         }
 
-        $('#reagentEmailValidationMessage').html('');
+%{--$('#reagentEmailValidationMessage').html('');--}%
 
-        var reagentEmail = $('#reagentEmail').val();
-        if(!reagentEmail || reagentEmail == '') {
-            $('#reagentEmailValidationMessage').html('${message(code: 'customer.reagentEmail.notEmpty')}')
-            return false;
-        }
+%{--var reagentEmail = $('#reagentEmail').val();--}%
+%{--if(!reagentEmail || reagentEmail == '') {--}%
+%{--$('#reagentEmailValidationMessage').html('${message(code: 'customer.reagentEmail.notEmpty')}')--}%
+%{--return false;--}%
+%{--}--}%
 
-        var $form = $("#reagentForm");
-        var serializedData = $form.serialize();
-        $('#reagentFrame').hide();
-        $('#reagentWaiting').fadeIn();
-        var request = $.ajax({
-            url: "${createLink(controller: "Customer", action: "validateReagent")}",
+    var $form = $("#reagentForm");
+    var serializedData = $form.serialize();
+    $('#reagentFrame').hide();
+    $('#reagentWaiting').fadeIn();
+    var request = $.ajax({
+        url: "${createLink(controller: "Customer", action: "validateReagent")}",
             type: "post",
             data: serializedData
         });
 
         request.done(function (response, textStatus, jqXHR){
             $('#reagentWaiting').hide();
-            if(isNaN(response)){
+            if(isNaN(response) && response != "0"){
                 $('#reagentFullName').html(response);
                 $('#reagentFrame').fadeIn();
 //                $('#reagentForm').submit(function(){});
-                $('#hiddenSubmit').click();
             }
-            else{
-                $('#reagentEmailValidationMessage').html('${message(code: 'customer.reagentEmail.invalid')}')
-            }
+%{--else{--}%
+%{--$('#reagentEmailValidationMessage').html('${message(code: 'customer.reagentEmail.invalid')}')--}%
+%{--}   --}%
+            $('#hiddenSubmit').click();
         });
 
-        request.fail(function (jqXHR, textStatus, errorThrown){
-        });
+request.fail(function (jqXHR, textStatus, errorThrown){
+});
 
-        request.always(function () {
-        });
+request.always(function () {
+});
 
-        return false;
-    }
+return false;
+}
 </g:javascript>
 <form id='reagentForm' class='cssform' autocomplete='off' method="POST"
       action="${createLink(controller: 'customer', action: 'saveReagent')}">
@@ -64,8 +64,7 @@
 
     <p>
         <label for='reagentEmail'><g:message
-                code="customer.reagent.email.label"/>:</label> *
-        <span id="reagentEmailValidationMessage"></span><br/>
+                code="customer.reagent.email.label"/>:</label>
         <input type='text' class='text_' name='email' id='reagentEmail' value="${customerInstance?.reagent?.email}"/>
         <span id="reagentWaiting" class="waiting">
             <img src="${resource(dir: 'images', file: 'loading.gif')}"/>
@@ -74,7 +73,8 @@
     </p>
 
     <p>
-        <span class="border" id="reagentFrame" ${customerInstance?.reagent ? 'style="display:inline-block;"' : ''}>
+        <span class="border" id="reagentFrame"
+              style="display: none;" ${customerInstance?.reagent ? 'style="display:inline-block;"' : ''}>
             <img src="${resource(dir: 'images', file: 'yes.png')}"/>
             <span><g:message
                     code="customer.reagent.name.label"/>:</span>

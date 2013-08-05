@@ -1,22 +1,22 @@
 <g:javascript>
 
-        function validateFirstName(){
-            $('#firstNameValidationMessage').html('');
-
-            var password = $('#firstName').val();
-            if(!password || password == '') {
-                $('#firstNameValidationMessage').html('${message(code: 'profile.firstName.notEmpty')}')
-                return false;
-            }
-            return true;
-        }
-
         function validateLastName(){
             $('#lastNameValidationMessage').html('');
 
             var password = $('#lastName').val();
             if(!password || password == '') {
                 $('#lastNameValidationMessage').html('${message(code: 'profile.lastName.notEmpty')}')
+                return false;
+            }
+            return true;
+        }
+
+        function validateBirthDate(){
+            $('#birthDateValidationMessage').html('');
+
+            var password = $('#birthDate_control').val();
+            if(!password || password == '') {
+                $('#birthDateValidationMessage').html('${message(code: 'profile.birthDate.notEmpty')}')
                 return false;
             }
             return true;
@@ -33,19 +33,19 @@
             return true;
         }
 
-        function validateTelephone(){
-            $('#telephoneValidationMessage').html('');
+        function validateJobTitle(){
+            $('#jobTitleValidationMessage').html('');
 
-            var password = $('#telephone').val();
+            var password = $('#jobTitle').val();
             if(!password || password == '') {
-                $('#telephoneValidationMessage').html('${message(code: 'profile.telephone.notEmpty')}')
+                $('#jobTitleValidationMessage').html('${message(code: 'profile.jobTitle.notEmpty')}')
                 return false;
             }
             return true;
         }
 
-        function validate(){
-            if(validateFirstName() && validateLastName() && validateMobile() && validateTelephone())
+        function validatePersonalInfo(){
+            if(validateLastName() && validateBirthDate() && validateJobTitle() && validateMobile())
                 return true;
             return false;
         }
@@ -58,9 +58,8 @@
 
         <p>
             <label for='firstName'><g:message
-                    code="springSecurity.register.firstName.label"/>:</label> *
-            <span id="firstNameValidationMessage"></span>
-            <input type='text' class='text_' name='firstName' id='firstName' value="${customerInstance.firstName}" onblur="validateFirstName()" />
+                    code="springSecurity.register.firstName.label"/>:</label>
+            <input type='text' class='text_' name='firstName' id='firstName' value="${customerInstance.firstName}" />
         </p>
 
         <p>
@@ -80,8 +79,14 @@
 
         <p>
             <label for='birthDate'><g:message
-                    code="springSecurity.register.birthDate.label"/>:</label>
+                    code="springSecurity.register.birthDate.label"/>:</label> *
+            <span id="birthDateValidationMessage"></span>
             <rg:datePicker name="birthDate" value="${customerInstance.birthDate}"></rg:datePicker>
+            <script type="text/javascript" language="javascript">
+                $('#birthDate_control').blur(function(){
+                    validateBirthDate();
+                });
+            </script>
         </p>
     </div>
 
@@ -94,9 +99,10 @@
 
         <p>
             <label for='jobTitle'><g:message
-                    code="springSecurity.register.jobTitle.label"/>:</label>
+                    code="springSecurity.register.jobTitle.label"/>:</label> *
+            <span id="jobTitleValidationMessage"></span>
             <g:select name="jobTitle" from="${customerInstance.constraints.jobTitle.inList}"
-                      value="${customerInstance?.jobTitle}"
+                      value="${customerInstance?.jobTitle}" onblur="validateJobTitle()"
                       valueMessagePrefix="customer.jobTitle" noSelection="['': '']"/>
         </p>
 
@@ -108,15 +114,16 @@
 
         <p>
             <label for='telephone'><g:message
-                    code="springSecurity.register.telephone.label"/>:</label> *
-            <span id="telephoneValidationMessage"></span>
-            <input type='text' class='text_' name='telephone' id='telephone' value="${customerInstance.telephone}" onblur="validateTelephone()"/>
+                    code="springSecurity.register.telephone.label"/>:</label>
+            <input type='text' class='text_' name='telephone' id='telephone' value="${customerInstance.telephone}"/>
         </p>
 
     </div>
 
+    <g:render template="profile/address"/>
+
     <p class="toolbar">
-        <input type='submit' id="submit" onclick="return validate();" class="btn btn-primary"
+        <input type='submit' id="submit" onclick="return validatePersonalInfo();" class="btn btn-primary"
                width="80px"
                value='${message(code: "savePersonalInfo")}'/>
     </p>
