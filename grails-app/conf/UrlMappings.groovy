@@ -46,7 +46,7 @@ class UrlMappings {
             action = "list"
         }
 
-        "/order/onlinePaymentResult/$bank/" {
+        "/order/onlinePaymentResult/$bank" {
             controller = "order"
             action = "onlinePaymentResult"
         }
