@@ -170,10 +170,9 @@ class OrderController {
         }
     }
 
-    def onlinePaymentResult() {
+    def onlinePaymentResultMellat() {
 
         def model = [:]
-//        if (params.bank == "mellat") {
         def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
         if (onlinePayment) {
             onlinePayment.resultCode = params.ResCode.toString()
@@ -190,9 +189,8 @@ class OrderController {
                 }
             }
         }
-//        }
 
-        model
+        render view: 'onlinePaymentResult', model: model
     }
 
     def payOrder(OnlinePayment payment, model) {

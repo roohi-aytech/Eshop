@@ -30,7 +30,7 @@ class MellatService {
                 new Date().format('yyyyMMdd'),
                 new Date().format('HHmmss'),
                 'OnlinePayment',
-                "http://www.zanbil.ir/order/onlinePaymentResult/mellat",
+                "http://www.zanbil.ir/order/onlinePaymentResultMellat",
                 0).toString().split(',')
 
         return result

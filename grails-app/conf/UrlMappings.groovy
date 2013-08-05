@@ -46,11 +46,6 @@ class UrlMappings {
             action = "list"
         }
 
-        "/order/onlinePaymentResult/$bank" {
-            controller = "order"
-            action = "onlinePaymentResult"
-        }
-
 //        static pages
         "/contactUs"{
             controller = "site"
