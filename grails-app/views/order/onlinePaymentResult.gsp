@@ -19,6 +19,10 @@
 
     <b>${onlinePayment?.transactionReferenceCode}</b>
     <b>${verificationResult}</b>
+    <b>${params.RefId}</b>
+    <b>${params.ResCode}</b>
+    <b>${params.SaleReferenceId}</b>
+    <b>${params.SaleOrderId}</b>
     <g:if test="${verificationResult == "0"}">
         <div class="info">
             <div><g:message code="onlinePayment.result.success"></g:message></div>
