@@ -173,16 +173,19 @@ class OrderController {
     def onlinePaymentResult() {
 
         def model = [:]
-        def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
-        if (onlinePayment) {
-            onlinePayment.resultCode = params.ResCode.toString()
-            onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
-            onlinePayment.save()
-            model = [onlinePayment: onlinePayment]
-            if (onlinePayment.resultCode == "0") {
-                payOrder(onlinePayment, model)
+        if (params.bank == "mellat") {
+            def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
+            if (onlinePayment) {
+                onlinePayment.resultCode = params.ResCode.toString()
+                onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
+                onlinePayment.save()
+                model = [onlinePayment: onlinePayment]
+                if (onlinePayment.resultCode == "0" &&
+                        mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.saleOrderId, onlinePayment.transactionReferenceCode) == 0)
+                    payOrder(onlinePayment, model)
             }
         }
+
         model
     }
 
