@@ -79,12 +79,11 @@ class CustomerController {
         customerInstance.email = params.username
         customerInstance.registrationLevel = 'basic'
 
-        if(session['invitation']){
+        if (session['invitation']) {
             def invitation = Invitation.findByIdentifier(session['invitation'].toString())
             customerInstance.reagent = invitation.sender
 
-            if(!invitation.registrationRecorded)
-            {
+            if (!invitation.registrationRecorded) {
                 invitation.registrationRecorded = true
                 invitation.save()
 
@@ -252,7 +251,7 @@ class CustomerController {
         customer.favoriteStyle = params.favoriteStyle
 
         customer.favoriteProductTypes.clear()
-        customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect{it.toLong()}).toArray())
+        customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect { it.toLong() }).toArray())
 
         customer.save()
 
@@ -321,20 +320,23 @@ class CustomerController {
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
-    def newsLetter(){
+    def newsLetter() {
         [customerInstance: springSecurityService.currentUser as Customer]
     }
 
-    @Secured([RoleHelper.ROLE_CUSTOMER])v
-    def saveNewsLetter(){
+    @Secured([RoleHelper.ROLE_CUSTOMER]) v
+
+    def saveNewsLetter() {
 
         def customer = springSecurityService.currentUser as Customer
 
         customer.newsLetterCategories.clear()
-        customer.newsLetterCategories.addAll(NewsLetterCategory.findAllByIdInList(params.categories.collect{it.toLong()}).toArray())
+        if (params.categories)
+            customer.newsLetterCategories.addAll(NewsLetterCategory.findAllByIdInList(params.categories.collect { it.toLong() }).toArray())
 
         customer.newsLetterProductTypes.clear()
-        customer.newsLetterProductTypes.addAll(ProductType.findAllByIdInList(params.newsLetterProductTypes.split(',').collect{it.toLong()}).toArray())
+        if (params.newsLetterProductTypes)
+            customer.newsLetterProductTypes.addAll(ProductType.findAllByIdInList(params.newsLetterProductTypes.split(',').collect { it.toLong() }).toArray())
 
         customer.save()
 
@@ -343,11 +345,11 @@ class CustomerController {
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
-    def personalEvents(){
+    def personalEvents() {
         [customerInstance: springSecurityService.currentUser as Customer]
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
-    def invite(){
+    def invite() {
     }
 }

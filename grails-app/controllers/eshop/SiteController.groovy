@@ -382,14 +382,13 @@ class SiteController {
         }
 
         def productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
-        model.addedValues = AddedValue.findAllByBaseProductAndProcessTime(product, 'optional').findAll { addedValue ->
+        model.addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
                 variationValue.value != productModel.variationValues
                         .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
             }
         }
         model.selectedAddedValues = model.addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
-
 
         //update product visit count
         if (!product.visitCount)
@@ -461,7 +460,7 @@ class SiteController {
                 productModel = model
         }
 
-        def addedValues = AddedValue.findAllByBaseProductAndProcessTime(product, 'optional').findAll { addedValue ->
+        def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
                 variationValue.value != productModel.variationValues
                         .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
