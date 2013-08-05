@@ -173,24 +173,24 @@ class OrderController {
     def onlinePaymentResult() {
 
         def model = [:]
-        if (params.bank == "mellat") {
-            def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
-            if (onlinePayment) {
-                onlinePayment.resultCode = params.ResCode.toString()
-                onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
+//        if (params.bank == "mellat") {
+        def onlinePayment = OnlinePayment.findByReferenceId(params.RefId.toString())
+        if (onlinePayment) {
+            onlinePayment.resultCode = params.ResCode.toString()
+            onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
+            onlinePayment.save()
+            model = [onlinePayment: onlinePayment]
+            if (onlinePayment.resultCode == "0") {
+                def verificationResult = mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)
+                onlinePayment.resultCode = "0-${verificationResult}"
                 onlinePayment.save()
-                model = [onlinePayment: onlinePayment]
-                if (onlinePayment.resultCode == "0") {
-                    def verificationResult = mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)
-                    onlinePayment.resultCode = "0-${verificationResult}"
-                    onlinePayment.save()
-                    model.verificationResult = verificationResult
-                    if (verificationResult == "0"){
-                        payOrder(onlinePayment, model)
-                    }
+                model.verificationResult = verificationResult
+                if (verificationResult == "0") {
+                    payOrder(onlinePayment, model)
                 }
             }
         }
+//        }
 
         model
     }
