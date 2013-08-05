@@ -180,9 +180,12 @@ class OrderController {
                 onlinePayment.transactionReferenceCode = params.SaleReferenceId.toString()
                 onlinePayment.save()
                 model = [onlinePayment: onlinePayment]
-                if (onlinePayment.resultCode == "0" &&
-                        mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.saleOrderId, onlinePayment.transactionReferenceCode) == 0)
-                    payOrder(onlinePayment, model)
+                if (onlinePayment.resultCode == "0") {
+                    onlinePayment.resultCode = "0-${mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.saleOrderId, onlinePayment.transactionReferenceCode)}"
+                    onlinePayment.save()
+                    if (onlinePayment.resultCode == "0-0")
+                        payOrder(onlinePayment, model)
+                }
             }
         }
 
