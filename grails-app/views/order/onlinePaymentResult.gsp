@@ -17,6 +17,8 @@
 <div class="page-content">
     <h2><g:message code="onlinePayment.result"/></h2>
 
+    <b>${onlinePayment?.transactionReferenceCode}</b>
+    <b>${verificationResult}</b>
     <g:if test="${verificationResult == "0"}">
         <div class="info">
             <div><g:message code="onlinePayment.result.success"></g:message></div>
@@ -59,8 +61,8 @@
                 <g:message code="onlinePayment.result.error"></g:message>
                 <g:if test="${onlinePayment?.resultCode}">
                     <br/>code: <b>${onlinePayment?.resultCode}</b>
-                <div style="display: none">${verificationResult}</div>
                 </g:if>
+                <div style="display: none">${verificationResult}</div>
             </div>
         </div>
     </g:else>
