@@ -33,15 +33,14 @@ class DeliveryTargetZoneController {
         } else
             deliveryTargetZoneInstance = new DeliveryTargetZone(params)
 
-        deliveryTargetZoneInstance.cities.clear()
-        deliveryTargetZoneInstance.cities.addAll(City.findAllByIdInList(params.cities.collect { it.toLong() }.toList()))
+//        deliveryTargetZoneInstance.cities.clear()
+//        deliveryTargetZoneInstance.cities.addAll(City.findAllByIdInList(params.cities.collect { it.toLong() }.toList()))
 
         if (deliveryTargetZoneInstance.validate() && deliveryTargetZoneInstance.save()) {
             render deliveryTargetZoneInstance as JSON
         } else
             render(template: "form", model: [deliveryTargetZoneInstance: deliveryTargetZoneInstance])
     }
-
 
     def delete() {
         def deliveryTargetZoneInstance = DeliveryTargetZone.get(params.id)

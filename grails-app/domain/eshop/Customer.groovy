@@ -19,7 +19,6 @@ class Customer extends User {
     Boolean profileReagentFilled = false
     Boolean profileFavoritesFilled = false
     Boolean profileNewsLettersFilled = false
-    Boolean favoritesFilled = false
 
 
     static hasMany = [wishList:Product, newsLetterCategories: NewsLetterCategory, newsLetterProductTypes: ProductType, favoriteProductTypes: ProductType, personalEvents: PersonalEvent]
@@ -38,7 +37,6 @@ class Customer extends User {
         profileReagentFilled(nullable: true)
         profileFavoritesFilled(nullable: true)
         profileNewsLettersFilled(nullable: true)
-        favoritesFilled(nullable: true)
         wayOfKnowing nullable: true, inList: ['friends', 'search-engines', 'websites', 'news', 'email', 'advertisements', 'other']
         reagent nullable:true
     }

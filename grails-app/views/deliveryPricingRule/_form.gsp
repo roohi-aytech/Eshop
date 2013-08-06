@@ -17,7 +17,7 @@
 <div style="padding: 3px;text-align: center;">
     <g:field type="number" name="weightMin" step="any" value="${deliveryPricingRuleInstance.weightMin}"
              style="width:90px;text-align: center;margin-left: 3px;"/>
-    ≤
+    <
     <g:message code="deliveryPricingRule.weight.label" default="Weight"/>
     ≤
     <g:field type="number" name="weightMax" step="any" value="${deliveryPricingRuleInstance.weightMax}"
@@ -26,7 +26,7 @@
 <div style="padding: 3px;text-align: center;">
     <g:field type="number" name="volumeMin" step="any" value="${deliveryPricingRuleInstance.volumeMin}"
              style="width:90px;text-align: center;"/>
-    ≤
+    <
     <g:message code="deliveryPricingRule.volume.label" default="Volume"/>
     ≤
     <g:field type="number" name="volumeMax" step="any" value="${deliveryPricingRuleInstance.volumeMax}"

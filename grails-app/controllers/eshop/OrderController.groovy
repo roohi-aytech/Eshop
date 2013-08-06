@@ -181,10 +181,14 @@ class OrderController {
             model = [onlinePayment: onlinePayment]
             if (onlinePayment.resultCode == "0") {
                 def verificationResult = mellatService.verifyPayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)
-                onlinePayment.resultCode = "0-${verificationResult}"
+                onlinePayment.resultCode = "${onlinePayment.resultCode}-${verificationResult}"
                 onlinePayment.save()
                 model.verificationResult = verificationResult
                 if (verificationResult == "0") {
+                    def settleResult = mellatService.settlePayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)
+                    onlinePayment.resultCode = "${onlinePayment.resultCode}-${settleResult}"
+                    onlinePayment.save()
+                    if(settleResult == "0" || settleResult == "45")
                     payOrder(onlinePayment, model)
                 }
             }
@@ -259,7 +263,7 @@ class OrderController {
                 //send alert to customer
                 mailService.sendMail {
                     to springSecurityService.currentUser.email
-                    subject message(code: 'activationMail.subject')
+                    subject message(code: 'order.paid.subject')
                     html(view: "/messageTemplates/mail/orderPaid",
                             model: [customer: springSecurityService.currentUser, order: payment.order])
                 }
@@ -276,7 +280,7 @@ class OrderController {
                 //send alert to customer
                 mailService.sendMail {
                     to springSecurityService.currentUser.email
-                    subject message(code: 'activationMail.subject')
+                    subject message(code: 'order.notPaid.subject')
                     html(view: "/messageTemplates/mail/orderNotPaid",
                             model: [customer: springSecurityService.currentUser, order: payment.order])
                 }
