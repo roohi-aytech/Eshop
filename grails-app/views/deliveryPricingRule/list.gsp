@@ -5,6 +5,11 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'deliveryPricingRule.label', default: 'DeliveryPricingRule')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <style>
+        .ui-widget-content.jqgrow.ui-row-rtl td{
+            direction: ltr !important;
+        }
+    </style>
 </head>
 
 <body>

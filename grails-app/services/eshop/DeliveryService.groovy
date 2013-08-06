@@ -45,9 +45,9 @@ class DeliveryService {
 
             deliveryMethod.sourceStations.each { sourceStation ->
                 def pricingRule = sourceStation.targetZones.find { it.cities.collect { it.id }.contains(targetCity.id) }.pricingRules.find { pricingRule ->
-                    (!pricingRule.weightMin || pricingRule.weightMin <= totalWeight) &&
+                    (!pricingRule.weightMin || pricingRule.weightMin < totalWeight) &&
                             (!pricingRule.weightMax || pricingRule.weightMax >= totalWeight) &&
-                            (!pricingRule.volumeMin || pricingRule.volumeMin <= totalVolume) &&
+                            (!pricingRule.volumeMin || pricingRule.volumeMin < totalVolume) &&
                             (!pricingRule.volumeMax || pricingRule.volumeMax >= totalVolume)
                 }
 

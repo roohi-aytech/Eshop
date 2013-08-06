@@ -48,4 +48,17 @@ class MellatService {
 
         return result
     }
+
+    def settlePayment(Account account, orderId, saleOrderId, saleReferenceId){
+        def onlinePaymentConfiguration = new XmlParser().parseText(account.onlinePaymentConfiguration)
+        def result = getService().bpSettleRequest(
+                onlinePaymentConfiguration.terminalCode.text().toLong(),
+                onlinePaymentConfiguration.userName.text(),
+                onlinePaymentConfiguration.password.text(),
+                orderId.toLong(),
+                saleOrderId.toLong(),
+                saleReferenceId.toLong()).toString()
+
+        return result
+    }
 }

@@ -118,7 +118,7 @@ class PaymentResponseController {
                         //send alert to customer
                         mailService.sendMail {
                             to springSecurityService.currentUser.email
-                            subject message(code: 'activationMail.subject')
+                            subject message(code: 'order.paid.subject')
                             html(view: "/messageTemplates/mail/orderPaid",
                                     model: [customer: springSecurityService.currentUser, order: request.order])
                         }
@@ -133,7 +133,7 @@ class PaymentResponseController {
                         //send alert to customer
                         mailService.sendMail {
                             to springSecurityService.currentUser.email
-                            subject message(code: 'activationMail.subject')
+                            subject message(code: 'order.notPaid.subject')
                             html(view: "/messageTemplates/mail/orderNotPaid",
                                     model: [customer: springSecurityService.currentUser, order: request.order])
                         }
