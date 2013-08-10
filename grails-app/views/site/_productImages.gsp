@@ -1,7 +1,5 @@
+<g:if test="${selectedImage}">
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.zoombie.css')}"/>
-
-%{--<g:javascript plugin="jquery" src="jquery/jquery-1.7.2.js"></g:javascript>--}%
-%{--<g:javascript src="jquery.zoombie.js"/>--}%
 <script language="javascript">
 
     var currentSelectedThumbnailId;
@@ -182,7 +180,7 @@
             else
                 currentImageX = zoomAreaWidth - largeImageWidth;
         }
-        else{
+        else {
             currentImageX = (zoomAreaWidth - largeImageWidth) / 2
         }
 
@@ -196,8 +194,14 @@
             else
                 currentImageY = zoomAreaHeight - largeImageHeight;
         }
-        else{
+        else {
             currentImageY = (zoomAreaHeight - largeImageHeight) / 2
         }
     }
 </script>
+</g:if>
+<g:else>
+    <div style="text-align: center;font-family:tahoma;margin-top:50px;font-size:11px;">
+        <g:message code="product.image.notFound"/>
+    </div>
+</g:else>

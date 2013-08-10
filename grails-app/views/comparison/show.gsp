@@ -47,19 +47,20 @@
 <body>
 
 <div class="tabbable">
-    <ul class="nav nav-tabs">
-        <g:each in="${productTypeList}" var="productType">
-            <li><a href="#tab${productType.item.id}" data-toggle="tab">
-            %{--<img src="${createLink(controller: 'image', params:[type:'productType', id:productType.item.id, wh:'50x50'])}"/>--}%
-                ${productType.item.name}</a></li>
-        </g:each>
-    </ul>
+<ul class="nav nav-tabs">
+    <g:each in="${productTypeList}" var="productType">
+        <li><a href="#tab${productType.item.id}" data-toggle="tab">
+        %{--<img src="${createLink(controller: 'image', params:[type:'productType', id:productType.item.id, wh:'50x50'])}"/>--}%
+            ${productType.item.name}</a></li>
+    </g:each>
+</ul>
 
-    <div class="tab-content">
-        <g:each in="${productTypeList}" var="productType">
-            <div id="tab${productType.item.id}" class="tab-pane">
+<div class="tab-content">
+    <g:each in="${productTypeList}" var="productType">
+        <div id="tab${productType.item.id}" class="tab-pane">
             <div style="float: right;margin-bottom: 10px;">
-                <select name="brand" id="brandCombo${productType.item.id}" class="imageCombo" onchange="showProducts(${productType.item.id}, $(this).val())">
+                <select name="brand" id="brandCombo${productType.item.id}" class="imageCombo"
+                        onchange="showProducts(${productType.item.id}, $(this).val())">
                     <g:each in="${productType.brands}" var="brand">
                         <option value="${brand.id}"
                                 data-image="${createLink(controller: 'image', params: [type: 'brand', id: brand.id])}">${brand.name}</option>
@@ -76,7 +77,8 @@
             </div>
 
             <div style="float: left;margin-bottom: 10px;">
-                <a class="btn btn-success" onclick="selectAttributes(${productType.item.id});" style="height: 23px;"><g:message
+                <a class="btn btn-success" onclick="selectAttributes(${productType.item.id});"
+                   style="height: 23px;"><g:message
                         code="comparison.selectAttributes.link"/></a>
             </div>
             <table class="comparison attribute-list" style="clear: both">
@@ -179,22 +181,22 @@
                     </g:form>
                 </div>
             </div>
-        </g:each>
-    </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
+    </g:each>
+</div>
 
-        <div class="modal-body">
-        </div>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     </div>
 
-    <g:javascript>
+    <div class="modal-body">
+    </div>
+</div>
+
+<g:javascript>
     $(document).ready(function () {
         $('ul.nav.nav-tabs li').first().addClass('active');
         $('div.tab-content div.tab-pane').first().addClass('active');
@@ -248,6 +250,6 @@
             input.val(input.val() + nodes[i].id);
         }
     }
-    </g:javascript>
+</g:javascript>
 </body>
 </html>

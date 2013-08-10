@@ -44,7 +44,7 @@ class DeliveryService {
             def totalPrice = order.items.sum(0, { it?.orderCount * it?.unitPrice ?: 0 })
 
             deliveryMethod.sourceStations.each { sourceStation ->
-                def pricingRule = sourceStation.targetZones.find { it.cities.collect { it.id }.contains(targetCity.id) }.pricingRules.find { pricingRule ->
+                def pricingRule = sourceStation.targetZones?.find { it.cities?.collect { it.id }.contains(targetCity.id) }?.pricingRules?.find { pricingRule ->
                     (!pricingRule.weightMin || pricingRule.weightMin < totalWeight) &&
                             (!pricingRule.weightMax || pricingRule.weightMax >= totalWeight) &&
                             (!pricingRule.volumeMin || pricingRule.volumeMin < totalVolume) &&

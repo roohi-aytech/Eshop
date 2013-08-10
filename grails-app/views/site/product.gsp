@@ -89,6 +89,22 @@
             <table class="table-simulated">
                 <tr class="table-row">
                     <td class="table-cell" style="padding-left:5px;">
+                        <div style="float:left;padding-top:6px;">
+                            <div class="g-plusone"></div>
+
+                            <script type="text/javascript">
+                                window.___gcfg = {lang: 'fa'};
+
+                                (function () {
+                                    var po = document.createElement('script');
+                                    po.type = 'text/javascript';
+                                    po.async = true;
+                                    po.src = 'https://apis.google.com/js/plusone.js';
+                                    var s = document.getElementsByTagName('script')[0];
+                                    s.parentNode.insertBefore(po, s);
+                                })();
+                            </script>
+                        </div>
                         <ul class="breadcrumb">
                             <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                 <a itemprop="url" href="${createLink(uri: '/')}">

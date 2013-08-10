@@ -500,7 +500,6 @@ class SiteController {
     def productImage() {
         def product = Product.get(params.id)
 
-        //fill zoomable property of images
         if (product.mainImage)
             imageService.getImageSize(product.mainImage, product)
 
@@ -511,19 +510,19 @@ class SiteController {
         render(template: "productImages", model: [product: product, selectedImage: params.img ? product.images.find { it.id.toString() == params.img.toString() } : product.mainImage])
     }
 
-    def productImages() {
-        def product = Product.get(params.id)
-
-        //fill zoomable property of images
-        if (product.mainImage)
-            imageService.getImageSize(product.mainImage, product)
-
-        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
-            imageService.getImageSize(it, product)
-        }
-
-        [product: product, selectedImage: params.img ? product.images.find { it.id.toString() == params.img.toString() } : product.mainImage]
-    }
+//    def productImages() {
+//        def product = Product.get(params.id)
+//
+//        //fill zoomable property of images
+//        if (product.mainImage)
+//            imageService.getImageSize(product.mainImage, product)
+//
+//        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
+//            imageService.getImageSize(it, product)
+//        }
+//
+//        [product: product, selectedImage: params.img ? product.images.find { it.id.toString() == params.img.toString() } : product.mainImage]
+//    }
 
     def fillAttibuteCategoryChildren(Product product, parentCategory) {
 

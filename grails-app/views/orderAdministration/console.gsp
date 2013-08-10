@@ -84,6 +84,9 @@
                            onclick="loadOrderList('${it}')"><g:message code="order.status.${it}"/></a>
                     </li>
                 </g:each>
+                <li style="text-align: right;margin:5px;" class="menuItem" id="menuItemAll">
+                    <a style="padding:3px;text-align: right;display: block;background: #f8f8f8;border-radius: 4px;"
+                       onclick="loadOrderList('All')"><g:message code="order.status.All"/></a></li>
             </ul>
         </td>
         <td style="border-width:0;">

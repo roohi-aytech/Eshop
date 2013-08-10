@@ -23,11 +23,15 @@ class Order {
 
     String status
 
+    String trackingCode
+
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
 
     static constraints = {
+        trackingCode nullable: true
         status(nullable: false, inList: OrderHelper.STATUS_LIST)
         customer(nullable: false)
+        ownerEmail()
         ownerMobile()
         ownerTelephone()
         items()
