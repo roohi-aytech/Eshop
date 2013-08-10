@@ -4,6 +4,15 @@
 <div id="show-order" class="content scaffold-show" role="main">
     <ol class="property-list order" style="padding: 0;margin: 0;margin-bottom:10px;">
 
+        <g:if test="${orderInstance?.trackingCode}">
+            <li class="fieldcontain">
+                <span id="trackingCode-label" class="property-label"><g:message code="order.trackingCode"/></span>
+
+                <span class="property-value" aria-labelledby="trackingCode-label">${orderInstance.trackingCode}</span>
+
+            </li>
+        </g:if>
+
         <g:if test="${orderInstance?.status}">
             <li class="fieldcontain">
                 <span id="status-label" class="property-label"><g:message code="order.status"

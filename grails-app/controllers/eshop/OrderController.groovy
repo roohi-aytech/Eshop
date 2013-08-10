@@ -50,7 +50,6 @@ class OrderController {
             return
         }
 
-
         //set tracking code
         def cal = Calendar.getInstance()
         cal.setTime(new Date())
@@ -401,6 +400,11 @@ class OrderController {
                 break
         }
         render template: 'invoice', model: [order: order, title: title]
+    }
+
+    def track() {
+        def customer = springSecurityService.currentUser as Customer
+        params.trackingCode ? [order: Order.findByTrackingCode(params.trackingCode), customer: customer] : [order: null, customer: customer]
     }
 
 //    def cancellation(){

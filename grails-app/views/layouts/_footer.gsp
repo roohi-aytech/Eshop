@@ -43,7 +43,16 @@
                 </ul>
             </td>
             <td>
-
+                <div class="orderTracking">
+                    <h3><g:message code="order.tracking"/></h3>
+                    <g:form method="post" controller="order" action="track">
+                        <g:textField name="trackingCode" id="trackingCode" place-holder="test"/>
+                        <g:submitButton name="submit" class="btn" value="${message( code:'order.tracking.button')}"/>
+                    </g:form>
+                    <script type="text/javascript" language="javascript">
+                        $('#trackingCode').maskInput('9999999999');
+                    </script>
+                </div>
             </td>
             <td>
 

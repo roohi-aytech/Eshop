@@ -72,9 +72,18 @@
                 </div>
 
                 <div class="column2 items">
-                    <h4><g:message code="controlPanel.orders.payments.label"></g:message></h4>
-                    <ul class="slave">
-                    </ul>
+                    <h4><g:message code="order.tracking"></g:message></h4>
+
+                    <div class="orderTracking">
+                        <g:form method="post" controller="order" action="track">
+                            <g:textField name="trackingCode" id="trackingCodePanel" place-holder="test"/>
+                            <g:submitButton name="submit" class="btn btn-primary"
+                                            value="${message(code: 'order.tracking.button')}"/>
+                        </g:form>
+                    </div>
+                    <script type="text/javascript" language="javascript">
+                        $('#trackingCodePanel').maskInput('9999999999');
+                    </script>
                 </div>
             </div>
         </li>
@@ -131,14 +140,15 @@
                     <h4><g:message
                             code="controlPanel.settings.preferences.label"></g:message></h4>
                     <ul class="slave">
-                        <li><g:link controller="customer" action="profile" params="${[tab:'reagent']}"><g:message
+                        <li><g:link controller="customer" action="profile" params="${[tab: 'reagent']}"><g:message
                                 code="customer.reagent.label"></g:message></g:link></li>
-                        <li><g:link controller="customer" action="profile" params="${[tab:'favorites']}"><g:message
+                        <li><g:link controller="customer" action="profile" params="${[tab: 'favorites']}"><g:message
                                 code="customer.favorites.label"></g:message></g:link></li>
-                        <li><g:link controller="customer" action="profile" params="${[tab:'newsLetters']}"><g:message
+                        <li><g:link controller="customer" action="profile" params="${[tab: 'newsLetters']}"><g:message
                                 code="controlPanel.settings.profile.newsLetters.label"></g:message></g:link></li>
-                        <li><g:link controller="customer" action="profile" params="${[tab:'personalEvents']}"><g:message
-                                code="controlPanel.settings.personalEvents.label"></g:message></g:link></li>
+                        <li><g:link controller="customer" action="profile"
+                                    params="${[tab: 'personalEvents']}"><g:message
+                                    code="controlPanel.settings.personalEvents.label"></g:message></g:link></li>
                     </ul>
                 </div>
             </div>
