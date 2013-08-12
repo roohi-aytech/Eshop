@@ -6,64 +6,82 @@
  * To change this template use File | Settings | File Templates.
  */
 $(document).ready(function () {
-    $('body').append($('<div class="search-auto-complete-drop-down"><div class="search-auto-complete-drop-down-inner"></div></div>'));
+    $("#searchForm").attr('searchAutoCompleteUrl', searchAutoCompleteUrl);
+    setupSearchAutoComplete($("#searchForm"));
+});
 
-    $('.search-auto-complete-drop-down').width($('#searchPhrase').width() - 10);
-    $('.search-auto-complete-drop-down').css('top', $('#searchPhrase').offset().top + $('#searchPhrase').height() + 8);
-    $('.search-auto-complete-drop-down').css('left', $('#searchPhrase').offset().left);
+function setupSearchAutoComplete(form){
+    var formId = form.attr('id');
+    var searchInput = $('#' + formId + ' input[type="text"]');
+    var dropDownId = 'search-auto-complete-drop-down-' + formId;
+    $('body').append($('<div id="' + dropDownId + '" class="search-auto-complete-drop-down"><div class="search-auto-complete-drop-down-inner"></div></div>'));
+    var dropDown = $('#' + dropDownId);
+
+    dropDown.width(searchInput.width() - 10);
+    dropDown.css('top', searchInput.offset().top + searchInput.height() + 8);
+    dropDown.css('left', searchInput.offset().left);
 
     $(window).resize(function () {
-        $('.search-auto-complete-drop-down').width($('#searchPhrase').width() - 10);
-        $('.search-auto-complete-drop-down').css('top', $('#searchPhrase').offset().top + $('#searchPhrase').height() + 8);
-        $('.search-auto-complete-drop-down').css('left', $('#searchPhrase').offset().left);
+        dropDown.width(searchInput.width() - 10);
+        dropDown.css('top', searchInput.offset().top + searchInput.height() + 8);
+        dropDown.css('left', $('#searchPhrase').offset().left);
     });
 
     $(document).scroll(function (e) {
-        $('.search-auto-complete-drop-down').width($('#searchPhrase').width() - 10);
-        $('.search-auto-complete-drop-down').css('top', $('#searchPhrase').offset().top + $('#searchPhrase').height() + 8);
-        $('.search-auto-complete-drop-down').css('left', $('#searchPhrase').offset().left);
+        dropDown.width(searchInput.width() - 10);
+        dropDown.css('top', searchInput.offset().top + searchInput.height() + 8);
+        dropDown.css('left', searchInput.offset().left);
     });
 
     $('#main-container').click(function(){
-        $('.search-auto-complete-drop-down').hide();
+        dropDown.hide();
     });
 
     $('.header').click(function(){
-        $('.search-auto-complete-drop-down').hide();
+        dropDown.hide();
     });
 
-    $('#searchPhrase').keyup(function () {
-        var phrase = $('#searchPhrase').val();
+    searchInput.keyup(function () {
+        var phrase = $(this).val();
         if (phrase && phrase.length > 2) {
-            autoComplete(phrase);
+
+            dropDown.width(searchInput.width() - 10);
+            dropDown.css('top', searchInput.offset().top + searchInput.height() + 8);
+            dropDown.css('left', searchInput.offset().left);
+
+            autoComplete(form);
         }
         else {
-            $('.search-auto-complete-drop-down').hide();
+            dropDown.hide();
         }
     });
-});
+}
 
-$()
+var searchAutoCompleteRequests = new Object();
+var lastAutoCompleteDropDown;
 
-var searchAutoCompleteRequest;
+function autoComplete(form) {
 
-function autoComplete(phrase) {
+    var formId = form.attr('id');
+    var searchInput = $('#' + formId + ' input[type="text"]');
+    var dropDownId = 'search-auto-complete-drop-down-' + formId;
+    var dropDown = $('#' + dropDownId);
 
-    var $form = $("#searchForm");
-    var serializedData = $form.serialize();
-    if (searchAutoCompleteRequest)
-        searchAutoCompleteRequest.abort();
-    $('.search-auto-complete-drop-down').hide();
+    var serializedData = form.serialize();
+    if (searchAutoCompleteRequests[formId])
+        searchAutoCompleteRequests[formId].abort();
+    dropDown.hide();
 
-    searchAutoCompleteRequest = $.ajax({
-        url: searchAutoCompleteUrl,
+    lastAutoCompleteDropDown = dropDown
+    searchAutoCompleteRequests[formId] = $.ajax({
+        url: form.attr('searchAutoCompleteUrl'),
         type: "get",
         data: serializedData
     });
 
-    $('#searchPhrase').addClass('waitForAutoComplete');
+    searchInput.addClass('waitForAutoComplete');
 
-    searchAutoCompleteRequest.done(function (response, textStatus, jqXHR) {
+    searchAutoCompleteRequests[formId].done(function (response, textStatus, jqXHR) {
 
         if (response) {
             showAutoCompleteResult(response);
@@ -71,25 +89,25 @@ function autoComplete(phrase) {
         else {
         }
 
-        $('#searchPhrase').removeClass('waitForAutoComplete');
+        searchInput.removeClass('waitForAutoComplete');
     });
 
-    searchAutoCompleteRequest.fail(function (jqXHR, textStatus, errorThrown) {
-        $('#searchPhrase').removeClass('waitForAutoComplete');
-        $('.search-auto-complete-drop-down').hide();
+    searchAutoCompleteRequests[formId].fail(function (jqXHR, textStatus, errorThrown) {
+        searchInput.removeClass('waitForAutoComplete');
+        dropDown.hide();
     });
 
-    searchAutoCompleteRequest.always(function () {
+    searchAutoCompleteRequests[formId].always(function () {
     });
 }
 
-function showAutoCompleteResult(response) {
+function showAutoCompleteResult(response, parameters) {
     if (response != '') {
-        $('.search-auto-complete-drop-down-inner').html(response);
-        $('.search-auto-complete-drop-down-inner').rollbar({zIndex: 80, wheelSpeed: 10});
-        $('.search-auto-complete-drop-down').fadeIn();
+        lastAutoCompleteDropDown.find('.search-auto-complete-drop-down-inner').html(response);
+        lastAutoCompleteDropDown.find('.search-auto-complete-drop-down-inner').rollbar({zIndex: 80, wheelSpeed: 10});
+        lastAutoCompleteDropDown.fadeIn();
     }
     else{
-        $('.search-auto-complete-drop-down').hide();
+        lastAutoCompleteDropDown.hide();
     }
 }
