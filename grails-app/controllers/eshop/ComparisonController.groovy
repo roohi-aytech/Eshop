@@ -5,6 +5,8 @@ import grails.converters.JSON
 class ComparisonController {
 
     def priceService
+    def browseService
+    def searchableService
 
     def add() {
         def id = params.id
@@ -189,5 +191,22 @@ class ComparisonController {
                         productTypeId: params.productTypeId.toLong()
                 ]
         )
+    }
+
+    def searchAutoComplete() {
+
+        def model = [:]
+        def productIdList = []
+        if (params.phrase)
+            productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
+
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0).products.productIds
+        model.commonLink = createLink(uri: '/')
+        model.productType = ProductType.get(params.id)
+
+        if(model.productIds?.size() > 0)
+            render(template: 'search_autoComplete', model: model)
+        else
+            render ''
     }
 }

@@ -816,6 +816,15 @@ input.search-query {
     width: 100%;
 }
 
+.comparison-search-query{
+    width: 400px;
+    margin-bottom: 0 !important;
+}
+
+.comparison-search-form{
+    margin:0;
+}
+
 .btn-inverse-grey {
     background-color: #e7e7e7;
     background-image: -moz-linear-gradient(center top, #f4f4f4, #e7e7e7);
@@ -3211,11 +3220,15 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     padding:5px;
     background-color: #f6f6f6;
     position: absolute;
-    z-index: 999999999;
+    z-index: 1000;
     border: 1px solid #EEEEEE;
     border-radius: 5px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.075);
     direction: rtl;
+}
+
+#search-auto-complete-drop-down-searchForm{
+    z-index: 999999999;
 }
 
 .search-auto-complete-drop-down-inner{

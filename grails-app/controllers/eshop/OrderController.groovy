@@ -404,7 +404,37 @@ class OrderController {
 
     def track() {
         def customer = springSecurityService.currentUser as Customer
-        params.trackingCode ? [order: Order.findByTrackingCode(params.trackingCode), customer: customer] : [order: null, customer: customer]
+
+        if(!params.trackingCode)
+            return [order: null, customer: customer]
+
+        def order = Order.findByTrackingCode(params.trackingCode)
+        def actions = []
+        def suggestedActions = []
+
+        if (order.status == OrderHelper.STATUS_INQUIRED)
+            suggestedActions = [OrderHelper.ACTION_PAYMENT]
+
+        def invoiceTitle = message(code: 'order.preInvoice.title')
+        switch (order.status) {
+            case OrderHelper.STATUS_PAID:
+                invoiceTitle = message(code: 'order.finalInvoice.title')
+                break
+            case OrderHelper.STATUS_TRANSMITTED:
+                invoiceTitle = message(code: 'order.finalInvoice.title')
+                break
+            case OrderHelper.STATUS_DELIVERED:
+                invoiceTitle = message(code: 'order.finalInvoice.title')
+                break
+        }
+
+        [
+                order: order,
+                customer: customer,
+                actions: actions,
+                suggestedActions: suggestedActions,
+                invoiceTitle: invoiceTitle
+        ]
     }
 
 //    def cancellation(){

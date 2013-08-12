@@ -59,21 +59,22 @@
     <g:each in="${productTypeList}" var="productType">
         <div id="tab${productType.item.id}" class="tab-pane">
             <div style="float: right;margin-bottom: 10px;">
-                <select name="brand" id="brandCombo${productType.item.id}" class="imageCombo"
-                        onchange="showProducts(${productType.item.id}, $(this).val())">
-                    <g:each in="${productType.brands}" var="brand">
-                        <option value="${brand.id}"
-                                data-image="${createLink(controller: 'image', params: [type: 'brand', id: brand.id])}">${brand.name}</option>
-                    </g:each>
-                </select>
+                %{--<select name="brand" id="brandCombo${productType.item.id}" class="imageCombo"--}%
+                        %{--onchange="showProducts(${productType.item.id}, $(this).val())">--}%
+                    %{--<g:each in="${productType.brands}" var="brand">--}%
+                        %{--<option value="${brand.id}"--}%
+                                %{--data-image="${createLink(controller: 'image', params: [type: 'brand', id: brand.id])}">${brand.name}</option>--}%
+                    %{--</g:each>--}%
+                %{--</select>--}%
 
-                <span id="productSelectorContainer"></span>
+                %{--<span id="productSelectorContainer"></span>--}%
 
-                <g:javascript>
-                    $(document).ready(function(){
-                        showProducts(${productType.item.id}, $('#brandCombo${productType.item.id}').val());
-                    });
-                </g:javascript>
+                %{--<g:javascript>--}%
+                    %{--$(document).ready(function(){--}%
+                        %{--showProducts(${productType.item.id}, $('#brandCombo${productType.item.id}').val());--}%
+                    %{--});--}%
+                %{--</g:javascript>--}%
+                <g:render template="productSearch" model="${[productType: productType.item]}"/>
             </div>
 
             <div style="float: left;margin-bottom: 10px;">
