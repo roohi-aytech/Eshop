@@ -37,7 +37,7 @@
             <td class="label"><g:message code="invoice.date"></g:message>:</td>
             <td class="value"><rg:formatJalaliDate date="${new Date()}" hm="true"></rg:formatJalaliDate></td>
             <td class="label"><g:message code="invoice.code"></g:message>:</td>
-            <td class="value">${order.id}</td>
+            <td class="value">${order.trackingCode}</td>
         </tr>
     </table>
     <table class="basket-detail" border="1">
