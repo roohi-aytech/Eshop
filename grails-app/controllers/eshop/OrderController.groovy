@@ -7,6 +7,7 @@ import eshop.accounting.OnlinePayment
 import eshop.accounting.PaymentRequest
 import eshop.accounting.Transaction
 import eshop.delivery.DeliverySourceStation
+import fi.joensuu.joyds1.calendar.JalaliCalendar
 
 class OrderController {
 
@@ -49,6 +50,19 @@ class OrderController {
             return
         }
 
+        //set tracking code
+        def cal = Calendar.getInstance()
+        cal.setTime(new Date())
+        def jc = new JalaliCalendar(cal)
+        order.trackingCode = String.format(
+                "%02d%02d%02d%01d%03d",
+                jc.getYear() % 100,
+                jc.getMonth(),
+                jc.getDay(),
+                0, //customer type flag
+                order.id % 1000
+        )
+
         //save order tracking log
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = OrderHelper.ACTION_CREATION
@@ -89,7 +103,7 @@ class OrderController {
 
 //    @grails.plugin.jms.Queue(name='order.new')
     def testEvents() {
-        event(topic: 'order_event', data: [id: 8], namespace: 'browser')
+        event(topic: 'order_event', data: [id: 41], namespace: 'browser')
 //        jmsService.send(topic:'order_event', [id:8])
         render 0
     }
@@ -188,8 +202,8 @@ class OrderController {
                     def settleResult = mellatService.settlePayment(onlinePayment.account, onlinePayment.order.id, params.SaleOrderId, onlinePayment.transactionReferenceCode)
                     onlinePayment.resultCode = "${onlinePayment.resultCode}-${settleResult}"
                     onlinePayment.save()
-                    if(settleResult == "0" || settleResult == "45")
-                    payOrder(onlinePayment, model)
+                    if (settleResult == "0" || settleResult == "45")
+                        payOrder(onlinePayment, model)
                 }
             }
         }
@@ -386,6 +400,11 @@ class OrderController {
                 break
         }
         render template: 'invoice', model: [order: order, title: title]
+    }
+
+    def track() {
+        def customer = springSecurityService.currentUser as Customer
+        params.trackingCode ? [order: Order.findByTrackingCode(params.trackingCode), customer: customer] : [order: null, customer: customer]
     }
 
 //    def cancellation(){

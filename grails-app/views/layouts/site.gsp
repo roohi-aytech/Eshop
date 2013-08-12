@@ -87,6 +87,7 @@
     <g:javascript src="jquery.hoverIntent.js"></g:javascript>
     <g:javascript src="common.js"></g:javascript>
     <g:javascript src="search-auto-complete.js"/>
+    <g:javascript src="jquery.maskinput.js"/>
 </head>
 
 <body dir="rtl" class="main" ng-controller="eshopCtrl">

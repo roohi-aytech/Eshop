@@ -5,6 +5,11 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <style>
+        td[aria-describedby='MongoProductGrid_name']{
+            direction: ltr;
+        }
+    </style>
 </head>
 
 <body>
@@ -184,7 +189,7 @@
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'baseProductId'], [name:'image',expression:'\\\'%3cimg height=30 src=%22\\\'%2bg.createLink(controller: \\\'image\\\',id:obj.baseProductId )%2b\\\'%22/%3e\\\''],[name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.find{true}?.name'],[name: 'type',expression:'obj[\\\'type\\\'][\\\'name\\\']'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'],[name: 'name']]"
+                 columns="[[name: 'baseProductId'], [name:'image',expression:'\\\'%3cimg height=30 src=%22\\\'%2bg.createLink(controller: \\\'image\\\',id:obj.baseProductId )%2b\\\'%22/%3e\\\''],[name: 'productTypes',expression:'obj[\\\'productTypes\\\']?.find{true}?.name'],[name: 'type',expression:'obj[\\\'type\\\'][\\\'name\\\']'], [name: 'brand',expression:'obj[\\\'brand\\\'][\\\'name\\\']'],[name: 'name'],[name: 'guaranteeList']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
                  commands="${productActions}">
             <g:if test="${ptid}">

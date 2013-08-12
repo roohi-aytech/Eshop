@@ -44,7 +44,7 @@ class DeliveryService {
             def totalPrice = order.items.sum(0, { it?.orderCount * it?.unitPrice ?: 0 })
 
             deliveryMethod.sourceStations.each { sourceStation ->
-                def pricingRule = sourceStation.targetZones.find { it.cities.collect { it.id }.contains(targetCity.id) }.pricingRules.find { pricingRule ->
+                def pricingRule = sourceStation.targetZones?.find { it.cities?.collect { it.id }.contains(targetCity.id) }?.pricingRules?.find { pricingRule ->
                     (!pricingRule.weightMin || pricingRule.weightMin < totalWeight) &&
                             (!pricingRule.weightMax || pricingRule.weightMax >= totalWeight) &&
                             (!pricingRule.volumeMin || pricingRule.volumeMin < totalVolume) &&
@@ -52,7 +52,7 @@ class DeliveryService {
                 }
 
                 if (pricingRule) {
-                    def price = pricingRule.netFactor
+                    Double price = pricingRule.netFactor
                     if (pricingRule.factorCalculationType == 'weight')
                         price = pricingRule.weightFactor * totalWeight
                     else if (pricingRule.factorCalculationType == 'volume')
@@ -63,10 +63,10 @@ class DeliveryService {
                         price *= [pricingRule.weightFactor * totalWeight, pricingRule.volumeFactor * totalWeight, pricingRule.netFactor].min()
 
                     if (deliveryMethod.insuranceIsRequired || order.optionalInsurance)
-                        price = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
+                        price += (totalPrice * deliveryMethod.insurancePercent) / 100
 
                     if (deliveryMethod.addedValuePercent)
-                        price = (price * deliveryMethod.addedValuePercent) / 100
+                        price += (price * deliveryMethod.addedValuePercent) / 100
 
                     if (price <= result.price) {
                         result.sourceStation = sourceStation

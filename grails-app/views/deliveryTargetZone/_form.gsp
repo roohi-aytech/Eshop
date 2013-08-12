@@ -30,7 +30,7 @@
            data-options="url:'${createLink(action: "cityTree", params: [deliveryTargetZoneId: deliveryTargetZoneInstance.id ?: 0])}'"/>
     <script language=javascript>
         $('#cities').combotree({
-            onlyLeafCheck: true
+//            onlyLeafCheck: true
         });
     </script>
 </div>

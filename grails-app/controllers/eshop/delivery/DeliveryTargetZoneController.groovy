@@ -27,14 +27,22 @@ class DeliveryTargetZoneController {
 
     def save() {
         def deliveryTargetZoneInstance
+        def cities = params.cities
+        params.cities = null
+
         if (params.id) {
             deliveryTargetZoneInstance = DeliveryTargetZone.get(params.id)
             deliveryTargetZoneInstance.properties = params
         } else
             deliveryTargetZoneInstance = new DeliveryTargetZone(params)
 
-//        deliveryTargetZoneInstance.cities.clear()
-//        deliveryTargetZoneInstance.cities.addAll(City.findAllByIdInList(params.cities.collect { it.toLong() }.toList()))
+        deliveryTargetZoneInstance.cities?.clear()
+        if (cities instanceof String)
+            deliveryTargetZoneInstance.addToCities(City.get(cities.toLong()))
+        else
+            City.findAllByIdInList(cities.findAll{it.toString().indexOf('p') == -1}.collect { it.toLong() }.toList()).each{
+                deliveryTargetZoneInstance.addToCities(it)
+            }
 
         if (deliveryTargetZoneInstance.validate() && deliveryTargetZoneInstance.save()) {
             render deliveryTargetZoneInstance as JSON

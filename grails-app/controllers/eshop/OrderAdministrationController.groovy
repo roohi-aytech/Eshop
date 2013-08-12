@@ -19,11 +19,12 @@ class OrderAdministrationController {
                 result += it.productModel.toString()
                 result += "<br/>"
             }
-            result += "<a target='_blank' href='${createLink(controller: 'orderAdministration', action: 'act', params: [id: order.id])}'>${message(code: 'order.notification.link')}</a>"
+            result += "<a target='_blank' href='${createLink(controller: 'orderAdministration', action: 'console', params: [id: order.id])}'>${message(code: 'order.notification.link')}</a>"
             render result
         } else
             render 0
     }
+
 
     @Secured([RoleHelper.ROLE_VENDOR])
     def console() {
@@ -31,7 +32,7 @@ class OrderAdministrationController {
     }
 
     def list() {
-        def orderList = orderTrackingService.filterOrderListForUser(Order.findAllByStatus(params.status), springSecurityService.currentUser)
+        def orderList = orderTrackingService.filterOrderListForUser(params.status == 'All'? Order.findAll() : Order.findAllByStatus(params.status), springSecurityService.currentUser)
         render view: '/orderAdministration/list', model: [orderList: orderList.size() > 0 ? orderList.collect { it.id.toLong() } : [0]]
     }
 

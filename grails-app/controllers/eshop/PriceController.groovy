@@ -42,6 +42,7 @@ class PriceController {
         }
         else {
             priceInstance = new Price(params)
+            priceInstance.startDate = new Date()
             
             def lastPrice = Price.findByProductModelAndEndDateIsNull(priceInstance.productModel)
 
@@ -50,7 +51,6 @@ class PriceController {
                 lastPrice.save()
             }
         }
-        priceInstance.startDate = new Date()
         priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
 
         if (priceInstance.validate() && priceInstance.save()) {

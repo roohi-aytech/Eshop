@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="eshop.Order" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main">
@@ -66,7 +66,17 @@
 
 
         $(document).ready(function () {
+        <g:if test="${params.id}">
+            <g:set var="selectedOrder" value="${Order.get(params.id)}"/>
+            $(".menuItem a").css('background', '#f8f8f8');
+            $(".menuItem a").css('color', '#48802C');
+            $("#menuItem${selectedOrder.status} a").css('background', '#48802C');
+            $("#menuItem${selectedOrder.status} a").css('color', '#ffffff');
+            viewOrder(${params.id});
+        </g:if>
+        <g:else>
             loadOrderList('${eshop.OrderHelper.STATUS_CREATED}');
+        </g:else>
         })
 
     </g:javascript>
@@ -84,6 +94,9 @@
                            onclick="loadOrderList('${it}')"><g:message code="order.status.${it}"/></a>
                     </li>
                 </g:each>
+                <li style="text-align: right;margin:5px;" class="menuItem" id="menuItemAll">
+                    <a style="padding:3px;text-align: right;display: block;background: #f8f8f8;border-radius: 4px;"
+                       onclick="loadOrderList('All')"><g:message code="order.status.All"/></a></li>
             </ul>
         </td>
         <td style="border-width:0;">

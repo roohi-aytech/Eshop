@@ -112,23 +112,23 @@ class ProductTypeController {
         def newValue = (params.nA == "on") ? "N/A" : params.newValue
 
         productType.products.findAll().each {
-            def attribute = it.attributes.find {atr -> atr.attributeType.id == attributeType.id}
-            if (!attribute){
+            def attribute = it.attributes.find { atr -> atr.attributeType.id == attributeType.id }
+            if (!attribute) {
                 attribute = new Attribute(attributeType: attributeType, product: it)
 
-            def attributeValue = AttributeValue.findByValue(newValue)
+                def attributeValue = AttributeValue.findByValue(newValue)
 
-            attribute.value = attributeValue ?: new AttributeValue(value: newValue).save()
-                if (!attributeValue){
+                attribute.value = attributeValue ?: new AttributeValue(value: newValue).save()
+                if (!attributeValue) {
                     attributeType.addToValues(attribute.value)
                     attributeType.save()
                 }
 
-            attribute.save()
+                attribute.save()
 
-        //    it.attributes.add(attribute)
+                //    it.attributes.add(attribute)
 
-            mongoService.storeProduct(it)
+                mongoService.storeProduct(it)
 
 //            if (!attribute) {
 //                def attributeValue
@@ -153,7 +153,7 @@ class ProductTypeController {
 //                    mongoService.storeProduct(it)
 //                }
 //            }
-        }
+            }
         }
     }
 
@@ -232,11 +232,11 @@ class ProductTypeController {
             render 1;
             return
         }
-        if (productTypeInstance.products.count {!it.deleted} > 0) {
+        if (productTypeInstance.products.count { !it.deleted } > 0) {
             render(message(code: "producttype.contains.products"))
             return
         }
-        if (productTypeInstance.children.count {!it.deleted}> 0) {
+        if (productTypeInstance.children.count { !it.deleted } > 0) {
             render(message(code: "producttype.contains.children"))
             return
         }
@@ -259,13 +259,15 @@ class ProductTypeController {
             render 1;
         }
     }
-    def synchProductType(){
-        def pt=ProductType.get(params.id)
+
+    def synchProductType() {
+        def pt = ProductType.get(params.id)
         pt.products.each {
             mongoService.storeProduct(it)
         }
         render 0;
     }
+
     def deleteAttributeType() {
         def attributeTypeInstance = AttributeType.get(params.id)
         if (!attributeTypeInstance) {
@@ -274,7 +276,7 @@ class ProductTypeController {
         }
         attributeTypeInstance.productType.attributeTypes
                 .findAll { it.sortIndex > attributeTypeInstance.sortIndex }
-        .each {
+                .each {
             it.sortIndex--
             it.save()
         }
@@ -473,8 +475,8 @@ class ProductTypeController {
             }
         }
 
-        attributeType.groups = attributeType.groups.findAll {group ->
-            !mustRemove.collect {it.id}.contains(group.id)
+        attributeType.groups = attributeType.groups.findAll { group ->
+            !mustRemove.collect { it.id }.contains(group.id)
         }
         mustRemove.each {
 //            attributeType.groups == attributeType.groups.findAll{group -> group.id != it.id}
@@ -548,7 +550,7 @@ class ProductTypeController {
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
     def getProductTypes() {
         def json = []
-        def productTypes = ProductType.findAllByParentProductIsNull()
+        def productTypes = ProductType.findAllByParentProductIsNullAndDeleted(false)
         productTypes.each {
             json << fillJson(it, params.curProductTypeId as Integer)
         }
@@ -561,7 +563,7 @@ class ProductTypeController {
             json.data = productType.name
             json.attr = [id: productType.id]
             json.children = []
-            productType.children.each {
+            productType.children.findAll { !it.deleted }.each {
                 json.children << fillJson(it, curId)
             }
         }

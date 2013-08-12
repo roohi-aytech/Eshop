@@ -27,7 +27,7 @@
 
         function deleteVariationGroup(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
-                var url = "<g:createLink action="delete"/>";
+                var url = "<g:createLink controller="variationGroup" action="delete"/>";
                 $.ajax({
                     type:"POST",
                     url:url,

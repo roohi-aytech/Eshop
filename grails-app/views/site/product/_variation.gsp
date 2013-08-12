@@ -77,7 +77,7 @@
                 <g:set var="gList" value="${ProductModel.findAllByProduct(product).collect { it.guarantee }.toSet()}"/>
                 <g:if test="${gList.count { it } > 1}">
                     <div class="variation-value" variationId="0">
-                        <g:each in="gList">
+                        <g:each in="${gList}">
                             <div variationValueId="${it.id}"
                                  class="variation-value-color ${defaultModel?.guarantee?.id == it.id ? 'selected' : ''}">
                                 ${it.name}

@@ -26,7 +26,7 @@
             <div class="groupHeader">
                 <img src="../../images/box.png">
 
-                <h3>#${order.id}</h3>
+                <h3>${order.trackingCode ?: '#' + order.id}</h3>
 
                 <div class="comment"><g:message code="order.totalPrice"></g:message>: <g:formatNumber
                         number="${order.totalPrice}"
@@ -61,7 +61,8 @@
                                 <g:link controller="site" action="product"
                                         params="${[id: orderItem.productModel?.product?.id]}">${orderItem.productModel}</g:link>
                                 <g:if test="${orderItem.productModel.status != 'exists'}">
-                                    <span class="comment">(<g:message code="productModel.status.${orderItem.productModel.status}"></g:message>)</span>
+                                    <span class="comment">(<g:message
+                                            code="productModel.status.${orderItem.productModel.status}"></g:message>)</span>
                                 </g:if>
 
                             </li>
