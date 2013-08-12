@@ -114,11 +114,10 @@ class BasketController {
             orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
             orderItem.orderCount = basketItem.count
-            def price = priceService.calcProductModelPrice(basketItem.id).valueAddedVal
-            orderItem.unitPrice = price ? price : 0
+//            def price = priceService.calcProductModelPrice(basketItem.id).valueAddedVal
+            orderItem.unitPrice = basketItem.realPrice //price ? price : 0
             order.addToItems(orderItem)
         }
-
 
         def deliveryMethods = deliveryService.findAllDeliveryMethods(order)
 

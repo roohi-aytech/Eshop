@@ -244,3 +244,33 @@ grails {
 
     }
 }
+
+compress {
+    // just in case for some reason you want to disable the filter
+    enabled = true
+    debug = false
+    statsEnabled = true
+    compressionThreshold = 1024
+    // filter's url-patterns
+    urlPatterns = ["/*"]
+    // include and exclude are mutually exclusive
+    includePathPatterns = []
+    excludePathPatterns = [".*\\.gif", ".*\\.ico", ".*\\.jpg", ".*\\.swf"]
+    // include and exclude are mutually exclusive
+    includeContentTypes = []
+    excludeContentTypes = ["image/png"]
+    // include and exclude are mutually exclusive
+    includeUserAgentPatterns = []
+    excludeUserAgentPatterns = [".*MSIE 4.*"]
+    // probably don't want these, but their available if needed
+    javaUtilLogger = ""
+    jakartaCommonsLogger = ""
+
+    development {
+        debug = true
+        compressionThreshold = 2048
+    }
+    production {
+        statsEnabled = false
+    }
+}

@@ -1,4 +1,9 @@
 <%@ page import="eshop.ProducerAccount" %>
+<style>
+#content table tbody td {
+    direction: ltr !important;
+}
+</style>
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${eshop.ProducerAccount}"
@@ -6,7 +11,7 @@
              showCommand="false"
              firstColumnWidth="30"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerAccountGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "producerAccountForm", controller: "producer", params: [producerId: producerInstance.id])}&id=#id#",saveAction: "${g.createLink(action: "saveProducerAccount", controller: "producer")}", icon: "application_edit"], [handler: "deleteProducerAccount(#id#)", icon: "application_delete"]]}">
+             commands="${[[loadOverlay: "${g.createLink(action: "producerAccountForm", controller: "producer", params: [producerId: producerInstance.id])}&id=#id#", saveAction: "${g.createLink(action: "saveProducerAccount", controller: "producer")}", icon: "application_edit"], [handler: "deleteProducerAccount(#id#)", icon: "application_delete"]]}">
         <rg:criteria>
             <rg:eq name="producer.id" value="${producerInstance.id}"/>
         </rg:criteria>
@@ -32,7 +37,8 @@ function deleteProducerAccount(id){
 }
 function addToProducerAccountGrid(){
     loadOverlay('<g:createLink action="producerAccountForm" controller="producer"
-                               params="[producerId: producerInstance.id]"/>','<g:createLink action="saveProducerAccount" controller="producer"/>',function(){
+                               params="[producerId: producerInstance.id]"/>','<g:createLink action="saveProducerAccount"
+                                                                                            controller="producer"/>',function(){
         $("#ProducerAccountGrid").trigger("reloadGrid")
     });
 }

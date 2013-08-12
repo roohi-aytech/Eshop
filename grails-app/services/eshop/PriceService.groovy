@@ -33,26 +33,26 @@ class PriceService {
         def mainVal = price?.rialPrice
 
         //addedValues - everyWhere
-        def addedValues = []
-        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "mandetory"))
-        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
-        productModel?.product?.productTypes?.each {
-            getAddedvalues(it).each {
-                if (!it.brand || it.brand.id == productModel.product.brand.id)
-                    addedValues.add(it)
-            }
-        }
-
-        addedValues?.each {
-            if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
-                def val
-                if (it.type == "percent")
-                    val = price.rialPrice * it.value / 100
-                else if (it.type == "fixed")
-                    val = it.value
-                priceVal += val
-            }
-        }
+//        def addedValues = []
+//        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "mandetory"))
+//        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
+//        productModel?.product?.productTypes?.each {
+//            getAddedvalues(it).each {
+//                if (!it.brand || it.brand.id == productModel.product.brand.id)
+//                    addedValues.add(it)
+//            }
+//        }
+//
+//        addedValues?.each {
+//            if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
+//                def val
+//                if (it.type == "percent")
+//                    val = price.rialPrice * it.value / 100
+//                else if (it.type == "fixed")
+//                    val = it.value
+//                priceVal += val
+//            }
+//        }
 
 //        def valueAddedVal = priceVal
         //addedValues - orderTime

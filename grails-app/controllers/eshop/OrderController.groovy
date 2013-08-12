@@ -103,7 +103,7 @@ class OrderController {
 
 //    @grails.plugin.jms.Queue(name='order.new')
     def testEvents() {
-        event(topic: 'order_event', data: [id: 8], namespace: 'browser')
+        event(topic: 'order_event', data: [id: 41], namespace: 'browser')
 //        jmsService.send(topic:'order_event', [id:8])
         render 0
     }

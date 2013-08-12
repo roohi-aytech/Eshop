@@ -5,6 +5,11 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <style>
+        td[aria-describedby='MongoProductGrid_name']{
+            direction: ltr;
+        }
+    </style>
 </head>
 
 <body>

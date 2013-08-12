@@ -1,4 +1,4 @@
-<%@ page import="eshop.Product; eshop.VariationGroup; eshop.Variation" %>
+<%@ page import="eshop.ProductType; eshop.Product; eshop.VariationGroup; eshop.Variation" %>
 <rg:grid domainClass="${Variation}"
          maxColumns="3"
          showCommand="false"
@@ -62,11 +62,13 @@ function addToVariationGrid(){
 }
 
 
+<g:if test="${baseProductInstance instanceof ProductType || ((Product)baseProductInstance)?.productTypes?.toArray()?.length > 0}">
  $(function(){
     $( "#variationGroup" ).on( "dialogopen", function( event, ui ) {
         setTimeout("$(\"input[name='productType.id']\").val(${baseProductInstance instanceof Product ? ((Product)baseProductInstance)?.productTypes?.toArray()?.first()?.id : baseProductInstance?.id})",100)
     } );
 });
+</g:if>
 </g:javascript>
 
 <fieldset class="buttons">

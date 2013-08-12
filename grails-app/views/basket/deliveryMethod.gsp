@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="layout" content="site">
-    <title></title>
+    <title><g:message code="deliveryMethod.selection"></g:message></title>
 </head>
 
 <body>

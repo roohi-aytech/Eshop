@@ -67,13 +67,14 @@ class ProductService {
     }
 
     def findRootProductTypes() {
-        def result = ProductType.findAllByParentProductIsNull().collect { [id: it.id, name: it.name, urlName: it.urlName] }
+        def result = ProductType.findAllByParentProductIsNullAndDeleted(false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
         result.each { rootItem ->
-            rootItem.children = ProductType.findAllByParentProduct(ProductType.get(rootItem.id)).collect { [id: it.id, name: it.name, urlName: it.urlName] }
+            rootItem.children = ProductType.findAllByParentProductAndDeleted(ProductType.get(rootItem.id), false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
             ProductType.createCriteria().listDistinct {
                 godFathers {
                     eq('id', rootItem.id)
                 }
+                eq('deleted', false)
             }.each {
                 rootItem.children << [id: it.id, name: it.name, urlName: it.urlName]
             }
