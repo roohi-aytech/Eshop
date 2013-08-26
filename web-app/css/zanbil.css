@@ -91,12 +91,8 @@ h2 .font-calibri {
 }
 
 .info div {
-    background-image: url(../images/icons/info.png);
-    background-position: center right;
-    background-repeat: no-repeat;
-    padding: 10px;
-    padding-top: 5px;
-    padding-right: 35px;
+    background: url(../images/icons/info.png) no-repeat top right;
+    padding: 5px 35px 10px 10px;
 }
 
 .info a {
@@ -1717,9 +1713,13 @@ span.cke_skin_kama {
 .shopping-basket ul li {
     list-style-type: none;
     border-bottom: 1px dashed #eeeeee;
-    padding: 10px;
-    height: 100px;
+    padding: 10px 0;
+    height: 110px;
     clear: both;
+}
+
+.shopping-basket ul li:last-of-type {
+    border-bottom-width: 0;
 }
 
 .shopping-basket .image {
@@ -1730,6 +1730,9 @@ span.cke_skin_kama {
     text-align: center;
     margin-left: 10px;
     position: relative;
+    padding:4px;
+    border-radius: 4px;
+    background-color: #ffffff;
 }
 
 .shopping-basket .image img {
@@ -1738,13 +1741,17 @@ span.cke_skin_kama {
     bottom: 0;
 }
 
-.shopping-basket h3 {
+.shopping-basket .name h3 {
     display: block;
+    margin: 0;
+    font-family: tahoma !important : ;;
+    font-size: 11px;
+    line-height: 14px;
 }
 
 .shopping-basket h3 a {
-    font-family: times !important;
-    font-size: 16px;
+    /*font-family: times !important;*/
+    /*font-size: 16px;*/
 }
 
 .shopping-basket .price {
@@ -1772,14 +1779,16 @@ span.cke_skin_kama {
     font-weight: bold;
 }
 
-.shopping-basket .check-out {
-    background-color: #f8f8f8;
-    padding: 5px;
-    margin: -5px;
+.check-out-price {
+    padding-right: 20px;
 }
 
-.shopping-basket .check-out a {
-    margin-right: 0;
+h2.check-out-price {
+    font-size: 18px !important;
+}
+
+h2.check-out-price span {
+    font-size: 14px;
 }
 
 /*Invoice*/
@@ -3068,10 +3077,11 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
 }
 
 .deliveryMethodList li {
-    border: 1px solid #eeeeee;
-    border-radius: 4px;
+    background-color: #FEFEFE;
+    border: 1px solid #EEEEEE;
+    border-radius: 4px 4px 4px 4px;
     display: block;
-    background-color: #f8f8f8;
+    margin-top: 5px;
     padding-right: 5px;
 }
 
@@ -3200,6 +3210,11 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 .basketItem .plus {
     color: grey;
     font-weight: normal;
+}
+
+.basketItem hr{
+    margin-top:10px;
+    margin-bottom:5px;
 }
 
 .navbar-search .search-query{
@@ -3445,6 +3460,57 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     float: right;
     background-color: #ffffff;
     margin-left: 10px;
+}
+
+/*checkout process*/
+.ui-accordion{
+    background-color: #f6f6f6;
+    padding: 2px;
+}
+
+.ui-accordion .ui-accordion-header{
+    padding: 0;
+    background-color: #ffffff;
+    margin-top:2px;
+    margin-bottom: 2px;
+    color:#000000;
+    font-size:14px !important;
+}
+
+.ui-accordion .ui-accordion-header:first-of-type{
+    margin-top:0;
+}
+
+.ui-accordion .ui-accordion-header:last-of-type{
+    margin-bottom: 0;
+}
+
+.ui-accordion .ui-accordion-header span{
+    font-family: 'b koodak', koodak, tahoma !important;
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    width: 70px;
+    margin-left: 10px;
+    font-size:14px !important;
+}
+
+.ui-accordion .ui-accordion-header span.ui-accordion-header-icon{
+    display: none;
+}
+
+.ui-accordion .ui-accordion-content{
+    background-color: #fafafa;
+}
+
+#noRegisterForm{
+    display: none;
+    opacity: 0;
+}
+
+#loginLink{
+    display: none;
+    opacity: 0;
 }
 
 

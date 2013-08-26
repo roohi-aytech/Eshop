@@ -6,6 +6,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.compareListCounter = compareListCounter;
     $scope.wishListCounter = wishListCounter;
     $scope.basket = basket;
+    $scope.deliveryPrice = -1;
     $scope.compareList = compareList;
     $scope.wishList = wishList;
     $scope.wishListEnabled = wishListEnabled;
@@ -96,6 +97,19 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         angular.forEach($scope.basket, function (item) {
             totalPrice += item.realPrice * item.count;
         });
+
+        return totalPrice;
+    }
+
+    $scope.calculateBasketPayablePrice = function () {
+        var totalPrice = 0;
+
+        angular.forEach($scope.basket, function (item) {
+            totalPrice += item.realPrice * item.count;
+        });
+
+        if($scope.deliveryPrice != -1)
+            totalPrice += $scope.deliveryPrice
 
         return totalPrice;
     }

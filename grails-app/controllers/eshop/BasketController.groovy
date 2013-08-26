@@ -62,9 +62,85 @@ class BasketController {
     }
 
     def checkout() {
+        def customer = springSecurityService.currentUser as Customer
+        if (!customer && !session.checkout_customerInformation)
+            session.forwardUri = createLink(controller: 'basket', action: 'checkout')
+        else
+            session.forwardUri = null
+
+        def currentStep = 1
+
+        if (customer || session.checkout_customerInformation)
+            currentStep = 2
+
+        if (session.checkout_address)
+            currentStep = 3
+
+        def customInvoiceInformation = [:]
+        customInvoiceInformation.ownerName = message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' +
+                (customer ? customer.toString() : session.checkout_customerInformation?.lastName)
+        customInvoiceInformation.ownerCode = ''
+        customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
+
+        def deliveryMethods = []
+
+        if (session.checkout_customInvoiceInformation) {
+            customInvoiceInformation = session.checkout_customInvoiceInformation
+            currentStep = 4
+
+            //setup delivery methods
+            Order order = new Order()
+            order.ownerName = customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() : session.checkout_customerInformation.lastName
+            order.ownerEmail = customer ? customer.email : session.checkout_customerInformation.email
+            order.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation.mobile
+            order.ownerTelephone = customer ? customer.telephone : session.checkout_customerInformation.telephone
+            order.ownerCode = customer ? '': session.checkout_customInvoiceInformation.ownerCode
+            order.ownerSex = customer ? customer.sex : session.checkout_customerInformation.sex
+
+            order.useAlternateInformation = session.checkout_customInvoiceInformation.customInvoiceInfo
+            order.alternateOwnerCode = session.checkout_customInvoiceInformation.ownerCode
+            order.alternateOwnerMobile = session.checkout_customInvoiceInformation.ownerMobile
+            order.alternateOwnerName = session.checkout_customInvoiceInformation.ownerName
+
+            session["order"] = order
+
+            Address sendingAddress = new Address()
+            sendingAddress.addressLine1 = session.checkout_address.addressLine1
+            sendingAddress.postalCode = session.checkout_address.postalCode
+            sendingAddress.telephone = session.checkout_address.telephone
+            sendingAddress.city = City.get(session.checkout_address.city.id)
+            session["sendingAddress"] = sendingAddress
+
+            Address billingAddress = new Address()
+            billingAddress.addressLine1 = session.checkout_address.addressLine1
+            billingAddress.postalCode = session.checkout_address.postalCode
+            billingAddress.telephone = session.checkout_address.telephone
+            billingAddress.city = City.get(session.checkout_address.city.id)
+            session["billingAddress"] = billingAddress
+
+            order.sendingAddress = sendingAddress
+            order.billingAddress = billingAddress
+
+            def basket = session.getAttribute("basket")
+            basket.each() { basketItem ->
+                def orderItem = new OrderItem()
+                orderItem.productModel = ProductModel.get(basketItem.id)
+                orderItem.order = order
+                orderItem.orderCount = basketItem.count
+                orderItem.unitPrice = basketItem.realPrice
+                order.addToItems(orderItem)
+            }
+
+            deliveryMethods = deliveryService.findAllDeliveryMethods(order)
+        }
+
         [
-                'basket': session.getAttribute("basket"),
-                'customer': springSecurityService.currentUser
+                basket: session.getAttribute("basket"),
+                customer: customer,
+                currentStep: currentStep,
+                address: session.checkout_address,
+                customInvoiceInformation: customInvoiceInformation,
+                deliveryMethods: deliveryMethods
         ]
     }
 
@@ -140,6 +216,49 @@ class BasketController {
                 sendingAddress: session.getAttribute("sendingAddress"),
                 billingAddress: session.getAttribute("billingAddress")
         ]
+    }
+
+    def storeCustomerInformationWithoutRegistration() {
+        def customerInformation = [:]
+        customerInformation.lastName = params.lastName
+        customerInformation.sex = params.sex
+        customerInformation.email = params.email
+        customerInformation.mobile = params.mobile
+        customerInformation.telephone = params.telephone
+        session.checkout_customerInformation = customerInformation
+        redirect(action: 'checkout')
+    }
+
+    def checkoutAddress() {
+        def model = [:]
+        if (params.addressIsSameAsProfile?.toBoolean()) {
+            model.address = (springSecurityService.currentUser as Customer).address
+        }
+        render template: 'checkout/address', model: model
+    }
+
+    def storeShippingAddress() {
+        def address = [:]
+        address.city = City.get(params.city)
+        address.postalCode = params.postalCode
+        address.telephone = params.telephone
+        address.addressLine1 = params.addressLine
+        session.checkout_address = address
+        redirect(action: 'checkout')
+    }
+
+    def storeCustomInvoiceInformation() {
+        def customer = springSecurityService.currentUser as Customer
+        def customInvoiceInformation = [:]
+        customInvoiceInformation.customInvoiceInfo = params.customInvoiceInfo == 'true'
+        customInvoiceInformation.ownerName = customInvoiceInformation.customInvoiceInfo ?
+            params.ownerName :
+            (customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() :
+                message(code: "customer.title.${session.checkout_customerInformation.sex}") + " " + session.checkout_customerInformation.lastName)
+        customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : ''
+        customInvoiceInformation.ownerMobile = customInvoiceInformation.customInvoiceInfo ? params.ownerMobile : (customer ? customer.mobile : session.checkout_customerInformation.mobile)
+        session.checkout_customInvoiceInformation = customInvoiceInformation
+        redirect(action: 'checkout')
     }
 
     def shop() {

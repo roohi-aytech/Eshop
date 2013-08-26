@@ -23,7 +23,7 @@ class OrderController {
     static exposes = ['jms']
 
 //    @grails.plugin.jms.Queue(name='order.new')
-    def create() {
+    def create_old() {
 
         //save order
         def order = (Order) session["order"]
@@ -472,5 +472,95 @@ class OrderController {
 //            redirect(controller: 'customer', action: 'panel')
 //        }
 //    }
+
+    def create() {
+
+        //save order
+        def order = session.getAttribute("order") as Order
+
+        order.customer = springSecurityService.currentUser as Customer
+        order.status = OrderHelper.STATUS_CREATED
+
+        def sendingAddress = (Address) session["sendingAddress"]
+        sendingAddress.save()
+
+        def billingAddress = (Address) session["billingAddress"]
+        billingAddress.save()
+
+        order.sendingAddress = sendingAddress
+        order.billingAddress = billingAddress
+
+        //set delivery method
+        order.deliverySourceStation = DeliverySourceStation.get(params.deliverySourceStation);
+        order.deliveryPrice = params.price.toDouble()
+        order.optionalInsurance = params["insurance${order.deliverySourceStation?.id}"]
+        if(!order.optionalInsurance)
+            order.optionalInsurance = false
+
+        order.items?.clear();
+        if (!order.validate() || !order.save()) {
+            //order save error
+            return
+        }
+
+
+        //set tracking code
+        def cal = Calendar.getInstance()
+        cal.setTime(new Date())
+        def jc = new JalaliCalendar(cal)
+        order.trackingCode = String.format(
+                "%02d%02d%02d%01d%03d",
+                jc.getYear() % 100,
+                jc.getMonth(),
+                jc.getDay(),
+                0, //customer type flag
+                order.id % 1000
+        )
+
+        //save order tracking log
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_CREATION
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = springSecurityService.currentUser as User
+        trackingLog.title = "order.actions.${OrderHelper.ACTION_CREATION}"
+        if (!trackingLog.validate() || !trackingLog.save()) {
+            //tracking log save error
+            return
+        }
+
+        def basket = session.getAttribute("basket")
+        basket.each() { basketItem ->
+            def orderItem = new OrderItem()
+            orderItem.productModel = ProductModel.get(basketItem.id)
+            orderItem.order = order
+            orderItem.orderCount = basketItem.count
+
+            //added values
+            basketItem.selectedAddedValues?.each { addedValue ->
+                orderItem.addToAddedValues(AddedValue.get(addedValue.toLong()))
+            }
+
+            orderItem.save()
+        }
+
+        priceService.updateOrderPrice(order);
+
+        session.setAttribute("basket", [])
+        session.setAttribute("basketCounter", 0)
+        session.removeAttribute("order")
+        session.removeAttribute("sendingAddress")
+        session.removeAttribute("billingAddress")
+        session.removeAttribute("checkout_customerInformation")
+        session.removeAttribute("checkout_address")
+        session.removeAttribute("checkout_customInvoiceInformation")
+        session.removeAttribute("forwardUri")
+
+        event(topic: 'order_event', data: [id: order.id], namespace: 'browser')
+
+        [trackingCode: order.trackingCode]
+//        flash.message = message(code: 'order.creation.success.message')
+//        redirect(controller: 'customer', action: 'panel')
+    }
 
 }

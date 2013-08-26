@@ -12,6 +12,13 @@ class Order {
     String ownerEmail
     String ownerMobile
     String ownerTelephone
+    String ownerCode
+    String ownerSex
+
+    Boolean useAlternateInformation
+    String alternateOwnerName
+    String alternateOwnerCode
+    String alternateOwnerMobile
 
     Address billingAddress
     Address sendingAddress
@@ -30,10 +37,16 @@ class Order {
     static constraints = {
         trackingCode nullable: true
         status(nullable: false, inList: OrderHelper.STATUS_LIST)
-        customer(nullable: false)
+        customer(nullable: true)
         ownerEmail()
         ownerMobile()
         ownerTelephone()
+        ownerCode(nullable: true)
+        ownerSex(nullable: true, inList: ['male', 'female'])
+        useAlternateInformation(nullable: true)
+        alternateOwnerName(nullable: true)
+        alternateOwnerCode(nullable: true)
+        alternateOwnerMobile(nullable: true)
         items()
         billingAddress(nullable: false)
         sendingAddress(nullable: false)

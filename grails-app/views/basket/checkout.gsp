@@ -2,316 +2,123 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title><g:message code="site.title"/></title>
+    <title><g:message code="enquiry.request"/></title>
     <meta name="layout" content="site">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet"
-          href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
-    <style>
-    body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    }
-    </style>
-
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.ui.accordion.css')}"/>
+    <g:javascript src="jquery.ui.accordion.js"/>
     <g:javascript>
-        function updateBasketItemCount(id, count) {
-            var scope = angular.element(document.getElementById('main-container')).scope();
-
-            var fount = false;
-            for (var i = 0; i < scope.basket.length; i++) {
-                if (parseInt(id) == scope.basket[i].id) {
-                    scope.basket[i].count = count;
-                    scope.$apply();
-                    found = true;
-                }
-            }
-
-            if (found)
-                scope.changeCount(id, count);
-        }
-
-        function updateCityList(provinceCombo, cityCombo){
-            var currentCityId = '${customerInstance?.address?.city?.id}';
-
-            var $el = $("#" + cityCombo);
-            $el.empty(); // remove old options
-            $.ajax({
-                type:"GET",
-                url:"<g:createLink controller="province" action="getProvinceCities"/>",
-                data:{id: $('#' + provinceCombo).val()}
-            }).done(function (response) {
-                $el = $("#" + cityCombo);
-                $el.empty(); // remove old options
-                for(var i = 0; i < response.length; i++)
-                    if(response[i].id.toString() == currentCityId)
-                      $el.append($("<option selected></option>")
-                         .attr("value", response[i].id).text(response[i].title));
-                     else
-                      $el.append($("<option></option>")
-                         .attr("value", response[i].id).text(response[i].title));
+        var addressRequest;
+        function loadAddress(){
+            $('#addressLoadingPane').stop().fadeOut(200, function(){
+                $('#addressLoadingBar').stop().fadeIn(200, function(){
+                    if(addressRequest)
+                        addressRequest.abort();
+                    addressRequest = $.ajax({
+                        url:'${createLink(action: 'checkoutAddress')}',
+                        type:'post',
+                        data:$('#addressSelectionForm').serialize()
+                    }).success(function(response){
+                        $('#addressLoadingBar').stop().fadeOut(200, function(){
+                            $('#addressLoadingPane').html(response);
+                            $('#addressLoadingPane').stop().fadeIn(500);
+                        });
+                    });
+                });
             });
         }
 
-        $(document).ready(function(){
-           updateCityList('province1', 'city1');
-           updateCityList('province2', 'city2');
+        $(function() {
+            $( "#inquiry-accordion" ).accordion({
+                heightStyle: "content",
+                active: ${currentStep - 1}
         });
-    </g:javascript>
+        $( ".accordion" ).on( "accordionbeforeactivate", function( event, ui ) {
+            if(ui.newHeader.hasClass('disabled')){
+                event.preventDefault();
+                $.msgGrowl({
+                    type: 'warning', sticky: false, title:'', 'text': '<span' +
+            'style="margin-top:10px;margin-bottom:10px;display:inline-block;">${message(code: 'enquiry.request.completePreviousSteps.description')}</span>', lifetime: 5000
+                });
+            }
 
+        });
+    });
+    </g:javascript>
 </head>
 
 <body>
 
-<div class="container-fluid">
-<div class="row-fluid">
-<div class="span12">
-<div class="shopping-basket">
-<h2><g:message code="basket.content"/></h2>
+<div class="page-content">
+    <table class="table-simulater" style="width: 100%;">
+        <tr>
+            <td style="width: 50%;vertical-align: top;">
+                <div class="accordion" id="inquiry-accordion">
+                    <h3 class=""><span
+                            style="background: rgb(206,70,35);"><g:message
+                                code="enquiry.request.shopping.step1"/></span><g:message
+                            code="enquiry.request.login.title"/></h3>
 
-<div class="group">
-    <ul>
-        <li ng-repeat="basketItem in basket" class="basketItem">
-            <span class="image"><img ng-src="{{contextRoot}}site/image/{{basketItem.id}}?type=productModel&wh=100x100"/>
-            </span>
-            <span class="name"><h3 style="display: inline-block"><a
-                    ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">{{basketItem.name}}</a>
-            </h3>
-                <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
-                    <span class="plus">+</span> {{addedValueName}}
-                </span>
-            </span>
-            <span class="price"><g:message code="price"></g:message>: <b>{{basketItem.realPrice}}</b></span>
-            <span class="count"><g:message code="count"></g:message>: <input type="text"
-                                                                             value="{{basketItem.count}}"
-                                                                             onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
-            </span>
-            <span class="delete">[ <a type="button"
-                                      ng-click="removeFromBasket(basketItem.id)"><g:message
-                        code="application_delete"></g:message></a> ]</span>
-        </li>
-    </ul>
+                    <div>
+                        <g:render template="checkout/login"/>
+                    </div>
 
-    <div class="check-out">
-        <g:message code="basket.totalPrice"></g:message>: <span
-            class="totalPrice">{{calculateBasketTotalPrice()}}</span>
-    </div>
-</div>
+                    <h3 class="${currentStep < 2 ? 'disabled' : ''}"><span
+                            style="background: rgb(184,6,76);"><g:message
+                                code="enquiry.request.shopping.step2"/></span><g:message
+                            code="enquiry.request.shippingAddress.title"/></h3>
 
-<sec:ifLoggedIn>
-    <h2><g:message code="order.owner.info"/></h2>
-    <g:form action="deliveryMethod" method="post">
-        <div class="group form">
-            <table class="table-simulated">
-                <tr class="table-row">
-                    <td class="table-cell">
-                        <h4><g:message code="invoice.specification"></g:message></h4>
+                    <div>
+                        <g:if test="${customer && !session.checkout_address}">
+                            <form id="addressSelectionForm" style="margin-bottom: 0;">
+                                <label style="display: inline-block;margin-left:20px;"><g:message
+                                        code="enquiry.request.shopping.addressIsSameAsProfile"/></label>
+                                <input type="radio" name="addressIsSameAsProfile" value="true"
+                                       id="addressIsSameAsProfile" style="margin-top:0;" onchange="loadAddress();"/>
+                                <label style="display: inline-block;margin-left:15px;"
+                                       for="addressIsSameAsProfile"><g:message code="yes"/></label>
+                                <input type="radio" name="addressIsSameAsProfile" value="false"
+                                       id="addressIsNotSameAsProfile" style="margin-top:0;" onchange="loadAddress();"/>
+                                <label for="addressIsNotSameAsProfile"><g:message code="no"/></label>
+                            </form>
 
-                        <div class="content">
-                            <div class="field">
-                                <label for="ownerName"><g:message code="invoice.owner.name"></g:message></label>
-                                <input type="text" id="ownerName" name="ownerName" value="${customer}"
-                                       class="block full"/>
+                            <div id="addressLoadingBar" style="display: none;margin:10px;">
+                                <img src="${resource(dir: 'images', file: 'loading.gif')}"
+                                     style="background: white;border:1px solid #eeeeee;border-radius: 4px;padding:4px;"/>
+                                <g:message code="waiting"/>
                             </div>
 
-                            <div class="field">
-                                <label for="ownerEmail"><g:message
-                                        code="invoice.owner.email"></g:message></label>
-                                <input type="text" id="ownerEmail" name="ownerEmail" value="${customer.email}"
-                                       class="block full"/>
-                            </div>
+                            <div id="addressLoadingPane" style="margin-top:10px;"></div>
+                        </g:if>
+                        <g:else>
+                            <g:render template="checkout/address"/>
+                        </g:else>
+                    </div>
 
-                            <div class="field">
-                                <label for="ownerMobile"><g:message
-                                        code="invoice.owner.mobile"></g:message></label>
-                                <input type="text" id="ownerMobile" name="ownerMobile"
-                                       value="${customer.mobile}" class="block full"/>
-                            </div>
+                    <h3 class="${currentStep < 3 ? 'disabled' : ''}"><span
+                            style="background: rgb(22,114,55);"><g:message
+                                code="enquiry.request.shopping.step3"/></span><g:message
+                            code="enquiry.request.invoiceInfo.title"/></h3>
 
-                            <div class="field">
-                                <label for="ownerTelephone"><g:message
-                                        code="invoice.owner.telephone"></g:message></label>
-                                <input type="text" id="ownerTelephone" name="ownerTelephone"
-                                       value="${customer.telephone}" class="block full"/>
-                            </div>
-                        </div>
-                    </td>
+                    <div>
+                        <g:render template="checkout/invoice_info"/>
+                    </div>
 
-                    <td class="table-cell">
-                        <h4><g:message code="invoice.sendingAddress"></g:message></h4>
+                    <h3 class="${currentStep < 4 ? 'disabled' : ''}"><span
+                            style="background: rgb(22,116,108);"><g:message
+                                code="enquiry.request.shopping.step4"/></span><g:message
+                            code="enquiry.request.shippingMethod.title"/></h3>
 
-                        <table class="table-simulated auto content">
-                            <tr class="table-row">
-                                <td class="table-cell">
-                                    <table class="table-simulated">
-                                        <tr class="table-row">
-                                            <td class="table-cell">
-                                                <div>
-                                                    <label for='province1'><g:message
-                                                            code="springSecurity.register.province.label"/>:</label> *
-                                                    <select name="province1" id="province1"
-                                                            onchange="updateCityList('province1', 'city1');"
-                                                            class="block half">
-                                                        <g:set var="provinceList"
-                                                               value="${eshop.Province.findAll()}"></g:set>
-                                                        <g:each in="${provinceList}" var="province">
-                                                            <option ${customer?.address?.city?.province?.id == province.id ? 'selected' : ''}
-                                                                    value="${province.id}">${province.title}</option>
-                                                        </g:each>
-                                                    </select>
-                                                </div>
-
-                                                <div>
-                                                    <label for='postalCode1'><g:message
-                                                            code="springSecurity.register.postalCode.label"/>:</label>
-                                                    <input type='text' name='postalCode1' id='postalCode1'
-                                                           value="${customer?.address?.postalCode}"
-                                                           class="block half"/>
-                                                </div>
-                                            </td>
-
-                                            <td class="table-cell">
-
-                                                <div>
-                                                    <label for='city1'><g:message
-                                                            code="springSecurity.register.city.label"/>:</label> *
-                                                    <select name="city1" id="city1" class="block half">
-                                                    </select>
-                                                </div>
-
-                                                <div>
-                                                    <label for='telephone1'><g:message
-                                                            code="springSecurity.register.telephone.label"/>:</label>
-                                                    <input type='text' name='telephone1' id='telephone1'
-                                                           value="${customer?.address?.telephone}"
-                                                           class="block half"/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="table-cell">
-                                    <label for='addressLine1'><g:message
-                                            code="springSecurity.register.address.label"/>:</label>
-                                    <textarea type='text' name='addressLine1'
-                                              id='addressLine1'
-                                              class="block full">${customer?.address?.addressLine1}</textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td class="table-cell">
-
-                        <h4><g:message code="invoice.billingAddress"></g:message></h4>
-
-                        <table class="table-simulated auto content">
-                            <tr class="table-row">
-                                <td class="table-cell">
-                                    <table class="table-simulated">
-                                        <tr class="table-row">
-                                            <td class="table-cell">
-                                                <div>
-                                                    <label for='province2'><g:message
-                                                            code="springSecurity.register.province.label"/>:</label> *
-                                                    <select name="province2" id="province2"
-                                                            onchange="updateCityList('province2', 'city2');"
-                                                            class="block half">
-                                                        <g:set var="provinceList"
-                                                               value="${eshop.Province.findAll()}"></g:set>
-                                                        <g:each in="${provinceList}" var="province">
-                                                            <option ${customer?.address?.city?.province?.id == province.id ? 'selected' : ''}
-                                                                    value="${province.id}">${province.title}</option>
-                                                        </g:each>
-                                                    </select>
-                                                </div>
-
-                                                <div>
-                                                    <label for='postalCode2'><g:message
-                                                            code="springSecurity.register.postalCode.label"/>:</label>
-                                                    <input type='text' name='postalCode2' id='postalCode2'
-                                                           value="${customer?.address?.postalCode}"
-                                                           class="block half"/>
-                                                </div>
-                                            </td>
-
-                                            <td class="table-cell">
-
-                                                <div>
-                                                    <label for='city2'><g:message
-                                                            code="springSecurity.register.city.label"/>:</label> *
-                                                    <select name="city2" id="city2" class="block half">
-                                                    </select>
-                                                </div>
-
-                                                <div>
-                                                    <label for='telephone2'><g:message
-                                                            code="springSecurity.register.telephone.label"/>:</label>
-                                                    <input type='text' name='telephone2' id='telephone2'
-                                                           value="${customer?.address?.telephone}"
-                                                           class="block half"/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="table-cell">
-                                    <label for='addressLine2'><g:message
-                                            code="springSecurity.register.address.label"/>:</label>
-                                    <textarea type='text' name='addressLine2'
-                                              id='addressLine2'
-                                              class="block full">${customer?.address?.addressLine1}</textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-
-            <div class="check-out">
-                <input type="submit" class="btn btn-primary" value="<g:message code="deliveryMethod.selection"/>"/>
-            </div>
-        </div>
-    </g:form>
-</sec:ifLoggedIn>
-
-<sec:ifNotLoggedIn>
-    <div class="info">
-        <div><g:message code="basket.checkout.loginRequired"></g:message></div>
-        <common:loginLink class="btn btn-success"></common:loginLink>
-        <common:registerLink class="btn btn-primary"></common:registerLink>
-    </div>
-</sec:ifNotLoggedIn>
+                    <div>
+                        <g:render template="checkout/delivery_method"/>
+                    </div>
+                </div>
+            </td>
+            <td style="width: 50%;vertical-align: top;">
+                <g:render template="checkout/basket_items"/>
+            </td>
+        </tr>
+    </table>
 </div>
-</div>
-</div>
-</div> <!-- /container -->
 
-<script type="text/javascript">
-    (function ($) {
-        $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');
-        $('.row-fluid ul.thumbnails li.span4:nth-child(3n + 4)').css('margin-right', '0px');
-        $('.row-fluid ul.thumbnails li.span3:nth-child(4n + 5)').css('margin-right', '0px');
-    })(jQuery);
-</script>
 </body>
 </html>

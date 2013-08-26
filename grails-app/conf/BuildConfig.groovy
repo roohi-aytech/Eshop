@@ -91,6 +91,8 @@ grails.project.dependency.resolution = {
         compile ":mail:1.0.1"
         compile ":rest:0.6.1"
         runtime ":resources:1.2.RC2"
+        compile ":rendering:0.4.4"
+
     }
 }
 grails.plugin.location.RapidGrails = "../RapidGrails"
