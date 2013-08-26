@@ -7,7 +7,7 @@ class CommonTagLib {
     def loginLink = {attrs, body ->
 
         out << '<a'
-        out << ' href=\"' + createLink(controller: 'Login', params:['forwardUri':request.forwardURI],absolute: true).replaceFirst('http:','https:') + '\"'
+        out << ' href=\"' + createLink(controller: 'Login', action: 'auth', params:['forwardUri':request.forwardURI],absolute: true).replaceFirst('http:','https:') + '\"'
         attrs.each { key, value ->
             out << ' ' + key + '=\"' + value + "\""
         }
