@@ -31,7 +31,7 @@ grails.project.dependency.resolution = {
         grailsPlugins()
         grailsHome()
         grailsCentral()
-        flatDir dir: 'lib'
+//        flatDir dir: 'lib'
         mavenLocal()
         mavenCentral()
 
