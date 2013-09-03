@@ -1,5 +1,10 @@
 <%@ page import="eshop.OrderHelper; eshop.Order" %>
 
+<g:if test="${modified}">
+    <div id="modificationFlag">
+        <g:message code="order.modified"/>
+    </div>
+</g:if>
 
 <div id="show-order" class="content scaffold-show" role="main">
     <ol class="property-list order" style="padding: 0;margin: 0;margin-bottom:10px;">
@@ -24,13 +29,13 @@
             </li>
         </g:if>
 
-        <g:if test="${orderInstance?.customer}">
+        <g:if test="${orderInstance?.ownerName}">
             <li class="fieldcontain">
                 <span id="customer-label" class="property-label"><g:message code="order.customer"
                                                                             default="Customer"/></span>
 
                 <span class="property-value"
-                      aria-labelledby="customer-label">${orderInstance?.customer?.encodeAsHTML()}</span>
+                      aria-labelledby="customer-label">${orderInstance?.ownerName?.encodeAsHTML()}</span>
 
             </li>
         </g:if>

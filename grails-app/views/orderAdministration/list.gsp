@@ -41,7 +41,7 @@
     </script>
     <rg:grid domainClass="${Order}"
              sortname="id"
-             maxColumns="7"
+             maxColumns="9"
              showCommand="false"
              commands="${[[handler: "viewOrder(#id#)", icon: "application_form"]]}">
         <rg:criteria>

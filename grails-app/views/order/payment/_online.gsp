@@ -17,7 +17,7 @@
 </g:javascript>
 
 <style>
-label{
+label {
     display: block;
 }
 </style>
@@ -36,9 +36,15 @@ label{
     <label><g:message code="order.payment.value"></g:message></label>
     <input type="text" name="value" id="onlineValue" onblur="onlineValidateValue()" value="${orderPrice}"/>
     <span id="onlineValueValidationMessage"></span>
-    <div>
-        <input type="checkbox" checked="checked" name="usingCustomerAccountValueAllowed" id="usingCustomerAccountValueAllowed"/>
-        <label style="display: inline" for="usingCustomerAccountValueAllowed"><g:message code="order.payment.usingCustomerAccountValueAllowed"></g:message></label></div>
+
+    <g:if test="${customer}">
+        <div style="display: none">
+            <input type="checkbox" checked="checked" name="usingCustomerAccountValueAllowed"
+                   id="usingCustomerAccountValueAllowed"/>
+            <label style="display: inline" for="usingCustomerAccountValueAllowed"><g:message
+                    code="order.payment.usingCustomerAccountValueAllowed"></g:message></label>
+        </div>
+    </g:if>
 
     <div class="toolbar" style="margin-top:10px;">
         <input type="submit" class="btn btn-primary" onclick="return onlineValidate()"

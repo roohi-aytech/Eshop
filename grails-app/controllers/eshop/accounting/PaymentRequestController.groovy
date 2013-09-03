@@ -1,5 +1,6 @@
 package eshop.accounting
 
+import eshop.Order
 import eshop.accounting.PaymentRequest
 import grails.converters.JSON
 
@@ -23,8 +24,8 @@ class PaymentRequestController {
     def list() {
     }
 
-    def show(){
-        [paymentRequestInstance:PaymentRequest.get(params.id)]
+    def show() {
+        [paymentRequestInstance: PaymentRequest.get(params.id)]
     }
 
     def save() {
@@ -35,6 +36,7 @@ class PaymentRequestController {
         } else
             paymentRequestInstance = new PaymentRequest(params)
         if (paymentRequestInstance.validate() && paymentRequestInstance.save()) {
+
             render paymentRequestInstance as JSON
         } else
             render(template: "form", model: [paymentRequestInstance: paymentRequestInstance])

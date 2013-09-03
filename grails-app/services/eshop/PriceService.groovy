@@ -1,12 +1,15 @@
 package eshop
 
+import eshop.discout.Discount
+import eshop.discout.ProductCriteria
+
 class PriceService {
 
     def calcProductPrice(productId) {
         def product = Product.get(productId)
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (!defaultModel)
-            return [mainVal: 0D, showVal: 0D, status: 'not-exists']
+            return [showVal: 0D, status: 'not-exists']
 
         if (defaultModel.status != 'exists') {
             def alternateModel = ProductModel.findByProductAndStatus(product, 'exists')
@@ -15,7 +18,7 @@ class PriceService {
         }
 
         if (!defaultModel)
-            return [mainVal: 0D, showVal: 0D, status: 'not-exists']
+            return [showVal: 0D, status: 'not-exists']
 
         calcProductModelPrice(defaultModel?.id)
     }
@@ -23,121 +26,145 @@ class PriceService {
     def calcProductModelPrice(productModelId) {
         def productModel = ProductModel.get(productModelId)
         if (!productModel)
-            return [mainVal: 0D, showVal: 0D, status: 'not-exists']
+            return [showVal: 0D, status: 'not-exists']
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
         if (!price)
-            return [mainVal: 0D, showVal: 0D, status: productModel.status]
+            return [showVal: 0D, status: productModel.status]
 
         def priceVal = price?.rialPrice
-        def mainVal = price?.rialPrice
 
-        //addedValues - everyWhere
-//        def addedValues = []
-//        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "mandetory"))
-//        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
-//        productModel?.product?.productTypes?.each {
-//            getAddedvalues(it).each {
-//                if (!it.brand || it.brand.id == productModel.product.brand.id)
-//                    addedValues.add(it)
-//            }
-//        }
-//
-//        addedValues?.each {
-//            if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
-//                def val
-//                if (it.type == "percent")
-//                    val = price.rialPrice * it.value / 100
-//                else if (it.type == "fixed")
-//                    val = it.value
-//                priceVal += val
-//            }
-//        }
-
-//        def valueAddedVal = priceVal
-        //addedValues - orderTime
-//        addedValues = []
-//        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productModel.product, "orderTime"))
-//        addedValues = addedValues.findAll { !it.brand || it.brand.id == productModel.product.brand.id }
-//        productModel?.product?.productTypes?.each {
-//            getOrderTimeAddedValues(it).each {
-//                if (!it.brand || it.brand.id == productModel.product.brand.id)
-//                    addedValues.add(it)
-//            }
-//        }
-
-//        addedValues?.each {
-//            if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
-//                def val
-//                if (it.type == "percent")
-//                    val = priceVal * it.value / 100
-//                else if (it.type == "fixed")
-//                    val = it.value
-//                valueAddedVal += val
-//            }
-//        }
-
-        [mainVal: mainVal, showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
+        [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
 
     def calcProductModelPrice(productModelId, selectedAddedValues) {
         def result = calcProductModelPrice(productModelId)
 
-        if (!result.mainVal)
+        if (!result.showVal)
             return result
 
-        def valueAddedVal = result.showVal
+        def addedVal = 0
         selectedAddedValues.collect { AddedValue.get(it.toLong()) }.each { addedValue ->
-            def value = 0
             if (addedValue.type == "percent")
-                value = result.mainVal * addedValue.value / 100
+                addedVal += result.showVal * addedValue.value / 100
             else if (addedValue.type == "fixed")
-                value = addedValue.value
-            valueAddedVal += value
+                addedVal += addedValue.value
         }
 
-        result.valueAddedVal = valueAddedVal
+        result.addedVal = addedVal
 
         result
     }
 
-    def getAddedvalues(ProductType productType) {
-        def addedValues = []
-        if (productType.parentProduct)
-            addedValues.addAll(getAddedvalues(productType.parentProduct))
-        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "mandetory"))
-        addedValues
-    }
-
-
-
     def updateOrderPrice(Order order) {
 
-        OrderItem.findAllByOrder(order).each { orderItem ->
+        OrderItem.findAllByOrderAndDeleted(order, false).each { orderItem ->
             def price = calcProductModelPrice(orderItem.productModel.id, orderItem.addedValues?.collect { it.id })
             if (price.status == 'exists') {
                 orderItem.baseUnitPrice = price.showVal ?: 0
-                orderItem.addedValuesPrice = price.valueAddedVal ? price.valueAddedVal - price.showVal : 0
-                orderItem.unitPrice = price.valueAddedVal ?: 0
-                orderItem.totalPrice = orderItem.orderCount * orderItem.unitPrice
+                orderItem.addedValuesPrice = price.addedVal ?: 0
+                orderItem.unitPrice = orderItem.baseUnitPrice + orderItem.addedValuesPrice
+                orderItem.discount = 0
+                orderItem.tax = 0
+                orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
+
             } else
-                orderItem.baseUnitPrice =
-                    orderItem.addedValuesPrice =
-                        orderItem.unitPrice =
-                            orderItem.totalPrice = 0
+                orderItem.deleted = true
+        }
+
+        OrderItem.findAllByOrderAndDeleted(order, false).each { orderItem ->
+
+            def product = orderItem?.productModel?.product
+            def productModel = ProductModel.get(orderItem?.productModel?.id)
+
+            //set discount
+            orderItem.discount = 0
+            def discountList = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThanEquals(new Date(), new Date(), 0)
+            discountList = discountList.findAll { discount ->
+                !discount.discountProductsCriteria.any { criteria -> !ProductCriteriaMatches(criteria, orderItem) } &&
+                        order.items.any { basketItem ->
+                            !discount.basketProductCriteria.any { criteria -> !ProductCriteriaMatches(criteria, basketItem) }
+                        }
+            }
+            discountList?.each { discount ->
+                if (discount.type == "Percent")
+                    orderItem.discount += (orderItem.unitPrice * discount.value) / 100
+                else if (discount.type == "Fixed")
+                    orderItem.discount += discount.value
+            }
+
+            //set tax
+            orderItem.tax = 0
+            if (order.invoiceType == 'with_added_value') {
+                def addedValues = []
+                addedValues.addAll(AddedValue.findAllByBaseProduct(orderItem.productModel.product))
+                Product.get(product?.id)?.productTypes?.each {
+                    getAddedValues(it).each {
+                        if (!it.brand || it.brand.id == product.brand.id)
+                            addedValues.add(it)
+                    }
+                }
+                addedValues?.each {
+                    if (!it.variationValues.any { !productModel.variationValues.contains(it) }) {
+                        if (it.type == "percent")
+                            orderItem.tax += ((orderItem.unitPrice - orderItem.discount) * it.value) / 100
+                        else if (it.type == "fixed")
+                            orderItem.tax += it.value
+                    }
+                }
+            }
+
+            //total price
+            orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
+
+
             orderItem.save()
         }
 
-        order.totalPrice = Math.round(((OrderItem.findAllByOrder(order).sum(0, { it.totalPrice }) as Integer) + order.deliveryPrice) / 1000) * 1000
+        order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, { it.totalPrice }) as Integer) + order.deliveryPrice) / 1000) * 1000
+        if(!order.usedAccountValue)
+            order.usedAccountValue = 0
+        order.totalPayablePrice = order.totalPrice - order.usedAccountValue
         order.save()
     }
 
-//    def getOrderTimeAddedValues(ProductType productType) {
-//        def addedValues = []
-//        if (productType.parentProduct)
-//            addedValues.addAll(getAddedvalues(productType.parentProduct))
-//        addedValues.addAll(AddedValue.findAllByBaseProductAndProcessTime(productType, "orderTime"))
-//        addedValues
-//    }
+    def getAddedValues(ProductType productType) {
+        def addedValues = []
+        if (productType.parentProduct)
+            addedValues.addAll(getAddedValues(productType.parentProduct))
+        addedValues.addAll(AddedValue.findAllByBaseProduct(productType))
+        addedValues
+    }
+
+    Boolean ProductCriteriaMatches(ProductCriteria criteria, OrderItem orderItem) {
+
+        def result = true
+        def product = Product.get(orderItem?.productModel?.product?.id)
+
+        //check product
+        result = result && (!criteria.product || criteria.product?.id == product.id)
+
+        //check product type
+        def productTypeList = [] as List<Long>
+        product.productTypes.each { productType ->
+            def item = productType
+            productTypeList.add(item.id)
+            while (item.parentProduct) {
+                item = item.parentProduct
+                productTypeList.add(item.id)
+            }
+
+        }
+        result = result && (!criteria.productType || productTypeList?.contains(criteria.productType?.id))
+
+        //brand
+        result = result && (!criteria.brand || criteria.brand?.id == product.brand?.id)
+
+        //price
+        result = result && (!criteria.fromPrice || criteria.fromPrice <= orderItem.unitPrice)
+        result = result && (!criteria.toPrice || criteria.toPrice >= orderItem.unitPrice)
+
+        result
+    }
 }

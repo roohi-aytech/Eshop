@@ -21,6 +21,7 @@ class CustomerTransaction {
         value min: 0
         type inList: AccountingHelper.TRANSACTION_TYPE_LIST
         order nullable: true
+        creator(nullable: true)
     }
 
     static mapping = {

@@ -12,7 +12,7 @@
         <th><g:message code="productModel.status"/></th>
         <th><g:message code="orderItem.action"></g:message></th>
     </tr>
-    <g:each in="${order.items}" var="orderItem">
+    <g:each in="${order.items.findAll {!it.deleted}}" var="orderItem">
         <tr>
             <td>
                 ${orderItem.productModel}
@@ -35,16 +35,18 @@
             <td>
                 <b><a onclick="$('#producers_${orderItem.id}').fadeIn('slow');" style="cursor: pointer"><g:message
                         code="orderItem.showProducers"/></a></b>
-                <g:if test="${order.status == eshop.OrderHelper.STATUS_UPDATING}">-
+                <g:if test="${order.status == eshop.OrderHelper.STATUS_UPDATING || order.status == eshop.OrderHelper.STATUS_PAID }">-
                     <b><a onclick="$('#price_${orderItem.id}').fadeIn('slow');" style="cursor: pointer"><g:message
                             code="orderItem.newPrice"/></a></b> -
                     <b><a onclick="$('#status_${orderItem.id}').fadeIn('slow');" style="cursor: pointer"><g:message
-                            code="orderItem.changeStatus"/></a></b>
+                            code="orderItem.changeStatus"/></a></b> -
+                    <b><a onclick="$('#count_${orderItem.id}').fadeIn('slow');" style="cursor: pointer"><g:message
+                            code="orderItem.changeCount"/></a></b>
                 </g:if>
             </td>
         </tr>
         <tr class="hideIt" id="producers_${orderItem.id}">
-            <td colspan="7" class="no-border">
+            <td colspan="8" class="no-border">
                 <h3><a style="cursor: pointer" onclick="$('#producers_${orderItem.id}').fadeOut('slow');"><img
                         src="${resource(dir: 'images', file: 'close.png')}"/></a>
                     <g:message code="producers"/></h3>
@@ -95,7 +97,7 @@
             </td>
         </tr>
         <tr class="hideIt" id="price_${orderItem.id}">
-            <td colspan="7" class="no-border">
+            <td colspan="8" class="no-border">
                 <form id="updatePriceForm${orderItem.id}">
                     <h3><a style="cursor: pointer" onclick="$('#price_${orderItem.id}').fadeOut('slow');"><img
                             src="${resource(dir: 'images', file: 'close.png')}"/></a>
@@ -128,7 +130,7 @@
             </td>
         </tr>
         <tr class="hideIt" id="status_${orderItem.id}">
-            <td colspan="7" class="no-border">
+            <td colspan="8" class="no-border">
                 <form id="updateProductModelStatusForm${orderItem.id}">
                     <h3><a style="cursor: pointer" onclick="$('#status_${orderItem.id}').fadeOut('slow');"><img
                             src="${resource(dir: 'images', file: 'close.png')}"/></a>
@@ -148,6 +150,29 @@
 
                     <span class="fieldcontain">
                         <input type="button" onclick="updateProductModelStatus(${orderItem.id});" value="${message(code: 'save')}"/>
+                    </span>
+                </form>
+            </td>
+        </tr>
+        <tr class="hideIt" id="count_${orderItem.id}">
+            <td colspan="8" class="no-border">
+                <form id="updateCountForm${orderItem.id}">
+                    <h3><a style="cursor: pointer" onclick="$('#count_${orderItem.id}').fadeOut('slow');"><img
+                            src="${resource(dir: 'images', file: 'close.png')}"/></a>
+                        <g:message code="count"/></h3>
+                    <g:hiddenField name="order.id" value="${params.id}"/>
+                    <g:hiddenField name="orderItem.id" value="${orderItem.id}"/>
+
+                    <span class="fieldcontain required">
+                        <label for="count">
+                            <g:message code="count" default="Count"/>
+                            <span class="required-indicator">*</span>
+                        </label>
+                        <g:field type="number" name="count" step="any" required="" value="${orderItem.orderCount}"/>
+                    </span>
+
+                    <span class="fieldcontain">
+                        <input type="button" onclick="updateCount(${orderItem.id});" value="${message(code: 'save')}"/>
                     </span>
                 </form>
             </td>

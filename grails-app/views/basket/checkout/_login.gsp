@@ -57,7 +57,7 @@
                         </p>
 
                         <p id="remember_me_holder">
-                            <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
+                            <input type='checkbox' class='chk' name='_spring_security_remember_me' id='remember_me'
                                    checked='checked' style="margin-top: 0"/>
                             <label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
                         </p>

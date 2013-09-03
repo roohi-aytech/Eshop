@@ -39,7 +39,7 @@
                     <td>
                         <h3><g:message code="order.items"/></h3>
                         <ul class="products">
-                            <g:each in="${OrderItem.findAllByOrder(order)}" var="orderItem">
+                            <g:each in="${OrderItem.findAllByOrderAndDeleted(order, false)}" var="orderItem">
                                 <li>
                                     <img src="${createLink(controller: 'image', params: [id: orderItem.productModel.product.id, wh: '50x50'])}"/>
 

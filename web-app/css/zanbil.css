@@ -29,6 +29,14 @@ body {
     /*position: relative;*/
 }
 
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly]{
+    color: #c0c0c0;
+}
+
+.hasDatepicker{
+    color: #000000 !important;
+}
+
 body.main {
     background-color: #444444;
 }
@@ -92,7 +100,7 @@ h2 .font-calibri {
 
 .info div {
     background: url(../images/icons/info.png) no-repeat top right;
-    padding: 5px 35px 10px 10px;
+    padding: 5px 35px 5px 10px;
 }
 
 .info a {
@@ -1791,56 +1799,6 @@ h2.check-out-price span {
     font-size: 14px;
 }
 
-/*Invoice*/
-.invoice {
-    padding: 20px;
-    padding-top: 0;
-}
-
-.invoice h2 {
-    margin-bottom: 0;
-}
-
-.invoice table {
-    width: 100%;
-}
-
-.invoice .label {
-    text-align: left;
-    vertical-align: middle;
-    background-color: transparent;
-    text-shadow: none;
-    font-weight: normal;
-    width: 0%;
-    color: #808080;
-    white-space: nowrap;
-    line-height: 20px;
-}
-
-.invoice .value {
-    vertical-align: top;
-    text-align: right;
-    width: 50%;
-}
-
-.invoice td {
-    padding: 3px;
-    border-color: #808080;
-}
-
-.invoice .customer-info {
-    margin-bottom: 10px;
-}
-
-.invoice .basket-detail {
-    border-color: #000000;
-    margin-bottom: 10px;
-}
-
-.invoice .basket-detail th {
-    background-color: #ff8c00;
-    padding: 5px;
-}
 
 /*form*/
 .form label {
@@ -2721,6 +2679,10 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
     margin-right: 5px;
 }
 
+.msgGrowl{
+    z-index: 9999;
+}
+
 .msgGrowl.warning .msgGrowl-content {
     min-height: 30px;
 }
@@ -3511,6 +3473,15 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 #loginLink{
     display: none;
     opacity: 0;
+}
+
+.export-toolbar{
+    text-align: left;
+}
+
+.page-shadow{
+    margin-top:10px;
+    margin-bottom: 10px;
 }
 
 

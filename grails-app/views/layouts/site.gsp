@@ -100,6 +100,8 @@
                     <g:layoutBody/>
                 </div>
             </div>
+
+            <g:render template="/inquired_payments"/>
             <r:layoutResources/>
         </td>
     </tr>

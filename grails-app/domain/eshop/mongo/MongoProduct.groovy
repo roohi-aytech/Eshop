@@ -12,6 +12,13 @@ class MongoProduct {
         this['brand']['name']
     }
 
+    transient def getIsVisible() {
+        Product.get(baseProductId)?.isVisible
+    }
+    void setIsVisible(visible) {
+        
+    }
+
     transient def getGuaranteeList() {
         Product.get(baseProductId)?.models?.collect { it.guarantee }.unique { it.id }
     }

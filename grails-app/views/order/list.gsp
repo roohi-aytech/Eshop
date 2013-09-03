@@ -41,12 +41,12 @@
                 <ul class="master">
                     <g:each in="${suggestedActions}" var="action">
                         <li>
-                            <g:link controller="order" action="${action}" params="${['id': order.id]}"><g:message
+                            <g:link class="btn btn-success" controller="order" action="${action}" params="${['id': order.id]}"><g:message
                                     code="controlPanel.orders.actions.${action}.label"></g:message></g:link></li>
                     </g:each>
                     <g:each in="${actions}" var="action">
                         <li>
-                            <g:link controller="order" action="${action}" params="${['id': order.id]}"><g:message
+                            <g:link class="btn btn-warning" controller="order" action="${action}" params="${['id': order.id]}"><g:message
                                     code="controlPanel.orders.actions.${action}.label"></g:message></g:link></li>
                     </g:each>
                 </ul>
@@ -55,7 +55,7 @@
             <div class="column2 items">
                 <h4><g:message code="controlPanel.orders.productList.label"></g:message></h4>
                 <ul class="master">
-                    <g:each in="${order.items}" var="orderItem">
+                    <g:each in="${order.items.findAll {!it.deleted}}" var="orderItem">
                         <g:if test="${orderItem.productModel}">
                             <li>
                                 <g:link controller="site" action="product"

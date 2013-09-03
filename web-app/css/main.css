@@ -1034,3 +1034,14 @@ pre.stack{
     display: table-cell;
     float: none !important;
 }
+
+#modificationFlag{
+    border-radius: 4px;
+    background-color: #ff4500;
+    color: #ffffff;
+    display: block;
+    float: right;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px silver;
+}

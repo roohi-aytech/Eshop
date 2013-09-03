@@ -52,7 +52,7 @@
     <g:layoutHead/>
     <rg:jstreeResources/>
 
-    <script language="javascript" src="${resource(dir: 'js', file: 'msgGrowl.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}" type="text/javascript"></script>
 
 
     %{--easy ui--}%

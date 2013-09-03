@@ -14,7 +14,7 @@ class OrderTrackingService {
         Boolean result = false
         def vendors = Vendor.findAllByUserAndDeleted user, false
         vendors.each { vendor ->
-            order.items.each { orderItem ->
+            order.items.findAll {!it.deleted}.each { orderItem ->
 
                 Boolean canContinueCheck = true
                 //check brands

@@ -6,87 +6,114 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="eshop.City" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="site"/>
     <title><g:message code="controlPanel.orders.actions.payment.label"></g:message></title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msdropdown.css')}"/>
-    <g:javascript src="jquery.msdropdown.js"></g:javascript>
-    <style>
-    label {
-        margin-bottom: 5px;
-    }
-    </style>
-    <g:javascript>
-    function showPreInvoice() {
 
-                $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
-                $("#myModal").modal({
-                        backdrop: false,
-                        show: true
-                        });
-                $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: params.id])}', function() {});
+    <g:javascript>
+        function changePayFromAccountType() {
+            if ($('#paySome').is(':checked')) {
+                $('#payFromAccountAmount').prop('disabled', false);
             }
+            else {
+                $('#payFromAccountAmount').prop('disabled', true);
+            }
+        }
+
+        function formatPrice(element) {
+            $(element).val($(element).val().replace(/[^0-9\.]/g, ''));
+            $(element).val(addCommasOnKeyPress($(element).val()));
+        }
+
+        function addCommasOnKeyPress(nStr) {
+            if (!nStr)
+                return;
+            nStr = nStr.replace(/\,/g, '');
+            nStr += '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+        $(document).ready(function () {
+            changePayFromAccountType();
+            formatPrice($('#payFromAccountAmount'));
+        });
+
+        function validatePayFromAccountAmount(){
+            var validator = $('#payFromAccountAmountValidator');
+            validator.html('');
+            if ($('#paySome').is(':checked')) {
+                var value = $('#payFromAccountAmount').val().replace(',', '');
+                if(!value || value == ''){
+                    validator.html('${message(code:'order.payment.payFromAccountAmount.notEmpty.validator')}');
+                    return false;
+                }
+                if(parseInt(value) > ${customerAccountValue}) {
+                    validator.html('${message(code:'order.payment.payFromAccountAmount.moreThanCustomerAccount.validator')}');
+                    return false;
+                }
+                if(parseInt(value) > ${orderPrice}) {
+                    validator.html('${message(code:'order.payment.payFromAccountAmount.moreThanOrderPrice.validator')}');
+                    return false;
+                }
+            }
+            return true
+        }
     </g:javascript>
 </head>
 
 <body>
-<div class="control-panel">
-    <h2><g:message code="controlPanel.orders.actions.payment.label"></g:message></h2>
-    <g:message code="order.payment.preInvoice.description"/>
-    <br/>
-    <input type="button" onclick="showPreInvoice();" value="<g:message code="order.payment.preInvoice.link"/>" class="btn btn-success" style="margin:10px;"/>
-    <br/>
-    <g:message code="order.payment.description"/>
-    <g:if test="${flash.message}">
-        <div class="info">
-            <div>
-                ${flash.message}
-            </div>
-        </div>
-    </g:if>
-
-    <ul class="nav nav-tabs" style="margin-top:10px;">
-        <li class="active">
-            <a href="#tabOnline" data-toggle="tab">
-                <g:message code="payment.types.online"></g:message>
-            </a>
-        </li>
-        <li>
-            <a href="#tabBankReceipt" data-toggle="tab">
-                <g:message code="payment.types.bankReceipt"></g:message>
-            </a>
-        </li>
-        <li>
-            <a href="#tabAccount" data-toggle="tab">
-                <g:message code="payment.types.account"></g:message>
-            </a>
-        </li>
-    </ul>
-
-    <div class="tab-content">
-        <div id="tabOnline" class="tab-pane active">
-            <g:render template="payment/online"></g:render>
-        </div>
-
-        <div id="tabBankReceipt" class="tab-pane">
-            <g:render template="payment/bankReceipt"></g:render>
-        </div>
-
-        <div id="tabAccount" class="tab-pane">
-            <g:render template="payment/account"></g:render>
+<div class="page-content">
+    <h2><g:message code="controlPanel.orders.actions.payment.label"></g:message> ${order.trackingCode} </h2>
+    <div class="info">
+        <div>
+            <g:message code="customer.account.currentValue"/> : <b><g:formatNumber number="${customerAccountValue}"
+                                                                                   type="number"/></b> <g:message
+                code="rial"/> <br/>
+            <g:message code="order.totalPrice"/> : <b><g:formatNumber number="${orderPrice}" type="number"/></b> <g:message
+                code="rial"/>
         </div>
     </div>
-    <g:javascript>
 
-        $(document).ready(function (e) {
-            try {
-                $("body select").msDropDown();
-            } catch (e) {
-            }
-        });
-    </g:javascript>
+    <g:form style="margin:0;" action="payFromAccount">
+        <g:hiddenField name="order.id" id="order" value="${params.id}"></g:hiddenField>
+        <div style="margin-top:15px;margin-right:10px;">
+            <g:if test="${customerAccountValue >= orderPrice}">
+                <div style="margin-bottom: 5px;">
+                    <input type="radio" id="payWhole" name="payFromAccountType" value="whole" style="margin-top:0"
+                           onchange="changePayFromAccountType()" checked=""/>
+                    <label for="payWhole" style="display: inline-block;">
+                        <g:message code="order.payment.payWholeFromAccount"/>
+                    </label>
+                </div>
+            </g:if>
+            <div>
+                <input type="radio" id="paySome" name="payFromAccountType" value="some"
+                       onchange="changePayFromAccountType()" ${customerAccountValue < orderPrice ? 'checked="" style="display:none;margin-top:0;"' : 'style="margin-top:0;"'}/>
+                <label for="paySome" style="display: inline-block">
+                    <g:message code="order.payment.paySomeFromAccount"/>:
+                </label>
+                <g:textField name="payFromAccountAmount" id="payFromAccountAmount" onKeyup="formatPrice(this);"
+                             style="margin:0;width:100px;direction: ltr;text-align: left;"
+                             value="${[orderPrice, customerAccountValue].min()}"/>
+                <g:message code="rial"/>
+                <span id="payFromAccountAmountValidator"></span>
+            </div>
+        </div>
+
+        <div style="margin-top:10px;margin-bottom:10px;">
+            <input type="submit" class="btn btn-primary" onclick="return validatePayFromAccountAmount();"
+                   value="<g:message code="controlPanel.orders.actions.payment.label"></g:message>"/>
+        </div>
+    </g:form>
 </div>
 
 <!-- Modal -->

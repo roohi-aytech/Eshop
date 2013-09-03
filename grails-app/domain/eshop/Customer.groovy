@@ -1,5 +1,7 @@
 package eshop
 
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+
 class Customer extends User {
     static auditable = true
 
@@ -19,7 +21,6 @@ class Customer extends User {
     Boolean profileReagentFilled = false
     Boolean profileFavoritesFilled = false
     Boolean profileNewsLettersFilled = false
-
 
     static hasMany = [wishList:Product, newsLetterCategories: NewsLetterCategory, newsLetterProductTypes: ProductType, favoriteProductTypes: ProductType, personalEvents: PersonalEvent]
 

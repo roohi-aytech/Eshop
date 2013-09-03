@@ -48,11 +48,11 @@
     <br/>
     <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
     <g:set var="price" value="${priceService.calcProductModelPrice(productModel.id, selectedAddedValues.collect{it.id})}"/>
-    <g:if test="${price.valueAddedVal}">
+    <g:if test="${price.showVal}">
         <div class="price">
             <g:message code="price"/>:
             <span class='current'><g:formatNumber
-                    number="${price.valueAddedVal}" type="number"/> <g:message code="rial"/></span>
+                    number="${price.showVal + price.addedVal}" type="number"/> <g:message code="rial"/></span>
         </div>
     </g:if>
 
@@ -70,17 +70,11 @@
                             <label for="addedValues_${addedValue.id}">
                                 ${addedValue.name}
                             </label>
-                        %{--</g:if>--}%
-                        %{--<g:else>--}%
-                            %{--<div class="requiredItem">--}%
-                                %{--${addedValue.name}--}%
-                            %{--</div>--}%
-                        %{--</g:else>--}%
                     </div>
 
                     <div class="price">
                         <g:if test="${addedValue.type == 'percent'}">
-                            <g:formatNumber number="${Math.round((addedValue.value * price.mainVal) / 100)}"
+                            <g:formatNumber number="${Math.round((addedValue.value * price.showVal) / 100)}"
                                             type="number"/> <g:message code="rial"/>
                         </g:if>
                         <g:else>

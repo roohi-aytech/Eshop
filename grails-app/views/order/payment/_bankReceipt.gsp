@@ -22,15 +22,26 @@
         return true;
     }
 
+    function validateDate(){
+        $('#dateValidationMessage').html('');
+
+        var date = $('#date_control').val();
+        if(!date || date == '') {
+            $('#dateValidationMessage').html('${message(code: 'order.payment.date.notEmpty')}')
+            return false;
+        }
+        return true;
+    }
+
     function validate(){
-        return validateValue() && validateTrackingCode();
+        return validateValue() && validateTrackingCode() && validateDate();
     }
 </g:javascript>
 
 <style>
-    label{
-        display: block;
-    }
+label {
+    display: block;
+}
 </style>
 
 <g:form action="savePaymentRequest">
@@ -50,9 +61,22 @@
     <label><g:message code="order.payment.trackingCode"></g:message></label>
     <input type="text" name="trackingCode" id="trackingCode" onblur="validateTrackingCode()"/>
     <span id="trackingCodeValidationMessage"></span>
-    <div>
-    <input type="checkbox" checked="checked" name="usingCustomerAccountValueAllowed" id="usingCustomerAccountValueAllowed"/>
-    <label style="display: inline" for="usingCustomerAccountValueAllowed"><g:message code="order.payment.usingCustomerAccountValueAllowed"></g:message></label></div>
+    <label for='date'><g:message code="order.payment.date"/></label>
+    <span id="dateValidationMessage"></span>
+    <rg:datePicker name="date" value="${new Date()}"></rg:datePicker>
+    <script type="text/javascript" language="javascript">
+        $('#birthDate_control').blur(function () {
+            validateDate();
+        });
+    </script>
+
+    <g:if test="${customer}">
+        <div style="display: none">
+            <input type="checkbox" checked="checked" name="usingCustomerAccountValueAllowed"
+                   id="usingCustomerAccountValueAllowed"/>
+            <label style="display: inline" for="usingCustomerAccountValueAllowed"><g:message
+                    code="order.payment.usingCustomerAccountValueAllowed"></g:message></label></div>
+    </g:if>
 
     <div class="toolbar" style="margin-top:10px;">
         <input type="submit" class="btn btn-primary" onclick="return validate()"

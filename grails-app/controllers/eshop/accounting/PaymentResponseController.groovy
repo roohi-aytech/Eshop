@@ -54,98 +54,80 @@ class PaymentResponseController {
 
             if (params.approved) {
 
-                //add customer transaction
-                def customerTransaction = new CustomerTransaction()
-                customerTransaction.account = request.account
-                customerTransaction.value = request.value
-                customerTransaction.date = new Date()
-                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
-                customerTransaction.order = request.order
-                customerTransaction.creator = request.owner
-                customerTransaction.save()
-
-                //add transaction
-                def transaction = new Transaction()
-                transaction.account = request.account
-                transaction.value = request.value
-                transaction.date = new Date()
-                transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
-                transaction.order = request.order
-                transaction.creator = request.owner
-                transaction.save()
+                return // next parts are not required anymore
 
                 //pay order
-                if (request.order) {
-                    def orderPrice = request.order.totalPrice
-                    def customerAccount = accountingService.calculateCustomerAccountValue(request.owner)
-                    def payableAmount = request.usingCustomerAccountValueAllowed ? request.value + customerAccount : request.value
-
-                    if (payableAmount >= orderPrice) {
-                        //save withdrawal customer transaction
-                        customerTransaction = new CustomerTransaction()
-                        customerTransaction.value = orderPrice
-                        customerTransaction.date = new Date()
-                        customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
-                        customerTransaction.order = request.order
-                        customerTransaction.creator = request.owner
-                        customerTransaction.save()
-
-                        //save withdrawal transaction
-                        transaction = new Transaction()
-                        transaction.value = orderPrice
-                        transaction.date = new Date()
-                        transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
-                        transaction.order = request.order
-                        transaction.creator = request.owner
-                        transaction.save()
-
-                        //set order status
-                        request.order.status = OrderHelper.STATUS_PAID
-                        request.order.save()
-
-                        //save order tracking log
-                        def trackingLog = new OrderTrackingLog()
-                        trackingLog.action = OrderHelper.ACTION_PAYMENT
-                        trackingLog.date = new Date()
-                        trackingLog.order = request.order
-                        trackingLog.user = request.owner
-                        trackingLog.title = "order.actions.${OrderHelper.ACTION_PAYMENT}"
-                        if (!trackingLog.validate() || !trackingLog.save()) {
-                            //tracking log save error
-                            return
-                        }
-
-                        //send alert to customer
-                        mailService.sendMail {
-                            to springSecurityService.currentUser.email
-                            subject message(code: 'order.paid.subject')
-                            html(view: "/messageTemplates/mail/orderPaid",
-                                    model: [customer: springSecurityService.currentUser, order: request.order])
-                        }
-
-                        if (springSecurityService.currentUser.mobile)
-                            messageService.sendMessage(
-                                    springSecurityService.currentUser.mobile,
-                                    g.render(
-                                            template: '/messageTemplates/sms/orderPaid',
-                                            model: [customer: springSecurityService.currentUser, order: request.order]).toString())
-                    } else {
-                        //send alert to customer
-                        mailService.sendMail {
-                            to springSecurityService.currentUser.email
-                            subject message(code: 'order.notPaid.subject')
-                            html(view: "/messageTemplates/mail/orderNotPaid",
-                                    model: [customer: springSecurityService.currentUser, order: request.order])
-                        }
-
-                        if (springSecurityService.currentUser.mobile)
-                            messageService.sendMessage(
-                                    springSecurityService.currentUser.mobile,
-                                    g.render(
-                                            template: '/messageTemplates/sms/orderNotPaid',
-                                            model: [customer: springSecurityService.currentUser, order: request.order]).toString())
-                    }
-                }
+//                if (request.order) {
+//                    def orderPrice = request.order.totalPrice
+//                    def customerAccount = request.owner ? accountingService.calculateCustomerAccountValue(request.owner) : 0
+//                    def payableAmount = request.usingCustomerAccountValueAllowed ? request.value + customerAccount : request.value
+//
+//                    if (payableAmount >= orderPrice) {
+//                        //save withdrawal customer transaction
+//                        customerTransaction = new CustomerTransaction()
+//                        customerTransaction.value = orderPrice
+//                        customerTransaction.date = new Date()
+//                        customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+//                        customerTransaction.order = request.order
+//                        customerTransaction.creator = request.owner
+//                        customerTransaction.save()
+//
+//                        //save withdrawal transaction
+//                        transaction = new Transaction()
+//                        transaction.value = orderPrice
+//                        transaction.date = new Date()
+//                        transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+//                        transaction.order = request.order
+//                        transaction.creator = request.owner
+//                        transaction.save()
+//
+//                        //set order status
+//                        request.order.status = OrderHelper.STATUS_PAID
+//                        request.order.save()
+//
+//                        //save order tracking log
+//                        def trackingLog = new OrderTrackingLog()
+//                        trackingLog.action = OrderHelper.ACTION_COMPLETION
+//                        trackingLog.date = new Date()
+//                        trackingLog.order = request.order
+//                        trackingLog.user = request.owner
+//                        trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
+//                        if (!trackingLog.validate() || !trackingLog.save()) {
+//                            //tracking log save error
+//                            return
+//                        }
+//
+//                        //send alert to customer
+//                        mailService.sendMail {
+//                            to request.owner ? request.owner.email : request.order.ownerEmail
+//                            subject message(code: 'order.paid.subject')
+//                            html(view: "/messageTemplates/mail/orderPaid",
+//                                    model: [customerName: request.owner ? request.owner.toString() : request.order.ownerName, order: request.order])
+//                        }
+//
+//                        if (request.owner ? request.owner.mobile : request.order.ownerMobile)
+//                            messageService.sendMessage(
+//                                    request.owner ? request.owner.mobile : request.order.ownerMobile,
+//                                    g.render(
+//                                            template: '/messageTemplates/sms/orderPaid',
+//                                            model: [customerName: request.owner ? request.owner.toString() : request.order.ownerName, order: request.order]).toString())
+//                    } else {
+//                        //send alert to customer
+//                        mailService.sendMail {
+//                            to request.owner ? request.owner.email : request.order.ownerEmail
+//                            subject message(code: 'order.notPaid.subject')
+//                            html(view: "/messageTemplates/mail/orderNotPaid",
+//                                    model: [customerName: request.owner ? request.owner.toString() : request.order.ownerName, order: request.order])
+//                        }
+//
+//                        if (request.owner ? request.owner.mobile : request.order.ownerMobile)
+//                            messageService.sendMessage(
+//                                    request.owner ? request.owner.mobile : request.order.ownerMobile,
+//                                    g.render(
+//                                            template: '/messageTemplates/sms/orderNotPaid',
+//                                            model: [customerName: request.owner ? request.owner.toString() : request.order.ownerName, order: request.order]).toString())
+//                    }
+//                }
 
             }
 

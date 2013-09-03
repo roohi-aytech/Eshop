@@ -39,9 +39,9 @@ class DeliveryService {
         def targetCity = order?.sendingAddress?.city
         if (targetCity) {
 
-            def totalWeight = order.items.sum(0, { it?.productModel?.product?.weight ?: 0 })
-            def totalVolume = order.items.sum(0, { (it?.productModel?.product?.width ?: 0) * (it?.productModel?.product?.height ?: 0) * (it?.productModel?.product?.length ?: 0) })
-            def totalPrice = order.items.sum(0, { it?.orderCount * it?.unitPrice ?: 0 })
+            def totalWeight = order.items.findAll {!it.deleted}.sum(0, { it?.productModel?.product?.weight ?: 0 })
+            def totalVolume = order.items.findAll {!it.deleted}.sum(0, { (it?.productModel?.product?.width ?: 0) * (it?.productModel?.product?.height ?: 0) * (it?.productModel?.product?.length ?: 0) })
+            def totalPrice = order.items.findAll {!it.deleted}.sum(0, { it?.orderCount * it?.unitPrice ?: 0 })
 
             deliveryMethod.sourceStations.each { sourceStation ->
                 def pricingRule = sourceStation.targetZones?.find { it.cities?.collect { it.id }.contains(targetCity.id) }?.pricingRules?.find { pricingRule ->

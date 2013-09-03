@@ -4,6 +4,6 @@
     <g:if test="${price.showVal}">
     %{--<g:message code="price"/>:--}%
         <b><g:render template="price"
-                     model="${[productModel: productModel, mainVal: price.mainVal, showVal: price.showVal, lastUpdate: price.lastUpdate]}"/></b>
+                     model="${[productModel: productModel, showVal: price.showVal, lastUpdate: price.lastUpdate]}"/></b>
     </g:if>
 </g:if>

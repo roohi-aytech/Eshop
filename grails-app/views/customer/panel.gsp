@@ -9,6 +9,7 @@
 <body>
 <div class="control-panel">
     <h2><g:message code="controlPanel.title" default="Control Panel"/></h2>
+    <g:render template="inquired_payments"/>
     <g:if test="${customer?.registrationLevel != 'full'}">
         <div class="info">
             <div>
@@ -56,6 +57,10 @@
                                     params="${[status: OrderHelper.STATUS_PAID]}"><g:message
                                     code="orders"/> <g:message
                                     code="order.status.${OrderHelper.STATUS_PAID}"/></g:link></li>
+                        <li><g:link controller="order" action="list"
+                                    params="${[status: OrderHelper.STATUS_PAYMENT_APPROVED]}"><g:message
+                                    code="orders"/> <g:message
+                                    code="order.status.${OrderHelper.STATUS_PAYMENT_APPROVED}"/></g:link></li>
                         <li><g:link controller="order" action="list"
                                     params="${[status: OrderHelper.STATUS_INCOMPLETE]}"><g:message
                                     code="orders"/> <g:message

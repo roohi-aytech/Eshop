@@ -34,7 +34,7 @@ class BasketController {
         }
         def price = priceService.calcProductModelPrice(productModel.id, basketItem.selectedAddedValues)
         basketItem.price = price.showVal
-        basketItem.realPrice = price.valueAddedVal
+        basketItem.realPrice = price.showVal + price.addedVal
 
 
         def basketCounter = 0
@@ -79,7 +79,7 @@ class BasketController {
         def customInvoiceInformation = [:]
         customInvoiceInformation.ownerName = message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' +
                 (customer ? customer.toString() : session.checkout_customerInformation?.lastName)
-        customInvoiceInformation.ownerCode = ''
+        customInvoiceInformation.ownerCode = customer.nationalCode
         customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
 
         def deliveryMethods = []
@@ -90,11 +90,11 @@ class BasketController {
 
             //setup delivery methods
             Order order = new Order()
-            order.ownerName = customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() : session.checkout_customerInformation.lastName
+            order.ownerName = customer ? customer.toString() : session.checkout_customerInformation.lastName
             order.ownerEmail = customer ? customer.email : session.checkout_customerInformation.email
             order.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation.mobile
             order.ownerTelephone = customer ? customer.telephone : session.checkout_customerInformation.telephone
-            order.ownerCode = customer ? '': session.checkout_customInvoiceInformation.ownerCode
+            order.ownerCode = customer ? customer.nationalCode: session.checkout_customInvoiceInformation.ownerCode
             order.ownerSex = customer ? customer.sex : session.checkout_customerInformation.sex
 
             order.useAlternateInformation = session.checkout_customInvoiceInformation.customInvoiceInfo
@@ -190,8 +190,7 @@ class BasketController {
             orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
             orderItem.orderCount = basketItem.count
-//            def price = priceService.calcProductModelPrice(basketItem.id).valueAddedVal
-            orderItem.unitPrice = basketItem.realPrice //price ? price : 0
+            orderItem.unitPrice = basketItem.realPrice
             order.addToItems(orderItem)
         }
 
@@ -255,7 +254,7 @@ class BasketController {
             params.ownerName :
             (customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() :
                 message(code: "customer.title.${session.checkout_customerInformation.sex}") + " " + session.checkout_customerInformation.lastName)
-        customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : ''
+        customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : customer.nationalCode
         customInvoiceInformation.ownerMobile = customInvoiceInformation.customInvoiceInfo ? params.ownerMobile : (customer ? customer.mobile : session.checkout_customerInformation.mobile)
         session.checkout_customInvoiceInformation = customInvoiceInformation
         redirect(action: 'checkout')

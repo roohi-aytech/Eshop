@@ -26,22 +26,36 @@ class Order {
     DeliverySourceStation deliverySourceStation
     Double deliveryPrice = 0D
     int totalPrice = 0
+    int usedAccountValue = 0
+    int totalPayablePrice = 0
     Boolean optionalInsurance = false
 
     String status
-
     String trackingCode
+    Integer serialNumber
+    Date paymentTimeout
+    String invoiceType
+
+    String paymentType
+    String deliveryTrackingCode
+
+    transient Date getLastActionDate() {
+        OrderTrackingLog.findAllByOrder(this)?.sort { -it.id }?.find()?.date
+    }
 
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
 
     static constraints = {
         trackingCode nullable: true
         status(nullable: false, inList: OrderHelper.STATUS_LIST)
-        customer(nullable: true)
+        ownerName()
         ownerEmail()
         ownerMobile()
         ownerTelephone()
         ownerCode(nullable: true)
+        paymentTimeout nullable: true
+        lastActionDate()
+
         ownerSex(nullable: true, inList: ['male', 'female'])
         useAlternateInformation(nullable: true)
         alternateOwnerName(nullable: true)
@@ -53,6 +67,18 @@ class Order {
 
         deliverySourceStation(nullable: true)
         deliveryPrice(nullable: true)
+
+        invoiceType nullable: true, inList: ['with_added_value', 'without_added_value']
+        customer(nullable: true)
+
+        paymentType nullable: true, inList: ['online', 'bank-receipt', 'account-value', 'in-place']
+        deliveryTrackingCode nullable: true
+
+        totalPrice nullable: true
+        usedAccountValue nullable: true
+        totalPayablePrice nullable: true
+
+        serialNumber nullable: true
     }
 
     static mapping = {

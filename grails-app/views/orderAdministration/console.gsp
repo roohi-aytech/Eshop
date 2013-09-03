@@ -50,10 +50,28 @@
             );
         }
 
+        function correctPayment(){
+            requestUrl(
+                '${createLink(action: 'correctPayment')}',
+                $('#correctPaymentForm').serialize()
+            );
+        }
+
+        function printInvoice(id){
+            window.location.href = '${createLink(action: 'printInvoice')}/' + id;
+        }
+
         function updatePrice(id){
             requestUrl(
                 '${createLink(action: 'updatePrice')}',
                 $('#updatePriceForm' + id).serialize()
+            );
+        }
+
+        function updateCount(id){
+            requestUrl(
+                '${createLink(action: 'updateCount')}',
+                $('#updateCountForm' + id).serialize()
             );
         }
 

@@ -35,7 +35,7 @@
                 %{--<span class="action">${trackingLog.action}</span>--}%
             </div>
 
-            <div class="description">${trackingLog.description}</div>
+            <div class="description">${trackingLog.description?.trim()?.replace('\n', '<br/>')}</div>
         </li>
     </g:each>
 </ul>
