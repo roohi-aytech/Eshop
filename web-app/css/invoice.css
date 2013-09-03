@@ -1,0 +1,144 @@
+@font-face {
+    src: url('../font/b_yekan.ttf');
+    -fs-pdf-font-embed: embed;
+    -fs-pdf-font-encoding: UTF-8;
+}
+
+.page-shadow{
+    box-shadow: 0 0 10px grey;
+    display: inline-block;
+}
+
+.page-shadow .a4{
+}
+
+.a4{
+    width: 21cm;
+    height: 29.7cm;
+}
+
+.invoice {
+    background-image: url(../images/A4-Invoice.jpg);
+    background-size: 100%;
+}
+
+.invoice *{
+    font-family: 'b yekan', yekan, tahoma !important;
+    font-size:0.3cm;
+}
+
+.invoice-inner{
+    padding:2cm;
+    padding-left: 1.5cm;
+    padding-top:4cm;
+}
+
+.invoice h2 {
+    margin-bottom: 0;
+    font-size:0.6cm;
+}
+
+.invoice table {
+    width: 100%;
+}
+
+.invoice .label {
+    text-align: left;
+    vertical-align: middle;
+    background-color: transparent;
+    text-shadow: none;
+    font-weight: normal;
+    color: #808080;
+    white-space: nowrap;
+    padding: 0;
+}
+
+.invoice .value {
+    vertical-align: top;
+    text-align: right;
+    width: 50%;
+}
+
+.invoice td {
+    border-color: #808080;
+    padding: 0.1cm;
+}
+
+.invoice .customer-info {
+}
+
+.invoice .basket-detail {
+    border-color: #000000;
+    margin-top:0.4cm;
+    border: 0.02cm solid #000000;
+}
+
+.invoice-highlight{
+    background-color: #c4b99a;
+}
+
+.invoice .basket-detail th {
+    background-color: #c4b99a;
+    text-align: center;
+    border: 0.02cm solid #000000;
+}
+
+.invoice .basket-detail td {
+    text-align: center;
+    border: 0.02cm solid #000000;
+}
+
+.invoice .basket-detail td * {
+    text-align: center;
+}
+
+#invoice-date{
+}
+
+#invoice-serial{
+    margin-bottom:1cm;
+}
+
+#invoice-trackingCode{
+    font-weight: bold;
+    font-size: 0.3cm !important;
+}
+
+#sellerInfo{
+    border: 0.06cm solid #000000;
+    border-radius: 0.2cm;
+    display: block;
+    margin-top:1cm;
+    padding: 0.1cm 0.1cm 0;
+}
+
+#invoice-sellerCode{
+    display: inline-block;
+    direction: ltr;
+}
+
+#customerInfo{
+    border: 0.06cm solid #000000;
+    border-radius: 0.2cm;
+    display: block;
+    margin-top:0.2cm;
+    padding: 0.1cm 0.1cm 0;
+}
+
+#customerInfo-withoutAddedValue{
+    border: 0.06cm solid #000000;
+    border-radius: 0.2cm;
+    display: block;
+    margin-top:1cm;
+    padding: 0.1cm 0.1cm 0;
+}
+
+.invoice h3{
+    color: #000000;
+    text-decoration: underline;
+}
+
+#invoice-sign{
+    text-align: left;
+    padding-left:3cm;
+}
