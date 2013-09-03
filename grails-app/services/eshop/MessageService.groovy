@@ -1,5 +1,6 @@
 package eshop
 
+import ir.agah.zanbil.sms.sms1000.SmsLocator
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 import org.grails.plugins.wsclient.service.WebService
 
@@ -12,11 +13,8 @@ class MessageService {
     static String senderNumber = '02142328'
 
     def sendMessage(String cellphones, String message) {
+        def messageService=new SmsLocator().getsmsSoap()
 
-        return
-
-        def wsdl = ApplicationHolder.application.parentContext.getResource('WEB-INF/messageService.wsdl')
-        def messageService = webService.getClient(wsdl.getURL().toString())
         def result = messageService.doSendSMS(
                 userName,
                 userPassword,
