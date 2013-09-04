@@ -16,7 +16,7 @@ class BrowseService {
 
     def countProducts(params) {
         def products = getProducts()
-        params.match["isVisible"] = true
+        params.match["displayInList"] = true
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$group: [_id: params.group, count: [$sum: 1]]],
@@ -29,7 +29,7 @@ class BrowseService {
 
     def countProductsWithUnwind(params) {
         def products = getProducts()
-        params.match["isVisible"] = true
+        params.match["displayInList"] = true
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$unwind: params.unwind],
@@ -42,7 +42,7 @@ class BrowseService {
 
     def listProducts(params) {
         def products = getProducts()
-        params.match["isVisible"] = true
+        params.match["displayInList"] = true
         def productIds = products.aggregate(
                 [$match: params.match],
                 [$sort: [sortOrder: 1, saleCount: -1, visitCount: -1]],
@@ -326,7 +326,7 @@ class BrowseService {
         }
 
         def products = getProducts()
-        params.match["isVisible"] = true
+        params.match["displayInList"] = true
         def brands = products.aggregate(
                 [$match: match],
                 [$group: [_id: '$brand.id', count: [$sum: 1]]],
