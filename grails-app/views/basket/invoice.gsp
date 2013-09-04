@@ -85,7 +85,7 @@
         <tr>
             <td colspan="6" align="left"><g:message code="basket.totalRoundedPrice"></g:message></td>
             <td><b><g:formatNumber
-                    number="${Math.round((basket.sum { (it.realPrice ? it.realPrice : 0) * it.count } + order.deliveryPrice) / 10000) * 10000}"
+                    number="${Math.floor((basket.sum { (it.realPrice ? it.realPrice : 0) * it.count } + order.deliveryPrice) / 10000) * 10000}"
                     type="number"></g:formatNumber></b></td>
         </tr>
     </table>

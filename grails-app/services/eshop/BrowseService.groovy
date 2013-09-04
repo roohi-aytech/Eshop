@@ -1,5 +1,7 @@
 package eshop
 
+import org.springframework.web.context.request.RequestContextHolder
+
 class BrowseService {
     def mongo
     def db
@@ -40,21 +42,87 @@ class BrowseService {
         countMap
     }
 
+    def pagesCount(match, pageSize) {
+
+        (products.aggregate(
+                [$match: match],
+                [$group: [_id: null, count: [$sum: 1]]]
+        ).results().collect { it.count }.find() ?: 0) / pageSize
+    }
+
     def listProducts(params) {
+
         def products = getProducts()
         params.match["displayInList"] = true
+
+        def totalPages = pagesCount(params.match, params.pageSize)
+
+        if (params.resetPagesCountMap) {
+
+            def pageCountByStatus = [:]
+
+            //exists
+            def customizedMatch = params.match
+            customizedMatch.status = 0
+            pageCountByStatus['exists'] = pagesCount(customizedMatch, params.pageSize)
+
+            //inquiry-required
+            customizedMatch = params.match
+            customizedMatch.status = 1
+            pageCountByStatus['inquiry-required'] = pagesCount(customizedMatch, params.pageSize)
+
+            //coming-soon
+            customizedMatch = params.match
+            customizedMatch.status = 2
+            pageCountByStatus['coming-soon'] = pagesCount(customizedMatch, params.pageSize)
+
+            //not-exists
+            customizedMatch = params.match
+            customizedMatch.status = 3
+            pageCountByStatus['not-exists'] = pagesCount(customizedMatch, params.pageSize)
+
+            def splitPoints = [
+                    0,
+                    Math.floor(pageCountByStatus['exists']),
+                    Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required']),
+                    Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon']),
+                    Math.ceil(totalPages)
+            ]
+
+            def tempPagesCountMap = []
+            for (def i = 0; i < totalPages; i++)
+                tempPagesCountMap[i] = i
+
+            def pagesCountMap = []
+            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[0], splitPoints[1]))
+            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[1], splitPoints[2]))
+            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[2], splitPoints[3]))
+            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[3], splitPoints[4]))
+
+            RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey] = pagesCountMap
+        }
+
+        def randomizedStart = params.start
+//        def pagesCountMap = RequestContextHolder.currentRequestAttributes().getSession()["params.pageListSessionKey"]
+//        def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()]
+//        randomizedStart = randomizedStart || randomizedStart == 0 ? randomizedStart * params.pageSize : 9999999
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: [sortOrder: 1, saleCount: -1, visitCount: -1]],
-                [$skip: params.start],
+                [$sort: [status: 1, sortOrder: 1, saleCount: -1, visitCount: -1]],
+                [$skip: randomizedStart],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
 
-        def totalPages = (products.aggregate(
-                [$match: params.match],
-                [$group: [_id: null, count: [$sum: 1]]]
-        ).results().collect { it.count }.find() ?: 0) / params.pageSize
         [totalPages: totalPages, productIds: productIds]
+    }
+
+    def shuffleArray(array, start, end) {
+        if (end <= start + 1)
+            return []
+
+        def tempArray = array[start..end - 1]
+        Collections.shuffle(tempArray)
+        tempArray
     }
 
     def findProductTypeFilters(ProductType productType, page) {
@@ -67,7 +135,11 @@ class BrowseService {
             attributesCountMap = attributesCountMap + countAttributes(pt, match)
             pt = pt.parentProduct
         }
-        def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
+        def start = Integer.parseInt(page.toString()) * 12
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        def pageListSessionKey = "pageList_browse_${productType}"
+        def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
+        def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
@@ -251,7 +323,11 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
+        def start = Integer.parseInt(page.toString()) * 12
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        def pageListSessionKey = "pageList_filter_${f}"
+        def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
+        def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
@@ -566,7 +642,11 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def products = listProducts(match: match, start: Integer.parseInt(page.toString()) * 12, pageSize: 12)
+        def start = Integer.parseInt(page.toString()) * 12
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        def pageListSessionKey = "pageList_search_${f}"
+        def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
+        def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }

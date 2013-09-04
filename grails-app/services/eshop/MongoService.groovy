@@ -27,11 +27,26 @@ class MongoService {
                     mongoProduct[it.key] = it.value
             }
             mongoProduct['displayInList'] = product.isVisible || product.isVisible == null
-            mongoProduct['price'] = priceService.calcProductPrice(product.id).showVal
+            def priceData = priceService.calcProductPrice(product.id)
+            mongoProduct['price'] = priceData.showVal
             mongoProduct['brand'] = [id: product?.brand?.id, name: product?.brand?.name]
             mongoProduct['type'] = [id: product?.type?.id, name: product?.type?.title]
             mongoProduct['visitCount'] = product?.visitCount ?: 0
             mongoProduct['saleCount'] = product?.saleCount
+            switch (priceData.status) {
+                case 'exists':
+                    mongoProduct['status'] = 0
+                    break
+                case 'inquiry-required':
+                    mongoProduct['status'] = 1
+                    break
+                case 'coming-soon':
+                    mongoProduct['status'] = 2
+                    break
+                case 'not-exists':
+                    mongoProduct['status'] = 3
+                    break
+            }
             def productTypeId = product?.productTypes?.count { it } > 0 ? product?.productTypes?.toArray()?.first()?.id : 0.toLong()
             mongoProduct['sortOrder'] = Product.createCriteria().count {
                 eq('deleted', false)
