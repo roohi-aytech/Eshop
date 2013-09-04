@@ -62,22 +62,22 @@ class BrowseService {
             def pageCountByStatus = [:]
 
             //exists
-            def customizedMatch = params.match
+            def customizedMatch = params.match.clone()
             customizedMatch.status = 0
             pageCountByStatus['exists'] = pagesCount(customizedMatch, params.pageSize)
 
             //inquiry-required
-            customizedMatch = params.match
+            customizedMatch = params.match.clone()
             customizedMatch.status = 1
             pageCountByStatus['inquiry-required'] = pagesCount(customizedMatch, params.pageSize)
 
             //coming-soon
-            customizedMatch = params.match
+            customizedMatch = params.match.clone()
             customizedMatch.status = 2
             pageCountByStatus['coming-soon'] = pagesCount(customizedMatch, params.pageSize)
 
             //not-exists
-            customizedMatch = params.match
+            customizedMatch = params.match.clone()
             customizedMatch.status = 3
             pageCountByStatus['not-exists'] = pagesCount(customizedMatch, params.pageSize)
 
@@ -95,17 +95,25 @@ class BrowseService {
 
             def pagesCountMap = []
             pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[0], splitPoints[1]))
+            if(!pagesCountMap.contains(splitPoints[1]))
+                pagesCountMap.add(splitPoints[1])
             pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[1], splitPoints[2]))
+            if(!pagesCountMap.contains(splitPoints[2]))
+                pagesCountMap.add(splitPoints[2])
             pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[2], splitPoints[3]))
+            if(!pagesCountMap.contains(splitPoints[3]))
+                pagesCountMap.add(splitPoints[3])
             pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[3], splitPoints[4]))
+            if(!pagesCountMap.contains(splitPoints[4]))
+                pagesCountMap.add(splitPoints[4])
 
             RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey] = pagesCountMap
         }
 
-        def randomizedStart = params.start
-//        def pagesCountMap = RequestContextHolder.currentRequestAttributes().getSession()["params.pageListSessionKey"]
-//        def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()]
-//        randomizedStart = randomizedStart || randomizedStart == 0 ? randomizedStart * params.pageSize : 9999999
+//        def randomizedStart = params.start
+        def pagesCountMap = RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey]
+        def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()]
+        randomizedStart = randomizedStart || randomizedStart == 0 ? randomizedStart * params.pageSize : 9999999
         def productIds = products.aggregate(
                 [$match: params.match],
                 [$sort: [status: 1, sortOrder: 1, saleCount: -1, visitCount: -1]],
@@ -120,7 +128,7 @@ class BrowseService {
         if (end <= start + 1)
             return []
 
-        def tempArray = array[start..end - 1]
+        def tempArray = array[(start ? start + 1 : 0)..end - 1]
         Collections.shuffle(tempArray)
         tempArray
     }

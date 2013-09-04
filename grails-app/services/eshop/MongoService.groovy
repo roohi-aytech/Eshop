@@ -7,10 +7,10 @@ class MongoService {
     def priceService
 
     def storeProduct(Product product) {
-        storeProduct(product, 0)
+        storeProductInternal(product, 0)
     }
 
-    private def storeProduct(Product product, int cnt) {
+    private def storeProductInternal(Product product, int cnt) {
         synchronized (product) {
             def mongoProducts = MongoProduct.findAllByBaseProductId(product.id)
 
@@ -95,7 +95,7 @@ class MongoService {
             } catch (e) {
                 e.printStackTrace()
                 if (cnt < 5)
-                    storeProduct(product, cnt + 1)
+                    storeProductInternal(product, cnt + 1)
             }
         }
     }
