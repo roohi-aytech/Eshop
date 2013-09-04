@@ -236,11 +236,16 @@ class OrderAdministrationController {
                         code: 'act.inquiry.description',
                         args: [rg.formatJalaliDate(date: validityDate, hm: 'true')]))
 
+        def invoice = new ByteArrayOutputStream()
+        pdfService.generateInvoice(order, invoice, true)
+
         mailService.sendMail {
+            multipart true
             to order.ownerEmail
             subject message(code: 'emailTemplates.inquiry_result.subject')
             html(view: "/messageTemplates/email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/inquiry_result', model: [order: order]).toString()])
+            attachBytes "Zanbil-Invoice.pdf", "application/pdf", invoice.toByteArray()
         }
 
         messageService.sendMessage(
