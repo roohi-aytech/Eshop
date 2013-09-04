@@ -44,7 +44,7 @@
 %{--Attribute Filters--}%
     <g:if test="${filters?.attributes}">
     %{--attribute categories--}%
-        <g:each in="${filters.attributes.findAll { it.value.type == 'ac' }}" var="attribute" status="indexer">
+        <g:each in="${filters.attributes.findAll { it.value.type == 'ac' && it.value.countsByValue.size() > 0 }}" var="attribute" status="indexer">
             <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
             <g:each in="${attribute.value.countsByValue.count { it } > 5 ? attribute.value.countsByValue.sort { -it.count }[0..4] : attribute.value.countsByValue.sort { -it.count }}"
                     var="attributeValueCount">
@@ -75,7 +75,7 @@
         </g:each>
 
     %{--attributes--}%
-        <g:each in="${filters.attributes.findAll { it.value.type == 'a' }}" var="attribute" status="indexer">
+        <g:each in="${filters.attributes.findAll { it.value.type == 'a' && it.value.countsByValue.size() > 0 }}" var="attribute" status="indexer">
             <li class="nav-header sidebarAttributeGroup">${attribute.value.name}</li>
             <g:each in="${attribute.value.countsByValue.count { it } > 5 ? attribute.value.countsByValue.sort { -it.count }[0..4] : attribute.value.countsByValue.sort { -it.count }}"
                     var="attributeValueCount">

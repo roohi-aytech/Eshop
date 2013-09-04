@@ -79,7 +79,7 @@ class BasketController {
         def customInvoiceInformation = [:]
         customInvoiceInformation.ownerName = message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' +
                 (customer ? customer.toString() : session.checkout_customerInformation?.lastName)
-        customInvoiceInformation.ownerCode = customer.nationalCode
+        customInvoiceInformation.ownerCode = customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode
         customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
 
         def deliveryMethods = []

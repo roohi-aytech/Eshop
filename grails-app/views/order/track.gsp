@@ -19,7 +19,7 @@
                 backdrop: false,
                 show: true
                 });
-        $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: order.id])}', function() {});
+        $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: order?.id])}', function() {});
     }
     </g:javascript>
 </head>

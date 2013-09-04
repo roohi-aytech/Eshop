@@ -118,7 +118,7 @@ class ComparisonController {
         def selectedList = session["selected-nodes-${productType?.item?.id}"] as Collection
 
         if (parentCategory.item) {
-            parentCategory.attributeTypes = AttributeType.findAllByCategory(parentCategory.item).findAll { it.showPositions.contains('compare') }.
+            parentCategory.attributeTypes = AttributeType.findAllByCategoryAndDeleted(parentCategory.item, false).findAll { it.showPositions.contains('compare') }.
                     collect { [item: it, selected: (!selectedList || selectedList.contains(it.id.toString()))] }
             if (parentCategory.attributeTypes) {
                 parentCategory.hasAttribute = parentCategory.attributeTypes.count { it } > 0

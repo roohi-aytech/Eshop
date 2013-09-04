@@ -90,7 +90,7 @@
     <g:javascript src="jquery.maskinput.js"/>
 </head>
 
-<body dir="rtl" class="main" ng-controller="eshopCtrl">
+<body class="main" ng-controller="eshopCtrl">
 <g:render template="/layouts/header"></g:render>
 <table id="main-container" class="table-simulated">
     <tr>
