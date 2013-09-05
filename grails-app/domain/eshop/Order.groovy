@@ -40,7 +40,9 @@ class Order {
     String deliveryTrackingCode
 
     transient Date getLastActionDate() {
-        OrderTrackingLog.findAllByOrder(this)?.sort { -it.id }?.find()?.date
+        if(this.id)
+            return OrderTrackingLog.findAllByOrder(this)?.sort { -it.id }?.find()?.date
+        return null
     }
 
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]

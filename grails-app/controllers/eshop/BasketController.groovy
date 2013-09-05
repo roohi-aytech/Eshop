@@ -90,7 +90,7 @@ class BasketController {
 
             //setup delivery methods
             Order order = new Order()
-            order.ownerName = customer ? customer.toString() : session.checkout_customerInformation.lastName
+            order.ownerName = customer ? message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' + customer.toString() : session.checkout_customerInformation.lastName
             order.ownerEmail = customer ? customer.email : session.checkout_customerInformation.email
             order.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation.mobile
             order.ownerTelephone = customer ? customer.telephone : session.checkout_customerInformation.telephone

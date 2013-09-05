@@ -225,7 +225,7 @@ grails.mail.default.from="Zanbil.ir <no-reply@zanbil.ir>"
 grails {
     mail {
         ssl = "off"
-        host = "91.99.98.70"
+        host = "127.0.0.1"
         from = "no-reply@zanbil.ir"
         port = 8443
         ssl = "off"

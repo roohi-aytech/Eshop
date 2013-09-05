@@ -8,9 +8,9 @@
 <table width="595" align="center">
     <tbody>
     <tr>
-        <td bgcolor="#ffcb05">
+        <td bgcolor="#ffcb05" style="font-family: Tahoma;font-size:11px;direction: rtl;padding: 5px 20px 5px 0;text-align: justify;">
             <p class="table">
-                <img src="./0_files/zanbil-logo.jpg" width="240" height="300" align="left">
+                <img src="${resource(dir:'images', file: 'zanbil-logo-mail-template.jpg', absolute: true)}" width="240" height="300" align="left" style="margin-right: 5px;">
             </p>
             ${message}
         </td>

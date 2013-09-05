@@ -15,6 +15,8 @@ class OrderAdministrationController {
     def orderTrackingService
     def deliveryService
     def pdfService
+    def mailService
+    def messageService
 
     def orderNotification() {
         def order = Order.get(params.id)
