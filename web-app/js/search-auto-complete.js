@@ -43,7 +43,7 @@ function setupSearchAutoComplete(form){
 
     searchInput.keyup(function () {
         var phrase = $(this).val();
-        if (phrase && phrase.length > 2) {
+        if (phrase && phrase.length > 0) {
 
             dropDown.width(searchInput.width() - 10);
             dropDown.css('top', searchInput.offset().top + searchInput.height() + 8);

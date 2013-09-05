@@ -46,11 +46,11 @@
 
         <td class="table-cell" ${filters.products.productIds.isEmpty() ? "style='padding-right:5px;'" : ""}>
             <table class="table-simulated">
-                <tr class="table-row">
-                    <td class="table-cell">
-                        <g:render template="common/slideshowMain"></g:render>
-                    </td>
-                </tr>
+                %{--<tr class="table-row">--}%
+                    %{--<td class="table-cell">--}%
+                        %{--<g:render template="common/slideshowMain"></g:render>--}%
+                    %{--</td>--}%
+                %{--</tr>--}%
 
                 <tr class="table-row">
                     <td class="table-cell">
@@ -87,11 +87,11 @@
                                         </li>
                                     </ul>
 
-                                    <g:if test="${filters.products.productIds.isEmpty()}">
+                                    <g:if test="${filters.products.productIds.isEmpty() && params.page == 0}">
                                         <g:message code="search.nothingMatchedYourQuery"/>
                                     </g:if>
                                     <g:else>
-                                        <g:render template="common/filteringGraphicalMenu"></g:render>
+                                        %{--<g:render template="common/filteringGraphicalMenu"></g:render>--}%
                                         <g:render template="common/productGrid"
                                                   model="${[productIds: filters.products.productIds]}"></g:render>
                                     </g:else>

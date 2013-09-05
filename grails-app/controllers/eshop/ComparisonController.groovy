@@ -197,8 +197,16 @@ class ComparisonController {
 
         def model = [:]
         def productIdList = []
-        if (params.phrase)
-            productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
+        if (params.phrase) {
+            def query = params.phrase.toString().trim()
+            while(query.contains('  '))
+                query = query.replace('  ', ' ')
+            query = "*${query.replace(' ', '* *')}*"
+            productIdList = Product.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
+        }
 
         model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0).products.productIds
         model.commonLink = createLink(uri: '/')

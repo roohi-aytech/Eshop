@@ -2,6 +2,7 @@ package eshop
 
 import grails.converters.JSON
 import groovy.sql.Sql
+import org.compass.core.CompassQuery
 
 import javax.servlet.http.Cookie
 
@@ -381,10 +382,10 @@ class SiteController {
         model.addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
                 variationValue.value != productModel.variationValues
-                        .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
+                        .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
             }
         }
-        model.selectedAddedValues = model.addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
+        model.selectedAddedValues = model.addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
 
         //update product visit count
         if (!product.visitCount)
@@ -459,11 +460,11 @@ class SiteController {
         def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
                 variationValue.value != productModel.variationValues
-                        .find {it.variationGroup.id == variationValue.variationGroup.id}?.value
+                        .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
             }
         }
 
-        def selectedAddedValues = addedValues.findAll {it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())}
+        def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
 
         render(template: 'product/card', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
     }
@@ -570,9 +571,16 @@ class SiteController {
 
         def model = [:]
         def productIdList = []
-        if (params.phrase)
-            productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
-
+        if (params.phrase) {
+            def query = params.phrase.toString().trim()
+            while(query.contains('  '))
+                query = query.replace('  ', ' ')
+            query = "*${query.replace(' ', '* *')}*"
+            productIdList = Product.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
+        }
         model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0)
         model.commonLink = createLink(uri: '/')
 
@@ -622,13 +630,21 @@ class SiteController {
 
         def model = [:]
         def productIdList = []
-        if (params.phrase)
-            productIdList = searchableService.search(params.phrase, [reload: false, max: 1000])
+        if (params.phrase) {
+            def query = params.phrase.toString().trim()
+            while(query.contains('  '))
+                query = query.replace('  ', ' ')
+            query = "*${query.replace(' ', '* *')}*"
+            productIdList = Product.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
+        }
 
         model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0).products.productIds
         model.commonLink = createLink(uri: '/')
 
-        if(model.productIds?.size() > 0)
+        if (model.productIds?.size() > 0)
             render(template: 'search_autoComplete', model: model)
         else
             render ''
