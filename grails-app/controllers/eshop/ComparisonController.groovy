@@ -146,7 +146,7 @@ class ComparisonController {
             parentCategory.attributeTypes = []
             products.each { product ->
                 product.attributes.each { attribute ->
-                    if (attribute.attributeType.category == null && attribute.attributeType.showPositions.contains('compare')) {
+                    if (!attribute.attributeType.deleted && attribute.attributeType.category == null && attribute.attributeType.showPositions.contains('compare')) {
                         def item = [item: attribute.attributeType, selected: (!selectedList || selectedList.contains(attribute.attributeType.id.toString()))]
                         if (!parentCategory.attributeTypes.contains(item)) {
                             parentCategory.attributeTypes << item
