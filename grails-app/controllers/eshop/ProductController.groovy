@@ -227,24 +227,24 @@ class ProductController {
     }
 
     def saveAttributeValues() {
-        if(saveAttributeValuesInternal(params))
-        redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid])
+        if (saveAttributeValuesInternal(params))
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid])
         else
-            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError:1])
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError: 1])
     }
 
     def saveAttributeValuesAndExit() {
         if (saveAttributeValuesInternal(params))
             redirect(action: "list", params: [ptid: params.ptid])
         else
-            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError:1])
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError: 1])
     }
 
     def saveAttributeValuesAndNew() {
         if (saveAttributeValuesInternal(params))
             redirect(action: "productDetails", params: [ptid: params.ptid])
         else
-            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError:1])
+            redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab, ptid: params.ptid, attributeValidationError: 1])
     }
 
     private Boolean saveAttributeValuesInternal(params) {
@@ -645,10 +645,13 @@ class ProductController {
 
     def synchMongo() {
 //        Thread.start {
-        MongoProduct.findAll().each { it.delete() }
+        if (!params.start)
+            MongoProduct.findAll().each { it.delete() }
         def i = 0
+        if (params.start)
+            i = params.start.toInteger()
         def ps = Product.findAll()
-        ps.each {
+        ps.toArray()[i..ps.size() - 1].each {
             try {
                 println "${i++} of ${ps.size()}"
                 mongoService.storeProduct(it)
