@@ -274,3 +274,16 @@ compress {
         statsEnabled = false
     }
 }
+
+uiperformance.continueAfterMinifyJsError = true
+uiperformance.keepOriginals = true
+
+//cache.headers.enabled = true
+//cache.headers.presets = [
+//        unauthed_page: [shared:true, validFor: 300], // 5 minute refresh window
+//        authed_page: false, // No caching for logged in user
+//        content: [shared:true, validFor: 3600], // 1hr on content
+//        recent_items_feed: [shared: true, validFor: 1800], // 30 minute throttle on RSS updates
+//        search_results: [validFor: 60, shared: true],
+//        taxonomy_results: [validFor: 60, shared: true]
+//]
