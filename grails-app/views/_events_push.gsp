@@ -3,6 +3,9 @@
 <g:javascript src="grailsEventsOverride.js"/>
 <g:set var="rootPath" value="${createLink(uri: '/', absolute: true).toString()}"/>
 <g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
+<g:if test="${request.scheme=="https"}">
+    <g:set var="rootPath" value="${rootPath.replace("http:","https:")}"/>
+</g:if>
 <r:script>
     var receivedOrders = new Array();
     var grailsEvents = new grails.Events("${rootPath}");
