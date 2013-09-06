@@ -647,8 +647,10 @@ class ProductController {
 //        Thread.start {
         MongoProduct.findAll().each { it.delete() }
         def i = 0
+        if(params.start)
+            i = params.start.toInteger()
         def ps = Product.findAll()
-        ps.each {
+        ps.toArray()[i..ps.size() - 1].each {
             try {
                 println "${i++} of ${ps.size()}"
                 mongoService.storeProduct(it)
