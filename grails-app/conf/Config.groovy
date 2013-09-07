@@ -277,6 +277,10 @@ compress {
 
 uiperformance.continueAfterMinifyJsError = true
 uiperformance.keepOriginals = true
+uiperformance.exclusions = [
+        "**/plugins/ckeditor*/**",
+        "**/angular.js"
+]
 
 //cache.headers.enabled = true
 //cache.headers.presets = [
