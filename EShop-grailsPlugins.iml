@@ -35,6 +35,7 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/quartz-1.0-RC9/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -201,6 +202,11 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/twitter-bootstrap-2.0.2.25/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/twitter-bootstrap-2.0.2.25/grails-app/taglib" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2/grails-app/taglib" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/uploadr-0.5.11">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/uploadr-0.5.11/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/uploadr-0.5.11/grails-app/controllers" isTestSource="false" />
@@ -247,6 +253,7 @@
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (EShop-grailsPlugins)">
         <CLASSES>
@@ -266,6 +273,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/xerces/xercesImpl/jars/xercesImpl-2.9.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/xerces/xercesImpl/jars/xercesImpl-2.8.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.itextpdf/itextpdf/jars/itextpdf-5.4.2.jar!/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -273,6 +281,7 @@
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/burning-image-0.5.1/lib" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/lib" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ui-performance-1.2.2/lib" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ws-client-1.0/lib" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" recursive="false" />
       </library>
