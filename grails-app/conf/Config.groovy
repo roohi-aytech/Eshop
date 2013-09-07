@@ -275,6 +275,12 @@ compress {
     }
 }
 
+environments {
+    development {
+        uiperformance.enabled = false
+    }
+}
+
 uiperformance.continueAfterMinifyJsError = true
 uiperformance.keepOriginals = true
 
