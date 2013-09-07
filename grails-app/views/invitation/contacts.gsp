@@ -2,8 +2,8 @@
 <head>
     <meta name="layout" content="site"/>
     <title><g:message code="grails.plugin.invitation.pickForm.submit"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file:'inviter.css')}"/>
-    <g:javascript src="inviter.js"/>
+    <g:css name="inviter"/>
+    <p:javascript src="inviter"/>
 </head>
 
 

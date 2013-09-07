@@ -9,16 +9,15 @@
     <g:javascript src="datepicker/jquery.ui.datepicker-cc.js" plugin="rapid-grails"/>
     <g:javascript src="datepicker/calendar.js" plugin="rapid-grails"/>
     <g:javascript src="datepicker/jquery.ui.datepicker-cc-fa.js" plugin="rapid-grails"/>
-
-    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}"/>
-    <g:javascript src="jquery.easyui/jquery.draggable.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.panel.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.parser.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.validatebox.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.tree.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.combo.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.combotree.js"></g:javascript>
+    <p:css name="jquery.easyui/metro/easyui"/>
+    <p:css name="jquery.easyui/easyui-rtl"/>
+    <p:javascript src="jquery.easyui/jquery.draggable"/>
+    <p:javascript src="jquery.easyui/jquery.panel"/>
+    <p:javascript src="jquery.easyui/jquery.parser"/>
+    <p:javascript src="jquery.easyui/jquery.validatebox"/>
+    <p:javascript src="jquery.easyui/jquery.tree"/>
+    <p:javascript src="jquery.easyui/jquery.combo"/>
+    <p:javascript src="jquery.easyui/jquery.combotree"/>
 
     <script language="javascript" type="text/javascript">
         var modal;

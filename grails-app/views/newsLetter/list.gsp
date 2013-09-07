@@ -5,7 +5,7 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'newsLetter.label', default: 'NewsLetter')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
-    <g:javascript src="jquery.ui.modal.ckEditorFix.js"/>
+    <p:javascript src="jquery.ui.modal.ckEditorFix"/>
 </head>
 
 <body>

@@ -1,5 +1,5 @@
 <g:if test="${selectedImage}">
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.zoombie.css')}"/>
+<p:css name="jquery.zoombie"/>
 <script language="javascript">
 
     var currentSelectedThumbnailId;

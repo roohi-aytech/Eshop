@@ -12,14 +12,13 @@
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rapidgrails.css')}"
           type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'css3.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'reset.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'theme.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'msgGrowl.css')}" type="text/css">
+    <g:css name="main"/>
+    <g:css name="mobile"/>
+    <g:css name="css3"/>
+    <g:css name="theme"/>
+    <g:css name="msgGrowl"/>
 
     <ckeditor:resources/>
     <g:javascript library="jquery"></g:javascript>
@@ -27,14 +26,14 @@
     <r:layoutResources/>
     <jqui:resources theme="cobalt"></jqui:resources>
 
-    <g:javascript plugin="rapid-grails" src="angular.min.js"></g:javascript>
-    <g:javascript plugin="rapid-grails" src="angular.autocomplete.js"></g:javascript>
+    <g:javascript plugin="rapid-grails" src="angular.min.js"/>
+    <g:javascript plugin="rapid-grails" src="angular.autocomplete.js"/>
 
-    <g:javascript plugin="rapid-grails" src="utils.js"></g:javascript>
-    <g:javascript plugin="rapid-grails" src="grid_utils.js"></g:javascript>
-    <g:javascript plugin="rapid-grails" src="jquery.json-2.3.min.js"></g:javascript>
-    <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
-    <g:javascript src="jquery.selectbox.js"></g:javascript>
+    <g:javascript plugin="rapid-grails" src="utils.js"/>
+    <g:javascript plugin="rapid-grails" src="grid_utils.js"/>
+    <g:javascript plugin="rapid-grails" src="jquery.json-2.3.min.js"/>
+    <g:javascript plugin="rapid-grails" src="jquery.form.js"/>
+    <p:javascript src="jquery.selectbox"/>
 
     <link rel="stylesheet"
           href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
@@ -42,11 +41,11 @@
     <g:javascript src="datepicker/calendar.js" plugin="rapid-grails"/>
     <g:javascript src="datepicker/jquery.ui.datepicker-cc-fa.js" plugin="rapid-grails"/>
 
-    <rg:jqgridResources></rg:jqgridResources>
-    <g:javascript src="jquery.labelify.js"></g:javascript>
-    <g:javascript src="theme.js"></g:javascript>
+    <rg:jqgridResources/>
+    <p:javascript src="jquery.labelify"/>
+    <p:javascript src="theme"/>
 
-    <g:javascript src="jquery.maskinput.js"/>
+    <p:javascript src="jquery.maskinput"/>
 
 
     <g:layoutHead/>
@@ -56,14 +55,14 @@
 
 
     %{--easy ui--}%
-    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}"/>
-    <g:javascript src="jquery.easyui/jquery.panel.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.parser.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.validatebox.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.tree.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.combo.js"></g:javascript>
-    <g:javascript src="jquery.easyui/jquery.combotree.js"></g:javascript>
+    <p:css name="jquery.easyui/metro/easyui"/>
+    <p:css name="jquery.easyui/easyui-rtl"/>
+    <p:javascript src="jquery.easyui/jquery.panel"/>
+    <p:javascript src="jquery.easyui/jquery.parser"/>
+    <p:javascript src="jquery.easyui/jquery.validatebox"/>
+    <p:javascript src="jquery.easyui/jquery.tree"/>
+    <p:javascript src="jquery.easyui/jquery.combo"/>
+    <p:javascript src="jquery.easyui/jquery.combotree"/>
 </head>
 
 <body dir="rtl">

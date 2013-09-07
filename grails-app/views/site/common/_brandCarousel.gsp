@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.themepunch.showbizpro.css')}" type="text/css">
-<g:javascript src="jquery.themepunch.plugins.js"></g:javascript>
-<g:javascript src="jquery.themepunch.showbizpro.js"></g:javascript>
+<p:css name="jquery.themepunch.showbizpro"/>
+<p:javascript src="jquery.themepunch.plugins"/>
+<p:javascript src="jquery.themepunch.showbizpro"/>
 %{--<h3 class="band-carousel-container-title">${title}</h3>--}%
 <g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
 <table class="table-simulated band-carousel-container">

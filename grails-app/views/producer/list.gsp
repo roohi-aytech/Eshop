@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<g:javascript src="jquery.quickselect.pack.js"/>
+<p:javascript src="jquery.quickselect.pack"/>
 
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 

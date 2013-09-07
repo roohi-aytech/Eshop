@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
-
 <div>
     <ul>
     %{--<div class="span" style="display: none;"></div>--}%

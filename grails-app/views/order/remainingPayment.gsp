@@ -11,10 +11,10 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-    <title><g:message code="controlPanel.orders.actions.payment.label"></g:message></title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msdropdown.css')}"/>
-    <g:javascript src="jquery.msdropdown.js"></g:javascript>
-    <style>
+    <title><g:message code="controlPanel.orders.actions.payment.label"/></title>
+    <p:css name="jquery.msdropdown"/>
+    <p:javascript src="jquery.msdropdown"/>
+    <style type="text/css">
     label {
         margin-bottom: 5px;
     }

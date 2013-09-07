@@ -85,7 +85,7 @@
 
 .memu-current {
 	background-color: #abcdef !important;
-	background-color: rgba(235, 245, 255, 0.98 !important);
+	background-color: rgba(235, 245, 255, 0.98) !important;
 }
 .black{
     margin-right:20px;

@@ -3,7 +3,7 @@
     <input type="hidden" name="${identifier}" id="${identifier}" />
 </span>
 
-<g:javascript src="jquery.raty.js"></g:javascript>
+<p:javascript src="jquery.raty"/>
 <g:javascript>
     $('#${identifier}').val(${currentValue});
     $('#star${identifier}').raty({

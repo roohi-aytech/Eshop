@@ -3,8 +3,7 @@
 <head>
     <r:require modules="bootstrap"/>
     <meta name="layout" content="site">
-
-    <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
+    <p:css name="firstPage"/>
 </head>
 
 <body>

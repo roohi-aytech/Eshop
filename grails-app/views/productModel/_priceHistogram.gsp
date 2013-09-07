@@ -10,9 +10,8 @@
 <html>
 <head>
     <title></title>
-    <g:javascript plugin="jquery" src="jquery/jquery-1.7.2.min.js"></g:javascript>
-    <g:javascript src="highcharts/highcharts.js"/>
-    <g:javascript src="date-conversion.js"/>
+    <p:javascript src="highcharts/highcharts"/>
+    <p:javascript src="date-conversion"/>
     <script language="javascript" type="text/javascript">
         function addCommas(nStr) {
             nStr = nStr.replace(/\,/g, '');

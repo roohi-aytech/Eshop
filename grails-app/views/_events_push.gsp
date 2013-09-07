@@ -1,6 +1,6 @@
 %{--<atmosphere:resources/>--}%
 <r:require module="grailsEvents"/>
-<g:javascript src="grailsEventsOverride.js"/>
+<p:javascript src="grailsEventsOverride"/>
 <g:set var="rootPath" value="${createLink(uri: '/', absolute: true).toString()}"/>
 <g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
 <r:script>

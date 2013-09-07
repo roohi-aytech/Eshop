@@ -6,15 +6,15 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9" ng-app='eshop' xmlns:ng="http://angularjs.org" id="ng-app"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" ng-app='eshop'><!--<![endif]-->
 <head>
-    <title><g:layoutTitle></g:layoutTitle></title>
+    <title><g:layoutTitle/></title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <canonical:show/>
     <meta name="robots" content="index, follow"/>
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
-    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'ieFix.js')}"></script>
-    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'json3.js')}"></script>
+    <p:javascript src="ieFix"/>
+    <p:javascript src="json3"/>
     <script>
         document.createElement('ng-include');
         document.createElement('ng-pluralize');
@@ -26,17 +26,16 @@
         document.createElement('ng:view');
       </script>
     <![endif]-->
-    <g:javascript library="jquery"></g:javascript>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
+    <g:javascript library="jquery"/>
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet"
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.rollbar.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.tipsy.css')}"/>
+    <p:css name="siteUI"/>
+    <p:css name="site"/>
+    <p:css name="jquery.rollbar"/>
+    <p:css name="jquery.msgGrowl"/>
+    <p:css name="jquery.tipsy"/>
 
     <r:layoutResources/>
     <script type="text/javascript"
@@ -73,21 +72,19 @@
 
         var searchAutoCompleteUrl = '${createLink(controller: 'site', action: 'searchAutoComplete')}';
     </script>
-    <g:javascript src="jquery.rollbar.js"></g:javascript>
-    <g:javascript src="jquery.mousewheel.js"></g:javascript>
-    <g:javascript src="jquery.msgGrowl.js"></g:javascript>
-    <g:javascript src="jquery.tipsy.js"></g:javascript>
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}"
-            type="text/javascript"></script>
+    <p:javascript src="jquery.rollbar"/>
+    <p:javascript src="jquery.mousewheel"/>
+    <p:javascript src="jquery.msgGrowl"/>
+    <p:javascript src="jquery.tipsy"/>
+    <p:javascript src="eshopCtrl"/>
+    <p:javascript src="jquery.tpl_layout1.1.6.min"/>
     <g:layoutHead/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
-
-    <g:javascript src="jquery.watch.js"/>
-    <g:javascript src="jquery.hoverIntent.js"></g:javascript>
-    <g:javascript src="common.js"></g:javascript>
-    <g:javascript src="search-auto-complete.js"/>
-    <g:javascript src="jquery.maskinput.js"/>
+    <p:css name="zanbil"/>
+    <p:javascript src="jquery.watch"/>
+    <p:javascript src="jquery.hoverIntent"/>
+    <p:javascript src="common"/>
+    <p:javascript src="search-auto-complete"/>
+    <p:javascript src="jquery.maskinput"/>
 </head>
 
 <body class="main" ng-controller="eshopCtrl">

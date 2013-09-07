@@ -4,8 +4,8 @@
 <head>
     <title><g:message code="enquiry.request"/></title>
     <meta name="layout" content="site">
-    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.ui.accordion.css')}"/>
-    <g:javascript src="jquery.ui.accordion.js"/>
+    <p:css name="jquery.ui.accordion"/>
+    <p:javascript src="jquery.ui.accordion"/>
     <g:javascript>
         var addressRequest;
         function loadAddress(){

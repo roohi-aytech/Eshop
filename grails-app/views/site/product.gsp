@@ -6,29 +6,14 @@
     <meta charset="utf-8">
     <meta name="description" content="${description}">
     <meta name="keywords" content="">
-    <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
-    %{--<link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>--}%
-    %{--<link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>--}%
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'zanbil.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'site.css')}"/>
-    <style>
-    body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    }
-    </style>
-    <link rel="stylesheet"
-          href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet"
-%{--href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>--}%
-%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <g:javascript src="browse.js"></g:javascript>
-    <g:javascript src="jquery.raty.js"></g:javascript>
+    <p:javascript src="browse"/>
+    <p:javascript src="jquery.raty"/>
     <script language="javascript" type="text/javascript">
         var modal;
         function showPriceHistogram(id) {

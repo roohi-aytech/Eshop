@@ -1,5 +1,5 @@
 <%@ page import="eshop.JournalArticle" %>
-<g:javascript src="jquery.ui.modal.ckEditorFix.js"/>
+<p:javascript src="jquery.ui.modal.ckEditorFix"/>
 <g:set var="entityName" value="${message(code: 'journalArticle.label', default: 'Journal Article')}"/>
 
 <div class="content scaffold-list" role="main">

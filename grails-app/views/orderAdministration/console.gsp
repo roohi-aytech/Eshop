@@ -11,11 +11,11 @@
 <head>
     <meta name="layout" content="main">
     <title><g:message code="orderAdministration.console"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.tipsy.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-timepicker-addon.css')}" type="text/css">
-    <g:javascript src="jquery.tipsy.js"/>
-    <g:javascript src="jquery-ui-sliderAccess.js"/>
-    <g:javascript src="jquery-ui-timepicker-addon.js"/>
+    <p:css name="jquery.tipsy"/>
+    <p:css name="jquery-ui-timepicker-addon"/>
+    <p:javascript src="jquery.tipsy"/>
+    <p:javascript src="jquery-ui-sliderAccess"/>
+    <p:javascript src="jquery-ui-timepicker-addon"/>
     <g:javascript>
         function requestUrl(url, data){
             $("#orderListContentPane").html('<div style="text-align:center;padding-top:100px;"><img style="padding:5px;border:1px solid #dddddd;border-radius:4px;background-color:#ffffff;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/></div>');

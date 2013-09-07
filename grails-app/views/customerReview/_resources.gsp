@@ -1,5 +1,5 @@
 <ckeditor:resources/>
-<g:javascript src="jquery.color.js"></g:javascript>
+<p:javascript src="jquery.color"/>
 <g:javascript>
     var newReviewsCounter = 0;
     var parentReviewId;

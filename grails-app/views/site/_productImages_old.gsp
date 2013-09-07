@@ -1,7 +1,5 @@
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.zoombie.css')}"/>
-
-%{--<g:javascript plugin="jquery" src="jquery/jquery-1.7.2.js"></g:javascript>--}%
-<g:javascript src="jquery.zoombie.js"/>
+<p:css name="jquery.zoombie"/>
+<p:javascript src="jquery.zoombie"/>
 <script language="javascript">
     $(document).ready(function () {
         $('#zommArea').zoombie({ })
