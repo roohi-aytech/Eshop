@@ -13,7 +13,7 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5" type="text/javascript"/>
     <![endif]-->
 
 </head>
@@ -23,7 +23,7 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav home">
-                <g:render template="common/browsingTextualMenu"></g:render>
+                <g:render template="common/browsingTextualMenu"/>
             </div>
             <g:render template="banners/rightsideBanners"/>
         </td>
@@ -32,7 +32,7 @@
             <table class="table-simulated">
                 <tr class="table-row">
                     <td>
-                    <g:render template="common/slideshowMain"></g:render>
+                    <g:render template="common/slideshowMain"/>
                     </td>
                 </tr>
 
@@ -44,17 +44,17 @@
                                 <td class="span600 table-cell">
 
                                     <g:render template="common/slideshowSpecialSales"
-                                              model="[specialSaleSlides: specialSaleSlides]"></g:render>
+                                              model="[specialSaleSlides: specialSaleSlides]"/>
 
-                                    <g:render template="common/browsingGraphicalMenu"></g:render>
+                                    <g:render template="common/browsingGraphicalMenu"/>
 
                                     <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"></g:render>
+                                              model="${[productIds: filters.products.productIds]}"/>
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <g:render template="banners/enamad"></g:render>
-                                    <g:render template="banners/leftsideBanners"></g:render>
+                                    <g:render template="banners/enamad"/>
+                                    <g:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

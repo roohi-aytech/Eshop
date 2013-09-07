@@ -39,6 +39,7 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 
 body.main {
     background-color: #444444;
+    overflow-x: hidden;
 }
 
 .scrollable {

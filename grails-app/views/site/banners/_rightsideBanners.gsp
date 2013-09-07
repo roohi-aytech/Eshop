@@ -11,8 +11,8 @@
     </g:each>
 </div>
 
-<div style="text-align: center">
-    <div class="g-plusone"></div>
+<div style="text-align: center;direction: ltr;overflow: hidden">
+    <span class="g-plusone" style="width:100px;direction: ltr"></span>
 
     <script type="text/javascript">
         window.___gcfg = {lang: 'fa'};
