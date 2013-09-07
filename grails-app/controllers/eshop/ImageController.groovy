@@ -3,6 +3,9 @@ package eshop
 import eshop.accounting.Account
 import eshop.delivery.DeliveryMethod
 
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 class ImageController {
     def imageService
     def fileService
@@ -110,6 +113,13 @@ class ImageController {
         }
 
         if (content) {
+            def seconds=3600*24
+            DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+            httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Calendar cal = new GregorianCalendar();
+            cal.roll(Calendar.SECOND, seconds);
+            response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
+            response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
             response.contentType = 'image/png'
             response.outputStream << content
             response.outputStream.flush()
