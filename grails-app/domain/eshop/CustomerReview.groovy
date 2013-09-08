@@ -27,7 +27,6 @@ class CustomerReview {
     static belongsTo = [Product]
 
     static searchable = {
-//        root false
         only = ['title', 'body']
     }
 

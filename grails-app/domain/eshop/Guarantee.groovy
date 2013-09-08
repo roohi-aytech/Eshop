@@ -12,7 +12,6 @@ class Guarantee {
  //   static composites = ["productTypeBrands"]
 
     static searchable = {
-//        root false
         only = ['name', 'description']
     }
 

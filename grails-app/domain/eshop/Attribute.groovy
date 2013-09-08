@@ -8,12 +8,7 @@ class Attribute {
     AttributeType attributeType
 
     static searchable = {
-//        root false
         only = ['attributeValue', 'attributeType']
-//        only: ['attributeValue']
-//        alias: "AttributeClass"
-//        value component:true
-//        attributeValue boost:1.5
         attributeType component:true
     }
 

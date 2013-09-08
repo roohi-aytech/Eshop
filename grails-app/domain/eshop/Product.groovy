@@ -61,12 +61,6 @@ class Product extends BaseProduct implements Comparable{
     static searchable = {
         root true
         only = ['title', 'breadCrumb', 'description', 'details', 'variations', 'attributes', 'customerReviews', 'models']
-//
-//        only: ['name', 'title', 'breadCrumb', 'description', 'details', 'manufactureCountry', 'otherAtributes', 'keywords', 'pageTitle', 'manualTitle']
-//
-//        title boost: 2.5
-//        breadCrumb boost: 0.5
-//
         variations reference:[lazy:true]
         attributes reference:[lazy:true]
         customerReviews reference:[lazy:true]
