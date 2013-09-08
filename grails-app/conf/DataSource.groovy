@@ -55,13 +55,13 @@ environments {
 //            dbCreate = "update"
 //            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
-            username = "root"
-            password = ""
-            pooled = true
-            driverClassName = "com.mysql.jdbc.Driver"
+//            url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
+//            username = "root"
+//            password = ""
+//            pooled = true
+//            driverClassName = "com.mysql.jdbc.Driver"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-//            jndiName = "java:comp/env/jdbc/LiferayPool"
+            jndiName = "java:comp/env/jdbc/EshopPool"
 
             properties {
                 maxActive = -1
