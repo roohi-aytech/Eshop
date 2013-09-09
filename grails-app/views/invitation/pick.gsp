@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Pick Friends</title>
-    <g:css name="inviter"/>
+    <p:css name="inviter"/>
     <p:javascript src="inviter"/>
 </head>
 

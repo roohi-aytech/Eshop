@@ -14,11 +14,11 @@
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
     <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rapidgrails.css')}"
           type="text/css">
-    <g:css name="main"/>
-    <g:css name="mobile"/>
-    <g:css name="css3"/>
-    <g:css name="theme"/>
-    <g:css name="msgGrowl"/>
+    <p:css name="main"/>
+    <p:css name="mobile"/>
+    <p:css name="css3"/>
+    <p:css name="theme"/>
+    <p:css name="msgGrowl"/>
 
     <ckeditor:resources/>
     <g:javascript library="jquery"></g:javascript>

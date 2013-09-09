@@ -1,5 +1,5 @@
 <%@ page import="eshop.NewsLetter" %>
-<g:css name="jquery-ui-timepicker-addon"/>
+<p:css name="jquery-ui-timepicker-addon"/>
 <style>
 
 .checkBoxList {

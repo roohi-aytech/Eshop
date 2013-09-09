@@ -2,7 +2,7 @@
 <head>
     <meta name="layout" content="site"/>
     <title><g:message code="grails.plugin.invitation.pickForm.submit"/></title>
-    <g:css name="inviter"/>
+    <p:css name="inviter"/>
     <p:javascript src="inviter"/>
 </head>
 

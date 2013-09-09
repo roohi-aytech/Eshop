@@ -3,7 +3,7 @@
     <meta name="layout" content="site"/>
     <title><g:message code="grails.plugin.invitation.result.title"/></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file:'inviter.css')}"/>
-    <g:css name="inviter"/>
+    <p:css name="inviter"/>
     <p:javascript src="inviter"/>
 </head>
 
