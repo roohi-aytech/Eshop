@@ -14,55 +14,65 @@
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
     <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rapidgrails.css')}"
           type="text/css">
-    <g:css name="main"/>
-    <g:css name="mobile"/>
-    <g:css name="css3"/>
-    <g:css name="theme"/>
-    <g:css name="msgGrowl"/>
+    <link href="${resource(dir: 'css', file: 'main.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'mobile.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'css3.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'theme.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'msgGrowl.css')}" rel="stylesheet" type="text/css"/>
 
     <ckeditor:resources/>
-    <g:javascript library="jquery"></g:javascript>
+    <g:javascript library="jquery"/>
     <g:render template="/events_push"/>
     <r:layoutResources/>
-    <jqui:resources theme="cobalt"></jqui:resources>
+    <jqui:resources theme="cobalt"/>
 
-    <g:javascript plugin="rapid-grails" src="angular.min.js"/>
-    <g:javascript plugin="rapid-grails" src="angular.autocomplete.js"/>
+    <script src="${resource(dir: 'js', file: 'angular.min.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
+    <script src="${resource(dir: 'js', file: 'angular.autocomplete.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
 
-    <g:javascript plugin="rapid-grails" src="utils.js"/>
-    <g:javascript plugin="rapid-grails" src="grid_utils.js"/>
-    <g:javascript plugin="rapid-grails" src="jquery.json-2.3.min.js"/>
-    <g:javascript plugin="rapid-grails" src="jquery.form.js"/>
-    <p:javascript src="jquery.selectbox"/>
+    <script src="${resource(dir: 'js', file: 'utils.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
+    <script src="${resource(dir: 'js', file: 'grid_utils.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
+    <script src="${resource(dir: 'js', file: 'jquery.json-2.3.min.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
+    <script src="${resource(dir: 'js', file: 'jquery.form.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.selectbox.js')}"></script>
 
     <link rel="stylesheet"
           href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
-    <g:javascript src="datepicker/jquery.ui.datepicker-cc.js" plugin="rapid-grails"/>
-    <g:javascript src="datepicker/calendar.js" plugin="rapid-grails"/>
-    <g:javascript src="datepicker/jquery.ui.datepicker-cc-fa.js" plugin="rapid-grails"/>
+    <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc.js', plugin: 'rapid-grails')}"
+            language="javascript" type="text/javascript"></script>
+    <script src="${resource(dir: 'js/datepicker', file: 'calendar.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
+    <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc-fa.js', plugin: 'rapid-grails')}"
+            language="javascript" type="text/javascript"></script>
 
     <rg:jqgridResources/>
-    <p:javascript src="jquery.labelify"/>
-    <p:javascript src="theme"/>
-
-    <p:javascript src="jquery.maskinput"/>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.labelify.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'theme.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"></script>
 
 
     <g:layoutHead/>
     <rg:jstreeResources/>
 
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}"
+            type="text/javascript"></script>
 
 
     %{--easy ui--}%
-    <p:css name="jquery.easyui/metro/easyui"/>
-    <p:css name="jquery.easyui/easyui-rtl"/>
-    <p:javascript src="jquery.easyui/jquery.panel"/>
-    <p:javascript src="jquery.easyui/jquery.parser"/>
-    <p:javascript src="jquery.easyui/jquery.validatebox"/>
-    <p:javascript src="jquery.easyui/jquery.tree"/>
-    <p:javascript src="jquery.easyui/jquery.combo"/>
-    <p:javascript src="jquery.easyui/jquery.combotree"/>
+    <link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.draggable.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.panel.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.parser.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.validatebox.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.tree.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combo.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combotree.js')}"></script>
 </head>
 
 <body dir="rtl">

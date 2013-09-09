@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<p:javascript src="jquery.quickselect.pack"/>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery.quickselect.pack.js')}" type="text/javascript"></script>
 
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 

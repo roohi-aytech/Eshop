@@ -12,8 +12,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <p:javascript src="browse"/>
-    <p:javascript src="jquery.raty"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'browse.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         var modal;
         function showPriceHistogram(id) {

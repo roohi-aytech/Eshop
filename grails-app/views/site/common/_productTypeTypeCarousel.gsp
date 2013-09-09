@@ -1,7 +1,8 @@
-<p:css name="jquery.themepunch.showbizpro"/>
-<p:javascript src="jquery.themepunch.plugins"/>
-<p:javascript src="jquery.themepunch.showbizpro"/>
-<g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
+
+<link href="${resource(dir: 'css', file: 'jquery.themepunch.showbizpro.css')}" rel="stylesheet" type="text/css"/>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.plugins.js')}" type="text/javascript"></script>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.showbizpro.js')}" type="text/javascript"></script>
+<g:set var="id" value="${java.util.UUID.randomUUID()}"/>
 <table class="table-simulated productTypeType-carousel-container">
     <tr>
         <td class="showbiz-navigation center sb-nav-dark table-cell">

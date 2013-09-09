@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<p:javascript src="jquery.quickselect.pack"/>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery.quickselect.pack.js')}" type="text/javascript"></script>
 
 <div class="content scaffold-list" ng-controller="specialSaleSlideController" role="main">
     <rg:grid domainClass="${SpecialSaleSlide}"

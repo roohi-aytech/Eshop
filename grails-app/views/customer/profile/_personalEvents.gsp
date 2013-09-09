@@ -1,18 +1,18 @@
 <jqui:resources theme="cobalt"></jqui:resources>
 <link rel="stylesheet"
       href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
-<p:css name="jquery.easyui/metro/easyui"/>
-<p:css name="jquery.easyui/easyui-rtl"/>
-<g:javascript src="datepicker/jquery.ui.datepicker-cc.js" plugin="rapid-grails"/>
-<g:javascript src="datepicker/calendar.js" plugin="rapid-grails"/>
-<g:javascript src="datepicker/jquery.ui.datepicker-cc-fa.js" plugin="rapid-grails"/>
-<p:javascript src="jquery.easyui/jquery.draggable"/>
-<p:javascript src="jquery.easyui/jquery.panel"/>
-<p:javascript src="jquery.easyui/jquery.parser"/>
-<p:javascript src="jquery.easyui/jquery.validatebox"/>
-<p:javascript src="jquery.easyui/jquery.tree"/>
-<p:javascript src="jquery.easyui/jquery.combo"/>
-<p:javascript src="jquery.easyui/jquery.combotree"/>
+<link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>
+<link href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}" rel="stylesheet" type="text/css"/>
+<script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+<script src="${resource(dir: 'js/datepicker', file: 'calendar.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+<script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc-fa.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.draggable.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.panel.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.parser.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.validatebox.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.tree.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combo.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combotree.js')}"></script>
 
 <script language="javascript" type="text/javascript">
     var modal;

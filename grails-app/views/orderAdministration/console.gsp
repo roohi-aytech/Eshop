@@ -11,11 +11,11 @@
 <head>
     <meta name="layout" content="main">
     <title><g:message code="orderAdministration.console"/></title>
-    <p:css name="jquery.tipsy"/>
-    <p:css name="jquery-ui-timepicker-addon"/>
-    <p:javascript src="jquery.tipsy"/>
-    <p:javascript src="jquery-ui-sliderAccess"/>
-    <p:javascript src="jquery-ui-timepicker-addon"/>
+    <link href="${resource(dir: 'css', file: 'jquery.tipsy.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'jquery-ui-timepicker-addon.css')}" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-sliderAccess.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-timepicker-addon.js')}" type="text/javascript"></script>
     <g:javascript>
         function requestUrl(url, data){
             $("#orderListContentPane").html('<div style="text-align:center;padding-top:100px;"><img style="padding:5px;border:1px solid #dddddd;border-radius:4px;background-color:#ffffff;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/></div>');

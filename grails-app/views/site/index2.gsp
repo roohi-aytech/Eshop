@@ -26,7 +26,7 @@
 </head>
 
 <body>
-<g:javascript src="browse.js"></g:javascript>
+<script src="${resource(dir: 'js', file: 'browse.js')}" language="javascript" type="text/javascript"></script>
 
 <div class="container-fluid">
     <div class="row-fluid">

@@ -21,9 +21,9 @@
     }
     </g:javascript>
 
-    <p:css name="jquery.banner-rotator"/>
-    <p:javascript src="jquery.easing.1.3"/>
-    <p:javascript src="jquery.banner-rotator"/>
+    <link href="${resource(dir: 'css', file: 'jquery.banner-rotator.css')}" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.easing.1.3.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.banner-rotator.js')}" type="text/javascript"></script>
 
     <div class="slideshowContainer">
         <center>

@@ -3,7 +3,6 @@
 <head>
     <r:require modules="bootstrap"/>
     <meta name="layout" content="site">
-    <p:css name="firstPage"/>
 </head>
 
 <body>

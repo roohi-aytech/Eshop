@@ -1,5 +1,5 @@
 <%@ page import="eshop.NewsLetter" %>
-<g:css name="jquery-ui-timepicker-addon"/>
+<link href="${resource(dir: 'css', file: 'jquery-ui-timepicker-addon.css')}" rel="stylesheet" type="text/css"/>
 <style>
 
 .checkBoxList {
@@ -40,8 +40,8 @@ td {
 }
 </style>
 
-<p:javascript src="jquery-ui-sliderAccess"/>
-<p:javascript src="jquery-ui-timepicker-addon"/>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-sliderAccess.js')}" type="text/javascript"></script>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-timepicker-addon.js')}" type="text/javascript"></script>
 
 <g:hasErrors bean="${newsLetterInstance}">
     <ul class="errors" role="alert">

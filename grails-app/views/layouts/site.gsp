@@ -13,8 +13,8 @@
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
-    <p:javascript src="ieFix"/>
-    <p:javascript src="json3"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'ieFix.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'json3.js')}" type="text/javascript"></script>
     <script>
         document.createElement('ng-include');
         document.createElement('ng-pluralize');
@@ -33,11 +33,11 @@
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
-    <p:css name="siteUI"/>
-    <p:css name="site"/>
-    <p:css name="jquery.rollbar"/>
-    <p:css name="jquery.msgGrowl"/>
-    <p:css name="jquery.tipsy"/>
+    <link href="${resource(dir: 'css', file: 'siteUI.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'jquery.rollbar.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'jquery.tipsy.css')}" rel="stylesheet" type="text/css"/>
 
     <r:layoutResources/>
     <script type="text/javascript"
@@ -74,23 +74,23 @@
 
         var searchAutoCompleteUrl = '${createLink(controller: 'site', action: 'searchAutoComplete')}';
     </script>
-    <p:javascript src="jquery.rollbar"/>
-    <p:javascript src="jquery.mousewheel"/>
-    <p:javascript src="jquery.msgGrowl"/>
-    <p:javascript src="jquery.tipsy"/>
-    <p:javascript src="eshopCtrl"/>
-    <p:javascript src="jquery.tpl_layout1.1.6.min"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}" type="text/javascript"></script>
     <g:layoutHead/>
-    <p:css name="zanbil"/>
-    <p:javascript src="jquery.watch"/>
-    <p:javascript src="jquery.hoverIntent"/>
-    <p:javascript src="common"/>
-    <p:javascript src="search-auto-complete"/>
-    <p:javascript src="jquery.maskinput"/>
+    <link href="${resource(dir: 'css', file: 'zanbil.css')}" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.watch.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}" type="text/javascript"></script>
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
-<g:render template="/layouts/header"></g:render>
+<g:render template="/layouts/header"/>
 <table id="main-container" class="table-simulated">
     <tr>
         <td id="body-container">
@@ -106,11 +106,10 @@
     </tr>
     <tr>
         <td class="totalFooter">
-            <g:render template="/layouts/footer"></g:render>
+            <g:render template="/layouts/footer"/>
         </td>
     </tr>
 </table>
-<g:javascript library="jquery"/>
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 
 </body>

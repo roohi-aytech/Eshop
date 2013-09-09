@@ -14,7 +14,7 @@
     </g:if>
     <g:render template="common/productGridMeta"
               model="${[productIds: filters.products.productIds]}"/>
-    <p:css name="site"/>
+    <link href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>
     <style>
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */

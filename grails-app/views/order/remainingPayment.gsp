@@ -12,8 +12,8 @@
 <head>
     <meta name="layout" content="site"/>
     <title><g:message code="controlPanel.orders.actions.payment.label"/></title>
-    <p:css name="jquery.msdropdown"/>
-    <p:javascript src="jquery.msdropdown"/>
+    <link href="${resource(dir: 'css', file: 'jquery.msdropdown.css')}" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msdropdown.js')}" type="text/javascript"></script>
     <style type="text/css">
     label {
         margin-bottom: 5px;

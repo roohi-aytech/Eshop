@@ -10,8 +10,8 @@
 <html>
 <head>
     <title></title>
-    <p:javascript src="highcharts/highcharts"/>
-    <p:javascript src="date-conversion"/>
+    <script language="javascript" src="${resource(dir: 'js/highcharts', file: 'highcharts.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'date-conversion.js')}" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         function addCommas(nStr) {
             nStr = nStr.replace(/\,/g, '');

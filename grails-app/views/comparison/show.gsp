@@ -11,16 +11,16 @@
 <head>
     <meta name="layout" content="site">
     <title><g:message code="compare"/></title>
-    <p:css name="jquery.easyui/metro/easyui"/>
-    <p:css name="jquery.easyui/easyui-rtl"/>
-    <p:css name="jquery.msdropdown"/>
-    <p:javascript src="jquery.easyui/jquery.panel"/>
-    <p:javascript src="jquery.easyui/jquery.parser"/>
-    <p:javascript src="jquery.easyui/jquery.validatebox"/>
-    <p:javascript src="jquery.easyui/jquery.draggable"/>
-    <p:javascript src="jquery.easyui/jquery.tree"/>
-    <p:javascript src="jquery.msdropdown"/>
-    <style>
+    <link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'jquery.msdropdown.css')}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.panel.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.parser.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.validatebox.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.draggable.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.tree.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.msdropdown.js')}"></script>
+    <style type="text/css">
     .ddcommon img {
         width: 20px;
         height: 20px;

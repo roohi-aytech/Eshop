@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<p:javascript src="jquery.quickselect.pack"/>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.quickselect.pack.js')}"></script>
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
  <g:set var="actions" value="${[[handler: "deleteAccessory(#id#)", icon: "application_delete"]]}"/>

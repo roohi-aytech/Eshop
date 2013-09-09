@@ -1,6 +1,6 @@
 %{--<atmosphere:resources/>--}%
 <r:require module="grailsEvents"/>
-<p:javascript src="grailsEventsOverride"/>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'grailsEventsOverride.js')}"></script>
 <g:set var="rootPath" value="${createLink(uri: '/', absolute: true).toString()}"/>
 <g:set var="rootPath" value="${rootPath.substring(0, rootPath.length() - 1)}"/>
 <g:if test="${request.scheme=="https"}">

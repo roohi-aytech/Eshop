@@ -4,8 +4,8 @@
 <head>
     <title><g:message code="enquiry.request"/></title>
     <meta name="layout" content="site">
-    <p:css name="jquery.ui.accordion"/>
-    <p:javascript src="jquery.ui.accordion"/>
+    <link href="${resource(dir: 'css', file: 'jquery.ui.accordion.css')}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.ui.accordion.js')}"></script>
     <g:javascript>
         var addressRequest;
         function loadAddress(){
@@ -36,8 +36,11 @@
             if(ui.newHeader.hasClass('disabled')){
                 event.preventDefault();
                 $.msgGrowl({
-                    type: 'warning', sticky: false, title:'', 'text': '<span' +
-            'style="margin-top:10px;margin-bottom:10px;display:inline-block;">${message(code: 'enquiry.request.completePreviousSteps.description')}</span>', lifetime: 5000
+                    type: 'warning',
+                    sticky: false,
+                    title:'',
+                    text: '<span style="margin-top:10px;margin-bottom:10px;display:inline-block;">${message(code: 'enquiry.request.completePreviousSteps.description')}</span>',
+                    lifetime: 5000
                 });
             }
 

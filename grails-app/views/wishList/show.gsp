@@ -13,7 +13,7 @@
     <link rel="stylesheet"
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
-    <p:css name="site"/>
+    <link href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>

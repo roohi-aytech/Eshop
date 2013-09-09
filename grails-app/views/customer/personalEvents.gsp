@@ -6,18 +6,18 @@
     <jqui:resources theme="cobalt"></jqui:resources>
     <link rel="stylesheet"
           href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
-    <g:javascript src="datepicker/jquery.ui.datepicker-cc.js" plugin="rapid-grails"/>
-    <g:javascript src="datepicker/calendar.js" plugin="rapid-grails"/>
-    <g:javascript src="datepicker/jquery.ui.datepicker-cc-fa.js" plugin="rapid-grails"/>
-    <p:css name="jquery.easyui/metro/easyui"/>
-    <p:css name="jquery.easyui/easyui-rtl"/>
-    <p:javascript src="jquery.easyui/jquery.draggable"/>
-    <p:javascript src="jquery.easyui/jquery.panel"/>
-    <p:javascript src="jquery.easyui/jquery.parser"/>
-    <p:javascript src="jquery.easyui/jquery.validatebox"/>
-    <p:javascript src="jquery.easyui/jquery.tree"/>
-    <p:javascript src="jquery.easyui/jquery.combo"/>
-    <p:javascript src="jquery.easyui/jquery.combotree"/>
+    <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+    <script src="${resource(dir: 'js/datepicker', file: 'calendar.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+    <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc-fa.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+    <link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.draggable.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.panel.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.parser.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.validatebox.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.tree.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combo.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combotree.js')}"></script>
 
     <script language="javascript" type="text/javascript">
         var modal;
@@ -87,10 +87,14 @@
             <td></td>
         </tr>
         </tfoot>
-        <g:each in="${customerInstance.personalEvents.sort {it.id}}" var="personalEvent">
+        <g:each in="${customerInstance.personalEvents.sort { it.id }}" var="personalEvent">
             <tr>
-                <td><img class="action-btn" original-title="${message(code:'edit')}" style="cursor: pointer" onclick="showEditersonalEventsModal(${personalEvent.id});" src="${resource(dir: 'images', file: 'personal_event_edit.png')}"/></td>
-                <td><a href="${createLink(controller: 'personalEvent', action: 'delete', params: [id:personalEvent.id])}"><img class="action-btn" original-title="${message(code:'delete')}" src="${resource(dir: 'images', file: 'personal_event_delete.png')}"/></a></td>
+                <td><img class="action-btn" original-title="${message(code: 'edit')}" style="cursor: pointer"
+                         onclick="showEditersonalEventsModal(${personalEvent.id});"
+                         src="${resource(dir: 'images', file: 'personal_event_edit.png')}"/></td>
+                <td><a href="${createLink(controller: 'personalEvent', action: 'delete', params: [id: personalEvent.id])}"><img
+                        class="action-btn" original-title="${message(code: 'delete')}"
+                        src="${resource(dir: 'images', file: 'personal_event_delete.png')}"/></a></td>
                 <td>${personalEvent.title}</td>
                 <td>${personalEvent.fullName}</td>
                 <td>${personalEvent.relationship}</td>

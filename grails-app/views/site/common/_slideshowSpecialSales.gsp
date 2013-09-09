@@ -20,10 +20,10 @@
         specialSaleSlideSize = 1440;
     }
     </g:javascript>
-    <p:css name="jquery.fusion"/>
-    <p:css name="jquery.jcountdown"/>
-    <p:javascript src="jquery.fusion"/>
-    <p:javascript src="jquery.jcountdown"/>
+    <link href="${resource(dir: 'css', file: 'jquery.fusion.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css', file: 'jquery.jcountdown.css')}" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.fusion.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.jcountdown.js')}" type="text/javascript"></script>
 
     <div id="fusion1" class="fusion"><!-- light -->
 

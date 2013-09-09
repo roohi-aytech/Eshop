@@ -170,7 +170,7 @@ html * {
 body {
 	background: #ffffff;
 	color: #333333;
-	margin: 0 50px;
+	margin: 0;
 	font-size: 11px;
     overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
 }
@@ -509,11 +509,11 @@ fieldset.embedded legend {
 	text-indent: 22px;
 }
 
-    border-radius: 5px 5px 5px 5px;
-    padding: 5px;
-    text-indent: 22px;
-	text-indent: 22px;
-}
+    /*border-radius: 5px 5px 5px 5px;*/
+    /*padding: 5px;*/
+    /*text-indent: 22px;*/
+	/*text-indent: 22px;*/
+/*}*/
 
 /* form fields with errors */
 .formfirstcolumn {
