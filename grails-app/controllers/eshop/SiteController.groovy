@@ -22,13 +22,14 @@ class SiteController {
     def simpleCaptchaService
     def imageService
 
-    def findProducts(params) {
+    def findProducts() {
 
     }
 
-    def findFilters(params) {
+    def findFilters() {
 
     }
+
 
     def browse() {
         def productType = params.productType ? ProductType.findBySeoFriendlyName(params.productType) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
@@ -83,7 +84,7 @@ class SiteController {
         }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-        model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0)
+        model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0, "${model.productType ? model.productType.id : ''} ${params.page ?: 0}")
 
         if (productType) {
             model.slides = Slide.createCriteria().list {
@@ -109,7 +110,7 @@ class SiteController {
 
     def filter() {
         def model = [:]
-        model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0)
+        model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0, "${params.f} ${params.page ?: 0}")
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -189,42 +190,42 @@ class SiteController {
         model
     }
 
-    def filter1() {
-        def x = browseService.search(params)
-        def rootProductTypes = ProductType.findAllByParentProductIsNull()
+//    def filter1() {
+//        def x = browseService.search()
+//        def rootProductTypes = ProductType.findAllByParentProductIsNull()
+//
+//        params.remove("page")
+//        def pageParams = params
+//
+//        def subProductTypes = x.productTypes.collect { ProductType.get(it) }
+//        def brands = x.brands.collect { Brand.get(it) }
+//        def products = x.productIds.collect { Product.get(it) }
+//        def totalPages = x.totalPages
+//        def attrs = x.attrs
+//        def attrgroups = x.attrGroups
+//        def page = (params.page as Integer) ?: 0
+//        [rootProductTypes: rootProductTypes, subProductTypes: subProductTypes,
+//                brands: brands, products: products,
+//                attrs: attrs, attrGroups: attrgroups,
+//                totalPages: totalPages, page: page,
+//                pageParams: pageParams]
+//    }
 
-        params.remove("page")
-        def pageParams = params
-
-        def subProductTypes = x.productTypes.collect { ProductType.get(it) }
-        def brands = x.brands.collect { Brand.get(it) }
-        def products = x.productIds.collect { Product.get(it) }
-        def totalPages = x.totalPages
-        def attrs = x.attrs
-        def attrgroups = x.attrGroups
-        def page = (params.page as Integer) ?: 0
-        [rootProductTypes: rootProductTypes, subProductTypes: subProductTypes,
-                brands: brands, products: products,
-                attrs: attrs, attrGroups: attrgroups,
-                totalPages: totalPages, page: page,
-                pageParams: pageParams]
-    }
-
-    def index2() {
-        def rootProductTypes = ProductType.findAllByParentProductIsNull()
-        [rootProductTypes: rootProductTypes]
-    }
+//    def index2() {
+//        def rootProductTypes = ProductType.findAllByParentProductIsNull()
+//        [rootProductTypes: rootProductTypes]
+//    }
 
     def sidebar() {
-        def subProductTypes = []//olapService.productTypes(params)
-        def brands = browseService.brands(params)//olapService.brands(params)
-        def breadCrumb = browseService.breadCrumb(params)
+        def subProductTypes = []//olapService.productTypes()
+        def brands = browseService.brands()//olapService.brands()
+        def breadCrumb = browseService.breadCrumb()
         def resp = [subProductTypes: subProductTypes, brands: brands, breadCrumb: breadCrumb, browsingProductTypeId: params.browsingProductTypeId, browsingBrandId: params.browsingBrandId]
 
         render resp as JSON
     }
 
-    def products() {
+//    def products() {
 //        def list = ProductClosure.createCriteria().listDistinct {
 //            if ((params.browsingProductTypeId as Long) > 0)
 //                eq("productType", ProductType.get(params.browsingProductTypeId))
@@ -236,7 +237,8 @@ class SiteController {
 //            model << priceService.calcProductPrice(it.id)
 //            render(template: "product_search", model: model)
 //        }
-    }
+//    }
+
 
     def index() {
 
@@ -262,19 +264,7 @@ class SiteController {
 
         model.commonLink = createLink(uri: '/browse').replace('/site', '')
 
-//        def productTypeChain = []
-//        def productTypeNavigator = productType
-//        while (productTypeNavigator) {
-//            productTypeChain << productTypeNavigator
-//            productTypeNavigator = productTypeNavigator.parentProduct
-//        }
-//        productTypeChain = productTypeChain.reverse()
-
         model.breadCrumb = []
-
-//        productTypeChain.each {
-//            model.breadCrumb << [name: it.name, href: "${model.commonLink}/${it.name}/"]
-//        }
 
         model.subProductTypeLinks = []
         def base = "${model.commonLink}/"
@@ -285,19 +275,7 @@ class SiteController {
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
-        model.filters = browseService.findProductTypeFilters(null, params.page ?: 0)
-
-        //seo
-//        model.pageContext = [:]
-//        model.pageContext["productTypes.id"] = [0]
-//
-//        def pageDetails = PageDetails.findByProductType(productType)
-//        if (pageDetails)
-//            model.title = pageDetails?.title?.replace('$BRAND$', '')
-//        else
-//            model.title = productType.name
-//        model.description = pageDetails?.description?.replace('$BRAND$', '')
-//        model.keywords = pageDetails?.keywords?.replace('$BRAND$', '')
+        model.filters = browseService.findProductTypeFilters(null, params.page ?: 0, "${params.page ?: 0}")
 
         //slides
         model.slides = Slide.findAllByVisibleOnFirstPage(true)
@@ -315,8 +293,6 @@ class SiteController {
             filterProductTypes = ProductType.findAllByParentProduct(productType)
         else
             filterProductTypes = ProductType.findAllByParentProductIsNull()
-
-//        Brand.findAll("from Brand as b where exists (from Product as p )")
 
         [productTypes: productTypes, filterProductTypes: filterProductTypes]
     }
@@ -568,7 +544,6 @@ class SiteController {
 
     def search() {
 
-
         def model = [:]
         def productIdList = []
         if (params.phrase) {
@@ -581,7 +556,7 @@ class SiteController {
             },
                     [reload: false, max: 1000])
         }
-        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0)
+        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}")
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -641,7 +616,7 @@ class SiteController {
                     [reload: false, max: 1000])
         }
 
-        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0).products.productIds
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}").products.productIds
         model.commonLink = createLink(uri: '/')
 
         if (model.productIds?.size() > 0)

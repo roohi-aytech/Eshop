@@ -208,7 +208,7 @@ class ComparisonController {
                     [reload: false, max: 1000])
         }
 
-        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0).products.productIds
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}").products.productIds
         model.commonLink = createLink(uri: '/')
         model.productType = ProductType.get(params.id)
 

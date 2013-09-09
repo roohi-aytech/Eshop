@@ -2,9 +2,11 @@ package eshop
 
 import eshop.discout.Discount
 import eshop.discout.ProductCriteria
+import grails.plugin.cache.Cacheable
 
 class PriceService {
 
+    @Cacheable(value='service', key='#productId.toString()')
     def calcProductPrice(productId) {
         def product = Product.get(productId)
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
@@ -23,6 +25,7 @@ class PriceService {
         calcProductModelPrice(defaultModel?.id)
     }
 
+    @Cacheable(value='service', key='#productModelId.toString()')
     def calcProductModelPrice(productModelId) {
         def productModel = ProductModel.get(productModelId)
         if (!productModel)
@@ -36,7 +39,6 @@ class PriceService {
 
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
-
 
     def calcProductModelPrice(productModelId, selectedAddedValues) {
         def result = calcProductModelPrice(productModelId)

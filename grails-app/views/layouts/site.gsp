@@ -27,6 +27,7 @@
       </script>
     <![endif]-->
     <g:javascript library="jquery"/>
+    <link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
     <link rel="stylesheet"
@@ -74,23 +75,30 @@
 
         var searchAutoCompleteUrl = '${createLink(controller: 'site', action: 'searchAutoComplete')}';
     </script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
+            type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"
+            type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}"
+            type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}"
+            type="text/javascript"></script>
     <g:layoutHead/>
     <link href="${resource(dir: 'css', file: 'zanbil.css')}" rel="stylesheet" type="text/css"/>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.watch.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}"
+            type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"
+            type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"
+            type="text/javascript"></script>
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
-<g:render template="/layouts/header"/>
+<cache:render template="/layouts/header" key="${sec.username()}"/>
 <table id="main-container" class="table-simulated">
     <tr>
         <td id="body-container">
@@ -106,7 +114,7 @@
     </tr>
     <tr>
         <td class="totalFooter">
-            <g:render template="/layouts/footer"/>
+            <cache:render template="/layouts/footer"/>
         </td>
     </tr>
 </table>

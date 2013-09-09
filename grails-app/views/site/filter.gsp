@@ -34,17 +34,17 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav">
-                <g:render template="common/filteringTextualMenu"></g:render>
+                <cache:render template="common/filteringTextualMenu" key="${params.f}"/>
             </div>
-            <g:render template="productType/article_list"/>
-            <g:render template="banners/rightsideBanners"/>
+            <cache:render template="productType/article_list" key="${params.f}"/>
+            <cache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
             <table class="table-simulated">
                 <tr class="table-row">
                     <td>
-                        <g:render template="common/slideshowMain"></g:render>
+                        <g:render template="common/slideshowMain"/>
                     </td>
                 </tr>
 
@@ -74,18 +74,18 @@
                                     %{--<li class="active">${filters.breadcrumb[-1].linkTitle}</li>--}%
                                     </ul>
 
-                                    <g:render template="common/filteringGraphicalMenu"></g:render>
+                                    <cache:render template="common/filteringGraphicalMenu" key="${params.f}"/>
 
 
                                     %{--<g:if test="${filters.productTypes?.isEmpty()}">--}%
                                     <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"></g:render>
+                                              model="${[productIds: filters.products.productIds]}"/>
                                     %{--</g:if>--}%
 
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <g:render template="banners/leftsideBanners"></g:render>
+                                    <cache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

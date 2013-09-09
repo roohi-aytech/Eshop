@@ -27,17 +27,17 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav">
-                <g:render template="common/browsingTextualMenu"></g:render>
+                <cache:render template="common/browsingTextualMenu" key="${params.productType}"/>
             </div>
-            <g:render template="productType/article_list"/>
-            <g:render template="banners/rightsideBanners"/>
+            <cache:render template="productType/article_list" key="${params.productType}"/>
+            <cache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
             <table class="table-simulated">
                 <tr class="table-row">
                     <td>
-                        <g:render template="common/slideshowMain"></g:render>
+                        <g:render template="common/slideshowMain"/>
                     </td>
                 </tr>
 
@@ -67,17 +67,17 @@
                                         %{--<li class="active">${breadCrumb[-1].name}</li>--}%
                                     </ul>
 
-                                    <g:render template="common/browsingGraphicalMenu"></g:render>
+                                    <cache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
 
                                     %{--<g:if test="${subProductTypeLinks?.isEmpty()}">--}%
                                     <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"></g:render>
+                                              model="${[productIds: filters.products.productIds]}"/>
                                     %{--</g:if>--}%
 
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <g:render template="banners/leftsideBanners"></g:render>
+                                    <cache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

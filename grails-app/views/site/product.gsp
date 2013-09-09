@@ -46,15 +46,15 @@
         <td class="table-cell product-rightColumn">
             <div class="product-card">
                 <div class="product-card-content" id="product-card">
-                    <g:render template="product/card"
+                    <cache:render template="product/card" key="${params.id}"
                               model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
                 </div>
 
                 <div class="product-card-footer">
                     <eshop:addToCompareList prodcutId="${product.id}"
-                                            productTitle="${product.toString()}"></eshop:addToCompareList>
+                                            productTitle="${product.toString()}"/>
                     <eshop:addToWishList prodcutId="${product.id}"
-                                         productTitle="${product.toString()}"></eshop:addToWishList>
+                                         productTitle="${product.toString()}"/>
                 </div>
 
                 <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
@@ -165,7 +165,7 @@
 
 
                                             <div id="product-price">
-                                                <g:render template="product/price"
+                                                <cache:render template="product/price" key="${params.id}"
                                                           model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
                                             </div>
 
@@ -175,12 +175,12 @@
                                                 </p>
                                             </g:if>
 
-                                            <g:render template="product/variation"/>
+                                            <cache:render template="product/variation" key="${params.id}"/>
                                         </div>
                                     </td>
 
                                     <td class="table-cell product-imageColumn">
-                                        <div><g:render template="product/zoom"/></div>
+                                        <div><cache:render template="product/zoom" key="${params.id}"/></div>
                                     </td>
                                 </tr>
                             </table>
@@ -191,21 +191,21 @@
                 <tr class="table-row">
                     <td class="table-cell">
                         <div class="white-panel">
-                            <h3><g:message code="product.specifications"></g:message></h3>
-                            <g:render template="product/attributes"
-                                      model="${[categories: rootAttributeCategories]}"></g:render>
+                            <h3><g:message code="product.specifications"/></h3>
+                            <cache:render template="product/attributes" key="${params.id}"
+                                      model="${[categories: rootAttributeCategories]}"/>
 
                             <hr/>
-                            <g:render template="product/description"/>
-                            <g:render template="../customerReview/resources"
-                                      model="${['product': product]}"></g:render>
-                            <g:render template="../customerReview/list"
-                                      model="${['product': product]}"></g:render>
-                            <g:render template="../customerReview/create"
-                                      model="${['product': product]}"></g:render>
+                            <cache:render template="product/description" key="${params.id}"/>
+                            <cache:render template="../customerReview/resources"
+                                      model="${['product': product]}"/>
+                            <cache:render template="../customerReview/list"
+                                      model="${['product': product]}" key="${params.id}"/>
+                            <cache:render template="../customerReview/create"
+                                      model="${['product': product]}"/>
                             <hr/>
-                            <g:render template="common/productCarousel"
-                                      model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"></g:render>
+                            <cache:render template="common/productCarousel" key="${productTypes.last().id}"
+                                      model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"/>
                         </div>
                     </td>
                 </tr>

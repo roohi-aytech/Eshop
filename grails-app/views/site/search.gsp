@@ -38,7 +38,7 @@
         <g:else>
             <td class="span180 table-cell">
                 <div class="well sidebar-nav">
-                    <g:render template="common/filteringTextualMenu"></g:render>
+                    <cache:render template="common/filteringTextualMenu" key="${params.phrase} ${params.f}"/>
                 </div>
             </td>
         </g:else>
@@ -97,7 +97,7 @@
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <g:render template="banners/leftsideBanners"></g:render>
+                                    <cache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

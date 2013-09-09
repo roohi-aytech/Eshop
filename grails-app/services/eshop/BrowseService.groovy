@@ -1,5 +1,6 @@
 package eshop
 
+import grails.plugin.cache.Cacheable
 import org.springframework.web.context.request.RequestContextHolder
 
 class BrowseService {
@@ -133,7 +134,8 @@ class BrowseService {
         tempArray
     }
 
-    def findProductTypeFilters(ProductType productType, page) {
+    @Cacheable(value='service', key='#cacheKey.toString()')
+    def findProductTypeFilters(ProductType productType, page, cacheKey) {
         def match = productType ? ['productTypes.id': productType.id] : [:]
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
 
@@ -151,7 +153,9 @@ class BrowseService {
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
-    def findFilteredPageFilters(f, page) {
+
+    @Cacheable(value='service', key='#cacheKey.toString()')
+    def findFilteredPageFilters(f, page, cacheKey) {
         def productType
         def breadcrumb = []
         def match = [:]
@@ -468,7 +472,8 @@ class BrowseService {
                 productIds: productIds, attrs: attrs, attrGroups: attrGroups, totalPages: totalPages]
     }
 
-    def findSearchPageFilters(productIdList, f, page) {
+    @Cacheable(value='service', key='#cacheKey.toString()')
+    def findSearchPageFilters(productIdList, f, page, cacheKey) {
         def productType
         def breadcrumb = []
         def selecteds = [:]

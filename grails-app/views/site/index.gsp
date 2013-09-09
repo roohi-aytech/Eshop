@@ -23,9 +23,9 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav home">
-                <g:render template="common/browsingTextualMenu"/>
+                <cache:render template="common/browsingTextualMenu"/>
             </div>
-            <g:render template="banners/rightsideBanners"/>
+            <cache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
@@ -43,18 +43,18 @@
 
                                 <td class="span600 table-cell">
 
-                                    <g:render template="common/slideshowSpecialSales"
+                                    <cache:render template="common/slideshowSpecialSales"
                                               model="[specialSaleSlides: specialSaleSlides]"/>
 
-                                    <g:render template="common/browsingGraphicalMenu"/>
+                                    <cache:render template="common/browsingGraphicalMenu"/>
 
                                     <g:render template="common/productGrid"
                                               model="${[productIds: filters.products.productIds]}"/>
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <g:render template="banners/enamad"/>
-                                    <g:render template="banners/leftsideBanners"/>
+                                    <cache:render template="banners/enamad"/>
+                                    <cache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

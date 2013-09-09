@@ -20,6 +20,8 @@ class ImageController {
 
     def index() {
 
+        cache shared: true, validUntil: new Date() + 1
+
         if (params.id && params.id.toString().contains("{{")) { //angular parameter
             render ""
             return
@@ -101,7 +103,7 @@ class ImageController {
             case 'banner':
                 def banner = Banner.get(params.id)
                 if (banner) {
-                   content = banner.image
+                    content = banner.image
                 }
                 break;
             case 'deliveryMethod':
@@ -113,7 +115,7 @@ class ImageController {
         }
 
         if (content) {
-            def seconds=3600*24
+            def seconds = 3600 * 24
             DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
             httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             Calendar cal = new GregorianCalendar();
@@ -145,11 +147,11 @@ class ImageController {
         if (img) {
             if (params.wh) {
 //                if (params.wh == "max")
-                    content = imageService.getImage(
-                            img,
-                            params.wh,
-                            fileService.filePath(product),
-                            request.getSession().getServletContext().getRealPath("/images/watermark.png"))
+                content = imageService.getImage(
+                        img,
+                        params.wh,
+                        fileService.filePath(product),
+                        request.getSession().getServletContext().getRealPath("/images/watermark.png"))
 
 //                else
 //                    content = imageService.getImage(img, params.wh, fileService.filePath(product))
@@ -173,9 +175,9 @@ class ImageController {
 //
         def content
 //        if (img) {
-            if (params.wh) {
-                content = imageService.getImage(params.wh, fileService.filePath(productType))
-            }
+        if (params.wh) {
+            content = imageService.getImage(params.wh, fileService.filePath(productType))
+        }
 //            else {
 //                content = img
 //            }
