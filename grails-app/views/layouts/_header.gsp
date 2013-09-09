@@ -55,8 +55,9 @@
                     </span>
                 </li>
             </ul>
-            <g:link class="btn btn-warning" controller="basket" action="checkout"><g:message
-                    code="basket.show"></g:message></g:link>
+
+            <common:link class="btn btn-warning" controller="basket" action="checkout" https="true" ><g:message
+                    code="basket.show"></g:message></common:link>
         </div>
     </div>
 

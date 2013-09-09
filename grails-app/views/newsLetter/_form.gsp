@@ -40,8 +40,8 @@ td {
 }
 </style>
 
-<script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-sliderAccess.js')}" type="text/javascript"></script>
-<script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-timepicker-addon.js')}" type="text/javascript"></script>
+<p:javascript src="jquery-ui-sliderAccess"/>
+<p:javascript src="jquery-ui-timepicker-addon"/>
 
 <g:hasErrors bean="${newsLetterInstance}">
     <ul class="errors" role="alert">
