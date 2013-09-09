@@ -280,7 +280,7 @@ environments {
         uiperformance.enabled = false
     }
 }
-
+uiperformance.enabled = false
 uiperformance.continueAfterMinifyJsError = true
 uiperformance.keepOriginals = true
 uiperformance.exclusions = [
