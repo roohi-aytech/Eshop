@@ -64,7 +64,7 @@ class OrderController {
     }
 
     def track() {
-        def customer = springSecurityService.currentUser as Customer
+        def customer = springSecurityService.currentUser
 
         if (!params.trackingCode)
             return [order: null, customer: customer]
@@ -72,6 +72,9 @@ class OrderController {
         def order = Order.findByTrackingCode(params.trackingCode)
         def actions = []
         def suggestedActions = []
+
+        if (!order)
+            return [order: null, customer: customer]
 
         if (order.status == OrderHelper.STATUS_INQUIRED)
             suggestedActions = [OrderHelper.ACTION_COMPLETION]
