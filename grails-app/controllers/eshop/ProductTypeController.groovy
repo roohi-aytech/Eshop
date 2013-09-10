@@ -128,7 +128,8 @@ class ProductTypeController {
 
                 //    it.attributes.add(attribute)
 
-                mongoService.storeProduct(it)
+                it.isSynchronized = false
+                it.save()
 
 //            if (!attribute) {
 //                def attributeValue
@@ -182,7 +183,8 @@ class ProductTypeController {
             render(template: "form_AttributeCategory", model: [attributeCategory: attributeCategory])
         }
         attributeCategory.productType.products.each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
     }
 
@@ -198,7 +200,8 @@ class ProductTypeController {
             attributecategory.save()
             render 0
             attributecategory.productType.products.each {
-                mongoService.storeProduct(it)
+                it.isSynchronized = false
+                it.save()
             }
         } catch (x) {
             x.printStackTrace()
@@ -263,7 +266,8 @@ class ProductTypeController {
     def synchProductType() {
         def pt = ProductType.get(params.id)
         pt.products.each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
         render 0;
     }
@@ -286,7 +290,8 @@ class ProductTypeController {
             def ptid = attributeTypeInstance.productType.id
             Thread.start {
                 ProductType.get(ptid).products.each {
-                    mongoService.storeProduct(it)
+                    it.isSynchronized = false
+                    it.save()
                 }
             }
 
@@ -345,7 +350,8 @@ class ProductTypeController {
             Thread.start {
                 productType?.products?.each {
                     if (it instanceof Product) try {
-                        mongoService.storeProduct(it)
+                        it.isSynchronized = false
+                        it.save()
                     } catch (x) {}
                 }
             }
@@ -536,7 +542,8 @@ class ProductTypeController {
         //save product type
         attributeType.save()
         attributeType.productType.products.each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
         render "0"
     }
@@ -575,7 +582,8 @@ class ProductTypeController {
         productType.parentProduct = ProductType.get(params.parentId)
         productType.save()
         productType.products.each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
         render 0
     }
@@ -599,7 +607,8 @@ class ProductTypeController {
         //products need to be resynched
         Thread.start {
             ProductType.get(params.id).products.each {
-                mongoService.storeProduct(it)
+                it.isSynchronized = false
+                it.save()
             }
         }
 
@@ -710,7 +719,8 @@ class ProductTypeController {
         cat.sortIndex = sortIndex
         cat.save()
         cat.productType.products.each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
         render 0
     }
@@ -729,7 +739,8 @@ class ProductTypeController {
         cat.sortIndex = sortIndex
         cat.save()
         cat.productType.products.each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
         render 0
     }

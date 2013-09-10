@@ -54,7 +54,8 @@ class PriceController {
         priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
 
         if (priceInstance.validate() && priceInstance.save()) {
-            mongoService.storeProduct(priceInstance.productModel.product)
+            priceInstance.productModel.product.isSynchronized = false
+            priceInstance.productModel.product.save()
             render priceInstance as JSON
         } else
             render(template: "form", model: [priceInstance: priceInstance])

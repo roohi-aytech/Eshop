@@ -92,6 +92,8 @@ class MongoService {
             }
             try {
                 mongoProduct.save(flush: true)
+                product.isSynchronized = true
+                product.save()
             } catch (e) {
                 e.printStackTrace()
                 if (cnt < 5)

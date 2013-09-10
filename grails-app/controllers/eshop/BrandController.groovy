@@ -34,8 +34,8 @@ class BrandController {
         if (brand.validate()) {
             brand.save(flush: true)
             Product.findAllByBrand(brand).each {
-                mongoService.storeProduct(it)
-                println "synch ${it}"
+                it.isSynchronized = false
+                it.save()
             }
 
             render brand as JSON

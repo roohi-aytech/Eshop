@@ -21,6 +21,7 @@ class Product extends BaseProduct implements Comparable{
     Integer saleCount = 0
     Boolean isVisible = true
     Boolean deleted =false
+    Boolean isSynchronized = false
 //    Long assetId
 //    Long dlFolderId
 //    Long igFolderId

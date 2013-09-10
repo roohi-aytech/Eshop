@@ -108,7 +108,8 @@ class ProductController {
             }
         }
         Product.findAllByType(productTypeType).each {
-            mongoService.storeProduct(it)
+            it.isSynchronized = false
+            it.save()
         }
         render productTypeType as JSON
     }
@@ -279,7 +280,8 @@ class ProductController {
                     attribute.save()
                 }
             }
-            mongoService.storeProduct(productInstance)
+            productInstance.isSynchronized = false
+            productInstance.save()
             return true
         } else
             return false
@@ -536,7 +538,8 @@ class ProductController {
 //        }catch(x){
 //
 //        }
-            mongoService.storeProduct(productInstance)
+            productInstance.isSynchronized = false
+            productInstance.save()
             return [productInstance: productInstance, productTypeIds: productTypeIds]
         }
     }
@@ -610,6 +613,9 @@ class ProductController {
 //            tmp.each {
 //                product.removeFromProductTypes(it)
 //            }
+            product.isSynchronized = false
+            product.save()
+
             mongoProductInstance.delete(flush: true)
             product.deleted = true
             product.save()
@@ -645,23 +651,31 @@ class ProductController {
 
     def synchMongo() {
 //        Thread.start {
-        if (!params.start)
-            MongoProduct.findAll().each { it.delete() }
-        def i = 0
-        if (params.start)
-            i = params.start.toInteger()
-        def ps = Product.findAll()
-        ps.toArray()[i..ps.size() - 1].each {
-            try {
-                println "${i++} of ${ps.size()}"
-                mongoService.storeProduct(it)
-                println it
-            } catch (e) {
-                println(e)
-            }
+
+        Product.findAllByDeletedOrDeletedIsNull(false).each{
+            it.isSynchronized = false
+            it.save()
         }
+
+
+//        if (!params.start)
+//            MongoProduct.findAll().each { it.delete() }
+//        def i = 0
+//        if (params.start)
+//            i = params.start.toInteger()
+//        def ps = Product.findAll()
+//        ps.toArray()[i..ps.size() - 1].each {
+//            try {
+//                println "${i++} of ${ps.size()}"
+//                it.isSynchronized = false
+//                it.save()
+//                println it
+//            } catch (e) {
+//                println(e)
+//            }
 //        }
-        render "Synch OK"
+////        }
+        render "Synch Reset OK"
     }
 
     def findDuplicates() {

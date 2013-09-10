@@ -367,8 +367,8 @@ class SiteController {
         if (!product.visitCount)
             product.visitCount = 0;
         product.visitCount++;
+        product.isSynchronized = false
         product.save()
-        mongoService.storeProduct(product)
 
         //fill zoomable property of images
         if (product.mainImage) {
@@ -548,7 +548,7 @@ class SiteController {
         def productIdList = []
         if (params.phrase) {
             def query = params.phrase.toString().trim()
-            while(query.contains('  '))
+            while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
             productIdList = Product.search({
@@ -607,7 +607,7 @@ class SiteController {
         def productIdList = []
         if (params.phrase) {
             def query = params.phrase.toString().trim()
-            while(query.contains('  '))
+            while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
             productIdList = Product.search({
@@ -731,6 +731,16 @@ class SiteController {
 
     def trust() {
         render view: '/site/statics/trust'
+    }
+
+    def synchMongoItem() {
+        try {
+            mongoService.storeProduct(Product.get(params.id))
+            render "0"
+        }
+        catch (ex) {
+            render "-1"
+        }
     }
 
 }
