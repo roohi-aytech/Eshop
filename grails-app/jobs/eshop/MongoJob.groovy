@@ -3,9 +3,10 @@ package eshop
 class MongoJob {
 
     def mongoService
+    def grailsApplication
 
-    def startDelay = 1000
-    def timeout = 1000
+    def startDelay = 60000
+    def timeout = 10000
 
     def execute() {
         def product = Product.createCriteria().list(max: 1) {
@@ -22,18 +23,16 @@ class MongoJob {
             }
         }
         if (product.size() > 0) {
-            withHttp(uri: "http://local.zanbil.ir") {
-                def result = get(path : "/site/synchMongoItem/${product.first()}")
-                println("Synchronizing: ${product.first()}, result: ${result}")
+            withHttp(uri: grailsApplication.config.grails.serverURL ?: 'http://localhost') {
+                try {
+                    def result = get(path: "/site/synchMongoItem/${product.first()}")
+                    println("Synchronizing: ${product.first()}, result: ${result}")
+                }
+                catch(ex) {
+                    ex.printStackTrace()
+                    println("Synchronizing: ${product.first()}, result: -2")
+                }
             }
-//            try{
-//            mongoService.storeProduct(Product.get(product.first()))
-//                println("Synchronized: ${product.first()}")
-//            }
-//            catch(ex){
-//                ex.printStackTrace()
-//                println("Failed to Synchronize: ${product.first()}")
-//            }
         } else {
             println('No Product to Synchronize')
         }
