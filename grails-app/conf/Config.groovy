@@ -288,6 +288,8 @@ uiperformance.exclusions = [
         "**/angular.js"
 ]
 
+grails.rest.injectInto = ["Controller", "Service", "Routes", "Job"]
+
 //cache.headers.enabled = true
 //cache.headers.presets = [
 //        unauthed_page: [shared:true, validFor: 300], // 5 minute refresh window
