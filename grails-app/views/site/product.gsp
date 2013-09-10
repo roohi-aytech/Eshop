@@ -204,7 +204,7 @@
                             <cache:render template="../customerReview/create"
                                       model="${['product': product]}"/>
                             <hr/>
-                            <cache:render template="common/productCarousel" key="${productTypes.last().id}"
+                            <cache:render template="common/productCarousel" key="${product?.productTypes?.toArray()?.find()?.id}"
                                       model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"/>
                         </div>
                     </td>

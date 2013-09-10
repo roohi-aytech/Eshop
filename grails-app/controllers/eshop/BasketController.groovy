@@ -254,7 +254,7 @@ class BasketController {
             params.ownerName :
             (customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() :
                 message(code: "customer.title.${session.checkout_customerInformation.sex}") + " " + session.checkout_customerInformation.lastName)
-        customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : customer.nationalCode
+        customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : (customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode)
         customInvoiceInformation.ownerMobile = customInvoiceInformation.customInvoiceInfo ? params.ownerMobile : (customer ? customer.mobile : session.checkout_customerInformation.mobile)
         session.checkout_customInvoiceInformation = customInvoiceInformation
         redirect(action: 'checkout')

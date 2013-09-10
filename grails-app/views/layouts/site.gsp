@@ -114,7 +114,7 @@
     </tr>
     <tr>
         <td class="totalFooter">
-            <cache:render template="/layouts/footer"/>
+            <g:render template="/layouts/footer"/>
         </td>
     </tr>
 </table>
