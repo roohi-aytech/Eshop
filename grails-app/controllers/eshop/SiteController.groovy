@@ -3,6 +3,7 @@ package eshop
 import grails.converters.JSON
 import groovy.sql.Sql
 import org.compass.core.CompassQuery
+import search.FarsiNormalizationFilter
 
 import javax.servlet.http.Cookie
 
@@ -548,6 +549,7 @@ class SiteController {
         def productIdList = []
         if (params.phrase) {
             def query = params.phrase.toString().trim()
+            query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
@@ -607,6 +609,7 @@ class SiteController {
         def productIdList = []
         if (params.phrase) {
             def query = params.phrase.toString().trim()
+            query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"

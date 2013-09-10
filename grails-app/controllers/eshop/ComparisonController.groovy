@@ -1,6 +1,7 @@
 package eshop
 
 import grails.converters.JSON
+import search.FarsiNormalizationFilter
 
 class ComparisonController {
 
@@ -199,6 +200,7 @@ class ComparisonController {
         def productIdList = []
         if (params.phrase) {
             def query = params.phrase.toString().trim()
+            query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
             while(query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"

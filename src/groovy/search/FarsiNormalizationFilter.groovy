@@ -19,7 +19,7 @@ public final class FarsiNormalizationFilter extends TokenFilter {
         super(input)
     }
 
-    public final org.apache.lucene.analysis.Token next(Token reusableToken) {
+    public final Token next(Token reusableToken) {
 
         assert reusableToken
 
