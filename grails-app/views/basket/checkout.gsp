@@ -28,7 +28,7 @@
         }
 
         $(function() {
-            $( "#inquiry-accordion" ).accordion({
+            $( ".accordion" ).accordion({
                 heightStyle: "content",
                 active: ${currentStep - 1}
         });
