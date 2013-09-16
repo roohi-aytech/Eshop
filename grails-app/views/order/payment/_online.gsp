@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
 
     function onlineValidateValue(){
         $('#onlineValueValidationMessage').html('');
@@ -14,7 +14,7 @@
     function onlineValidate(){
         return onlineValidateValue();
     }
-</g:javascript>
+</script>
 
 <style>
 label {

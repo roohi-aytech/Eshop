@@ -14,7 +14,7 @@
         </rg:criteria>
     </rg:grid>
 
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
 function deleteProducerStaff(id){
      if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
         var url = "<g:createLink action="deleteProducerStaff" controller="producer"/>";
@@ -38,6 +38,6 @@ function addToProducerStaffGrid(){
         $("#ProducerStaffGrid").trigger("reloadGrid")
     });
 }
-    </g:javascript>
+    </script>
 
 </div>

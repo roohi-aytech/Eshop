@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
     function validateOwnerName(){
         $('#ownerNameValidationMessage').html('');
 
@@ -41,7 +41,7 @@
             $('#submitInvoiceCustomInfoForm').click();
         }
     }
-</g:javascript>
+</script>
 <form id="invoiceCustomInfoForm" onsubmit="return validateInvoiceCustomInformation();" method="post" action="${createLink(action: 'storeCustomInvoiceInformation')}" style="margin-bottom: 0;">
     <label style="display: inline-block;margin-left:20px;"><g:message
             code="enquiry.request.shopping.customInvoiceInfo.description"/></label>

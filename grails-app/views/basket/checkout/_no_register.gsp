@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
     function validateLastName(){
         $('#lastNameValidationMessage').html('');
 
@@ -64,7 +64,7 @@
     $(document).ready(function(){
         document.getElementById('customerInformationForm').onsubmit = validateCustomerInformation;
     });
-</g:javascript>
+</script>
 <p style="line-height: 18px;text-align: justify;">
     <img src="${resource(dir: 'images', file: 'msgGrowl_warning.png')}" style="height:18px;"/>
     <g:message code="enquiry.request.shopping.noRegister.warning"/>

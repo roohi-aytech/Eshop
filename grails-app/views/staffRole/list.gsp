@@ -37,7 +37,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToStaffRoleGrid", icon: "plus"]]}"
              commands="${[[handler: "addToStaffRoleGrid(#id#)", icon: "application_edit"], [handler: "deleteStaffRole(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteStaffRole(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -72,7 +72,7 @@
                 })
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

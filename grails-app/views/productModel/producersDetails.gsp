@@ -27,10 +27,10 @@
 
 
 </div>
-%{--<g:javascript>--}%
+%{--<script language="javascript" type="text/javascript">--}%
 %{--$(function () {--}%
 %{--$("#details-tabs").tabs();--}%
 %{--});--}%
-%{--</g:javascript>--}%
+%{--</script>--}%
 </body>
 </html>

@@ -30,7 +30,7 @@
         margin-right: 5px;
     }
     </style>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function showProducts(productTypeId, brandId){
             $("#productSelectorContainer").html('<img style="margin:auto;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
             $("#productSelectorContainer").load('${createLink(controller: 'comparison', action: 'productSelector')}?productTypeId=' + productTypeId + "&brandId=" + brandId, function () {
@@ -41,7 +41,7 @@
             var productId = $("#productCombo" + productTypeId).val();
             window.location.href = "${createLink(controller: 'comparison', action: 'addAndShow')}/" + productId;
         }
-    </g:javascript>
+    </script>
 </head>
 
 <body>
@@ -69,11 +69,11 @@
 
                 %{--<span id="productSelectorContainer"></span>--}%
 
-                %{--<g:javascript>--}%
+                %{--<script language="javascript" type="text/javascript">--}%
                     %{--$(document).ready(function(){--}%
                         %{--showProducts(${productType.item.id}, $('#brandCombo${productType.item.id}').val());--}%
                     %{--});--}%
-                %{--</g:javascript>--}%
+                %{--</script>--}%
                 <g:render template="productSearch" model="${[productType: productType.item]}"/>
             </div>
 
@@ -197,7 +197,7 @@
     </div>
 </div>
 
-<g:javascript>
+<script language="javascript" type="text/javascript">
     $(document).ready(function () {
         $('ul.nav.nav-tabs li').first().addClass('active');
         $('div.tab-content div.tab-pane').first().addClass('active');
@@ -251,6 +251,6 @@
             input.val(input.val() + nodes[i].id);
         }
     }
-</g:javascript>
+</script>
 </body>
 </html>

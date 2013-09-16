@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
 
     $(".shopping-basket" ).accordion({
                 heightStyle: "content"
@@ -19,7 +19,7 @@ for (var i = 0; i < scope.basket.length; i++) {
 if (found)
     scope.changeCount(id, count);
 }
-</g:javascript>
+</script>
 <div class="shopping-basket accordion" style="margin-bottom: 20px;">
     <h3><span style="background: rgb(9, 76, 127)"><g:message code="basket.content"/></span></h3>
 

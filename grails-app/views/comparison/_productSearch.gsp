@@ -10,9 +10,9 @@
         </tr>
     </table>
 </g:form>
-<g:javascript>
+<script language="javascript" type="text/javascript">
     $(document).ready(function () {
         $("#comparisonSearchForm${productType.id}").attr('searchAutoCompleteUrl', '${createLink(controller: 'comparison', action: 'searchAutoComplete', params: [id:productType.id])}');
         setupSearchAutoComplete($("#comparisonSearchForm${productType.id}"))
     });
-</g:javascript>
+</script>

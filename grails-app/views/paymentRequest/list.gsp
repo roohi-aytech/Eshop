@@ -28,7 +28,7 @@
         <rg:saveButton domainClass="${PaymentRequest}" />
         <rg:cancelButton/>
     </rg:dialog>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function showPaymentRequest(id){
              window.location.href="${createLink(action:'show')}/" + id;
         }
@@ -49,7 +49,7 @@
                 });
             }
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

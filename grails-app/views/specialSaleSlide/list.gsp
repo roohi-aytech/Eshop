@@ -71,7 +71,7 @@
     <input type="button" ng-click="openSpecialSaleSlideCreateDialog()" value="<g:message code="new"/>"/>
     <input type="button" ng-click="openSpecialSaleSlideEditDialog()" value="<g:message code="edit"/>"/>
     <input type="button" value="${message(code:'specialSaleSlides.returnToProductDetail')}" onclick="window.location.href='${createLink(controller: 'product', action:'productDetails', params:[id:params.detail])}#price'">
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteSpecialSaleSlide(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -97,7 +97,7 @@
                 setTimeout("$(\"select.compositionField:visible\").quickselect()",100)
             })
         })
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

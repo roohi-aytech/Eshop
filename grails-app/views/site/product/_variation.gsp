@@ -1,5 +1,5 @@
 <%@ page import="eshop.ProductModel" %>
-<g:javascript>
+<script language="javascript" type="text/javascript">
     $(".variation-value-color").hover(function () {
         var vth = $(this).parents(".product-variation")
         vth.find(".hover-variation")
@@ -28,7 +28,7 @@
         angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
         angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
     });
-</g:javascript>
+</script>
 <div class="product-variations">
     <g:set var="defaultModel" value="${ProductModel.findByProductAndIsDefaultModel(product, true)}"/>
     <g:if test="${defaultModel}">
@@ -89,6 +89,3 @@
         </form>
     </g:if>
 </div>
-<g:javascript>
-
-</g:javascript>

@@ -17,7 +17,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteUser(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteUser(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -40,7 +40,7 @@
                 $("#UserGrid").trigger("reloadGrid")
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

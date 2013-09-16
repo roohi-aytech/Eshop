@@ -18,7 +18,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToDeliveryMethodGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#", saveAction: "${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteDeliveryMethod(#id#)", icon: "application_delete"],
                      [controller: "deliverySourceStation", action: "list", param: "deliveryMethod.id=#id#", icon: "application_form",title:"${message(code: "deliveryMethod.sourceStations")}"]]}"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteDeliveryMethod(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -41,7 +41,7 @@
                 $("#DeliveryMethodGrid").trigger("reloadGrid")
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

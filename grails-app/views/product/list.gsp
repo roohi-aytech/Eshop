@@ -157,7 +157,7 @@
                 onSelectRow="loadProducts">
         </rg:grid>
     </div>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         var curSelectedProductType=${ptid ?: 0}
         var loadProducts = function (rowId) {
             curSelectedProductType = rowId
@@ -172,7 +172,7 @@
             else
                 return '${message(code: 'mongoProduct.isVisible.false')}'
         }
-    </g:javascript>
+    </script>
     <div style="margin: 10px;">
         <div class="criteria-div">
             <rg:criteria>

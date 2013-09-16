@@ -37,7 +37,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProducerTypeGrid", icon: "plus"]]}"
              commands="${[[handler: "addToProducerTypeGrid(#id#)", icon: "application_edit"], [handler: "deleteProducerType(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteProducerType(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -72,7 +72,7 @@
                 })
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

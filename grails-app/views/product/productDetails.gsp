@@ -63,14 +63,14 @@
 
 
 </div>
-<g:javascript>
+<script language="javascript" type="text/javascript">
     $(function() {
         $( "#details-tabs" ).tabs({
             selected:${curtab ?: 0}
     ${productInstance.id ? "" : ",disabled:[1,2,3,4,5,6,7]"}
     });
     });
-</g:javascript>
+</script>
 
 </body>
 </html>

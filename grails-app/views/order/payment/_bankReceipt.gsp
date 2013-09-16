@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
 
     function validateValue(){
         $('#valueValidationMessage').html('');
@@ -36,7 +36,7 @@
     function validate(){
         return validateValue() && validateTrackingCode() && validateDate();
     }
-</g:javascript>
+</script>
 
 <style>
 label {

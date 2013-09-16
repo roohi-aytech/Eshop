@@ -3,11 +3,9 @@
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.js')}" type="text/javascript"></script>
 <link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
 
-<g:javascript>
+<script language="javascript" type="text/javascript">
     jQuery(document).ready(function ($) {
         $('#etalage').etalage({
-//            thumb_image_width: 250,
-//            thumb_image_height: 250,
             source_image_width: 900,
             source_image_height: 900,
             zoom_area_width: $('#product-description-area').width(),
@@ -34,7 +32,7 @@
 
         $(".etalage_small_thumbs ul li img[src$='50x50']").parent().fadeIn();
     });
-</g:javascript>
+</script>
 
 <ul id="etalage">
 

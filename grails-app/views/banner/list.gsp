@@ -17,7 +17,7 @@
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToBannerGrid", icon: "plus"]]}"
              commands="${[[handler: "addToBannerGrid(#id#)", icon: "application_edit"], [handler: "deleteBanner(#id#)", icon: "application_delete"]]}"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteBanner(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -55,7 +55,7 @@
 
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

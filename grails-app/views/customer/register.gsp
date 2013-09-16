@@ -115,7 +115,7 @@
         width: 373px;
     }
     </style>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
 
         function validateUsernameField(){
             $('#usernameValidationMessage').html('');
@@ -185,7 +185,7 @@
                 return true;
             return false;
         }
-    </g:javascript>
+    </script>
 </head>
 
 <body>

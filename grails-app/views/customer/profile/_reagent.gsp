@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
     function validateReagent(){
 
 
@@ -49,7 +49,7 @@ request.always(function () {
 
 return false;
 }
-</g:javascript>
+</script>
 <form id='reagentForm' class='cssform' autocomplete='off' method="POST"
       action="${createLink(controller: 'customer', action: 'saveReagent')}">
 

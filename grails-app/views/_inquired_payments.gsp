@@ -5,7 +5,7 @@
         params.action != 'panel'}">
     <g:each in="${Order.findAllByCustomerAndStatusAndPaymentTimeoutGreaterThanEquals(customer, 'inquired', new Date())}"
             var="order">
-        <g:javascript>
+        <script language="javascript" type="text/javascript">
             $(document).ready(function(){
                 $.msgGrowl({
                     type: 'warning',
@@ -18,6 +18,6 @@
                 });
 
             });
-        </g:javascript>
+        </script>
     </g:each>
 </g:if>

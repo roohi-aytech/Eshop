@@ -12,7 +12,7 @@
             <rg:eq name="baseProduct.id" value="${baseProductInstance.id}"/>
         </rg:criteria>
     </rg:grid>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteJournalArticle(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink controller="journalArticle" action="delete"/>";
@@ -63,5 +63,5 @@
                 }
             });
         }
-    </g:javascript>
+    </script>
 </div>

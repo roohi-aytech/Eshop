@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
 
         function validateLastName(){
             $('#lastNameValidationMessage').html('');
@@ -49,7 +49,7 @@
                 return true;
             return false;
         }
-</g:javascript>
+</script>
 <g:form controller="customer" action='savePersonalInfo' method='POST' id='registerForm'
         name='registerForm'
         class='cssform'

@@ -1,5 +1,5 @@
 <g:if test="${specialSaleSlides && !specialSaleSlides.isEmpty()}">
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
     specialSaleSlides = ${specialSaleSlides.collect { [id: it.id, productId: it.product.id, title: it.product.toString(), finishDate: it.finishDate] } as grails.converters.JSON};
     specialSaleSlideSize;
     specialSaleSlideWidth = $('.slideshowContainer').width();
@@ -19,7 +19,7 @@
         specialSaleSlideHeight = 260;
         specialSaleSlideSize = 1440;
     }
-    </g:javascript>
+    </script>
     <link href="${resource(dir: 'css', file: 'jquery.fusion.css')}" rel="stylesheet" type="text/css"/>
     <link href="${resource(dir: 'css', file: 'jquery.jcountdown.css')}" rel="stylesheet" type="text/css"/>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.fusion.js')}" type="text/javascript"></script>
@@ -52,7 +52,7 @@
         </div>
 
     </div>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         $(document).ready(function () {
             jQuery('#fusion1').css('width', specialSaleSlideWidth + 22);
             jQuery('#fusion1').css('height', specialSaleSlideHeight + 22);
@@ -69,5 +69,5 @@
                 keyboardNav: true
             });
         });
-    </g:javascript>
+    </script>
 </g:if>

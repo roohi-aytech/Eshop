@@ -26,7 +26,7 @@
            href="${createLink(controller: 'newsLetter', action: 'list')}"><g:message
                 code="newsLetter.list"/></a>
     </fieldset>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteNewsLetterInstance(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -49,7 +49,7 @@
                 $("#NewsLetterInstanceGrid").trigger("reloadGrid")
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

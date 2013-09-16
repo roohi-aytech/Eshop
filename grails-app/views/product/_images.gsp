@@ -14,10 +14,10 @@
     </div>
 </div>
 
-<g:javascript>
+<script language="javascript" type="text/javascript">
     $(function() {
         $( "#images-tabs" ).tabs({
             selected:${curtab2?:0}
         });
     });
-</g:javascript>
+</script>

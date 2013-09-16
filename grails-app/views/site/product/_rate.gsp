@@ -4,7 +4,7 @@
 </span>
 
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
-<g:javascript>
+<script language="javascript" type="text/javascript">
     $('#${identifier}').val(${currentValue});
     $('#star${identifier}').raty({
         score: ${currentValue},
@@ -13,4 +13,4 @@
             $('#${identifier}').val(score);
         }
     });
-</g:javascript>
+</script>

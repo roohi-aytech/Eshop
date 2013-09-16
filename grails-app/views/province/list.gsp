@@ -28,7 +28,7 @@
     </rg:dialog>
     <input type="button" ng-click="openProvinceCreateDialog()" value="<g:message code="new" />"/>
     <input type="button" ng-click="openProvinceEditDialog()" value="<g:message code="edit" />"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteProvince(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -46,7 +46,7 @@
                 });
             }
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

@@ -16,7 +16,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToPageDetailsGrid", icon: "plus"]]}"
              commands="${[[handler:'addToPageDetailsGrid(#id#)', icon: "application_edit"], [handler: "deletePageDetails(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deletePageDetails(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -44,7 +44,7 @@
                 width:400
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

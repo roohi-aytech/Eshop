@@ -16,7 +16,7 @@
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-sliderAccess.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery-ui-timepicker-addon.js')}" type="text/javascript"></script>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function requestUrl(url, data){
             $("#orderListContentPane").html('<div style="text-align:center;padding-top:100px;"><img style="padding:5px;border:1px solid #dddddd;border-radius:4px;background-color:#ffffff;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/></div>');
 
@@ -97,7 +97,7 @@
         </g:else>
         })
 
-    </g:javascript>
+    </script>
 </head>
 
 <body>

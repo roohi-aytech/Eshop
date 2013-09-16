@@ -16,7 +16,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToTransactionGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteTransaction(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteTransaction(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -39,7 +39,7 @@
                 $("#TransactionGrid").trigger("reloadGrid")
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

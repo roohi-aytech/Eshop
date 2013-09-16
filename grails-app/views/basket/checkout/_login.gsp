@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
     var customerLoginLinkHeight;
     function switchToNoRegisterForm() {
         $('#noRegisterLink').animate({
@@ -37,7 +37,7 @@
             }, 500);
         });
     }
-</g:javascript>
+</script>
 <g:if test="${!customer}">
     <table class="table-simulated">
         <tr>

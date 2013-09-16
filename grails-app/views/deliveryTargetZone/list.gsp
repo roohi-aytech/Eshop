@@ -29,7 +29,7 @@
            href="${createLink(controller: 'deliverySourceStation', action: 'list', params: ['deliveryMethod.id': deliverySourceStation.method.id])}"><g:message
                 code="deliverySourceStation.list"/></a>
     </fieldset>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteDeliveryTargetZone(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -54,7 +54,7 @@
                 $("#DeliveryTargetZoneGrid").trigger("reloadGrid")
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

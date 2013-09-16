@@ -19,7 +19,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToNewsLetterGrid", icon: "plus"]]}"
              commands="${[[handler: "addToNewsLetterGrid(#id#)", icon: "application_edit"], [handler: "deleteNewsLetter(#id#)", icon: "application_delete"],
                      [controller: "newsLetterInstance", action: "list", param: "newsLetter.id=#id#", icon: "application_form",title:"${message(code: "newsLetter.instances")}"]]}"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteNewsLetter(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -65,7 +65,7 @@
                 }
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

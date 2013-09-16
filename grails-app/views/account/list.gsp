@@ -17,7 +17,7 @@
          showCommand="false"
          toolbarCommands="${[[caption: message(code: "add"), function: "addToAccountGrid", icon: "plus"]]}"
          commands="${[[handler: "addToAccountGrid(#id#)", icon: "application_edit"], [handler: "deleteAccount(#id#)", icon: "application_delete"]]}"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteAccount(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -44,7 +44,7 @@
             },function(){},{
             width:550});
         }
-    </g:javascript>
+    </script>
     </div>
     </body>
     </html>

@@ -16,7 +16,7 @@
             <rg:eq name="request.id" value="${params.id}"/>
         </rg:criteria>
         </rg:grid>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deletePaymentResponse(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -39,7 +39,7 @@
                 $("#PaymentResponseGrid").trigger("reloadGrid")
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

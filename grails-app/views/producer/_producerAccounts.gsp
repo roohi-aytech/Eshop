@@ -17,7 +17,7 @@
         </rg:criteria>
     </rg:grid>
 
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
 function deleteProducerAccount(id){
      if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
         var url = "<g:createLink action="deleteProducerAccount" controller="producer"/>";
@@ -42,6 +42,6 @@ function addToProducerAccountGrid(){
         $("#ProducerAccountGrid").trigger("reloadGrid")
     });
 }
-    </g:javascript>
+    </script>
 
 </div>

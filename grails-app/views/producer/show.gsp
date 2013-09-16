@@ -35,7 +35,7 @@
              %{--showCommand="false"--}%
              %{--onSelectRow="loadProducerStaffs"--}%
     %{--/>--}%
-    %{--<g:javascript>--}%
+    %{--<script language="javascript" type="text/javascript">--}%
         %{--var curSelectedProducer=${producer?:0}--}%
         %{--var loadProducerStaffs = function (rowId) {--}%
             %{--curSelectedProducer = rowId--}%
@@ -45,7 +45,7 @@
             %{--loadGridWithCriteria("ProducerAccountGrid", criteria)--}%
 
         %{--}--}%
-    %{--</g:javascript>--}%
+    %{--</script>--}%
 
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProducerStaff}"
@@ -79,9 +79,6 @@
 
         </rg:grid>
     </div>
-
-    <g:javascript>
-    </g:javascript>
 </div>
 </body>
 </html>

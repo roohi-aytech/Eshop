@@ -37,7 +37,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToSettlementGrid", icon: "plus"]]}"
              commands="${[[handler: "addToSettlementGrid(#id#)", icon: "application_edit"], [handler: "deleteSettlement(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteSettlement(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -72,7 +72,7 @@
                 })
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

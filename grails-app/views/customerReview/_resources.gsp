@@ -1,6 +1,6 @@
 <ckeditor:resources/>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.color.js')}"></script>
-<g:javascript>
+<script language="javascript" type="text/javascript">
     var newReviewsCounter = 0;
     var parentReviewId;
     function submitReview(parentReviewIdParam) {
@@ -176,4 +176,4 @@
         request.always(function () {
         });
     }
-</g:javascript>
+</script>

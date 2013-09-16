@@ -16,7 +16,7 @@
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToSlideGrid", icon: "plus"]]}"
              commands="${[[handler: "addToSlideGrid(#id#)", icon: "application_edit"], [handler: "deleteSlide(#id#)", icon: "application_delete"]]}"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteSlide(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -54,7 +54,7 @@
 
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.draggable.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.tree.js')}"></script>
 
-<g:javascript>
+<script language="javascript" type="text/javascript">
     function validateFavorites(){
         $('#favoriteStyleValidationMessage').html('');
 
@@ -19,7 +19,7 @@
 
         return gatherData();
     }
-</g:javascript>
+</script>
 <form id='reagentForm' class='cssform' autocomplete='off' method="POST"
       action="${createLink(controller: 'customer', action: 'saveFavorites')}">
 

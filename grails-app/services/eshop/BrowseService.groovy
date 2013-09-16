@@ -134,7 +134,7 @@ class BrowseService {
         tempArray
     }
 
-    @Cacheable(value='service', key='#cacheKey.toString()')
+//    @Cacheable(value='service', key='#cacheKey.toString()')
     def findProductTypeFilters(ProductType productType, page, cacheKey) {
         def match = productType ? ['productTypes.id': productType.id] : [:]
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
@@ -154,7 +154,7 @@ class BrowseService {
     }
 
 
-    @Cacheable(value='service', key='#cacheKey.toString()')
+//    @Cacheable(value='service', key='#cacheKey.toString()')
     def findFilteredPageFilters(f, page, cacheKey) {
         def productType
         def breadcrumb = []
@@ -472,7 +472,7 @@ class BrowseService {
                 productIds: productIds, attrs: attrs, attrGroups: attrGroups, totalPages: totalPages]
     }
 
-    @Cacheable(value='service', key='#cacheKey.toString()')
+//    @Cacheable(value='service', key='#cacheKey.toString()')
     def findSearchPageFilters(productIdList, f, page, cacheKey) {
         def productType
         def breadcrumb = []

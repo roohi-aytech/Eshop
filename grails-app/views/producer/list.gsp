@@ -78,7 +78,7 @@
     <sec:ifAnyGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_TYPE_ADMIN},${eshop.RoleHelper.ROLE_PRODUCER_ADD_EDIT}">
         <input type="button" ng-click="openProducerEditDialog()" value="<g:message code="edit" />"/>
     </sec:ifAnyGranted>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteProducer(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -96,7 +96,7 @@
                 });
              }
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

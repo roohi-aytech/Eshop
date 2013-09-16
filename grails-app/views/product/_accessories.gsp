@@ -11,7 +11,7 @@
     </rg:criteria>
 </rg:grid>
 
-<g:javascript>
+<script language="javascript" type="text/javascript">
 function deleteAccessory(id){
      if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
         var url = "<g:createLink action="deleteAccessory" controller="product"/>";
@@ -36,7 +36,7 @@ function addToAccessoryGrid(){
         $("#AccessoryGrid").trigger("reloadGrid")
     });
 }
-</g:javascript>
+</script>
 
 <fieldset class="buttons">
 

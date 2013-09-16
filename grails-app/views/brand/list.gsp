@@ -29,7 +29,7 @@
              toolbarCommands="${[[caption: message(code: "add"), function: "addToBrandGrid", icon: "plus"]]}"
              commands="${[[handler: "addToBrandGrid(#id#)", icon: "application_edit"], [handler: "deleteBrand(#id#)", icon: "application_delete"]]}"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteBrand(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -64,7 +64,7 @@
                 })
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

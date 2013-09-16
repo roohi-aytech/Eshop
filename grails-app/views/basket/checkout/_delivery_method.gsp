@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
     function setDeliveryPrice(element, price) {
         if (element.checked) {
             $('#price').val(price);
@@ -22,7 +22,7 @@
             scope.$apply();
         }
     }
-</g:javascript>
+</script>
 <g:form controller="order" action="create" style="margin-bottom:0;">
     <g:hiddenField id="price" name="price"/>
     <ul class="deliveryMethodList">

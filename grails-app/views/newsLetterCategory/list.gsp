@@ -16,7 +16,7 @@
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToNewsLetterCategoryGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#", saveAction: "${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteNewsLetterCategory(#id#)", icon: "application_delete"]]}"/>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function deleteNewsLetterCategory(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
                 var url = "<g:createLink action="delete"/>";
@@ -50,7 +50,7 @@
                 width:300
             });
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

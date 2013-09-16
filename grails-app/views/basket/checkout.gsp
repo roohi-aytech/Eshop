@@ -6,7 +6,7 @@
     <meta name="layout" content="site">
     <link href="${resource(dir: 'css', file: 'jquery.ui.accordion.css')}" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.ui.accordion.js')}"></script>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         var addressRequest;
         function loadAddress(){
             $('#addressLoadingPane').stop().fadeOut(200, function(){
@@ -46,7 +46,7 @@
 
         });
     });
-    </g:javascript>
+    </script>
 </head>
 
 <body>

@@ -20,7 +20,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function addToBasket(id, title, price) {
             var scope = angular.element(document.getElementById('main-container')).scope();
             scope.addToBasket(id, title, price, []);
@@ -31,7 +31,7 @@
             scope.addToCompareList(id, title, price);
             scope.$apply();
         }
-    </g:javascript>
+    </script>
 </head>
 
 <body>

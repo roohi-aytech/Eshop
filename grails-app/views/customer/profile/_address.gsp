@@ -1,4 +1,4 @@
-<g:javascript>
+<script language="javascript" type="text/javascript">
 
         function updateCityList(){
             var currentCityId = '${customerInstance?.address?.city?.id}';
@@ -25,7 +25,7 @@
         $(document).ready(function(){
            updateCityList();
         });
-</g:javascript>
+</script>
 %{--<g:form controller="customer" action='saveAddress' method='POST' id='registerForm'--}%
 %{--name='registerForm'--}%
 %{--class='cssform'--}%

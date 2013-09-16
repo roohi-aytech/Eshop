@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
     <title><g:message code="contact.label"/></title>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function validateForm() {
             $('.validator').css('display', 'none');
             var isValid = true;
@@ -42,7 +42,7 @@
 
             return isValid;
         }
-    </g:javascript>
+    </script>
     <style>
     label {
         display: block !important;

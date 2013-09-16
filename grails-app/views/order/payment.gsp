@@ -12,7 +12,7 @@
     <meta name="layout" content="site"/>
     <title><g:message code="controlPanel.orders.actions.payment.label"></g:message></title>
 
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function changePayFromAccountType() {
             if ($('#paySome').is(':checked')) {
                 $('#payFromAccountAmount').prop('disabled', false);
@@ -67,7 +67,7 @@
             }
             return true
         }
-    </g:javascript>
+    </script>
 </head>
 
 <body>

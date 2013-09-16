@@ -38,14 +38,14 @@
                      [loadOverlay: "${g.createLink(action: "productTypeBrandForm")}?guarantee.id=#id#",saveAction:"${g.createLink(action: "saveProductTypeBrand")}", saveCallback:"productTypeBrandSaved", icon: "application_put",title:"${message(code: "add-productTypeBrand")}"]]}"
              onSelectRow="loadProductTypeBrands"
     />
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         var curSelectedGuarantee=${guarantee?:0}
         var loadProductTypeBrands = function (rowId) {
             curSelectedGuarantee = rowId
             var criteria = "[{'op':'eq', 'field':'guarantee.id', 'val':" + rowId + "}]"
             loadGridWithCriteria("ProductTypeBrandGrid", criteria)
         }
-    </g:javascript>
+    </script>
 
     <div style="margin: 10px;">
         <rg:grid domainClass="${eshop.ProductTypeBrand}" maxColumns="2"
@@ -61,7 +61,7 @@
         </rg:grid>
     </div>
 
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
          function productTypeBrandSaved(productTypeBrand){
             var grid = $("#ProductTypeBrandGrid");
             grid.trigger('reloadGrid');
@@ -129,7 +129,7 @@
                 })
             },{width:400});
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

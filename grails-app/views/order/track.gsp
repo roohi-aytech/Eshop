@@ -11,7 +11,7 @@
 <head>
     <meta name="layout" content="site"/>
     <title><g:message code="order.tracking"/></title>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
     function showPreInvoice() {
 
         $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
@@ -21,7 +21,7 @@
                 });
         $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: order?.id])}', function() {});
     }
-    </g:javascript>
+    </script>
 </head>
 
 <body>

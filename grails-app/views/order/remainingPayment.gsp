@@ -89,7 +89,7 @@
         </g:if>
     </div>
 </div>
-<g:javascript>
+<script language="javascript" type="text/javascript">
 
     $(document).ready(function (e) {
         try {
@@ -97,6 +97,6 @@
         } catch (e) {
         }
     });
-</g:javascript>
+</script>
 </body>
 </html>

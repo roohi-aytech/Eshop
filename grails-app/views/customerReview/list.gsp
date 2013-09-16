@@ -31,7 +31,7 @@
         <rg:saveButton domainClass="${CustomerReview}"/>
         <rg:cancelButton/>
     </rg:dialog>
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function showCustomerReview(id){
              window.location.href="${createLink(action: 'show')}/" + id;
         }
@@ -52,7 +52,7 @@
                 });
             }
         }
-    </g:javascript>
+    </script>
 </div>
 </body>
 </html>

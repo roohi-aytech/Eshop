@@ -21,7 +21,7 @@
     </rg:dialog>
     <input id="vgc-button" style="display: none;" type="button" value="${message(code: "new-variation-group")}"
            ng-click="openVariationGroupCreateDialog()">
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function variationGroupSaved(){
             $.ajax({
                 url:'<g:createLink action="variationGroups" controller="variationGroup"
@@ -33,9 +33,9 @@
                 })
             })
         }
-    </g:javascript>
+    </script>
 </div>
-<g:javascript>
+<script language="javascript" type="text/javascript">
 function deleteVariation(id){
      if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
         var url = "<g:createLink action="deleteVariation" controller="variationGroup"/>";
@@ -69,7 +69,7 @@ function addToVariationGrid(){
     } );
 });
 </g:if>
-</g:javascript>
+</script>
 
 <fieldset class="buttons">
 

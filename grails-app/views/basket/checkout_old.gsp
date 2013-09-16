@@ -27,7 +27,7 @@
     <![endif]-->
 
 
-    <g:javascript>
+    <script language="javascript" type="text/javascript">
         function updateBasketItemCount(id, count) {
             var scope = angular.element(document.getElementById('main-container')).scope();
 
@@ -70,7 +70,7 @@
            updateCityList('province1', 'city1');
            updateCityList('province2', 'city2');
         });
-    </g:javascript>
+    </script>
 
 </head>
 
