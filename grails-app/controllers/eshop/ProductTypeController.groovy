@@ -288,10 +288,24 @@ class ProductTypeController {
             attributeTypeInstance.deleted = true
             attributeTypeInstance.save(flush: true)
             def ptid = attributeTypeInstance.productType.id
-            Thread.start {
-                ProductType.get(ptid).products.each {
-                    it.isSynchronized = false
-                    it.save()
+
+
+            def productType = ProductType.get(ptid)
+            if (productType) {
+                def productTypeIds = getChildProductTypes(ProductType.get(ptid)).collect { it.id }
+                Product.createCriteria().list {
+                    or {
+                        isNull('deleted')
+                        eq('deleted', false)
+                    }
+                    productTypes {
+                        'in'('id', productTypeIds)
+                    }
+                }.each {
+                    if (it instanceof Product) try {
+                        it.isSynchronized = false
+                        it.save()
+                    } catch (x) {}
                 }
             }
 
@@ -346,16 +360,33 @@ class ProductTypeController {
 
         }
 
-        if (productType)
-            Thread.start {
-                productType?.products?.each {
-                    if (it instanceof Product) try {
-                        it.isSynchronized = false
-                        it.save()
-                    } catch (x) {}
+        if (productType) {
+            def productTypeIds = getChildProductTypes(productType).collect { it.id }
+            Product.createCriteria().list {
+                or {
+                    isNull('deleted')
+                    eq('deleted', false)
                 }
+                productTypes {
+                    'in'('id', productTypeIds)
+                }
+            }.each {
+                if (it instanceof Product) try {
+                    it.isSynchronized = false
+                    it.save()
+                } catch (x) {}
             }
+        }
+
         render 0;
+    }
+
+    def getChildProductTypes(ProductType productType) {
+        def list = [productType]
+        ProductType.findAllByParentProduct(productType).each {
+            list.addAll(getChildProductTypes(it))
+        }
+        list
     }
 
     def getImage() {
@@ -604,13 +635,25 @@ class ProductTypeController {
         }
         productType.save()
 
-        //products need to be resynched
-        Thread.start {
-            ProductType.get(params.id).products.each {
-                it.isSynchronized = false
-                it.save()
+        //products need to be resynchized
+        if (productType) {
+            def productTypeIds = getChildProductTypes(productType).collect { it.id }
+            Product.createCriteria().list {
+                or {
+                    isNull('deleted')
+                    eq('deleted', false)
+                }
+                productTypes {
+                    'in'('id', productTypeIds)
+                }
+            }.each {
+                if (it instanceof Product) try {
+                    it.isSynchronized = false
+                    it.save()
+                } catch (x) {}
             }
         }
+
 
         render(view: "details", model: [productTypeInstance: productType, baseProductInstance: productType])
     }
@@ -756,4 +799,5 @@ class ProductTypeController {
         giftInformation.save()
         redirect(action: "details", id: giftInformation.productType?.id)
     }
+
 }

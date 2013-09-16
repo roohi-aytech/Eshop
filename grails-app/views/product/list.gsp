@@ -142,7 +142,9 @@
     var curProductTypeGridNodeReload =
     ${curptidx - 1}
 </script>
-
+<div style="clear: both;background: #ffffff;border:1px solid #eeeeee;border-radius: 4px;padding: 5px;">
+    <g:message code="product.unSynchronized.count"/>: <b><g:formatNumber number="${unSynchronizedProductsCount}" type="number"/></b> <g:message code="product"/>
+</div>
 <div id="list-product" class="content scaffold-list" role="main">
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>

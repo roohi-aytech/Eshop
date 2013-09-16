@@ -3487,5 +3487,9 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     margin-bottom: 10px;
 }
 
+.product-variations{
+    margin-top:15px;
+}
+
 
 

@@ -368,7 +368,7 @@ class SiteController {
         if (!product.visitCount)
             product.visitCount = 0;
         product.visitCount++;
-        product.isSynchronized = false
+//        product.isSynchronized = false
         product.save()
 
         //fill zoomable property of images

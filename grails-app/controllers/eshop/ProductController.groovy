@@ -23,7 +23,22 @@ class ProductController {
     }
 
     def list() {
-        [ptid: params.ptid ?: 0]
+        [
+                ptid: params.ptid ?: 0,
+                unSynchronizedProductsCount:
+                        Product.createCriteria().count {
+                            or {
+                                eq('isSynchronized', false)
+                                isNull('isSynchronized')
+                            }
+                            or {
+                                eq('deleted', false)
+                                isNull('deleted')
+                            }
+                            projections {
+                                property('id', 'id')
+                            }
+                        }]
     }
 
     def create() {
@@ -652,11 +667,10 @@ class ProductController {
     def synchMongo() {
 //        Thread.start {
 
-        Product.findAllByDeletedOrDeletedIsNull(false).each{
+        Product.findAllByDeletedOrDeletedIsNull(false).each {
             it.isSynchronized = false
             it.save()
         }
-
 
 //        if (!params.start)
 //            MongoProduct.findAll().each { it.delete() }

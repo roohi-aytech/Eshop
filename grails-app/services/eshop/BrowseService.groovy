@@ -83,41 +83,62 @@ class BrowseService {
             pageCountByStatus['not-exists'] = pagesCount(customizedMatch, params.pageSize)
 
             def splitPoints = [
-                    0,
+                    1,
                     Math.floor(pageCountByStatus['exists']),
+                    Math.ceil(pageCountByStatus['exists']),
                     Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required']),
+                    Math.ceil(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required']),
                     Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon']),
+                    Math.ceil(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon']),
                     Math.ceil(totalPages)
             ]
 
             def tempPagesCountMap = []
             for (def i = 0; i < totalPages; i++)
-                tempPagesCountMap[i] = i
+                tempPagesCountMap[i] = i + 1
 
             def pagesCountMap = []
-            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[0], splitPoints[1]))
-            if(!pagesCountMap.contains(splitPoints[1]))
+            if (splitPoints[1] > splitPoints[0])
+                pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[0], splitPoints[1]))
+            else if (!pagesCountMap.contains(splitPoints[0]))
+                pagesCountMap.add(splitPoints[0])
+            if (!pagesCountMap.contains(splitPoints[1]))
                 pagesCountMap.add(splitPoints[1])
-            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[1], splitPoints[2]))
-            if(!pagesCountMap.contains(splitPoints[2]))
+
+            if (splitPoints[3] > splitPoints[2])
+                pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[2], splitPoints[3]))
+            else if (!pagesCountMap.contains(splitPoints[0]))
                 pagesCountMap.add(splitPoints[2])
-            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[2], splitPoints[3]))
-            if(!pagesCountMap.contains(splitPoints[3]))
+            if (!pagesCountMap.contains(splitPoints[3]))
                 pagesCountMap.add(splitPoints[3])
-            pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[3], splitPoints[4]))
-            if(!pagesCountMap.contains(splitPoints[4]))
+
+            if (splitPoints[5] > splitPoints[4])
+                pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[4], splitPoints[5]))
+            else if (!pagesCountMap.contains(splitPoints[0]))
                 pagesCountMap.add(splitPoints[4])
+            if (!pagesCountMap.contains(splitPoints[5]))
+                pagesCountMap.add(splitPoints[5])
+
+            if (splitPoints[7] > splitPoints[6])
+                pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[6], splitPoints[7]))
+            else if (!pagesCountMap.contains(splitPoints[0]))
+                pagesCountMap.add(splitPoints[6])
+            if (!pagesCountMap.contains(splitPoints[7]))
+                pagesCountMap.add(splitPoints[7])
+
+//            for (def i = 0; i < pagesCountMap.count { it }; i++)
+//                pagesCountMap[i]--
 
             RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey] = pagesCountMap
         }
 
 //        def randomizedStart = params.start
         def pagesCountMap = RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey]
-        def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()]
+        def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()] - 1
         randomizedStart = randomizedStart || randomizedStart == 0 ? randomizedStart * params.pageSize : 9999999
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: [status: 1, sortOrder: 1, saleCount: -1, visitCount: -1]],
+                [$sort: [status: 1, sortOrder: 1]],
                 [$skip: randomizedStart],
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
@@ -152,7 +173,6 @@ class BrowseService {
         def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
-
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findFilteredPageFilters(f, page, cacheKey) {

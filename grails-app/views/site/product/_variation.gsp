@@ -1,34 +1,37 @@
 <%@ page import="eshop.ProductModel" %>
 <script language="javascript" type="text/javascript">
-    $(".variation-value-color").hover(function () {
-        var vth = $(this).parents(".product-variation")
-        vth.find(".hover-variation")
-                .show()
-                .text($(this).text())
-        vth.find(".cur-variation").hide()
+    $(document).ready(function () {
+        $(".variation-value-color").hover(function () {
+            var vth = $(this).parents(".product-variation")
+            vth.find(".hover-variation")
+                    .show()
+                    .text($(this).text())
+            vth.find(".cur-variation").hide()
 
-    }, function () {
-        var vth = $(this).parents(".product-variation")
-        vth.find(".cur-variation").show()
-        vth.find(".hover-variation").hide()
-    });
+        }, function () {
+            var vth = $(this).parents(".product-variation")
+            vth.find(".cur-variation").show()
+            vth.find(".hover-variation").hide()
+        });
 
-    $(".variation-value-color").click(function () {
-        $(this).parent().find('.variation-value-color').removeClass('selected');
-        $(this).addClass('selected');
-        var variationId = parseInt($(this).parent().attr('variationId'));
-        var variationValueId = parseInt($(this).attr('variationValueId'));
-        $('#cur-variation-' + variationId).html($(this).html());
-        $('#variation' + variationId).val($(this).attr('variationValueId'));
+        $(".variation-value-color").click(function () {
+            $(this).parent().find('.variation-value-color').removeClass('selected');
+            $(this).addClass('selected');
+            var variationId = parseInt($(this).parent().attr('variationId'));
+            var variationValueId = parseInt($(this).attr('variationValueId'));
+            $('#cur-variation-' + variationId).html($(this).html());
+            $('#variation' + variationId).val($(this).attr('variationValueId'));
 
-        var $form = $("#productVariationForm");
-        var serializedData = $form.serialize();
+            var $form = $("#productVariationForm");
+            var serializedData = $form.serialize();
 
-        $('#product-card').html('${message(code: 'waiting')}');
-        angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
-        angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
+            $('#product-card').html('${message(code: 'waiting')}');
+            angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
+            angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
+        });
     });
 </script>
+
 <div class="product-variations">
     <g:set var="defaultModel" value="${ProductModel.findByProductAndIsDefaultModel(product, true)}"/>
     <g:if test="${defaultModel}">

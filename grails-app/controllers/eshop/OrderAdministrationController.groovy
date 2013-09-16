@@ -435,7 +435,7 @@ class OrderAdministrationController {
         OrderItem.findAllByOrderAndDeleted(order, false).each {
             def product = Product.get it.productModel.product.id
             product.saleCount = product.saleCount ? product.saleCount + 1 : 0
-            product.isSynchronized = false
+//            product.isSynchronized = false
             product.save()
         }
 
