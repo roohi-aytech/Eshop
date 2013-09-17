@@ -10,6 +10,7 @@ class CustomerController {
 
     def springSecurityService
     def mailService
+    def messageService
 
     def index() {}
 
@@ -97,12 +98,20 @@ class CustomerController {
             def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
             UserRole.create customerInstance, customerRole
 
+
             mailService.sendMail {
                 to customerInstance.email
-                subject message(code: 'activationMail.subject')
-                html(view: "/messageTemplates/mail/emailVerification",
-                        model: [customer: customerInstance])
+                subject message(code: 'emailTemplates.email_verification.subject')
+                html(view: "/messageTemplates/email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance]).toString()])
             }
+
+            if (customerInstance.mobile)
+                messageService.sendMessage(
+                        customerInstance.mobile,
+                        g.render(template: '/messageTemplates/sms/email_verification', model: [customer: customerInstance]).toString())
+
+
             redirect(action: 'checkForActivationMail')
         } else {
             render(view: 'register', model: ['customerInstance': customerInstance])
@@ -118,6 +127,21 @@ class CustomerController {
             def customer = Customer.get(params.id)
             customer.enabled = true
             customer.save()
+
+
+            mailService.sendMail {
+                to customer.email
+                subject message(code: 'emailTemplates.activation_result.subject')
+                html(view: "/messageTemplates/email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/activation_result', model: [customer: customer]).toString()])
+            }
+
+            if (customer.mobile)
+                messageService.sendMessage(
+                        customer.mobile,
+                        g.render(template: '/messageTemplates/sms/activation_result', model: [customer: customer]).toString())
+
+
             flash.message = message(code: 'springSecurity.accountEnabled')
             redirect(controller: 'login', action: 'auth')
             return
@@ -229,7 +253,7 @@ class CustomerController {
         customer.save()
 
         flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'profile', params:[tab:'favorites'])
+        redirect(action: 'profile', params: [tab: 'favorites'])
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])
@@ -244,7 +268,7 @@ class CustomerController {
         customer.save()
 
         flash.message = message(code: "controlPanel.settings.profile.changes.successMessage")
-        redirect(action: 'profile', params: [tab:'newsLetters'])
+        redirect(action: 'profile', params: [tab: 'newsLetters'])
     }
 
     def forgetPassword() {
@@ -256,12 +280,20 @@ class CustomerController {
         def user = User.findByUsername params.username
 
         if (user) {
+
             mailService.sendMail {
                 to user.email
-                subject message(code: 'passwordResetMail.subject')
-                html(view: "/messageTemplates/mail/passwordReset",
-                        model: [user: user])
+                subject message(code: 'emailTemplates.password_rest.subject')
+                html(view: "/messageTemplates/email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/password_rest', model: [user: user]).toString()])
             }
+
+            if (user instanceof Customer && ((Customer)user).mobile)
+                messageService.sendMessage(
+                        customer.mobile,
+                        g.render(template: '/messageTemplates/sms/password_reset', model: [user: user]).toString())
+
+
             flash.message = g.message(code: 'forgetPassword.succeed')
         } else {
             flash.message = g.message(code: 'forgetPassword.wrongUsername')
@@ -330,7 +362,7 @@ class CustomerController {
         customer.registrationLevel = 'full'
         customer.save()
 
-        redirect(action: 'profile', params: [tab:'personalEvents'])
+        redirect(action: 'profile', params: [tab: 'personalEvents'])
     }
 
     @Secured([RoleHelper.ROLE_CUSTOMER])

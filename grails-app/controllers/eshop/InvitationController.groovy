@@ -8,6 +8,8 @@ class InvitationController {
 
     def springSecurityService
 
+    def mailService
+
     def index = {}
 
     def invite() {
@@ -75,11 +77,15 @@ class InvitationController {
                                     inviter: invitation.sender,
                                     message: params.message.toString().replace('\n', '<br/>'),
                                     identifier: invitation.identifier])
-                    sendMail {
+
+
+                    mailService.sendMail {
                         to address
                         subject params.subject
-                        html messageBody
+                        html(view: "/messageTemplates/email_template",
+                                model: [message: messageBody])
                     }
+
                 } else {
                     def messageBody = g.render(
                             template: 'templates/message',

@@ -704,6 +704,20 @@ class SiteController {
                     ])
         }
 
+
+        mailService.sendMail {
+            to params.email
+            subject message(code: 'emailTemplates.contact_us.subject')
+            html(view: "/messageTemplates/email_template",
+                    model: [message: g.render(template: '/messageTemplates/mail/contact_us', model: [parameters: params]).toString()])
+        }
+
+        if (params.phone)
+            messageService.sendMessage(
+                    params.phone,
+                    g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
+
+
         flash.message = message(code: 'contactUs.email.successMessage')
         redirect(uri: '/contactUs')
     }
