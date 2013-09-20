@@ -129,19 +129,28 @@ class BrowseService {
 //            for (def i = 0; i < pagesCountMap.count { it }; i++)
 //                pagesCountMap[i]--
 
-            RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey] = pagesCountMap
+            if (pagesCountMap.indexOf(0) != -1)
+                pagesCountMap.remove(pagesCountMap.indexOf(0))
+
+            if (pagesCountMap.indexOf(0D) != -1)
+                pagesCountMap.remove(pagesCountMap.indexOf(0D))
+
+            RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey] = pagesCountMap.unique()
         }
 
 //        def randomizedStart = params.start
         def pagesCountMap = RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey]
-        def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()] - 1
-        randomizedStart = randomizedStart || randomizedStart == 0 ? randomizedStart * params.pageSize : 9999999
-        def productIds = products.aggregate(
-                [$match: params.match],
-                [$sort: [status: 1, sortOrder: 1]],
-                [$skip: randomizedStart],
-                [$limit: params.pageSize]
-        ).results().collect { it.baseProductId }
+        def productIds = []
+        if (pagesCountMap[(params.start / params.pageSize)?.toInteger()] != null) {
+            def randomizedStart = pagesCountMap[(params.start / params.pageSize)?.toInteger()] - 1
+            randomizedStart = randomizedStart || randomizedStart == 0 ? randomizedStart * params.pageSize : 9999999
+            productIds = products.aggregate(
+                    [$match: params.match],
+                    [$sort: [status: 1, sortOrder: 1]],
+                    [$skip: randomizedStart],
+                    [$limit: params.pageSize]
+            ).results().collect { it.baseProductId }
+        }
 
         [totalPages: totalPages, productIds: productIds]
     }

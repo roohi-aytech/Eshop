@@ -30,19 +30,23 @@
                 <tr class="table-row">
                     <td class="table-cell" style="padding-left:5px;">
                         <ul class="breadcrumb">
-                            <li>
-                                <a href="${createLink(uri: '/')}"><g:message code="home"/></a>
+                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="${createLink(uri: '/')}" itemprop="url"><span itemprop="title"><g:message code="home"/></span></a>
                                 <span class="divider">${">"}</span>
                             </li>
                             <g:if test="${breadCrumb.size() > 1}">
                                 <g:each in="${breadCrumb[0..-1]}">
-                                    <li>
-                                        <a href="${it.href}">${it.name}</a>
+                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                        <a href="${it.href}" itemprop="url"><span itemprop="title">${it.name}</span></a>
                                         <span class="divider">${">"}</span>
                                     </li>
                                 </g:each>
                             </g:if>
-                            <li class="active">${article.name}</li>
+                            <li class="active" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="${createLink(controller: 'site', action: 'article', params: [id:article.id])}" itemprop="url">
+                                    <span itemprop="title">${article.title}</span>
+                                </a>
+                            </li>
                         </ul>
                     </td>
                 </tr>

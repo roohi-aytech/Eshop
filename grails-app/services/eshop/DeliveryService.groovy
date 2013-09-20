@@ -74,12 +74,17 @@ class DeliveryService {
 
                         if (deliveryMethod.insurancePercent)
                             result.priceWithInsurance = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
+
                         if (deliveryMethod.addedValuePercent)
                             result.priceWithInsurance = (result.priceWithInsurance * deliveryMethod.addedValuePercent) / 100
                     }
                 }
             }
         }
+
+        //round price
+        result.price = Math.floor(result.price / 10000) * 10000
+        result.priceWithInsurance = Math.floor(result.priceWithInsurance / 10000) * 10000
 
         result
     }

@@ -15,7 +15,6 @@ class WindowsliveInvitationService {
     static def tokenStore = [:]
 
     def getAuthDetails(callbackUrl) {
-
         if (!authService)
         {
             authService = [:]

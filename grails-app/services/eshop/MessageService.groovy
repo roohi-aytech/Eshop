@@ -1,12 +1,10 @@
 package eshop
 
-import ir.agah.zanbil.sms.sms1000.SmsLocator
+import eshop.sms.sms1000.SmsLocator
 import org.codehaus.groovy.grails.commons.ApplicationHolder
 import org.grails.plugins.wsclient.service.WebService
 
 class MessageService {
-
-    WebService webService
 
     static String userName = "parmir"
     static String userPassword = "p@rmir"

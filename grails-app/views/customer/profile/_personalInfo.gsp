@@ -81,7 +81,7 @@
             <label for='birthDate'><g:message
                     code="springSecurity.register.birthDate.label"/>:</label> *
             <span id="birthDateValidationMessage"></span>
-            <rg:datePicker name="birthDate" value="${customerInstance.birthDate}"></rg:datePicker>
+            <rg:datePicker name="birthDate" yearRange="1320:1390" value="${customerInstance.birthDate}"></rg:datePicker>
             <script type="text/javascript" language="javascript">
                 $('#birthDate_control').blur(function(){
                     validateBirthDate();

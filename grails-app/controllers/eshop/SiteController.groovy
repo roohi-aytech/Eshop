@@ -87,6 +87,11 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0, "${model.productType ? model.productType.id : ''} ${params.page ?: 0}")
 
+        if (model.filters.products.productIds.size() == 0) {
+            redirect(uri: "/notFound")
+            return
+        }
+
         if (productType) {
             model.slides = Slide.createCriteria().list {
                 productTypes {
@@ -112,6 +117,12 @@ class SiteController {
     def filter() {
         def model = [:]
         model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0, "${params.f} ${params.page ?: 0}")
+
+        if (model.filters.products.productIds.size() == 0) {
+            redirect(uri: "/notFound")
+            return
+        }
+
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()

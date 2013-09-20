@@ -52,8 +52,8 @@ class Order {
         status(nullable: false, inList: OrderHelper.STATUS_LIST)
         ownerName()
         ownerEmail()
-        ownerMobile()
-        ownerTelephone()
+        ownerMobile(nullable: true)
+        ownerTelephone(nullable: true)
         ownerCode(nullable: true)
         paymentTimeout nullable: true
         lastActionDate()

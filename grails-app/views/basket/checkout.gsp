@@ -8,44 +8,48 @@
     <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.ui.accordion.js')}"></script>
     <script language="javascript" type="text/javascript">
         var addressRequest;
-        function loadAddress(){
-            $('#addressLoadingPane').stop().fadeOut(200, function(){
-                $('#addressLoadingBar').stop().fadeIn(200, function(){
-                    if(addressRequest)
+        function loadAddress() {
+            $('#addressLoadingPane').stop().fadeOut(200, function () {
+                $('#addressLoadingBar').stop().fadeIn(200, function () {
+                    if (addressRequest)
                         addressRequest.abort();
                     addressRequest = $.ajax({
-                        url:'${createLink(action: 'checkoutAddress')}',
-                        type:'post',
-                        data:$('#addressSelectionForm').serialize()
-                    }).success(function(response){
-                        $('#addressLoadingBar').stop().fadeOut(200, function(){
-                            $('#addressLoadingPane').html(response);
-                            $('#addressLoadingPane').stop().fadeIn(500);
-                        });
-                    });
+                        url: '${createLink(action: 'checkoutAddress')}',
+                        type: 'post',
+                        data: $('#addressSelectionForm').serialize()
+                    }).success(function (response) {
+                                $('#addressLoadingBar').stop().fadeOut(200, function () {
+                                    $('#addressLoadingPane').html(response);
+                                    $('#addressLoadingPane').stop().fadeIn(500);
+                                });
+                            });
                 });
             });
         }
 
-        $(function() {
-            $( ".accordion" ).accordion({
+        $(function () {
+            $("#inquiry-accordion").accordion({
                 heightStyle: "content",
                 active: ${currentStep - 1}
-        });
-        $( ".accordion" ).on( "accordionbeforeactivate", function( event, ui ) {
-            if(ui.newHeader.hasClass('disabled')){
-                event.preventDefault();
-                $.msgGrowl({
-                    type: 'warning',
-                    sticky: false,
-                    title:'',
-                    text: '<span style="margin-top:10px;margin-bottom:10px;display:inline-block;">${message(code: 'enquiry.request.completePreviousSteps.description')}</span>',
-                    lifetime: 5000
-                });
-            }
+            });
+            $(".shopping-basket").accordion({
+                heightStyle: "content",
+                active: 0
+            });
+            $("#inquiry-accordion").on("accordionbeforeactivate", function (event, ui) {
+                if (ui.newHeader.hasClass('disabled')) {
+                    event.preventDefault();
+                    $.msgGrowl({
+                        type: 'warning',
+                        sticky: false,
+                        title: '',
+                        text: '<span style="margin-top:10px;margin-bottom:10px;display:inline-block;">${message(code: 'enquiry.request.completePreviousSteps.description')}</span>',
+                        lifetime: 5000
+                    });
+                }
 
+            });
         });
-    });
     </script>
 </head>
 

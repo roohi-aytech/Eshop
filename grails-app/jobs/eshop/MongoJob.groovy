@@ -1,12 +1,14 @@
 package eshop
 
+import java.lang.management.GarbageCollectorMXBean
+
 class MongoJob {
 
     def mongoService
     def grailsApplication
 
     def startDelay = 60000
-    def timeout = 10000
+    def timeout = 2000
 
     def execute() {
         def product = Product.createCriteria().list(max: 1) {
