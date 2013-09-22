@@ -37,6 +37,14 @@ class PriceService {
 
         def priceVal = price?.rialPrice
 
+        if (priceVal)
+            AddedValue.findAllByBaseProductAndProcessTime(productModel.product, 'mandetory').each { addedValue ->
+                if (addedValue.type == "percent")
+                    priceVal += price?.rialPrice * addedValue.value / 100
+                else if (addedValue.type == "fixed")
+                    priceVal += addedValue.value
+            }
+
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
@@ -47,7 +55,7 @@ class PriceService {
             return result
 
         def addedVal = 0
-        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.each { addedValue ->
+        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.findAll { it.processTime == 'optional' }.each { addedValue ->
             if (addedValue.type == "percent")
                 addedVal += result.showVal * addedValue.value / 100
             else if (addedValue.type == "fixed")
@@ -125,7 +133,7 @@ class PriceService {
         }
 
         order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, { it.totalPrice }) as Integer) + order.deliveryPrice) / 1000) * 1000
-        if(!order.usedAccountValue)
+        if (!order.usedAccountValue)
             order.usedAccountValue = 0
         order.totalPayablePrice = order.totalPrice - order.usedAccountValue
         order.save()

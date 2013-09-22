@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:Foo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ReferencePayment" targetNamespace="urn:Foo">
+  <types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:Foo">
+      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <complexType name="ReverseResult">
+        <sequence>
+          <element name="refNum" type="string"/>
+          <element name="resultCode" type="int"/>
+          <element name="resultDesc" type="string"/></sequence></complexType>
+      <complexType name="FilterBean">
+        <sequence>
+          <element name="docState" type="short"/>
+          <element name="docType" type="short"/>
+          <element name="maxAmount" type="double"/>
+          <element name="maxTransDate" type="string"/>
+          <element name="minAmount" type="double"/>
+          <element name="minTransDate" type="string"/>
+          <element name="refNum" type="string"/>
+          <element name="resNum" type="string"/></sequence></complexType>
+      <complexType name="TransResult">
+        <sequence>
+          <element name="resultCode" type="int"/>
+          <element name="resultDesc" type="string"/>
+          <element name="transBean" type="tns:ArrayOfTransBean"/></sequence></complexType>
+      <complexType name="ArrayOfTransBean">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:TransBean[]"/></restriction></complexContent></complexType>
+      <complexType name="TransBean">
+        <sequence>
+          <element name="amount" type="double"/>
+          <element name="docType" type="short"/>
+          <element name="docstate" type="short"/>
+          <element name="localTransDate" type="string"/>
+          <element name="mtId" type="string"/>
+          <element name="refNum" type="string"/>
+          <element name="resNum" type="string"/>
+          <element name="transDate" type="string"/></sequence></complexType></schema></types>
+  <message name="PaymentIF_reverseTransResult">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/>
+    <part name="String_3" type="xsd:string"/>
+    <part name="double_4" type="xsd:double"/></message>
+  <message name="PaymentIF_reverseTransResultResponse">
+    <part name="result" type="tns:ReverseResult"/></message>
+  <message name="PaymentIF_reverseTransaction">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/>
+    <part name="String_3" type="xsd:string"/>
+    <part name="double_4" type="xsd:double"/></message>
+  <message name="PaymentIF_reverseTransactionResponse">
+    <part name="result" type="xsd:int"/></message>
+  <message name="PaymentIF_verifyTransaction">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/></message>
+  <message name="PaymentIF_verifyTransactionResponse">
+    <part name="result" type="xsd:double"/></message>
+  <message name="PaymentIF_verifyTransaction2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/>
+    <part name="String_3" type="xsd:string"/>
+    <part name="String_4" type="xsd:string"/></message>
+  <message name="PaymentIF_verifyTransaction2Response">
+    <part name="result" type="xsd:string"/></message>
+  <message name="PaymentIF_verifyTransaction3">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/>
+    <part name="String_3" type="xsd:string"/>
+    <part name="String_4" type="xsd:string"/>
+    <part name="String_5" type="xsd:string"/>
+    <part name="String_6" type="xsd:string"/></message>
+  <message name="PaymentIF_verifyTransaction3Response">
+    <part name="result" type="xsd:string"/></message>
+  <message name="PaymentIF_verifyTransaction4">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/>
+    <part name="String_3" type="xsd:string"/>
+    <part name="String_4" type="xsd:string"/>
+    <part name="String_5" type="xsd:string"/>
+    <part name="String_6" type="xsd:string"/>
+    <part name="String_7" type="xsd:string"/>
+    <part name="String_8" type="xsd:string"/></message>
+  <message name="PaymentIF_verifyTransaction4Response">
+    <part name="result" type="xsd:string"/></message>
+  <message name="PaymentIF_viewTransaction">
+    <part name="String_1" type="xsd:string"/>
+    <part name="String_2" type="xsd:string"/>
+    <part name="FilterBean_3" type="tns:FilterBean"/></message>
+  <message name="PaymentIF_viewTransactionResponse">
+    <part name="result" type="tns:TransResult"/></message>
+  <portType name="PaymentIF">
+    <operation name="reverseTransResult" parameterOrder="String_1 String_2 String_3 double_4">
+      <input message="tns:PaymentIF_reverseTransResult"/>
+      <output message="tns:PaymentIF_reverseTransResultResponse"/></operation>
+    <operation name="reverseTransaction" parameterOrder="String_1 String_2 String_3 double_4">
+      <input message="tns:PaymentIF_reverseTransaction"/>
+      <output message="tns:PaymentIF_reverseTransactionResponse"/></operation>
+    <operation name="verifyTransaction" parameterOrder="String_1 String_2">
+      <input message="tns:PaymentIF_verifyTransaction"/>
+      <output message="tns:PaymentIF_verifyTransactionResponse"/></operation>
+    <operation name="verifyTransaction2" parameterOrder="String_1 String_2 String_3 String_4">
+      <input message="tns:PaymentIF_verifyTransaction2"/>
+      <output message="tns:PaymentIF_verifyTransaction2Response"/></operation>
+    <operation name="verifyTransaction3" parameterOrder="String_1 String_2 String_3 String_4 String_5 String_6">
+      <input message="tns:PaymentIF_verifyTransaction3"/>
+      <output message="tns:PaymentIF_verifyTransaction3Response"/></operation>
+    <operation name="verifyTransaction4" parameterOrder="String_1 String_2 String_3 String_4 String_5 String_6 String_7 String_8">
+      <input message="tns:PaymentIF_verifyTransaction4"/>
+      <output message="tns:PaymentIF_verifyTransaction4Response"/></operation>
+    <operation name="viewTransaction" parameterOrder="String_1 String_2 FilterBean_3">
+      <input message="tns:PaymentIF_viewTransaction"/>
+      <output message="tns:PaymentIF_viewTransactionResponse"/></operation></portType>
+  <binding name="PaymentIFBinding" type="tns:PaymentIF">
+    <operation name="reverseTransResult">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <operation name="reverseTransaction">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <operation name="verifyTransaction">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <operation name="verifyTransaction2">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <operation name="verifyTransaction3">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <operation name="verifyTransaction4">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <operation name="viewTransaction">
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="urn:Foo"/></output>
+      <soap:operation soapAction=""/></operation>
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/></binding>
+  <service name="ReferencePayment">
+    <port name="PaymentIFPort" binding="tns:PaymentIFBinding">
+      <soap:address xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" location="https://acquirer.sb24.com:443/ref-payment/ws/ReferencePayment"/></port></service></definitions>

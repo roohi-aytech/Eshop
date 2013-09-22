@@ -28,6 +28,7 @@ class OrderController {
     def springSecurityService
     def priceService
     def mellatService
+    def samanService
     def accountingService
     def jmsService
     def deliveryService
@@ -222,6 +223,10 @@ class OrderController {
     def registeredPayment() {
         def order = Order.get(params.id)
         def customer = springSecurityService.currentUser as Customer
+        if(customer?.id != order.customer?.id){
+            redirect(uri: '/notFound')
+            return
+        }
         render view: 'payment', model: [
                 order: order,
                 orderPrice: order.totalPrice,
@@ -292,17 +297,18 @@ class OrderController {
             def order = Order.get(params.order.id)
             def account = Account.get(params.accountId)
             def model = [bankName: account.bankName]
+
+            def onlinePayment = new OnlinePayment()
+            onlinePayment.account = account
+            onlinePayment.amount = params["value"].toInteger()
+            onlinePayment.customer = order.customer
+            onlinePayment.date = new Date()
+            onlinePayment.order = order
+            onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
+            onlinePayment.save()
+
             switch (account.bankName) {
                 case 'mellat':
-
-                    def onlinePayment = new OnlinePayment()
-                    onlinePayment.account = account
-                    onlinePayment.amount = params["value"].toInteger()
-                    onlinePayment.customer = order.customer
-                    onlinePayment.date = new Date()
-                    onlinePayment.order = order
-                    onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
-                    onlinePayment.save()
 
                     def result = mellatService.prepareForPayment(account, onlinePayment.id, params.value, order.customerId)
                     if (result[0] == "0")
@@ -317,6 +323,11 @@ class OrderController {
 
                     break
                 case 'saman':
+
+                    model.amount = onlinePayment.amount
+                    model.reservationNumber = onlinePayment.id
+                    def onlinePaymentConfiguration = new XmlParser().parseText(onlinePayment.account.onlinePaymentConfiguration)
+                    model.merchantId = onlinePaymentConfiguration.userName.text()
                     break
             }
 
@@ -350,6 +361,30 @@ class OrderController {
                 }
             }
         }
+
+        render view: 'onlinePaymentResult', model: model
+    }
+
+    def onlinePaymentResultSaman() {
+
+        def model = [:]
+        def reservationNumber = params.ResNum.toLong();
+        def status = params.State.toString();
+        def referenceNumber = params.RefNum;
+
+        def onlinePayment = OnlinePayment.get(reservationNumber)
+        model.onlinePayment = onlinePayment
+
+        double state = -100;
+        if (status.equals("OK")) {
+            state = samanService.verifyPayment(referenceNumber, onlinePayment.account)
+        }
+        model.verificationResult = state
+        onlinePayment.resultCode = state.toString()
+        onlinePayment.save()
+
+        if(state.toInteger() == onlinePayment.amount)
+            payOrder(onlinePayment, model)
 
         render view: 'onlinePaymentResult', model: model
     }
@@ -527,12 +562,27 @@ class OrderController {
     }
 
     def completion() {
-        [order: Order.get(params.id)]
+        def order = Order.get(params.id)
+        if(order.customer){
+            def customer = springSecurityService.currentUser as Customer
+            if(customer?.id != order.customer?.id){
+                redirect(uri: '/notFound')
+                return
+            }
+        }
+        [order: order]
     }
 
     //<editor-fold desc="invoice">
     def invoice() {
         def order = Order.get(params.id)
+        if(order.customer){
+            def customer = springSecurityService.currentUser as Customer
+            if(customer?.id != order.customer?.id){
+                redirect(uri: '/notFound')
+                return
+            }
+        }
         def title = message(code: 'order.preInvoice.title')
         switch (order.status) {
             case OrderHelper.STATUS_PAID:
@@ -550,6 +600,13 @@ class OrderController {
 
     def pdf() {
         def order = Order.get(params.id)
+        if(order.customer){
+            def customer = springSecurityService.currentUser as Customer
+            if(customer?.id != order.customer?.id){
+                redirect(uri: '/notFound')
+                return
+            }
+        }
         response.setHeader("Content-Disposition", "attachment; filename=\"Zanbil-Invoice.pdf\"");
         pdfService.generateInvoice(order, response.outputStream, true)
     }

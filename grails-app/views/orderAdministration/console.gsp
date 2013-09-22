@@ -32,7 +32,9 @@
         function loadOrderList(type){
         var url = '${createLink(action: 'list')}/' + type;
              requestUrl(url);
-            $(".menuItem a").css('background', '#f8f8f8');
+            $(".menuItem a").each(function(){
+                $(this).css('background', $(this).attr('data-color'));
+            });
             $(".menuItem a").css('color', '#48802C');
             $("#menuItem" + type + " a").css('background', '#48802C');
             $("#menuItem" + type + " a").css('color', '#ffffff');
@@ -86,7 +88,9 @@
         $(document).ready(function () {
         <g:if test="${params.id}">
             <g:set var="selectedOrder" value="${Order.get(params.id)}"/>
-            $(".menuItem a").css('background', '#f8f8f8');
+            $(".menuItem a").each(function(){
+                $(this).css('background', $(this).attr('data-color'));
+            });
             $(".menuItem a").css('color', '#48802C');
             $("#menuItem${selectedOrder.status} a").css('background', '#48802C');
             $("#menuItem${selectedOrder.status} a").css('color', '#ffffff');
@@ -107,13 +111,13 @@
         <td style="width:160px;border-width:0;">
             <ul style="border:1px solid #dddddd;border-radius: 4px;background: white;">
                 <g:each in="${eshop.OrderHelper.STATUS_LIST}">
-                    <li style="text-align: right;margin:5px;" class="menuItem" id="menuItem${it}">
-                        <a style="padding:3px;text-align: right;display: block;background: #f8f8f8;border-radius: 4px;"
+                    <li style="text-align: right;margin:5px;list-style: none;" class="menuItem" id="menuItem${it}">
+                        <a data-color="${message(code:"order.status.${it}.color", default: '#f8f8f8')}" style="padding:3px;text-align: right;display: block;background: ${message(code:"order.status.${it}.color", default: '#f8f8f8')};border-radius: 4px;"
                            onclick="loadOrderList('${it}')"><g:message code="order.status.${it}"/></a>
                     </li>
                 </g:each>
-                <li style="text-align: right;margin:5px;" class="menuItem" id="menuItemAll">
-                    <a style="padding:3px;text-align: right;display: block;background: #f8f8f8;border-radius: 4px;"
+                <li style="text-align: right;margin:5px;list-style-type: none;" class="menuItem" id="menuItemAll">
+                    <a data-color="${message(code:"order.status.All.color", default: '#f8f8f8')}" style="padding:3px;text-align: right;display: block;background: ${message(code:"order.status.All.color", default: '#f8f8f8')};border-radius: 4px;"
                        onclick="loadOrderList('All')"><g:message code="order.status.All"/></a></li>
             </ul>
         </td>

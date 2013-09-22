@@ -18,6 +18,7 @@
                         <div><b>${it.attributeType}:</b> ${it.value.toString().contains('\n')? '<br/>' + it.value.toString().replace('\n', '<br/>'): it.value}</div>
                     %{--</g:if>--}%
                 </g:each>
+                <div><b><g:message code="guarantee"/>:</b> ${product.guaranteeList.collect{it.toString()}.join('، ')}</div>
             </div>
         </div>
     </a>

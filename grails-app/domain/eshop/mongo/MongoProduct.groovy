@@ -20,7 +20,7 @@ class MongoProduct {
     }
 
     transient def getGuaranteeList() {
-        Product.get(baseProductId)?.models?.collect { it.guarantee }.unique { it.id }
+        Product.get(baseProductId)?.models?.collect { it.guarantee }?.unique { it.id }
     }
 
     transient def getProductTypesName() {

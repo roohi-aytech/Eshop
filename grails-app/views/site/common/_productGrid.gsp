@@ -38,7 +38,7 @@
                 <g:if test="${currentPage < filters.products.totalPages - 2}">
                     <li ${(params.page ?: "0") == it.toString() ? 'class="active"' : ''}>
                         <g:link action="${params.action}"
-                                params="${params + [page: Math.round(filters.products.totalPages)]}"><<</g:link></li>
+                                params="${params + [page: Math.ceil(filters.products.totalPages).toInteger() - 1]}"><<</g:link></li>
                 </g:if>
             </ul>
         </div>

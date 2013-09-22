@@ -84,45 +84,49 @@ class BrowseService {
 
             def splitPoints = [
                     1,
-                    Math.floor(pageCountByStatus['exists']),
-                    Math.ceil(pageCountByStatus['exists']),
-                    Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required']),
-                    Math.ceil(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required']),
-                    Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon']),
-                    Math.ceil(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon']),
-                    Math.ceil(totalPages)
+                    Math.floor(pageCountByStatus['exists']).toInteger(),
+                    Math.ceil(pageCountByStatus['exists']).toInteger(),
+                    (Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'])).toInteger(),
+                    (Math.ceil(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'])).toInteger(),
+                    (Math.floor(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon'])).toInteger(),
+                    (Math.ceil(pageCountByStatus['exists'] + pageCountByStatus['inquiry-required'] + pageCountByStatus['coming-soon'])).toInteger(),
+                    Math.ceil(totalPages).toInteger()
             ]
+
+            for(def i = 1; i < splitPoints.size(); i++)
+                if(splitPoints[i] < splitPoints[i - 1])
+                    splitPoints[i] = splitPoints[i - 1]
 
             def tempPagesCountMap = []
             for (def i = 0; i < totalPages; i++)
                 tempPagesCountMap[i] = i + 1
 
             def pagesCountMap = []
+            if (!pagesCountMap.contains(splitPoints[0]))
+                pagesCountMap.add(splitPoints[0])
             if (splitPoints[1] > splitPoints[0])
                 pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[0], splitPoints[1]))
-            else if (!pagesCountMap.contains(splitPoints[0]))
-                pagesCountMap.add(splitPoints[0])
             if (!pagesCountMap.contains(splitPoints[1]))
                 pagesCountMap.add(splitPoints[1])
 
+            if (!pagesCountMap.contains(splitPoints[0]))
+                pagesCountMap.add(splitPoints[2])
             if (splitPoints[3] > splitPoints[2])
                 pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[2], splitPoints[3]))
-            else if (!pagesCountMap.contains(splitPoints[0]))
-                pagesCountMap.add(splitPoints[2])
             if (!pagesCountMap.contains(splitPoints[3]))
                 pagesCountMap.add(splitPoints[3])
 
+            if (!pagesCountMap.contains(splitPoints[0]))
+                pagesCountMap.add(splitPoints[4])
             if (splitPoints[5] > splitPoints[4])
                 pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[4], splitPoints[5]))
-            else if (!pagesCountMap.contains(splitPoints[0]))
-                pagesCountMap.add(splitPoints[4])
             if (!pagesCountMap.contains(splitPoints[5]))
                 pagesCountMap.add(splitPoints[5])
 
+            if (!pagesCountMap.contains(splitPoints[0]))
+                pagesCountMap.add(splitPoints[6])
             if (splitPoints[7] > splitPoints[6])
                 pagesCountMap.addAll(shuffleArray(tempPagesCountMap, splitPoints[6], splitPoints[7]))
-            else if (!pagesCountMap.contains(splitPoints[0]))
-                pagesCountMap.add(splitPoints[6])
             if (!pagesCountMap.contains(splitPoints[7]))
                 pagesCountMap.add(splitPoints[7])
 
@@ -159,7 +163,7 @@ class BrowseService {
         if (end <= start + 1)
             return []
 
-        def tempArray = array[(start ? start + 1 : 0)..end - 1]
+        def tempArray = array[(start ?: 0)..end - 1]
         Collections.shuffle(tempArray)
         tempArray
     }

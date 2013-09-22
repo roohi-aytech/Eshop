@@ -1351,6 +1351,24 @@ table.attribute-list td {
     width: 150px;
 }
 
+.comparison-container{
+    clear: both;
+    padding-top: 0;
+}
+
+.comparison-container.fixed{
+}
+
+.comparison-container .comparisonTableHeader{
+}
+
+.comparison-container.fixed .comparisonTableHeader{
+    position: fixed;
+    top: 54px;
+    border-bottom: 1px solid #0088CC;
+    display: block;
+}
+
 .attribute-list.comparison .attributeName {
     font-weight: bold;
 }

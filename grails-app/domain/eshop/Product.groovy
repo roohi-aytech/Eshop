@@ -35,7 +35,7 @@ class Product extends BaseProduct implements Comparable{
     }
 
     String getBreadCrumb() {
-        def result
+        def result = ''
         def type
         if (productTypes?.count { it } > 0)
             type = productTypes?.toArray()?.first()
@@ -49,9 +49,9 @@ class Product extends BaseProduct implements Comparable{
         result
     }
 
-//    ProductType getProductType() {
-//        productTypes?.count {it} > 0 ? productTypes?.toArray()?.first() : null
-//    }
+    transient def getGuaranteeList() {
+        models?.collect { it.guarantee }?.unique { it.id }
+    }
 
     static transients = ['title', 'currentPrice', 'breadCrumb']
 
