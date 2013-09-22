@@ -15,6 +15,8 @@
 
 <body>
 <div class="page-content">
+
+    ${params}
     <h2><g:message code="onlinePayment.result"/></h2>
 
     <g:if test="${verificationResult == "0"}">

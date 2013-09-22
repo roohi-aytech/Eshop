@@ -368,7 +368,7 @@ class OrderController {
     def onlinePaymentResultSaman() {
 
         def model = [:]
-        def reservationNumber = params.ResNum.toLong();
+        def reservationNumber = params.ResNum?.toLong();
         def status = params.State.toString();
         def referenceNumber = params.RefNum;
 
