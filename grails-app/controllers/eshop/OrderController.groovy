@@ -46,6 +46,10 @@ class OrderController {
         render 0
     }
 
+    def testSaman(){
+        samanService.verifyPayment(Account.get(3), "PqRkdtYGy27S8BWRDrJ/FpVwMWdCb3")
+    }
+
     def list() {
 
         def status = params.status

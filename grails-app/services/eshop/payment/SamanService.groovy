@@ -1,13 +1,13 @@
 package eshop.payment
 
 import eshop.accounting.Account
-import eshop.payment.saman.PaymentIF
-import eshop.payment.saman.ReferencePaymentLocator
+import eshop.payment.saman.PaymentIFBindingLocator
+import eshop.payment.saman.PaymentIFBindingSoap_PortType
 
 class SamanService {
 
-    PaymentIF getService(){
-        new ReferencePaymentLocator().getPaymentIFPort()
+    PaymentIFBindingSoap_PortType getService(){
+        new PaymentIFBindingLocator().getPaymentIFBindingSoap()
     }
 
     Double verifyPayment(Account account, String referenceNumber){

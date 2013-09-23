@@ -307,6 +307,7 @@ class PdfService {
 
     def generateInvoiceWithoutAddedValue(Order order, OutputStream outputStream, Boolean useBackground) {
         def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
+        def rg = grailsApplication.mainContext.getBean('rapidgrails.JqueryUiTagLib')
 
         def document = new Document()
         document.setPageSize(PageSize.A4);
