@@ -261,7 +261,7 @@
 														}
 		.showbiz .overflowholder 						{	overflow: hidden;position: relative;width: 100%; z-index:2}
 
-		.showbiz .overflowholder ul 					{		width:100000px; position: absolute;	top: 0px; left: 0px; }
+		.showbiz .overflowholder ul 					{		width:100000px !important; position: absolute;	top: 0px; left: 0px; }
 
 		.showbiz .overflowholder ul li 					{		float: left !important;
 																-webkit-transition: all 0.3s ease;
