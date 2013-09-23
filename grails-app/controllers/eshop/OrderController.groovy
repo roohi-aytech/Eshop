@@ -223,7 +223,7 @@ class OrderController {
     def registeredPayment() {
         def order = Order.get(params.id)
         def customer = springSecurityService.currentUser as Customer
-        if(customer?.id != order.customer?.id){
+        if (customer?.id != order.customer?.id) {
             redirect(uri: '/notFound')
             return
         }
@@ -370,20 +370,20 @@ class OrderController {
         def model = [:]
         def reservationNumber = params.ResNum?.toLong();
         def status = params.State.toString();
-        def referenceNumber = params.RefNum;
+        def referenceNumber = params.RefNum ? params.RefNum.toString() : '';
 
         def onlinePayment = OnlinePayment.get(reservationNumber)
         model.onlinePayment = onlinePayment
 
         double state = -100;
         if (status.equals("OK")) {
-            state = samanService.verifyPayment(referenceNumber, onlinePayment.account)
+            state = samanService.verifyPayment(onlinePayment.account, referenceNumber)
         }
         model.verificationResult = state
         onlinePayment.resultCode = state.toString()
         onlinePayment.save()
 
-        if(state.toInteger() == onlinePayment.amount)
+        if (state.toInteger() == onlinePayment.amount)
             payOrder(onlinePayment, model)
 
         render view: 'onlinePaymentResult', model: model
@@ -563,9 +563,9 @@ class OrderController {
 
     def completion() {
         def order = Order.get(params.id)
-        if(order.customer){
+        if (order.customer) {
             def customer = springSecurityService.currentUser as Customer
-            if(customer?.id != order.customer?.id){
+            if (customer?.id != order.customer?.id) {
                 redirect(uri: '/notFound')
                 return
             }
@@ -576,9 +576,9 @@ class OrderController {
     //<editor-fold desc="invoice">
     def invoice() {
         def order = Order.get(params.id)
-        if(order.customer){
+        if (order.customer) {
             def customer = springSecurityService.currentUser as Customer
-            if(customer?.id != order.customer?.id){
+            if (customer?.id != order.customer?.id) {
                 redirect(uri: '/notFound')
                 return
             }
@@ -600,9 +600,9 @@ class OrderController {
 
     def pdf() {
         def order = Order.get(params.id)
-        if(order.customer){
+        if (order.customer) {
             def customer = springSecurityService.currentUser as Customer
-            if(customer?.id != order.customer?.id){
+            if (customer?.id != order.customer?.id) {
                 redirect(uri: '/notFound')
                 return
             }
