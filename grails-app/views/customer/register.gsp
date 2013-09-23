@@ -114,6 +114,10 @@
         display: block;
         width: 373px;
     }
+
+    .requiredFlag{
+        color: red;
+    }
     </style>
     <script language="javascript" type="text/javascript">
 
@@ -180,8 +184,19 @@
             return true;
         }
 
+        function validateSex(){
+            $('#sexValidationMessage').html('');
+
+            var sex = $('#sex').val();
+            if(!sex || sex == 'no') {
+                $('#sexValidationMessage').html('${message(code: 'profile.sex.notEmpty')}')
+                return false;
+            }
+            return true;
+        }
+
         function validate(){
-            if(validateLastName() && validateUsernameField() && validatePassword() && validateConfirmPassword())
+            if(validateLastName() && validateSex() && validateUsernameField() && validatePassword() && validateConfirmPassword())
                 return true;
             return false;
         }
@@ -216,6 +231,7 @@
 
             <p>
                 <label for='lastName'><g:message code="springSecurity.register.lastName.label"/>:</label>
+                <span class="requiredFlag">*</span>
                 <span id="lastNameValidationMessage"></span>
                 <input type='text' onblur="validateLastName()" class='text_' name='lastName' id='lastName'
                        value="${customerInstance.lastName}"/>
@@ -223,8 +239,11 @@
 
             <p>
                 <label for='sex'><g:message code="springSecurity.register.sex.label"/>:</label>
+                <span class="requiredFlag">*</span>
                 <span id="sexValidationMessage"></span>
                 <select name="sex" id="sex" style="display: block">
+                    <option value="no"><g:message
+                            code="profile.sex.empty"></g:message></option>
                     <option value="female" ${customerInstance.sex == 'female' ? 'selected' : ''}><g:message
                             code="sex.female"></g:message></option>
                     <option value="male" ${customerInstance.sex == 'male' ? 'selected' : ''}><g:message
@@ -233,7 +252,14 @@
             </p>
 
             <p>
+                <label for='mobileField'><g:message code="springSecurity.register.mobile.label"/>:</label>
+                <input type='text' class='text_' name='mobile' id='mobileField'
+                       value="${customerInstance.mobile}"/>
+            </p>
+
+            <p>
                 <label for='usernameField'><g:message code="springSecurity.register.username.label"/>:</label>
+                <span class="requiredFlag">*</span>
                 <span id="usernameValidationMessage"></span>
                 <input type='text' onblur="validateUsernameField()" class='text_' name='username' id='usernameField'
                        value="${customerInstance.username}"/>
@@ -241,6 +267,7 @@
 
             <p>
                 <label for='password'><g:message code="springSecurity.register.password.label"/>:</label>
+                <span class="requiredFlag">*</span>
                 <span id="passwordValidationMessage"></span>
                 <input type='password' onblur="validatePassword()" class='text_' name='password' id='password'/>
             </p>
@@ -248,6 +275,7 @@
             <p>
                 <label for='confirmPassword'><g:message
                         code="springSecurity.register.confirmPassword.label"/>:</label>
+                <span class="requiredFlag">*</span>
                 <span id="confirmPasswordValidationMessage"></span>
                 <input type='password' onblur="validateConfirmPassword()" class='text_' name='confirmPassword'
                        id='confirmPassword'/>

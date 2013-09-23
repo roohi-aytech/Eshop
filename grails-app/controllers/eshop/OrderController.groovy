@@ -387,7 +387,7 @@ class OrderController {
         onlinePayment.resultCode = state.toString()
         onlinePayment.save()
 
-        if (state.toInteger() == onlinePayment.amount)
+        if (state.toInteger() == onlinePayment.amount.toInteger())
             payOrder(onlinePayment, model)
 
         render view: 'onlinePaymentResult', model: model

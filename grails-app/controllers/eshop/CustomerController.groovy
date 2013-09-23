@@ -78,6 +78,7 @@ class CustomerController {
         customerInstance.username = params.username
         customerInstance.password = params.password
         customerInstance.email = params.username
+        customerInstance.mobile = params.mobile
         customerInstance.registrationLevel = 'basic'
 
         if (session['invitation']) {
