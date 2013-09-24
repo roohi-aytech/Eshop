@@ -46,7 +46,7 @@
         <td class="table-cell product-rightColumn">
             <div class="product-card">
                 <div class="product-card-content" id="product-card">
-                    <cache:render template="product/card" key="${params.id}"
+                    <g:render template="product/card" key="${params.id}"
                               model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
                 </div>
 
