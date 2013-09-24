@@ -64,6 +64,12 @@ class ImageController {
                     content = brand.logo
                 }
                 break;
+            case 'guarantee':
+                def guarantee = Guarantee.get(params.id)
+                if (guarantee) {
+                    content = guarantee.logo
+                }
+                break;
             case 'specialSale':
                 def specialSaleSlide = SpecialSaleSlide.get(params.id)
                 if (specialSaleSlide) {

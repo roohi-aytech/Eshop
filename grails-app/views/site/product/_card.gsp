@@ -41,13 +41,17 @@
     <div class="product-variation">
         <div class="variation-title">
             ${message(code: 'guarantee')}:
-            <div class="cur-variation">${productModel.guarantee.name}</div>
+            <div class="cur-variation">
+                ${productModel.guarantee.name}
+            </div>
+            <div class="selected-guarantee-box"><img src="${createLink(controller: 'image', params: [id:productModel.guarantee.id, type:'guarantee'])}"/> </div>
         </div>
     </div>
 
     <br/>
     <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
-    <g:set var="price" value="${priceService.calcProductModelPrice(productModel.id, selectedAddedValues.collect{it.id})}"/>
+    <g:set var="price"
+           value="${priceService.calcProductModelPrice(productModel.id, selectedAddedValues.collect { it.id })}"/>
     <g:if test="${price.showVal}">
         <div class="price">
             <g:message code="price"/>:
@@ -64,12 +68,13 @@
                     ${addedValue.processTime == 'mandetory' ? 'original-title="' + message(code: "product.addedValues.${addedValue.processTime}.tip") + '"' : ''}>
                     <div>
                         %{--<g:if test="${addedValue.processTime == 'optional'}">--}%
-                            <input type="checkbox" name="addedValues" id="addedValues_${addedValue.id}" ${addedValue.processTime == 'mandetory' ? 'disabled' : ''}
-                                   value="${addedValue.id}" onchange="addOrRemoveAddedValue(this);"
-                                ${selectedAddedValues.collect { it.id }.contains(addedValue.id) ? 'checked' : ''}/>
-                            <label for="addedValues_${addedValue.id}">
-                                ${addedValue.name}
-                            </label>
+                        <input type="checkbox" name="addedValues"
+                               id="addedValues_${addedValue.id}" ${addedValue.processTime == 'mandetory' ? 'disabled' : ''}
+                               value="${addedValue.id}" onchange="addOrRemoveAddedValue(this);"
+                            ${selectedAddedValues.collect { it.id }.contains(addedValue.id) ? 'checked' : ''}/>
+                        <label for="addedValues_${addedValue.id}">
+                            ${addedValue.name}
+                        </label>
                     </div>
 
                     <div class="price">

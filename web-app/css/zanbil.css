@@ -3509,5 +3509,18 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     margin-top:15px;
 }
 
+.selected-guarantee-box{
+    margin-right:40px;
+    margin-top:5px;
+    line-height: 0;
+}
+
+.selected-guarantee-box img{
+    border-radius: 4px;
+    display: inline-block;
+    border:1px solid #b9d4ff;
+    box-shadow: 0 0 2px #b9d4ff inset;
+}
+
 
 
