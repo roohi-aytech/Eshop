@@ -17,7 +17,7 @@
 <div class="page-content">
     <h2><g:message code="onlinePayment.result"/></h2>
 
-    <g:if test="${verificationResult == "0"}">
+    <g:if test="${verificationResult?.toString() == "0"}">
         <div class="info">
             <div><g:message code="onlinePayment.result.success"></g:message></div>
         </div>
