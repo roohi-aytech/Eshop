@@ -387,7 +387,7 @@ class OrderController {
         if (state.toInteger() > 0)
             onlinePayment.amount = state.toInteger()
         onlinePayment.resultCode = state.toString()
-        onlinePayment.transactionReferenceCode = referenceNumber
+        onlinePayment.transactionReferenceCode = params.MID
         onlinePayment.save()
 
         if (state.toInteger() > 0){
