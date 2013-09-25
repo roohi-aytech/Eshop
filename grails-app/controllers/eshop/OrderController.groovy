@@ -46,7 +46,7 @@ class OrderController {
         render 0
     }
 
-    def testSaman(){
+    def testSaman() {
         samanService.verifyPayment(Account.get(3), "PqRkdtYGy27S8BWRDrJ/FpVwMWdCb3")
     }
 
@@ -384,10 +384,12 @@ class OrderController {
             state = samanService.verifyPayment(onlinePayment.account, referenceNumber)
         }
         model.verificationResult = state
+        if (state.toInteger() > 0)
+            onlinePayment.amount = state.toInteger()
         onlinePayment.resultCode = state.toString()
         onlinePayment.save()
 
-        if (state.toInteger() == onlinePayment.amount.toInteger())
+        if (state.toInteger() > 0)
             payOrder(onlinePayment, model)
 
         render view: 'onlinePaymentResult', model: model

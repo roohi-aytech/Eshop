@@ -30,7 +30,7 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:field id="price" onKeyup="formatPrice();" type="number" name="price" step="any" value="${formatNumber(number: priceInstance.price)}"/>
+    <g:field id="price" onKeyup="formatPrice();" type="text" name="price" step="any" value="${formatNumber(number: priceInstance.price)}"/>
 </div>
 
 <script type="text/javascript" language="javascript">
