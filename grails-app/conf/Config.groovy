@@ -16,8 +16,8 @@ import java.awt.Font
 
 
 grails.plugin.invitation.facebook.enabled = true
-grails.plugin.invitation.facebook.key = 'your APP ID'
-grails.plugin.invitation.facebook.secret = 'your App Secret'
+grails.plugin.invitation.facebook.key = 'zanbil.ir@gmail.com'
+grails.plugin.invitation.facebook.secret = 'z@nbil.ir1391'
 
 grails.plugin.invitation.google.enabled = true
 grails.plugin.invitation.google.key = 'www.zanbil.ir'
@@ -290,12 +290,49 @@ uiperformance.exclusions = [
 
 grails.rest.injectInto = ["Controller", "Service", "Routes", "Job"]
 
-//cache.headers.enabled = true
-//cache.headers.presets = [
-//        unauthed_page: [shared:true, validFor: 300], // 5 minute refresh window
-//        authed_page: false, // No caching for logged in user
-//        content: [shared:true, validFor: 3600], // 1hr on content
-//        recent_items_feed: [shared: true, validFor: 1800], // 30 minute throttle on RSS updates
-//        search_results: [validFor: 60, shared: true],
-//        taxonomy_results: [validFor: 60, shared: true]
-//]
+
+grails.cache.config = {
+    cache {
+        name 'grailsTemplatesShortTTLCache'
+        maxElementsInMemory 10000
+        eternal false
+        timeToIdleSeconds 120
+        timeToLiveSeconds 120
+        overflowToDisk true
+        maxElementsOnDisk 10000000
+        diskPersistent false
+        diskExpiryThreadIntervalSeconds 120
+        memoryStoreEvictionPolicy 'LRU'
+    }
+    cache {
+        name 'grailsTemplatesNormalCache'
+        maxElementsInMemory 10000
+        eternal false
+        timeToIdleSeconds 7200
+        timeToLiveSeconds 7200
+        overflowToDisk true
+        maxElementsOnDisk 10000000
+        diskPersistent false
+        diskExpiryThreadIntervalSeconds 7200
+        memoryStoreEvictionPolicy 'LRU'
+    }
+    cache {
+        name 'grailsTemplatesLongTTLCache'
+        maxElementsInMemory 10000
+        eternal false
+        timeToIdleSeconds 86400
+        timeToLiveSeconds 86400
+        overflowToDisk true
+        maxElementsOnDisk 10000000
+        diskPersistent false
+        diskExpiryThreadIntervalSeconds 86400
+        memoryStoreEvictionPolicy 'LRU'
+    }
+    cache {
+        name 'grailsBlocksTemporaryCache'
+        eternal false
+        overflowToDisk true
+        maxElementsInMemory 10000
+        maxElementsOnDisk 10000000
+    }
+}
