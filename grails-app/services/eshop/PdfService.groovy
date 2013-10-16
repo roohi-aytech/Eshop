@@ -149,7 +149,7 @@ class PdfService {
                 writer.directContent)
         addText(
                 232f, 544f, 270f, 20f,
-                order.useAlternateInformation ? order.alternateOwnerName : g.message(code: "customer.title." + order.ownerSex) + " " + order.ownerName,
+                order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : g.message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName,
                 fontPersianBlack,
                 writer.directContent)
 
@@ -394,7 +394,7 @@ class PdfService {
                 writer.directContent)
         addText(
                 232f, 574f, 270f, 20f,
-                order.useAlternateInformation ? order.alternateOwnerName : g.message(code: "customer.title." + order.ownerSex) + " " + order.ownerName,
+                order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : g.message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName,
                 fontPersianBlack,
                 writer.directContent)
 

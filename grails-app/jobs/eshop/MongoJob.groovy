@@ -36,7 +36,7 @@ class MongoJob {
                 }
             }
         } else {
-            println('No Product to Synchronize')
+//            println('No Product to Synchronize')
         }
     }
 }

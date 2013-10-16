@@ -19,9 +19,9 @@
 <table class="layout-container table-simulated">
     <tr class="table-row">
         <td class="table-cell span180">
-            <g:render template="productType/article_list"/>
+            <ehcache:render template="productType/article_list"/>
             <div class="well sidebar-nav">
-                <g:render template="common/browsingTextualMenu"></g:render>
+                <ehcache:render template="common/browsingTextualMenu"/>
             </div>
         </td>
 

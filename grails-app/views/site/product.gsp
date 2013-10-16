@@ -165,7 +165,7 @@
 
 
                                             <div id="product-price">
-                                                <cache:render template="product/price" key="${params.id}"
+                                                <ehcache:renderShortTTL template="product/price" key="${params.id}"
                                                           model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
                                             </div>
 
@@ -175,12 +175,12 @@
                                                 </p>
                                             </g:if>
 
-                                            <cache:render template="product/variation" key="${params.id}"/>
+                                            <ehcache:render template="product/variation" key="${params.id}"/>
                                         </div>
                                     </td>
 
                                     <td class="table-cell product-imageColumn">
-                                        <div><cache:render template="product/zoom" key="${params.id}"/></div>
+                                        <div><ehcache:render template="product/zoom" key="${params.id}"/></div>
                                     </td>
                                 </tr>
                             </table>
@@ -192,19 +192,19 @@
                     <td class="table-cell">
                         <div class="white-panel">
                             <h3><g:message code="product.specifications"/></h3>
-                            <cache:render template="product/attributes" key="${params.id}"
+                            <ehcache:render template="product/attributes" key="${params.id}"
                                       model="${[categories: rootAttributeCategories]}"/>
 
                             <hr/>
-                            <cache:render template="product/description" key="${params.id}"/>
-                            <cache:render template="../customerReview/resources"
+                            <ehcache:render template="product/description" key="${params.id}"/>
+                            <ehcache:render template="../customerReview/resources"
                                       model="${['product': product]}"/>
-                            <cache:render template="../customerReview/list"
+                            <ehcache:render template="../customerReview/list"
                                       model="${['product': product]}" key="${params.id}"/>
-                            <cache:render template="../customerReview/create"
+                            <ehcache:render template="../customerReview/create"
                                       model="${['product': product]}"/>
                             <hr/>
-                            <cache:render template="common/productCarousel" key="${product?.productTypes?.toArray()?.find()?.id}"
+                            <ehcache:render template="common/productCarousel" key="${product?.productTypes?.toArray()?.find()?.id}"
                                       model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"/>
                         </div>
                     </td>

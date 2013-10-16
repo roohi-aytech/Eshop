@@ -30,4 +30,9 @@ class AddedValue {
         remainCount(nullable: true)
 
     }
+
+    @Override
+    String toString(){
+        name
+    }
 }

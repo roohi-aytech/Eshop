@@ -98,7 +98,7 @@
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
-<cache:render template="/layouts/header" key="${sec.username()}"/>
+<ehcache:render template="/layouts/header" key="${sec.username()}"/>
 <table id="main-container" class="table-simulated">
     <tr>
         <td id="body-container">

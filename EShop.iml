@@ -108,11 +108,11 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sf.json-lib/json-lib/jars/json-lib-2.3-jdk15.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.0.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.0.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/com.itextpdf/itextpdf/jars/itextpdf-5.4.2.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/xerces/xercesImpl/jars/xercesImpl-2.9.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/bouncycastle/bcprov-jdk14/jars/bcprov-jdk14-136.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/bouncycastle/bcmail-jdk14/jars/bcmail-jdk14-136.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.lowagie/itext/jars/itext-2.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/com.itextpdf/itextpdf/jars/itextpdf-5.4.2.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/xerces/xercesImpl/jars/xercesImpl-2.9.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -122,6 +122,13 @@
     <orderEntry type="module" module-name="RapidGrails" exported="" />
     <orderEntry type="module" module-name="EShop-grailsPlugins" />
     <orderEntry type="library" name="commons-math-1.0" level="project" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />

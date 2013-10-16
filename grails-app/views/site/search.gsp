@@ -38,7 +38,7 @@
         <g:else>
             <td class="span180 table-cell">
                 <div class="well sidebar-nav">
-                    <cache:render template="common/filteringTextualMenu" key="${params.phrase} ${params.f}"/>
+                    <ehcache:render template="common/filteringTextualMenu" key="${params.phrase} ${params.f}"/>
                 </div>
             </td>
         </g:else>
@@ -92,12 +92,12 @@
                                     <g:else>
                                         %{--<g:render template="common/filteringGraphicalMenu"></g:render>--}%
                                         <g:render template="common/productGrid"
-                                                  model="${[productIds: filters.products.productIds]}"></g:render>
+                                                  model="${[productIds: filters.products.productIds]}"/>
                                     </g:else>
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <cache:render template="banners/leftsideBanners"/>
+                                    <ehcache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

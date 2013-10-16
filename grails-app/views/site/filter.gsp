@@ -34,10 +34,10 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav">
-                <cache:render template="common/filteringTextualMenu" key="${params.f}"/>
+                <ehcache:render template="common/filteringTextualMenu" key="${params.f}"/>
             </div>
-            <cache:render template="productType/article_list" key="${params.f}"/>
-            <cache:render template="banners/rightsideBanners"/>
+            <ehcache:render template="productType/article_list" key="${params.f}"/>
+            <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
@@ -74,7 +74,7 @@
                                     %{--<li class="active">${filters.breadcrumb[-1].linkTitle}</li>--}%
                                     </ul>
 
-                                    <cache:render template="common/filteringGraphicalMenu" key="${params.f}"/>
+                                    <ehcache:render template="common/filteringGraphicalMenu" key="${params.f}"/>
 
 
                                     %{--<g:if test="${filters.productTypes?.isEmpty()}">--}%
@@ -85,7 +85,7 @@
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <cache:render template="banners/leftsideBanners"/>
+                                    <ehcache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

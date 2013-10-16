@@ -23,9 +23,9 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav home">
-                <cache:render template="common/browsingTextualMenu"/>
+                <ehcache:render template="common/browsingTextualMenu"/>
             </div>
-            <cache:render template="banners/rightsideBanners"/>
+            <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
@@ -43,18 +43,18 @@
 
                                 <td class="span600 table-cell">
 
-                                    <cache:render template="common/slideshowSpecialSales"
+                                    <ehcache:render template="common/slideshowSpecialSales"
                                               model="[specialSaleSlides: specialSaleSlides]"/>
 
-                                    <cache:render template="common/browsingGraphicalMenu"/>
+                                    <ehcache:render template="common/browsingGraphicalMenu"/>
 
                                     <g:render template="common/productGrid"
                                               model="${[productIds: filters.products.productIds]}"/>
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <cache:render template="banners/enamad"/>
-                                    <cache:render template="banners/leftsideBanners"/>
+                                    <ehcache:render template="banners/enamad"/>
+                                    <ehcache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

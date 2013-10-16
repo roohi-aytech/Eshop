@@ -308,7 +308,7 @@ class OrderController {
             onlinePayment.customer = order.customer
             onlinePayment.date = new Date()
             onlinePayment.order = order
-            onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
+            onlinePayment.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed ?: order.customer ? true : false
             onlinePayment.save()
 
             switch (account.bankName) {

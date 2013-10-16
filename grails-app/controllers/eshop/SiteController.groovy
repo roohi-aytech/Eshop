@@ -116,6 +116,11 @@ class SiteController {
 
     def filter() {
         def model = [:]
+        if (!params.f) {
+            redirect(uri: "/")
+            return
+        }
+
         model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0, "${params.f} ${params.page ?: 0}")
 
         if (model.filters.products.productIds.size() == 0) {
@@ -312,7 +317,7 @@ class SiteController {
     def product() {
         def productTypeList = ProductType.findAllByParentProductIsNull()
         def product = Product.get(params.id)
-        if (!product || product.deleted) {
+        if (!product || product.deleted || (product.isVisible == false)) {
             redirect(uri: "/notFound")
             return
         }
@@ -558,6 +563,7 @@ class SiteController {
 
         def model = [:]
         def productIdList = []
+
         if (params.phrase) {
             def query = params.phrase.toString().trim()
             query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())

@@ -139,6 +139,13 @@ class BrowseService {
             if (pagesCountMap.indexOf(0D) != -1)
                 pagesCountMap.remove(pagesCountMap.indexOf(0D))
 
+            def indexOfLastPage = pagesCountMap.indexOf(pagesCountMap.size())
+            if(indexOfLastPage != pagesCountMap.size() - 1){
+                def currentLastPage = pagesCountMap[pagesCountMap.size() - 1]
+                pagesCountMap[pagesCountMap.size() - 1] = pagesCountMap.size()
+                pagesCountMap[indexOfLastPage] = currentLastPage
+            }
+
             RequestContextHolder.currentRequestAttributes().getSession()[params.pageListSessionKey] = pagesCountMap.unique()
         }
 

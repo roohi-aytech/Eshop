@@ -20,7 +20,7 @@ class OnlinePayment {
 
     static constraints = {
         account()
-        customer()
+        customer nullable: true
         order nullable: true
         amount()
         date()

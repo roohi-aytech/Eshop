@@ -27,10 +27,10 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav">
-                <cache:render template="common/browsingTextualMenu" key="${params.productType}"/>
+                <ehcache:render template="common/browsingTextualMenu" key="${params.productType}"/>
             </div>
-            <cache:render template="productType/article_list" key="${params.productType}"/>
-            <cache:render template="banners/rightsideBanners"/>
+            <ehcache:render template="productType/article_list" key="${params.productType}"/>
+            <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
@@ -67,7 +67,7 @@
                                         %{--<li class="active">${breadCrumb[-1].name}</li>--}%
                                     </ul>
 
-                                    <cache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
+                                    <ehcache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
 
                                     %{--<g:if test="${subProductTypeLinks?.isEmpty()}">--}%
                                     <g:render template="common/productGrid"
@@ -77,7 +77,7 @@
                                 </td>
 
                                 <td class="span200 table-cell">
-                                    <cache:render template="banners/leftsideBanners"/>
+                                    <ehcache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>
                         </table>

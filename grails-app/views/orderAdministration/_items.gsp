@@ -16,19 +16,33 @@
         <tr>
             <td>
                 ${orderItem.productModel}
+                <g:if test="${orderItem.productModel.variationValues?.size() > 0}">
+                    <g:each in="${orderItem.productModel.variationValues}" var="variationValue" status="index">
+                        <g:if test="${index == 0}">
+                            (
+                        </g:if>
+                        ${variationValue.variationGroup}: ${variationValue}
+                        <g:if test="${index < orderItem.productModel.variationValues?.size() - 1}">
+                            ,
+                        </g:if>
+                        <g:else>
+                            )
+                        </g:else>
+                    </g:each>
+                </g:if>
                 <g:each in="${orderItem.addedValues}">
                     + ${it}
                 </g:each>
             </td>
             <td><g:formatNumber number="${orderItem.baseUnitPrice}"
-                                type="number"></g:formatNumber></td>
+                                type="number"/></td>
             <td><g:formatNumber number="${orderItem.addedValuesPrice}"
-                                type="number"></g:formatNumber></td>
+                                type="number"/></td>
             <td><g:formatNumber number="${orderItem.unitPrice}"
-                                type="number"></g:formatNumber></td>
+                                type="number"/></td>
             <td class="center">${orderItem.orderCount}</td>
             <td><g:formatNumber number="${orderItem.totalPrice}"
-                                type="number"></g:formatNumber></td>
+                                type="number"/></td>
             <td>
                 <g:message code="productModel.status.${orderItem.productModel.status}"/>
             </td>
