@@ -69,16 +69,12 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.7.2"
         runtime ":resources:1.1.6"
 
-        // Uncomment these (or add new ones) to enable additional resources capabilities
-        //runtime ":zipped-resources:1.0"
-        //runtime ":cached-resources:1.0"
-        //runtime ":yui-minify-resources:0.1.4"
-
         build ":tomcat:$grailsVersion"
 
         runtime ":database-migration:1.1"
 
         compile ':cache:1.0.0'
+        compile ":cache-ehcache:1.0.0"
         compile ":ckeditor:3.6.2.2"
         compile (":mongodb:1.0.0.GA"){
             excludes 'mongo-java-driver', 'gmongo'
