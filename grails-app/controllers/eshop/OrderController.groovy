@@ -574,8 +574,8 @@ class OrderController {
         def order = Order.get(params.id)
         if (order.customer) {
             def customer = springSecurityService.currentUser as Customer
-            if (customer?.id != order.customer?.id) {
-                redirect(uri: '/notFound')
+            if (customer && customer?.id != order.customer?.id) {
+                redirect(uri:'/notFound')
                 return
             }
         }

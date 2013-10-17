@@ -206,7 +206,7 @@ class OrderAdministrationController {
             it.save()
         }
 
-        priceService.updateOrderPrice(order)
+//        priceService.updateOrderPrice(order)
 
         def validityDate = params.ValidityDate
         if (params.ValidityTime) {
@@ -227,6 +227,8 @@ class OrderAdministrationController {
             order.serialNumber = 1100
         order.serialNumber++
         order.save()
+
+        priceService.updateOrderPrice(order)
 
         OrderJob.schedule(validityDate, [orderId: params.id])
 

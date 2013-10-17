@@ -1,6 +1,7 @@
 package eshop
 
 import grails.converters.JSON
+import org.apache.lucene.search.BooleanQuery
 import search.FarsiNormalizationFilter
 
 class ComparisonController {
@@ -204,6 +205,7 @@ class ComparisonController {
             while(query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
+            BooleanQuery.setMaxClauseCount(10000);
             productIdList = Product.search({
                 queryString(query)
             },

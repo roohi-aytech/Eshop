@@ -3522,5 +3522,12 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     box-shadow: 0 0 2px #b9d4ff inset;
 }
 
+.dropdown-menu .group-title{
+    font-weight: normal;
+    color:#808080;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
 
 

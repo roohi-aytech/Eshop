@@ -1,4 +1,4 @@
-<%@ page import="eshop.RoleHelper; eshop.Customer; eshop.User; eshop.ProductType" %>
+<%@ page import="eshop.Order; eshop.OrderHelper; eshop.RoleHelper; eshop.Customer; eshop.User; eshop.ProductType" %>
 <div class="navbar navbar-fixed-top header">
 <table class="table-simulated navbar-inner">
 <tr class="table-row">
@@ -56,7 +56,7 @@
                 </li>
             </ul>
 
-            <common:link class="btn btn-warning" controller="basket" action="checkout" https="true" ><g:message
+            <common:link class="btn btn-warning" controller="basket" action="checkout" https="true"><g:message
                     code="basket.show"></g:message></common:link>
         </div>
     </div>
@@ -118,7 +118,7 @@
         <div class="btn-group pull-right topNavigationItem" id="link-userMenu-loggedIn">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"
                original-title="${message(code: "userMenu")} [ ${currentUser} ]">
-                <span><g:message code="user.controlpanel.label"></g:message></span>
+                <span><g:message code="user.controlpanel.label"/></span>
             </a>
             <ul class="dropdown-menu">
                 <g:if test="${currentUser.authorities.any {
@@ -128,30 +128,41 @@
                 }}">
                     <li class="dropdown">
                         <a tabindex="-1"
-                           href="<g:createLink uri="/admin"></g:createLink>"><g:message
-                                code="admin.controlpanel.label"></g:message></a></li>
+                           href="<g:createLink uri="/admin"/>"><g:message
+                                code="admin.controlpanel.label"/></a></li>
                 </g:if>
                 <g:if test="${currentUser instanceof Customer}">
                     <li class="dropdown">
                         <a tabindex="-1"
-                           href="<g:createLink controller="Customer" action="panel"></g:createLink>"><g:message
-                                code="user.controlpanel.label"></g:message></a></li>
+                           href="<g:createLink controller="Customer" action="panel"/>"><g:message
+                                code="user.controlpanel.label"/></a></li>
                 </g:if>
                 <li class="divider"></li>
-            <li class="dropdown">
                 <g:if test="${currentUser instanceof Customer}">
-                    <a tabindex="-1"
-                       href="<g:createLink controller="Customer"
-                                           action="profile"></g:createLink>"><g:message
-                            code="profile"></g:message></a></li>
+                    <g:set var="inquiredOrders" value="${Order.findAllByCustomerAndStatusAndTrackingCodeNotIsNull(currentUser as Customer, OrderHelper.STATUS_INQUIRED)}"/>
+                    <g:if test="${inquiredOrders?.size() > 0}">
+                        <g:each in="${inquiredOrders}">
+                            <li class="group-title"><g:message code="order.actions.completion"/></li>
+                            <li class="dropdown">
+                                <a tabindex="-1"
+                                   href="<g:createLink controller="order"
+                                                       action="completion" params="${[id:it.id]}"/>"><g:message code="order.trackingCode"/>: ${ it.trackingCode }</a></li>
+                        </g:each>
+                        <li class="divider"></li>
+                    </g:if>
+                    <li class="dropdown">
+                        <a tabindex="-1"
+                           href="<g:createLink controller="Customer"
+                                               action="profile"/>"><g:message
+                                code="profile"/></a></li>
                 </g:if>
                 <li class="dropdown">
                     <a tabindex="-1"
                        href="<g:createLink controller="Customer"
-                                           action="changePassword"></g:createLink>"><g:message
-                            code="password.change.label"></g:message></a></li>
+                                           action="changePassword"/>"><g:message
+                            code="password.change.label"/></a></li>
                 <li class="dropdown">
-                    <common:logoutLink tabindex="-1"></common:logoutLink>
+                    <common:logoutLink tabindex="-1"/>
                 </li>
             </ul>
         </div>
@@ -161,13 +172,13 @@
         <div class="btn-group pull-right topNavigationItem" id="link-userMenu-notLoggedIn">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"
                original-title="${message(code: "logInOrRegister")}">
-                <span><g:message code="user.controlpanel.label"></g:message></span>
+                <span><g:message code="user.controlpanel.label"/></span>
             </a>
             <ul class="dropdown-menu">
                 <li class="dropdown">
-                    <common:loginLink tabindex="-1"></common:loginLink></li>
+                    <common:loginLink tabindex="-1"/></li>
                 <li class="dropdown">
-                    <common:registerLink tabindex="-1"></common:registerLink></li>
+                    <common:registerLink tabindex="-1"/></li>
             </ul>
         </div>
     </sec:ifNotLoggedIn>
@@ -228,7 +239,8 @@
                     </td>
 
                     <td class="navbar-search pull-right table-cell search-input-box">
-                        <input name="phrase" id="searchPhrase" type="text" class="input-large search-query" autocomplete="off"
+                        <input name="phrase" id="searchPhrase" type="text" class="input-large search-query"
+                               autocomplete="off"
                                value="${params.phrase ? params.phrase : ''}" placeholder="<g:message code="search"/>">
                     </td>
 

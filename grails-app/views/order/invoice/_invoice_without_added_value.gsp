@@ -32,7 +32,7 @@
                 <tr>
                     <td colspan="2">
                         <span class="label"><g:message code="invoice.owner.name"></g:message>:</span>
-                        <span class="value">${order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName}</span>
+                        <span class="value">${order.useAlternateInformation ? order.alternateOwnerName : message(code: "customer.title." + order.ownerSex) + " " + order.ownerName}</span>
                     </td>
                     <td>
                         <span class="label"><g:message code="invoice.ownerCodeWithoutAddedValue"></g:message>:</span>

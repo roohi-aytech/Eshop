@@ -2,6 +2,7 @@ package eshop
 
 import grails.converters.JSON
 import groovy.sql.Sql
+import org.apache.lucene.search.BooleanQuery
 import org.compass.core.CompassQuery
 import search.FarsiNormalizationFilter
 
@@ -570,6 +571,7 @@ class SiteController {
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
+            BooleanQuery.setMaxClauseCount(10000);
             productIdList = Product.search({
                 queryString(query)
             },
@@ -630,6 +632,7 @@ class SiteController {
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
+            BooleanQuery.setMaxClauseCount(10000);
             productIdList = Product.search({
                 queryString(query)
             },

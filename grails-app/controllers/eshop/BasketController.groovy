@@ -63,7 +63,7 @@ class BasketController {
 
     def checkout() {
         def customer = springSecurityService.currentUser as Customer
-        if (!customer && !session.checkout_customerInformation)
+        if (!customer && !session.checkout_customerInformation && session.getAttribute("basket")?.size() > 0)
             session.forwardUri = createLink(controller: 'basket', action: 'checkout')
         else
             session.forwardUri = null

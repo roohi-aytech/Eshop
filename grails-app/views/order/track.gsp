@@ -33,7 +33,7 @@
                     code="order.status.${order.status}"/></b><br/>
                 <g:message code="order.trackingCode"/>: <b>${order.trackingCode}</b></div>
         </div>
-        <g:if test="${order.customer.id == customer?.id}">
+        <g:if test="${order.customer?.id == customer?.id}">
             <table class="table-simulated orderTrackingDetails" cellpadding="5" cellspacing="5">
                 <tr>
                     <td>
