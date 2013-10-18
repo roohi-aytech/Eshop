@@ -122,9 +122,9 @@
             <div style="float: right;padding-right: 10px;">
                 <common:registerLink></common:registerLink>
                 <br/>
-                <a href="${createLink(controller: 'customer', action: 'forgetPassword')}">
+                <common:link controller='customer' action='forgetPassword' https="true">
                     <g:message code="forgetPassword"/>
-                </a>
+                </common:link>
             </div>
 
             <div style="float: left;padding-left:5px;">

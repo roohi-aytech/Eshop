@@ -91,7 +91,7 @@
     </table>
 
     <div>
-        <common:link action="checkout" class="btn" https="true"><g:message code="invoice.return"/></common:link>
+        <common:link action="checkout" class="btn" https="false"><g:message code="invoice.return"/></common:link>
         <g:link controller="order" action="create"
                 params="${[deliveryPrice: order.deliveryPrice, deliverySourceStation: order.deliverySourceStation.id, optionalInsurance: order.optionalInsurance ?: false]}"
                 class="btn btn-primary shop"><g:message code="basket.checkout"/></g:link>
