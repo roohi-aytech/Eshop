@@ -1438,6 +1438,7 @@ table.attribute-list td {
     width: 200px;
     height: 50px;
     padding: 5px;
+    white-space: normal;
 }
 
 .basket-item-count {
@@ -3527,6 +3528,10 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     color:#808080;
     padding-right: 10px;
     padding-bottom: 5px;
+}
+
+.dropdown-menu a.btn{
+    color:white;
 }
 
 

@@ -24,32 +24,32 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.specialSaleSlideHeight = specialSaleSlideHeight;
 
 //    product cart
-    $scope.reloadProductCart = function(url, serializedData, productCard){
+    $scope.reloadProductCart = function (url, serializedData, productCard) {
         $http({
             url: url,
             method: "POST",
             data: serializedData,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (data, status, headers, config){
+        }).success(function (data, status, headers, config) {
                 productCard.html(data);
-            }).error(function (data, status, headers, config){
+            }).error(function (data, status, headers, config) {
                 console.error(
-                    "The following error occured: "+
+                    "The following error occured: " +
                         textStatus, errorThrown
                 );
             });
     }
-    $scope.reloadProductPrice = function(url, serializedData, productPrice){
+    $scope.reloadProductPrice = function (url, serializedData, productPrice) {
         $http({
             url: url,
             method: "POST",
             data: serializedData,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (data, status, headers, config){
+        }).success(function (data, status, headers, config) {
                 productPrice.html(data);
-            }).error(function (data, status, headers, config){
+            }).error(function (data, status, headers, config) {
                 console.error(
-                    "The following error occured: "+
+                    "The following error occured: " +
                         textStatus, errorThrown
                 );
             });
@@ -58,6 +58,12 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     //    basket
     $scope.addToBasket = function (id, name, price, selectedAddedValues) {
         $('#link-basket').addClass('full');
+
+        $('#basketItems .rollbar-path-vertical').remove();
+        $('#basketItems .rollbar-path-horizontal').remove();
+        $('#basketItems .rollbar-content li').unwrap();
+        $('#basketItems .scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
+
         $scope.basketCounter++;
         var found = false;
         for (var i = 0; i < $scope.basket.length; i++) {
@@ -69,9 +75,8 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         if (!found)
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, price: price};
-            $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
+        $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
         });
-
         return false;
     };
 
@@ -108,7 +113,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             totalPrice += item.realPrice * item.count;
         });
 
-        if($scope.deliveryPrice != -1)
+        if ($scope.deliveryPrice != -1)
             totalPrice += $scope.deliveryPrice
 
         return totalPrice;
@@ -120,15 +125,19 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     }
 
     //    compareList
-    $scope.addToCompareList = function (id, name, price) {;
+    $scope.addToCompareList = function (id, name, price) {
         var found = false;
+
+        if ($scope.compareListCounter == 0)
+            $('#compareListItems .scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
+
         for (var i = 0; i < $scope.compareList.length; i++) {
             if ($scope.compareList[i].id == id) {
                 found = true;
                 break;
             }
         }
-        if (!found)  {
+        if (!found) {
             $scope.compareList[$scope.compareList.length] = {id: id, title: name, price: price};
             $scope.compareListCounter++
         }
@@ -156,15 +165,16 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
     //    wishList
     $scope.addToWishList = function (id, name, price) {
-        if(!$scope.wishListEnabled)
-        {
-            $.msgGrowl ({
-                type: 'warning'
-                , 'text': wishListNotEnabledMessage
-                , lifetime: 5000
+        if (!$scope.wishListEnabled) {
+            $.msgGrowl({
+                type: 'warning', 'text': wishListNotEnabledMessage, lifetime: 5000
             });
             return;
         }
+
+        if ($scope.wishListCounter == 0)
+            $('#wishListItems .scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
+
         var found = false;
         for (var i = 0; i < $scope.wishList.length; i++) {
             if ($scope.wishList[i].id == id) {
@@ -172,7 +182,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
                 break;
             }
         }
-        if (!found){
+        if (!found) {
             $scope.wishListCounter++;
             $scope.wishList[$scope.wishList.length] = {id: id, title: name, price: price};
         }
@@ -199,7 +209,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     };
 
 //    common functions
-    $scope.isEmpty = function(value){
+    $scope.isEmpty = function (value) {
         return !value || value.toString().length == 0;
     }
 });

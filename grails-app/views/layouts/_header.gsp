@@ -54,6 +54,7 @@
                     </span>
                     </span>
                 </li>
+                <li ng-show="!basket.length"><g:message code="basket.empty"></g:message></li>
             </ul>
 
             <common:link class="btn btn-warning" controller="basket" action="checkout" https="false"><g:message
@@ -81,6 +82,7 @@
                     </span>
                     </span>
                 </li>
+                <li ng-show="!compareList.length"><g:message code="compareList.empty"></g:message></li>
             </ul>
             <g:link class="btn btn-warning" controller="comparison" action="show"><g:message
                     code="compareList.show"></g:message></g:link>
@@ -107,6 +109,7 @@
                     </span>
                     </span>
                 </li>
+                <li ng-show="!wishList.length"><g:message code="wishList.empty"></g:message></li>
             </ul>
             <g:link class="btn btn-warning" controller="wishList" action="show"><g:message
                     code="wishList.show"></g:message></g:link>
@@ -139,14 +142,16 @@
                 </g:if>
                 <li class="divider"></li>
                 <g:if test="${currentUser instanceof Customer}">
-                    <g:set var="inquiredOrders" value="${Order.findAllByCustomerAndStatusAndTrackingCodeNotIsNull(currentUser as Customer, OrderHelper.STATUS_INQUIRED)}"/>
+                    <g:set var="inquiredOrders"
+                           value="${Order.findAllByCustomerAndStatusAndTrackingCodeNotIsNull(currentUser as Customer, OrderHelper.STATUS_INQUIRED)}"/>
                     <g:if test="${inquiredOrders?.size() > 0}">
                         <g:each in="${inquiredOrders}">
                             <li class="group-title"><g:message code="order.actions.completion"/></li>
                             <li class="dropdown">
                                 <a tabindex="-1"
                                    href="<g:createLink controller="order"
-                                                       action="completion" params="${[id:it.id]}"/>"><g:message code="order.trackingCode"/>: ${ it.trackingCode }</a></li>
+                                                       action="completion" params="${[id: it.id]}"/>"><g:message
+                                        code="order.trackingCode"/>: ${it.trackingCode}</a></li>
                         </g:each>
                         <li class="divider"></li>
                     </g:if>
