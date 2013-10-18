@@ -336,3 +336,5 @@ grails.cache.config = {
         maxElementsOnDisk 10000000
     }
 }
+
+eshop.instance = 'zanbil'
