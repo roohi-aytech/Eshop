@@ -23,7 +23,7 @@
     <tr class="table-row">
         <td class="span180 table-cell">
             <div class="well sidebar-nav home">
-                <ehcache:render template="common/browsingTextualMenu"/>
+                <g:render template="common/browsingTextualMenu"/>
             </div>
             <ehcache:render template="banners/rightsideBanners"/>
         </td>
