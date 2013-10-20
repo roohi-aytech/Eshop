@@ -74,7 +74,7 @@
         <br/>
 
         <div>
-            <common:link action="checkout" class="btn" https="false"><g:message code="invoice.return"/></common:link>
+            <common:link action="checkout" class="btn" https="${false}"><g:message code="invoice.return"/></common:link>
             <g:if test="${deliveryMethods.size > 0}">
                 <input type="submit" class="btn btn-primary" style="height:30px;"
                        value="<g:message code="basket.invoice"/>"/>

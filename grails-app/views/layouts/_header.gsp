@@ -56,7 +56,7 @@
                 </li>
             </ul>
 
-            <common:link class="btn btn-warning" controller="basket" action="checkout" https="false"><g:message
+            <common:link class="btn btn-warning" controller="basket" action="checkout" https="${false}"><g:message
                     code="basket.show"></g:message></common:link>
         </div>
     </div>
