@@ -188,7 +188,7 @@ class OrderController {
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
 
-        event(topic: 'order_event', data: [id: order.id], namespace: 'browser')
+        event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
 
         mailService.sendMail {
             to order.ownerEmail
@@ -413,6 +413,8 @@ class OrderController {
                 payment.order.paymentType = 'online'
                 payment.order.save()
 
+                event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
+
                 //save order tracking log
                 def trackingLog = new OrderTrackingLog()
                 trackingLog.action = OrderHelper.ACTION_COMPLETION
@@ -494,6 +496,8 @@ class OrderController {
             order.paymentType = 'bank-receipt'
             order.save()
 
+            event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
+
             //save order tracking log
             def trackingLog = new OrderTrackingLog()
             trackingLog.action = OrderHelper.ACTION_COMPLETION
@@ -529,6 +533,8 @@ class OrderController {
         order.paymentType = 'account-value'
         order.save()
 
+        event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
+
 //        save order tracking log
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = OrderHelper.ACTION_COMPLETION
@@ -552,6 +558,8 @@ class OrderController {
         order.status = OrderHelper.STATUS_PAID
         order.paymentType = 'in-place'
         order.save()
+
+        event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
 
 //        save order tracking log
         def trackingLog = new OrderTrackingLog()

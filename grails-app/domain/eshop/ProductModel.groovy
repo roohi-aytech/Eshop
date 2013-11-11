@@ -36,6 +36,6 @@ class ProductModel {
 
     @Override
     String toString() {
-        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} مدل ${name?:""}"
+        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} مدل ${name?:""} با گارانتی ${guarantee?:""}"
     }
 }

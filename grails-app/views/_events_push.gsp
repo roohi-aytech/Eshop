@@ -13,8 +13,8 @@
     function handleOrderEvent(data){
         try{
             if(data.id){
-                if (receivedOrders.indexOf(data.id) == -1) {
-                    receivedOrders[receivedOrders.length] = data.id;
+                if (receivedOrders.indexOf(data.id + "_" + data.status) == -1) {
+                    receivedOrders[receivedOrders.length] = data.id + "_" + data.status;
                     var url = "<g:createLink controller="orderAdministration" action="orderNotification"/>";
                     $.ajax({
                         type: "POST",
@@ -23,7 +23,7 @@
                     }).done(function (response) {
                         if (response != "0") {
                             $.msgGrowl({
-                                type: 'info', sticky: true, 'title': '${message(code: 'order.notification.title')}', 'text': response, lifetime: 5000
+                                type: 'info', sticky: true, 'title': response.title, 'text': response.body, lifetime: 5000
                             });
                         }
                     });

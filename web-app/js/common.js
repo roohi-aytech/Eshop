@@ -190,7 +190,10 @@ function setExternalLinksTarget(){
     jQuery(function($){
         $('a[href^="http://"]')
             .not('[href*="richardneililagan.com"]')
-            .attr('target','_blank');
+            .each(function(){
+                if(!$(this).attr('target'))
+                    $(this).attr('target','_blank');
+            });
     });
 }
 

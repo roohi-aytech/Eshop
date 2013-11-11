@@ -5,6 +5,7 @@ import eshop.accounting.CustomerTransaction
 import eshop.accounting.OnlinePayment
 import eshop.accounting.PaymentRequest
 import eshop.accounting.Transaction
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 class OrderAdministrationController {
@@ -27,7 +28,7 @@ class OrderAdministrationController {
                 result += "<br/>"
             }
             result += "<a target='_blank' href='${createLink(controller: 'orderAdministration', action: 'console', params: [id: order.id])}'>${message(code: 'order.notification.link')}</a>"
-            render result
+            render([title: message(code: "order.statusChangeNotification.title.${order.status}"), body: result] as JSON)
         } else
             render 0
     }
@@ -187,6 +188,8 @@ class OrderAdministrationController {
             return
         }
 
+        event(topic: 'order_event', data: [id: order.id, status: order.status], namespace: 'browser')
+
         redirect(action: 'list', params: [status: oldStatus])
     }
 
@@ -258,6 +261,8 @@ class OrderAdministrationController {
     }
 
     def act_markAsNotExist() {
+        def order = Order.get(params.id)
+
         actOnOrder(
                 OrderHelper.STATUS_UPDATING,
                 OrderHelper.STATUS_NOT_EXIST,
@@ -265,16 +270,18 @@ class OrderAdministrationController {
                 "")
 
 
-        mailService.sendMail {
-            to order.ownerEmail
-            subject message(code: 'emailTemplates.not_exist.subject')
-            html(view: "/messageTemplates/email_template",
-                    model: [message: g.render(template: '/messageTemplates/mail/not_exist', model: [order: order]).toString()])
-        }
+        if (order.ownerEmail)
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.not_exist.subject')
+                html(view: "/messageTemplates/email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/not_exist', model: [order: order]).toString()])
+            }
 
-        messageService.sendMessage(
-                order.ownerMobile,
-                g.render(template: '/messageTemplates/sms/not_exist', model: [order: order]).toString())
+        if (order.ownerMobile)
+            messageService.sendMessage(
+                    order.ownerMobile,
+                    g.render(template: '/messageTemplates/sms/not_exist', model: [order: order]).toString())
     }
 
 
@@ -441,7 +448,7 @@ class OrderAdministrationController {
             product.save()
         }
 
-        if(order.deliveryTrackingCode && order.deliveryTrackingCode != ''){
+        if (order.deliveryTrackingCode && order.deliveryTrackingCode != '') {
 
             mailService.sendMail {
                 to order.ownerEmail
@@ -453,8 +460,7 @@ class OrderAdministrationController {
             messageService.sendMessage(
                     order.ownerMobile,
                     g.render(template: '/messageTemplates/sms/delivery_with_tracking_code', model: [order: order]).toString())
-        }
-        else{
+        } else {
 
             mailService.sendMail {
                 to order.ownerEmail
