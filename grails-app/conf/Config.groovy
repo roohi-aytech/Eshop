@@ -337,4 +337,4 @@ grails.cache.config = {
     }
 }
 
-eshop.instance = 'zanbil'
+eShop.instance = 'zanbil'

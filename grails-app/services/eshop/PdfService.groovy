@@ -297,7 +297,7 @@ class PdfService {
         table.addCell(createDescriptionCell(g.message(code: 'invoice.description'), fontPersianBlackBold, 8, Element.ALIGN_LEFT, 0, 0))
         table.addCell(createDescriptionCell("1. " + g.message(code: 'invoice.description.1'), fontPersianBlack, 8, Element.ALIGN_LEFT, 20, 0))
         table.addCell(createDescriptionCell("2. " + g.message(code: 'invoice.description.2'), fontPersianBlack, 8, Element.ALIGN_LEFT, 20, 0))
-        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: [order.ownerName]), fontPersianBlack, 8, Element.ALIGN_LEFT, 0, 0))
+        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: ['........................']), fontPersianBlack, 8, Element.ALIGN_LEFT, 0, 0))
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign'), fontPersianBlack, 8, Element.ALIGN_RIGHT, 0, 80))
 
         table.writeSelectedRows(0, -1, 0, -1, 40, 490, writer.directContent)
@@ -539,7 +539,7 @@ class PdfService {
         table.addCell(createDescriptionCell(g.message(code: 'invoice.description'), fontPersianBlackBold, 7, Element.ALIGN_LEFT, 0, 0))
         table.addCell(createDescriptionCell("1. " + g.message(code: 'invoice.description.1'), fontPersianBlack, 7, Element.ALIGN_LEFT, 20, 0))
         table.addCell(createDescriptionCell("2. " + g.message(code: 'invoice.description.2'), fontPersianBlack, 7, Element.ALIGN_LEFT, 20, 0))
-        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: [order.ownerName]), fontPersianBlack, 7, Element.ALIGN_LEFT, 0, 0))
+        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: ['........................']), fontPersianBlack, 7, Element.ALIGN_LEFT, 0, 0))
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign'), fontPersianBlack, 7, Element.ALIGN_RIGHT, 0, 80))
 
         table.writeSelectedRows(0, -1, 0, -1, 40, 520, writer.directContent)

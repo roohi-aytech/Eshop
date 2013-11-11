@@ -154,7 +154,7 @@
                 <li><g:message code="invoice.description.2"/></li>
             </ol>
 
-            <div><g:message code="invoice.aggreegation" args="${[order.ownerName]}"/></div>
+            <div><g:message code="invoice.aggreegation" args="${['........................']}"/></div>
 
             <div id="invoice-sign"><g:message code="invoice.aggreegation.sign"/></div>
         </div>

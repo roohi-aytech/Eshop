@@ -97,6 +97,7 @@
                                 </td>
 
                                 <td class="span200 table-cell">
+                                    <ehcache:render template="banners/enamad"/>
                                     <ehcache:render template="banners/leftsideBanners"/>
                                 </td>
                             </tr>

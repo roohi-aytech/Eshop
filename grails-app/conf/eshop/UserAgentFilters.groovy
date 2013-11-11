@@ -11,6 +11,7 @@ class UserAgentFilters {
                 if (userAgentIdentService.browser.toLowerCase().contains('robot') &&
                         !userAgent.contains('googlebot') &&
                         !userAgent.contains('bingbot') &&
+                        !userAgent.contains('ask jeeves/teoma') &&
                         !userAgent.contains('yahoo')) {
                     response.setStatus(403);
                     response.flushBuffer()
