@@ -413,7 +413,7 @@ class OrderController {
                 payment.order.paymentType = 'online'
                 payment.order.save()
 
-                event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
+                event(topic: 'order_event', data: [id:payment.order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
 
                 //save order tracking log
                 def trackingLog = new OrderTrackingLog()
