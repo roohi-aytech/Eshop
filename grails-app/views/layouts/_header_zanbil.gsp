@@ -143,7 +143,7 @@
                 <li class="divider"></li>
                 <g:if test="${currentUser instanceof Customer}">
                     <g:set var="inquiredOrders"
-                           value="${Order.findAllByCustomerAndStatusAndPaymentTimeoutGreaterThanEquals(customer, OrderHelper.STATUS_INQUIRED, new Date())}"/>
+                           value="${Order.findAllByCustomerAndStatusAndPaymentTimeoutGreaterThanEquals(currentUser, OrderHelper.STATUS_INQUIRED, new Date())}"/>
                     <g:if test="${inquiredOrders?.size() > 0}">
                         <li class="group-title"><g:message code="order.actions.completion"/></li>
                         <g:each in="${inquiredOrders}">
