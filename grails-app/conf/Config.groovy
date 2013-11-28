@@ -115,7 +115,7 @@ environments {
         grails.logging.jul.usebridge = false
         grails.plugin.databasemigration.updateOnStart = true
         grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
-//        grails.serverURL = "http://www.zanbil.ir"
+        grails.serverURL = "http://www.zanbil.ir"
     }
 }
 
