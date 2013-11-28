@@ -15,6 +15,11 @@ import java.awt.Font
 
 
 
+eShop.instance = 'zanbil'
+
+grails.app.context = "/"
+
+
 grails.plugin.invitation.facebook.enabled = true
 grails.plugin.invitation.facebook.key = 'zanbil.ir@gmail.com'
 grails.plugin.invitation.facebook.secret = 'z@nbil.ir1391'
@@ -110,7 +115,7 @@ environments {
         grails.logging.jul.usebridge = false
         grails.plugin.databasemigration.updateOnStart = true
         grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
-        grails.serverURL = "http://www.zanbil.ir"
+//        grails.serverURL = "http://www.zanbil.ir"
     }
 }
 
@@ -336,5 +341,3 @@ grails.cache.config = {
         maxElementsOnDisk 10000000
     }
 }
-
-eShop.instance = 'zanbil'
