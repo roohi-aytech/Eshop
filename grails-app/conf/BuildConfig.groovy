@@ -4,7 +4,7 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
-grails.tomcat.nio = true
+//grails.tomcat.nio = true
 //grails.server.port.http = 80
 //grails.server.host = "local.zanbil.ir"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
@@ -20,7 +20,7 @@ grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
-        // excludes 'ehcache'
+        excludes 'commons-logging'
     }
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
@@ -70,6 +70,8 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.1.6"
 
         build ":tomcat:$grailsVersion"
+
+        compile ":ws-client:1.0"
 
         runtime ":database-migration:1.1"
 
