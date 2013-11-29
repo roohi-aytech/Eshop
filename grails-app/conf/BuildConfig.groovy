@@ -5,16 +5,17 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.tomcat.nio = true
-//grails.server.port.http = 80
+grails.server.port.http = 80
 //grails.server.host = "local.zanbil.ir"
+
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.war.resources = { stagingDir ->
-    delete(file:"${stagingDir}/WEB-INF/lib/ext-impl.jar")
-    delete(file:"${stagingDir}/WEB-INF/lib/ext-service.jar")
-    delete(file:"${stagingDir}/WEB-INF/lib/portal-service.jar")
-    delete(file:"${stagingDir}/WEB-INF/lib/portal-impl.jar")
-    delete(file:"${stagingDir}/WEB-INF/lib/portal-kernel.jar")
-    delete(file:"${stagingDir}/WEB-INF/lib/util-java.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/ext-impl.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/ext-service.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/portal-service.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/portal-impl.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/portal-kernel.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/util-java.jar")
 }
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -78,7 +79,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.0.0'
         compile ":cache-ehcache:1.0.0"
         compile ":ckeditor:3.6.2.2"
-        compile (":mongodb:1.0.0.GA"){
+        compile(":mongodb:1.0.0.GA") {
             excludes 'mongo-java-driver', 'gmongo'
         }
 
