@@ -7,6 +7,9 @@ class GeneralFilters {
     def filters = {
         all(controller: '*', action: '*') {
             before = {
+                if(!grailsApplication.config.force.www)
+                    return true
+
                 if (request.serverName != 'localhost' && !request.serverName.startsWith('local.') && !request.serverName.toString().startsWith("www")) {
                     def targetUrl = new ApplicationTagLib().createLink(
                             [
