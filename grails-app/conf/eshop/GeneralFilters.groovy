@@ -1,16 +1,22 @@
 package eshop
 
 import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib
+import org.springframework.web.servlet.support.RequestContextUtils
 
 class GeneralFilters {
 
     def filters = {
         all(controller: '*', action: '*') {
             before = {
-                if(!grailsApplication.config.force.www)
-                    return true
 
-                if (request.serverName != 'localhost' && !request.serverName.startsWith('local.') && !request.serverName.toString().startsWith("www")) {
+                //set locale
+                RequestContextUtils.getLocaleResolver(request).setLocale(request, response, new Locale(grailsApplication.config.locale, grailsApplication.config.locale.toString().toUpperCase()))
+
+
+                if (grailsApplication.config.force.www &&
+                        request.serverName != 'localhost' &&
+                        !request.serverName.startsWith('local.') &&
+                        !request.serverName.toString().startsWith("www")) {
                     def targetUrl = new ApplicationTagLib().createLink(
                             [
                                     controller: controllerName,
