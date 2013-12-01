@@ -54,7 +54,7 @@
 
 </div>
 <div class="bottom-bar">
-    <div class="help">راهنمای استفاده از زنبیل</div>
+    <div class="help">راهنمای استفاده از <g:message code="name"/></div>
 
     <div class="know-us">با ما آشنا شوید</div>
 
