@@ -1,5 +1,10 @@
 grails.serverURL = "http://local.zanbil.ir"
-grails.app.context = "/"
+grails.app.context = "/eshop"
 eShop.instance = 'zanbil'
-force.www = false
-locale='lo'
+url.www = false
+locale='local'
+ckeditor {
+    upload {
+        basedir = "/Volumes/Personal HD/DevDesk/Eshop-Images/"
+    }
+}
