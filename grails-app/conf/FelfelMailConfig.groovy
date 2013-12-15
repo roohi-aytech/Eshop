@@ -5,7 +5,7 @@ grails {
         ssl = "off"
         host = "127.0.0.1"
         from = "noreply@zanbil.ir"
-        port = 587
+        port = 25
         ssl = "off"
         username = "noreply@felfel.ir"
         password = "Salam123"
