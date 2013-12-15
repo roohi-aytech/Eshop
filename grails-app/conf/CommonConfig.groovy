@@ -131,7 +131,6 @@ ckeditor {
     skipAllowedItemsCheck = false
     defaultFileBrowser = "ofm"
     upload {
-        basedir = "/Volumes/Personal HD/DevDesk/Eshop-Images/"
         baseurl = "/image/get?path="
         overwrite = false
         link {
