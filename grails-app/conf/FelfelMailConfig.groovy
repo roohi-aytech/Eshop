@@ -1,14 +1,14 @@
 
-grails.mail.default.from="Zanbil.ir <no-reply@zanbil.ir>"
+grails.mail.default.from="Felfel.ir <noreply@felfel.ir>"
 grails {
     mail {
         ssl = "off"
         host = "127.0.0.1"
-        from = "no-reply@zanbil.ir"
-        port = 8443
+        from = "noreply@zanbil.ir"
+        port = 587
         ssl = "off"
-        username = "no-reply@zanbil.ir"
-        password = "eshop@agah"
+        username = "noreply@felfel.ir"
+        password = "Salam123"
         props = [
                 "mail.debug":"true",
         ]
