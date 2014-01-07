@@ -1,6 +1,6 @@
 import org.codehaus.groovy.grails.compiler.GrailsClassLoader
 
-instance = "Felfel"
+instance = "Zanbil"
 
 def classLoader = new GrailsClassLoader()
 grails.config.locations = [
