@@ -5,6 +5,6 @@ url.www = true
 locale='zanbil'
 ckeditor {
     upload {
-        basedir = "/home/uploads"
+        basedir = "/home/uploads/"
     }
 }
