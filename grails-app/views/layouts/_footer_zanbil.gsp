@@ -111,6 +111,5 @@
 
 
 <!-- Iran Web Festival -->
-<script>var _mxvtmw_position = 'left', _mxvtmw_domain = 'zanbil.ir'</script>
-<script src="http://iwfcdn.iranwebfestival.com/js/mx.vtmw.min.js?59691" async="async"></script>
+<script type="text/javascript" src="http://1abzar.ir/abzar/tools/fix-pic/index.php?pz=3&ax=http://cv.zanbil.ir/zanbil.png&url=http://directory.iranwebfestival.com/website/zanbil.ir/"></script>
 <!-- Iran Web Festival -->
