@@ -12,11 +12,30 @@ class ProductType extends BaseProduct {
     ProductType parentProduct
     ProductType rootProductType
     Long assetcategoryId
-    Boolean deleted=false
+    Boolean deleted = false
     byte[] image
 
-    String getUrlName(){
-        if(seoFriendlyName)
+    transient Integer getChildrenCount() {
+        def count = 0
+        children.each { count += it.childrenCount + 1 }
+        count
+    }
+
+    transient def getAllChildren() {
+        def list = []
+        children.each {
+            list += it.getAllChildren()
+            list << it
+        }
+        list
+    }
+
+    transient Integer getDepth() {
+        parentProduct ? parentProduct.depth + 1 : 0
+    }
+
+    String getUrlName() {
+        if (seoFriendlyName)
             return seoFriendlyName
 
         name

@@ -1,5 +1,5 @@
 <g:if test="${articles && !articles.isEmpty()}">
-    <div class="well sidebar-nav">
+    <div>
         <ul class="nav nav-list">
             <li class="nav-header"><g:message code="journalArticle"></g:message></li>
             <g:each in="${articles}">

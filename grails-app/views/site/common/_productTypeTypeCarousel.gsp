@@ -3,6 +3,8 @@
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.plugins.js')}" type="text/javascript"></script>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.showbizpro.js')}" type="text/javascript"></script>
 <g:set var="id" value="${java.util.UUID.randomUUID()}"/>
+
+<h3 class="showbiz-header"><g:message code="productType.select"/></h3>
 <table class="table-simulated productTypeType-carousel-container">
     <tr>
         <td class="showbiz-navigation center sb-nav-dark table-cell">

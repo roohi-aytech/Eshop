@@ -12,7 +12,7 @@ class EshopTagLib {
         request.setAttribute("product", product)
         HashSet definedProductTypes = new HashSet()
         request.setAttribute("definedProductTypes", definedProductTypes)
-        product.productTypes?.findAll {!it.deleted}?.sort { it.name }?.each {
+        product.productTypes?.findAll { !it.deleted }?.sort { it.name }?.each {
             request.setAttribute("productType", it)
             out << renderProductTypeAttributes()
             request.removeAttribute("productType")
@@ -31,7 +31,7 @@ class EshopTagLib {
         out << "<fieldset class='form'>"
         out << "<legend>${productType.name}</legend>"
 
-        def attributeTypes = AttributeType.findAllByProductTypeAndCategoryIsNullAndDeleted(productType,false)
+        def attributeTypes = AttributeType.findAllByProductTypeAndCategoryIsNullAndDeleted(productType, false)
         attributeTypes?.sort { it.sortIndex }?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
@@ -55,20 +55,20 @@ class EshopTagLib {
     }
     def renderAttributeCategory = { attrs, body ->
         AttributeCategory attributeCategory = request.getAttribute("attributeCategory") ?: attrs.attributeCategory
-        if(attributeCategory.deleted)
+        if (attributeCategory.deleted)
             return
 
         out << "<fieldset class='form'>"
         out << "<legend>${attributeCategory?.name}</legend>"
 
-        def attributeTypes = AttributeType.findAllByCategoryAndDeleted(attributeCategory,false)
+        def attributeTypes = AttributeType.findAllByCategoryAndDeleted(attributeCategory, false)
         attributeTypes?.sort { it.sortIndex }?.each {
             request.setAttribute("attribute", it)
             out << renderAttribute()
             request.removeAttribute("attribute")
         }
 
-        def attributeCategories = AttributeCategory.findAllByParentCategoryAndDeleted(attributeCategory,false)
+        def attributeCategories = AttributeCategory.findAllByParentCategoryAndDeleted(attributeCategory, false)
         attributeCategories.sort { it.name }.each {
             request.setAttribute("attributeCategory", it)
             out << renderAttributeCategory()
@@ -201,24 +201,24 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a type="basket" original-title="${message(code: "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a type="basket" original-title="${message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                     else
                         out << """
-                            <a class="btn btn-primary btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><span>${g.message(code: "add-to-basket")}</span></a>
+                            <a class="btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" :  "add-to-basket")}</span></a>
                             """
-                } else {
+                } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
                 }
-            } else if (defaultModel.status == 'not-exists') {
+            } else if (!attrs.buttonOnly && defaultModel.status == 'not-exists') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.notExists'))
-            } else if (defaultModel.status == 'inquiry-required') {
+            } else if (!attrs.buttonOnly && defaultModel.status == 'inquiry-required') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
-            } else if (defaultModel.status == 'coming-soon') {
+            } else if (!attrs.buttonOnly && defaultModel.status == 'coming-soon') {
                 out << (attrs.image ? '' : g.message(code: 'product.price.comingSoon'))
             }
         } else
-            out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
+            out << (attrs.image ? '' : attrs.buttonOnly ? '' : g.message(code: 'product.price.inquiryRequired'))
     }
 
     def addToWishList = { attrs, body ->
@@ -230,11 +230,11 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-            <a type="wish" original-title="${message(code: "add-to-wishList")}" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
+            <a type="wish" original-title="${message(code:  attrs.useLongText ? "add-to-wishList.long" : "add-to-wishList")}" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
             """
         else
             out << """
-                <a class="btn btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code: "add-to-wishList")}</span></a>
+                <a class="btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code:  attrs.useLongText ? "add-to-wishList.long" : "add-to-wishList")}</span></a>
                 """
     }
 
@@ -247,11 +247,11 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-                <a type="compare" original-title="${message(code: "add-to-compareList")}" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
+                <a type="compare" original-title="${message(code: attrs.useLongText ? "add-to-compareList.long" :  "add-to-compareList")}" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
                 """
         else
             out << """
-                <a class="btn btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code: "add-to-compareList")}</span></a>
+                <a class="btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code:  attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")}</span></a>
                 """
     }
 

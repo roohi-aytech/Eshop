@@ -54,10 +54,10 @@
                             <span class="price"><g:message code="price"></g:message>: <b>{{wishListItem.price}}</b>
                             </span>
                             <span>
-                                <a href="" class="btn btn-primary btn-buy"
+                                <a href="" class="btn-buy"
                                    onclick="addToBasket({{wishListItem.id}}, '{{wishListItem.title}}', '{{wishListItem.price}}')"><span><g:message code="add-to-basket"></g:message></span>
                                 </a>
-                                <a href="" class="btn btn-compare"
+                                <a href="" class="btn-compare"
                                    onclick="addToCompareList({{wishListItem.id}}, '{{wishListItem.title}}', '{{wishListItem.price}}')"><span><g:message code="add-to-compareList"></g:message></span>
                                 </a>
                             </span>
@@ -69,9 +69,9 @@
                 </div>
                 <sec:ifNotLoggedIn>
                     <div class="info">
-                        <div><g:message code="wishList.notEnabled.message"></g:message></div>
-                        <common:loginLink class="btn btn-success"></common:loginLink>
-                        <common:registerLink class="btn btn-primary"></common:registerLink>
+                        <div><g:message code="wishList.notEnabled.message"/></div>
+                        <common:loginLink class="btn btn-success"/>
+                        <common:registerLink class="btn btn-primary"/>
                     </div>
                 </sec:ifNotLoggedIn>
             </div>

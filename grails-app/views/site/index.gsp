@@ -4,8 +4,8 @@
 <head>
     <title><g:message code="site.mainPage.title"/></title>
     <!-- E7zma1ATwR6TvWerhh0l7txRVh0 -->
-    <meta name="description" content="${message(code:'site.mainPage.description')}">
-    <meta name="keywords" content="${message(code:'site.mainPage.keywords')}">
+    <meta name="description" content="${message(code: 'site.mainPage.description')}">
+    <meta name="keywords" content="${message(code: 'site.mainPage.keywords')}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="">
@@ -21,46 +21,59 @@
 <body>
 <table class="layout-container table-simulated">
     <tr class="table-row">
-        <td class="span180 table-cell">
-            <div class="well sidebar-nav home">
-                <g:render template="common/browsingTextualMenu"/>
-            </div>
-            <ehcache:render template="banners/rightsideBanners"/>
+        <td colspan="2">
+            <g:render template="common/slideshowMain"/>
         </td>
-
-        <td class="table-cell">
+    </tr>
+    <tr class="table-row">
+        <td colspan="2">
             <table class="table-simulated">
-                <tr class="table-row">
-                    <td>
-                    <g:render template="common/slideshowMain"/>
+                <tr>
+                    <td class="specialSales-cell">
+                        <g:render template="common/slideshowSpecialSales"
+                                  model="[specialSaleSlides: specialSaleSlides]"/>
                     </td>
-                </tr>
-
-                <tr class="table-row">
-                    <td class="table-cell">
-                        <table class="table-simulated">
-                            <tr class="table-row">
-
-                                <td class="span600 table-cell">
-
-                                    <ehcache:render template="common/slideshowSpecialSales"
-                                              model="[specialSaleSlides: specialSaleSlides]"/>
-
-                                    <ehcache:render template="common/browsingGraphicalMenu"/>
-
-                                    <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"/>
-                                </td>
-
-                                <td class="span200 table-cell">
-                                    <ehcache:render template="banners/enamad"/>
-                                    <ehcache:render template="banners/leftsideBanners"/>
-                                </td>
-                            </tr>
-                        </table>
+                    <td class="namad-cell">
+                        <g:render template="banners/enamad"/>
                     </td>
                 </tr>
             </table>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="table-cell banners">
+            <g:render template="banners/rightsideBanners"/>
+        </td>
+
+        <td class="table-cell">
+
+            <g:render template="common/browsingGraphicalMenu"/>
+
+            <g:render template="common/productGrid"
+                      model="${[productIds: filters.products.productIds]}"/>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="table-cell" colspan="2">
+            <g:render template="common/productCarousel"
+                      key="${productTypeId}"
+                      model="${[title: message(code: 'product.mostVisited.list', args: ['']), productList: mostVisitedProducts]}"/>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td colspan="2" class="table-cell">
+            <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
+            <g:set var="lastVisitedProducts"
+                   value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>
+            <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
+                <g:render template="/site/common/productCarousel"
+                          model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>
+            </g:if>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="table-cell" colspan="2">
+            <g:render template="news/window" model="${[productTypeId: productTypeId]}"/>
         </td>
     </tr>
 </table>

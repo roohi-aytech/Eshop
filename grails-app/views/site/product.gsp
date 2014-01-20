@@ -52,9 +52,9 @@
 
                 <div class="product-card-footer">
                     <eshop:addToCompareList prodcutId="${product.id}"
-                                            productTitle="${product.toString()}"/>
+                                            productTitle="${product.toString()}" useLongText="${true}"/>
                     <eshop:addToWishList prodcutId="${product.id}"
-                                         productTitle="${product.toString()}"/>
+                                         productTitle="${product.toString()}" useLongText="${true}"/>
                 </div>
 
                 <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
@@ -75,20 +75,23 @@
                 <tr class="table-row">
                     <td class="table-cell" style="padding-left:5px;">
                         <div style="float:left;padding-top:6px;">
-                            <div class="g-plusone"></div>
 
-                            <script type="text/javascript">
-                                window.___gcfg = {lang: 'fa'};
+                            <g:if test="${grailsApplication.config.instance != 'Local'}">
+                                <div class="g-plusone"></div>
 
-                                (function () {
-                                    var po = document.createElement('script');
-                                    po.type = 'text/javascript';
-                                    po.async = true;
-                                    po.src = 'https://apis.google.com/js/plusone.js';
-                                    var s = document.getElementsByTagName('script')[0];
-                                    s.parentNode.insertBefore(po, s);
-                                })();
-                            </script>
+                                <script type="text/javascript">
+                                    window.___gcfg = {lang: 'fa'};
+
+                                    (function () {
+                                        var po = document.createElement('script');
+                                        po.type = 'text/javascript';
+                                        po.async = true;
+                                        po.src = 'https://apis.google.com/js/plusone.js';
+                                        var s = document.getElementsByTagName('script')[0];
+                                        s.parentNode.insertBefore(po, s);
+                                    })();
+                                </script>
+                            </g:if>
                         </div>
                         <ul class="breadcrumb">
                             <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -153,20 +156,22 @@
                                                             readOnly="true"/>
                                             </div>
 
-                                            <p class="brand-badge">
-                                                <img width="80px" height="80px" itemprop="brand"
-                                                     src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
-                                                     alt="${product?.brand}"/>
-                                            </p>
+                                            <div class="column-left">
+                                                <p class="brand-badge">
+                                                    <img width="80px" height="80px" itemprop="brand"
+                                                         src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
+                                                         alt="${product?.brand}"/>
+                                                </p>
 
-                                            <p>
-                                                <g:message code="productCode.label"/>: <b>${params.id}</b>
-                                            </p>
+                                                <p>
+                                                    <g:message code="productCode.label"/>: <b>${params.id}</b>
+                                                </p>
 
 
-                                            <div id="product-price">
-                                                <ehcache:renderShortTTL template="product/price" key="${params.id}"
-                                                          model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
+                                                <div id="product-price">
+                                                    <ehcache:renderShortTTL template="product/price" key="${params.id}"
+                                                                            model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
+                                                </div>
                                             </div>
 
                                             <g:if test="${product.description}">
@@ -182,6 +187,13 @@
                                     <td class="table-cell product-imageColumn">
                                         <div><ehcache:render template="product/zoom" key="${params.id}"/></div>
                                     </td>
+                                    <td class="table-cell product-details">
+                                        <ul class="tabs rotate">
+                                            <li class="product-specification"><g:message code="product.specifications"/></li>
+                                            <li class="product-proOpinions"><g:message code="product.proOpinions"/></li>
+                                            <li class="product-reviewList"><g:message code="product.review.list"/></li>
+                                        </ul>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -191,21 +203,34 @@
                 <tr class="table-row">
                     <td class="table-cell">
                         <div class="white-panel">
-                            <h3><g:message code="product.specifications"/></h3>
-                            <ehcache:render template="product/attributes" key="${params.id}"
-                                      model="${[categories: rootAttributeCategories]}"/>
+                            <ul class="tabs">
+                                <li class="product-specification"><g:message code="product.specifications"/></li>
+                                <li class="product-proOpinions"><g:message code="product.proOpinions"/></li>
+                                <li class="product-reviewList"><g:message code="product.review.list"/></li>
+                            </ul>
 
-                            <hr/>
-                            <ehcache:render template="product/description" key="${params.id}"/>
-                            <ehcache:render template="../customerReview/resources"
-                                      model="${['product': product]}"/>
-                            <ehcache:render template="../customerReview/list"
-                                      model="${['product': product]}" key="${params.id}"/>
-                            <ehcache:render template="../customerReview/create"
-                                      model="${['product': product]}"/>
-                            <hr/>
-                            <ehcache:render template="common/productCarousel" key="${product?.productTypes?.toArray()?.find()?.id}"
-                                      model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"/>
+                            <div class="product-specification-panel">
+                                <h3><g:message code="product.specifications"/></h3>
+                                <ehcache:render template="product/attributes" key="${params.id}"
+                                                model="${[categories: rootAttributeCategories]}"/>
+                            </div>
+
+                            <div class="product-proOpinions-panel">
+                                <h3><g:message code="product.proOpinions"/></h3>
+                                <ehcache:render template="product/description" key="${params.id}"/>
+                            </div>
+
+                            <div class="product-reviewList-panel">
+                                <ehcache:render template="../customerReview/resources"
+                                                model="${['product': product]}"/>
+                                <ehcache:render template="../customerReview/list"
+                                                model="${['product': product]}" key="${params.id}"/>
+                                <ehcache:render template="../customerReview/create"
+                                                model="${['product': product]}"/>
+                            </div>
+                            <g:render template="common/productCarousel"
+                                            key="${product?.productTypes?.toArray()?.find()?.id}"
+                                            model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"/>
                         </div>
                     </td>
                 </tr>

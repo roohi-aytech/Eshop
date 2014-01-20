@@ -7,6 +7,7 @@ class JournalArticle {
     String summary
     String keywords
     String text
+    byte[] image
     BaseProduct baseProduct
     static belongsTo = [BaseProduct]
     static mapping = {
@@ -19,5 +20,6 @@ class JournalArticle {
         summary(maxSize: 200000)
         keywords(maxSize: 200000)
         text()
+        image(nullable: true, maxSize: 20000000)
     }
 }

@@ -9,9 +9,10 @@ class SpecialSaleSlide {
     int totalCount
     int remainingCount
     int price
-    byte[] image1024
-    byte[] image1280
-    byte[] image1440
+    byte[] image
+    byte[] extraImage1
+    byte[] extraImage2
+    byte[] extraImage3
 
     static constraints = {
         product(nullable: false)
@@ -19,8 +20,9 @@ class SpecialSaleSlide {
         finishDate(nullable:false, persian: true)
         totalCount(nullable:false)
         remainingCount(nullable:false)
-        image1024(nullable: false, maxSize: 20000000)
-        image1280(nullable: false, maxSize: 20000000)
-        image1440(nullable: false, maxSize: 20000000)
+        image(maxSize: 20000000)
+        extraImage1(maxSize: 20000000)
+        extraImage2(maxSize: 20000000)
+        extraImage3(maxSize: 20000000)
     }
 }

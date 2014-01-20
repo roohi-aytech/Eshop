@@ -1,5 +1,7 @@
 package eshop
 
+import groovyx.net.http.HTTPBuilder
+
 import java.lang.management.GarbageCollectorMXBean
 
 class MongoJob {
@@ -25,16 +27,18 @@ class MongoJob {
             }
         }
         if (product.size() > 0) {
-            withHttp(uri: grailsApplication.config.grails.serverURL ?: 'http://localhost') {
-                try {
-                    def result = get(path: "/site/synchMongoItem/${product.first()}")
-                    println("Synchronizing: ${product.first()}, result: ${result}")
-                }
-                catch(ex) {
-                    ex.printStackTrace()
-                    println("Synchronizing: ${product.first()}, result: -2")
-                }
+            def http = new HTTPBuilder("${(grailsApplication.config.grails.serverURL ?: 'http://localhost')}/site/synchMongoItem/${product.first()}")
+            try {
+                def result = http.get([:]).toString().trim()
+//            withHttp(uri: grailsApplication.config.grails.serverURL ?: 'http://localhost') {
+//                    def result = get(path: "/site/synchMongoItem/${product.first()}")
+                println("Synchronizing: ${product.first()}, result: ${result}")
             }
+            catch (ex) {
+                ex.printStackTrace()
+                println("Synchronizing: ${product.first()}, result: -2")
+            }
+//            }
         } else {
 //            println('No Product to Synchronize')
         }

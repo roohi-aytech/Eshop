@@ -5,6 +5,6 @@ url.www = false
 locale='local'
 ckeditor {
     upload {
-        basedir = "/Volumes/Personal HD/DevDesk/Eshop-Images/"
+        basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
     }
 }

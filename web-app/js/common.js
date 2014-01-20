@@ -1,17 +1,16 @@
-function Stack()
-{
-    this.stac=new Array();
-    this.pop=function(){
+function Stack() {
+    this.stac = new Array();
+    this.pop = function () {
         return this.stac.pop();
     }
-    this.push=function(item){
+    this.push = function (item) {
         this.stac.push(item);
     }
 }
 
 $(document).ready(function () {
 
-    $(".showbiz .thumbnail").hoverIntent(function () {
+    $(".thumbnailGrid .thumbnail").hoverIntent(function () {
 
         $(this).find('img').first().css('position', 'absolute');
 
@@ -75,6 +74,17 @@ $(document).ready(function () {
     });
 
     $(window).resize(function () {
+
+//        window.alert($(document.body).width());
+
+        setupMenu();
+
+        $(document.body)
+            .removeClass('res-1024')
+            .removeClass('res-1280')
+            .removeClass('res-1440')
+            .removeClass('res-1920');
+
         changeAddToBasketButtonLabel();
         resizeThumbnails();
         setupFooter();
@@ -85,7 +95,7 @@ $(document).ready(function () {
 
     $('.scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
 
-    $('.topNavigationItem a.dropdown-toggle').tipsy({live: true});
+//    $('.topNavigationItem a.dropdown-toggle').tipsy({live: true});
     $('.price-last-update').tipsy({live: true});
     $('.addedValues .item').tipsy({live: true, gravity: 'e'});
 
@@ -114,15 +124,33 @@ $(document).ready(function () {
         setProductCartPosition()
     });
 
+    setupMenu();
     setExternalLinksTarget();
     setupFooter();
 
+    $('.product-specification').click(function () {
+        $('.product-proOpinions-panel').hide();
+        $('.product-reviewList-panel').hide();
+        $('.product-specification-panel').fadeIn();
+    });
+
+    $('.product-proOpinions').click(function () {
+        $('.product-specification-panel').hide();
+        $('.product-reviewList-panel').hide();
+        $('.product-proOpinions-panel').fadeIn();
+    });
+
+    $('.product-reviewList').click(function () {
+        $('.product-specification-panel').hide();
+        $('.product-proOpinions-panel').hide();
+        $('.product-reviewList-panel').fadeIn();
+    });
 
 });
 
 function setProductCartPosition() {
     var position = $(window).scrollTop();
-    var maxPosition = $('.totalFooter').position().top - $('.product-card').height() - 75;
+    var maxPosition = $('.totalFooter').position().top - $('.product-card').height() - 115;
     if (position > maxPosition)
         position = maxPosition;
     $('.product-card').first().stop().animate({
@@ -132,19 +160,25 @@ function setProductCartPosition() {
 
 
 function changeAddToBasketButtonLabel() {
-    $('#basketCounter').fadeIn();
-    $('#link-compareList .counter').fadeIn();
-    $('#link-wishList .counter').fadeIn();
+//    $('#basketCounter').fadeIn();
+//    $('#link-compareList .counter').fadeIn();
+//    $('#link-wishList .counter').fadeIn();
 }
 
 function resizeThumbnails() {
-    var currentWidth = $('.span600').first().width();
-    if (currentWidth > 700) {
-        $('.thumbnails.productTypes .span3').css('width', '19%');
+    var currentWidth = $('.thumbnailGrid').first().width();
+    if (currentWidth > 1600) {
+        $('.thumbnailGrid .span3').css('width', (currentWidth - 55) / 8);
+    } else if (currentWidth > 1400) {
+        $('.thumbnailGrid .span3').css('width', (currentWidth - 50) / 7);
+    } else if (currentWidth > 1200) {
+        $('.thumbnailGrid .span3').css('width', (currentWidth - 45) / 6);
+    } else if (currentWidth > 1000) {
+        $('.thumbnailGrid .span3').css('width', (currentWidth - 40) / 5);
+    } else if (currentWidth > 800) {
         $('.thumbnailGrid .span3').css('width', (currentWidth - 35) / 4);
     }
     else {
-        $('.thumbnails.productTypes .span3').css('width', '24%');
         $('.thumbnailGrid .span3').css('width', (currentWidth - 30) / 3);
     }
 
@@ -182,18 +216,22 @@ function hoverCarouselButton() {
     }
 }
 
-function setupFooter(){
+function setupFooter() {
     $('.totalFooter').height($('.footer1').height() + $('.footer2').height() + $('.footer3').height())
 }
 
-function setExternalLinksTarget(){
-    jQuery(function($){
+function setExternalLinksTarget() {
+    jQuery(function ($) {
         $('a[href^="http://"]')
             .not('[href*="richardneililagan.com"]')
-            .each(function(){
-                if(!$(this).attr('target'))
-                    $(this).attr('target','_blank');
+            .each(function () {
+                if (!$(this).attr('target'))
+                    $(this).attr('target', '_blank');
             });
     });
+}
+
+function setupMenu() {
+    $('.top-menu').width($('#header').width()).css('left', $('#header').position().left);
 }
 

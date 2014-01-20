@@ -98,9 +98,10 @@ class SiteController {
                 productTypes {
                     eq('id', productType.id)
                 }
+                eq('deleted', false)
             }
         } else {
-            model.slides = Slide.findAllByVisibleOnFirstPage(true)
+            model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
         }
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
@@ -111,6 +112,18 @@ class SiteController {
 
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
+
+        model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+            }
+            productTypes {
+                'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+            }
+            maxResults(20)
+            order("visitCount", "desc")
+        }
 
         model
     }
@@ -150,16 +163,17 @@ class SiteController {
                 model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${params.f},t${it.id}"]), id: it.id]
             }
         }
+
         if (productType) {
             model.slides = Slide.createCriteria().list {
                 productTypes {
                     eq('id', productType.id)
                 }
+                eq('deleted', false)
             }
         } else {
-            model.slides = Slide.findAllByVisibleOnFirstPage(true)
+            model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
         }
-
 
         trackingService.trackExplore(productType, brandList)
 
@@ -204,6 +218,19 @@ class SiteController {
 
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
+
+
+        model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+            }
+            productTypes {
+                'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+            }
+            maxResults(20)
+            order("visitCount", "desc")
+        }
 
         model
     }
@@ -296,8 +323,17 @@ class SiteController {
         model.filters = browseService.findProductTypeFilters(null, params.page ?: 0, "${params.page ?: 0}")
 
         //slides
-        model.slides = Slide.findAllByVisibleOnFirstPage(true)
+        model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
         model.specialSaleSlides = SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
+
+        model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+            }
+            maxResults(20)
+            order("visitCount", "desc")
+        }
 
         model
     }
@@ -581,7 +617,7 @@ class SiteController {
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-        model.slides = Slide.findAllByVisibleOnFirstPage(true)
+        model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
 
         def brandList = new ArrayList<Brand>()
         def brand
@@ -694,6 +730,27 @@ class SiteController {
         model.productType.children.findAll { !it.deleted }.each {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
+
+        model
+    }
+
+    def articleList() {
+        def model = [:]
+
+        model.productType = ProductType.get(params.id)
+
+        model.articles = JournalArticle.createCriteria().list(max: 10, offset: (params.page ? params.page.toInteger() * 10 : 0), {
+            if (params.id)
+                'in'('baseProduct.id', ProductType.get(params.id).allChildren.collect { it.id } + [params.id.toLong()])
+            order('id', ORDER_DESCENDING)
+
+            maxResults(10)
+        })
+
+        model.totalPages = JournalArticle.createCriteria().count{
+            if (params.id)
+                'in'('baseProduct.id', ProductType.get(params.id).allChildren.collect { it.id } + [params.id.toLong()])
+        }.toDouble()/10
 
         model
     }

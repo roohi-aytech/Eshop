@@ -15,11 +15,11 @@
             <ul>
                 <g:if test="${params.page && params.page.toInteger() > 1}">
                     <li ${(params.page ?: "0") == it.toString() ? 'class="active"' : ''}>
-                        <g:link action="${params.action}" params="${params + [page: 0]}">>></g:link></li>
+                        <g:link action="${params.action}" params="${params + [page: 0]}"><<</g:link></li>
                 </g:if>
                 <g:if test="${params.page && params.page.toInteger() > 0}">
                     <li ${(params.page ?: "0") == it.toString() ? 'class="active"' : ''}>
-                        <g:link action="${params.action}" params="${params + [page: params.page.toInteger() - 1]}">></g:link></li>
+                        <g:link action="${params.action}" params="${params + [page: params.page.toInteger() - 1]}"><</g:link></li>
                 </g:if>
                 <g:set var="currentPage" value="${0}"></g:set>
                 <g:if test="${params.page}">
@@ -33,12 +33,12 @@
                 </g:each>
                 <g:if test="${currentPage < filters.products.totalPages - 1}">
                     <li ${(params.page ?: "0") == it.toString() ? 'class="active"' : ''}>
-                        <g:link action="${params.action}" params="${params + [page: currentPage + 1]}"><</g:link></li>
+                        <g:link action="${params.action}" params="${params + [page: currentPage + 1]}">></g:link></li>
                 </g:if>
                 <g:if test="${currentPage < filters.products.totalPages - 2}">
                     <li ${(params.page ?: "0") == it.toString() ? 'class="active"' : ''}>
                         <g:link action="${params.action}"
-                                params="${params + [page: Math.ceil(filters.products.totalPages).toInteger() - 1]}"><<</g:link></li>
+                                params="${params + [page: Math.ceil(filters.products.totalPages).toInteger() - 1]}">>></g:link></li>
                 </g:if>
             </ul>
         </div>

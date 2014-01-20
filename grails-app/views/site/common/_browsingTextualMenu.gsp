@@ -1,7 +1,7 @@
 <ul class="nav nav-list">
     <g:if test="${productType.children}">
         <li class="nav-header"><g:message code="site.selectSubcategory"
-                                          default="Select SubProductType"></g:message></li>
+                                          default="Select SubProductType"/></li>
     </g:if>
     <g:each in="${subProductTypeLinks}" var="subProductTypeLink">
         <li><a href="${subProductTypeLink.href}">${subProductTypeLink.name}</a></li>
@@ -11,13 +11,13 @@
 %{--Brands Filters--}%
     <g:if test="${filters?.brands}">
         <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand"
-                                                            default="Select Brand"></g:message></li>
+                                                            default="Select Brand"/></li>
 
         <g:each in="${filters.brands?.count { it } > 5 ? filters.brands?.sort { -it.count }[0..4] : filters.brands?.sort { -it.count }}"
                 var="brand">
             <li class="checkable">
                 <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
-                                        brandName="${brand._id?.name}"></eshop:filterStartBrand>
+                                        brandName="${brand._id?.name}"/>
             </li>
         </g:each>
 
@@ -25,17 +25,17 @@
             <g:each in="${filters.brands?.sort { -it.count }[5..(filters.brands.count { it } - 1)]}" var="brand">
                 <li class="checkable moreItems moreBrandItems">
                     <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
-                                            brandName="${brand._id?.name}"></eshop:filterStartBrand>
+                                            brandName="${brand._id?.name}"/>
                 </li>
             </g:each>
 
-            <li><a onclick="$(this).parent().fadeOut();
+            <li><a onclick="$(this).parent().hide();
             $(this).parent().next().fadeIn();
             $(this).parent().next().fadeIn();
-            $('.moreBrandItems').fadeIn('slow');"><g:message code="more"></g:message></a></li>
-            <li class="moreItems"><a onclick="$(this).parent().fadeOut();
+            $('.moreBrandItems').fadeIn('slow');"><g:message code="more"/></a></li>
+            <li class="moreItems"><a onclick="$(this).parent().hide();
             $(this).parent().prev().fadeIn();
-            $('.moreBrandItems').fadeOut('fast');"><g:message code="less"></g:message></a></li>
+            $('.moreBrandItems').hide('fast');"><g:message code="less"/></a></li>
         </g:if>
 
         <li class="divider"></li>
@@ -51,7 +51,7 @@
                 <li class="checkable">
                     <eshop:filterStart productType="${productType}"
                                        attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                       value="${attributeValueCount._id}"></eshop:filterStart>
+                                       value="${attributeValueCount._id}"/>
                 </li>
             </g:each>
 
@@ -61,16 +61,16 @@
                     <li class="checkable moreItems moreAttributeItems${indexer}">
                         <eshop:filterStart productType="${productType}"
                                            attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                           value="${attributeValueCount._id}"></eshop:filterStart>
+                                           value="${attributeValueCount._id}"/>
                     </li>
                 </g:each>
 
-                <li><a onclick='$(this).parent().fadeOut();
+                <li><a onclick='$(this).parent().hide();
                 $(this).parent().next().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
-                <li class="moreItems"><a onclick='$(this).parent().fadeOut();
+                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                <li class="moreItems"><a onclick='$(this).parent().hide();
                 $(this).parent().prev().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeOut("fast");'><g:message code="less"></g:message></a></li>
+                $(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
             </g:if>
         </g:each>
 
@@ -82,7 +82,7 @@
                 <li class="checkable">
                     <eshop:filterStart productType="${productType}"
                                        attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                       value="${attributeValueCount._id}"></eshop:filterStart>
+                                       value="${attributeValueCount._id}"/>
                 </li>
             </g:each>
 
@@ -92,16 +92,16 @@
                     <li class="checkable moreItems moreAttributeItems${indexer}">
                         <eshop:filterStart productType="${productType}"
                                            attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                           value="${attributeValueCount._id}"></eshop:filterStart>
+                                           value="${attributeValueCount._id}"/>
                     </li>
                 </g:each>
 
-                <li><a onclick='$(this).parent().fadeOut();
+                <li><a onclick='$(this).parent().hide();
                 $(this).parent().next().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
-                <li class="moreItems"><a onclick='$(this).parent().fadeOut();
+                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                <li class="moreItems"><a onclick='$(this).parent().hide();
                 $(this).parent().prev().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeOut("fast");'><g:message code="less"></g:message></a></li>
+                $(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
             </g:if>
         </g:each>
         <li class="divider"></li>
@@ -118,7 +118,7 @@
                         <li class="checkable">
                             <eshop:filterStartVariation productType="${productType}"
                                                         variation="${variationGroup.value.type + variationGroup.key}"
-                                                        value="${variationValueCount._id.name}"></eshop:filterStartVariation>
+                                                        value="${variationValueCount._id.name}"/>
                         </li>
                     </g:each>
 
@@ -128,16 +128,16 @@
                             <li class="checkable moreItems moreVariationItems${indexer}">
                                 <eshop:filterStartVariation productType="${productType}"
                                                             variation="${variationGroup.value.type + variationGroup.key}"
-                                                            value="${variationValueCount._id.name}"></eshop:filterStartVariation>
+                                                            value="${variationValueCount._id.name}"/>
                             </li>
                         </g:each>
 
-                        <li><a onclick='$(this).parent().fadeOut();
+                        <li><a onclick='$(this).parent().hide();
                         $(this).parent().next().fadeIn();
-                        $(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
-                        <li class="moreItems"><a onclick='$(this).parent().fadeOut();
+                        $(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                        <li class="moreItems"><a onclick='$(this).parent().hide();
                         $(this).parent().prev().fadeIn();
-                        $(".moreVariationItems${indexer}").fadeOut("fast");'><g:message code="less"></g:message></a>
+                        $(".moreVariationItems${indexer}").hide("fast");'><g:message code="less"/></a>
                         </li>
                     </g:if>
 

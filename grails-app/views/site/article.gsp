@@ -20,9 +20,9 @@
     <tr class="table-row">
         <td class="table-cell span180">
             <ehcache:render template="productType/article_list"/>
-            <div class="well sidebar-nav">
-                <ehcache:render template="common/browsingTextualMenu"/>
-            </div>
+            %{--<div class="well sidebar-nav">--}%
+                %{--<ehcache:render template="common/browsingTextualMenu"/>--}%
+            %{--</div>--}%
         </td>
 
         <td class="table-cell">

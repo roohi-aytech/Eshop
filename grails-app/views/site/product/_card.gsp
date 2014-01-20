@@ -25,8 +25,13 @@
         angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
     }
 </script>
+<h3><g:message code="order.specifications"/></h3>
 <g:if test="${productModel}">
-    <h4>${productModel}</h4>
+
+    <img src="${createLink(controller: 'image', params: [type:'product', id:productModel?.product?.id, wh:'50x50'])}"/>
+
+    <h4>${productModel?.product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h4>
+    <h5>${productModel?.name ?: ""}</h5>
 
 %{--variation select--}%
     <g:each in="${product?.variations}">
@@ -93,7 +98,7 @@
 
     <div class="buttons">
         <eshop:addToBasket prodcutModelId="${productModel.id}"
-                           productModelTitle="${productModel}" angular="false"></eshop:addToBasket>
+                           productModelTitle="${productModel}" angular="false" useLongText="${true}"></eshop:addToBasket>
     </div>
 </g:if>
 <g:else>

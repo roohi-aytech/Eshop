@@ -1,0 +1,142 @@
+.responsive-specialSalesSlider{
+    display: none;
+}
+
+.specialSalesSlider-container td.main,
+.specialSalesSlider-container td.extra1,
+.specialSalesSlider-container td.extra2,
+.specialSalesSlider-container td.extra3{
+    background: #ffffff url(../images/loading.gif) no-repeat center center;
+    vertical-align: top;
+}
+
+.specialSalesSlider-container td.main{
+    min-width: 850px;
+    text-align: center;
+}
+
+.specialSalesSlider-container td.main div{
+    width: 850px;
+    display: inline-block;
+}
+
+.specialSalesSlider-container td.extra1,
+.specialSalesSlider-container td.extra2,
+.specialSalesSlider-container td.extra3{
+    min-width: 240px;
+    display: none;
+}
+
+.specialSalesSlider-container div{
+    position: relative;
+}
+
+.specialSalesSlider-main,
+.specialSalesSlider-extra1,
+.specialSalesSlider-extra2,
+.specialSalesSlider-extra3{
+    background-repeat: no-repeat;
+    background-position: center center;
+    /*background-size: 100% 100%;*/
+    display: none;
+    position: absolute !important;
+    top:20px;
+    left:0;
+    right:0;
+}
+
+.specialSalesSlider-progress{
+    height:5px;
+    background-color:#ffffff;
+    opacity: 0.5;
+    display: block;
+    position:absolute;
+    left:0;
+}
+
+.specialSalesSlider-next{
+    display: inline-block;
+    height: 32px;
+    position: absolute;
+    right: 15px;
+    top: 200px;
+    width: 32px;
+    background: url("../images/arrow-right.png") no-repeat;
+}
+
+.specialSalesSlider-previous{
+    background: url("../images/arrow-left.png") no-repeat;
+    display: inline-block;
+    height: 32px;
+    position: absolute;
+    left: 15px;
+    top: 200px;
+    width: 32px;
+}
+
+.specialSalesSlider-button{
+    /*opacity: 0;*/
+    cursor: pointer;
+}
+
+.specialSalesSlider-button:hover{
+    /*opacity: 1 !important;*/
+}
+
+.specialSalesSlider-container:hover .specialSalesSlider-button{
+    /*opacity: 0.5;*/
+}
+
+.specialSalesSlider-thumbnails{
+}
+
+.specialSalesSlider-thumbnail{
+    padding-right: 5px;
+    padding-left: 5px;
+    line-height: 11px;
+    display: inline-block;
+    border-left: 1px solid #c0c0c0;
+    color: #c0c0c0;
+}
+
+.specialSalesSlider-thumbnail.current{
+    color: #808080;
+}
+
+.specialSalesSlider-thumbnail:last-of-type{
+    border-width: 0;
+}
+
+.specialSalesSlider-thumbnail:hover{
+    text-decoration: none;
+}
+
+.specialSalesSlider-container td.main div.group{
+    width: auto;
+}
+
+.jCountdownContainer{
+    direction: ltr;
+    position: absolute !important;
+    top:130px;
+    left:15px;
+}
+
+.jCountdownScale{
+    width: auto !important;
+}
+
+.jCountdownContainer .group{
+    float:left;
+    margin-right: 65px !important;
+}
+
+.jCountdown .group > .label{
+    margin-left: -125px;
+    height: 30px !important;
+    top:20px;
+    background: none !important;
+    color:#ffffff;
+    text-align: center;
+    font-size: 18px !important;
+}

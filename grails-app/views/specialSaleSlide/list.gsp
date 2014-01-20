@@ -36,30 +36,37 @@
                     <div class="form-fields-part">
                         <rg:field name="startDate"/>
                         <rg:field name="finishDate"/>
+
+                        <div class="fieldcontain required">
+                            <label for="image"><g:message code="slide.image.label" default="image"/>
+                                <span class="required-indicator">*</span>
+                            </label>
+                            <input type="file" id="image" name="image"/>
+                        </div>
                     </div>
 
                     <div class="form-fields-part">
 
                         <div class="fieldcontain required">
-                            <label for="totalCount"><g:message code="slide.image1024.label" default="image1024"/>
+                            <label for="extraImage1"><g:message code="slide.extraImage1.label" default="extraImage1"/>
                                 <span class="required-indicator">*</span>
                             </label>
-                            <input type="file" id="image1024" name="image1024"/>
+                            <input type="file" id="extraImage1" name="extraImage1"/>
                         </div>
 
 
                         <div class="fieldcontain required">
-                            <label for="totalCount"><g:message code="slide.image1280.label" default="image1024"/>
+                            <label for="extraImage2"><g:message code="slide.extraImage2.label" default="extraImage2"/>
                                 <span class="required-indicator">*</span>
                             </label>
-                            <input type="file" id="image1280" name="image1280"/>
+                            <input type="file" id="extraImage2" name="extraImage2"/>
                         </div>
 
                         <div class="fieldcontain required">
-                            <label for="totalCount"><g:message code="slide.image1440.label" default="image1024"/>
+                            <label for="extraImage3"><g:message code="slide.extraImage3.label" default="extraImage3"/>
                                 <span class="required-indicator">*</span>
                             </label>
-                            <input type="file" id="image1440" name="image1440"/>
+                            <input type="file" id="extraImage3" name="extraImage3"/>
                         </div>
                     </div>
                 </div>

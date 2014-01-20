@@ -1,0 +1,83 @@
+.accordion {
+    margin: 0 0 15px;
+}
+
+.accordion a:hover{
+    text-decoration: none;
+}
+
+.accordion ul li {
+    list-style: none;
+    border-top: 1px solid #acacac;
+}
+
+.accordion ul li a {
+    border-top: 1px solid white;
+    margin-top: -1px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.accordion dt, .accordion dd {
+    border-bottom: 0;
+    margin: 0;
+}
+
+.accordion dt:last-of-type, .accordion dd:last-of-type {
+}
+
+.accordion dt a {
+    display: block;
+    color: #dbdbdb;
+    padding: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-top: 1px solid white;
+    margin-top: -1px;
+}
+
+.accordion dd a {
+    display: block;
+    color: #7b7b7b;
+    padding: 10px;
+}
+
+.accordion dt {
+    background-color: #a4a4a4;
+    font-weight: normal;
+    border-top: 1px solid #acacac;
+}
+
+.accordion dt.hasActive{
+    background-color: #cc9966;
+}
+
+.accordion dd {
+    border-top: 0;
+    font-size: 12px;
+    background: #bcbcbc;
+}
+
+.accordion dd:last-of-type {
+    position: relative;
+    top: -1px;
+}
+
+.accordion dt{
+    background-image: url(../images/filter-arrow-left.png);
+    background-position:7px 14px;
+    background-repeat: no-repeat;
+}
+
+.accordion dt.open{
+    background-image: url(../images/filter-arrow-down.png);
+}
+
+.accordion li a{
+    background: url(../images/not-checked.png) right center no-repeat;
+    padding-right:20px;
+}
+
+.accordion li.active a{
+    background-image: url(../images/checked.png);
+}

@@ -12,7 +12,7 @@ class CommonTagLib {
             out << ' ' + key + '=\"' + value + "\""
         }
         out << '>'
-        out << message(code: 'login')
+        out << message(code: 'login.link')
         out << '</a>'
     }
 
@@ -24,7 +24,7 @@ class CommonTagLib {
             out << ' ' + key + '=\"' + value + "\""
         }
         out << '>'
-        out << message(code: 'register')
+        out << message(code: 'register.link')
         out << '</a>'
     }
 

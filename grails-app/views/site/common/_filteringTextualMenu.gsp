@@ -1,7 +1,7 @@
 <ul class="nav nav-list">
     <g:if test="${filters.productTypes}">
         <li class="nav-header"><g:message code="site.selectSubcategory"
-                                          default="Select SubProductType"></g:message></li>
+                                          default="Select SubProductType"/></li>
         <g:each in="${filters.productTypes}" var="productType">
             <li>
                 <eshop:filterAddProductType id="${productType._id.id}" name="${productType._id.name}"
@@ -13,19 +13,19 @@
 %{--Brands Filters--}%
     <g:if test="${filters?.brands}">
         <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand"
-                                                            default="Select Brand"></g:message></li>
+                                                            default="Select Brand"/></li>
         <g:each in="${filters.brands?.count { it } > 5 ? filters.brands?.sort { -it.count }[0..4] : filters.brands?.sort { -it.count }}"
                 var="brand">
             <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
                 <li class="active checkable">
                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                          remove="true"></eshop:filterAddBrand>
+                                          remove="true"/>
                 </li>
             </g:if>
             <g:else>
                 <li class="checkable">
                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}"
-                                          f="${params.f}"></eshop:filterAddBrand>
+                                          f="${params.f}"/>
                 </li>
             </g:else>
         </g:each>
@@ -35,23 +35,23 @@
                 <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
                     <li class="active checkable moreBrandItems">
                         <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                              remove="true"></eshop:filterAddBrand>
+                                              remove="true"/>
                     </li>
                 </g:if>
                 <g:else>
                     <li class="checkable moreItems moreBrandItems">
                         <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}"
-                                              f="${params.f}"></eshop:filterAddBrand>
+                                              f="${params.f}"/>
                     </li>
                 </g:else>
             </g:each>
 
-            <li><a onclick="$(this).parent().fadeOut();
+            <li><a onclick="$(this).parent().hide();
             $(this).parent().next().fadeIn();
-            $('.moreBrandItems').fadeIn('slow');"><g:message code="more"></g:message></a></li>
-            <li class="moreItems"><a onclick="$(this).parent().fadeOut();
+            $('.moreBrandItems').fadeIn('slow');"><g:message code="more"/></a></li>
+            <li class="moreItems"><a onclick="$(this).parent().hide();
             $(this).parent().prev().fadeIn();
-            $('.moreBrandItems').fadeOut('fast');"><g:message code="less"></g:message></a></li>
+            $('.moreBrandItems').hide('fast');"><g:message code="less"/></a></li>
         </g:if>
     </g:if>
     <li class="divider"></li>
@@ -65,14 +65,14 @@
                     <li class="active checkable">
                         <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                   value="${attributeValueCount._id}" f="${params.f}"
-                                                  remove="true"></eshop:filterAddAttribute>
+                                                  remove="true"/>
                     </li>
                 </g:if>
                 <g:else>
                     <li class="checkable">
                         <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                   value="${attributeValueCount._id}"
-                                                  f="${params.f}"></eshop:filterAddAttribute></li>
+                                                  f="${params.f}"/></li>
                 </g:else>
             </g:each>
 
@@ -84,23 +84,23 @@
                         <li class="active checkable">
                             <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                       value="${attributeValueCount._id}" f="${params.f}"
-                                                      remove="true"></eshop:filterAddAttribute>
+                                                      remove="true"/>
                         </li>
                     </g:if>
                     <g:else>
                         <li class="checkable moreItems moreAttributeItems${indexer}">
                             <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                       value="${attributeValueCount._id}"
-                                                      f="${params.f}"></eshop:filterAddAttribute></li>
+                                                      f="${params.f}"/></li>
                     </g:else>
                 </g:each>
 
-                <li><a onclick='$(this).parent().fadeOut();
+                <li><a onclick='$(this).parent().hide();
                 $(this).parent().next().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
-                <li class="moreItems"><a onclick='$(this).parent().fadeOut();
+                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                <li class="moreItems"><a onclick='$(this).parent().hide();
                 $(this).parent().prev().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeOut("fast");'><g:message code="less"></g:message></a></li>
+                $(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
             </g:if>
         </g:each>
     </g:if>
@@ -118,7 +118,7 @@
                                 <eshop:filterAddVariation
                                         id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
                                         value="${variationValueCount._id.name}" f="${params.f}"
-                                        remove="true"></eshop:filterAddVariation>
+                                        remove="true"/>
                             </li>
                         </g:if>
                         <g:else>
@@ -126,7 +126,7 @@
                                 <eshop:filterAddVariation
                                         id="${variationGroup.value.type.replace("a", "") + variationGroup.key}"
                                         value="${variationValueCount._id.name}"
-                                        f="${params.f}"></eshop:filterAddVariation></li>
+                                        f="${params.f}"/></li>
                         </g:else>
                     </g:each>
 
@@ -138,24 +138,24 @@
                                     <eshop:filterAddVariation
                                             id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
                                             value="${variationValueCount._id.name}" f="${params.f}"
-                                            remove="true"></eshop:filterAddVariation>
+                                            remove="true"/>
                                 </li>
                             </g:if>
                             <g:else>
-                                <li class="checkable">
+                                <li class="checkable moreItems moreVariationItems${indexer}">
                                     <eshop:filterAddVariation
                                             id="${variationGroup.value.type.replace("a", "") + variationGroup.key}"
                                             value="${variationValueCount._id.name}"
-                                            f="${params.f}"></eshop:filterAddVariation></li>
+                                            f="${params.f}"/></li>
                             </g:else>
                         </g:each>
 
-                        <li><a onclick='$(this).parent().fadeOut();
+                        <li><a onclick='$(this).parent().hide();
                         $(this).parent().next().fadeIn();
-                        $(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"></g:message></a></li>
-                        <li class="moreItems"><a onclick='$(this).parent().fadeOut();
+                        $(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                        <li class="moreItems"><a onclick='$(this).parent().hide();
                         $(this).parent().prev().fadeIn();
-                        $(".moreVariationItems${indexer}").fadeOut("fast");'><g:message code="less"></g:message></a>
+                        $(".moreVariationItems${indexer}").hide("fast");'><g:message code="less"/></a>
                         </li>
                     </g:if>
 

@@ -31,6 +31,16 @@ class UrlMappings {
             action = "article"
         }
 
+        "/article/list/" {
+            controller = "site"
+            action = "articleList"
+        }
+
+        "/article/list/$id?" {
+            controller = "site"
+            action = "articleList"
+        }
+
         "/producer/list" {
             controller = "producer"
             action = "list"

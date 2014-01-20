@@ -2,7 +2,7 @@
 <link href="${resource(dir: 'css', file: 'jquery.themepunch.showbizpro.css')}" rel="stylesheet" type="text/css"/>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.plugins.js')}" type="text/javascript"></script>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.showbizpro.js')}" type="text/javascript"></script>
-<h3>${title}</h3>
+<h3 class="showbiz-header">${title}</h3>
 <g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
 <table class="table-simulated product-carousel-container">
     <tr class="table-row">
@@ -18,8 +18,8 @@
                     <ul class="product-carousel">
                         <g:each in="${productList}" var="product">
                             <li class="sb-showcase-skin">
-                                <g:render template="/site/common/productThumbnail"
-                                          model="${[product: product]}"></g:render>
+                                <g:render template="/site/common/productThumbnailSmall"
+                                          model="${[product: product]}"/>
                             </li>
                         </g:each>
                     </ul>
@@ -48,10 +48,10 @@
 
         var visibleElementsArray;
         <g:if test="${mode=='large'}">
-        visibleElementsArray = [6, 5, 4, 3];
+        visibleElementsArray = [7, 6, 5, 4];
         </g:if>
         <g:else>
-        visibleElementsArray = [5, 4, 3, 2];
+        visibleElementsArray = [6, 5, 4, 3];
         </g:else>
         var width = $('#carousel_${id}').width();
         var visibleCount;

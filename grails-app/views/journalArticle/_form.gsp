@@ -30,6 +30,15 @@
     <g:textField name="title" value="${journalArticleInstance?.title}" class="count-words"/>
 </div>
 
+
+<div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'image', 'error')} required">
+    <label for="image">
+        <g:message code="slide.image.label" default="image"/>
+    </label>
+    <input type="file" id="image" name="image" />
+    <img src="<g:createLink controller="image" action="index" params="${[id:journalArticleInstance?.id, type:'article']}"/>" style="max-width: 100px"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: journalArticleInstance, field: 'summary', 'error')} ">
     <label for="summary">
         <g:message code="journalArticle.summary.label" default="Summary" class="count-words"/>

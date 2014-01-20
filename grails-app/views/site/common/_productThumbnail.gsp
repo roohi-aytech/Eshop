@@ -24,8 +24,8 @@
     </a>
     <div class="tips-container"></div>
     <div class="buttons">
-        <eshop:addToBasket prodcutId="${product.id}" image="true"></eshop:addToBasket>
-        <eshop:addToCompareList prodcutId="${product.id}" image="true"></eshop:addToCompareList>
-        <eshop:addToWishList prodcutId="${product.id}" image="true"></eshop:addToWishList>
+        <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}"></eshop:addToBasket>
+        <eshop:addToCompareList prodcutId="${product.id}"></eshop:addToCompareList>
+        <eshop:addToWishList prodcutId="${product.id}"></eshop:addToWishList>
     </div>
 </div>

@@ -2,8 +2,10 @@
 <link href="${resource(dir: 'css', file: 'jquery.themepunch.showbizpro.css')}" rel="stylesheet" type="text/css"/>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.plugins.js')}" type="text/javascript"></script>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.showbizpro.js')}" type="text/javascript"></script>
-%{--<h3 class="band-carousel-container-title">${title}</h3>--}%
+
 <g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
+
+<h3 class="showbiz-header"><g:message code="brand.select"/></h3>
 <table class="table-simulated band-carousel-container">
     <tr class="table-row">
         <td class="showbiz-navigation center sb-nav-dark table-cell">

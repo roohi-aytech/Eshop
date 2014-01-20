@@ -73,32 +73,24 @@ class ImageController {
             case 'specialSale':
                 def specialSaleSlide = SpecialSaleSlide.get(params.id)
                 if (specialSaleSlide) {
-                    switch (params.size) {
-                        case '1280':
-                            content = specialSaleSlide.image1280
+                    switch (params.role) {
+                        case 'e1':
+                            content = specialSaleSlide.extraImage1
                             break
-                        case '1440':
-                            content = specialSaleSlide.image1440
+                        case 'e2':
+                            content = specialSaleSlide.extraImage2
+                            break
+                        case 'e3':
+                            content = specialSaleSlide.extraImage3
                             break
                         default:
-                            content = specialSaleSlide.image1024
+                            content = specialSaleSlide.image
                     }
                 }
                 break;
             case 'mainSlide':
                 def slide = Slide.get(params.id)
-                if (slide) {
-                    switch (params.size) {
-                        case '1280':
-                            content = slide.image1280
-                            break
-                        case '1440':
-                            content = slide.image1440
-                            break
-                        default:
-                            content = slide.image1024
-                    }
-                }
+                content = slide.image
                 break;
             case 'account':
                 def account = Account.get(params.id)
@@ -117,6 +109,10 @@ class ImageController {
                 if (deliveryMethod) {
                     content = deliveryMethod.logo
                 }
+                break;
+            case 'article':
+                def article = JournalArticle.get(params.id)
+                content = article.image
                 break;
         }
 

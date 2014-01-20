@@ -27,7 +27,11 @@ class JournalArticleController {
         def journalArticleInstance
         if (params.id) {
             journalArticleInstance = JournalArticle.get(params.id)
+            def image = journalArticleInstance.image
             journalArticleInstance.properties = params
+            journalArticleInstance.image = params.image?.bytes
+            if(!params.image)
+                journalArticleInstance.image = image
         }
         else
             journalArticleInstance = new JournalArticle(params)

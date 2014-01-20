@@ -16,8 +16,8 @@
     <g:render template="common/productGridMeta"
               model="${[productIds: filters.products.productIds]}"/>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
@@ -25,66 +25,70 @@
 <body>
 <table class="layout-container table-simulated">
     <tr class="table-row">
-        <td class="span180 table-cell">
-            <div class="well sidebar-nav">
-                <ehcache:render template="common/browsingTextualMenu" key="${params.productType}"/>
-            </div>
-            <ehcache:render template="productType/article_list" key="${params.productType}"/>
+        <td colspan="2">
+            <g:render template="common/slideshowMain"/>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="banners table-cell">
+            <g:render template="common/browsingAccordion"/>
             <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
             <table class="table-simulated">
                 <tr class="table-row">
-                    <td>
-                        <g:render template="common/slideshowMain"/>
-                    </td>
-                </tr>
-
-                <tr class="table-row">
                     <td class="table-cell">
-                        <table class="table-simulated">
-                            <tr class="table-row">
-                                <td class="span600 table-cell">
-                                    <ul class="breadcrumb">
-                                        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                            <a href="${createLink(uri: '/')}" itemprop="url">
-                                                <span itemprop="title">
-                                                    <g:message code="home"/>
-                                                </span>
-                                            </a>
-                                            %{--<span class="divider">${">"}</span>--}%
-                                        </li>
-                                        <g:if test="${breadCrumb.size() > 0}">
-                                            <g:each in="${breadCrumb[0..-1]}">
-                                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                                    <span class="divider">${">"}</span>
-                                                    <a href="${it.href}" itemprop="url">
-                                                        <span itemprop="title">${it.name}</span></a>
-                                                </li>
-                                            </g:each>
-                                        </g:if>
-                                        %{--<li class="active">${breadCrumb[-1].name}</li>--}%
-                                    </ul>
+                        <ul class="breadcrumb">
+                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <a href="${createLink(uri: '/')}" itemprop="url">
+                                    <span itemprop="title">
+                                        <g:message code="home"/>
+                                    </span>
+                                </a>
+                            </li>
+                            <g:if test="${breadCrumb.size() > 0}">
+                                <g:each in="${breadCrumb[0..-1]}">
+                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                        <span class="divider">${">"}</span>
+                                        <a href="${it.href}" itemprop="url">
+                                            <span itemprop="title">${it.name}</span></a>
+                                    </li>
+                                </g:each>
+                            </g:if>
+                        </ul>
 
-                                    <ehcache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
+                        <ehcache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
 
-                                    %{--<g:if test="${subProductTypeLinks?.isEmpty()}">--}%
-                                    <g:render template="common/productGrid"
-                                              model="${[productIds: filters.products.productIds]}"/>
-                                    %{--</g:if>--}%
+                        <g:render template="common/productGrid"
+                                  model="${[productIds: filters.products.productIds]}"/>
 
-                                </td>
-
-                                <td class="span200 table-cell">
-                                    <ehcache:render template="banners/enamad"/>
-                                    <ehcache:render template="banners/leftsideBanners"/>
-                                </td>
-                            </tr>
-                        </table>
                     </td>
                 </tr>
             </table>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="table-cell" colspan="2">
+            <g:render template="common/productCarousel"
+                      key="${productTypeId}"
+                      model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName]), productList: mostVisitedProducts]}"/>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td colspan="2" class="table-cell">
+            <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
+            <g:set var="lastVisitedProducts"
+                   value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>
+            <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
+                <g:render template="/site/common/productCarousel"
+                          model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>
+            </g:if>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="table-cell" colspan="2">
+            <g:render template="news/window" model="${[productTypeId: productTypeId]}"/>
         </td>
     </tr>
 </table>

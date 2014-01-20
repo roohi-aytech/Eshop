@@ -129,35 +129,9 @@
         </sec:ifAllGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">
             <h3>
-                <g:message code="navigation.manage.settings" default="Settings"/>
+                <g:message code="navigation.manage.basicInfo" default="Basic Info"/>
             </h3>
             <ul>
-                <li>
-                    <g:link controller="user" action="list"><img
-                            src="images/users.png"/><span><g:message
-                            code="navigation.manage.users"
-                            default="Users"/></span></g:link></li>
-                <li>
-                    <g:link controller="slide" action="list"><img
-                            src="images/slideshow.png"/><span><g:message
-                            code="navigation.manage.slideshow"
-                            default="Users"/></span></g:link></li>
-                <li>
-                    <g:link controller="banner" action="list"><img
-                            src="images/banners.png"/><span><g:message
-                            code="navigation.manage.banners"/></span></g:link></li>
-                <li>
-                    <g:link controller="deliveryMethod" action="list"><img
-                            src="images/delivery.png"/><span><g:message
-                            code="navigation.manage.deliveryMethods"/></span></g:link></li>
-                <li>
-                    <g:link controller="newsLetterCategory" action="list"><img
-                            src="images/NewsletterCategoryIcon.png"/><span><g:message
-                            code="navigation.manage.newsLetterCategory"/></span></g:link></li>
-                <li>
-                    <g:link controller="newsLetter" action="list"><img
-                            src="images/NewsletterIcon.png"/><span><g:message
-                            code="navigation.manage.newsLetter"/></span></g:link></li>
                 <li>
                     <g:link controller="province" action="list"><img
                             src="images/globe.png"/><span><g:message
@@ -172,6 +146,42 @@
                             src="images/cultureEvent.png"/><span><g:message
                             code="cultureEvent.label"
                             default="Culture Event"/></span></g:link></li>
+                <li>
+                    <g:link controller="deliveryMethod" action="list"><img
+                            src="images/delivery.png"/><span><g:message
+                            code="navigation.manage.deliveryMethods"/></span></g:link></li>
+                <li>
+                    <g:link controller="newsLetterCategory" action="list"><img
+                            src="images/NewsletterCategoryIcon.png"/><span><g:message
+                            code="navigation.manage.newsLetterCategory"/></span></g:link></li>
+                <li>
+                    <g:link controller="newsLetter" action="list"><img
+                            src="images/NewsletterIcon.png"/><span><g:message
+                            code="navigation.manage.newsLetter"/></span></g:link></li>
+            </ul>
+
+            <h3>
+                <g:message code="navigation.manage.settings" default="Settings"/>
+            </h3>
+            <ul>
+                <li>
+                    <g:link controller="user" action="list"><img
+                            src="images/users.png"/><span><g:message
+                            code="navigation.manage.users"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="menuConfig" action="index"><img
+                            src="images/menu.png"/><span><g:message
+                            code="navigation.manage.menuConfig"/></span></g:link></li>
+                <li>
+                    <g:link controller="slide" action="list"><img
+                            src="images/slideshow.png"/><span><g:message
+                            code="navigation.manage.slideshow"
+                            default="Users"/></span></g:link></li>
+                <li>
+                    <g:link controller="banner" action="list"><img
+                            src="images/banners.png"/><span><g:message
+                            code="navigation.manage.banners"/></span></g:link></li>
                 <li>
                     <g:link controller="pageDetails" action="list"><img
                             src="images/pageDetails.png"/><span><g:message

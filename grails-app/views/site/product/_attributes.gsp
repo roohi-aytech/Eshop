@@ -8,16 +8,16 @@
 
 <g:each in="${categories?.sort { it.sortIndex }}" var="category">
     <g:if test="${category.hasAttribute && !category.item.deleted}">
-        <tr>
+        <tr class="level${indent}">
             <td colspan="2">
-                <h4 style="padding-right:${indent * 20 + 7}px">${category.item.name}</h4>
+                <h4>${category.item.name}</h4>
             </td>
         </tr>
         <g:each in="${category.attributes.sort { it.attributeType.sortIndex }}" var="attribute">
             <g:if test="${!attribute.attributeType.deleted && (attribute.attributeType.showPositions.contains('productDetails') || attribute.attributeType.showPositions.contains('productFullDetails')) && attribute.value && attribute.value.toString().compareTo("N/A") != 0}">
-                <tr>
+                <tr class="level${indent}">
                     <td>
-                        <div style="padding-right:${indent * 20}px">
+                        <div>
                             <b>${attribute.attributeType}</b>
                         </div>
                     </td>
@@ -35,7 +35,7 @@
     <g:set var="orphanAttributes"
            value="${Attribute.findAllByProductAndAttributeTypeInList(product, AttributeType.findAllByCategoryIsNull())}"></g:set>
     <g:if test="${orphanAttributes.count { !it.attributeType.deleted && (it.attributeType.showPositions.contains('productDetails') || it.attributeType.showPositions.contains('productFullDetails')) && it.value && it.value.toString().compareTo("N/A") != 0 } > 0}">
-        <tr>
+        <tr class="level${indent}">
             <td colspan="2">
                 <h4><g:message code="otherAttributes"/></h4>
             </td>
@@ -43,7 +43,7 @@
     </g:if>
     <g:each in="${orphanAttributes?.sort { it.attributeType.sortIndex }}" var="attribute">
         <g:if test="${!attribute.attributeType.deleted && (attribute.attributeType.showPositions.contains('productDetails') || attribute.attributeType.showPositions.contains('productFullDetails')) && attribute.value && attribute.value.toString().compareTo("N/A") != 0}">
-            <tr>
+            <tr class="level${indent}">
                 <td>
                     <b>${attribute.attributeType}</b>
                 </td>

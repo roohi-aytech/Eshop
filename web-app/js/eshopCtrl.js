@@ -74,7 +74,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             }
         }
         if (!found)
-            $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, price: price};
+            $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, realPrice: price};
         $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
         });
         return false;
@@ -213,3 +213,19 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         return !value || value.toString().length == 0;
     }
 });
+
+function updateBasketItemCount(id, count) {
+    var scope = angular.element(document.getElementById('main-container')).scope();
+
+    var found = false;
+    for (var i = 0; i < scope.basket.length; i++) {
+        if (parseInt(id) == scope.basket[i].id) {
+            scope.basket[i].count = count;
+            scope.$apply();
+            found = true;
+        }
+    }
+
+    if (found)
+        scope.changeCount(id, count);
+}
