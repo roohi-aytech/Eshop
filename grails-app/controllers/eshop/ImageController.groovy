@@ -20,7 +20,7 @@ class ImageController {
 
     def index() {
 
-        cache shared: true, validUntil: new Date() + 1
+        cache shared: true, validUntil: new Date() + 3600
 
         if (params.id && params.id.toString().contains("{{")) { //angular parameter
             render ""
@@ -121,7 +121,7 @@ class ImageController {
             DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
             httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             Calendar cal = new GregorianCalendar();
-            cal.roll(Calendar.SECOND, seconds);
+            cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
             response.contentType = 'image/png'
