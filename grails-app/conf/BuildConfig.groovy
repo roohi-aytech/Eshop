@@ -5,7 +5,7 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.tomcat.nio = true
-grails.server.port.http = 8080
+grails.server.port.http = 80
 //grails.server.host = "local.zanbil.ir"
 
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
