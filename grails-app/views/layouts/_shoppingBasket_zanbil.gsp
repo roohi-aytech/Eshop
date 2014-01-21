@@ -1,4 +1,4 @@
-<div class="btn-group pull-left topNavigationItem link-basket"
+<div class="btn-group pull-left topNavigationItem link-basket ng-cloak"
      id="link-basket-empty" ng-show="!basket.length">
 
     <span><g:message code="basket.empty"/></span>
@@ -8,7 +8,7 @@
     </common:link>
 </div>
 
-<div class="btn-group pull-left topNavigationItem link-basket full"
+<div class="btn-group pull-left topNavigationItem link-basket full ng-cloak"
      id="link-basket" ng-show="basket.length">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"
        original-title="${message(code: "basket")}">

@@ -12,15 +12,30 @@
         <ul>
             <li><g:link uri="/"><g:message code="home"/></g:link></li>
             <li><g:link controller="comparison" action="show"><g:message code="compare"/><span
-                    ng-show="compareListCounter">&nbsp;({{compareListCounter}})</span></g:link></li>
+                    ng-show="compareListCounter" class="ng-cloak">&nbsp;({{compareListCounter}})</span></g:link></li>
             <li><g:link controller="wishList" action="show"><g:message code="wishList"/><span
-                    ng-show="wishListCounter">&nbsp;({{wishListCounter}})</span></g:link></li>
+                    ng-show="wishListCounter" class="ng-cloak">&nbsp;({{wishListCounter}})</span></g:link></li>
             <li><a href="javascript:void(window.open('http://support.zanbil.ir:81/chat.php?acid=26617','','width=590,height=760,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'))"><g:message
                     code="support.label"/></a></li>
             <li><g:link uri="/contactUs"><g:message code="contact.label"/></g:link></li>
         </ul>
         <span class="user-links">
             <sec:ifLoggedIn>
+                <g:set var="currentUser" value="${User.findByUsername(sec.username())}"/>
+                <g:if test="${currentUser.authorities.any {
+                    it.authority in [
+                            RoleHelper.ROLE_USER_ADMIN
+                    ]
+                }}">
+                    <a tabindex="-1"
+                       href="<g:createLink uri="/admin"/>"><g:message
+                            code="admin.controlpanel.label"/></a> -
+                </g:if>
+                <g:if test="${currentUser instanceof Customer}">
+                    <a tabindex="-1"
+                       href="<g:createLink controller="Customer" action="panel"/>"><g:message
+                            code="user.controlpanel.label"/></a> -
+                </g:if>
                 <common:logoutLink/>
             </sec:ifLoggedIn>
             <sec:ifNotLoggedIn>

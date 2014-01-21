@@ -11,16 +11,18 @@ class FeedService {
 
     def readNews() {
         def list = []
-        def rssObj = new XmlSlurper().parse('http://www.blog.zanbil.ir/zanbil-news/feed/')
-        rssObj.channel.item.each {
-            def post = [
-                    title: it.title.toString(),
-                    link: it.link.toString(),
-                    body: it.description.toString().split('</p>').find().replace('<p>', ''),
-                    imgUrl: it.'encoded'?.toString()?.split('"')?.findAll { it =~ /http:.*.jpg/ || it =~ /http:.*.gif/ || it =~ /http:.*.jpeg/ || it =~ /http:.*.png/ }?.find()
-            ]
-            list << post
-        }
+        try {
+            def rssObj = new XmlSlurper().parse('http://www.blog.zanbil.ir/zanbil-news/feed/')
+            rssObj.channel.item.each {
+                def post = [
+                        title: it.title.toString(),
+                        link: it.link.toString(),
+                        body: it.description.toString().split('</p>').find().replace('<p>', ''),
+                        imgUrl: it.'encoded'?.toString()?.split('"')?.findAll { it =~ /http:.*.jpg/ || it =~ /http:.*.gif/ || it =~ /http:.*.jpeg/ || it =~ /http:.*.png/ }?.find()
+                ]
+                list << post
+            }
+        } catch (ex) {}
         list
     }
 
