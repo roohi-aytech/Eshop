@@ -23,6 +23,11 @@ grails {
         host = "127.0.0.1"
         username = "roohi"
         password = ""
+	options {
+            autoConnectRetry = true
+            connectTimeout = 300
+     	    connectionsPerHost = 1900
+	}
     }
 }
 
