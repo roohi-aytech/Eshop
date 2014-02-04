@@ -10,7 +10,7 @@ class GeneralFilters {
             before = {
 
                 //set locale
-                RequestContextUtils.getLocaleResolver(request).setLocale(request, response, new Locale(grailsApplication.config.locale, grailsApplication.config.locale.toString().toUpperCase()))
+                RequestContextUtils.getLocaleResolver(request).setLocale(request, response, new Locale(grailsApplication.config.locale.language, grailsApplication.config.locale.country))
 
 
                 if (grailsApplication.config.url.www &&

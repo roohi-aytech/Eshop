@@ -2,7 +2,8 @@ grails.serverURL = "http://localhost/eshop"
 grails.app.context = "/eshop"
 eShop.instance = 'zanbil'
 url.www = false
-locale='local'
+locale.language='en'
+locale.country='US'
 admin.theme='ui-lightness'
 ckeditor {
     upload {
