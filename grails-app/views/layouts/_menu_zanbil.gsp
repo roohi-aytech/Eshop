@@ -10,7 +10,7 @@
             <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)}"/>
             <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
-                <div class="inner">
+                <div class="inner" style="background-image: url(${createLink(controller:'image', params:[id:pt.id, type:'productTypeMenu'])});">
                     <table>
                         <tr>
                             <g:set var="columnsCount" value="${0}"/>

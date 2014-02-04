@@ -53,13 +53,31 @@
     </label>
     <input type="file" id="image" name="image" />
     <input type="hidden" id="image${productTypeInstance?.id}deleted" name="imagedeleted" value="" />
-    <img id="${productTypeInstance?.id}img" src="<g:createLink controller="productType" action="getImage" id="${productTypeInstance?.id}" params="[timestamp:System.currentTimeMillis()]"/>" style="max-width: 100px"/>
+    <img id="img"/>
     <input type="button" value="<g:message code="delete" />" onclick="deleteImage()">
     <script type="text/javascript">
         function deleteImage(){
             if(confirm('<g:message code="default.button.delete.confirm.message" />')){
                 $("#${productTypeInstance?.id}img").attr('src','')
                 $("#image${productTypeInstance?.id}deleted").val("true")
+            }
+        }
+    </script>
+</div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'menuImage', 'error')} ">
+    <label for="menuImage">
+        <g:message code="productType.menuImage.label" default="menuImage" />
+
+    </label>
+    <input type="file" id="menuImage" name="menuImage" />
+    <input type="hidden" id="menuImage${productTypeInstance?.id}deleted" name="menuImageDeleted" value="" />
+    <img id="menuImg" width="100px"/>
+    <input type="button" value="<g:message code="delete" />" onclick="deleteMenuImage()">
+    <script type="text/javascript">
+        function deleteMenuImage(){
+            if(confirm('<g:message code="default.button.delete.confirm.message" />')){
+                $("#${productTypeInstance?.id}menuImg").attr('src','')
+                $("#menuImage${productTypeInstance?.id}deleted").val("true")
             }
         }
     </script>

@@ -24,7 +24,7 @@
     <g:javascript library="jquery"/>
     <g:render template="/events_push"/>
     <r:layoutResources/>
-    <jqui:resources theme="cobalt"/>
+    <jqui:resources theme="${grailsApplication.config.admin.theme}"/>
 
     <script src="${resource(dir: 'js', file: 'angular.min.js', plugin: 'rapid-grails')}" language="javascript"
             type="text/javascript"></script>

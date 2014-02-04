@@ -1,4 +1,4 @@
-<jqui:resources theme="cobalt"></jqui:resources>
+<jqui:resources theme="${grailsApplication.config.admin.theme}"></jqui:resources>
 <link rel="stylesheet"
       href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
 <link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>

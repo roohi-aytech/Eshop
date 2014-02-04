@@ -3,7 +3,7 @@
     <meta name='layout' content='site'/>
     <title><g:message code="profile"/></title>
 
-    <jqui:resources theme="cobalt"></jqui:resources>
+    <jqui:resources theme="${grailsApplication.config.admin.theme}"/>
     <link rel="stylesheet"
           href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
     <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>

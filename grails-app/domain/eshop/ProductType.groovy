@@ -14,6 +14,7 @@ class ProductType extends BaseProduct {
     Long assetcategoryId
     Boolean deleted = false
     byte[] image
+    byte[] menuImage
 
     transient Integer getChildrenCount() {
         def count = 0
@@ -67,6 +68,7 @@ class ProductType extends BaseProduct {
         seoFriendlyAlternativeName(nullable: true)
         seoFriendlyName(nullable: true)
         image(nullable: true, maxSize: 1000000000)
+        menuImage(nullable: true, maxSize: 1000000000)
         deleted(nullable: true)
     }
 

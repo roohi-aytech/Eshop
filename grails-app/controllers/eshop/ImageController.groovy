@@ -52,6 +52,12 @@ class ImageController {
                     content = getProdcutTypeImage(productType)
                 }
                 break;
+            case 'productTypeMenu':
+                def productType = ProductType.get(params.id)
+                if (productType) {
+                    content = productType.menuImage
+                }
+                break;
             case 'productTypeType':
                 def productTypeType = ProductTypeType.get(params.id)
                 if (productTypeType) {

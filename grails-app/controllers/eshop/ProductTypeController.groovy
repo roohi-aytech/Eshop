@@ -337,9 +337,11 @@ class ProductTypeController {
         ProductType productType
         try {
             def image
+            def menuImage
             if (params.id) {
                 productType = ProductType.get(params.id)
                 image = productType.image
+                menuImage = productType.menuImage
                 productType.properties = params
                 productType.seoFriendlyName = params.seoFriendlyName
             } else {
@@ -347,6 +349,7 @@ class ProductTypeController {
             }
 
             productType.image = null
+            productType.menuImage = null
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
 //            productType = productType.save()
             if (!params.imagedeleted) {
@@ -354,6 +357,12 @@ class ProductTypeController {
                     productType.image = imageService.saveAndScaleImages(params.image.bytes, "image", fileService.filePath(productType))
                 else if (image)
                     productType.image = image
+            }
+            if (!params.menuImageDeleted) {
+                if (params.menuImage)
+                    productType.menuImage = params.menuImage.bytes
+                else if (menuImage)
+                    productType.menuImage = menuImage
             }
             productType.save()
         } catch (x) {

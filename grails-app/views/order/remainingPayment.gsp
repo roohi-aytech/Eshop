@@ -19,7 +19,7 @@
         margin-bottom: 5px;
     }
     </style>
-    <link href="${resource(plugin: 'jquery-ui', dir: 'jquery-ui/themes/cobalt', file: 'jquery-ui-1.8.15.custom.css')}"
+    <link href="${resource(plugin: 'jquery-ui', dir: 'jquery-ui/themes/' + grailsApplication.config.admin.theme , file: 'jquery-ui-1.8.15.custom.css')}"
           type="text/css" rel="stylesheet" media="screen, projection" id="jquery-ui-theme"/>
     <script src="${resource(plugin: 'jquery-ui', dir: 'jquery-ui/js', file: 'jquery-ui-1.8.15.custom.min.js')}"
             type="text/javascript"></script>
