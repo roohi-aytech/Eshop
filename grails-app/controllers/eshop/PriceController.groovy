@@ -38,10 +38,18 @@ class PriceController {
         params.price = params.price.toString().replace(',', '').toDouble()
         if (params.id) {
             priceInstance = Price.get(params.id)
-            priceInstance.properties = params
+//            priceInstance.properties = params
+            priceInstance.productModel = ProductModel.get(params.productModel.id)
+            priceInstance.price = params.price?.toDouble()
+            if(params.currency)
+                priceInstance.currency = Currency.get(params.currency)
         }
         else {
-            priceInstance = new Price(params)
+            priceInstance = new Price()
+            priceInstance.productModel = ProductModel.get(params.productModel.id)
+            priceInstance.price = params.price?.toDouble()
+            if(params.currency)
+                priceInstance.currency = Currency.get(params.currency)
             priceInstance.startDate = new Date()
             
             def lastPrice = Price.findByProductModelAndEndDateIsNull(priceInstance.productModel)
