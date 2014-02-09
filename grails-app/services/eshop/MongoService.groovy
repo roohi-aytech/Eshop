@@ -75,7 +75,7 @@ class MongoService {
                     else
                         mongoProduct["a${it.attributeType.id}"] = it.value?.value
                 else if (it.attributeType.defaultValue)
-                    mongoProduct["a${it.attributeType.id}"] = it.attributeType.defaultValue
+                    mongoProduct["a${it.attributeType.id}"] = it.attributeType?.defaultValue?.value
             }
 
             def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll { it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted }.collect { it.attributeType.category.id })
@@ -91,6 +91,7 @@ class MongoService {
                     mongoProduct["v${it.variationGroup?.id}"] = it.variationValues.collect {[id: it.id, name: it.value]}
             }
             try {
+//                println('go to save synchronized object ' + )
                 mongoProduct.save(flush: true)
                 product.isSynchronized = true
                 product.save()
