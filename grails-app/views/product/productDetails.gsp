@@ -21,6 +21,7 @@
             <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
         </sec:ifAllGranted>
         <li><a href="#product_description"><g:message code="description"/></a></li>
+        <li><a href="#product_proOpinions"><g:message code="product.proOpinions"/></a></li>
         <li><a href="#images"><g:message code="images"/></a></li>
         <li><a href="#videos"><g:message code="videos"/></a></li>
 
@@ -50,6 +51,9 @@
     </sec:ifAllGranted>
     <div id="product_description">
         <g:render template="description"/>
+    </div>
+    <div id="product_proOpinions">
+        <g:render template="details"/>
     </div>
 
     <div id="images">

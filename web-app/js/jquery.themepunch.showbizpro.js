@@ -149,7 +149,10 @@ function lazyLoadCarouselImages(){
                     if (u.length > 1)u = u[0];
                     var l = u.find(">li").length;
                     if (t.data("das") == "on") {
-                        a(t, 1)
+
+                        if(t.data("es") > 0)
+                            var h = Math.floor(p / t.data("es"));
+                        a(t, h)
                     } else {
                         var c = u.find(">li:first-child").offset().left;
                         if (r == 1 && c < 0) {
@@ -180,6 +183,10 @@ function lazyLoadCarouselImages(){
                                     h = t.data("vea")[3]
                                 }
                             }
+
+//                            if(t.data("es") > 0)
+//                                h = Math.floor(p / t.data("es"));
+
                             o.data("offset", o.data("offset") + h);
                             f(200, t, o);
                             setTimeout(function () {
@@ -242,6 +249,10 @@ function lazyLoadCarouselImages(){
                                     c = t.data("vea")[3]
                                 }
                             }
+
+//                            if(t.data("es") > 0)
+//                                c = Math.floor(h / t.data("es"));
+
                             o.data("offset", o.data("offset") - c);
                             f(200, t, o);
                             setTimeout(function () {
@@ -299,6 +310,10 @@ function lazyLoadCarouselImages(){
         if (i < 981 && i > 768)u = t.data("vea")[1];
         if (i < 769 && i > 420)u = t.data("vea")[2];
         if (i < 421)u = t.data("vea")[3];
+
+        if(t.data("es") > 0)
+            h = Math.floor(i / t.data("es"));
+
         var a = o - u;
         var f = s.find(">li:first-child").outerWidth(true);
         var l = r.find(".overflowholder");
@@ -387,6 +402,10 @@ function lazyLoadCarouselImages(){
             } catch (v) {
             }
         }
+
+        if(r.data("es") > 0)
+            p = Math.floor(f / r.data("es"));
+
         if (s != 1) {
             if (a >= maxitem - p) {
                 a = maxitem - p;
@@ -443,7 +462,7 @@ function lazyLoadCarouselImages(){
     }
 
     e.fn.extend({showbizpro: function (t) {
-        e.fn.showbizpro.defaults = {entrySizeOffset: 0, containerOffsetRight: 0, heightOffsetBottom: 0, carousel: "off", visibleElementsArray: [4, 3, 2, 1], mediaMaxHeight: [0, 0, 0, 0], ytMarkup: "<iframe src='http://www.youtube.com/embed/%%videoid%%?hd=1&wmode=opaque&autohide=1&showinfo=0&autoplay=1'></iframe>", vimeoMarkup: "<iframe src='http://player.vimeo.com/video/29298709?title=0&byline=0&portrait=0;api=1&autoplay=1'></iframe>", closeOtherOverlays: "off", allEntryAtOnce: "off", dragAndScroll: "off"};
+        e.fn.showbizpro.defaults = {entrySizeOffset: 0, containerOffsetRight: 0, heightOffsetBottom: 0, carousel: "on", elementSize:0, visibleElementsArray: [4, 3, 2, 1], mediaMaxHeight: [0, 0, 0, 0], ytMarkup: "<iframe src='http://www.youtube.com/embed/%%videoid%%?hd=1&wmode=opaque&autohide=1&showinfo=0&autoplay=1'></iframe>", vimeoMarkup: "<iframe src='http://player.vimeo.com/video/29298709?title=0&byline=0&portrait=0;api=1&autoplay=1'></iframe>", closeOtherOverlays: "off", allEntryAtOnce: "off", dragAndScroll: "off"};
         t = e.extend({}, e.fn.showbizpro.defaults, t);
         return this.each(function () {
             var i = e(this);
@@ -454,6 +473,7 @@ function lazyLoadCarouselImages(){
             i.data("ytmarkup", t.ytMarkup);
             i.data("vimeomarkup", t.vimeoMarkup);
             i.data("vea", t.visibleElementsArray);
+            i.data("es", t.elementSize);
             i.data("coo", t.closeOtherOverlays);
             i.data("allentry", t.allEntryAtOnce);
             i.data("mediaMaxHeight", t.mediaMaxHeight);

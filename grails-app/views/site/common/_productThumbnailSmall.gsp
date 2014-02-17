@@ -7,7 +7,8 @@
 
         <div class="title">
             <h4>${product.manualTitle ? product.pageTitle : product.toString()}</h4>
-            <eshop:thumbnailPrice productId="${product.id}"/>
+            <eshop:thumbnailPrice productId="${product.id}" flag="true"/>
+            %{--<eshop:statusFlag productId="${product.id}"/>--}%
         </div>
     </a>
 </div>

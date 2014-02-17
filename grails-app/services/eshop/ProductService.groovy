@@ -69,15 +69,24 @@ class ProductService {
     def findRootProductTypes() {
         def result = ProductType.findAllByParentProductIsNullAndDeleted(false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
         result.each { rootItem ->
-            rootItem.children = ProductType.findAllByParentProductAndDeleted(ProductType.get(rootItem.id), false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
-            ProductType.createCriteria().listDistinct {
-                godFathers {
-                    eq('id', rootItem.id)
-                }
-                eq('deleted', false)
-            }.each {
-                rootItem.children << [id: it.id, name: it.name, urlName: it.urlName]
+            findChildProductTypes(rootItem)
+        }
+        result
+    }
+
+    def findChildProductTypes(parentProductType){
+        parentProductType.children = ProductType.findAllByParentProductAndDeleted(ProductType.get(parentProductType.id), false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
+        ProductType.createCriteria().listDistinct {
+            godFathers {
+                eq('id', parentProductType.id)
             }
+            eq('deleted', false)
+        }.each {
+            parentProductType.children << [id: it.id, name: it.name, urlName: it.urlName]
+        }
+
+        parentProductType.children.each{
+            findChildProductTypes(it)
         }
     }
 

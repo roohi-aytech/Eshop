@@ -5,7 +5,7 @@
 
 %{--Brands Filters--}%
     <g:if test="${filters?.brands}">
-        <dt><a href=""><g:message code="site.selectBrand" default="Select Brand"/></a></dt>
+        <dt class="${params.o == "b" ? 'open' : ''}"><a href=""><g:message code="site.selectBrand" default="Select Brand"/></a></dt>
         <dd>
             <ul>
                 <g:each in="${filters.brands?.count { it } > 5 ? filters.brands?.sort { -it.count }[0..4] : filters.brands?.sort { -it.count }}"
@@ -44,7 +44,7 @@
     %{--attribute categories--}%
         <g:each in="${filters.attributes.findAll { it.value.type == 'ac' && it.value.countsByValue.size() > 0 }}"
                 var="attribute" status="indexer">
-            <dt><a href="">${attribute.value.name}</a></dt>
+            <dt class="${params.o == "${attribute.value.type.replace("a", "") + attribute.key}" ? 'open' : ''}"><a href="">${attribute.value.name}</a></dt>
             <dd>
                 <ul>
                     <g:each in="${attribute.value.countsByValue.count { it } > 5 ? attribute.value.countsByValue.sort { -it.count }[0..4] : attribute.value.countsByValue.sort { -it.count }}"
@@ -80,7 +80,7 @@
     %{--attributes--}%
         <g:each in="${filters.attributes.findAll { it.value.type == 'a' && it.value.countsByValue.size() > 0 }}"
                 var="attribute" status="indexer">
-            <dt><a href="">${attribute.value.name}</a></dt>
+            <dt class="${params.o == "${attribute.value.type.replace("a", "") + attribute.key}" ? 'open' : ''}"><a href="">${attribute.value.name}</a></dt>
             <dd>
                 <ul>
                     <g:each in="${attribute.value.countsByValue.count { it } > 5 ? attribute.value.countsByValue.sort { -it.count }[0..4] : attribute.value.countsByValue.sort { -it.count }}"
@@ -119,14 +119,14 @@
         <g:if test="${filters?.variations}">
             <g:each in="${filters.variations}" var="variationGroup" status="indexer">
                 <g:if test="${variationGroup.value.countsByValue.count { it } > 0}">
-                    <dt><a href="">${variationGroup.value.name}</a></dt>
+                    <dt class="${params.o == "${variationGroup.value.type.replace('v', '') + variationGroup.key}" ? 'open' : ''}"><a href="">${variationGroup.value.name}</a></dt>
                     <dd>
                         <ul>
                             <g:each in="${variationGroup.value.countsByValue.count { it } > 5 ? variationGroup.value.countsByValue.sort { -it.count }[0..4] : variationGroup.value.countsByValue.sort { -it.count }}"
                                     var="variationValueCount">
                                 <li class="checkable">
                                     <eshop:filterStartVariation productType="${productType}"
-                                                                variation="${variationGroup.value.type + variationGroup.key}"
+                                                                variation="${variationGroup.value.type.replace('v', '') + variationGroup.key}"
                                                                 value="${variationValueCount._id.name}"/>
                                 </li>
                             </g:each>
@@ -136,7 +136,7 @@
                                         var="variationValueCount">
                                     <li class="checkable moreItems moreVariationItems${indexer}">
                                         <eshop:filterStartVariation productType="${productType}"
-                                                                    variation="${variationGroup.value.type + variationGroup.key}"
+                                                                    variation="${variationGroup.value.type.replace('v', '') + variationGroup.key}"
                                                                     value="${variationValueCount._id.name}"/>
                                     </li>
                                 </g:each>

@@ -7,7 +7,8 @@
 
         <div class="title">
             <h4>${product.manualTitle ? product.pageTitle : product.toString()}</h4>
-            <eshop:thumbnailPrice productId="${product.id}"></eshop:thumbnailPrice>
+            <eshop:thumbnailPrice productId="${product.id}" flag="true"/>
+            %{--<eshop:statusFlag productId="${product.id}"/>--}%
         </div>
 
         <div class="attributes scrollable"
@@ -24,8 +25,8 @@
     </a>
     <div class="tips-container"></div>
     <div class="buttons">
-        <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}"></eshop:addToBasket>
-        <eshop:addToCompareList prodcutId="${product.id}"></eshop:addToCompareList>
-        <eshop:addToWishList prodcutId="${product.id}"></eshop:addToWishList>
+        <eshop:specifications prodcutId="${product.id}"/>
+        <eshop:addToCompareList prodcutId="${product.id}"/>
+        <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}"/>
     </div>
 </div>

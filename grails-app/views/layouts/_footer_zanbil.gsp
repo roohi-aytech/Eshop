@@ -42,10 +42,10 @@
             <td colspan="4">
                 <ul class="third-party">
                     <li>
-                        <img src="${resource(dir: 'images/third-party', file: 'rights-sanat.png')}"/>
+                        <img src="${resource(dir: 'images/third-party', file: 'best-brands.png')}"/>
                     </li>
                     <li>
-                        <img src="${resource(dir: 'images/third-party', file: 'rights-enamad.png')}"/>
+                        <img src="${resource(dir: 'images/third-party', file: 'rights-all.png')}"/>
                     </li>
                 </ul>
             </td>
@@ -104,6 +104,10 @@
                 <ul class="column">
                     <li>
                         <a href="#"><g:message
+                                code="help.paymentAndSend"/></a>
+                    </li>
+                    <li>
+                        <a href="#"><g:message
                                 code="help.payment"/></a>
                     </li>
                     <li>
@@ -125,6 +129,10 @@
                     <li>
                         <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message
                                 code="footerItems.about"/></a>
+                    </li>
+                    <li>
+                        <a href="#"><g:message
+                                code="footerItems.tour"/></a>
                     </li>
                     <li>
                         <a href="#"><g:message

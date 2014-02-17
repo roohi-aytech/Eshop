@@ -237,7 +237,14 @@ class ProductController {
 
     def saveProductDescription() {
         def productInstance = Product.findById(params.id)
-        productInstance.details = params.detail_description;
+        productInstance.description = params.detail_description;
+        productInstance.save()
+        redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab])
+    }
+
+    def saveProductDetails() {
+        def productInstance = Product.findById(params.id)
+        productInstance.details = params.detail_details;
         productInstance.save()
         redirect(action: "productDetails", params: [pid: params.id, curtab: params.curtab])
     }

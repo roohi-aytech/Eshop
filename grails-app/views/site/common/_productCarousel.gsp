@@ -46,33 +46,12 @@
 
         var itemsCount = ${productList.count{it}};
 
-        var visibleElementsArray;
-        <g:if test="${mode=='large'}">
-        visibleElementsArray = [7, 6, 5, 4];
-        </g:if>
-        <g:else>
-        visibleElementsArray = [6, 5, 4, 3];
-        </g:else>
         var width = $('#carousel_${id}').width();
-        var visibleCount;
-        if (width > 980) {
-            visibleCount = visibleElementsArray[0]
-        }
-        if (width < 981 && width > 768) {
-            visibleCount = visibleElementsArray[1]
-        }
-        if (width < 769 && width > 420) {
-            visibleCount = visibleElementsArray[2]
-        }
-        if (width < 421) {
-            visibleCount = visibleElementsArray[3]
-        }
+        var visibleCount = Math.floor(width / 200);
 
         if (itemsCount > visibleCount) {
             jQuery('#carousel_${id}').showbizpro({
-                dragAndScroll: "of",
-                visibleElementsArray: visibleElementsArray,
-                carousel: "on"
+                elementSize: 200
             });
         }
         else {

@@ -8,7 +8,7 @@
 
 .accordion ul li {
     list-style: none;
-    border-top: 1px solid #acacac;
+    border-top: 1px solid transparent;
 }
 
 .accordion ul li a {
@@ -28,11 +28,11 @@
 
 .accordion dt a {
     display: block;
-    color: #dbdbdb;
+    color: #666666;
     padding: 10px;
     margin-right: 5px;
     margin-left: 5px;
-    border-top: 1px solid white;
+    border-top: 1px solid #dddddd;
     margin-top: -1px;
 }
 
@@ -43,19 +43,33 @@
 }
 
 .accordion dt {
-    background-color: #a4a4a4;
+    background-color: #cccccc;
     font-weight: normal;
-    border-top: 1px solid #acacac;
+    border-top: 1px solid transparent;
 }
 
 .accordion dt.hasActive{
-    background-color: #cc9966;
+    background-color: #ee593a !important;
+}
+
+.accordion dt.hasActive a{
+    color: #ffffff;
+    border-top-color:transparent;
+}
+
+.accordion dt.open{
+    background-color: #339999;
+}
+
+.accordion dt.open a{
+    color: #ffffff;
+    border-top-color:transparent;
 }
 
 .accordion dd {
     border-top: 0;
     font-size: 12px;
-    background: #bcbcbc;
+    background: #eeeeee;
 }
 
 .accordion dd:last-of-type {
@@ -80,4 +94,5 @@
 
 .accordion li.active a{
     background-image: url(../images/checked.png);
+    color:#339999;
 }

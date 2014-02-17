@@ -1,3 +1,4 @@
+<%@ page import="eshop.ProductType" %>
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
 <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"/>
 
@@ -18,16 +19,20 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <li>
+                                <a tabindex="-1"
+                                   href="#"
+                                   onclick="$('#hidCategory').val('p0');$('#searchCategory').html('${message(code: 'category.all')}')">${message(code: 'category.all')}</a>
+                            </li>
                             <g:each in="${rootProductTypes}" var="rootProductType">
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1"
                                        href="#"
-                                       onclick="$('#hidCategory').val('p${rootProductType.id}');
-                                       $('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
+                                       onclick="$('#hidCategory').val('p${rootProductType.id}');$('#searchCategory').html('${rootProductType.name}')">${rootProductType.name}</a>
                                     <ul class="dropdown-menu">
-                                        <g:each in="${rootProductType.children}" var="secondLevelProductType">
-                                            <li>
-                                            <a href="#" onclick="$('#hidCategory').val('p${secondLevelProductType.id}');$('#searchCategory').html('${secondLevelProductType.name}')">${secondLevelProductType.name}</a>
+                                        <g:each in="${rootProductType.children}" var="pt">
+                                            <g:render template="/layouts/dropdown_productType_zanbil"
+                                                      model="${[productType: pt]}"/>
                                         </g:each>
                                     </ul>
                                 </li>

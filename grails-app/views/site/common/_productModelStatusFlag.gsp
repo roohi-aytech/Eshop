@@ -1,0 +1,1 @@
+<img class="flag" src="${resource(dir:'images', file: status + '.png')}"/>

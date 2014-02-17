@@ -3,7 +3,7 @@
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.plugins.js')}" type="text/javascript"></script>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.themepunch.showbizpro.js')}" type="text/javascript"></script>
 
-<g:set var="id" value="${java.util.UUID.randomUUID()}"></g:set>
+<g:set var="id" value="${java.util.UUID.randomUUID()}"/>
 
 <h3 class="showbiz-header"><g:message code="brand.select"/></h3>
 <table class="table-simulated band-carousel-container">
@@ -14,7 +14,7 @@
 
         </td>
 
-        <td id="carousel_${id}" class="showbiz-container table-cell">
+        <td id="carousel_${id}" class="showbiz-container table-cell fullwidth">
             <div class="showbiz" data-left="#showbiz_left_${id}" data-right="#showbiz_right_${id}">
                 <div class="overflowholder">
                     <ul class="brand-carousel">
@@ -23,13 +23,13 @@
                                 <g:if test="${type == 'filter'}">
                                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
                                                           remove="${(selectedBrands?.contains(brand._id?.id)).toString()}"
-                                                          type="icon"></eshop:filterAddBrand>
+                                                          type="icon"/>
 
                                 </g:if>
                                 <g:else>
                                     <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
                                                             brandName="${brand._id?.name}"
-                                                            type="icon"></eshop:filterStartBrand>
+                                                            type="icon"/>
                                 </g:else>
                             </li>
                         </g:each>
@@ -56,41 +56,28 @@
     jQuery(document).ready(function () {
 
         var itemsCount = ${brands.count{it}};
-
-        var visibleElementsArray;
-        <g:if test="${mode=='large'}">
-        visibleElementsArray = [6, 5, 4, 3];
-        </g:if>
-        <g:else>
-        visibleElementsArray = [8, 7, 6, 5];
-        </g:else>
         var width = $('#carousel_${id}').width();
-        var visibleCount;
-        if (width > 980) {
-            visibleCount = visibleElementsArray[0]
-        }
-        if (width < 981 && width > 768) {
-            visibleCount = visibleElementsArray[1]
-        }
-        if (width < 769 && width > 420) {
-            visibleCount = visibleElementsArray[2]
-        }
-        if (width < 421) {
-            visibleCount = visibleElementsArray[3]
-        }
+        var visibleCount = Math.floor(width / 100);
 
         if (itemsCount > visibleCount) {
             jQuery('#carousel_${id}').showbizpro({
-                dragAndScroll: "of",
-                visibleElementsArray: visibleElementsArray,
-                carousel: "on"
+                elementSize:100
             });
         }
         else {
-            var carousel = $('#carousel_${id} .brand-carousel');
+            var carousel = $('#carousel_${id}').find('.brand-carousel');
             carousel.parent().parent().parent().parent().replaceWith(carousel);
             carousel.removeClass('brand-carousel').addClass('static-brand-carousel');
         }
+
+        //show top 8 brand images
+        var brandItems = $('.brand-carousel li a img, .static-brand-carousel li a img');
+        if (brandItems.length > visibleCount)
+            brandItems = brandItems.slice(0, visibleCount);
+        brandItems.each(function () {
+            if ($(this).attr('src') != $(this).attr('original-src'))
+                $(this).attr('src', $(this).attr('original-src'));
+        });
     });
 
 </script>

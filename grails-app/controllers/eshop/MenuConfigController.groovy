@@ -56,6 +56,16 @@ class MenuConfigController {
             if(item)
                 result.children << item
         }
+        ProductType.createCriteria().listDistinct {
+            godFathers {
+                eq('id', productType.id)
+            }
+            eq('deleted', false)
+        }.each {
+            result.children << productTypeJson(it)
+        }
+
+
         result
     }
 

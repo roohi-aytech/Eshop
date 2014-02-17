@@ -30,7 +30,7 @@
 
     <img src="${createLink(controller: 'image', params: [type:'product', id:productModel?.product?.id, wh:'50x50'])}"/>
 
-    <h4>${productModel?.product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h4>
+    <h4>${product?.type?.title ?: (productModel?.product?.productTypes?.find { true }?.name ?: "")} ${product?.brand?.name ?: ""}</h4>
     <h5>${productModel?.name ?: ""}</h5>
 
 %{--variation select--}%
@@ -49,7 +49,7 @@
             <div class="cur-variation">
                 ${productModel.guarantee.name}
             </div>
-            <div class="selected-guarantee-box"><img src="${createLink(controller: 'image', params: [id:productModel.guarantee.id, type:'guarantee'])}"/> </div>
+            %{--<div class="selected-guarantee-box"><img src="${createLink(controller: 'image', params: [id:productModel.guarantee.id, type:'guarantee'])}"/> </div>--}%
         </div>
     </div>
 
@@ -98,7 +98,7 @@
 
     <div class="buttons">
         <eshop:addToBasket prodcutModelId="${productModel.id}"
-                           productModelTitle="${productModel}" angular="false" useLongText="${true}"></eshop:addToBasket>
+                           productModelTitle="${productModel}" angular="false" buttonOnly="${true}" useLongText="${true}"></eshop:addToBasket>
     </div>
 </g:if>
 <g:else>

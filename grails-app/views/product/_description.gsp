@@ -2,7 +2,7 @@
     <g:hiddenField name="id" value="${productInstance.id}"/>
 
         <ckeditor:editor name="detail_description" width="100%" height="200px">
-            ${productInstance.details}
+            ${productInstance.description}
         </ckeditor:editor>
 
     <fieldset class="buttons">

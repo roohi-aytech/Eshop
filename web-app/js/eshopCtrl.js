@@ -77,6 +77,40 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, realPrice: price};
         $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
         });
+
+        $.ajax({ url: contextRoot + "basket/alert/" + id })
+            .done(function(html) {
+                $('#link-basket').qtip({
+                    content: {
+                        title: 'توجه',
+                        text: html,
+                        button: 'Close'
+                    },
+                    style: {
+                        classes: 'qtip-bootstrap',
+                        width: 400
+                    },
+                    position: {
+                        my: 'top center',
+                        at: 'bottom center'
+                    },
+                    show: {
+                        ready: true,
+                        event: 'ready',
+                        effect: function (offset) {
+                            $(this).slideDown(100);
+                        }
+                    },
+                    hide: {
+                        event: ''
+                    },
+                    metadata: {
+                        type: 'html5'
+                    }
+                });
+            });
+
+
         return false;
     };
 
@@ -142,7 +176,40 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             $scope.compareListCounter++
         }
         $http.post(contextRoot + "comparison/add/" + id).success(function (response) {
+            $.ajax({ url: contextRoot + "comparison/alert/" + id })
+                .done(function(html) {
+                    $('#link-compare').qtip({
+                        content: {
+                            title: 'توجه',
+                            text: html,
+                            button: 'Close'
+                        },
+                        style: {
+                            classes: 'qtip-bootstrap',
+                            width: 410
+                        },
+                        position: {
+                            my: 'top center',
+                            at: 'bottom center'
+                        },
+                        show: {
+                            ready: true,
+                            event: 'ready',
+                            effect: function (offset) {
+                                $(this).slideDown(100);
+                            }
+                        },
+                        hide: {
+                            event: ''
+                        },
+                        metadata: {
+                            type: 'html5'
+                        }
+                    });
+                });
         });
+
+
 
         return false;
     };

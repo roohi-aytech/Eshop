@@ -1,17 +1,12 @@
-<span class="price">
-    <g:if test="${status == 'exists'}">
+<g:if test="${status == 'exists'}">
+    <span class="price">
         <g:if test="${showVal}">
-            <span class='current'
-            %{--${lastUpdate?" price-last-update' original-title='${rg.formatJalaliDate(date:lastUpdate)}'":"'"}--}%><g:formatNumber
-                    number="${showVal}" type="number"/> <g:message code="rial"/></span>
+            <span class='current'>
+            <g:formatNumber number="${showVal}" type="number"/> <g:message code="rial"/></span>
             <g:if test="${lastUpdate}">
                 <span class="price-last-update" original-title="${message(code: 'price.lastUpdate')}">
-                    <rg:formatJalaliDate date="${lastUpdate}"></rg:formatJalaliDate>
-                </span>
+                    <rg:formatJalaliDate date="${lastUpdate}"/>
             </g:if>
         </g:if>
-    </g:if>
-    <g:else>
-        <span class="${status}-label"><g:message code="productModel.status.${status}"/>
-    </g:else>
-</span>
+    </span>
+</g:if>

@@ -263,4 +263,12 @@ class BasketController {
     def shop() {
 
     }
+
+    def alert(){
+
+        def id = params.id
+        def productModel = ProductModel.get(id)
+
+        render template: 'alert', model: [name: "${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title?:''} ${productModel?.product?.brand} ${productModel?.variationValues?.find {it.variationGroup.representationType == 'Color'}?.value}"]
+    }
 }

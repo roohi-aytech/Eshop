@@ -30,7 +30,16 @@ class FeedService {
         def list = []
         try {
             def productType = ProductType.get(id)
-            def rssObj = new XmlSlurper().parse("http://www.blog.zanbil.ir/${id ? productType.seoFriendlyName + "/" : ''}feed/")
+            def name = ""
+            if(productType){
+                def pt = productType
+                name = pt.seoFriendlyName + "/"
+                while(pt.parentProduct){
+                    pt = pt.parentProduct
+                    name = pt.seoFriendlyName + "/" + name
+                }
+            }
+            def rssObj = new XmlSlurper().parse("http://www.blog.zanbil.ir/${name}feed/")
             rssObj.channel.item.findAll { !it.category.toString().contains('اخبار') }.each {
                 list << [
                         title: it.title.toString(),

@@ -19,7 +19,7 @@ class ComparisonController {
             compareList = [];
         def compareListItem = compareList.find { it -> it.id == id }
         if (!compareListItem) {
-            compareListItem = [id: id, title: product.toString(), price: priceService.calcProductPrice(product.id).showVal]
+            compareListItem = [id: id, title: product?.toString(), type:product?.productTypes?.find()?.name, price: priceService.calcProductPrice(product.id).showVal]
             compareList << compareListItem
         }
 
@@ -40,7 +40,7 @@ class ComparisonController {
             compareList = [];
         def compareListItem = compareList.find { it -> it.id == id }
         if (!compareListItem) {
-            compareListItem = [id: id, title: product.toString(), price: priceService.calcProductPrice(product.id).showVal]
+            compareListItem = [id: id, title: product.toString(), type:product?.productTypes?.find()?.name, price: priceService.calcProductPrice(product.id).showVal]
             compareList << compareListItem
         }
 
@@ -220,5 +220,21 @@ class ComparisonController {
             render(template: 'search_autoComplete', model: model)
         else
             render ''
+    }
+
+    def alert(){
+
+        def id = params.id
+        def product = Product.get(id)
+
+        def map = [:]
+        session["compareList"]?.each {item ->
+            if(!map.containsKey(item.type))
+                map.put(item.type, 0)
+            map[item.type]++
+        }
+
+
+        render template: 'alert', model: [name: "${product?.productTypes?.find()} ${product?.type?.title?:''} ${product?.brand}", map: map, enabled: map.any {it.value > 1}]
     }
 }

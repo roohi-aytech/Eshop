@@ -15,4 +15,6 @@
         return false;
     });
 
+    $('.accordion > dt.open > a').click().click();
+
 })(jQuery);

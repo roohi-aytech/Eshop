@@ -5,7 +5,7 @@
 %{--Brands Filters--}%
     <g:if test="${filters?.brands}">
         <g:set var="selectedCount" value="${filters.brands?.count { filters.selecteds["b"]?.contains(it._id?.id) }}"/>
-        <dt class="${selectedCount > 0 ? 'hasActive' : ''}"><a
+        <dt class="${selectedCount > 0 ? 'hasActive' : ''} ${params.o == "b" ? 'open' : ''}"><a
                 href=""><g:message code="site.selectBrand"
                                    default="Select Brand"/> ${selectedCount > 0 ? message(code: 'selectedFiltersCount', args: [selectedCount]) : ''}</a></dt>
         <dd>
@@ -58,7 +58,7 @@
         <g:each in="${filters.attributes.findAll { it.value.countsByValue.size() > 0 }}" var="attribute"
                 status="indexer">
             <g:set var="selectedCount" value="${attribute.value.countsByValue.count { filters.selecteds[attribute.key]?.contains(it._id) }}"/>
-            <dt class="${selectedCount > 0 ? 'hasActive' : ''}"><a
+            <dt class="${selectedCount > 0 ? 'hasActive' : ''} ${params.o == "${attribute.value.type.replace("a", "") + attribute.key}" ? 'open' : ''}"><a
                     href="">${attribute.value.name} ${selectedCount > 0 ? message(code: 'selectedFiltersCount', args: [selectedCount]) : ''}</a></dt>
             <dd>
                 <ul>
@@ -120,7 +120,7 @@
 
                 <g:if test="${variationGroup.value.countsByValue.count { it } > 0}">
                     <g:set var="selectedCount" value="${variationGroup.value.countsByValue.count {filters.selecteds[variationGroup.key]?.contains(it._id.name)}}"/>
-                    <dt class="${selectedCount > 0 ? 'hasActive' : ''}"><a
+                    <dt class="${selectedCount > 0 ? 'hasActive' : ''} ${params.o == "${variationGroup.value.type + variationGroup.key}" ? 'open' : ''}"><a
                             href="">${variationGroup.value.name} ${selectedCount > 0 ? message(code: 'selectedFiltersCount', args: [selectedCount]) : ''}</a></dt>
                     <dd>
                         <ul>
@@ -129,7 +129,7 @@
                                 <g:if test="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id.name)}">
                                     <li class="active checkable">
                                         <eshop:filterAddVariation
-                                                id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
+                                                id="${variationGroup.value.type + variationGroup.key}"
                                                 value="${variationValueCount._id.name}" f="${params.f}"
                                                 remove="true"/>
                                     </li>
@@ -137,7 +137,7 @@
                                 <g:else>
                                     <li class="checkable">
                                         <eshop:filterAddVariation
-                                                id="${variationGroup.value.type.replace("a", "") + variationGroup.key}"
+                                                id="${variationGroup.value.type + variationGroup.key}"
                                                 value="${variationValueCount._id.name}"
                                                 f="${params.f}"/></li>
                                 </g:else>
@@ -149,7 +149,7 @@
                                     <g:if test="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id.name)}">
                                         <li class="active checkable">
                                             <eshop:filterAddVariation
-                                                    id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
+                                                    id="${variationGroup.value.type + variationGroup.key}"
                                                     value="${variationValueCount._id.name}" f="${params.f}"
                                                     remove="true"/>
                                         </li>
@@ -157,7 +157,7 @@
                                     <g:else>
                                         <li class="checkable moreItems moreVariationItems${indexer}">
                                             <eshop:filterAddVariation
-                                                    id="${variationGroup.value.type.replace("a", "") + variationGroup.key}"
+                                                    id="${variationGroup.value.type + variationGroup.key}"
                                                     value="${variationValueCount._id.name}"
                                                     f="${params.f}"/></li>
                                     </g:else>

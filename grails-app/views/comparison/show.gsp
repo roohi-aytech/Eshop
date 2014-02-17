@@ -222,7 +222,7 @@
     function fixComparisonTableHeader() {
         var position = $(window).scrollTop();
 
-        if (position > 122) {
+        if (position > 114) {
             $('.comparison-container')
                     .addClass('fixed')
                     .each(function () {
