@@ -3136,6 +3136,7 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 
 .modal.fade.in {
     top: 370px;
+    margin: -250px 0 0 -280px;
 }
 
 .modal .modal-header {
