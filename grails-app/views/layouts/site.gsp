@@ -1,1 +1,1 @@
-<g:render template="/layouts/site_${grailsApplication.config.eShop.instance}"/>
+<g:render template="/layouts/${grailsApplication.config.eShop.instance}/site"/>
