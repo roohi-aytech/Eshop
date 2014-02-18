@@ -2335,8 +2335,8 @@ h2.check-out-price span {
 /*carousel*/
 .showbiz li.sb-showcase-skin {
     padding: 5px !important;
-    margin-right: 15px !important;
-    margin-left: -5px !important;
+    /*margin-right: 15px !important;*/
+    /*margin-left: -5px !important;*/
 }
 
 .showbiz .thumbnail {
