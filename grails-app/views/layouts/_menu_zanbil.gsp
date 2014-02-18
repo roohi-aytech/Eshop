@@ -5,12 +5,13 @@
 <ul class="btn-group pull-right">
     <g:each in="${rootProductTypes}" var="rpt">
         <g:set var="pt" value="${ProductType.get(rpt.id)}"/>
-        <li>
+        <li class="root">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span>${rpt.name}</span></a>
             <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)}"/>
             <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
-                <div class="inner" style="background-image: url(${createLink(controller:'image', params:[id:pt.id, type:'productTypeMenu'])});">
+                <div class="inner"
+                     style="background-image: url(${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu'])});">
                     <table>
                         <tr>
                             <g:set var="columnsCount" value="${0}"/>
@@ -38,3 +39,12 @@
         </li>
     </g:each>
 </ul>
+<script language="javascript" type="text/javascript">
+    $('.header-menu-row li.root').hover(function () {
+        var hoveredItem = this;
+        $('.header-menu-row li.root').each(function () {
+            if (this != hoveredItem)
+                $(this).removeClass('open');
+        });
+    });
+</script>

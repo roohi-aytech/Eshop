@@ -829,7 +829,7 @@ ul.thumbnailGrid {
 
 .header-menu-row td ul li.depth_3 {
     padding-right: 15px;
-    background: url('../images/menu_item_arrow.png') top right no-repeat;
+    background: url('../images/menu_item_square.png') top right no-repeat;
 }
 
 .header-menu-row td .top-menu ul li.depth_3 a {
@@ -842,7 +842,7 @@ ul.thumbnailGrid {
 
 .header-menu-row td ul li.depth_4 {
     padding-right: 15px;
-    background: url('../images/menu_item_arrow.png') top right no-repeat;
+    background: url('../images/menu_item_dot.png') top right no-repeat;
 }
 
 .header-menu-row td .top-menu ul li.depth_4 a {
@@ -2943,6 +2943,32 @@ ul.nav.nav-tabs {
     padding: 10px;
 }
 
+.product-card-content table{
+    background: #f5f5f5;
+    color:#7f7f7f;
+    margin-right: -10px;
+    margin-left: -10px;
+    width: 220px !important;
+    max-width: 220px !important;
+}
+
+.product-card-content table td{
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.product-card-content table td + td{
+    text-align: left;
+}
+
+.product-card-content table td hr{
+    margin:auto;
+    border-color: #cdcdcd;
+    width: 200px;
+}
+
 .product-card-footer {
     /*background: none repeat scroll 0 0 #eeeeee;*/
     border: 5px solid #c0c0c0;
@@ -2972,7 +2998,9 @@ ul.nav.nav-tabs {
     background-color: #E1AE3F;
     line-height: 30px;
     height: 30px !important;
+    cursor: pointer;
 }
+
 
 .product-card-footer a.btn-compare {
     display: inline-block !important;
@@ -3739,12 +3767,14 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 
 /*added values*/
 .addedValues {
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
     margin-right: -10px;
     margin-left: -10px;
     padding-right: 10px;
     padding-left: 10px;
     padding-bottom: 10px;
+    display: inline-block;
+    min-width: 300px;
 }
 
 .addedValues .title {
@@ -3758,13 +3788,18 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     margin-top: 5px;
 }
 
+.addedValues .item div {
+    display: inline-block;
+    padding: 5px;
+}
+
 .addedValues .item:hover {
     background-color: #e4efff;
     border-color: #accdff;
 }
 
 .addedValues input[type=checkbox] {
-    margin-top: 0;
+    margin-top: -2px;
 }
 
 .addedValues label {
@@ -3778,10 +3813,11 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 
 .addedValues .price {
     color: #942a25;
-    margin-right: 17px;
-    font-size: 9px;
+    margin-right: 0px;
+    /*font-size: 9px;*/
     background: none;
     padding: 0;
+    display: inline-block;
 }
 
 .basketItem .addedValue {

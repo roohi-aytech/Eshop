@@ -60,10 +60,14 @@
 
             <div class="social-links">
                 <span><g:message code="social.share"/></span>
-                <a href="http://www.facebook.com/sharer.php?u=${createLink(uri:"/product/${params.id}", absolute: true)}" target="_blank"><img src="${resource(dir:'images/social', file:'facebook.png')}"/></a>
-                <a href="http://twitter.com/share?url=${createLink(uri:"/product/${params.id}", absolute: true)}&text=${product.manualTitle ? product.pageTitle : title}" target="_blank"><img src="${resource(dir:'images/social', file:'twitter.png')}"/></a>
-                <a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri:"/product/${params.id}", absolute: true)}"><img src="${resource(dir:'images/social', file:'mail.png')}"/></a>
-                <a href="https://plus.google.com/share?url=${createLink(uri:"/product/${params.id}", absolute: true)}" target="_blank"><img src="${resource(dir:'images/social', file:'google.png')}"/></a>
+                <a href="http://www.facebook.com/sharer.php?u=${createLink(uri: "/product/${params.id}", absolute: true)}"
+                   target="_blank"><img src="${resource(dir: 'images/social', file: 'facebook.png')}"/></a>
+                <a href="http://twitter.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}&text=${product.manualTitle ? product.pageTitle : title}"
+                   target="_blank"><img src="${resource(dir: 'images/social', file: 'twitter.png')}"/></a>
+                <a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img
+                        src="${resource(dir: 'images/social', file: 'mail.png')}"/></a>
+                <a href="https://plus.google.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}"
+                   target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a>
             </div>
 
         </div>
@@ -188,6 +192,10 @@
                                     </div>
 
                                     <ehcache:render template="product/variation" key="${params.id}"/>
+
+                                    <div class="product-additives">
+                                        <g:render template="product/additives"/>
+                                    </div>
 
                                     <g:if test="${product.description}">
                                         <p itemprop="description">

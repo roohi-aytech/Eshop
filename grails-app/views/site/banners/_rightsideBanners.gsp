@@ -37,8 +37,12 @@
 
 <script language="javascript" type="text/javascript">
 
-    $(document).scroll(function (e) {
-        setBannersPosition()
+    $(document).ready(function(){
+        $(document).scroll(function (e) {
+            setBannersPosition();
+        });
+
+        setBannersPosition();
     });
 
     function setBannersPosition() {
@@ -49,7 +53,7 @@
         var minPosition = 0;
         if (position > maxPosition)
             position = maxPosition;
-        else if (position < minPosition)
+        if (position < minPosition)
             position = minPosition;
         banners.first().stop().animate({
             'top': position + "px"

@@ -39,6 +39,21 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
                 );
             });
     }
+    $scope.reloadProductAdditives = function (url, serializedData, productAdditives) {
+        $http({
+            url: url,
+            method: "POST",
+            data: serializedData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config) {
+                productAdditives.html(data);
+            }).error(function (data, status, headers, config) {
+                console.error(
+                    "The following error occured: " +
+                        textStatus, errorThrown
+                );
+            });
+    }
     $scope.reloadProductPrice = function (url, serializedData, productPrice) {
         $http({
             url: url,
