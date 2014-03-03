@@ -124,7 +124,13 @@ Copyright (c) 2012
 	height:15px;
 }
 .jCountdown.metal.black .group>.label{
-	background-image:url(../images/jcountdown/jcountdown_metal_black.png);
+    background-image: url("../images/jcountdown/jcountdown_metal_black.png");
+    color: #000000;
+    font-family: b koodak, tahoma,serif !important;
+    font-size: 24px !important;
+    left: 20%;
+    margin-top: 5px;
+    top: 25px;
 }
 .jCountdown.metal.white .group>.label{
 	background-image:url(../images/jcountdown/jcountdown_metal_white.png);

@@ -275,7 +275,7 @@ class ProductController {
         def attributeTypes = productInstance?.productTypes.collect { attributeTypes(it) }.flatten()
 
         //check required attributes
-        def requiredAttributeTypes = attributeTypes.findAll { it.required }
+        def requiredAttributeTypes = attributeTypes.findAll { it.required && !it.deleted }
         def isValid = true
         requiredAttributeTypes.each {
             if (!params["at_${it.id}"] && !params["notAvailable_${it.id}"]) {

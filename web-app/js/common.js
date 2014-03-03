@@ -62,8 +62,8 @@ $(document).ready(function () {
 
         $(this).find('.title').first().stop().animate({
             'top': '168px',
-            'margin-right': '30px',
-            'margin-left': '30px',
+            'margin-right': '10px',
+            'margin-left': '10px',
             'margin-top': '168px'
         });
 

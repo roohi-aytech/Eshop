@@ -21,7 +21,7 @@ class BasketController {
         if (basketItem)
             basketItem.count++;
         else {
-            basketItem = [id: id, productId: productModel.product.id, name: productModel.toString(), count: 1]
+            basketItem = [id: id, productId: productModel.product.id, name: productModel.toBasketItemString(), count: 1]
             basket << basketItem
         }
 
@@ -154,6 +154,12 @@ class BasketController {
         def basketItem = basket.find { it -> it.id == id }
         if (basketItem)
             basketItem.count = params.count.toInteger();
+
+
+        def basketCounter = 0
+        basket.each { basketCounter += it.count }
+
+        session.setAttribute("basketCounter", basketCounter)
 
         render "1"
     }

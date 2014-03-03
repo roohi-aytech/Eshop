@@ -47,11 +47,11 @@
         var itemsCount = ${productList.count{it}};
 
         var width = $('#carousel_${id}').width();
-        var visibleCount = Math.floor(width / 200);
+        var visibleCount = Math.floor(width / 204);
 
         if (itemsCount > visibleCount) {
             jQuery('#carousel_${id}').showbizpro({
-                elementSize: 200
+                elementSize: 204
             });
         }
         else {

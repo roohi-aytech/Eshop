@@ -31,21 +31,17 @@
                         <rg:field name="totalCount"/>
                         <rg:field name="remainingCount"/>
 
-                    </div>
-
-                    <div class="form-fields-part">
-                        <rg:field name="startDate"/>
-                        <rg:field name="finishDate"/>
-
                         <div class="fieldcontain required">
                             <label for="image"><g:message code="slide.image.label" default="image"/>
                                 <span class="required-indicator">*</span>
                             </label>
                             <input type="file" id="image" name="image"/>
                         </div>
+
                     </div>
 
                     <div class="form-fields-part">
+                        <rg:field name="startDate"/>
 
                         <div class="fieldcontain required">
                             <label for="extraImage1"><g:message code="slide.extraImage1.label" default="extraImage1"/>
@@ -68,6 +64,13 @@
                             </label>
                             <input type="file" id="extraImage3" name="extraImage3"/>
                         </div>
+                    </div>
+
+                    <div class="form-fields-part">
+                        <rg:field name="finishDate"/>
+                        <rg:field name="extraLink1"/>
+                        <rg:field name="extraLink2"/>
+                        <rg:field name="extraLink3"/>
                     </div>
                 </div>
             </rg:template>

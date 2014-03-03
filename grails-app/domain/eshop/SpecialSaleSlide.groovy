@@ -13,6 +13,9 @@ class SpecialSaleSlide {
     byte[] extraImage1
     byte[] extraImage2
     byte[] extraImage3
+    String extraLink1
+    String extraLink2
+    String extraLink3
 
     static constraints = {
         product(nullable: false)
@@ -24,5 +27,8 @@ class SpecialSaleSlide {
         extraImage1(maxSize: 20000000)
         extraImage2(maxSize: 20000000)
         extraImage3(maxSize: 20000000)
+        extraLink1(nullable: true, maxSize: 2048)
+        extraLink2(nullable: true, maxSize: 2048)
+        extraLink3(nullable: true, maxSize: 2048)
     }
 }

@@ -38,4 +38,8 @@ class ProductModel {
     String toString() {
         "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} مدل ${name?:""} با گارانتی ${guarantee?:""}"
     }
+
+    String toBasketItemString(){
+        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} با گارانتی ${guarantee?:""}\n مدل ${name?:""}"
+    }
 }

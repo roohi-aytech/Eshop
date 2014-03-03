@@ -93,8 +93,8 @@ class BrowseService {
                     Math.ceil(totalPages).toInteger()
             ]
 
-            for(def i = 1; i < splitPoints.size(); i++)
-                if(splitPoints[i] < splitPoints[i - 1])
+            for (def i = 1; i < splitPoints.size(); i++)
+                if (splitPoints[i] < splitPoints[i - 1])
                     splitPoints[i] = splitPoints[i - 1]
 
             def tempPagesCountMap = []
@@ -140,7 +140,7 @@ class BrowseService {
                 pagesCountMap.remove(pagesCountMap.indexOf(0D))
 
             def indexOfLastPage = pagesCountMap.indexOf(pagesCountMap.size())
-            if(indexOfLastPage != pagesCountMap.size() - 1){
+            if (indexOfLastPage != pagesCountMap.size() - 1) {
                 def currentLastPage = pagesCountMap[pagesCountMap.size() - 1]
                 pagesCountMap[pagesCountMap.size() - 1] = pagesCountMap.size()
                 pagesCountMap[indexOfLastPage] = currentLastPage
@@ -521,6 +521,9 @@ class BrowseService {
 
         def match = [baseProductId: [$in: productIdList]]
 
+        if (f instanceof String[])
+            f = f[f.length - 1]
+
         def raw_filters = f.split(",")
         def filterPartsMap = [:]
         def filterIndexes = [:]
@@ -716,5 +719,14 @@ class BrowseService {
 
     def getAllSubProductTypes(ProductType productType) {
         BrowseHelper.getAllSubProductTypes(productType)
+    }
+
+    def brandList(Long productTypeId) {
+        def match = productTypeId ? ['productTypes.id': productTypeId] : [:]
+        countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
+    }
+
+    def minPrice(Long productTypeId) {
+        products.aggregate([$unwind: '$productTypes'], [$match: [displayInList:true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect { it.minPrice }.find() ?: 0
     }
 }

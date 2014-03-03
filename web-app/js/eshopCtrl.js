@@ -1,7 +1,6 @@
 var eshop = angular.module('eshop', []);
 
 eshop.controller('eshopCtrl', function ($scope, $http) {
-
     $scope.basketCounter = basketCounter;
     $scope.compareListCounter = compareListCounter;
     $scope.wishListCounter = wishListCounter;
@@ -72,7 +71,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
     //    basket
     $scope.addToBasket = function (id, name, price, selectedAddedValues) {
-        $('#link-basket').addClass('full');
+        $('#link-basket').removeClass('open').addClass('full');
 
         $('#basketItems .rollbar-path-vertical').remove();
         $('#basketItems .rollbar-path-horizontal').remove();
@@ -90,11 +89,11 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         if (!found)
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: 1, realPrice: price};
-        $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
+            $http.post(contextRoot + "basket/add/" + id + "?addedValues=" + selectedAddedValues.toString()).success(function (response) {
         });
 
         $.ajax({ url: contextRoot + "basket/alert/" + id })
-            .done(function(html) {
+            .done(function (html) {
                 $('#link-basket').qtip({
                     content: {
                         title: 'توجه',
@@ -133,7 +132,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         var found = false;
         for (var i = 0; i < $scope.basket.length; i++) {
             if ($scope.basket[i].id == id) {
-                $scope.basketCounter -= $scope.basket[i].count;
+                $scope.basketCounter -= parseInt($scope.basket[i].count);
                 $scope.basket.splice(i, 1);
                 found = true;
                 break;
@@ -144,6 +143,14 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             });
         }
     };
+
+    $scope.itemFirstLine = function(name){
+        return name.split('\n')[0];
+    }
+
+    $scope.itemSecondLine = function(name){
+        return name.split('\n')[1];
+    }
 
     $scope.calculateBasketTotalPrice = function () {
         var totalPrice = 0;
@@ -169,8 +176,22 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     }
 
     $scope.changeCount = function (id, count) {
-        $http.post(contextRoot + "basket/changeCount/" + id + "?count=" + count).success(function (response) {
-        });
+
+        var found = false;
+        for (var i = 0; i < $scope.basket.length; i++) {
+            if ($scope.basket[i].id == id) {
+                $scope.basketCounter -= parseInt($scope.basket[i].count);
+                $scope.basket[i].count = parseInt(count);
+                $scope.basketCounter += parseInt($scope.basket[i].count);
+                $scope.$apply();
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+            $http.post(contextRoot + "basket/changeCount/" + id + "?count=" + count).success(function (response) {
+            });
     }
 
     //    compareList
@@ -192,7 +213,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         $http.post(contextRoot + "comparison/add/" + id).success(function (response) {
             $.ajax({ url: contextRoot + "comparison/alert/" + id })
-                .done(function(html) {
+                .done(function (html) {
                     $('#link-compare').qtip({
                         content: {
                             title: 'توجه',
@@ -223,7 +244,6 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
                     });
                 });
         });
-
 
 
         return false;
@@ -298,16 +318,5 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
 function updateBasketItemCount(id, count) {
     var scope = angular.element(document.getElementById('main-container')).scope();
-
-    var found = false;
-    for (var i = 0; i < scope.basket.length; i++) {
-        if (parseInt(id) == scope.basket[i].id) {
-            scope.basket[i].count = count;
-            scope.$apply();
-            found = true;
-        }
-    }
-
-    if (found)
-        scope.changeCount(id, count);
+    scope.changeCount(id, count);
 }

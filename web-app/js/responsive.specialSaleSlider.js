@@ -4,28 +4,22 @@ $('.responsive-specialSalesSlider').each(function () {
     var ul = $(this);
     ul.after('<div class="specialSalesSlider-container"></div>');
     var container = $('.specialSalesSlider-container').first();
-    container.css('height', parseInt(ul.attr('height')) + 30);
-    container.append('<table class="table-simulated" style="height:' + (parseInt(ul.attr('height')) + 20) + 'px"><tr><td class="extra3"><div></div></td><td class="extra2"><div></div></td><td class="extra1"><div></div></td><td class="main"><div></div></td></tr></table>')
+    container.css('height', parseInt(ul.attr('height')) + 45);
+    container.append('<table class="table-simulated" style="height:' + (parseInt(ul.attr('height')) + 35) + 'px"><tr><td class="extra1"><div></div></td><td class="extra2"><div></div></td><td class="extra3"><div></div></td><td class="main"><div></div></td></tr></table>')
     var main = container.find('.main div');
     var extra1 = container.find('.extra1 div');
     var extra2 = container.find('.extra2 div');
     var extra3 = container.find('.extra3 div');
     ul.find('li img').each(function () {
         var img = $(this);
-        var enclosingStart = '';
-        var enclosingEnd = '';
-        if (img.parent().attr('href')) {
-            enclosingStart = '<a href="' + img.parent().attr('href') + '">';
-            enclosingEnd = '</a>';
-        }
         var finishDate = ''
         if (img.attr('finishDate')) {
             finishDate = '<span class="specialSalesSlider-finishDate">' + img.attr('finishDate') + '</span>';
         }
-        main.append(enclosingStart + '<div class="specialSalesSlider-main" style="background-image: url(' + img.attr('src') + ');height:' + ul.attr('height') + 'px;">' + finishDate + '</div>' + enclosingEnd);
-        extra1.append(enclosingStart + '<div class="specialSalesSlider-extra1" style="background-image: url(' + img.attr('src-extra1') + ');height:' + ul.attr('height') + 'px;"></div>' + enclosingEnd);
-        extra2.append(enclosingStart + '<div class="specialSalesSlider-extra2" style="background-image: url(' + img.attr('src-extra2') + ');height:' + ul.attr('height') + 'px;"></div>' + enclosingEnd);
-        extra3.append(enclosingStart + '<div class="specialSalesSlider-extra3" style="background-image: url(' + img.attr('src-extra3') + ');height:' + ul.attr('height') + 'px;"></div>' + enclosingEnd);
+        main.append('<a href="' + img.parent().attr('href') + '"><div class="specialSalesSlider-main" style="background-image: url(' + img.attr('src') + ');height:' + ul.attr('height') + 'px;">' + finishDate + '</div></a>');
+        extra1.append('<a href="' + img.parent().attr('href-extra1') + '"><div class="specialSalesSlider-extra1" style="background-image: url(' + img.attr('src-extra1') + ');height:' + ul.attr('height') + 'px;"></div></a>');
+        extra2.append('<a href="' + img.parent().attr('href-extra2') + '"><div class="specialSalesSlider-extra2" style="background-image: url(' + img.attr('src-extra2') + ');height:' + ul.attr('height') + 'px;"></div></a>');
+        extra3.append('<a href="' + img.parent().attr('href-extra3') + '"><div class="specialSalesSlider-extra3" style="background-image: url(' + img.attr('src-extra3') + ');height:' + ul.attr('height') + 'px;"></div></a>');
     });
 
     //thumbnails
@@ -89,7 +83,8 @@ function setupCountDowns(){
             displayLabel: true,
             displayDay: true,
             width:400,
-            reflection: false
+            reflection: false,
+            style: 'metal'
         });
 
         $('.jCountdown .group.second .label').text('ثانیه');

@@ -34,7 +34,8 @@
                                onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
                     </span>
                     <span class="basket-item-title">
-                        {{basketItem.name}}<br/>
+                        {{itemFirstLine(basketItem.name)}}<br/>
+                        {{itemSecondLine(basketItem.name)}}<br/>
                         <span>{{basketItem.realPrice | number:0}} <g:message code="rial"/>
                             <br/>
                             <a ng-click="removeFromBasket(basketItem.id)" class="removeBasketItem"><g:message

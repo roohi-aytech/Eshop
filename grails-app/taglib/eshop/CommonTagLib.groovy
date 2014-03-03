@@ -7,7 +7,8 @@ class CommonTagLib {
     def loginLink = { attrs, body ->
 
         out << '<a target="_self"'
-        out << ' href=\"' + createLink(controller: 'Login', action: 'auth', params: ['forwardUri': request.forwardURI], absolute: true)/*.replaceFirst('http:', 'https:') */+ '\"'
+        attrs.each { out << " " + it }
+        out << ' href=\"' + createLink(controller: 'Login', action: 'auth', params: ['forwardUri': request.forwardURI], absolute: true)/*.replaceFirst('http:', 'https:') */ + '\"'
         attrs.each { key, value ->
             out << ' ' + key + '=\"' + value + "\""
         }
@@ -19,6 +20,7 @@ class CommonTagLib {
     def registerLink = { attrs, body ->
 
         out << '<a target="_self"'
+        attrs.each { out << " " + it }
         out << ' href=\"' + createLink(controller: 'Customer', action: 'register', params: ['forwardUri': request.forwardURI], absolute: true)/*.replaceFirst('http:', 'https:')*/ + '\"'
         attrs.each { key, value ->
             out << ' ' + key + '=\"' + value + "\""

@@ -3,7 +3,6 @@ package eshop
 import grails.converters.JSON
 import groovy.sql.Sql
 import org.apache.lucene.search.BooleanQuery
-import org.compass.core.CompassQuery
 import search.FarsiNormalizationFilter
 
 import javax.servlet.http.Cookie
@@ -125,7 +124,7 @@ class SiteController {
             order("visitCount", "desc")
         }
 
-        model
+        render(model: model, view: "${grailsApplication.config.eShop.instance}/browse");
     }
 
     def filter() {
@@ -232,7 +231,7 @@ class SiteController {
             order("visitCount", "desc")
         }
 
-        model
+        render(modle: model, view: "${grailsApplication.config.eShop.instance}/filter")
     }
 
 //    def filter1() {
@@ -335,7 +334,7 @@ class SiteController {
             order("visitCount", "desc")
         }
 
-        model
+        render(model: model, view: "${grailsApplication.config.eShop.instance}/index")
     }
 
     def category() {
@@ -462,7 +461,7 @@ class SiteController {
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
 
-        model
+        render(model: model, view: "${grailsApplication.config.eShop.instance}/product")
     }
 
     def productCard() {
@@ -689,7 +688,7 @@ class SiteController {
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
 
-        render(view: 'search', model: model)
+        render(view: "${grailsApplication.config.eShop.instance}/search", model: model)
     }
 
     def searchAutoComplete() {
@@ -765,7 +764,7 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
-        model
+        render(model: model, view: "${grailsApplication.config.eShop.instance}/article")
     }
 
     def articleList() {
@@ -781,12 +780,12 @@ class SiteController {
             maxResults(10)
         })
 
-        model.totalPages = JournalArticle.createCriteria().count{
+        model.totalPages = JournalArticle.createCriteria().count {
             if (params.id)
                 'in'('baseProduct.id', ProductType.get(params.id).allChildren.collect { it.id } + [params.id.toLong()])
-        }.toDouble()/10
+        }.toDouble() / 10
 
-        model
+        render(model: model, view: "${grailsApplication.config.eShop.instance}/articleList")
     }
 
     def contactUs() {

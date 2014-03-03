@@ -1,4 +1,4 @@
-<g:if test="${status == 'exists'}">
+%{--<g:if test="${status == 'exists'}">--}%
     <span class="price">
         <g:if test="${showVal}">
             <span class='current'>
@@ -6,7 +6,8 @@
             <g:if test="${lastUpdate}">
                 <span class="price-last-update" original-title="${message(code: 'price.lastUpdate')}">
                     <rg:formatJalaliDate date="${lastUpdate}"/>
+                </span>
             </g:if>
         </g:if>
     </span>
-</g:if>
+%{--</g:if>--}%

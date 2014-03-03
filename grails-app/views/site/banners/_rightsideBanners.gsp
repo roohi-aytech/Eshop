@@ -1,5 +1,5 @@
 <%@ page import="eshop.Banner" %>
-
+<div style="width: 220px;"></div>
 <div class="relative">
     <div class="right-side-banners">
         <g:each in="${Banner.findAllByPositionAndDeleted('right', false).sort { it.sortIndex }}">

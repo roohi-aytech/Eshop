@@ -53,7 +53,7 @@
     </label>
     <input type="file" id="image" name="image" />
     <input type="hidden" id="image${productTypeInstance?.id}deleted" name="imagedeleted" value="" />
-    <img id="img"/>
+    <img id="${productTypeInstance?.id}img"/>
     <input type="button" value="<g:message code="delete" />" onclick="deleteImage()">
     <script type="text/javascript">
         function deleteImage(){
@@ -76,7 +76,7 @@
     <script type="text/javascript">
         function deleteMenuImage(){
             if(confirm('<g:message code="default.button.delete.confirm.message" />')){
-                $("#${productTypeInstance?.id}menuImg").attr('src','')
+                $("#menuImg").attr('src','')
                 $("#menuImage${productTypeInstance?.id}deleted").val("true")
             }
         }

@@ -947,7 +947,10 @@ input.search-query {
 }
 
 #btn-search input {
-    background: url("../images/icons/btn-search.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    background-image: url("../images/icons/btn-search.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: transparent;
     border-width: 0;
     display: inline-block;
     height: 28px;
@@ -962,7 +965,9 @@ input.search-query {
 }
 
 .category-select .caret {
-    background: url("../images/search-category-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    background-image: url("../images/search-category-arrow.png");
+    background-repeat: no-repeat;
+    background-position: center center;
     border-width: 0;
     height: 12px;
     width: 12px;
@@ -1124,7 +1129,9 @@ input.search-query {
     -moz-border-left-colors: none !important;
     -moz-border-right-colors: none !important;
     -moz-border-top-colors: none !important;
-    background: url("../images/zanbil-kharid.png") no-repeat scroll 174px 3px rgba(0, 0, 0, 0);
+    background-image: url("../images/zanbil-kharid.png");
+    background-repeat: no-repeat;
+    background-position: 174px 3px;
     border-color: #8B8B8B !important;
     border-image: none !important;
     border-radius: 0 2px 2px 0 !important;
@@ -1144,7 +1151,8 @@ input.search-query {
     border-radius: 0 2px 0 0 !important;
 }
 
-.link-basket.open .dropdown-toggle {
+.link-basket.open .dropdown-toggle,
+.link-basket:hover .dropdown-toggle{
     box-shadow: none;
     background-color: #ffffff !important;
 }
@@ -1194,6 +1202,8 @@ input.search-query {
     border-color: #60bd68 !important;
     color: #076c2b;
     background-image: url("../images/zanbil-kharid-green.png");
+    background-repeat: no-repeat;
+    background-position: 174px 3px;
 }
 
 .link-basket.full a.dropdown-toggle:hover {
@@ -3544,9 +3554,16 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     /*position: absolute;*/
     /*top: 168px;*/
     margin-top: 13px;
-    margin-right: 30px;
-    margin-left: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
     text-align: right;
+}
+
+.showbiz .thumbnail .title h4 span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    height: 18px;
 }
 
 .showbiz .thumbnail .title h4 {
@@ -4308,6 +4325,11 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     display: block !important;
 }
 
+#link-basket a.dropdown-toggle:hover + .dropdown-menu,
+#link-basket a.dropdown-toggle + .dropdown-menu:hover{
+    display: block !important;
+}
+
 .banners {
     width: 220px;
     padding-left: 10px;
@@ -4438,6 +4460,7 @@ h3.quick-access {
 
 .news-table {
     margin: 10px 10% 30px;
+    height: 200px;
 }
 
 .news-table table td {
@@ -4452,11 +4475,13 @@ div.news {
     margin-bottom:20px;
 }
 
-div.news:first-of-type {
+#news-article
+{
     margin-right: 0;
 }
 
-div.news:last-of-type {
+#news-news
+{
     margin-left: 0;
     float:left;
 }
@@ -4517,6 +4542,7 @@ div.news ul li a img {
     border: 1px solid #cccccc;
     padding: 1px;
     margin-left: 5px;
+    width: 64px;
 }
 
 div.news a.more-link {

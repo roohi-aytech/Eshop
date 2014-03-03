@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="eshop.MenuConfig" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main">
@@ -145,7 +145,7 @@
             ${flash.message}
         </div>
     </g:if>
-    <g:form controller="menuConfig" action="save" onsubmit="saveMenuConfig();">
+    <g:form controller="menuConfig" action="save" method="POST" onsubmit="saveMenuConfig();" enctype="multipart/form-data">
         <div id="menu-tabs">
             <ul>
                 <g:each in="${productTypes}" var="productType">
@@ -181,6 +181,39 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <div>
+                        <g:each in="${1..5}" var="index">
+                            <div class="fieldcontain ${hasErrors(bean: productType, field: "extraMenuImage${index}_${productType.id}", 'error')} ">
+                                <label for="extraMenuImage${index}_${productType.id}">
+                                    <g:message code="productType.extraMenuImage${index}.label" default="extraMenuImage${index}"/>
+                                </label>
+                                <input type="file" id="extraMenuImage${index}_${productType.id}"
+                                       name="extraMenuImage${index}_${productType.id}"/>
+                                <input type="hidden" id="extraMenuImage${index}deleted_${productType.id}"
+                                       name="extraMenuImage${index}Deleted_${productType.id}" value=""/>
+                                <img id="extraMenuImg${index}_${productType.id}" width="100px"
+                                     src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu', role: "e${index}"])}"/>
+                                <input type="button" value="<g:message code="delete"/>"
+                                       onclick="deleteExtraMenuImage${index}_${productType.id}()">
+                                <script type="text/javascript">
+                                    function deleteExtraMenuImage${index}_${productType.id}() {
+                                        if (confirm('<g:message code="default.button.delete.confirm.message" />')) {
+                                            $("#mextraMenuImg${index}_${productType.id}").attr('src', '');
+                                            $("#extraMenuImage${index}deleted_${productType.id}").val("true");
+                                        }
+                                    }
+                                </script>
+                            </div>
+                        </g:each>
+                        <g:set var="menuConfig" value="${MenuConfig.findByProductType(productType)}"/>
+                        <div class="fieldcontain ${hasErrors(bean: productType, field: "maxBrandsCount", 'error')} ">
+                            <label for="extraMenuImage${index}_${productType.id}">
+                                <g:message code="menuConfig.maxBrandsCount.label" default="maxBrandsCount"/>
+                            </label>
+                            <g:textField name="maxBrandsCount_${productType.id}" value="${menuConfig.maxBrandsCount ?: 0}"/>
+                        </div>
+                    </div>
                 </div>
             </g:each>
         </div>
@@ -193,9 +226,12 @@
         </script>
 
         <div class="toolbar">
-            <input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                   style="padding:10px;margin:10px;" value="${message(code: 'save')}"/>
-            <g:link controller="menuConfig" action="clear" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+            <g:submitButton name="submit" value="${message(code: 'save')}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                            style="padding:10px;margin:10px;"/>
+            %{--<input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"--}%
+                   %{--style="padding:10px;margin:10px;" value="${message(code: 'save')}"/>--}%
+            <g:link controller="menuConfig" action="clear"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
                     style="padding:10px;margin:10px;">${message(code: 'clearAll')}</g:link>
         </div>
     </g:form>

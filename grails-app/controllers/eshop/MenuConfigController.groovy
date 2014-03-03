@@ -105,6 +105,54 @@ class MenuConfigController {
             menuConfig.column4 = params["column_${it.id}_4"]
             menuConfig.column5 = params["column_${it.id}_5"]
             menuConfig.column6 = params["column_${it.id}_6"]
+            menuConfig.maxBrandsCount = params["maxBrandsCount_${it.id}"] as Integer
+
+            def extraMenuImage1 = menuConfig.extraMenuImage1
+            def extraMenuImage2 = menuConfig.extraMenuImage2
+            def extraMenuImage3 = menuConfig.extraMenuImage3
+            def extraMenuImage4 = menuConfig.extraMenuImage4
+            def extraMenuImage5 = menuConfig.extraMenuImage5
+
+            if (!params["extraMenuImage1Deleted_${it.id}"]) {
+                if (params["extraMenuImage1_${it.id}"].bytes.length > 0)
+                    menuConfig.extraMenuImage1 = params["extraMenuImage1_${it.id}"].bytes
+                else if (extraMenuImage1)
+                    menuConfig.extraMenuImage1 = extraMenuImage1
+            }
+            else menuConfig.extraMenuImage1 = null
+
+            if (!params["extraMenuImage2Deleted_${it.id}"]) {
+                if (params["extraMenuImage2_${it.id}"].bytes.length > 0)
+                    menuConfig.extraMenuImage2 = params["extraMenuImage2_${it.id}"].bytes
+                else if (extraMenuImage1)
+                    menuConfig.extraMenuImage2 = extraMenuImage2
+            }
+            else menuConfig.extraMenuImage2 = null
+
+            if (!params["extraMenuImage3Deleted_${it.id}"]) {
+                if (params["extraMenuImage3_${it.id}"].bytes.length > 0)
+                    menuConfig.extraMenuImage3 = params["extraMenuImage3_${it.id}"].bytes
+                else if (extraMenuImage3)
+                    menuConfig.extraMenuImage3 = extraMenuImage3
+            }
+            else menuConfig.extraMenuImage3 = null
+
+            if (!params["extraMenuImage4Deleted_${it.id}"]) {
+                if (params["extraMenuImage4_${it.id}"].bytes.length > 0)
+                    menuConfig.extraMenuImage4 = params["extraMenuImage4_${it.id}"].bytes
+                else if (extraMenuImage3)
+                    menuConfig.extraMenuImage4 = extraMenuImage4
+            }
+            else menuConfig.extraMenuImage4 = null
+
+            if (!params["extraMenuImage5Deleted_${it.id}"]) {
+                if (params["extraMenuImage5_${it.id}"].bytes.length > 0)
+                    menuConfig.extraMenuImage5 = params["extraMenuImage5_${it.id}"].bytes
+                else if (extraMenuImage5)
+                    menuConfig.extraMenuImage5 = extraMenuImage5
+            }
+            else menuConfig.extraMenuImage5 = null
+
             menuConfig.save(flush: true)
         }
 

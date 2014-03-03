@@ -6,6 +6,8 @@ class EshopTagLib {
     static namespace = "eshop"
 
     def priceService
+    def browseService
+    def messageSource
 
     def renderProductAttributes = { attrs, body ->
         Product product = attrs.product
@@ -200,11 +202,11 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a type="basket" original-title="${message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a type="basket" original-title="${message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${price}', []);"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                     else
                         out << """
-                            <a class="btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel}', '${price}', []);"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
+                            <a class="btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${price}', []);"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
                             """
                 } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
@@ -262,5 +264,23 @@ class EshopTagLib {
 
     def basketItem = { attrs, body ->
         out << "${attrs.id} ${attrs.name} ${attrs.count} salam farzin :D"
+    }
+
+    def productTypeTopBrands = { attrs, body ->
+        def brandList = browseService.brandList(attrs.productTypeId as Long)
+        out << "<ul>"
+        def counter = 0
+        brandList.each { brand ->
+            if (counter++ < (attrs.max as Integer))
+                out << """
+        <li><a href="${createLink(uri: '/filter?p' + attrs.productTypeId + ',b' + brand._id.id)}">${brand._id.name}</a>
+                                            </li>
+"""
+        }
+        out << "</ul>"
+    }
+
+    def productTypeMinPrice = { attrs, body ->
+        out << formatNumber(number: browseService.minPrice(attrs.productTypeId as Long), type: 'number')
     }
 }

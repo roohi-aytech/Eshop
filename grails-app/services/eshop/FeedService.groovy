@@ -12,7 +12,7 @@ class FeedService {
     def readNews() {
         def list = []
         try {
-            def rssObj = new XmlSlurper().parse('http://www.blog.zanbil.ir/zanbil-news/feed/')
+            def rssObj = new XmlSlurper().parse('http://www.blog.zanbil.ir/zanbil-and-festival-news/feed')
             rssObj.channel.item.each {
                 def post = [
                         title: it.title.toString(),

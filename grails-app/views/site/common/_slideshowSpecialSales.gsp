@@ -7,7 +7,10 @@
     <ul class="responsive-specialSalesSlider" height="180">
         <g:each in="${specialSaleSlides}" var="slide">
             <li>
-                <a href="${createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}">
+                <a href="${createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}"
+                   href-extra1="${slide.extraLink1 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}"
+                   href-extra2="${slide.extraLink2 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}"
+                   href-extra3="${slide.extraLink3 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}">
                     <img alt="${slide.product}"
                         <g:if test="${slide.finishDate}">
                             finishDate="${formatDate(date: slide.finishDate, format: 'yyyy/MM/dd HH:mm:ss')}"

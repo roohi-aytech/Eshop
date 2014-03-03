@@ -2,6 +2,7 @@ package eshop
 
 import eshop.accounting.Account
 import eshop.delivery.DeliveryMethod
+import grails.util.Environment
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -20,7 +21,8 @@ class ImageController {
 
     def index() {
 
-        cache shared: true, validUntil: new Date() + 3600
+        if (Environment.current != Environment.DEVELOPMENT)
+            cache shared: true, validUntil: new Date() + 1
 
         if (params.id && params.id.toString().contains("{{")) { //angular parameter
             render ""
@@ -55,7 +57,30 @@ class ImageController {
             case 'productTypeMenu':
                 def productType = ProductType.get(params.id)
                 if (productType) {
-                    content = productType.menuImage
+                    switch (params.role) {
+                        case 'e1':
+                            def menuConfig = MenuConfig.findByProductType productType
+                            content = menuConfig.extraMenuImage1
+                            break
+                        case 'e2':
+                            def menuConfig = MenuConfig.findByProductType productType
+                            content = menuConfig.extraMenuImage2
+                            break
+                        case 'e3':
+                            def menuConfig = MenuConfig.findByProductType productType
+                            content = menuConfig.extraMenuImage3
+                            break
+                        case 'e4':
+                            def menuConfig = MenuConfig.findByProductType productType
+                            content = menuConfig.extraMenuImage4
+                            break
+                        case 'e5':
+                            def menuConfig = MenuConfig.findByProductType productType
+                            content = menuConfig.extraMenuImage5
+                            break
+                        default:
+                            content = productType.menuImage
+                    }
                 }
                 break;
             case 'productTypeType':
