@@ -31,6 +31,10 @@
     position: relative;
 }
 
+.specialSalesSlider-main{
+    position: relative;
+}
+
 .specialSalesSlider-main,
 .specialSalesSlider-extra1,
 .specialSalesSlider-extra2,
@@ -121,13 +125,14 @@
 
 .jCountdownContainer{
     direction: ltr;
-    position: absolute !important;
-    top:130px;
-    left:15px;
+    float: left;
+    margin-top:125px;
+    margin-left:15px;
 }
 
 .jCountdownScale{
-    width: auto !important;
+    /*width: 400px !important;*/
+    /*transform: scale(0.5) !important;*/
 }
 
 .jCountdownContainer .group{
@@ -135,12 +140,30 @@
     /*margin-right: 65px !important;*/
 }
 
+.jCountdown{
+    width: auto !important;
+    height: 70px !important;
+}
+
 .jCountdown .group > .label{
-    margin-left: -125px;
+    /*margin-left: -125px;*/
     height: 30px !important;
-    top:20px;
+    /*top:20px;*/
     background: none !important;
-    color:#ffffff;
+    /*color:#ffffff;*/
     text-align: center;
     font-size: 18px !important;
+}
+
+.jCountdownContainer, .jCountdownContainer div{
+    display: block !important;
+}
+
+.jCountdownContainer div.container{
+    display: inline-block !important;
+}
+
+.jCountdown.metal.black .group > .label{
+    top:5px;
+    left:50%;
 }

@@ -84,7 +84,8 @@ function setupCountDowns(){
             displayDay: true,
             width:400,
             reflection: false,
-            style: 'metal'
+            style: 'metal',
+            scale: 0.5
         });
 
         $('.jCountdown .group.second .label').text('ثانیه');

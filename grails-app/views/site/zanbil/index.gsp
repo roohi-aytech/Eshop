@@ -22,7 +22,7 @@
 <table class="layout-container table-simulated">
     <tr class="table-row">
         <td colspan="2">
-            <g:render template="common/slideshowMain"/>
+            <ehcache:render template="common/slideshowMain"/>
         </td>
     </tr>
     <tr class="table-row">
@@ -30,11 +30,11 @@
             <table class="table-simulated">
                 <tr>
                     <td class="specialSales-cell">
-                        <g:render template="common/slideshowSpecialSales"
+                        <ehcache:render template="common/slideshowSpecialSales"
                                   model="[specialSaleSlides: specialSaleSlides]"/>
                     </td>
                     <td class="namad-cell">
-                        <g:render template="banners/enamad"/>
+                        <ehcache:render template="banners/enamad"/>
                     </td>
                 </tr>
             </table>
@@ -42,12 +42,12 @@
     </tr>
     <tr class="table-row">
         <td class="table-cell banners">
-            <g:render template="banners/rightsideBanners"/>
+            <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
         <td class="table-cell">
 
-            <g:render template="common/browsingGraphicalMenu"/>
+            <ehcache:render template="common/browsingGraphicalMenu"/>
 
             <g:render template="common/productGrid"
                       model="${[productIds: filters.products.productIds]}"/>
@@ -73,7 +73,7 @@
     </tr>
     <tr class="table-row">
         <td class="table-cell" colspan="2">
-            <g:render template="news/window" model="${[productTypeId: productTypeId]}"/>
+            <ehcache:render template="news/window" model="${[productTypeId: productTypeId]}"/>
         </td>
     </tr>
 </table>
