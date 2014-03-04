@@ -51,7 +51,7 @@ class BrowseService {
         ).results().collect { it.count }.find() ?: 0) / pageSize
     }
 
-    def listProducts(params) {
+    def listRandomProducts(params) {
 
         def products = getProducts()
         params.match["displayInList"] = true
@@ -162,6 +162,22 @@ class BrowseService {
                     [$limit: params.pageSize]
             ).results().collect { it.baseProductId }
         }
+
+        [totalPages: totalPages, productIds: productIds]
+    }
+
+    def listProducts(params) {
+
+        def products = getProducts()
+        params.match["displayInList"] = true
+
+        def totalPages = pagesCount(params.match, params.pageSize)
+        def productIds = products.aggregate(
+                [$match: params.match],
+                [$sort: [status: 1, sortOrder: 1]],
+                [$skip: params.start],
+                [$limit: params.pageSize]
+        ).results().collect { it.baseProductId }
 
         [totalPages: totalPages, productIds: productIds]
     }
@@ -727,6 +743,6 @@ class BrowseService {
     }
 
     def minPrice(Long productTypeId) {
-        products.aggregate([$unwind: '$productTypes'], [$match: [displayInList:true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect { it.minPrice }.find() ?: 0
+        products.aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect { it.minPrice }.find() ?: 0
     }
 }

@@ -224,14 +224,16 @@ class SiteController {
                 isNull('isVisible')
                 eq('isVisible', true)
             }
-            productTypes {
-                'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+            if (productType) {
+                productTypes {
+                    'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+                }
             }
             maxResults(20)
             order("visitCount", "desc")
         }
 
-        render(modle: model, view: "${grailsApplication.config.eShop.instance}/filter")
+        render(model: model, view: "${grailsApplication.config.eShop.instance}/filter")
     }
 
 //    def filter1() {
