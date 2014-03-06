@@ -37,7 +37,7 @@ body {
     /*position: relative;*/
 }
 
-.relative{
+.relative {
     position: relative;
 }
 
@@ -61,6 +61,41 @@ body.main {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.static-page-content {
+    margin: 0 10% 20px;
+}
+
+.static-page-content *{
+    text-align: justify !important;
+}
+
+.static-page-content ul {
+    margin: 0 25px 10px 0;
+}
+
+.static-page-content ol {
+    margin: 0 10px 10px 0;
+}
+
+.static-page-content OL {
+    counter-reset: item;
+}
+
+.static-page-content OL LI {
+    display: block
+}
+
+.static-page-content OL LI:before {
+    content: counters(item, ".") ".";
+    counter-increment: item
+}
+
+h4 {
+    font-family: 'b koodak',koodak,times !important;
+    font-size: 18px;
+    margin-bottom: 0;
 }
 
 .page-content {
@@ -691,12 +726,10 @@ ul.thumbnailGrid {
     padding-left: 7px;
 }
 
-
 .link-list ul li b {
     font-weight: normal;
-    color:#076C2B !important;
+    color: #076C2B !important;
 }
-
 
 .link-list ul li b span {
     font-weight: bold;
@@ -1152,7 +1185,7 @@ input.search-query {
 }
 
 .link-basket.open .dropdown-toggle,
-.link-basket:hover .dropdown-toggle{
+.link-basket:hover .dropdown-toggle {
     box-shadow: none;
     background-color: #ffffff !important;
 }
@@ -1450,8 +1483,8 @@ h2 {
     display: block;
 }
 
-#product-price .flag-container{
-    margin-top:5px;
+#product-price .flag-container {
+    margin-top: 5px;
     color: #808080;
     font-size: 12px;
 }
@@ -1497,11 +1530,11 @@ h2 {
     color: #ffffff;
     text-align: center;
     background: #8ec42f;
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 .product-card-footer .btn-compare {
-    margin-top:0;
+    margin-top: 0;
 }
 
 .btn-compare:hover {
@@ -1534,7 +1567,7 @@ h3 {
     font-family: 'b koodak', koodak, times !important;
 }
 
-.product-specification-panel .attribute-list{
+.product-specification-panel .attribute-list {
     max-width: 1200px;
     border-left: 1px solid #dddddd;
     border-right: 1px solid #dddddd;
@@ -1546,7 +1579,7 @@ table.attribute-list {
 
 table.attribute-list td {
     padding: 8px;
-    width:100px;
+    width: 100px;
 }
 
 table.attribute-list td + td {
@@ -2563,7 +2596,7 @@ h2.check-out-price span {
     /*left:auto !important;*/
 }
 
-.brand-carousel li{
+.brand-carousel li {
     /*width: 80px !important;*/
 }
 
@@ -2587,7 +2620,7 @@ h2.check-out-price span {
     position: relative;
 }
 
-.product-carousel .sb-showcase-skin{
+.product-carousel .sb-showcase-skin {
     min-width: 170px;
 }
 
@@ -2953,28 +2986,28 @@ ul.nav.nav-tabs {
     padding: 10px;
 }
 
-.product-card-content table{
+.product-card-content table {
     background: #f5f5f5;
-    color:#7f7f7f;
+    color: #7f7f7f;
     margin-right: -10px;
     margin-left: -10px;
     width: 220px !important;
     max-width: 220px !important;
 }
 
-.product-card-content table td{
+.product-card-content table td {
     padding-right: 10px;
     padding-left: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.product-card-content table td + td{
+.product-card-content table td + td {
     text-align: left;
 }
 
-.product-card-content table td hr{
-    margin:auto;
+.product-card-content table td hr {
+    margin: auto;
     border-color: #cdcdcd;
     width: 200px;
 }
@@ -3011,7 +3044,6 @@ ul.nav.nav-tabs {
     cursor: pointer;
 }
 
-
 .product-card-footer a.btn-compare {
     display: inline-block !important;
     width: 95px;
@@ -3037,8 +3069,6 @@ ul.nav.nav-tabs {
     margin-bottom: 3px;
 }
 
-
-
 .product-card .social-links a {
     display: inline-block;
 }
@@ -3050,7 +3080,6 @@ ul.nav.nav-tabs {
     float: right;
     padding-top: 8px;
 }
-
 
 .product-card .social-links a img {
     float: none;
@@ -3090,17 +3119,17 @@ ul.nav.nav-tabs {
 
 .banners img {
     margin-bottom: 10px;
-    margin-top:11px;
+    margin-top: 11px;
 }
 
-td.banners{
+td.banners {
     position: relative;
 }
 
-div.right-side-banners{
+div.right-side-banners {
     position: absolute;
-    right:0;
-    top:0;
+    right: 0;
+    top: 0;
     width: 220px;
 }
 
@@ -3534,7 +3563,7 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     height: 17px !important;
     margin: 5px 0 0 !important;
     padding: 0 !important;
-    top:0 !important;
+    top: 0 !important;
 }
 
 .showbiz .mediaholder.thumbnail.small img {
@@ -3559,7 +3588,7 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
     text-align: right;
 }
 
-.showbiz .thumbnail .title h4 span{
+.showbiz .thumbnail .title h4 span {
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
@@ -4326,7 +4355,7 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 }
 
 #link-basket a.dropdown-toggle:hover + .dropdown-menu,
-#link-basket a.dropdown-toggle + .dropdown-menu:hover{
+#link-basket a.dropdown-toggle + .dropdown-menu:hover {
     display: block !important;
 }
 
@@ -4357,8 +4386,8 @@ ul.tabs {
     padding-bottom: 2px;
 }
 
-.product-page-container{
-    margin-left:30px;
+.product-page-container {
+    margin-left: 30px;
 }
 
 td.product-details {
@@ -4379,8 +4408,8 @@ td.product-details ul.tabs {
 
 td.product-details ul.tabs.rotate {
     position: absolute;
-    left:-175px;
-    top:120px;
+    left: -175px;
+    top: 120px;
 
 }
 
@@ -4470,20 +4499,18 @@ h3.quick-access {
 div.news {
     margin-left: 25px;
     margin-right: 25px;
-    display:block;
-    float:right;
-    margin-bottom:20px;
+    display: block;
+    float: right;
+    margin-bottom: 20px;
 }
 
-#news-article
-{
+#news-article {
     margin-right: 0;
 }
 
-#news-news
-{
+#news-news {
     margin-left: 0;
-    float:left;
+    float: left;
 }
 
 div.news h3 {
@@ -4612,11 +4639,11 @@ ul.article-list li span {
 
 }
 
-.alert-compare-items{
+.alert-compare-items {
     margin-right: 15px;
 }
 
-.alert-compare-items li{
+.alert-compare-items li {
     list-style: none;
 }
 

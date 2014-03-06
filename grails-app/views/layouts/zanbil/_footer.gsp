@@ -62,17 +62,17 @@
                         <g:message code="rules"/>
                     </li>
                     <li>
-                        <a href="#"><g:message code="rules.shopping"/></a>
+                        <a href="${createLink(controller: 'site', action: 'shoppingRules')}"><g:message code="rules.shoppingRules"/></a>
                     </li>
                     <li>
-                        <a href="#"><g:message code="rules.customerRights"/></a>
-                    </li>
-                    <li>
-                        <a href="${createLink(controller: 'site', action: 'guarantee')}"><g:message
-                                code="footerItems.guarantee"/></a>
+                        <a href="${createLink(controller: 'site', action: 'customerRights')}"><g:message code="rules.customerRights"/></a>
                     </li>
                     <li>
                         <a href="${createLink(controller: 'site', action: 'moneyBackConditions')}"><g:message
+                                code="footerItems.guarantee"/></a>
+                    </li>
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'guarantee')}"><g:message
                                 code="footerItems.returnRules"/></a>
                     </li>
                 </ul>
@@ -102,44 +102,43 @@
             </td>
             <td>
                 <ul class="column">
-                    <li>
-                        <a href="#"><g:message
-                                code="help.paymentAndSend"/></a>
+                    <li class="bold">
+                        <g:message
+                                code="help.all"/>
                     </li>
                     <li>
-                        <a href="#"><g:message
+                        <a href="${createLink(controller: 'site', action: 'shoppingSteps')}"><g:message
+                                code="help.shoppingSteps"/></a>
+                    </li>
+                    <li>
+                        <a href="${createLink(controller: 'site', action: 'paymentMethods')}"><g:message
                                 code="help.payment"/></a>
                     </li>
                     <li>
-                        <a href="#"><g:message
-                                code="help.delivery"/></a>
+                        <a href="${createLink(controller: 'site', action: 'paymentAndDelivery')}"><g:message
+                                code="help.paymentAndDelivery"/></a>
                     </li>
                     <li>
-                        <a href="#"><g:message
-                                code="help.deliveryTime"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><g:message
-                                code="help.tax"/></a>
+                        <a href="${createLink(controller: 'site', action: 'deliveryTips')}"><g:message
+                                code="help.deliveryTips"/></a>
                     </li>
                 </ul>
             </td>
             <td>
                 <ul class="column">
-                    <li>
-                        <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message
-                                code="footerItems.about"/></a>
+                    <li class="bold">
+                        <g:message code="footerItems.about"/>
                     </li>
                     <li>
-                        <a href="#"><g:message
+                        <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message
                                 code="footerItems.tour"/></a>
                     </li>
                     <li>
-                        <a href="#"><g:message
+                        <a href="http://www.cv.zanbil.ir/"><g:message
                                 code="help.employment"/></a>
                     </li>
                     <li>
-                        <a href="#"><g:message
+                        <a href="${createLink(controller: 'site', action: 'suppliers')}"><g:message
                                 code="help.supplier"/></a>
                     </li>
                 </ul>

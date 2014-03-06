@@ -862,6 +862,38 @@ class SiteController {
         render view: '/site/statics/trust'
     }
 
+    def shoppingRules(){
+        render view: '/site/statics/shoppingRules'
+    }
+
+    def customerRights(){
+        render view: '/site/statics/customerRights'
+    }
+
+    def shoppingSteps(){
+        render view: '/site/statics/shoppingSteps'
+    }
+
+    def paymentAndDelivery(){
+        render view: '/site/statics/paymentAndDelivery'
+    }
+
+    def deliveryTips(){
+        render view: '/site/statics/deliveryTips'
+    }
+
+    def paymentMethods(){
+        render view: '/site/statics/paymentMethods'
+    }
+
+    def suppliers(){
+        render view: '/site/statics/suppliers'
+    }
+
+    def goldenGuarantee(){
+        render view: '/site/statics/goldenGuarantee'
+    }
+
     def synchMongoItem() {
         try {
             println('synchronizing request received for ' + params.id)
