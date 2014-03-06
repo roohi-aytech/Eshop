@@ -8,6 +8,9 @@
                     <g:render template="/site/common/productThumbnail" model="[product: product]"/>
                 </li>
             </g:if>
+            <g:else>
+                ${System.out.println('product with id ' + productId + 'not found')}
+            </g:else>
         </g:each>
     </ul>
     <g:if test="${filters.products.totalPages > 1}">

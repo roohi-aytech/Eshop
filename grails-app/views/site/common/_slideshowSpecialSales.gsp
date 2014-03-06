@@ -11,7 +11,7 @@
                    href-extra1="${slide.extraLink1 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}"
                    href-extra2="${slide.extraLink2 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}"
                    href-extra3="${slide.extraLink3 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}">
-                    <img alt="${slide.product}"
+                    <img alt="${slide.product.productTypes?.find {true}?.name?:""} ${slide.product.type?.title?:""}  مدل ${slide.product.name?:""}"
                         <g:if test="${slide.finishDate}">
                             finishDate="${formatDate(date: slide.finishDate, format: 'yyyy/MM/dd HH:mm:ss')}"
                         </g:if>
