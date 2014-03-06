@@ -179,6 +179,9 @@ class BrowseService {
                 [$limit: params.pageSize]
         ).results().collect { it.baseProductId }
 
+        println('page size:' + params.pageSize)
+        println('productIds:' + productIds)
+
         [totalPages: totalPages, productIds: productIds]
     }
 

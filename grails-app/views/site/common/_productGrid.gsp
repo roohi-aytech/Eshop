@@ -3,14 +3,12 @@
     %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
             <g:set var="product" value="${eshop.Product.get(productId)}"/>
+            ${System.out.println('product id: ' + productId)}
             <g:if test="${product}">
                 <li class="span3">
                     <g:render template="/site/common/productThumbnail" model="[product: product]"/>
                 </li>
             </g:if>
-            <g:else>
-                ${System.out.println('product with id ' + productId + 'not found')}
-            </g:else>
         </g:each>
     </ul>
     <g:if test="${filters.products.totalPages > 1}">
