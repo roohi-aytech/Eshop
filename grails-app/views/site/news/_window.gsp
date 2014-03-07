@@ -8,7 +8,9 @@
     function resizeNewsTable(){
         var totalWidth = $('.news-table').width();
         var count = $('.news').length;
-        $('.news').width((totalWidth - ((count - 1) * 50)) / count - 1);
+        $('.news').width((totalWidth - ((count - 1) * 50)) / count - 1).css('margin-right', '25px').css('margin-left', '25px');
+        $('.news').first().css('margin-right', '0');
+        $('.news').last().css('margin-left', '0');
     }
 
     $(window).resize(function () {
