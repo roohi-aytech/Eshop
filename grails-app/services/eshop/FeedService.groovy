@@ -1,5 +1,7 @@
 package eshop
 
+import grails.plugin.cache.Cacheable
+
 /**
  * Created with IntelliJ IDEA.
  * User: Farzin
@@ -8,7 +10,7 @@ package eshop
  * To change this template use File | Settings | File Templates.
  */
 class FeedService {
-
+    @Cacheable(value='feednews')
     def readNews() {
         def list = []
         try {
@@ -25,7 +27,7 @@ class FeedService {
         } catch (ex) {}
         list
     }
-
+    @Cacheable(value='feedposts',key='#id.toString()')
     def readPosts(def id) {
         def list = []
         try {
@@ -51,7 +53,7 @@ class FeedService {
         } catch (ex) {}
         list
     }
-
+    @Cacheable(value='feedatricles',key='#id.toString()')
     def readArticles(def id) {
         def list = []
         try {
