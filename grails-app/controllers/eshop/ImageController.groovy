@@ -2,6 +2,7 @@ package eshop
 
 import eshop.accounting.Account
 import eshop.delivery.DeliveryMethod
+import grails.plugin.cache.Cacheable
 import grails.util.Environment
 
 import java.text.DateFormat
@@ -18,7 +19,7 @@ class ImageController {
         response.outputStream << content
         response.outputStream.flush()
     }
-
+    @Cacheable(value='imageindex')
     def index() {
 
         if (Environment.current != Environment.DEVELOPMENT)
