@@ -92,7 +92,7 @@ body.main {
     counter-increment: item
 }
 
-h4 {
+.static-page-content h4 {
     font-family: 'b koodak',koodak,times !important;
     font-size: 18px;
     margin-bottom: 0;
