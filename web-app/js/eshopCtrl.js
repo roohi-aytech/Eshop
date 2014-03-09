@@ -145,11 +145,11 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     };
 
     $scope.itemFirstLine = function(name){
-        return name.split('\n')[0];
+        return name.split('<br/>')[0];
     }
 
     $scope.itemSecondLine = function(name){
-        return name.split('\n')[1];
+        return name.split('<br/>')[1];
     }
 
     $scope.calculateBasketTotalPrice = function () {

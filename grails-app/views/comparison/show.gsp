@@ -169,7 +169,7 @@
                     <g:form controller="comparison" action="show">
                         <h3 class="font-koodak"><g:message code="comparison.selectAttributes.link"/></h3>
 
-                        <div style="height: 400px;margin-bottom:10px;" class="scrollable">
+                        <div style="height: 300px;margin-bottom:10px;" class="scrollable">
                             <ul class="easyui-tree" id="tree-${productType.item.id}">
                                 <g:each in="${productType.rootAttributeCategories}" var="category">
                                     <g:render template="attributeTree"

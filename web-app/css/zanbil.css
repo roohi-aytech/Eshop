@@ -37,6 +37,12 @@ body {
     /*position: relative;*/
 }
 
+:focus, a:focus {
+    outline: 0 !important;
+}
+
+
+
 .relative {
     position: relative;
 }

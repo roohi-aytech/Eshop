@@ -40,6 +40,6 @@ class ProductModel {
     }
 
     String toBasketItemString(){
-        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} با گارانتی ${guarantee?:""}\n مدل ${name?:""}"
+        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} با گارانتی ${guarantee?:""}<br/> مدل ${name?:""}"
     }
 }
