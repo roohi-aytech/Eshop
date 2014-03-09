@@ -107,7 +107,7 @@
                                                                                 hm="true"/></span>
                                     </div>
 
-                                    <div class="description">${trackingLog.description}</div>
+                                    %{--<div class="description">${trackingLog.description}</div>--}%
                                 </li>
                             </g:each>
                         </ul>

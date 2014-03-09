@@ -39,7 +39,7 @@
         <div class="product-variation">
             <div class="variation-title">
                 ${it.name}:
-                <div class="cur-variation">${productModel.variationValues.find { value -> value.variationGroup.id == it.variationGroup.id }}</div>
+                <div class="cur-variation">${productModel?.variationValues.find { value -> value.variationGroup.id == it.variationGroup.id }}</div>
             </div>
         </div>
     </g:each>

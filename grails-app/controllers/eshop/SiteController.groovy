@@ -356,12 +356,18 @@ class SiteController {
     }
 
     def product() {
-        def productTypeList = ProductType.findAllByParentProductIsNull()
+        if(!params.id?.toString()?.isLong()){
+            redirect(uri: "/notFound")
+            return
+        }
+
         def product = Product.get(params.id)
         if (!product || product.deleted || (product.isVisible == false)) {
             redirect(uri: "/notFound")
             return
         }
+
+        def productTypeList = ProductType.findAllByParentProductIsNull()
 
         trackingService.trackProductVisit(product)
 
@@ -478,7 +484,7 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def modelVariationId = model?.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
                 def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
@@ -492,8 +498,8 @@ class SiteController {
         }
 
         def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
-            !addedValue.variationValues.any { variationValue ->
-                variationValue.value != productModel.variationValues
+            !addedValue?.variationValues.any { variationValue ->
+                variationValue.value != productModel?.variationValues
                         .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
             }
         }
@@ -512,7 +518,7 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def modelVariationId = model?.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
                 def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
@@ -526,9 +532,9 @@ class SiteController {
         }
 
         def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
-            !addedValue.variationValues.any { variationValue ->
-                variationValue.value != productModel.variationValues
-                        .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
+            !addedValue?.variationValues?.any { variationValue ->
+                variationValue.value != productModel?.variationValues
+                        .find { it?.variationGroup?.id == variationValue?.variationGroup?.id }?.value
             }
         }
 
