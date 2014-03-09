@@ -6,7 +6,7 @@
     <g:each in="${rootProductTypes}" var="rpt">
         <g:set var="pt" value="${ProductType.get(rpt.id)}"/>
         <li class="root">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span>${rpt.name}</span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="${createLink(uri:"/browse/${pt.seoFriendlyName}")}"><span>${rpt.name}</span></a>
             <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)}"/>
             <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
@@ -35,6 +35,11 @@
             </div>
             <script type="text/javascript" language="javascript">
                 $('.top-menu#top-menu${pt.id} .inner td').css('width', '${100F/columnsCount}%');
+//                $(document).ready(function(){
+                    $('li.root a').click(function(){
+                        window.location.href = $(this).attr('href');
+                    });
+//                });
             </script>
         </li>
     </g:each>
