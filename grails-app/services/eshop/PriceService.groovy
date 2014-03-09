@@ -6,7 +6,7 @@ import grails.plugin.cache.Cacheable
 
 class PriceService {
 
-    @Cacheable(value='service', key='#productId.toString()')
+    @Cacheable(value='pservice', key='#productId.toString()')
     def calcProductPrice(productId) {
         def product = Product.get(productId)
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
@@ -25,7 +25,7 @@ class PriceService {
         calcProductModelPrice(defaultModel?.id)
     }
 
-    @Cacheable(value='service', key='#productModelId.toString()')
+    @Cacheable(value='pmservice', key='#productModelId.toString()')
     def calcProductModelPrice(productModelId) {
         def productModel = ProductModel.get(productModelId)
         if (!productModel)
@@ -48,6 +48,7 @@ class PriceService {
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
+    @Cacheable(value='pmmservice', key='#productModelId.toString().concat(#selectedAddedValues.toString())')
     def calcProductModelPrice(productModelId, selectedAddedValues) {
         def result = calcProductModelPrice(productModelId)
 
@@ -139,6 +140,7 @@ class PriceService {
         order.save()
     }
 
+    @Cacheable(value='advservice', key='#productType.id.toString()')
     def getAddedValues(ProductType productType) {
         def addedValues = []
         if (productType.parentProduct)

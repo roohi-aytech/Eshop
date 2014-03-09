@@ -8,38 +8,10 @@ class CacheCleanerJob {
         simple repeatInterval: 120000 // execute job once in 2 minutes
     }
 
-
+    @CacheEvict(value = ['service', 'imageindex', 'feedatricles', 'feedposts',
+    'feednews', 'pservice,', 'pmservice', 'pmmservice',
+    'advservice'], allEntries = true)
     def execute() {
-        clearFeed()
-        clearNews()
-        clearImage()
-        clearService()
-        clearPosts()
+        println 'All Cache Cleared: ' + new Date()
     }
-
-    @CacheEvict(value = 'service', allEntries = true)
-    def clearService() {
-        println 'All Service Cache Cleared: ' + new Date()
-    }
-
-    @CacheEvict(value = 'imageindex', allEntries = true)
-    def clearImage() {
-        println 'All Image Cache Cleared: ' + new Date()
-    }
-
-    @CacheEvict(value = 'feedatricles', allEntries = true)
-    def clearFeed() {
-        println 'All Feed Cache Cleared: ' + new Date()
-    }
-
-    @CacheEvict(value = 'feedposts', allEntries = true)
-    def clearPosts() {
-        println 'All Post Cache Cleared: ' + new Date()
-    }
-
-    @CacheEvict(value = 'feednews', allEntries = true)
-    def clearNews() {
-        println 'All News Cache Cleared: ' + new Date()
-    }
-
 }
