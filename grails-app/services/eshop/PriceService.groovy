@@ -48,7 +48,7 @@ class PriceService {
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
-    @Cacheable(value='pmmservice', key='#productModelId.toString().concat(#selectedAddedValues.join("-"))')
+    @Cacheable(value='pmmservice', key='#productModelId.toString().concat(#selectedAddedValues.toString())')
     def calcProductModelPrice(productModelId, selectedAddedValues) {
         def result = calcProductModelPrice(productModelId)
 

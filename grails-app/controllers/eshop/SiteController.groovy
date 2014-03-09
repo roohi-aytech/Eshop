@@ -129,12 +129,15 @@ class SiteController {
 
     def filter() {
         def model = [:]
-        if (!params.f) {
+        def f=params.f
+        if(f instanceof String[]&& f.length)
+            f=f[0]
+        if (!f) {
             redirect(uri: "/")
             return
         }
 
-        model.filters = browseService.findFilteredPageFilters(params.f, params.page ?: 0, "${params.f} ${params.page ?: 0}")
+        model.filters = browseService.findFilteredPageFilters(f, params.page ?: 0, "${f} ${params.page ?: 0}")
 
         if (model.filters.products.productIds.size() == 0) {
             redirect(uri: "/notFound")
@@ -155,11 +158,11 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(params.f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
+        def productType = ProductType.get(f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
-        if (productType && productType.children.isEmpty() && !params.f?.split(',')?.find { it.startsWith('t') }) {
+        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
             productType.types.each {
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${params.f},t${it.id}"]), id: it.id]
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${f},t${it.id}"]), id: it.id]
             }
         }
 
@@ -648,7 +651,10 @@ class SiteController {
             },
                     [reload: false, max: 1000])
         }
-        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}")
+        def f=params.f
+        if(f instanceof String[] && f.length)
+            f=f[0]
+        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -664,11 +670,11 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(params.f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
+        def productType = ProductType.get(f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
-        if (productType && productType.children.isEmpty() && !params.f?.split(',')?.find { it.startsWith('t') }) {
+        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
             productType.types.each {
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${params.f},t${it.id}"]), id: it.id]
+                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${f},t${it.id}"]), id: it.id]
             }
         }
 
@@ -709,8 +715,10 @@ class SiteController {
             },
                     [reload: false, max: 1000])
         }
-
-        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}").products.productIds
+        def f=params.f
+        if(f instanceof String[] && f.length)
+            f=f[0]
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
         model.commonLink = createLink(uri: '/')
 
         if (model.productIds?.size() > 0)
