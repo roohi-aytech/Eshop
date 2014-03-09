@@ -138,7 +138,7 @@
 
     <div class="buttons">
         <eshop:addToBasket prodcutModelId="${productModel.id}"
-                           productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
+                           productModelTitle="${productModel}" angular="true" buttonOnly="${true}"
                            useLongText="${true}"></eshop:addToBasket>
     </div>
 </g:if>
