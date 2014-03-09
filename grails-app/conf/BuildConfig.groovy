@@ -76,7 +76,7 @@ grails.project.dependency.resolution = {
 
         runtime ":database-migration:1.1"
 
-        compile ':cache:1.0.0'
+        compile ':cache:1.1.1'
         compile ":cache-ehcache:1.0.0"
         compile ":ckeditor:3.6.2.2"
         compile(":mongodb:1.0.0.GA") {
