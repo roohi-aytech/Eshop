@@ -11,7 +11,7 @@ grails.cache.config = {
 
     cache {
         name 'grailsTemplatesShortTTLCache'
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         eternal false
         timeToIdleSeconds 120
         timeToLiveSeconds 120
@@ -23,7 +23,7 @@ grails.cache.config = {
     }
     cache {
         name 'grailsTemplatesNormalCache'
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         eternal false
         timeToIdleSeconds 7200
         timeToLiveSeconds 7200
@@ -35,7 +35,7 @@ grails.cache.config = {
     }
     cache {
         name 'grailsTemplatesLongTTLCache'
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         eternal false
         timeToIdleSeconds 86400
         timeToLiveSeconds 86400
@@ -49,7 +49,7 @@ grails.cache.config = {
         name 'grailsBlocksTemporaryCache'
         eternal false
         overflowToDisk true
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         maxElementsOnDisk 10000000
     }
 
@@ -57,7 +57,7 @@ grails.cache.config = {
         name 'layout'
         eternal false
         overflowToDisk true
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         maxElementsOnDisk 10000000
     }
 
@@ -65,7 +65,7 @@ grails.cache.config = {
         name 'action'
         eternal false
         overflowToDisk true
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         maxElementsOnDisk 10000000
     }
 
@@ -73,7 +73,7 @@ grails.cache.config = {
         name 'service'
         eternal false
         overflowToDisk true
-        maxElementsInMemory 10000
+        maxElementsInMemory 1000000
         maxElementsOnDisk 10000000
     }
 }
