@@ -3,7 +3,7 @@
     %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
             <g:set var="product" value="${eshop.Product.get(productId)}"/>
-            ${System.out.println('product id: ' + productId)}
+            %{--${System.out.println('product id: ' + productId)}--}%
             <g:if test="${product}">
                 <li class="span3">
                     <g:render template="/site/common/productThumbnail" model="[product: product]"/>

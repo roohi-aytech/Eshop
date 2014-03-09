@@ -147,7 +147,6 @@ class ImageController {
                 content = article.image
                 break;
         }
-
         if (content) {
             def seconds = 3600 * 24
             DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
@@ -157,8 +156,10 @@ class ImageController {
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
             response.contentType = 'image/png'
+            response.setStatus(200)
             response.outputStream << content
             response.outputStream.flush()
+            render null
         } else
             render ""
 

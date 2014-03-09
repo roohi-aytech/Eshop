@@ -9,9 +9,9 @@ grails {
         ssl = "off"
         username = "no-reply@zanbil.ir"
         password = "eshop@agah"
-        props = [
-                "mail.debug":"true",
-        ]
+//        props = [
+//                "mail.debug":"true",
+//        ]
 
     }
 }
