@@ -39,7 +39,7 @@ public class EShopWebKeyGenerator extends DefaultWebKeyGenerator {
         if (StringUtils.hasLength(request.getQueryString())) {
             key.append('?').append(request.getQueryString());
         }
-        System.out.println(key.toString());
+//        System.out.println(key.toString());
         return key.toString();
     }
 }
