@@ -19,7 +19,7 @@ class ImageController {
         response.outputStream << content
         response.outputStream.flush()
     }
-//    @Cacheable(value='imageindex')
+    @Cacheable(value='image')
     def index() {
 
         if (Environment.current != Environment.DEVELOPMENT)
