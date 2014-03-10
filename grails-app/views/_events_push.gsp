@@ -8,7 +8,7 @@
 </g:if>
 <r:script>
     var receivedOrders = new Array();
-    var grailsEvents = new grails.Events("${rootPath}");
+    var grailsEvents = new grails.Events("${rootPath}:82");
 
     function handleOrderEvent(data){
         try{
