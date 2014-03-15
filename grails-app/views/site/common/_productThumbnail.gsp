@@ -2,7 +2,7 @@
 
 <div class="thumbnail mediaholder">
     <a href="<g:createLink uri="/product/${product.id}"/>">
-        <img src="<g:createLink controller="site" action="image"
+        <img src="<g:createLink  controller="image" action="index"
                                 params="[id: product?.id, wh: '150x150']"/>"/>
 
         <div class="title">

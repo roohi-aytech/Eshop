@@ -7,7 +7,7 @@
         <div class="product-image-details">
             <g:radio name="mainImage" value="${it.id}" checked="${productInstance.mainImage?.id==it.id}"/>
             <span class="product-image-details-img">
-                <img src="<g:createLink controller="product" action="image"
+                <img src="<g:createLink controller="image" action="index"
                                     params="[id: productInstance.id, name: it.name]"/>" alt="">
             </span>
             <span id="image-variations-${it.id}" class="product-image-details-variations">

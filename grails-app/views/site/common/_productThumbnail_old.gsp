@@ -8,7 +8,7 @@
                 <span class="image">
                     <span>
                         <span>
-                            <img src="<g:createLink controller="site" action="image"
+                            <img src="<g:createLink controller="image" action="index"
                                                     params="[id: product?.id, wh: '150x150']"/>"/>
                         </span>
                     </span>

@@ -6,7 +6,7 @@
                 <a href="<g:createLink action="product" params="[id: product.id]"/>" class="title">
                     <span class="image">
                         <span>
-                            <img src="<g:createLink action="image" params="[id: product?.id, wh: '150x150']"/>"/>
+                            <img src="<g:createLink controller="image" action="index" params="[id: product?.id, wh: '150x150']"/>"/>
                         </span>
                     </span>
                     <h4>${product}</h4>

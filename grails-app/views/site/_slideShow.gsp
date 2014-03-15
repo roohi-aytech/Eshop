@@ -11,7 +11,7 @@
 			<div class="slideShowItem">
 				<div class="slideShowImage">
 					<a href="<g:createLink action="category" params="[id:it.id]"/>">
-						<img src="<g:createLink action="image" params="[id:it.id,wh:'300x300']"/>" />
+						<img src="<g:createLink controller="image" action="index" params="[id:it.id,wh:'300x300']"/>" />
 					</a>
 				</div>
 				<div class="slideShowDesc">
