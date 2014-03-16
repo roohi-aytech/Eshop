@@ -4578,6 +4578,7 @@ div.news ul {
 div.news ul li {
     list-style-type: none;
     margin-top: 8px;
+    clear: both;
 }
 
 div.news ul li a {
@@ -4595,6 +4596,8 @@ div.news ul li a img {
     padding: 1px;
     margin-left: 5px;
     width: 64px;
+    float:right;
+    margin-bottom: 7px;
 }
 
 div.news a.more-link {

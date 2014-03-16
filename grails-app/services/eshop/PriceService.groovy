@@ -6,7 +6,7 @@ import grails.plugin.cache.Cacheable
 
 class PriceService {
 
-    @Cacheable(value='pservice', key='#productId.toString()')
+    @Cacheable(value = 'pservice', key = '#productId.toString()')
     def calcProductPrice(productId) {
         def product = Product.get(productId)
         def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
@@ -25,7 +25,7 @@ class PriceService {
         calcProductModelPrice(defaultModel?.id)
     }
 
-    @Cacheable(value='pmservice', key='#productModelId.toString()')
+    @Cacheable(value = 'pmservice', key = '#productModelId.toString()')
     def calcProductModelPrice(productModelId) {
         def productModel = ProductModel.get(productModelId)
         if (!productModel)
@@ -39,16 +39,18 @@ class PriceService {
 
         if (priceVal)
             AddedValue.findAllByBaseProductAndProcessTime(productModel.product, 'mandetory').each { addedValue ->
-                if (addedValue.type == "percent")
-                    priceVal += price?.rialPrice * addedValue.value / 100
-                else if (addedValue.type == "fixed")
-                    priceVal += addedValue.value
+                if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
+                    if (addedValue.type == "percent")
+                        priceVal += price?.rialPrice * addedValue.value / 100
+                    else if (addedValue.type == "fixed")
+                        priceVal += addedValue.value
+                }
             }
 
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
-    @Cacheable(value='pmmservice', key='#productModelId.toString().concat(#selectedAddedValues.toString())')
+    @Cacheable(value = 'pmmservice', key = '#productModelId.toString().concat(#selectedAddedValues.toString())')
     def calcProductModelPrice(productModelId, selectedAddedValues) {
         def result = calcProductModelPrice(productModelId)
 
@@ -56,7 +58,9 @@ class PriceService {
             return result
 
         def addedVal = 0
-        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.findAll { it.processTime == 'optional' }.each { addedValue ->
+        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.findAll {
+            it.processTime == 'optional'
+        }.each { addedValue ->
             if (addedValue.type == "percent")
                 addedVal += result.showVal * addedValue.value / 100
             else if (addedValue.type == "fixed")
@@ -133,14 +137,16 @@ class PriceService {
             orderItem.save()
         }
 
-        order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, { it.totalPrice }) as Integer) + order.deliveryPrice) / 1000) * 1000
+        order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
+            it.totalPrice
+        }) as Integer) + order.deliveryPrice) / 1000) * 1000
         if (!order.usedAccountValue)
             order.usedAccountValue = 0
         order.totalPayablePrice = order.totalPrice - order.usedAccountValue
         order.save()
     }
 
-    @Cacheable(value='advservice', key='#productType.id.toString()')
+    @Cacheable(value = 'advservice', key = '#productType.id.toString()')
     def getAddedValues(ProductType productType) {
         def addedValues = []
         if (productType.parentProduct)
