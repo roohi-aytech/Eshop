@@ -12,7 +12,7 @@ import grails.plugin.cache.Cacheable
 class FeedService {
 
     //yek dafe dige cache mano pak koni ,,, midam vakil zade sob ta shab bahat harf bezane ,,, ye hafteye kaamel
-    @Cacheable(value='feednews')
+//    @Cacheable(value='feednews')
     def readNews() {
         def list = []
         try {
@@ -34,7 +34,7 @@ class FeedService {
         } catch (ex) {}
         list
     }
-    @Cacheable(value='feedposts',key='#id.toString()')
+//    @Cacheable(value='feedposts',key='#id.toString()')
     def readPosts(def id) {
         def list = []
         try {
@@ -65,7 +65,7 @@ class FeedService {
         } catch (ex) {}
         list
     }
-    @Cacheable(value='feedatricles',key='#id.toString()')
+//    @Cacheable(value='feedatricles',key='#id.toString()')
     def readArticles(def id) {
         def list = []
         try {
