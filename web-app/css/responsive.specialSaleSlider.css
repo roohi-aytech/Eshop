@@ -95,20 +95,20 @@
 }
 
 .specialSalesSlider-thumbnail{
-    padding-right: 5px;
-    padding-left: 5px;
+    padding-right: 15px;
+    padding-left: 15px;
     line-height: 11px;
     display: inline-block;
     /*border-left: 1px solid #c0c0c0;*/
     color: #c0c0c0;
-    height: 35px;
-    min-width: 250px;
+    height: 30px;
+    /*min-width: 250px;*/
     text-align: center;
 }
 
 .specialSalesSlider-thumbnail.current{
     color: #808080;
-    background: url('../images/special-sales-title-selected.png') no-repeat bottom center;
+    background: url('../images/special-sales-title-selected.jpg') no-repeat bottom center;
 }
 
 .specialSalesSlider-thumbnail:last-of-type{

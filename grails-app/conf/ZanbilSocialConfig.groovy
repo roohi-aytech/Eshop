@@ -1,7 +1,7 @@
 
 grails.plugin.invitation.facebook.enabled = true
-grails.plugin.invitation.facebook.key = 'zanbil.ir@gmail.com'
-grails.plugin.invitation.facebook.secret = 'z@nbil.ir1391'
+grails.plugin.invitation.facebook.key = '456233177811011'
+grails.plugin.invitation.facebook.secret = '91afef04ac96dc5c5413ac8f21086352'
 
 grails.plugin.invitation.google.enabled = true
 grails.plugin.invitation.google.key = 'www.zanbil.ir'

@@ -1,7 +1,20 @@
 <%@ page import="eshop.Banner" %>
 <div style="width: 220px;"></div>
+
 <div class="relative">
     <div class="right-side-banners">
+
+        <div class="orderTracking">
+            <h4><g:message code="order.tracking"></g:message></h4>
+            <g:form method="post" controller="order" action="track">
+                <g:submitButton name="submit"
+                                value="${message(code: 'order.tracking.button')}"/><g:textField name="trackingCode" id="trackingCodePanel" place-holder="test"/>
+            </g:form>
+        </div>
+        <script type="text/javascript" language="javascript">
+            $('#trackingCodePanel').maskInput('9999999999');
+        </script>
+
         <g:each in="${Banner.findAllByPositionAndDeleted('right', false).sort { it.sortIndex }}">
             <g:if test="${it.url}">
                 <a href="${it.url}">
@@ -37,7 +50,7 @@
 
 <script language="javascript" type="text/javascript">
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $(document).scroll(function (e) {
             setBannersPosition();
         });
