@@ -10,24 +10,31 @@ import grails.plugin.cache.Cacheable
  * To change this template use File | Settings | File Templates.
  */
 class FeedService {
-//    @Cacheable(value='feednews')
+
+    //yek dafe dige cache mano pak koni ,,, midam vakil zade sob ta shab bahat harf bezane ,,, ye hafteye kaamel
+    @Cacheable(value='feednews')
     def readNews() {
         def list = []
         try {
             def rssObj = new XmlSlurper().parse('http://www.blog.zanbil.ir/zanbil-and-festival-news/feed')
             rssObj.channel.item.each {
+                def imgUrl=it.'encoded'?.toString()?.split('"')?.findAll { it =~ /http:.*.jpg/ || it =~ /http:.*.gif/ || it =~ /http:.*.jpeg/ || it =~ /http:.*.png/ }?.find()
+                def indx=imgUrl?.lastIndexOf('.')
+                if(indx && indx>0)
+                    imgUrl=imgUrl.substring(0,indx)+'-60x40'+imgUrl.substring(indx)
                 def post = [
                         title: it.title.toString(),
                         link: it.link.toString(),
                         body: it.description.toString().split('</p>').find().replace('<p>', ''),
-                        imgUrl: it.'encoded'?.toString()?.split('"')?.findAll { it =~ /http:.*.jpg/ || it =~ /http:.*.gif/ || it =~ /http:.*.jpeg/ || it =~ /http:.*.png/ }?.find()
+                        imgUrl: imgUrl
                 ]
+
                 list << post
             }
         } catch (ex) {}
         list
     }
-//    @Cacheable(value='feedposts',key='#id.toString()')
+    @Cacheable(value='feedposts',key='#id.toString()')
     def readPosts(def id) {
         def list = []
         try {
@@ -43,17 +50,22 @@ class FeedService {
             }
             def rssObj = new XmlSlurper().parse("http://www.blog.zanbil.ir/${name}feed/")
             rssObj.channel.item.findAll { !it.category.toString().contains('اخبار') }.each {
-                list << [
+                def imgUrl=it.'encoded'?.toString()?.split('"')?.findAll { it =~ /http:.*.jpg/ || it =~ /http:.*.gif/ || it =~ /http:.*.jpeg/ || it =~ /http:.*.png/ }?.find()
+                def indx=imgUrl?.lastIndexOf('.')
+                if(indx && indx>0)
+                    imgUrl=imgUrl.substring(0,indx)+'-60x40'+imgUrl.substring(indx)
+                def itm= [
                         title: it.title.toString(),
                         link: it.link.toString(),
                         body: it.description.toString().split('</p>').find().replace('<p>', ''),
-                        imgUrl: it.'encoded'?.toString()?.split('"')?.findAll { it =~ /http:.*.jpg/ || it =~ /http:.*.gif/ || it =~ /http:.*.jpeg/ || it =~ /http:.*.png/ }?.find()
+                        imgUrl: imgUrl
                 ]
+                list<<itm
             }
         } catch (ex) {}
         list
     }
-//    @Cacheable(value='feedatricles',key='#id.toString()')
+    @Cacheable(value='feedatricles',key='#id.toString()')
     def readArticles(def id) {
         def list = []
         try {
