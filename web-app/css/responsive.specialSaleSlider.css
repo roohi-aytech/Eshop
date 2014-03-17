@@ -15,6 +15,10 @@
     text-align: center;
 }
 
+.specialSalesSlider-container td.main div.specialSalesSlider-main{
+    display: none;
+}
+
 .specialSalesSlider-container td.main div{
     width: 850px;
     display: inline-block;

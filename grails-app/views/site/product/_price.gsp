@@ -24,12 +24,24 @@
                                                                        model="${[status: price.status]}"/>
                 </div>
             </g:if>
+
+            <g:else>
+                <div class="flag-container">
+                    <g:message code="productModel.status"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <g:render template="common/productModelStatusFlag"
+                                                                                                    model="${[status: 'not-exists']}"/>
+                </div>
+            </g:else>
         </span>
 
     </g:if>
+    <g:else>
+        <div class="flag-container">
+            <g:message code="productModel.status"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <g:render template="common/productModelStatusFlag"
+                                                                                            model="${[status: 'not-exists']}"/>
+        </div>
+    </g:else>
 </g:if>
 <g:else>
-
     <div class="flag-container">
         <g:message code="productModel.status"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <g:render template="common/productModelStatusFlag"
                                                                                         model="${[status: 'not-exists']}"/>
