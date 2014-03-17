@@ -204,3 +204,5 @@ uiperformance.exclusions = [
 ]
 
 grails.rest.injectInto = ["Controller", "Service", "Routes", "Job"]
+
+cors.headers = ['Access-Control-Allow-Origin': '*']
