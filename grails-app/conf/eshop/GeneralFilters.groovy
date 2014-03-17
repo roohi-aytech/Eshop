@@ -9,6 +9,10 @@ class GeneralFilters {
         all(controller: '*', action: '*') {
             before = {
 
+                response.setHeader('Access-Control-Allow-Origin', '*')
+                response.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+                response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
                 //set locale
                 RequestContextUtils.getLocaleResolver(request).setLocale(request, response, new Locale(grailsApplication.config.locale.language, grailsApplication.config.locale.country))
 
