@@ -22,7 +22,6 @@
 
     <ckeditor:resources/>
     <g:javascript library="jquery"/>
-    <g:render template="/events_push"/>
     <r:layoutResources/>
     <jqui:resources theme="${grailsApplication.config.admin.theme}"/>
 
@@ -147,5 +146,6 @@
         });
     }
 </script>
+<g:render template="/events_push"/>
 </body>
 </html>
