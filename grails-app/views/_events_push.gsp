@@ -6,6 +6,7 @@
 %{--<g:if test="${request.scheme=="https"}">--}%
     %{--<g:set var="rootPath" value="${rootPath.replace("http:","https:")}"/>--}%
 %{--</g:if>--}%
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.atmosphere.js')}"></script>
 <r:script>
     var receivedOrders = new Array();
     var grailsEvents = new grails.Events("${grailsApplication.config.events.url}");
