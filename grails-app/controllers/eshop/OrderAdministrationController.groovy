@@ -21,7 +21,8 @@ class OrderAdministrationController {
 
     def orderNotification() {
         def order = Order.get(params.id)
-        if (orderTrackingService.checkIfOrderIsVisibleToUser(order, springSecurityService.currentUser)) {
+        def user = User.findByUsername(params.userName)
+        if (orderTrackingService.checkIfOrderIsVisibleToUser(order, user)) {
             String result = ""
             order.items.findAll { !it.deleted }.each {
                 result += it.productModel.toString()
