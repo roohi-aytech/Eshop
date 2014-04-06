@@ -283,4 +283,29 @@ class EshopTagLib {
     def productTypeMinPrice = { attrs, body ->
         out << formatNumber(number: browseService.minPrice(attrs.productTypeId as Long), type: 'number')
     }
+
+    def selectedProductsList = {attrs, body ->
+        def productType = ProductType.get(attrs.productTypeId.toLong())
+        ProductType.findAllByParentProductAndDeleted(productType, false).each {
+            out << selectedProducts(productTypeId: it.id)
+        }
+    }
+
+    def selectedProducts = {attrs, body ->
+        def productType = ProductType.get(attrs.productTypeId.toLong())
+        def products = browseService.findProductTypeSampleProducts(productType, 4)
+        out << """<div class="category_heading">
+                    <h2>${productType}</h2>
+                    <div class="right_text">
+                        <a href="${createLink(uri:"/browse/${productType.seoFriendlyName}")}">${message(code:'category.view.all', args: [productType.name])} &gt;</a>
+                    </div>
+                  </div>"""
+        out << """<div class="row">"""
+        def counter = 0
+        products.productIds.each {
+            counter ++
+            out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product:Product.get(it), class: counter == 4 ? 'last' : ''])
+        }
+        out << "</div>"
+    }
 }

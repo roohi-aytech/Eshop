@@ -82,7 +82,7 @@
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'eshopCtrl.js')}" type="text/javascript"></script>
+    <script language="javascript" src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'eshopCtrl.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}"
             type="text/javascript"></script>
     <g:layoutHead/>

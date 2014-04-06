@@ -6,6 +6,8 @@ locale.language='fa'
 locale.country='IR'
 events.url='http://localhost:8080/eshop'
 admin.theme='cobalt'
+browse.view.root='browse'
+page.size=12
 ckeditor {
     upload {
         basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"

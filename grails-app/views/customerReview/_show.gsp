@@ -35,7 +35,7 @@
             </g:if>
 
             <g:if test="${customerReviewInstance?.body}">
-                <div>
+                <div class="comment-body">
                     ${customerReviewInstance.body}
                 </div>
             </g:if>

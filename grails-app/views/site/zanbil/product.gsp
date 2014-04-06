@@ -48,7 +48,7 @@
 <td class="table-cell product-rightColumn">
     <div class="product-card">
         <div class="product-card-content" id="product-card">
-            <g:render template="product/card" key="${params.id}"
+            <g:render template="/site/zanbil/templates/product/card" key="${params.id}"
                       model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
         </div>
 
@@ -185,7 +185,7 @@
 
 
                                         <div id="product-price">
-                                            <ehcache:renderShortTTL template="product/price"
+                                            <ehcache:renderShortTTL template="/site/zanbil/templates/product/price"
                                                                     key="${params.id}"
                                                                     model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
                                         </div>
@@ -207,7 +207,7 @@
                             </td>
 
                             <td class="table-cell product-imageColumn">
-                                <div><ehcache:render template="product/zoom" key="${params.id}"/></div>
+                                <div><ehcache:render template="/site/zanbil/templates/product/zoom" key="${params.id}"/></div>
                             </td>
                             <td class="table-cell product-details">
                                 <ul class="tabs rotate">

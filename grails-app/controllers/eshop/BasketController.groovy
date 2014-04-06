@@ -11,6 +11,9 @@ class BasketController {
     def index() {}
 
     def add() {
+        def count = 1
+        if(params.count)
+            count = params.count as Integer
         def id = params.id
         def productModel = ProductModel.get(id)
 
@@ -19,9 +22,9 @@ class BasketController {
             basket = [];
         def basketItem = basket.find { it -> it.id == id }
         if (basketItem)
-            basketItem.count++;
+            basketItem.count = basketItem.count + count;
         else {
-            basketItem = [id: id, productId: productModel.product.id, name: productModel.toBasketItemString(), count: 1]
+            basketItem = [id: id, productId: productModel.product.id, name: productModel.toBasketItemString(), count: count]
             basket << basketItem
         }
 

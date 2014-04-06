@@ -8,6 +8,7 @@ class BrowseService {
     def db
     def products
     def searchableService
+    def grailsApplication
 
     def getProducts() {
         if (!products) {
@@ -205,11 +206,11 @@ class BrowseService {
             attributesCountMap = attributesCountMap + countAttributes(pt, match)
             pt = pt.parentProduct
         }
-        def start = Integer.parseInt(page.toString()) * 12
+        def start = Integer.parseInt(page.toString()) * grailsApplication.config.page.size
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_browse_${productType}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
@@ -394,11 +395,11 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def start = Integer.parseInt(page.toString()) * 12
+        def start = Integer.parseInt(page.toString()) * grailsApplication.config.page.size
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_filter_${f}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
@@ -717,11 +718,11 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def start = Integer.parseInt(page.toString()) * 12
+        def start = Integer.parseInt(page.toString()) * grailsApplication.config.page.size
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_search_${f}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, start: start, pageSize: 12, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
@@ -747,5 +748,10 @@ class BrowseService {
 
     def minPrice(Long productTypeId) {
         products.aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect { it.minPrice }.find() ?: 0
+    }
+
+    def findProductTypeSampleProducts(ProductType productType, count) {
+        def match = productType ? ['productTypes.id': productType.id] : [:]
+        listProducts(match: match, start: 0, pageSize: count)
     }
 }

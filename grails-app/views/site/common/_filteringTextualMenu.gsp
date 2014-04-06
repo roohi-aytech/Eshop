@@ -3,7 +3,7 @@
         <li class="nav-header"><g:message code="site.selectSubcategory"
                                           default="Select SubProductType"/></li>
         <g:each in="${filters.productTypes}" var="productType">
-            <li>
+            <li class="sub-category">
                 <eshop:filterAddProductType id="${productType._id.id}" name="${productType._id.name}"
                                             f="${params.f}"/>
             </li>
@@ -46,10 +46,10 @@
                 </g:else>
             </g:each>
 
-            <li><a onclick="$(this).parent().hide();
+            <li class="moreItemsLink"><a onclick="$(this).parent().hide();
             $(this).parent().next().fadeIn();
             $('.moreBrandItems').fadeIn('slow');"><g:message code="more"/></a></li>
-            <li class="moreItems"><a onclick="$(this).parent().hide();
+            <li class="moreItems moreItemsLink"><a onclick="$(this).parent().hide();
             $(this).parent().prev().fadeIn();
             $('.moreBrandItems').hide('fast');"><g:message code="less"/></a></li>
         </g:if>
@@ -95,10 +95,10 @@
                     </g:else>
                 </g:each>
 
-                <li><a onclick='$(this).parent().hide();
+                <li class="moreItemsLink"><a onclick='$(this).parent().hide();
                 $(this).parent().next().fadeIn();
                 $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
-                <li class="moreItems"><a onclick='$(this).parent().hide();
+                <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();
                 $(this).parent().prev().fadeIn();
                 $(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
             </g:if>
@@ -150,10 +150,10 @@
                             </g:else>
                         </g:each>
 
-                        <li><a onclick='$(this).parent().hide();
+                        <li class="moreItemsLink"><a onclick='$(this).parent().hide();
                         $(this).parent().next().fadeIn();
                         $(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
-                        <li class="moreItems"><a onclick='$(this).parent().hide();
+                        <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();
                         $(this).parent().prev().fadeIn();
                         $(".moreVariationItems${indexer}").hide("fast");'><g:message code="less"/></a>
                         </li>

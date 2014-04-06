@@ -6,6 +6,8 @@ locale.language='en'
 locale.country='US'
 events.url='http://www.felfel.ir/private'
 admin.theme='ui-lightness'
+browse.view.root='browse-root'
+page.size=81
 ckeditor {
     upload {
         basedir = "/home/uploads"

@@ -25,10 +25,11 @@
             var $form = $("#productVariationForm");
             var serializedData = $form.serialize();
 
-            $('#product-card').html('${message(code: 'waiting')}');
+            %{--$('#product-card').html('${message(code: 'waiting')}');--}%
             angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
-            angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
-            angular.element(document.getElementById('main-container')).scope().reloadProductAdditives("${createLink(controller: "site", action: "productAdditives")}", serializedData, $('.product-additives'));
+            angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productShoppingPanel")}", serializedData, $('#shoppingPanel'));
+            %{--angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));--}%
+            %{--angular.element(document.getElementById('main-container')).scope().reloadProductAdditives("${createLink(controller: "site", action: "productAdditives")}", serializedData, $('.product-additives'));--}%
         });
     });
 </script>
@@ -40,7 +41,7 @@
             <g:hiddenField name="productId" value="${product.id}"/>
             <g:hiddenField name="selectedAddedValues" id="selectedAddedValues" value=""/>
         %{--variation select--}%
-            <g:each in="${product?.variations}">
+            <g:each in="${product?.variations.sort {it.variationValues.size()}}">
                 <div class="product-variation">
                     <div class="variation-title">
                         ${it.name}:

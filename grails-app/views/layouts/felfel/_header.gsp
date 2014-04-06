@@ -33,24 +33,63 @@
         </div>
 
         <div class="left_links">
-            <ul class="links">
+            <ul>
                 <sec:ifLoggedIn>
                     <g:set var="currentUser" value="${User.findByUsername(sec.username())}"/>
-                    <g:if test="${currentUser.authorities.any {
-                        it.authority in [
-                                RoleHelper.ROLE_USER_ADMIN
-                        ]
-                    }}">
-                        <li><a tabindex="-1"
-                               href="<g:createLink uri="/admin"/>"><g:message
-                                    code="admin.controlpanel.label"/></a> |</li>
-                    </g:if>
-                    <g:if test="${currentUser instanceof Customer}">
-                        <li><a tabindex="-1"
-                               href="<g:createLink controller="Customer" action="panel"/>"><g:message
-                                    code="user.controlpanel.label"/></a> |</li>
-                    </g:if>
-                    <li><common:logoutLink/></li>
+                    <li class="user_name"><g:message code="welcome" args="${[currentUser]}"/></li>
+                    <li class="needhelp" id="menu-account"><a href="<g:createLink controller="Customer" action="panel"/>"><g:message
+                            code="account.title"/></a>
+
+                        <div id="accountTooltipContainer">
+                            <ul>
+
+                                <g:if test="${currentUser.authorities.any {
+                                    it.authority in [
+                                            RoleHelper.ROLE_USER_ADMIN
+                                    ]
+                                }}">
+                                    <li><a tabindex="-1"
+                                           href="<g:createLink uri="/admin"/>"><g:message
+                                                code="admin.controlpanel.label"/></a></li>
+                                </g:if>
+                                <g:if test="${currentUser instanceof Customer}">
+                                    <li><a tabindex="-1"
+                                           href="<g:createLink controller="Customer" action="panel"/>"><g:message
+                                                code="user.controlpanel.label"/></a></li>
+                                </g:if>
+                                <li><common:logoutLink/></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <script language="javascript" type="text/javascript">
+
+                        $('#menu-account').qtip({
+                            id: 'accountTooltip',
+                            content: {
+                                text: $('#accountTooltipContainer')
+                            },
+                            style: {
+                                classes: 'qtip-bootstrap',
+                                width: 120
+                            },
+                            position: {
+                                my: 'top center',
+                                at: 'bottom center'
+                            },
+                            show: {
+                                effect: function (offset) {
+                                    $(this).slideDown(100);
+                                }
+                            },
+                            hide: {
+                                fixed: true,
+                                delay: 1000
+                            },
+                            metadata: {
+                                type: 'html5'
+                            }
+                        });
+                    </script>
                 </sec:ifLoggedIn>
                 <sec:ifNotLoggedIn>
                     <li>

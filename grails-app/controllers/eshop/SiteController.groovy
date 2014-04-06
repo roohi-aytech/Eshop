@@ -124,7 +124,11 @@ class SiteController {
             order("visitCount", "desc")
         }
 
-        render(model: model, view: "${grailsApplication.config.eShop.instance}/browse");
+        def view = grailsApplication.config.browse.view.root
+        if(productType.parentProduct)
+            view = 'browse'
+
+        render(model: model, view: "/site/${grailsApplication.config.eShop.instance}/${view}");
     }
 
     def filter() {
@@ -468,7 +472,7 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-        def title = product.toString().replace(product.name, modelNames.join(','))
+        def title = product.toString().replace(product.name, modelNames.unique{it.trim()}.join(','))
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
 
@@ -506,7 +510,41 @@ class SiteController {
 
         def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
 
-        render(template: 'product/card', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
+        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
+    }
+
+    def productShoppingPanel() {
+        def product = Product.get(params.productId)
+
+        def models = ProductModel.findAllByProduct(product)
+        def productModel
+        models.each {
+            def model = it
+            Boolean selected = true
+            product.variations.each { variation ->
+                def modelVariationId = model?.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
+                if (modelVariationId != selectedVariationId)
+                    selected = false
+            }
+
+            if (model.guarantee.id.toLong() != params.guarantee.toLong())
+                selected = false
+
+            if (selected)
+                productModel = model
+        }
+
+        def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
+            !addedValue?.variationValues.any { variationValue ->
+                variationValue.value != productModel?.variationValues
+                        .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
+            }
+        }
+
+        def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
+
+        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/shoppingPanel", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
     }
 
     def productAdditives() {

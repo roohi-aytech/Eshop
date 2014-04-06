@@ -291,7 +291,7 @@ class CustomerController {
 
             if (user instanceof Customer && ((Customer)user).mobile)
                 messageService.sendMessage(
-                        customer.mobile,
+                        user.mobile,
                         g.render(template: '/messageTemplates/sms/password_reset', model: [user: user]).toString())
 
 

@@ -72,6 +72,76 @@ class PriceService {
         result
     }
 
+    @Cacheable(value = 'poservice', key = '#productId.toString()')
+    def calcProductOldPrice(productId) {
+        def product = Product.get(productId)
+        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        if (!defaultModel)
+            return [showVal: 0D, status: 'not-exists']
+
+        if (defaultModel.status != 'exists') {
+            def alternateModel = ProductModel.findByProductAndStatus(product, 'exists')
+            if (alternateModel)
+                defaultModel = alternateModel
+        }
+
+        if (!defaultModel)
+            return [showVal: 0D, status: 'not-exists']
+
+        calcProductModelOldPrice(defaultModel?.id)
+    }
+
+    @Cacheable(value = 'pmoservice', key = '#productModelId.toString()')
+    def calcProductModelOldPrice(productModelId) {
+        def productModel = ProductModel.get(productModelId)
+        if (!productModel)
+            return [showVal: 0D, status: 'not-exists']
+        def now = new Date()
+        def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
+        if(price) {
+            def oldPriceList = Price.findAllByProductModelAndStartDateLessThanEqualsAndEndDateIsNotNull(productModel, price.startDate)
+            price = oldPriceList.find {it.startDate >= oldPriceList.collect {it.startDate}.max()}
+        }
+        if (!price)
+            return [showVal: 0D, status: productModel.status]
+
+        def priceVal = price?.rialPrice
+
+        if (priceVal)
+            AddedValue.findAllByBaseProductAndProcessTime(productModel.product, 'mandetory').each { addedValue ->
+                if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
+                    if (addedValue.type == "percent")
+                        priceVal += price?.rialPrice * addedValue.value / 100
+                    else if (addedValue.type == "fixed")
+                        priceVal += addedValue.value
+                }
+            }
+
+        [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
+    }
+
+    @Cacheable(value = 'pmmoservice', key = '#productModelId.toString().concat(#selectedAddedValues.toString())')
+    def calcProductModelOldPrice(productModelId, selectedAddedValues) {
+        def result = calcProductModelOldPrice(productModelId)
+
+        if (!result.showVal)
+            return result
+
+        def addedVal = 0
+        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.findAll {
+            it.processTime == 'optional'
+        }.each { addedValue ->
+            if (addedValue.type == "percent")
+                addedVal += result.showVal * addedValue.value / 100
+            else if (addedValue.type == "fixed")
+                addedVal += addedValue.value
+        }
+
+        result.addedVal = addedVal
+
+        result
+    }
+
     def updateOrderPrice(Order order) {
 
         OrderItem.findAllByOrderAndDeleted(order, false).each { orderItem ->

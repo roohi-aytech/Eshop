@@ -9,7 +9,7 @@ class CacheCleanerJob {
     }
 
     @CacheEvict(value = ['service', 'imageindex', 'feedatricles', 'feedposts',
-    'feednews', 'pservice,', 'pmservice', 'pmmservice',
+    'feednews', 'pservice,', 'pmservice', 'pmmservice', 'poservice,', 'pmoservice', 'pmmoservice',
     'advservice'], allEntries = true)
     def execute() {
         println 'All Cache Cleared: ' + new Date()

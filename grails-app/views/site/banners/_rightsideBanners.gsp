@@ -2,18 +2,22 @@
 <div style="width: 220px;"></div>
 
 <div class="relative">
-    <div class="right-side-banners">
+    <div class="right-side-banners banners">
 
-        <div class="orderTracking">
-            <h4><g:message code="order.tracking"></g:message></h4>
-            <g:form method="post" controller="order" action="track">
-                <g:submitButton name="submit"
-                                value="${message(code: 'order.tracking.button')}"/><g:textField name="trackingCode" id="trackingCodePanel" place-holder="test"/>
-            </g:form>
-        </div>
-        <script type="text/javascript" language="javascript">
-            $('#trackingCodePanel').maskInput('9999999999');
-        </script>
+        <g:if test="${grailsApplication.config.instance == 'Zanbil'}">
+            <div class="orderTracking">
+                <h4><g:message code="order.tracking"/></h4>
+                <g:form method="post" controller="order" action="track">
+                    <g:submitButton name="submit"
+                                    value="${message(code: 'order.tracking.button')}"/><g:textField name="trackingCode"
+                                                                                                    id="trackingCodePanel"
+                                                                                                    place-holder="test"/>
+                </g:form>
+            </div>
+            <script type="text/javascript" language="javascript">
+                $('#trackingCodePanel').maskInput('9999999999');
+            </script>
+        </g:if>
 
         <g:each in="${Banner.findAllByPositionAndDeleted('right', false).sort { it.sortIndex }}">
             <g:if test="${it.url}">
@@ -26,8 +30,7 @@
         </g:each>
 
 
-
-        <g:if test="${grailsApplication.config.instance != 'Local'}">
+        <g:if test="${grailsApplication.config.instance == 'Zanbil'}">
             <div style="text-align: center;direction: ltr;overflow: hidden">
                 <span class="g-plusone" style="width:100px;direction: ltr"></span>
 
@@ -48,29 +51,31 @@
     </div>
 </div>
 
-<script language="javascript" type="text/javascript">
+<g:if test="${grailsApplication.config.instance == 'Zanbil'}">
+    <script language="javascript" type="text/javascript">
 
-    $(document).ready(function () {
-        $(document).scroll(function (e) {
+        $(document).ready(function () {
+            $(document).scroll(function (e) {
+                setBannersPosition();
+            });
+
             setBannersPosition();
         });
 
-        setBannersPosition();
-    });
-
-    function setBannersPosition() {
-        var container = $('td.banners');
-        var banners = $('div.right-side-banners');
-        container.css('paddingBottom', banners.height());
-        var position = $(window).scrollTop() - container.position().top - $('.quick-access').height() - $('.accordion').height() - $('.slider-container').height() + 90;
-        var maxPosition = container.outerHeight() - banners.height() - $('.quick-access').height() - $('.accordion').height() - 40;
-        var minPosition = 0;
-        if (position > maxPosition)
-            position = maxPosition;
-        if (position < minPosition)
-            position = minPosition;
-        banners.first().stop().animate({
-            'top': position + "px"
-        }, 200);
-    }
-</script>
+        function setBannersPosition() {
+            var container = $('td.banners');
+            var banners = $('div.right-side-banners');
+            container.css('paddingBottom', banners.height());
+            var position = $(window).scrollTop() - container.position().top - $('.quick-access').height() - $('.accordion').height() - $('.slider-container').height() + 90;
+            var maxPosition = container.outerHeight() - banners.height() - $('.quick-access').height() - $('.accordion').height() - 40;
+            var minPosition = 0;
+            if (position > maxPosition)
+                position = maxPosition;
+            if (position < minPosition)
+                position = minPosition;
+            banners.first().stop().animate({
+                'top': position + "px"
+            }, 200);
+        }
+    </script>
+</g:if>

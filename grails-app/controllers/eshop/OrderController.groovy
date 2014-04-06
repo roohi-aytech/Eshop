@@ -268,7 +268,8 @@ class OrderController {
                             account.id == accountFilter.account.id
                         } && (!accountFilter.brands
                                 || accountFilter?.brands?.isEmpty()
-                                || accountFilter?.brands?.any { it.id == orderItem?.productModel?.product?.brand?.id }))
+                                || accountFilter?.brands?.any { it.id == orderItem?.productModel?.product?.brand?.id })
+                        && accountFilter?.account?.hasOnlinePayment)
                             accountsForOnlinePayment.add(accountFilter.account)
                 }
 
@@ -277,10 +278,10 @@ class OrderController {
         }
 
         accountsForOnlinePayment.addAll(
-                Account.findAllByBankNameNotInListAndType(accountsForOnlinePayment.collect { it.bankName } ?: [''], 'legal'))
+                Account.findAllByBankNameNotInListAndTypeAndHasOnlinePayment(accountsForOnlinePayment.collect { it.bankName } ?: [''], 'legal', true))
 
         accountsForOnlinePayment.addAll(
-                Account.findAllByBankNameNotInList(accountsForOnlinePayment.collect { it.bankName } ?: ['']))
+                Account.findAllByBankNameNotInListAndHasOnlinePayment(accountsForOnlinePayment.collect { it.bankName } ?: [''], true))
 
         accountsForOnlinePayment.unique { it.bankName }
 
