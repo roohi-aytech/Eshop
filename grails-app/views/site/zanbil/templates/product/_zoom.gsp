@@ -1,6 +1,6 @@
 <%@ page import="com.sun.xml.internal.messaging.saaj.util.ByteInputStream; javax.imageio.ImageIO" %>
 
-<script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.js')}" type="text/javascript"></script>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.modified.js')}" type="text/javascript"></script>
 <link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
 
 <script language="javascript" type="text/javascript">
