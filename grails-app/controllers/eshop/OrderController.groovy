@@ -240,11 +240,19 @@ class OrderController {
     }
 
     def payFromAccount() {
+        def customer = springSecurityService.currentUser as Customer
+        def customerAccountValue = customer ? accountingService.calculateCustomerAccountValue(customer) : 0
         def order = Order.get(params.order.id)
         if (params.payFromAccountType == 'whole')
             order.usedAccountValue = order.totalPrice
         else
             order.usedAccountValue = params.payFromAccountAmount.replace(',', '').toInteger()
+        if(order.usedAccountValue > customerAccountValue)
+        {
+            flash.message = message(code:'order.payment.payFromAccountAmount.moreThanCustomerAccount.validator')
+            redirect(action: 'payment', params: [id: params.order.id])
+            return
+        }
         order.totalPayablePrice = order.totalPrice - order.usedAccountValue
         order.save()
 

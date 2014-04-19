@@ -40,14 +40,14 @@
                 <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}"/>
                 <img width="18"
                      height="18"
-                     src="http://www.pepperfry.com/img/loading1.gif"
+                     src="${resource(dir:'images/felfel', file: 'loading1.gif')}"
                      style="display:none;"
                      id="load-cart-1113409"/>
             </div>
 
             <div class="wishlist_icon_loading">
                 <eshop:addToWishList prodcutId="${product.id}" buttonOnly="${true}"/>
-                <img width="18" height="18" src="http://www.pepperfry.com/img/loading1.gif" style="display:none;"
+                <img width="18" height="18" src="${resource(dir:'images/felfel', file: 'loading1.gif')}" style="display:none;"
                      id="load-wish-1113409"/>
             </div>
 
@@ -56,7 +56,7 @@
                    class="quick_view" id="load-quick-a-1113409"
                    title="Quick View"></a>
                 <img width="18" height="18"
-                     src="http://www.pepperfry.com/img/loading1.gif"
+                     src="${resource(dir:'images/felfel', file: 'loading1.gif')}"
                      style="display:none;position:relative; left:0px;"
                      id="load-quick-1113409"></div></div>
 

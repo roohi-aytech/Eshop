@@ -70,6 +70,8 @@
                     </g:each>
                 </ul>
             </div>
+
+            <div class="clearfix"></div>
         </div>
     </g:each>
 </div>

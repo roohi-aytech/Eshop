@@ -55,7 +55,7 @@
 
 <body>
 
-<div class="page-content">
+<div class="page-content" style="margin-top: 20px;">
     <g:if test="${session.getAttribute("basket")?.size() > 0}">
         <table class="table-simulater" style="width: 100%;">
             <tr>
@@ -87,7 +87,7 @@
                                     <input type="radio" name="addressIsSameAsProfile" value="false"
                                            id="addressIsNotSameAsProfile" style="margin-top:0;"
                                            onchange="loadAddress();"/>
-                                    <label for="addressIsNotSameAsProfile"><g:message code="no"/></label>
+                                    <label for="addressIsNotSameAsProfile" style="display: inline-block;"><g:message code="no"/></label>
                                 </form>
 
                                 <div id="addressLoadingBar" style="display: none;margin:10px;">

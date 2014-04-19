@@ -117,8 +117,9 @@
 
                 <p class="toolbar">
 
-                    <input type='submit' id="submit" class="btn btn-primary" width="80px"
+                    <input type='submit' id="submit" class="btn btn-primary btn-forgetPassword" width="80px"
                            value="${message(code: 'forgetPassword.sendMail')}"/>
+                    <div class="clearfix"></div>
                 </p>
             </form>
         </g:if>

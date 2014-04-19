@@ -8,8 +8,8 @@
 function lazyLoadCarouselImages(){
     var brandItems = $('.brand-carousel li a img');
     brandItems.each(function(){
-        if($(this).attr('src') != $(this).attr('original-src'))
-            $(this).attr('src', $(this).attr('original-src'));
+        if($(this).attr('src') != $(this).attr('data-src'))
+            $(this).attr('src', $(this).attr('data-src'));
     });
 }
 

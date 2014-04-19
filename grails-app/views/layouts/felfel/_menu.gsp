@@ -22,13 +22,13 @@
                             </li>
                             <li>
                                 <div class="free_shipping_hover"><a target="_blank"
-                                                                    href="http://www.pepperfry.com/contact-us.html#free_shipping"><img
+                                                                    href="#"><img
                                             width="30" height="19" border="0" alt=""
-                                            src="http://i1.pepperfry.com/media/wysiwyg/banners/free_shipping_icon.png">
+                                            src="${resource(dir:'images/felfel', file: 'free_shipping_icon.png')}">
                                 </a>
 
                                     <p><a target="_blank"
-                                          href="http://www.pepperfry.com/contact-us.html#free_shipping"><g:message code="menu.shipping.title"/></a><span
+                                          href="#"><g:message code="menu.shipping.title"/></a><span
                                             class="subtitle"><g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: pt.id)} <g:message code="rial"/>
                                     </span></p>
                                 </div>
@@ -38,7 +38,7 @@
                                                                                                            height="16"
                                                                                                            border="0"
                                                                                                            alt=""
-                                                                                                           src="http://i1.pepperfry.com/media/wysiwyg/banners/bon_homie.png">
+                                                                                                           src="${resource(dir:'images/felfel', file: 'bon_homie.png')}">
                                 </a>
 
                                     <p><span class="subtitle"><a target="_blank"

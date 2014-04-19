@@ -119,13 +119,14 @@
             <p class="toolbar">
                 <input type='submit' id="submit" class="btn btn-primary" width="80px" value='${message(code: "password.change.label")}'/>
             </p>
+            <div class="clearfix"></div>
         </g:form>
     </div>
 </div>
 <script type='text/javascript'>
     <!--
     (function() {
-        document.forms['changePasseordForm'].elements['j_username'].focus();
+        document.forms['changePasseordForm'].elements['oldPassword'].focus();
     })();
     // -->
 </script>

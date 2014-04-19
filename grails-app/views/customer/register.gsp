@@ -284,6 +284,7 @@
             <p class="toolbar">
                 <input type='submit' id="submit" onclick="return validate();" class="btn btn-primary" width="80px"
                        value='${message(code: "register")}'/>
+                <div class="clearfix"></div>
             </p>
         </g:form>
     </div>

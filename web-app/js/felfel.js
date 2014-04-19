@@ -32,7 +32,7 @@ $(document).ready(function(){
     //fix navigation
     $(document).scroll(function(){
         var position = $(window).scrollTop();
-        if(position > 15){
+        if(position > 76){
             $('.header .navigation').addClass('sticky_nav');
         }
         else{
@@ -55,4 +55,6 @@ $(document).ready(function(){
 
     $('.addToBasket').tipsy({live: true, gravity: 'e', text: 'افزودن به سبد خرید'});
 
+
+    $('.btn-primary').addClass('btn-danger').removeClass('btn-primary');
 });

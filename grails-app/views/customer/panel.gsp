@@ -90,6 +90,8 @@
                         $('#trackingCodePanel').maskInput('9999999999');
                     </script>
                 </div>
+
+                <div class="clearfix"></div>
             </div>
         </li>
         <li>
@@ -117,6 +119,8 @@
                     <ul class="slave">
                     </ul>
                 </div>
+
+                <div class="clearfix"></div>
             </div>
         </li>
         <li>
@@ -156,6 +160,8 @@
                                     code="controlPanel.settings.personalEvents.label"></g:message></g:link></li>
                     </ul>
                 </div>
+
+                <div class="clearfix"></div>
             </div>
         </li>
     </ul>

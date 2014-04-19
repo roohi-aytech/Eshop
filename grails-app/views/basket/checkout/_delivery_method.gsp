@@ -5,6 +5,8 @@
             var scope = angular.element(document.getElementById('main-container')).scope();
             scope.deliveryPrice = price;
             scope.$apply();
+            $('.deliveryMethodList b').removeClass('selected');
+            $(element).parent().next('td').next('td').find('b').addClass('selected');
         }
     }
     function setDeliveryPriceWithInsurance(element, price, priceWithInsurance) {
@@ -54,7 +56,7 @@
                         </td>
                         <td>
                             <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
-                                <b>${deliveryMethod.deliveryMethod}</b>
+                                <b ${indexer == 0 ? 'class="selected"' : ''}>${deliveryMethod.deliveryMethod}</b>
                             </label>
                         </td>
                     </tr>

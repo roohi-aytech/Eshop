@@ -20,73 +20,18 @@
 
 <body>
 
-<g:render template="banners/rightsideBanners"/>
-<g:render template="banners/leftsideBanners"/>
-<div class="slider-container"></div>
-%{--<table class="layout-container table-simulated">--}%
-    %{--<tr class="table-row">--}%
-        %{--<td colspan="2">--}%
-            %{--<g:render template="common/slideshowMain"/>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
-    %{--<tr class="table-row">--}%
-        %{--<td colspan="2">--}%
-            %{--<table class="table-simulated">--}%
-                %{--<tr>--}%
-                    %{--<td class="specialSales-cell">--}%
-                        %{--<g:render template="common/slideshowSpecialSales"--}%
-                                  %{--model="[specialSaleSlides: specialSaleSlides]"/>--}%
-                    %{--</td>--}%
-                    %{--<td class="namad-cell">--}%
-                        %{--<g:render template="banners/enamad"/>--}%
-                    %{--</td>--}%
-                %{--</tr>--}%
-            %{--</table>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
-    %{--<tr class="table-row">--}%
-        %{--<td class="table-cell banners">--}%
-            %{--<g:render template="banners/rightsideBanners"/>--}%
-        %{--</td>--}%
-
-        %{--<td class="table-cell">--}%
-
-            %{--<g:render template="common/browsingGraphicalMenu"/>--}%
-
-            %{--<g:render template="common/productGrid"--}%
-                      %{--model="${[productIds: filters.products.productIds]}"/>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
-    %{--<tr class="table-row">--}%
-        %{--<td class="table-cell" colspan="2">--}%
-            %{--<g:render template="common/productCarousel"--}%
-                      %{--key="${productTypeId}"--}%
-                      %{--model="${[title: message(code: 'product.mostVisited.list', args: ['']), productList: mostVisitedProducts]}"/>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
-    %{--<tr class="table-row">--}%
-        %{--<td colspan="2" class="table-cell">--}%
-            %{--<% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>--}%
-            %{--<g:set var="lastVisitedProducts"--}%
-                   %{--value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>--}%
-            %{--<g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">--}%
-                %{--<g:render template="/site/common/productCarousel"--}%
-                          %{--model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>--}%
-            %{--</g:if>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
-    %{--<tr class="table-row">--}%
-        %{--<td class="table-cell" colspan="2">--}%
-            %{--<ehcache:render template="news/window" model="${[productTypeId: productTypeId]}"/>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
-%{--</table>--}%
-%{--<script type="text/javascript">--}%
-    %{--(function ($) {--}%
-        %{--$('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');--}%
-        %{--$('.row-fluid ul.thumbnails li.span4:nth-child(3n + 4)').css('margin-right', '0px');--}%
-        %{--$('.row-fluid ul.thumbnails li.span3:nth-child(4n + 5)').css('margin-right', '0px');--}%
-    %{--})(jQuery);--}%
-%{--</script>--}%
+<div id="top-banners">
+    <g:render template="banners/rightsideBanners"/>
+    <g:render template="banners/leftsideBanners"/>
+    <g:render template="/site/felfel/templates/slider"/>
+    <div class="clearfix"></div>
+</div>
+<g:render template="/site/felfel/templates/testimonials"/>
+<eshop:mostSoldProductTypes/>
+<eshop:mostVisitedProductTypes/>
+<g:render template="/site/common/specialSalesRowList"/>
+<g:if test="${filters?.brands}">
+    <g:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands ]}"/>
+</g:if>
 </body>
 </html>

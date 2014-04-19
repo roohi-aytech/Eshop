@@ -333,6 +333,7 @@ class SiteController {
         //slides
         model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
         model.specialSaleSlides = SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
+//        model.specialSaleSlides = SpecialSaleSlide.findAll()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
             or {

@@ -1,4 +1,4 @@
-<g:if test="${specialSaleSlides && !specialSaleSlides.isEmpty()}">
+<g:if test="${specialSaleSlides && !specialSaleSlides?.isEmpty()}">
     <link href="${resource(dir: 'css', file: 'jquery.jcountdown.css')}" rel="stylesheet" type="text/css"/>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.jcountdown.js')}" type="text/javascript"></script>
 

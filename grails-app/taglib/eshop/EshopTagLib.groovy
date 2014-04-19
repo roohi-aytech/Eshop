@@ -102,7 +102,7 @@ class EshopTagLib {
         def link = g.createLink(action: "filter", params: [f: f, o: 'b'])
         def brand = Brand.get(attrs.brandId)
         if (attrs.type == 'icon')
-            out << "<a class='brand-filter' href='${link}'><img original-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}'><img class='lazy' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
             out << "<a href='${link}'><span>${attrs.brandName}</span></a>"
     }
@@ -202,11 +202,21 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a href="#" type="basket" original-title="${message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${price}', []);"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a href="#" type="basket" original-title="${
+                            message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
+                        }" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${
+                            defaultModel.id
+                        }, '${defaultModel.toBasketItemString()}', '${price}', []);"><img src='${
+                            resource(dir: 'images/menu', file: 'basket_new.png')
+                        }' /></a>
                             """
                     else
                         out << """
-                            <a href="#" class="btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${price}', []);"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
+                            <a href="#" class="btn-buy addToBasket" ${
+                            attrs.angular == "false" ? "on" : "ng-"
+                        }click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${
+                            price
+                        }', []);"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
                             """
                 } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
@@ -231,17 +241,25 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-            <a type="wish" original-title="${message(code: attrs.useLongText ? "add-to-wishList.long" : "add-to-wishList")}" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
+            <a type="wish" original-title="${
+                message(code: attrs.useLongText ? "add-to-wishList.long" : "add-to-wishList")
+            }" class="has-tipsy" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${
+                price
+            }')"><img src='${resource(dir: 'images/menu', file: 'favorites_new.png')}' /></a>
             """
         else
             out << """
-                <a class="btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code: attrs.useLongText ? "add-to-wishList.long" : "add-to-wishList")}</span></a>
+                <a class="btn-wish" ng-click="addToWishList(${attrs.prodcutId}, '${product.toString()}', '${
+                price
+            }')"><span>${g.message(code: attrs.useLongText ? "add-to-wishList.long" : "add-to-wishList")}</span></a>
                 """
     }
 
     def specifications = { attrs, body ->
         out << """
-                <a class="btn-spec" href="${createLink(uri: '/product/' + attrs.prodcutId)}" ><span>${g.message(code: "specifications")}</span></a>
+                <a class="btn-spec" href="${createLink(uri: '/product/' + attrs.prodcutId)}" ><span>${
+            g.message(code: "specifications")
+        }</span></a>
                 """
     }
 
@@ -254,11 +272,17 @@ class EshopTagLib {
 
         if (attrs.image)
             out << """
-                <a type="compare" original-title="${message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")}" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
+                <a type="compare" original-title="${
+                message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")
+            }" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${
+                price
+            }')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
                 """
         else
             out << """
-                <a class="btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${price}')"><span>${g.message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")}</span></a>
+                <a class="btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${
+                price
+            }')"><span>${g.message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")}</span></a>
                 """
     }
 
@@ -284,28 +308,134 @@ class EshopTagLib {
         out << formatNumber(number: browseService.minPrice(attrs.productTypeId as Long), type: 'number')
     }
 
-    def selectedProductsList = {attrs, body ->
+    def selectedProductsList = { attrs, body ->
         def productType = ProductType.get(attrs.productTypeId.toLong())
         ProductType.findAllByParentProductAndDeleted(productType, false).each {
             out << selectedProducts(productTypeId: it.id)
         }
     }
 
-    def selectedProducts = {attrs, body ->
+    def selectedProducts = { attrs, body ->
         def productType = ProductType.get(attrs.productTypeId.toLong())
         def products = browseService.findProductTypeSampleProducts(productType, 4)
         out << """<div class="category_heading">
                     <h2>${productType}</h2>
                     <div class="right_text">
-                        <a href="${createLink(uri:"/browse/${productType.seoFriendlyName}")}">${message(code:'category.view.all', args: [productType.name])} &gt;</a>
+                        <a href="${createLink(uri: "/browse/${productType.seoFriendlyName}")}">${
+            message(code: 'category.view.all', args: [productType.name])
+        } &gt;</a>
                     </div>
                   </div>"""
         out << """<div class="row">"""
         def counter = 0
         products.productIds.each {
-            counter ++
-            out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product:Product.get(it), class: counter == 4 ? 'last' : ''])
+            counter++
+            out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: Product.get(it), class: counter == 4 ? 'last' : ''])
         }
         out << "</div>"
+    }
+
+    def mostSoldProductTypes = { attrs, body ->
+        def productTypes = OrderItem.createCriteria().list({
+            projections {
+                count('id', 'orderCount')
+                productModel {
+                    product {
+                        productTypes {
+                            groupProperty('id')
+                        }
+                    }
+                }
+            }
+            order('orderCount', 'desc')
+        }, max: 12)
+
+        out << render(template: '/site/common/productTypeRowList', model: [productTypes: productTypes, rowSize: 3, itemTitle: message(code: 'bestSelelrs.title')])
+    }
+
+    def mostVisitedProductTypes = { attrs, body ->
+        def productTypes = Product.createCriteria().list({
+            projections {
+                sum('visitCount', 'visitCount')
+                productTypes {
+                    groupProperty('id')
+                }
+            }
+            order('visitCount', 'desc')
+        }, max: 16)
+
+        out << render(template: '/site/common/productTypeRowList', model: [productTypes: productTypes, rowSize: 4, itemTitle: message(code: 'mostVisiteds.title')])
+    }
+
+    def mostVisitedProductTypeList = { attrs, body ->
+        Integer columns = attrs.columns as Integer
+        Integer rows = attrs.rows as Integer
+        def productTypes = Product.createCriteria().list({
+            projections {
+                sum('visitCount', 'visitCount')
+                productTypes {
+                    groupProperty('id')
+                }
+            }
+            order('visitCount', 'desc')
+        }, max: rows * columns)
+
+        columns.times { column ->
+            out << "<ul>"
+            rows.times { row ->
+                def productType = ProductType.get(productTypes[column * rows + row] as Long)
+                out << """
+                <li>
+                    <a title="${productType.name}" href="${createLink(uri: "/browse/${productType.seoFriendlyName}")}">
+                        ${productType.name}
+                    </a>
+                </li>
+                """
+            }
+            out << "</ul>"
+        }
+    }
+
+    def topBrands = { attrs, body ->
+        def brands = Product.createCriteria().list({
+            projections {
+                count('id', 'productCount')
+                brand {
+                    property('id')
+                    groupProperty('id')
+                }
+            }
+            order('productCount', 'desc')
+        }, max: 11)
+
+        out << render(template: '/site/common/brandList', model: [brands: brands])
+    }
+
+    def topBrandsList = { attrs, body ->
+        Integer columns = attrs.columns as Integer
+        Integer rows = attrs.rows as Integer
+        def brands = Product.createCriteria().list({
+            projections {
+                count('id', 'productCount')
+                brand {
+                    property('id')
+                    groupProperty('id')
+                }
+            }
+            order('productCount', 'desc')
+        }, max: rows * columns)
+
+        2.times { column ->
+            out << "<ul>"
+            14.times { row ->
+                def brand = Brand.get(brands[column * rows + row] as Long)
+                out << """
+                <li>
+                    ${eshop.filterStartBrand(brandId:brand.id, brandName:brand.name)}
+                </li>
+                """
+            }
+            out << "</ul>"
+        }
     }
 }

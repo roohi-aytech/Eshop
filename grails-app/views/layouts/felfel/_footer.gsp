@@ -1,192 +1,75 @@
-%{--<div class="footer1">--}%
+<div class="footer">
 
-%{--</div>--}%
+    <div class="footer-container">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <div class="popular-cat">
+                    <span class="heading">
+                        <g:message code="mostVisiteds.title"/>
+                    </span>
+                    <eshop:mostVisitedProductTypeList columns="3" rows="14"/>
+                </div>
 
-%{--<div class="footer2">--}%
-    %{--<a href="${createLink(uri: '/')}"><g:message code="home.label"/></a> |--}%
-    %{--<a href="#"><g:message code="help.label"/></a> |--}%
-    %{--<a href="${createLink(uri: '/termsAndConditions')}"><g:message code="rules.label"/></a> |--}%
-    %{--<a href="${createLink(uri: '/contactUs')}"><g:message code="contact.label"/></a>--}%
-%{--</div>--}%
+                <div class="popular-links"><span class="heading">
+                    <g:message code="topBrands.title"/>
+                </span>
+                    <eshop:topBrandsList columns="2" rows="14"/>
+                </div>
+            </div>
 
-%{--<div class="footer3">--}%
-    %{--<table>--}%
-        %{--<tr>--}%
-            %{--<td colspan="4">--}%
-                %{--<ul class="third-party">--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'bonyad-koodak.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'bimeh-asia.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'bank-mellat.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'bank-saman.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'post-iran.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'post-aramex.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'post-tipax.png')}"/>--}%
-                    %{--</li>--}%
-                %{--</ul>--}%
-            %{--</td>--}%
-        %{--</tr>--}%
-        %{--<tr>--}%
-            %{--<td colspan="4">--}%
-                %{--<ul class="third-party">--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'best-brands.png')}"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<img src="${resource(dir: 'images/third-party', file: 'rights-all.png')}"/>--}%
-                    %{--</li>--}%
-                %{--</ul>--}%
-            %{--</td>--}%
-        %{--</tr>--}%
-        %{--<tr>--}%
-            %{--<td colspan="4">--}%
-                %{--<hr/>--}%
-            %{--</td>--}%
-        %{--</tr>--}%
-        %{--<tr>--}%
-            %{--<td>--}%
-                %{--<ul class="column">--}%
-                    %{--<li class="bold">--}%
-                        %{--<g:message code="rules"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message code="rules.shopping"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message code="rules.customerRights"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="${createLink(controller: 'site', action: 'guarantee')}"><g:message--}%
-                                %{--code="footerItems.guarantee"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="${createLink(controller: 'site', action: 'moneyBackConditions')}"><g:message--}%
-                                %{--code="footerItems.returnRules"/></a>--}%
-                    %{--</li>--}%
-                %{--</ul>--}%
-            %{--</td>--}%
-            %{--<td>--}%
-                %{--<ul class="column">--}%
-                    %{--<li class="bold">--}%
-                        %{--<g:message code="help.label"/>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.shopping"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.register"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.search"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.compare"/></a>--}%
-                    %{--</li>--}%
-                %{--</ul>--}%
-            %{--</td>--}%
-            %{--<td>--}%
-                %{--<ul class="column">--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.paymentAndSend"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.payment"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.delivery"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.deliveryTime"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.tax"/></a>--}%
-                    %{--</li>--}%
-                %{--</ul>--}%
-            %{--</td>--}%
-            %{--<td>--}%
-                %{--<ul class="column">--}%
-                    %{--<li>--}%
-                        %{--<a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message--}%
-                                %{--code="footerItems.about"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="footerItems.tour"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.employment"/></a>--}%
-                    %{--</li>--}%
-                    %{--<li>--}%
-                        %{--<a href="#"><g:message--}%
-                                %{--code="help.supplier"/></a>--}%
-                    %{--</li>--}%
-                %{--</ul>--}%
-            %{--</td>--}%
-        %{--</tr>--}%
-    %{--</table>--}%
-%{--</div>--}%
+            <div class="footer-right">
+                <span class="heading">
+                    <g:message code="payWithConfidence"/>
+                </span>
 
-%{--<div class="footer4">--}%
-    %{--<g:message code="copyright"/>--}%
-%{--</div>--}%
+                <div class="trust_logos ">
+                    <div class="payment_options">
+                        <img src="${resource(dir: '/images/felfel', file: 'shetab.png')}">
+                    </div>
 
-<div id="back-top">
-    <a href="#"><g:message code="backToTop"/></a>
+                    <div class="trust_icon">
+                        <img src="${resource(dir: '/images/felfel', file: 'enamad.png')}">
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="engage">
+                    <div class="engage_links">
+                        <a class="bon_homie" href="http://blog.felfel.ir/">
+                            <img width="74" height="30"
+                                 src="${resource(dir: 'images/felfel', file: 'bon_homie_footer.jpg')}">
+                        </a>
+                        <a class="write_testi" id="footer_testimonial" href="${createLink(controller: 'testimonial', action: 'write')}"><g:message code="testimonial.write"/></a>
+                        <a class="bulk_order" href="http://www.pepperfry.com/bulkorder.html">Bulk Order</a>
+                    </div>
+
+                    <div class="clear_all"></div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <ul class="footer-links">
+                    <a href="${createLink(controller: 'site', action: 'shoppingSteps')}"><g:message
+                            code="help.shoppingSteps"/></a> |
+                    <a href="${createLink(controller: 'site', action: 'paymentMethods')}"><g:message
+                            code="help.payment"/></a> |
+                    <a href="${createLink(controller: 'site', action: 'paymentAndDelivery')}"><g:message
+                            code="help.paymentAndDelivery"/></a> |
+                    <a href="${createLink(controller: 'site', action: 'deliveryTips')}"><g:message
+                            code="help.deliveryTips"/></a> |
+                    <a href="${createLink(controller: 'site', action: 'shoppingRules')}"><g:message code="rules.shoppingRules"/></a> |
+                    <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message
+                            code="footerItems.tour"/></a>
+                </ul>
+                <ul class="footer_social">
+                    <li class="f_icon"><a target="_blank" href="http://twitter.com/felfel">twitter</a></li>
+                    <li class="t_icon"><a target="_blank" href="http://www.facebook.com/felfel">Facebook</a></li>
+                    <li class="p_icon"><a target="_blank" href="http://pinterest.com/felfel/">Pinterest</a></li>
+                    <li class="y_icon"><a target="_blank" href="http://www.youtube.com/user/felfel"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </div>
-
-<g:if test="${grailsApplication.config.instance != 'Local'}">
-    <!-- LiveZilla Tracking Code (ALWAYS PLACE IN BODY ELEMENT) -->
-    <div id="livezilla_tracking" style="display:none"></div>
-    <script type="text/javascript">
-        /* <![CDATA[ */
-        var script = document.createElement("script");
-        script.async = true;
-        script.type = "text/javascript";
-        var src = "http://support.zanbil.ir:81/server.php?acid=4292d&request=track&output=jcrpt&nse=" + Math.random();
-        setTimeout("script.src=src;document.getElementById('livezilla_tracking').appendChild(script)", 1);
-        /* ]]> */
-    </script>
-    <noscript>
-        <img src="http://support.zanbil.ir:81/server.php?acid=4292d&amp;request=track&amp;output=nojcrpt"
-             width="0" height="0" style="visibility:hidden;" alt=""/>
-    </noscript>
-    <!-- http://www.LiveZilla.net Tracking Code -->
-    <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-33318835-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function () {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-
-    </script>
-</g:if>

@@ -35,7 +35,7 @@
     <g:if test="${breadCrumb.size() > 0}">
         <g:each in="${breadCrumb[0..-1]}">
             <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <span class="divider"> ${"/"}</span>
+                <span class="divider">${"/"}</span>
                 <a href="${it.href}" itemprop="url">
                     <span itemprop="title">${it.name}</span></a>
             </li>
@@ -46,18 +46,21 @@
 
 <eshop:selectedProductsList productTypeId="${productType.id}"/>
 
+<g:if test="${filters?.brands}">
+    <g:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands ]}"/>
+</g:if>
 %{--<g:render template="common/productGrid"--}%
-          %{--model="${[productIds: filters.products.productIds]}"/>--}%
+%{--model="${[productIds: filters.products.productIds]}"/>--}%
 %{--<g:render template="common/productCarousel"--}%
-          %{--key="${productTypeId}"--}%
-          %{--model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName]), productList: mostVisitedProducts]}"/>--}%
+%{--key="${productTypeId}"--}%
+%{--model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName]), productList: mostVisitedProducts]}"/>--}%
 
 %{--<% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>--}%
 %{--<g:set var="lastVisitedProducts"--}%
-       %{--value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>--}%
+%{--value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>--}%
 %{--<g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">--}%
-    %{--<g:render template="/site/common/productCarousel"--}%
-              %{--model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>--}%
+%{--<g:render template="/site/common/productCarousel"--}%
+%{--model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>--}%
 %{--</g:if>--}%
 
 
