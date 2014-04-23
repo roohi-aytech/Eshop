@@ -322,7 +322,7 @@ class EshopTagLib {
     def selectedProducts = { attrs, body ->
         def productType = ProductType.get(attrs.productTypeId.toLong())
         def products = browseService.findProductTypeSampleProducts(productType, 4)
-        if (products && products.size() > 0) {
+        if (products && products?.productIds && products?.productIds?.size() > 0) {
             out << """<div class="category_heading">
                     <h2>${productType}</h2>
                     <div class="right_text">
@@ -357,7 +357,11 @@ class EshopTagLib {
         }, max: 12)
 
         if (!productTypes || productTypes.size() == 0)
-            productTypes = ProductType.list(max: 12)
+            productTypes = ProductType.createCriteria().list({
+                projections {
+                    property('id')
+                }
+            }, max: 12)
 
         out << render(template: '/site/common/productTypeRowList', model: [productTypes: productTypes, rowSize: 3, itemTitle: message(code: 'bestSelelrs.title')])
     }

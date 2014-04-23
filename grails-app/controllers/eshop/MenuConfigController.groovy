@@ -155,8 +155,9 @@ class MenuConfigController {
 
             if(!menuConfig.save(flush: true))
             {
-                flash.message = menuConfig.errors.toString()
+                flash.message = 'error<br/>' + menuConfig.errors?.allErrors?.toString()
                 redirect(action: 'index')
+                return;
             }
         }
 

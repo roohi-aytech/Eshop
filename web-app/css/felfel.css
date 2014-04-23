@@ -646,6 +646,8 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 .new_selection_holder .selection_col_left ul li p.sel_catimage a img {
     display: inline-block;
+    width:100px;
+    height: 100px;
 }
 
 a img {
