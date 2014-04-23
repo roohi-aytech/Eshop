@@ -206,7 +206,9 @@ class EshopTagLib {
                             message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
                         }" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${
                             defaultModel.id
-                        }, '${defaultModel.toBasketItemString()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><img src='${
+                        }, '${defaultModel.toBasketItemString()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${
+                            attrs.animate
+                        }');"><img src='${
                             resource(dir: 'images/menu', file: 'basket_new.png')
                         }' /></a>
                             """
@@ -216,7 +218,9 @@ class EshopTagLib {
                             attrs.angular == "false" ? "on" : "ng-"
                         }click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${
                             price
-                        }', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
+                        }', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${
+                            g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
+                        }</span></a>
                             """
                 } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
@@ -384,7 +388,8 @@ class EshopTagLib {
             out << "<ul>"
             rows.times { row ->
                 def productType = ProductType.get(productTypes[column * rows + row] as Long)
-                out << """
+                if (productType)
+                    out << """
                 <li>
                     <a title="${productType.name}" href="${createLink(uri: "/browse/${productType.seoFriendlyName}")}">
                         ${productType.name}
@@ -431,7 +436,7 @@ class EshopTagLib {
                 def brand = Brand.get(brands[column * rows + row] as Long)
                 out << """
                 <li>
-                    ${eshop.filterStartBrand(brandId:brand.id, brandName:brand.name)}
+                    ${eshop.filterStartBrand(brandId: brand.id, brandName: brand.name)}
                 </li>
                 """
             }
