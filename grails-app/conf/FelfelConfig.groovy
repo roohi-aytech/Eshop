@@ -1,6 +1,6 @@
 grails.serverURL = "http://www.felfel.ir/private"
 grails.app.context = "/private"
-eShop.instance = 'zanbil'
+eShop.instance = 'felfel'
 url.www = false
 locale.language='en'
 locale.country='US'

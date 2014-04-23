@@ -21,17 +21,17 @@
 <body>
 
 <div id="top-banners">
-    <g:render template="banners/rightsideBanners"/>
-    <g:render template="banners/leftsideBanners"/>
-    <g:render template="/site/felfel/templates/slider"/>
+    <ehcache:render template="banners/rightsideBanners"/>
+    <ehcache:render template="banners/leftsideBanners"/>
+    <ehcache:render template="/site/felfel/templates/slider"/>
     <div class="clearfix"></div>
 </div>
-<g:render template="/site/felfel/templates/testimonials"/>
+<ehcache:render template="/site/felfel/templates/testimonials"/>
 <eshop:mostSoldProductTypes/>
 <eshop:mostVisitedProductTypes/>
-<g:render template="/site/common/specialSalesRowList"/>
+<ehcache:render template="/site/common/specialSalesRowList"/>
 <g:if test="${filters?.brands}">
-    <g:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands ]}"/>
+    <ehcache:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands ]}"/>
 </g:if>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <g:if test="${productType.children}">
         <ul class="dropdown-menu">
             <g:each in="${productType.children}" var="pt">
-                <g:render template="/layouts/${grailsApplication.config.eShop.instance}/dropdown_productType" model="${[productType: pt]}"/>
+                <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/dropdown_productType" model="${[productType: pt]}"/>
             </g:each>
         </ul>
     </g:if>

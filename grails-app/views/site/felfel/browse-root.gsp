@@ -51,19 +51,6 @@
 <g:if test="${filters?.brands}">
     <g:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands ]}"/>
 </g:if>
-%{--<g:render template="common/productGrid"--}%
-%{--model="${[productIds: filters.products.productIds]}"/>--}%
-%{--<g:render template="common/productCarousel"--}%
-%{--key="${productTypeId}"--}%
-%{--model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName]), productList: mostVisitedProducts]}"/>--}%
-
-%{--<% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>--}%
-%{--<g:set var="lastVisitedProducts"--}%
-%{--value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>--}%
-%{--<g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">--}%
-%{--<g:render template="/site/common/productCarousel"--}%
-%{--model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>--}%
-%{--</g:if>--}%
 
 
 <script type="text/javascript">
