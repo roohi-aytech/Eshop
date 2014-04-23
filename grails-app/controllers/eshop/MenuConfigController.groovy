@@ -153,7 +153,11 @@ class MenuConfigController {
             }
             else menuConfig.extraMenuImage5 = null
 
-            menuConfig.save(flush: true)
+            if(!menuConfig.save(flush: true))
+            {
+                flash.message = menuConfig.errors.toString()
+                redirect(action: 'index')
+            }
         }
 
         flash.message = message(code: 'success')

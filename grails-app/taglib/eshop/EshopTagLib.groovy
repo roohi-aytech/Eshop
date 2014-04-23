@@ -322,21 +322,23 @@ class EshopTagLib {
     def selectedProducts = { attrs, body ->
         def productType = ProductType.get(attrs.productTypeId.toLong())
         def products = browseService.findProductTypeSampleProducts(productType, 4)
-        out << """<div class="category_heading">
+        if (products && products.size() > 0) {
+            out << """<div class="category_heading">
                     <h2>${productType}</h2>
                     <div class="right_text">
                         <a href="${createLink(uri: "/browse/${productType.seoFriendlyName}")}">${
-            message(code: 'category.view.all', args: [productType.name])
-        } &gt;</a>
+                message(code: 'category.view.all', args: [productType.name])
+            } &gt;</a>
                     </div>
                   </div>"""
-        out << """<div class="row">"""
-        def counter = 0
-        products.productIds.each {
-            counter++
-            out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: Product.get(it), class: counter == 4 ? 'last' : ''])
+            out << """<div class="row">"""
+            def counter = 0
+            products.productIds.each {
+                counter++
+                out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: Product.get(it), class: counter == 4 ? 'last' : ''])
+            }
+            out << "</div>"
         }
-        out << "</div>"
     }
 
     def mostSoldProductTypes = { attrs, body ->
@@ -353,6 +355,9 @@ class EshopTagLib {
             }
             order('orderCount', 'desc')
         }, max: 12)
+
+        if (!productTypes || productTypes.size() == 0)
+            productTypes = ProductType.list(max: 12)
 
         out << render(template: '/site/common/productTypeRowList', model: [productTypes: productTypes, rowSize: 3, itemTitle: message(code: 'bestSelelrs.title')])
     }
@@ -434,9 +439,10 @@ class EshopTagLib {
             out << "<ul>"
             14.times { row ->
                 def brand = Brand.get(brands[column * rows + row] as Long)
-                out << """
+                if (brand)
+                    out << """
                 <li>
-                    ${eshop.filterStartBrand(brandId: brand.id, brandName: brand.name)}
+                    ${eshop.filterStartBrand(brandId: brand?.id, brandName: brand?.name)}
                 </li>
                 """
             }

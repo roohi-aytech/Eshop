@@ -8,9 +8,9 @@
     <g:set var="productType" value="${eshop.ProductType.get(pt)}"/>
     <g:if test="${productType}">
         <g:render template="/site/${grailsApplication.config.eShop.instance}/templates/productTypeThumbnail"
-                  model="[id: productType.id, name: productType.name, description: productType.description, href:createLink(uri:'/browse/' + productType.seoFriendlyName), className: 'column' + rowSize]"/>
+                  model="[id: productType?.id, name: productType?.name, description: productType?.description, href:createLink(uri:'/browse/' + productType?.seoFriendlyName), className: 'column' + rowSize]"/>
     </g:if>
-    <g:if test="${i % rowSize == rowSize - 1 || i == productTypes.size() - 1}">
+    <g:if test="${i % rowSize == rowSize - 1 || i == productTypes?.size() - 1}">
         </div>
     </g:if>
 </g:each>

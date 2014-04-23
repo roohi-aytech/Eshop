@@ -644,6 +644,10 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     border-color: #EC1E20;
 }
 
+.new_selection_holder .selection_col_left ul li p.sel_catimage a img {
+    display: inline-block;
+}
+
 a img {
     border: 0 none;
 }
@@ -2371,6 +2375,7 @@ hr {
 .home_cms_best_sellers.column3 a img {
     width: 322px;
     height: 256px;
+    display:inline-block;
 }
 
 .home_cms_best_sellers.column3 .shop_now img {
@@ -2381,6 +2386,7 @@ hr {
 .home_cms_best_sellers.column4 a img {
     width: 238px;
     height: 200px;
+    display:inline-block;
 }
 
 .home_cms_best_sellers.column4 .shop_now img {
@@ -2455,6 +2461,12 @@ hr {
     margin-left: 4px;
     margin-right: 4px;
     white-space: nowrap;
+}
+
+.brand-list li img{
+    width: 80px;
+    height: 80px;
+    display: inline-block;
 }
 
 .footer {
