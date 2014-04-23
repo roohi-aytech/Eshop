@@ -4047,5 +4047,26 @@ h2.check-out-price span {
     font-size:11px;
 }
 
+input.priceRange{
+    margin-left: 5px;
+    width: 72px;
+    display: inline-block;
+    text-align: center;
+}
+
+input.priceRange + input.priceRange{
+    margin-right: 5px;
+}
+
+input.priceRange + input[type=button]{
+    display: inline-block;
+    height: 30px;
+    margin-top: -9px;
+    background-image: url('../images/felfel/filter.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+}
+
 
 

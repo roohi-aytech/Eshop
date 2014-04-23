@@ -215,12 +215,24 @@ class BrowseService {
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
-    def findFilteredPageFilters(f, page, cacheKey) {
+    def findFilteredPageFilters(f, priceFrom, priceTo, page, cacheKey) {
         def productType
         def breadcrumb = []
         def match = [:]
         def selecteds = [:]
         def growingFilter = ""
+
+        if(priceFrom){
+            if(priceTo){
+                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger(), $lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
+            }
+            else{
+                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
+            }
+        }
+        else if(priceTo){
+            match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
+        }
 
         def raw_filters = f.split(",")
         def filterPartsMap = [:]
@@ -533,13 +545,25 @@ class BrowseService {
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
-    def findSearchPageFilters(productIdList, f, page, cacheKey) {
+    def findSearchPageFilters(productIdList, f, priceFrom, priceTo, page, cacheKey) {
         def productType
         def breadcrumb = []
         def selecteds = [:]
         def growingFilter = ""
 
         def match = [baseProductId: [$in: productIdList]]
+
+        if(priceFrom){
+            if(priceTo){
+                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger(), $lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
+            }
+            else{
+                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
+            }
+        }
+        else if(priceTo){
+            match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
+        }
 
         if (f instanceof String[])
             f = f[f.length - 1]

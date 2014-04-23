@@ -39,6 +39,8 @@
         $('input#price').val(addCommasOnKeyPress($('input#price').val()));
     }
 
+
+
     function addCommasOnKeyPress(nStr) {
         nStr = nStr.replace(/\,/g, '');
         nStr += '';

@@ -141,7 +141,7 @@ class SiteController {
             return
         }
 
-        model.filters = browseService.findFilteredPageFilters(f, params.page ?: 0, "${f} ${params.page ?: 0}")
+        model.filters = browseService.findFilteredPageFilters(f, params.pf, params.pt, params.page ?: 0, "${f} ${params.page ?: 0}")
 
         if (model.filters.products.productIds.size() == 0) {
             redirect(uri: "/notFound")
@@ -717,7 +717,7 @@ class SiteController {
         def f=params.f
         if(f instanceof String[] && f.length)
             f=f[0]
-        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, f, params.pf, params.pt, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
