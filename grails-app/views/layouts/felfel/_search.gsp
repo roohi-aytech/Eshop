@@ -1,4 +1,4 @@
-<%@ page import="eshop.ProductType" %>
+<%@ page import="grails.converters.JSON; eshop.ProductType" %>
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
 <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"/>
 <div class="search_recommendation">

@@ -13,30 +13,6 @@
     <![endif]-->
 
     <script language="javascript" src="${resource(dir: 'js', file: 'browse.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript">
-        var modal;
-        function showPriceHistogram(id) {
-            $("#priceHistogramModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
-            if (modal) {
-                modal.show();
-                $('#priceHistogramModal').addClass('in');
-            }
-            else {
-                modal = $("#priceHistogramModal").modal({
-                    backdrop: false,
-                    show: true
-                });
-            }
-            $("#priceHistogramModal .modal-body").load('${createLink(controller: 'productModel', action: 'priceHistogram')}/' + id, function () {
-            });
-        }
-
-        function hidePriceHistogram() {
-            $('#priceHistogramModal').removeClass('in');
-            modal.hide();
-        }
-    </script>
 </head>
 
 <body>

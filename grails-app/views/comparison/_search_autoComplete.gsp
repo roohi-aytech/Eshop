@@ -18,7 +18,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <eshop:thumbnailPrice productId="${product.id}"></eshop:thumbnailPrice>
+                                    <eshop:thumbnailPrice productId="${product.id}" hideLastUpdate="true"></eshop:thumbnailPrice>
                                 </td>
                             </tr>
                         </table>

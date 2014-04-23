@@ -15,90 +15,96 @@
     <g:render template="common/productGridMeta"
               model="${[productIds: filters.products.productIds]}"/>
     <link href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>
-    <style>
-    body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    }
-    </style>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <script language="JavaScript" type="text/javascript" src="${resource(dir:'js', file: 'jquery.transform.js')}"></script>
+
 </head>
 
 <body>
 
-<table class="layout-container table-simulated">
-    <tr class="table-row">
+<ul class="breadcrumb">
+    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+        <a class="home" href="${createLink(uri: '/')}" itemprop="url">
+            <span itemprop="title">
+                <g:message code="home"/>
+            </span>
+        </a>
+    </li>
+    <g:if test="${filters.breadcrumb.size() > 0}">
+        <g:each in="${filters.breadcrumb[0..-1]}">
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                <span class="divider">${"/"}</span>
+                <a href="${commonLink}${it.linkTail}"
+                   itemprop="url"><span itemprop="title">${it.linkTitle}</span></a>
+            </li>
+        </g:each>
+    </g:if>
+    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+        <span class="divider">${"/"}</span>
+        <a href="${request.requestURI.replace('.dispatch', '').replace('grails/site/', '') + '?' + request.queryString}"
+           itemprop="url">
+            <span itemprop="title">
+                <g:message code="search.for.label"></g:message> ${params.phrase}
+            </span>
+        </a>
+    </li>
+</ul>
 
-        <g:if test="${filters.products.productIds.isEmpty()}">
-        </g:if>
-        <g:else>
-            <td class="banners table-cell">
-                <div class="sidebar-nav">
-                    <ehcache:render template="common/filteringAccordion" key="${params.phrase}${params.f}"/>
-                </div>
-            </td>
-        </g:else>
+<h3 class="category_heading top_less bottom_less">
+    <div class="right_text">
+        <g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message
+                code="rial"/>
+    </div>
+    <g:message code="search.for.label"></g:message> ${params.phrase}
+</h3>
 
-        <td class="table-cell" ${filters.products.productIds.isEmpty() ? "style='padding-right:5px;'" : ""}>
-            <table class="table-simulated">
+<div class="toolbar_top">
+    <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
+    <div class="clearfix"></div>
+</div>
 
-                <tr class="table-row">
-                    <td class="span600 table-cell">
-                        <ul class="breadcrumb">
-                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="${createLink(uri: '/')}" itemprop="url">
-                                    <span itemprop="title">
-                                        <g:message code="home"/>
-                                    </span>
-                                </a>
-                                <span class="divider">${">"}</span>
-                            </li>
-                            <g:if test="${filters.breadcrumb.size() > 0}">
-                                <g:each in="${filters.breadcrumb[0..-1]}">
-                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                        <a href="${commonLink}${it.linkTail}"
-                                           itemprop="url">
-                                            <span itemprop="title">${it.linkTitle}</span>
-                                        </a>
-                                        <span class="divider">${">"}</span>
-                                    </li>
-                                </g:each>
-                            </g:if>
-                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="${request.requestURI.replace('.dispatch', '').replace('grails/site/', '') + '?' + request.queryString}"
-                                   itemprop="url">
-                                    <span itemprop="title">
-                                        <g:message code="search.for.label"></g:message> ${params.phrase}
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+<div class="filter_left">
+    <div class="filter_float_threshold_start"></div>
 
-                        <g:if test="${filters.products.productIds.isEmpty() && params.page == 0}">
-                            <g:message code="search.nothingMatchedYourQuery"/>
-                        </g:if>
-                        <g:else>
-                        %{--<g:render template="common/filteringGraphicalMenu"></g:render>--}%
-                            <g:render template="common/productGrid"
-                                      model="${[productIds: filters.products.productIds]}"/>
-                        </g:else>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+    <div class="floating_filter">
+        <g:render template="common/filteringTextualMenu"/>
+    </div>
+</div>
 
-<script type="text/javascript">
-    (function ($) {
-        $('.row-fluid ul.thumbnails li.span6:nth-child(2n + 3)').css('margin-right', '0px');
-        $('.row-fluid ul.thumbnails li.span4:nth-child(3n + 4)').css('margin-right', '0px');
-        $('.row-fluid ul.thumbnails li.span3:nth-child(4n + 5)').css('margin-right', '0px');
-    })(jQuery);
+<div class="listing_right">
+
+    <g:render template="common/productRowList"
+              model="${[productIds: filters.products.productIds]}"/>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="toolbar_bottom">
+    <div class="toolbar_top">
+        <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<script language="JavaScript" type="text/javascript">
+    $(document).ready(function () {
+        setFilterSize();
+        resetStickForFilters();
+    });
+
+    function resetStickForFilters(){
+        $(".floating_filter").stick_in_parent({
+            offset_top:75
+        });
+    }
+
+    function setFilterSize(){
+        $('.filter_left').css('height', Math.max($('.filter_left').height(), $('.listing_right').height()));
+    }
 </script>
 </body>
 </html>

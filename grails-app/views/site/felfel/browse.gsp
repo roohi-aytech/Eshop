@@ -16,10 +16,12 @@
     <g:render template="common/productGridMeta"
               model="${[productIds: filters.products.productIds]}"/>
 
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <script language="JavaScript" type="text/javascript" src="${resource(dir:'js', file: 'jquery.transform.js')}"></script>
 </head>
 
 <body>
@@ -56,10 +58,8 @@
 </div>
 
 <div class="filter_left">
-    <div class="filter_float_threshold_start"></div>
-
     <div class="floating_filter">
-        <g:render template="common/browsingTextualMenu"/>
+            <g:render template="common/browsingTextualMenu"/>
     </div>
 </div>
 
@@ -77,6 +77,21 @@
         <div class="clearfix"></div>
     </div>
 </div>
+<script language="JavaScript" type="text/javascript">
+    $(document).ready(function () {
+        setFilterSize();
+        resetStickForFilters();
+    });
 
+    function resetStickForFilters(){
+        $(".floating_filter").stick_in_parent({
+            offset_top:75
+        });
+    }
+
+    function setFilterSize(){
+        $('.filter_left').css('height', Math.max($('.filter_left').height(), $('.listing_right').height()));
+    }
+</script>
 </body>
 </html>

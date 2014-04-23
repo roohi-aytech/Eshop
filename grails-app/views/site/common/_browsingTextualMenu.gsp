@@ -17,7 +17,7 @@
                 var="brand">
             <li class="checkable">
                 <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
-                                        brandName="${brand._id?.name}"/>
+                                        brandName="${brand._id?.name}" showCount="true" count="${brand.count}"/>
             </li>
         </g:each>
 
@@ -25,17 +25,13 @@
             <g:each in="${filters.brands?.sort { -it.count }[5..(filters.brands.count { it } - 1)]}" var="brand">
                 <li class="checkable moreItems moreBrandItems">
                     <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
-                                            brandName="${brand._id?.name}"/>
+                                            brandName="${brand._id?.name}" showCount="true" count="${brand.count}"/>
                 </li>
             </g:each>
 
-            <li class="moreItemsLink"><a onclick="$(this).parent().hide();
-            $(this).parent().next().fadeIn();
-            $(this).parent().next().fadeIn();
+            <li class="moreItemsLink"><a onclick="$(this).parent().hide();$(this).parent().next().fadeIn();$(this).parent().next().fadeIn();
             $('.moreBrandItems').fadeIn('slow');"><g:message code="more"/></a></li>
-            <li class="moreItems moreItemsLink"><a onclick="$(this).parent().hide();
-            $(this).parent().prev().fadeIn();
-            $('.moreBrandItems').hide('fast');"><g:message code="less"/></a></li>
+            <li class="moreItems moreItemsLink"><a onclick="$(this).parent().hide();$(this).parent().prev().fadeIn();$('.moreBrandItems').hide('fast');"><g:message code="less"/></a></li>
         </g:if>
 
         <li class="divider"></li>
@@ -51,7 +47,7 @@
                 <li class="checkable">
                     <eshop:filterStart productType="${productType}"
                                        attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                       value="${attributeValueCount._id}"/>
+                                       value="${attributeValueCount._id}" showCount="true" count="${attributeValueCount.count}"/>
                 </li>
             </g:each>
 
@@ -61,16 +57,12 @@
                     <li class="checkable moreItems moreAttributeItems${indexer}">
                         <eshop:filterStart productType="${productType}"
                                            attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                           value="${attributeValueCount._id}"/>
+                                           value="${attributeValueCount._id}" showCount="true" count="${attributeValueCount.count}"/>
                     </li>
                 </g:each>
 
-                <li class="moreItemsLink"><a onclick='$(this).parent().hide();
-                $(this).parent().next().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
-                <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();
-                $(this).parent().prev().fadeIn();
-                $(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
+                <li class="moreItemsLink"><a onclick='$(this).parent().hide();$(this).parent().next().fadeIn();$(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();$(this).parent().prev().fadeIn();$(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
             </g:if>
         </g:each>
 
@@ -82,7 +74,7 @@
                 <li class="checkable">
                     <eshop:filterStart productType="${productType}"
                                        attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                       value="${attributeValueCount._id}"/>
+                                       value="${attributeValueCount._id}" showCount="true" count="${attributeValueCount.count}"/>
                 </li>
             </g:each>
 
@@ -92,16 +84,12 @@
                     <li class="checkable moreItems moreAttributeItems${indexer}">
                         <eshop:filterStart productType="${productType}"
                                            attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                           value="${attributeValueCount._id}"/>
+                                           value="${attributeValueCount._id}" showCount="true" count="${attributeValueCount.count}"/>
                     </li>
                 </g:each>
 
-                <li class="moreItemsLink"><a onclick='$(this).parent().hide();
-                $(this).parent().next().fadeIn();
-                $(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
-                <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();
-                $(this).parent().prev().fadeIn();
-                $(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
+                <li class="moreItemsLink"><a onclick='$(this).parent().hide();$(this).parent().next().fadeIn();$(".moreAttributeItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();$(this).parent().prev().fadeIn();$(".moreAttributeItems${indexer}").hide("fast");'><g:message code="less"/></a></li>
             </g:if>
         </g:each>
         <li class="divider"></li>
@@ -118,7 +106,7 @@
                         <li class="checkable">
                             <eshop:filterStartVariation productType="${productType}"
                                                         variation="${variationGroup.value.type + variationGroup.key}"
-                                                        value="${variationValueCount._id.name}"/>
+                                                        value="${variationValueCount._id}" showCount="true" count="${variationValueCount.count}"/>
                         </li>
                     </g:each>
 
@@ -128,16 +116,12 @@
                             <li class="checkable moreItems moreVariationItems${indexer}">
                                 <eshop:filterStartVariation productType="${productType}"
                                                             variation="${variationGroup.value.type + variationGroup.key}"
-                                                            value="${variationValueCount._id.name}"/>
+                                                            value="${variationValueCount._id}" showCount="true" count="${variationValueCount.count}"/>
                             </li>
                         </g:each>
 
-                        <li class="moreItemsLink"><a onclick='$(this).parent().hide();
-                        $(this).parent().next().fadeIn();
-                        $(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
-                        <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();
-                        $(this).parent().prev().fadeIn();
-                        $(".moreVariationItems${indexer}").hide("fast");'><g:message code="less"/></a>
+                        <li class="moreItemsLink"><a onclick='$(this).parent().hide();$(this).parent().next().fadeIn();$(".moreVariationItems${indexer}").fadeIn("slow");'><g:message code="more"/></a></li>
+                        <li class="moreItems moreItemsLink"><a onclick='$(this).parent().hide();$(this).parent().prev().fadeIn();$(".moreVariationItems${indexer}").hide("fast");'><g:message code="less"/></a>
                         </li>
                     </g:if>
 

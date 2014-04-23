@@ -103,7 +103,7 @@
                                     <g:message code="application_delete"></g:message>
                                 </a> ]
                                 </span><br/>
-                                <span><eshop:thumbnailPrice productId="${product.id}"></eshop:thumbnailPrice></span>
+                                <span><eshop:thumbnailPrice productId="${product.id}" hideLastUpdate="true"></eshop:thumbnailPrice></span>
                             </th>
                         </g:each>
                     </tr>

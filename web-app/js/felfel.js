@@ -1,6 +1,4 @@
-
-
-Number.prototype.formatMoney = function formatMoney(c, d, t){
+Number.prototype.formatMoney = function formatMoney(c, d, t) {
     var n = this,
         c = isNaN(c = Math.abs(c)) ? 0 : c,
         d = d == undefined ? "." : d,
@@ -11,40 +9,31 @@ Number.prototype.formatMoney = function formatMoney(c, d, t){
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
-$(document).ready(function(){
+$(document).ready(function () {
 
     //dotdotdot
     $('.product_block .subtitle p').dotdotdot({
-        ellipsis : '... ',
-        wrap : 'word',
+        ellipsis: '... ',
+        wrap: 'word',
         fallbackToLetter: true,
-        after : null,
-        watch : false,
-        height : 35,
-        tolerance : 0,
-        callback : function( isTruncated, orgContent ) {},
-        lastCharacter : {
-            remove : [ ' ', ',', ';', '.', '!', '?' ],
-            noEllipsis : []
+        after: null,
+        watch: false,
+        height: 35,
+        tolerance: 0,
+        callback: function (isTruncated, orgContent) {
+        },
+        lastCharacter: {
+            remove: [ ' ', ',', ';', '.', '!', '?' ],
+            noEllipsis: []
         }
     });
 
     //fix navigation
-    $(document).scroll(function(){
-        var position = $(window).scrollTop();
-        if(position > 76){
-            $('.header .navigation').addClass('sticky_nav');
-        }
-        else{
-            $('.header .navigation').removeClass('sticky_nav');
-        }
-        if(position > 100){
-            $('#back-top').fadeIn();
-        }
-        else{
-            $('#back-top').fadeOut();
-        }
+    $(document).scroll(function () {
+        resetHeaderPosition();
     });
+    resetHeaderPosition();
+
     $('#back-top').find('a').click(function () {
         $('body,html').animate({
             scrollTop: 0
@@ -57,4 +46,23 @@ $(document).ready(function(){
 
 
     $('.btn-primary').addClass('btn-danger').removeClass('btn-primary');
+    $('.btn-success').addClass('btn-danger').removeClass('btn-success');
+
+    $('.scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
 });
+
+function resetHeaderPosition(){
+    var position = $(window).scrollTop();
+    if (position > 76) {
+        $('.header .navigation').addClass('sticky_nav');
+    }
+    else {
+        $('.header .navigation').removeClass('sticky_nav');
+    }
+    if (position > 100) {
+        $('#back-top').fadeIn();
+    }
+    else {
+        $('#back-top').fadeOut();
+    }
+}

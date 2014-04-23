@@ -1,4 +1,4 @@
-<div class="product_block four_column">
+<div class="product_block four_column" id="productThumbnail_${product?.id}">
     <div class="image">
         <a title="${product}" href="${createLink(uri: "/product/${product?.id}")}">
             <img width="236px" height="260px" border="0"
@@ -37,7 +37,7 @@
 
         <div class="cta_block">
             <div class="btn-cart-loading">
-                <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}"/>
+                <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}" animate="true"/>
                 <img width="18"
                      height="18"
                      src="${resource(dir:'images/felfel', file: 'loading1.gif')}"
@@ -52,13 +52,13 @@
             </div>
 
             <div class="quick_view_loading">
-                <a onclick="javascript:quick_view(1113409);" href="javascript://"
-                   class="quick_view" id="load-quick-a-1113409"
+                <a onclick="quickViewProduct(${product.id});" href="javascript://"
+                   class="quick_view" id="load-quick-a-${product.id}"
                    title="Quick View"></a>
                 <img width="18" height="18"
                      src="${resource(dir:'images/felfel', file: 'loading1.gif')}"
                      style="display:none;position:relative; left:0px;"
-                     id="load-quick-1113409"></div></div>
+                     id="load-quick-${product.id}"></div></div>
 
         <div class="clearfix">
 

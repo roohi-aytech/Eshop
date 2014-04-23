@@ -1,7 +1,6 @@
 <g:if test="${specialSaleSlides && !specialSaleSlides?.isEmpty()}">
     <h3 class="category_heading spicy_offer_heading">
-        <span>Spicy Deals</span>
-        Ending Soon
+        <g:message code="specialSale.title"/>
     </h3>
 
     <g:each in="${specialSaleSlides.size() % 4 != 0 ? specialSaleSlides[(specialSaleSlides.size() % 4)..(specialSaleSlides.size() - 1)] : specialSaleSlides}" status="i" var="slide">

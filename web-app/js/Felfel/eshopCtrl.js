@@ -111,7 +111,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     }
 
     //    basket
-    $scope.addToBasket = function (id, name, price, selectedAddedValues, count) {
+    $scope.addToBasket = function (id, name, price, selectedAddedValues, count, type, productId, animate) {
         if (!count)
             count = 1;
         $('#link-basket').removeClass('open').addClass('full');
@@ -132,8 +132,34 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         }
         if (!found)
             $scope.basket[$scope.basket.length] = {id: id, name: name, count: count, realPrice: price};
-        $http.post(contextRoot + "basket/add/" + id + "?count=" + count + "&addedValues=" + selectedAddedValues.toString()).success(function (response) {
+        $http.post(contextRoot + "basket/add/" + id + "?count=" + count + "&addedValues=" + selectedAddedValues.toString() + "&type=" + type).success(function (response) {
         });
+
+
+        if (animate) {
+            var item = $('#productThumbnail_' + productId);
+            var movingItem = item.clone()
+                .css('position', 'absolute')
+                .css('top', item.offset().top)
+                .css('left', item.offset().left - 14)
+                .css('width', 239)
+                .css('background', 'white')
+                .css('z-index', '999999999');
+            $('body').append(movingItem);
+            var basketObject = $('#link-basket');
+            var top = basketObject.offset().top - 200;
+            var left = basketObject.offset().left - 130;
+            $('#link-basket').qtip('hide');
+            movingItem.animate({
+                'top': top,
+                'left': left,
+                'opacity': 0.5,
+                transform: 'scale(0.1,0.1)'
+            }, 1000, function () {
+                $(this).remove();
+                $('#link-basket').qtip('show');
+            });
+        }
 
         return false;
     };

@@ -11,7 +11,7 @@
     <canonical:show/>
     <meta name="robots" content="index, follow"/>
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
-    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
+    <link rel="shortcut icon" href="${resource(dir: 'images/felfel', file: 'favicon.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
     <script language="javascript" src="${resource(dir: 'js', file: 'ieFix.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'json3.js')}" type="text/javascript"></script>
@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
     %{--<link href="${resource(dir: 'css', file: 'siteUI.css')}" rel="stylesheet" type="text/css"/>--}%
     %{--<link href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>--}%
-    %{--<link href="${resource(dir: 'css', file: 'jquery.rollbar.css')}" rel="stylesheet" type="text/css"/>--}%
+    <link href="${resource(dir: 'css', file: 'jquery.rollbar.css')}" rel="stylesheet" type="text/css"/>
     <link href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}" rel="stylesheet" type="text/css"/>
     <link href="${resource(dir: 'css', file: 'jquery.tipsy.css')}" rel="stylesheet" type="text/css"/>
 
@@ -77,8 +77,8 @@
     </script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
             type="text/javascript"></script>
-    %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"--}%
-    %{--type="text/javascript"></script>--}%
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"
+    type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
@@ -90,11 +90,11 @@
     <g:layoutHead/>
     <link href="${resource(dir: 'css', file: 'felfel.css')}" rel="stylesheet" type="text/css"/>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.watch.js')}" type="text/javascript"></script>--}%
-    %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}"--}%
-    %{--type="text/javascript"></script>--}%
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}"
+    type="text/javascript"></script>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>--}%
-    %{--<script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"--}%
-    %{--type="text/javascript"></script>--}%
+    <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete-felfel.js')}"
+    type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"
     type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.dotdotdot.js')}"
@@ -103,6 +103,9 @@
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.qtip.css')}"/>
     <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'jquery.qtip.js')}"></script>
     <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'imagesloaded.js')}"></script>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${resource(dir: 'js', file: 'jquery.sticky-kit.js')}"></script>
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
@@ -121,5 +124,27 @@
 <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
 
+<!-- Modal -->
+<div id="quickViewModal" class="modal hide fade" tabindex="-1" role="window" aria-labelledby="quickViewModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+
+    <div class="modal-body" style="margin:0 !important;">
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    function quickViewProduct(id) {
+
+        $("#quickViewModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
+        $("#quickViewModal").modal({
+            backdrop: false,
+            show: true
+        });
+        $("#quickViewModal .modal-body").load('${createLink(controller: 'site', action: 'productQuickView')}/' + id, function () {
+        });
+    }
+</script>
 </body>
 </html>

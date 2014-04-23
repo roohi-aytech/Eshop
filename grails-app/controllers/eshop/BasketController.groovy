@@ -12,10 +12,16 @@ class BasketController {
 
     def add() {
         def count = 1
-        if(params.count)
+        if (params.count)
             count = params.count as Integer
         def id = params.id
         def productModel = ProductModel.get(id)
+        if (params.type == 'product') {
+            def product = Product.get(id)
+            productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+            if (productModel?.prices?.count { it } == 0)
+                productModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        }
 
         def basket = session.getAttribute("basket")
         if (!basket)
@@ -30,7 +36,9 @@ class BasketController {
 
         if (params.addedValues) {
             basketItem.selectedAddedValues = params.addedValues?.toString().split(',')
-            basketItem.selectedAddedValueNames = basketItem.selectedAddedValues.collect { AddedValue.get(it.toLong()).name }
+            basketItem.selectedAddedValueNames = basketItem.selectedAddedValues.collect {
+                AddedValue.get(it.toLong()).name
+            }
         } else {
             basketItem.selectedAddedValues = []
             basketItem.selectedAddedValueNames = []
@@ -97,7 +105,7 @@ class BasketController {
             order.ownerEmail = customer ? customer.email : session.checkout_customerInformation.email
             order.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation.mobile
             order.ownerTelephone = customer ? customer.telephone : session.checkout_customerInformation.telephone
-            order.ownerCode = customer ? customer.nationalCode: session.checkout_customInvoiceInformation.ownerCode
+            order.ownerCode = customer ? customer.nationalCode : session.checkout_customInvoiceInformation.ownerCode
             order.ownerSex = customer ? customer.sex : session.checkout_customerInformation.sex
 
             order.useAlternateInformation = session.checkout_customInvoiceInformation.customInvoiceInfo
@@ -260,9 +268,9 @@ class BasketController {
         def customInvoiceInformation = [:]
         customInvoiceInformation.customInvoiceInfo = params.customInvoiceInfo == 'true'
         customInvoiceInformation.ownerName = customInvoiceInformation.customInvoiceInfo ?
-            params.ownerName :
-            (customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() :
-                message(code: "customer.title.${session.checkout_customerInformation.sex}") + " " + session.checkout_customerInformation.lastName)
+                params.ownerName :
+                (customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() :
+                        message(code: "customer.title.${session.checkout_customerInformation.sex}") + " " + session.checkout_customerInformation.lastName)
         customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : (customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode)
         customInvoiceInformation.ownerMobile = customInvoiceInformation.customInvoiceInfo ? params.ownerMobile : (customer ? customer.mobile : session.checkout_customerInformation.mobile)
         session.checkout_customInvoiceInformation = customInvoiceInformation
@@ -273,11 +281,11 @@ class BasketController {
 
     }
 
-    def alert(){
+    def alert() {
 
         def id = params.id
         def productModel = ProductModel.get(id)
 
-        render template: 'alert', model: [name: "${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title?:''} ${productModel?.product?.brand} ${productModel?.variationValues?.find {it.variationGroup.representationType == 'Color'}?.value}"]
+        render template: 'alert', model: [name: "${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title ?: ''} ${productModel?.product?.brand} ${productModel?.variationValues?.find { it.variationGroup.representationType == 'Color' }?.value}"]
     }
 }

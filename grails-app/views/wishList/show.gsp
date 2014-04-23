@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>Zanbil</title>
+    <title><g:message code="wishList"/></title>
     <meta name="layout" content="site">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
     <script language="javascript" type="text/javascript">
         function addToBasket(id, title, price) {
             var scope = angular.element(document.getElementById('main-container')).scope();
-            scope.addToBasket(id, title, price, []);
+            scope.addToBasket(id, title, price, [], 1, 'product');
             scope.$apply();
         }
         function addToCompareList(id, title, price) {
@@ -39,7 +39,7 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
-            <div class="shopping-basket">
+            <div class="shopping-basket wish-list">
                 <h2><g:message code="wishList"/></h2>
 
                 <div class="group">
@@ -51,7 +51,7 @@
                                     ng-href="{{contextRoot}}site/product/{{wishListItem.id}}">{{wishListItem.title}}</a>
                             </h3>
                             </span>
-                            <span class="price"><g:message code="price"></g:message>: <b>{{wishListItem.price}}</b>
+                            <span class="price"><g:message code="price"></g:message>: <b>{{wishListItem.price}} <g:message code="rial"/></b>
                             </span>
                             <span>
                                 <a href="" class="btn-buy"

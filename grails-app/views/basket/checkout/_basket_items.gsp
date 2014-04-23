@@ -16,14 +16,16 @@
                         ng-src="{{contextRoot}}site/image/{{basketItem.id}}?type=productModel&wh=100x100"/>
                 </span>
                 <span class="name"><h3 style="display: inline-block"><a
-                        ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">{{basketItem.name}}</a>
+                        ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">
+                    {{itemFirstLine(basketItem.name)}}<br/>{{itemSecondLine(basketItem.name)}}
+                        </a>
                 </h3>
                     <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
                         <span class="plus">+</span> {{addedValueName}}
                     </span>
                 </span>
                 <span class="price"><g:message
-                        code="orderItem.unitPrice"></g:message>: <b>{{basketItem.realPrice | number:0}}</b> <g:message
+                        code="orderItem.unitPrice"/>: <b>{{basketItem.realPrice | number:0}}</b> <g:message
                         code="rial"/></span>
                 <span class="count"><g:message code="count"></g:message>: <input type="text"
                                                                                  value="{{basketItem.count}}"
@@ -31,11 +33,12 @@
                 </span>
                 <span class="delete">[ <a type="button"
                                           ng-click="removeFromBasket(basketItem.id)"><g:message
-                            code="basket.items.delete"></g:message></a> ]</span>
+                            code="basket.items.delete"/></a> ]</span>
                 <hr/>
                 <span class="price"><g:message
-                        code="basket.totalPrice"></g:message>: <b>{{basketItem.realPrice * basketItem.count | number:0}}</b> <g:message
+                        code="basket.totalPrice"/>: <b>{{basketItem.realPrice * basketItem.count | number:0}}</b> <g:message
                         code="rial"/></span>
+                <div class="clearfix"></div>
             </li>
         </ul>
     </div>
@@ -59,5 +62,5 @@
 
 <h2 class="check-out-price">
     <g:message code="basket.totalPayablePrice"></g:message>: <span
-        class="totalPrice">{{calculateBasketPayablePrice() | number:0}}</span> <g:message code="rial"/>
+        class="totalPrice">{{calculateBasketPayablePrice() | number:0}} <g:message code="rial"/></span>
 </h2>

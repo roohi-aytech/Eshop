@@ -1,14 +1,14 @@
 grails.serverURL = "http://localhost:8080/eshop"
 grails.app.context = "/eshop"
-eShop.instance = 'zanbil'
+eShop.instance = 'felfel'
 url.www = false
-locale.language='fa'
-locale.country='IR'
+locale.language='en'
+locale.country='US'
 events.url='http://localhost:8080/eshop'
-browse.view.root='browse'
-page.size=12
 admin.theme='cobalt'
-testimonials=false
+browse.view.root='browse-root'
+page.size=81
+testimonials=true
 ckeditor {
     upload {
         basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"

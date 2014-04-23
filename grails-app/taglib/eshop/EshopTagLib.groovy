@@ -94,7 +94,7 @@ class EshopTagLib {
     def filterStart = { attrs, body ->
         def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
         def link = g.createLink(action: "filter", params: [f: f, o: attrs.attribute])
-        out << "<a href='${link}'>${attrs.value}</a>"
+        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
 
     def filterStartBrand = { attrs, body ->
@@ -104,19 +104,19 @@ class EshopTagLib {
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img class='lazy' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
-            out << "<a href='${link}'><span>${attrs.brandName}</span></a>"
+            out << "<a href='${link}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
 
     def filterStartVariation = { attrs, body ->
         def f = "p${attrs.productType.id},${attrs.variation}|${attrs.value}"
         def link = g.createLink(action: "filter", params: [f: f, o: 'v' + attrs.variation])
-        out << "<a href='${link}'>${attrs.value}</a>"
+        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
 
     def filterAddProductType = { attrs, body ->
         def f = "${attrs.f},p${attrs.id}"
         def link = g.createLink(action: params.action, params: params + [f: f])
-        out << "<a href='${link}'>${attrs.name}</a>"
+        out << "<a href='${link}'>${attrs.name} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
 
     def filterAddBrand = { attrs, body ->
@@ -132,7 +132,7 @@ class EshopTagLib {
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
-            out << "<a href='${link}'>${attrs.name}</span></a>"
+            out << "<a href='${link}'>${attrs.name} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</span></a>"
     }
 
     def filterAddVariation = { attrs, body ->
@@ -144,7 +144,7 @@ class EshopTagLib {
         } else
             f = "${attrs.f},${attrs.id}|${attrs.value}"
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
-        out << "<a href='${link}'>${attrs.value}</a>"
+        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
 
     def filterAddAttribute = { attrs, body ->
@@ -156,7 +156,7 @@ class EshopTagLib {
         } else
             f = "${attrs.f},${attrs.id}|${attrs.value}"
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
-        out << "<a href='${link}'>${attrs.value}</a>"
+        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
 
     def filter = { attrs, body ->
@@ -202,21 +202,21 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a href="#" type="basket" original-title="${
+                            <a href="javascript://" type="basket" original-title="${
                             message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
                         }" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${
                             defaultModel.id
-                        }, '${defaultModel.toBasketItemString()}', '${price}', []);"><img src='${
+                        }, '${defaultModel.toBasketItemString()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><img src='${
                             resource(dir: 'images/menu', file: 'basket_new.png')
                         }' /></a>
                             """
                     else
                         out << """
-                            <a href="#" class="btn-buy addToBasket" ${
+                            <a href="javascript://" class="btn-buy addToBasket" ${
                             attrs.angular == "false" ? "on" : "ng-"
                         }click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${
                             price
-                        }', []);"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
+                        }', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
                             """
                 } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))

@@ -360,6 +360,23 @@ class SiteController {
         [productTypes: productTypes, filterProductTypes: filterProductTypes]
     }
 
+    def productQuickView() {
+        if(!params.id?.toString()?.isLong()){
+            redirect(uri: "/notFound")
+            return
+        }
+
+        def product = Product.get(params.id)
+        if (!product || product.deleted || (product.isVisible == false)) {
+            redirect(uri: "/notFound")
+            return
+        }
+        def customerReviews = CustomerReview.findAllByProduct product
+        def rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, { it.rate }) / customerReviews.count { it })
+
+        render template: '/site/felfel/templates/productQuickView', model: [product: product, rate: rate, quickView: true]
+    }
+
     def product() {
         if(!params.id?.toString()?.isLong()){
             redirect(uri: "/notFound")
@@ -476,6 +493,7 @@ class SiteController {
         def title = product.toString().replace(product.name, modelNames.unique{it.trim()}.join(','))
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
+        model.showHistogram = true
 
         render(model: model, view: "${grailsApplication.config.eShop.instance}/product")
     }
@@ -511,7 +529,7 @@ class SiteController {
 
         def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
 
-        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
+        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, showHistogram:true])
     }
 
     def productShoppingPanel() {

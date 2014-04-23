@@ -4681,6 +4681,18 @@ ul.article-list li span {
     right: auto;
 }
 
+.invoice{
+    background-image: url(../images/zanbil/A4-Invoice.jpg);
+}
+
+.invoice .basket-detail th {
+    background-color: #c4b99a;
+}
+
+.invoice-highlight{
+    background-color: #c4b99a;
+}
+
 
 
 

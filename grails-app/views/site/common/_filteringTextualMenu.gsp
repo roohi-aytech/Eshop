@@ -19,13 +19,13 @@
             <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
                 <li class="active checkable">
                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                          remove="true"/>
+                                          remove="true" showCount="true" count="${brand.count}"/>
                 </li>
             </g:if>
             <g:else>
                 <li class="checkable">
                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}"
-                                          f="${params.f}"/>
+                                          f="${params.f}" showCount="true" count="${brand.count}"/>
                 </li>
             </g:else>
         </g:each>
@@ -35,13 +35,13 @@
                 <g:if test="${filters.selecteds["b"]?.contains(brand._id?.id)}">
                     <li class="active checkable moreBrandItems">
                         <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                              remove="true"/>
+                                              remove="true" showCount="true" count="${brand.count}"/>
                     </li>
                 </g:if>
                 <g:else>
                     <li class="checkable moreItems moreBrandItems">
                         <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}"
-                                              f="${params.f}"/>
+                                              f="${params.f}" showCount="true" count="${brand.count}"/>
                     </li>
                 </g:else>
             </g:each>
@@ -65,14 +65,14 @@
                     <li class="active checkable">
                         <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                   value="${attributeValueCount._id}" f="${params.f}"
-                                                  remove="true"/>
+                                                  remove="true" showCount="true" count="${attributeValueCount.count}"/>
                     </li>
                 </g:if>
                 <g:else>
                     <li class="checkable">
                         <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                   value="${attributeValueCount._id}"
-                                                  f="${params.f}"/></li>
+                                                  f="${params.f}" showCount="true" count="${attributeValueCount.count}"/></li>
                 </g:else>
             </g:each>
 
@@ -84,14 +84,14 @@
                         <li class="active checkable">
                             <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                       value="${attributeValueCount._id}" f="${params.f}"
-                                                      remove="true"/>
+                                                      remove="true" showCount="true" count="${attributeValueCount.count}"/>
                         </li>
                     </g:if>
                     <g:else>
                         <li class="checkable moreItems moreAttributeItems${indexer}">
                             <eshop:filterAddAttribute id="${attribute.value.type.replace("a", "") + attribute.key}"
                                                       value="${attributeValueCount._id}"
-                                                      f="${params.f}"/></li>
+                                                      f="${params.f}" showCount="true" count="${attributeValueCount.count}"/></li>
                     </g:else>
                 </g:each>
 
@@ -113,40 +113,40 @@
                     <li class="nav-header sidebarAttributeGroup">${variationGroup.value.name}</li>
                     <g:each in="${variationGroup.value.countsByValue.count { it } > 5 ? variationGroup.value.countsByValue.sort { -it.count }[0..4] : variationGroup.value.countsByValue.sort { -it.count }}"
                             var="variationValueCount">
-                        <g:if test="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id.name)}">
+                        <g:if test="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id)}">
                             <li class="active checkable">
                                 <eshop:filterAddVariation
                                         id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
-                                        value="${variationValueCount._id.name}" f="${params.f}"
-                                        remove="true"/>
+                                        value="${variationValueCount._id}" f="${params.f}"
+                                        remove="true" showCount="true" count="${variationValueCount.count}"/>
                             </li>
                         </g:if>
                         <g:else>
                             <li class="checkable">
                                 <eshop:filterAddVariation
                                         id="${variationGroup.value.type.replace("a", "") + variationGroup.key}"
-                                        value="${variationValueCount._id.name}"
-                                        f="${params.f}"/></li>
+                                        value="${variationValueCount._id}"
+                                        f="${params.f}" showCount="true" count="${variationValueCount.count}"/></li>
                         </g:else>
                     </g:each>
 
                     <g:if test="${variationGroup.value.countsByValue.count { it } > 5}">
                         <g:each in="${variationGroup.value.countsByValue.sort { -it.count }[5..(variationGroup.value.countsByValue.count { it } - 1)]}"
                                 var="variationValueCount">
-                            <g:if test="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id.name)}">
+                            <g:if test="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id)}">
                                 <li class="active checkable">
                                     <eshop:filterAddVariation
                                             id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
-                                            value="${variationValueCount._id.name}" f="${params.f}"
-                                            remove="true"/>
+                                            value="${variationValueCount._id}" f="${params.f}"
+                                            remove="true" showCount="true" count="${variationValueCount.count}"/>
                                 </li>
                             </g:if>
                             <g:else>
                                 <li class="checkable moreItems moreVariationItems${indexer}">
                                     <eshop:filterAddVariation
                                             id="${variationGroup.value.type.replace("a", "") + variationGroup.key}"
-                                            value="${variationValueCount._id.name}"
-                                            f="${params.f}"/></li>
+                                            value="${variationValueCount._id}"
+                                            f="${params.f}" showCount="true" count="${variationValueCount.count}"/></li>
                             </g:else>
                         </g:each>
 

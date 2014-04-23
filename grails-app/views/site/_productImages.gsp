@@ -90,7 +90,9 @@
     }
 
     function resetZoomArea() {
+        <g:if test="${grailsApplication.config.eShop.instance == 'zanbil'}">
         $('.modal-body').css('height', ($('.modal-body').parent().parent().parent().height() + 10) + "px");
+        </g:if>
         $('#product-slideShow').css('height', ($('#product-slideShow').parent().height() - 18) + "px");
         $('#product-slideShow').css('width', ($('#product-slideShow').parent().width() - 1) + "px");
         zoomAreaHeight = $('#zoomAreaCell').height();

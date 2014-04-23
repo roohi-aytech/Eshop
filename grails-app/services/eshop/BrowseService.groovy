@@ -443,7 +443,7 @@ class BrowseService {
         varIds.each { varId ->
             def r = match.remove('v' + varId)
             def variationGroup = VariationGroup.get(varId)
-            result.put(varId, [type: 'v', name: variationGroup, countsByValue: countProductsWithUnwind(group: '$v' + varId, match: match, unwind: '$v' + varId)])
+            result.put(varId, [type: 'v', name: variationGroup, countsByValue: countProductsWithUnwind(group: '$v' + varId + '.name', match: match, unwind: '$v' + varId)])
             if (r)
                 match.put('v' + varId, r)
         }
