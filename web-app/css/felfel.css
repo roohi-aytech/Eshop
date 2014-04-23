@@ -740,6 +740,7 @@ a img {
 .new_selection_holder .selection_col_right ul li a {
     color: #919191;
     text-decoration: none;
+    text-transform: lowercase;
 }
 
 .new_selection_holder .selection_col_middle ul li a:hover {

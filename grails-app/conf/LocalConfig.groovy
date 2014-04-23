@@ -7,7 +7,7 @@ locale.country='US'
 events.url='http://localhost:8080/eshop'
 admin.theme='cobalt'
 browse.view.root='browse-root'
-page.size=81
+page.size=18
 testimonials=true
 ckeditor {
     upload {
