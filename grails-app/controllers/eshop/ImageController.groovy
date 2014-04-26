@@ -19,7 +19,7 @@ class ImageController {
         response.outputStream << content
         response.outputStream.flush()
     }
-    @Cacheable(value='image')
+//    @Cacheable(value='image')
     def index() {
 
 //        if (Environment.current != Environment.DEVELOPMENT)
@@ -164,7 +164,7 @@ class ImageController {
             render ""
 
     }
-    @Cacheable(value='pimage', key='#product.id.toString()')
+//    @Cacheable(value='pimage', key='#product.id.toString()')
     byte[] getProdcutImage(Product product) {
         def img
         if (params.name)
@@ -200,7 +200,7 @@ class ImageController {
 
         content
     }
-    @Cacheable(value='ptimage', key='#productType.id.toString()')
+//    @Cacheable(value='ptimage', key='#productType.id.toString()')
     byte[] getProdcutTypeImage(ProductType productType) {
 //        def img = productType.image
 //        if (!img) {
@@ -220,7 +220,7 @@ class ImageController {
 //        }
         content
     }
-    @Cacheable(value='pttimage', key='#productTypeType.id.toString()')
+//    @Cacheable(value='pttimage', key='#productTypeType.id.toString()')
     byte[] getProdcutTypeTypeImage(ProductTypeType productTypeType) {
         def img = productTypeType.image
         if (!img) {

@@ -17,7 +17,7 @@
                         </li>
                     </g:if>
                 </ul>
-                <meta content="INR" itemprop="priceCurrency">
+                <meta content="IRR" itemprop="priceCurrency">
                 <ul class="new_pricing_block last">
                     <li class="first you_pay"><g:message code="price"/></li>
                     <li class="our_price_red" itemprop="price"><span><g:formatNumber number="${price.showVal}"

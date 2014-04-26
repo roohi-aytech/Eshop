@@ -96,6 +96,8 @@ grails.project.dependency.resolution = {
         compile ":rendering:0.4.4"
 
         runtime ":cors:1.1.4"
+
+        compile ":jxl:0.54"
     }
 }
 grails.plugin.location.RapidGrails = "../RapidGrails"
