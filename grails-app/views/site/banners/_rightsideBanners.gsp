@@ -4,7 +4,7 @@
 <div class="relative">
     <div class="right-side-banners banners">
 
-        <g:if test="${grailsApplication.config.instance == 'Zanbil'}">
+        <g:if test="${grailsApplication.config.eShop.instance == 'zanbil'}">
             <div class="orderTracking">
                 <h4><g:message code="order.tracking"/></h4>
                 <g:form method="post" controller="order" action="track">
@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<g:if test="${grailsApplication.config.instance == 'Zanbil'}">
+<g:if test="${grailsApplication.config.eShop.instance == 'zanbil'}">
     <script language="javascript" type="text/javascript">
 
         $(document).ready(function () {

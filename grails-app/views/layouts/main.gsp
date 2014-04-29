@@ -72,6 +72,7 @@
     <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.tree.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combo.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combotree.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.combobox.js')}"></script>
 </head>
 
 <body dir="rtl">

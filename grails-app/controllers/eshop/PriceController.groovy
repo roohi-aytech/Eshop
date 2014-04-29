@@ -1,6 +1,5 @@
 package eshop
 
-import org.springframework.dao.DataIntegrityViolationException
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
@@ -8,6 +7,7 @@ import grails.plugins.springsecurity.Secured
 class PriceController {
 
     def mongoService
+    def excelService
 
     static allowedMethods = [save: "POST", delete: "POST"]
 
@@ -41,17 +41,16 @@ class PriceController {
 //            priceInstance.properties = params
             priceInstance.productModel = ProductModel.get(params.productModel.id)
             priceInstance.price = params.price?.toDouble()
-            if(params.currency)
+            if (params.currency)
                 priceInstance.currency = Currency.get(params.currency)
-        }
-        else {
+        } else {
             priceInstance = new Price()
             priceInstance.productModel = ProductModel.get(params.productModel.id)
             priceInstance.price = params.price?.toDouble()
-            if(params.currency)
+            if (params.currency)
                 priceInstance.currency = Currency.get(params.currency)
             priceInstance.startDate = new Date()
-            
+
             def lastPrice = Price.findByProductModelAndEndDateIsNull(priceInstance.productModel)
 
             if (lastPrice) {
@@ -74,5 +73,58 @@ class PriceController {
 
         priceInstance.delete(flush: true)
         render 0
+    }
+
+    def bulkUpdate() {
+        def model = [:]
+        model.productTypes = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
+            getProductTypesJson(it)
+        }
+        model.productTypeTypes = ProductTypeType.findAll().collect { [id: it.id, text: it.title] }
+        model.brands = Brand.findAll().collect { [id: it.id, text: it.name] }
+        model.guarantees = Guarantee.findAll().collect { [id: it.id, text: it.name] }
+        model
+    }
+
+    def getProductTypesJson(ProductType parent) {
+        def result = [:]
+        result.id = parent.id
+        result.text = parent.name
+        def children = ProductType.findAllByParentProductAndDeleted(parent, false)
+        if (children?.size() > 0) {
+            result.children = []
+            children.each {
+                result.children.add(getProductTypesJson(it))
+            }
+        }
+        result
+    }
+
+    def exportPriceList() {
+        excelService.exportPriceList(
+                params.productTypes instanceof String ? [params.productTypes as Long] : params.productTypes.collect {
+                    it as Long
+                },
+                params.productTypeTypes instanceof String ? [params.productTypeTypes as Long] : params.productTypeTypes.collect {
+                    it as Long
+                },
+                params.brands instanceof String ? [params.brands as Long] : params.brands.collect { it as Long },
+                params.guarantees instanceof String ? [params.guarantees as Long] : params.guarantees.collect {
+                    it as Long
+                },
+                params.statuses instanceof String ? [params.statuses as String] : params.statuses,
+                response)
+    }
+
+    def importPriceList() {
+        def model = excelService.importPriceList(request.getFile('file').inputStream)
+        model.productTypes = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
+            getProductTypesJson(it)
+        }
+        model.productTypeTypes = ProductTypeType.findAll().collect { [id: it.id, text: it.title] }
+        model.brands = Brand.findAll().collect { [id: it.id, text: it.name] }
+        model.guarantees = Guarantee.findAll().collect { [id: it.id, text: it.name] }
+        model.showResult = true
+        render view: 'bulkUpdate', model: model
     }
 }

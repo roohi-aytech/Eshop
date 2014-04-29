@@ -94,20 +94,26 @@
                                 code="discount"
                                 default="Discount"/></span></g:link></li>
                 </sec:ifAllGranted>
-                <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
+                <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">
                     <li>
                         <g:link controller="customerReview" action="list"><img
                                 src="images/comment.png"/><span><g:message
                                 code="review.waiting.list"/></span></g:link></li>
                 </sec:ifAllGranted>
                 <g:if test="${grailsApplication.config.testimonials}">
-                    <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
+                    <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">
                         <li>
                             <g:link controller="testimonial" action="list"><img
                                     src="images/testimonials.png"/><span><g:message
                                     code="testimonial.list"/></span></g:link></li>
                     </sec:ifAllGranted>
                 </g:if>
+                <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
+                    <li>
+                        <g:link controller="price" action="bulkUpdate"><img
+                                src="images/excel.png"/><span><g:message
+                                code="price.bulkUpdate"/></span></g:link></li>
+                </sec:ifAllGranted>
             </ul>
         </sec:ifAnyGranted>
         <sec:ifAllGranted roles="${RoleHelper.ROLE_USER_ADMIN}">

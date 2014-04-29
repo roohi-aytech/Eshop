@@ -63,6 +63,7 @@ grails.project.dependency.resolution = {
         compile 'com.itextpdf:itextpdf:5.4.2'
         build 'com.itextpdf:itextpdf:5.4.2'
         runtime 'com.itextpdf:itextpdf:5.4.2'
+
     }
 
     plugins {
@@ -98,6 +99,8 @@ grails.project.dependency.resolution = {
         runtime ":cors:1.1.4"
 
         compile ":jxl:0.54"
+//        compile ":excel-import:1.0.0"//  {excludes "xmlbeans"}
+//        compile ":joda-time:1.4"
     }
 }
 grails.plugin.location.RapidGrails = "../RapidGrails"

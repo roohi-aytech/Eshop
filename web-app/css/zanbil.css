@@ -4390,6 +4390,12 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     padding-right: 10px;
 }
 
+.banners .banners {
+    width: auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .showbiz-container {
 }
 
@@ -4691,6 +4697,36 @@ ul.article-list li span {
 
 .invoice-highlight{
     background-color: #c4b99a;
+}
+
+.accordion dd span{
+    display:inline-block;
+    color:#808080;
+    font-size:11px;
+}
+
+input.priceRange{
+    margin-left: 5px;
+    width: 55px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    margin-top:10px;
+    font-size: 10px;
+}
+
+input.priceRange + input.priceRange{
+    margin-right: 5px;
+}
+
+input.priceRange + input[type=button]{
+    display: inline-block;
+    height: 30px;
+    margin-top: 1px;
+    background-image: url('../images/felfel/filter.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0;
 }
 
 
