@@ -21,7 +21,7 @@
                 function postRefId(refIdValue) {
                     var form = document.createElement("form");
                     form.setAttribute("method", "POST");
-                    form.setAttribute("action", "https://pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat");
+                    form.setAttribute("action", "https://bpm.shaparak.ir/pgwchannel/startpay.mellat");
                     form.setAttribute("target", "_self");
                     var hiddenField = document.createElement("input");
                     hiddenField.setAttribute("name", "RefId");
@@ -44,7 +44,7 @@
                 function postRefId() {
                     var form = document.createElement("form");
                     form.setAttribute("method", "POST");
-                    form.setAttribute("action", "https://acquirer.samanepay.com/Payment.aspx");
+                    form.setAttribute("action", "https://sep.shaparak.ir/Payment.aspx");
                     form.setAttribute("target", "_self");
 
                     var hiddenField = document.createElement("input");

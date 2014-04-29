@@ -22,7 +22,7 @@ public class PaymentIFBindingLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for PaymentIFBindingSoap
-    private java.lang.String PaymentIFBindingSoap_address = "https://acquirer.samanepay.com/payments/referencepayment.asmx";
+    private java.lang.String PaymentIFBindingSoap_address = "https://sep.shaparak.ir/payments/referencepayment.asmx";
 
     public java.lang.String getPaymentIFBindingSoapAddress() {
         return PaymentIFBindingSoap_address;

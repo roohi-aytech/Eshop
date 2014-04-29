@@ -22,7 +22,7 @@ public class PaymentGatewayImplServiceLocator extends org.apache.axis.client.Ser
     }
 
     // Use to get a proxy class for PaymentGatewayImplPort
-    private java.lang.String PaymentGatewayImplPort_address = "https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw";
+    private java.lang.String PaymentGatewayImplPort_address = "https://bpm.shaparak.ir/pgwchannel/services/pgw";
 
     public java.lang.String getPaymentGatewayImplPortAddress() {
         return PaymentGatewayImplPort_address;
