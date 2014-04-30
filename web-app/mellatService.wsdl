@@ -97,7 +97,7 @@
   </wsdl:binding>
   <wsdl:service name="PaymentGatewayImplService">
     <wsdl:port binding="tns:PaymentGatewayImplServiceSoapBinding" name="PaymentGatewayImplPort">
-      <soap:address location="https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw"/>
+      <soap:address location="https://bpm.shaparak.ir/pgwchannel/services/pgw"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="PaymentGatewayImplService" targetNamespace="http://service.pgw.sw.bps.com/" xmlns:ns1="http://interfaces.core.sw.bps.com/" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.pgw.sw.bps.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <wsdl:import location="https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw?wsdl=IPaymentGateway.wsdl" namespace="http://interfaces.core.sw.bps.com/">
+  <wsdl:import location="https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl=IPaymentGateway.wsdl" namespace="http://interfaces.core.sw.bps.com/">
     </wsdl:import>
   <wsdl:binding name="PaymentGatewayImplServiceSoapBinding" type="ns1:IPaymentGateway">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -97,7 +97,7 @@
   </wsdl:binding>
   <wsdl:service name="PaymentGatewayImplService">
     <wsdl:port binding="tns:PaymentGatewayImplServiceSoapBinding" name="PaymentGatewayImplPort">
-      <soap:address location="https://pgws.bpm.bankmellat.ir/pgwchannel/services/pgw"/>
+      <soap:address location="https://bpm.shaparak.ir/pgwchannel/services/pgw"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
