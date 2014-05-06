@@ -1383,13 +1383,13 @@ input[type=checkbox] + label {
 }
 
 .share_block .btn-compare {
-    background: url("../images/felfel/compare.png") no-repeat scroll -20px 0 rgba(0, 0, 0, 0);
+    background: url("../images/felfel/compare.png") no-repeat scroll -18px 0 rgba(0, 0, 0, 0);
     color: #5D5D5D;
     display: inline-block;
     float: right;
     height: 20px;
     margin-right: 10px;
-    padding-left: 25px;
+    padding-left: 23px;
     text-decoration: none;
     line-height: 20px;
 }
