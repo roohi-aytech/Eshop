@@ -41,8 +41,11 @@ $(document).ready(function () {
         return false;
     });
 
-
-    $('.addToBasket').tipsy({live: true, gravity: 'e', text: 'افزودن به سبد خرید'});
+;
+    $('.product_block .price_info .cta_block .btn-buy').attr('original-title', 'افزودن به سبد خرید').tipsy({live: true, gravity: 'sw'});
+    $('.product_block .price_info .cta_block .btn-compare').attr('original-title', 'افزودن به سبد مقایسه').tipsy({live: true, gravity: 'nw'});
+    $('.product_block .price_info .cta_block .btn-wish').attr('original-title', 'افزودن به سبد آرزو').tipsy({live: true, gravity: 'nw'});
+    $('.product_block .price_info .cta_block .quick_view').attr('original-title', 'نمایش اطلاعات اولیه').tipsy({live: true, gravity: 'nw'});
 
 
     $('.btn-primary').addClass('btn-danger').removeClass('btn-primary');

@@ -40,25 +40,36 @@
                 <eshop:addToBasket prodcutId="${product.id}" buttonOnly="${true}" animate="true"/>
                 <img width="18"
                      height="18"
-                     src="${resource(dir:'images/felfel', file: 'loading1.gif')}"
+                     src="${resource(dir: 'images/felfel', file: 'loading1.gif')}"
                      style="display:none;"
                      id="load-cart-1113409"/>
             </div>
 
-            <div class="wishlist_icon_loading">
-                <eshop:addToWishList prodcutId="${product.id}" buttonOnly="${true}"/>
+            <div class="quick_view_loading">
+                <a onclick="quickViewProduct(${product.id});" href="javascript://"
+                   class="quick_view" id="load-quick-a-${product.id}"></a>
+                <img width="18" height="18"
+                     src="${resource(dir: 'images/felfel', file: 'loading1.gif')}"
+                     style="display:none;position:relative; left:0px;"
+                     id="load-quick-${product.id}">
+            </div>
+
+
+            <div class="compare_icon_loading">
+                <eshop:addToCompareList prodcutId="${product.id}" buttonOnly="${true}"/>
                 <img width="18" height="18" src="${resource(dir:'images/felfel', file: 'loading1.gif')}" style="display:none;"
                      id="load-wish-1113409"/>
             </div>
 
-            <div class="quick_view_loading">
-                <a onclick="quickViewProduct(${product.id});" href="javascript://"
-                   class="quick_view" id="load-quick-a-${product.id}"
-                   title="Quick View"></a>
-                <img width="18" height="18"
-                     src="${resource(dir:'images/felfel', file: 'loading1.gif')}"
-                     style="display:none;position:relative; left:0px;"
-                     id="load-quick-${product.id}"></div></div>
+            <div class="wishlist_icon_loading">
+                <eshop:addToWishList prodcutId="${product.id}" buttonOnly="${true}"/>
+                <img width="18" height="18" src="${resource(dir: 'images/felfel', file: 'loading1.gif')}"
+                     style="display:none;"
+                     id="load-wish-1113409"/>
+            </div>
+
+
+        </div>
 
         <div class="clearfix">
 

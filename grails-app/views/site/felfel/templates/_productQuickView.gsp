@@ -24,6 +24,7 @@
                     </a>
 
                     <eshop:addToWishList useLongText="true" prodcutId="${product.id}"/>
+                    <eshop:addToCompareList useLongText="true" prodcutId="${product.id}"/>
                 </p>
 
                 <div class="clearfix"></div>

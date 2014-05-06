@@ -647,7 +647,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 .new_selection_holder .selection_col_left ul li p.sel_catimage a img {
     display: inline-block;
-    width:100px;
+    width: 100px;
     height: 100px;
 }
 
@@ -922,11 +922,12 @@ a img {
     font-size: 12px;
     margin-left: 5px;
     display: inline-block;
+    display: none;
 }
 
 .product_block .price_info .price_block .our_price .current {
     display: inline-block;
-    margin-right: 5px;
+    /*margin-right: 5px;*/
     font-size: 16px;
 }
 
@@ -954,7 +955,7 @@ a img {
 .product_block .price_info .cta_block {
     float: left;
     margin-top: 0;
-    width: 46px;
+    width: 62px;
 }
 
 .product_block .price_info .cta_block .btn-cart-loading {
@@ -988,7 +989,8 @@ a img {
     height: 22px;
     position: relative;
     text-decoration: none;
-    width: 23px;
+    width: 22px;
+    margin-top: 1px;
 }
 
 .product_block .price_info .cta_block .btn-wish {
@@ -1006,6 +1008,33 @@ a img {
     background-position: -23px -7px;
 }
 
+.product_block .price_info .cta_block .compare_icon_loading {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: default;
+    display: block;
+    float: left;
+    height: 22px;
+    position: relative;
+    text-decoration: none;
+    width: 18px;
+    margin-top: -2px;
+}
+
+.product_block .price_info .cta_block .btn-compare {
+    background: url("../images/felfel/compare.png") no-repeat scroll 0 1px rgba(0, 0, 0, 0);
+    display: block;
+    float: right;
+    height: 22px;
+    position: relative;
+    text-decoration: none;
+    width: 18px;
+    text-indent: -999999px;
+}
+
+.product_block .price_info .cta_block .btn-compare:hover {
+    background-position: -18px 1px;
+}
+
 .product_block .price_info .cta_block .quick_view_loading {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
     cursor: default;
@@ -1015,7 +1044,8 @@ a img {
     margin-top: 2px;
     position: relative;
     text-decoration: none;
-    width: 23px;
+    width: 21px;
+    clear: both;
 }
 
 .product_block .price_info .cta_block .quick_view {
@@ -1345,11 +1375,23 @@ input[type=checkbox] + label {
     color: #5D5D5D;
     display: inline-block;
     float: right;
-    height: 17px;
+    height: 20px;
     margin-right: 10px;
-    margin-left: 5px;
-    padding-left: 23px;
+    padding-left: 25px;
     text-decoration: none;
+    line-height: 20px;
+}
+
+.share_block .btn-compare {
+    background: url("../images/felfel/compare.png") no-repeat scroll -20px 0 rgba(0, 0, 0, 0);
+    color: #5D5D5D;
+    display: inline-block;
+    float: right;
+    height: 20px;
+    margin-right: 10px;
+    padding-left: 25px;
+    text-decoration: none;
+    line-height: 20px;
 }
 
 .product_detail_right_block .price_block {
@@ -2379,7 +2421,7 @@ hr {
 .home_cms_best_sellers.column3 a img {
     width: 322px;
     height: 256px;
-    display:inline-block;
+    display: inline-block;
 }
 
 .home_cms_best_sellers.column3 .shop_now img {
@@ -2390,7 +2432,7 @@ hr {
 .home_cms_best_sellers.column4 a img {
     width: 238px;
     height: 200px;
-    display:inline-block;
+    display: inline-block;
 }
 
 .home_cms_best_sellers.column4 .shop_now img {
@@ -2467,7 +2509,7 @@ hr {
     white-space: nowrap;
 }
 
-.brand-list li img{
+.brand-list li img {
     width: 80px;
     height: 80px;
     display: inline-block;
@@ -3982,7 +4024,7 @@ h2.check-out-price span {
     margin-bottom: 10px;
 }
 
-.invoice{
+.invoice {
     background-image: url(../images/felfel/A4-Invoice.jpg);
 }
 
@@ -3990,20 +4032,20 @@ h2.check-out-price span {
     border-bottom-width: 0;
 }
 
-.invoice .basket-detail th{
+.invoice .basket-detail th {
     background: #EEEEEE;
 }
 
-.invoice-highlight{
+.invoice-highlight {
     background-color: #EEEEEE;
 }
 
-.invoice h2{
+.invoice h2 {
     margin-right: 320px;
     margin-top: 140px;
 }
 
-#invoice-trackingCode{
+#invoice-trackingCode {
     margin-right: 320px;
 }
 
@@ -4013,8 +4055,8 @@ h2.check-out-price span {
     color: white;
 }
 
-#invoice-date .label{
-    color:#ffffff;
+#invoice-date .label {
+    color: #ffffff;
 }
 
 #invoice-serial {
@@ -4022,15 +4064,15 @@ h2.check-out-price span {
     color: white;
 }
 
-#invoice-serial .label{
-    color:#ffffff;
+#invoice-serial .label {
+    color: #ffffff;
 }
 
-.borderRadius{
+.borderRadius {
     border-radius: 0;
 }
 
-.borderRadiusTp{
+.borderRadiusTp {
     border-radius: 0;
 }
 
@@ -4038,28 +4080,28 @@ h2.check-out-price span {
     border-radius: 0;
 }
 
-.dd .ddTitle .ddTitleText img{
+.dd .ddTitle .ddTitleText img {
     margin-left: 10px;
 }
 
-.nav-list li span{
-    display:inline-block;
-    color:#808080;
-    font-size:11px;
+.nav-list li span {
+    display: inline-block;
+    color: #808080;
+    font-size: 11px;
 }
 
-input.priceRange{
+input.priceRange {
     margin-left: 5px;
     width: 72px;
     display: inline-block;
     text-align: center;
 }
 
-input.priceRange + input.priceRange{
+input.priceRange + input.priceRange {
     margin-right: 5px;
 }
 
-input.priceRange + input[type=button]{
+input.priceRange + input[type=button] {
     display: inline-block;
     height: 30px;
     margin-top: -9px;
