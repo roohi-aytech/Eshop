@@ -35,15 +35,6 @@
             </span>
         </a>
     </li>
-    <g:if test="${filters.breadcrumb.size() > 0}">
-        <g:each in="${filters.breadcrumb[0..-1]}">
-            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <span class="divider">${"/"}</span>
-                <a href="${commonLink}${it.linkTail}"
-                   itemprop="url"><span itemprop="title">${it.linkTitle}</span></a>
-            </li>
-        </g:each>
-    </g:if>
     <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
         <span class="divider">${"/"}</span>
         <a href="${request.requestURI.replace('.dispatch', '').replace('grails/site/', '') + '?' + request.queryString}"
@@ -53,6 +44,15 @@
             </span>
         </a>
     </li>
+    <g:if test="${filters.breadcrumb.size() > 0}">
+        <g:each in="${filters.breadcrumb[0..-1]}">
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                <span class="divider">${"/"}</span>
+                <a href="${commonLink}${it.linkTail}"
+                   itemprop="url"><span itemprop="title">${it.linkTitle}</span></a>
+            </li>
+        </g:each>
+    </g:if>
 </ul>
 
 <h3 class="category_heading top_less bottom_less">

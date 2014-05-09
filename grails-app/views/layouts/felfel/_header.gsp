@@ -24,7 +24,7 @@
                         <span ng-hide="wishListCounter" class="ng-cloak"><g:message code="wishList"/></span>
                     </g:link> |
                 </li>
-                <li><a href="javascript:void(window.open('http://support.zanbil.ir:81/chat.php?acid=26617','','width=590,height=760,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'))"><g:message
+                <li><a href="javascript:void(window.open('http://support.felfel.ir:81/chat.php?acid=26617','','width=590,height=760,left=0,top=0,resizable=yes,menubar=no,location=no,status=yes,scrollbars=yes'))"><g:message
                         code="support.label"/></a> |</li>
                 <li><g:link uri="/contactUs"><g:message code="contact.label"/></g:link></li>
             </ul>
