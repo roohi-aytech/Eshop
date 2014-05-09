@@ -2,27 +2,36 @@
 
 <h3 class="quick-access"><g:message code="quickAccess.title"/></h3>
 <dl class="accordion">
-<dt class="${params.o == "p" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/></a>
+<dt class="${params.o == "r" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/></a>
 </dt>
 <dd>
-    <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
+    <input type="text" class="priceRange" id="priceRangeFrom" value="${params.f?.split(',')?.find {it?.toString()?.startsWith('rf')}?.replace('rf', '')?:''}" onkeyup="formatPrice(this)"/>
     <g:message code="filter.price.range.last"/>
-    <input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>
+    <input type="text" class="priceRange" id="priceRangeTo" value="${params.f?.split(',')?.find {it?.toString()?.startsWith('rt')}?.replace('rt', '')?:''}" onkeyup="formatPrice(this)"/>
     <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {
+            var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g,'');
+            var priceFilterTo = $('#priceRangeTo').val().replace(/,/g,'');
+            var params_f = '${params.f.replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rf')}, '').replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rt')}, '')}';
             <g:if test="${params.action == 'filter'}">
-            var url = '${createLink(controller: 'site', action: 'filter', params: [f:params.f, o:'p'])}';
+            var url = '${createLink(controller: 'site', action: 'filter')}';
+            url += '?f=' + params_f;
+            if (priceFilterFrom)
+                url += ',rf' + priceFilterFrom;
+            if (priceFilterTo)
+                url += ',rt' + priceFilterTo;
+            url += '&o=r'
             </g:if>
             <g:if test="${params.action == 'search'}">
-            var url = '${createLink(controller: 'site', action: 'search', params: [f:params.f, phrase:params.phrase, o:'p'])}';
-            </g:if>
-            var priceFilterFrom = $('#priceRangeFrom').val();
-            var priceFilterTo = $('#priceRangeTo').val();
+            var url = '${createLink(controller: 'site', action: 'search', params: [phrase:params.phrase])}';
+            url += '&f=' + params_f;
             if (priceFilterFrom)
-                url += '&pf=' + priceFilterFrom;
+                url += ',rf' + priceFilterFrom;
             if (priceFilterTo)
-                url += '&pt=' + priceFilterTo;
+                url += ',rt' + priceFilterTo;
+            url += '&o=r'
+            </g:if>
             window.location.href = url;
         }
 
@@ -54,8 +63,8 @@
             }
         });
 
-        $('#priceRangeFrom').val('${params.pf}');
-        $('#priceRangeTo').val('${params.pt}');
+        formatPrice($('#priceRangeFrom'));
+        formatPrice($('#priceRangeTo'));
     </script>
 </dd>
 %{--Brands Filters--}%

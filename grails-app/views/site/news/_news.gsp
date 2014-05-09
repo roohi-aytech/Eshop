@@ -11,7 +11,7 @@
             </g:each>
         </ul>
         <g:if test="${items.size() > 4}">
-            <a class="more-link" href="http://www.blog.zanbil.ir/zanbil-news">
+            <a class="more-link" href="http://www.blog.zanbil.ir/zanbil-and-festival-news">
                 <g:message code="news.more"/> <span>>></span>
             </a>
         </g:if>

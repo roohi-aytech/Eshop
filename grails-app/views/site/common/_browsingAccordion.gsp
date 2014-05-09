@@ -2,7 +2,8 @@
 
 <h3 class="quick-access"><g:message code="quickAccess.title"/></h3>
 <dl class="accordion">
-<dt class="${params.o == "p" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/></a></dt>
+<dt class="${params.o == "p" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/></a>
+</dt>
 <dd>
     <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
     <g:message code="filter.price.range.last"/>
@@ -10,15 +11,17 @@
     <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {
-            var url = '${createLink(controller: 'site', action: 'filter', params: [f:"p${productType.id}",o:'p'])}';
-            var priceFilterFrom = $('#priceRangeFrom').val();
-            var priceFilterTo = $('#priceRangeTo').val();
+            var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');
+            var priceFilterTo = $('#priceRangeTo').val().replace(/,/g, '');
+            var params_f = 'p${productType.id}';
+            var url = '${createLink(controller: 'site', action: 'filter')}';
+            url += '?f=' + params_f;
             if (priceFilterFrom)
-                url += '&pf=' + priceFilterFrom;
+                url += ',rf' + priceFilterFrom;
             if (priceFilterTo)
-                url += '&pt=' + priceFilterTo;
-            if (priceFilterFrom || priceFilterTo)
-                window.location.href = url;
+                url += ',rt' + priceFilterTo;
+            url += '&o=r'
+            window.location.href = url;
         }
 
         function formatPrice(item) {

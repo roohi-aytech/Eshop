@@ -134,7 +134,7 @@
 
 <body dir="rtl">
 <div>
-    <h2><g:message code="productModel.priceHistogram"/> ${productModel.toString()}</h2>
+    <h3><g:message code="productModel.priceHistogram"/> ${productModel.toString()}</h3>
 
     <div id="container" style="height: 250px">
     </div>

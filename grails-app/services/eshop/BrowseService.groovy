@@ -3,12 +3,15 @@ package eshop
 import grails.plugin.cache.Cacheable
 import org.springframework.web.context.request.RequestContextHolder
 
+import java.text.NumberFormat
+
 class BrowseService {
     def mongo
     def db
     def products
     def searchableService
     def grailsApplication
+    def messageSource
 
     def getProducts() {
         if (!products) {
@@ -198,7 +201,9 @@ class BrowseService {
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findProductTypeFilters(ProductType productType, page, cacheKey) {
         def match = productType ? ['productTypes.id': productType.id] : [:]
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
+            it._id.name != null
+        }
 
         def attributesCountMap = [:]
         def pt = productType
@@ -215,24 +220,12 @@ class BrowseService {
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
-    def findFilteredPageFilters(f, priceFrom, priceTo, page, cacheKey) {
+    def findFilteredPageFilters(f, page, cacheKey) {
         def productType
         def breadcrumb = []
         def match = [:]
         def selecteds = [:]
         def growingFilter = ""
-
-        if(priceFrom){
-            if(priceTo){
-                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger(), $lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
-            }
-            else{
-                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
-            }
-        }
-        else if(priceTo){
-            match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
-        }
 
         def raw_filters = f.split(",")
         def filterPartsMap = [:]
@@ -247,6 +240,12 @@ class BrowseService {
             } else if (it.startsWith("t")) {
                 filterPartsMap["t"] = (filterPartsMap["t"] ?: []) + it.replace("t", "")
                 filterIndexes["t"] = index
+            } else if (it.startsWith("rf")) {
+                filterPartsMap["rf"] = (filterPartsMap["rf"] ?: []) + it.replace("rf", "")
+                filterIndexes["rf"] = index
+            } else if (it.startsWith("rt")) {
+                filterPartsMap["rt"] = (filterPartsMap["rt"] ?: []) + it.replace("rt", "")
+                filterIndexes["rt"] = index
             } else {
                 def filter_parts = it.split("\\|")
                 filterPartsMap[filter_parts[0]] = (filterPartsMap[filter_parts[0]] ?: []) + filter_parts[1]
@@ -267,6 +266,14 @@ class BrowseService {
                 filterPartsMap["t"].each {
                     sortedFilters << "t${it}"
                 }
+            } else if (filterKey == "rf") {
+                filterPartsMap["rf"].each {
+                    sortedFilters << "rf${it}"
+                }
+            } else if (filterKey == "rt") {
+                filterPartsMap["rt"].each {
+                    sortedFilters << "rt${it}"
+                }
             } else {
                 filterPartsMap[filterKey].each {
                     sortedFilters << "${filterKey}|${it}"
@@ -274,6 +281,8 @@ class BrowseService {
             }
         }
         def lastbc = ""
+        NumberFormat numberFormatter = NumberFormat.getNumberInstance()
+        numberFormatter.maximumFractionDigits = 2
         sortedFilters.each { String filter ->
             if (!growingFilter)
                 growingFilter = filter
@@ -357,6 +366,30 @@ class BrowseService {
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
                 lastbc = "${filterParts[0]}"
 
+            } else if (filter.startsWith("rf")) {
+                def priceFrom = Integer.parseInt(filter.replace("rf", ""))
+                if (lastbc == "rt") {
+                    match.put('price', [$lte: match['price']['$lte'], $gte: priceFrom])
+                    def priceTo = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
+                    breadcrumb.remove(breadcrumb.size() - 1)
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [numberFormatter.format(priceFrom), priceTo].toArray(), Locale.default)]
+                } else {
+                    match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.moreThan', [numberFormatter.format(priceFrom)].toArray(), Locale.default)]
+                }
+                lastbc = "rf"
+            } else if (filter.startsWith("rt")) {
+                def priceTo = Integer.parseInt(filter.replace("rt", ""))
+                if (lastbc == "rf") {
+                    match.put('price', [$gte: match['price']['$gte'], $lte: priceTo])
+                    def priceFrom = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
+                    breadcrumb.remove(breadcrumb.size() - 1)
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [priceFrom, numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                } else {
+                    match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.lessThan', [numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                }
+                lastbc = "rt"
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -378,14 +411,17 @@ class BrowseService {
             }
         }
 
-
         def r = match.remove('brand.id')
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
+            it._id.name != null
+        }
         if (r)
             match.put('brand.id', r)
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
-        def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
+        def childProductTypeIds = productType ? productType.children.collect {
+            it.id
+        } : ProductType.findAllByParentProductIsNull().collect { it.id }
         if (productType)
             ProductType.createCriteria().listDistinct {
                 godFathers {
@@ -432,7 +468,9 @@ class BrowseService {
 
         def attributeCategoryList = productType ? AttributeCategory.findAllByProductType(productType) : AttributeCategory.findAllByProductTypeIsNull()
 
-        def attrGroupIds = attributeCategoryList.asList().findAll { it.showPositions.contains("filter") }.collect { it.id }
+        def attrGroupIds = attributeCategoryList.asList().findAll { it.showPositions.contains("filter") }.collect {
+            it.id
+        }
         attrGroupIds.each { attrGroupId ->
             def r = match.remove('ac' + attrGroupId)
             def attributeCategory = AttributeCategory.get(attrGroupId)
@@ -516,7 +554,9 @@ class BrowseService {
         def attrGroups = [:]
         if (productTypeId) {
             def pt = ProductType.get(productTypeId)
-            def attrNames = AttributeType.findAllByProductType(pt).asList().findAll { it.showPositions.contains("filter") }.collect { it.name }
+            def attrNames = AttributeType.findAllByProductType(pt).asList().findAll {
+                it.showPositions.contains("filter")
+            }.collect { it.name }
             attrNames.each { attr ->
                 def attrValues = products.aggregate(
                         [$match: match],
@@ -527,7 +567,9 @@ class BrowseService {
                 attrs[attr] = attrValues
             }
 
-            def attrGroupNames = AttributeCategory.findAllByProductType(pt).asList().findAll { it.showPositions.contains("filter") }.collect { it.name }
+            def attrGroupNames = AttributeCategory.findAllByProductType(pt).asList().findAll {
+                it.showPositions.contains("filter")
+            }.collect { it.name }
             attrGroupNames.each { attrGroup ->
                 def attrValues = products.aggregate(
                         [$match: match],
@@ -545,25 +587,13 @@ class BrowseService {
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
-    def findSearchPageFilters(productIdList, f, priceFrom, priceTo, page, cacheKey) {
+    def findSearchPageFilters(productIdList, f, page, cacheKey) {
         def productType
         def breadcrumb = []
         def selecteds = [:]
         def growingFilter = ""
 
         def match = [baseProductId: [$in: productIdList]]
-
-        if(priceFrom){
-            if(priceTo){
-                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger(), $lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
-            }
-            else{
-                match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
-            }
-        }
-        else if(priceTo){
-            match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
-        }
 
         if (f instanceof String[])
             f = f[f.length - 1]
@@ -581,6 +611,12 @@ class BrowseService {
             } else if (it.startsWith("t")) {
                 filterPartsMap["t"] = (filterPartsMap["t"] ?: []) + it.replace("t", "")
                 filterIndexes["t"] = index
+            } else if (it.startsWith("rf")) {
+                filterPartsMap["rf"] = (filterPartsMap["rf"] ?: []) + it.replace("rf", "")
+                filterIndexes["rf"] = index
+            } else if (it.startsWith("rt")) {
+                filterPartsMap["rt"] = (filterPartsMap["rt"] ?: []) + it.replace("rt", "")
+                filterIndexes["rt"] = index
             } else {
                 def filter_parts = it.split("\\|")
                 filterPartsMap[filter_parts[0]] = (filterPartsMap[filter_parts[0]] ?: []) + filter_parts[1]
@@ -601,6 +637,14 @@ class BrowseService {
                 filterPartsMap["t"].each {
                     sortedFilters << "t${it}"
                 }
+            } else if (filterKey == "rf") {
+                filterPartsMap["rf"].each {
+                    sortedFilters << "rf${it}"
+                }
+            } else if (filterKey == "rt") {
+                filterPartsMap["rt"].each {
+                    sortedFilters << "rt${it}"
+                }
             } else {
                 filterPartsMap[filterKey].each {
                     sortedFilters << "${filterKey}|${it}"
@@ -608,6 +652,8 @@ class BrowseService {
             }
         }
         def lastbc = ""
+        NumberFormat numberFormatter = NumberFormat.getNumberInstance()
+        numberFormatter.maximumFractionDigits = 2
         sortedFilters.each { String filter ->
             if (!growingFilter)
                 growingFilter = filter
@@ -692,6 +738,30 @@ class BrowseService {
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: filterParts[1]]
                 lastbc = "${filterParts[0]}"
+            } else if (filter.startsWith("rf")) {
+                def priceFrom = Integer.parseInt(filter.replace("rf", ""))
+                if (lastbc == "rt") {
+                    match.put('price', [$lte: match['price']['$lte'], $gte: priceFrom])
+                    def priceTo = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
+                    breadcrumb.remove(breadcrumb.size() - 1)
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [numberFormatter.format(priceFrom), priceTo].toArray(), Locale.default)]
+                } else {
+                    match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.moreThan', [numberFormatter.format(priceFrom)].toArray(), Locale.default)]
+                }
+                lastbc = "rf"
+            } else if (filter.startsWith("rt")) {
+                def priceTo = Integer.parseInt(filter.replace("rt", ""))
+                if (lastbc == "rf") {
+                    match.put('price', [$gte: match['price']['$gte'], $lte: priceTo])
+                    def priceFrom = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
+                    breadcrumb.remove(breadcrumb.size() - 1)
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [priceFrom, numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                } else {
+                    match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.lessThan', [numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                }
+                lastbc = "rt"
             } else {
                 def filterParts = filter.split("\\|")
 
@@ -714,12 +784,16 @@ class BrowseService {
         }
 
         def r = match.remove('brand.id')
-        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
+        def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
+            it._id.name != null
+        }
         if (r)
             match.put('brand.id', r)
 
         def allProductTypesCountMap = countProductsWithUnwind(group: [id: '$productTypes.id', name: '$productTypes.name'], unwind: "\$productTypes", match: match)
-        def childProductTypeIds = productType ? productType.children.collect { it.id } : ProductType.findAllByParentProductIsNull().collect { it.id }
+        def childProductTypeIds = productType ? productType.children.collect {
+            it.id
+        } : ProductType.findAllByParentProductIsNull().collect { it.id }
         if (productType)
             ProductType.createCriteria().listDistinct {
                 godFathers {
@@ -771,7 +845,9 @@ class BrowseService {
     }
 
     def minPrice(Long productTypeId) {
-        products.aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect { it.minPrice }.find() ?: 0
+        products.aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
+            it.minPrice
+        }.find() ?: 0
     }
 
     def findProductTypeSampleProducts(ProductType productType, count) {

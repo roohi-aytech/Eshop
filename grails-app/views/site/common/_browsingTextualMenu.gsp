@@ -18,15 +18,17 @@
     <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {
-            var url = '${createLink(controller: 'site', action: 'filter', params: [f:"p${productType.id}"])}';
-            var priceFilterFrom = $('#priceRangeFrom').val();
-            var priceFilterTo = $('#priceRangeTo').val();
+            var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');
+            var priceFilterTo = $('#priceRangeTo').val().replace(/,/g, '');
+            var params_f = 'p${productType.id}';
+            var url = '${createLink(controller: 'site', action: 'filter')}';
+            url += '?f=' + params_f;
             if (priceFilterFrom)
-                url += '&pf=' + priceFilterFrom;
+                url += ',rf' + priceFilterFrom;
             if (priceFilterTo)
-                url += '&pt=' + priceFilterTo;
-            if (priceFilterFrom || priceFilterTo)
-                window.location.href = url;
+                url += ',rt' + priceFilterTo;
+            url += '&o=r'
+            window.location.href = url;
         }
 
         function formatPrice(item) {

@@ -84,7 +84,7 @@
 
 
 <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
-     aria-labelledby="priceHistogramModalLabel" aria-hidden="true" style="width: 700px;">
+     aria-labelledby="priceHistogramModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 onclick="hidePriceHistogram();">×</button>

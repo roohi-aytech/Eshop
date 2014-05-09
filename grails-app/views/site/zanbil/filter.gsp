@@ -38,7 +38,7 @@
     </tr>
     <tr class="table-row">
         <td class="banners table-cell">
-            <ehcache:render template="common/filteringAccordion" key="${params.f}"/>
+            <g:render template="common/filteringAccordion" key="${params.f}"/>
             <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
