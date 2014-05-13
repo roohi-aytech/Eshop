@@ -134,9 +134,17 @@
     margin-left:15px;
 }
 
-.jCountdownScale{
+.jCountdownContainer, .jCountdownContainer div.jCountdownScale{
     /*width: 400px !important;*/
     /*transform: scale(0.5) !important;*/
+    /*position: absolute !important;*/
+}
+
+.jCountdownContainer div.jCountdownScale > .jCountdownContainer div.jCountdownScale{
+    /*width: 400px !important;*/
+    /*transform: scale(0.5) !important;*/
+    /*position: absolute !important;*/
+    /*top:-20px !important;*/
 }
 
 .jCountdownContainer .group{

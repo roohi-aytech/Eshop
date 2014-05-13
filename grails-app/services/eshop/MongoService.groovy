@@ -15,10 +15,15 @@ class MongoService {
             def mongoProducts = MongoProduct.findAllByBaseProductId(product.id)
 
             if (mongoProducts) {
-                mongoProducts.each {it.delete(flush: true)}
+                mongoProducts.each {
+                    it.delete(flush: true)
+                }
             }
-            if (product?.deleted)
+            if (product?.deleted) {
+                product.isSynchronized = true
+                product.save()
                 return
+            }
 
             def mongoProduct = new MongoProduct(baseProductId: product.id)
 
@@ -47,7 +52,9 @@ class MongoService {
                     mongoProduct['status'] = 3
                     break
             }
-            def productTypeId = product?.productTypes?.count { it } > 0 ? product?.productTypes?.toArray()?.first()?.id : 0.toLong()
+            def productTypeId = product?.productTypes?.count {
+                it
+            } > 0 ? product?.productTypes?.toArray()?.first()?.id : 0.toLong()
             mongoProduct['sortOrder'] = Product.createCriteria().count {
                 eq('deleted', false)
                 or {
@@ -68,7 +75,9 @@ class MongoService {
             def productTypes = collectProductTypes(product)
             mongoProduct['productTypes'] = productTypes.collect { [id: it.id, name: it.name, parentId: it?.parentId] }
 
-            product.attributes.findAll { it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted }.each {
+            product.attributes.findAll {
+                it?.attributeType?.showPositions?.contains("filter") && !it?.attributeType?.deleted
+            }.each {
                 if (it.value)
                     if (it.value?.group)
                         mongoProduct["a${it.attributeType.id}"] = it.value?.group?.value
@@ -78,17 +87,23 @@ class MongoService {
                     mongoProduct["a${it.attributeType.id}"] = it.attributeType?.defaultValue?.value
             }
 
-            def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll { it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted }.collect { it.attributeType.category.id })
+            def attributeCategories = AttributeCategory.findAllByIdInList(product.attributes.findAll {
+                it?.attributeType?.category?.showPositions?.contains("filter") && !it.attributeType?.category?.deleted
+            }.collect { it.attributeType.category.id })
             attributeCategories.each {
                 def attributes = Attribute.findAllByProductAndAttributeTypeInListAndValueIsNotNull(product, AttributeType.findAllByCategory(it))
-                mongoProduct["ac${it.id}"] = attributes.collect { [id: it.attributeType.id, name: it.attributeType.name, valueId: it.value?.id, value: it.value?.value] }
+                mongoProduct["ac${it.id}"] = attributes.collect {
+                    [id: it.attributeType.id, name: it.attributeType.name, valueId: it.value?.id, value: it.value?.value]
+                }
             }
 
             product.variations
 //                .findAll {it?.variationGroup?.showInFilter}
                     .each {
-                if (it.variationValues.count {it} > 0)
-                    mongoProduct["v${it.variationGroup?.id}"] = it.variationValues.collect {[id: it.id, name: it.value]}
+                if (it.variationValues.count { it } > 0)
+                    mongoProduct["v${it.variationGroup?.id}"] = it.variationValues.collect {
+                        [id: it.id, name: it.value]
+                    }
             }
             try {
 //                println('go to save synchronized object ' + )

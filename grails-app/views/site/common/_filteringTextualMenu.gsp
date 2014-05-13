@@ -10,6 +10,20 @@
     </g:each>
     <li class="divider"></li>
 </g:if>
+
+<g:if test="${productTypeTypeLinks && !productTypeTypeLinks.isEmpty()}">
+    <li class="nav-header"><g:message code="site.selectProductTypeType"
+                                      default="Select SubcategoryType"/></li>
+    <g:each in="${productTypeTypeLinks}"
+            var="productTypeTypeLink">
+        <li class="sub-category">
+            <a href="${productTypeTypeLink.href}">
+                ${productTypeTypeLink.name}
+            </a>
+        </li>
+    </g:each>
+    <li class="divider"></li>
+</g:if>
 %{--price range--}%
 
 <li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>

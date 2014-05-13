@@ -18,10 +18,10 @@ class MongoJob {
                 eq('isSynchronized', false)
                 isNull('isSynchronized')
             }
-            or {
-                eq('deleted', false)
-                isNull('deleted')
-            }
+//            or {
+//                eq('deleted', false)
+//                isNull('deleted')
+//            }
             projections {
                 property('id', 'id')
             }

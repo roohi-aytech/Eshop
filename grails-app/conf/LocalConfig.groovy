@@ -6,7 +6,7 @@ locale.language='en'
 locale.country='US'
 events.url='http://localhost:8080/eshop'
 admin.theme='cobalt'
-browse.view.root='browse'
+browse.view.root='browse-root'
 page.size=81
 testimonials=true
 ckeditor {

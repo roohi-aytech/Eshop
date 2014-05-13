@@ -108,7 +108,7 @@ class EshopTagLib {
     }
 
     def filterStartVariation = { attrs, body ->
-        def f = "p${attrs.productType.id},${attrs.variation}|${attrs.value}"
+        def f = "p${attrs.productType.id},v${attrs.variation}|${attrs.value}"
         def link = g.createLink(action: "filter", params: [f: f, o: 'v' + attrs.variation])
         out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>[${attrs.count}]</span>" : ''}</a>"
     }
@@ -194,6 +194,10 @@ class EshopTagLib {
             defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
             if (defaultModel?.prices?.count { it } == 0)
                 defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+        }
+
+        if (!defaultModel || defaultModel.status != 'exists') {
+            defaultModel = ProductModel.findByProductAndStatus(product, 'exists')
         }
 
         if (defaultModel) {
@@ -334,8 +338,11 @@ class EshopTagLib {
             out << """<div class="row">"""
             def counter = 0
             products.productIds.each {
-                counter++
-                out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: Product.get(it), class: counter == 4 ? 'last' : ''])
+                def product = Product.get(it)
+                if (product) {
+                    counter++
+                    out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: product, class: counter == 4 ? 'last' : ''])
+                }
             }
             out << "</div>"
         }
@@ -368,6 +375,10 @@ class EshopTagLib {
 
     def mostVisitedProductTypes = { attrs, body ->
         def productTypes = Product.createCriteria().list({
+            or {
+                isNull('deleted')
+                eq('deleted', false)
+            }
             projections {
                 sum('visitCount', 'visitCount')
                 productTypes {
@@ -384,6 +395,10 @@ class EshopTagLib {
         Integer columns = attrs.columns as Integer
         Integer rows = attrs.rows as Integer
         def productTypes = Product.createCriteria().list({
+            or {
+                isNull('deleted')
+                eq('deleted', false)
+            }
             projections {
                 sum('visitCount', 'visitCount')
                 productTypes {

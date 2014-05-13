@@ -2,11 +2,24 @@
 <g:if test="${productType.children}">
     <li class="nav-header"><g:message code="site.selectSubcategory"
                                       default="Select SubProductType"/></li>
+    <g:each in="${subProductTypeLinks}" var="subProductTypeLink">
+        <li class="sub-category"><a href="${subProductTypeLink.href}">${subProductTypeLink.name}</a></li>
+    </g:each>
+    <li class="divider"></li>
 </g:if>
-<g:each in="${subProductTypeLinks}" var="subProductTypeLink">
-    <li class="sub-category"><a href="${subProductTypeLink.href}">${subProductTypeLink.name}</a></li>
-</g:each>
-<li class="divider"></li>
+<g:if test="${productTypeTypeLinks && !productTypeTypeLinks.isEmpty()}">
+    <li class="nav-header"><g:message code="site.selectProductTypeType"
+                                      default="Select SubcategoryType"/></li>
+    <g:each in="${productTypeTypeLinks}"
+            var="productTypeTypeLink">
+        <li class="sub-category">
+            <a href="${productTypeTypeLink.href}">
+                ${productTypeTypeLink.name}
+            </a>
+        </li>
+    </g:each>
+    <li class="divider"></li>
+</g:if>
 
 %{--price range--}%
 

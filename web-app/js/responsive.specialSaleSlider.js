@@ -93,6 +93,16 @@ function setupCountDowns(){
         $('.jCountdown .group.hour .label').text('ساعت');
         $('.jCountdown .group.day .label').text('روز');
     });
+
+    var isFirstElement = true;
+    $('.jCountdownScale').each(function(){
+        if(isFirstElement){
+            isFirstElement = false;
+        }
+        else{
+            $(this).css('top', '-19px');
+        }
+    });
 }
 
 function nextSpecialSaleSlide(container) {
