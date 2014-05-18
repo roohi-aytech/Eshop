@@ -350,6 +350,7 @@ class EshopTagLib {
 
     def mostSoldProductTypes = { attrs, body ->
         def productTypes = OrderItem.createCriteria().list({
+            eq('deleted', false)
             projections {
                 count('id', 'orderCount')
                 productModel {
