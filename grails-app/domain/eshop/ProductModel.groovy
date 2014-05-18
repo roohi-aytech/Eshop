@@ -9,6 +9,7 @@ class ProductModel {
     Boolean isDefaultModel
 
     static searchable = {
+        root true
         only = ['name','guarantee']
     }
 

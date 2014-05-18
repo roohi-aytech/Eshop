@@ -13,7 +13,7 @@
                                 <img width="118"
                                      height="118"
                                      alt="${productTypeLink.name}"
-                                     src="${createLink(controller: 'image', params: [type: 'productType', id: productTypeLink.id, wh: '100x100'])}"
+                                     src="${createLink(controller: 'image', params: [type: 'productType', id: productTypeLink.id, wh: '150x150'])}"
                                      title="${productTypeLink.name}">
                             </a>
                         </p>
@@ -29,15 +29,15 @@
         <div class="selection_col_middle">
             <h2 class="middle_heading"><g:message code="menu.otherTypes.title"/></h2>
             <ul>
-                <g:each in="${subProductTypeLinks.size() > 8 ? (subProductTypeLinks.size() > 21 ? subProductTypeLinks[8..20] : subProductTypeLinks[8..(subProductTypeLinks.size() - 1)]) : []}"
+                <g:each in="${subProductTypeLinks.size() > 8 ? (subProductTypeLinks.size() > 19 ? subProductTypeLinks[8..19] : subProductTypeLinks[8..(subProductTypeLinks.size() - 1)]) : []}"
                         var="productTypeLink">
                     <li><a href="${productTypeLink.href}" title="${productTypeLink.name}">${productTypeLink.name}</a>
                     </li>
                 </g:each>
             </ul>
-            <g:if test="${subProductTypeLinks.size() > 21}">
+            <g:if test="${subProductTypeLinks.size() > 19}">
                 <ul class="last">
-                    <g:each in="${subProductTypeLinks.size() > 25 ? subProductTypeLinks[21..25] : subProductTypeLinks}">
+                    <g:each in="${subProductTypeLinks.size() > 23 ? subProductTypeLinks[21..23] : subProductTypeLinks}">
                         <li><a href="${productTypeLink.href}" title="${productTypeLink.name}">${productTypeLink.name}</a>
                     </g:each>
                 </li>
@@ -62,7 +62,7 @@
         <div class="selection_col_right">
             <h2 class="middle_heading"><g:message code="menu.shopByBrand.title"/></h2>
             <ul>
-                <g:each in="${filters.brands.size() > 14 ? filters.brands[0..13] : filters.brands}" var="brand">
+                <g:each in="${filters.brands.size() > 11 ? filters.brands[0..10] : filters.brands}" var="brand">
                     <li>
                         <eshop:filterStartBrand productType="${productType}" brandId="${brand._id?.id}"
                                                 brandName="${brand._id?.name}"/>

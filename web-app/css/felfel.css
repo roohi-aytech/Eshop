@@ -643,8 +643,8 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 .new_selection_holder .selection_col_left ul li p.sel_catimage a img {
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 118px;
+    height: 94px;
 }
 
 a img {
@@ -679,6 +679,7 @@ a img {
     margin-bottom: 10px;
     padding-bottom: 5px;
     text-transform: uppercase;
+    line-height: 14px;
 }
 
 .new_selection_holder .selection_col_right {
@@ -705,6 +706,7 @@ a img {
     font-size: 14px;
     padding-bottom: 5px;
     text-transform: uppercase;
+    line-height: 14px;
 }
 
 .new_selection_holder .selection_col_middle ul {
@@ -787,6 +789,7 @@ a img {
     float: right;
     font-size: 30px;
     font-weight: lighter;
+    line-height:14px;
 }
 
 .category_heading span {

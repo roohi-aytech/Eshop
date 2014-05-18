@@ -13,7 +13,7 @@
 <div class="search_bar">
     <g:form url="${createLink(uri: '/search')}" method="get" id="searchForm">
         <g:submitButton name="s" value="" class="submit"
-                        onclick="\$(this).attr('disabled', true);return \$('searchPhrase').val() != '';"/>
+                        onclick="return \$('searchPhrase').val() != '';"/>
         <div class="btn-group pull-left">
             <a class="btn btn-inverse-grey dropdown-toggle" data-toggle="dropdown" href="#">
                 <span id="searchCategory">
@@ -47,7 +47,7 @@
         </div>
         <g:hiddenField name="f" id="hidCategory" value="p${productTypeId ? productTypeId.toString() : '0'}"/>
         <g:if test="${params.f}">
-            <g:hiddenField name="f" id="hidFilter" value="${params.f}"/>
+            <g:hiddenField name="f" id="hidFilter" value="${params.f?.toString()?.split(',')?.findAll{!it.toString().startsWith('p')}?.join(',')}"/>
         </g:if>
         <input name="phrase" id="searchPhrase" type="text" class="srch_input"
                autocomplete="off"

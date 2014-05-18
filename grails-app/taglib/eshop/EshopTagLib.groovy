@@ -305,7 +305,7 @@ class EshopTagLib {
         brandList.each { brand ->
             if (counter++ < (attrs.max as Integer))
                 out << """
-        <li><a href="${createLink(uri: '/filter?p' + attrs.productTypeId + ',b' + brand._id.id)}">${brand._id.name}</a>
+        <li><a href="${createLink(uri: '/filter?f=p' + attrs.productTypeId + ',b' + brand._id.id)}">${brand._id.name}</a>
                                             </li>
 """
         }

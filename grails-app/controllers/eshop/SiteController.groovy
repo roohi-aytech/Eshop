@@ -33,7 +33,7 @@ class SiteController {
 
 
     def browse() {
-        def productType = params.productType ? ProductType.findBySeoFriendlyName(params.productType) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
+        def productType = params.productType ? ProductType.findBySeoFriendlyNameAndDeleted(params.productType, false) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
         if (!productType || productType.deleted) {
             redirect(uri: "/notFound")
             return
@@ -125,7 +125,7 @@ class SiteController {
         }
 
         def view = grailsApplication.config.browse.view.root
-        if(productType.parentProduct)
+        if (productType.parentProduct)
             view = 'browse'
 
         render(model: model, view: "/site/${grailsApplication.config.eShop.instance}/${view}");
@@ -133,9 +133,9 @@ class SiteController {
 
     def filter() {
         def model = [:]
-        def f=params.f
-        if(f instanceof String[]&& f.length)
-            f=f[0]
+        def f = params.f
+        if (f instanceof String[] && f.length)
+            f = f[0]
         if (!f) {
             redirect(uri: "/")
             return
@@ -162,7 +162,9 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
+        def productType = ProductType.get(f?.split(',').reverse()?.find {
+            it.startsWith('p')
+        }?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
         if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
             productType.types.each {
@@ -361,7 +363,7 @@ class SiteController {
     }
 
     def productQuickView() {
-        if(!params.id?.toString()?.isLong()){
+        if (!params.id?.toString()?.isLong()) {
             redirect(uri: "/notFound")
             return
         }
@@ -372,13 +374,15 @@ class SiteController {
             return
         }
         def customerReviews = CustomerReview.findAllByProduct product
-        def rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, { it.rate }) / customerReviews.count { it })
+        def rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
+            it.rate
+        }) / customerReviews.count { it })
 
         render template: '/site/felfel/templates/productQuickView', model: [product: product, rate: rate, quickView: true]
     }
 
     def product() {
-        if(!params.id?.toString()?.isLong()){
+        if (!params.id?.toString()?.isLong()) {
             redirect(uri: "/notFound")
             return
         }
@@ -397,7 +401,9 @@ class SiteController {
         model.price = priceService.calcProductPrice(product?.id)
 
         def customerReviews = CustomerReview.findAllByProduct product
-        model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, { it.rate }) / customerReviews.count { it })
+        model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
+            it.rate
+        }) / customerReviews.count { it })
 
         model.commonLink = createLink(uri: '/browse')
 
@@ -447,7 +453,9 @@ class SiteController {
                         .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
             }
         }
-        model.selectedAddedValues = model.addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
+        model.selectedAddedValues = model.addedValues.findAll {
+            it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
+        }
 
         //update product visit count
         if (!product.visitCount)
@@ -490,7 +498,7 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-        def title = product.toString().replace(product.name, modelNames.unique{it.trim()}.join(','))
+        def title = product.toString().replace(product.name, modelNames.unique { it.trim() }.join(','))
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
         model.showHistogram = true
@@ -507,7 +515,9 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model?.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def modelVariationId = model?.variationValues.find {
+                    it.variationGroup.id == variation.variationGroup.id
+                }?.id?.toLong()
                 def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
@@ -527,9 +537,11 @@ class SiteController {
             }
         }
 
-        def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
+        def selectedAddedValues = addedValues.findAll {
+            it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
+        }
 
-        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, showHistogram:true])
+        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, showHistogram: true])
     }
 
     def productShoppingPanel() {
@@ -541,7 +553,9 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model?.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def modelVariationId = model?.variationValues.find {
+                    it.variationGroup.id == variation.variationGroup.id
+                }?.id?.toLong()
                 def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
@@ -561,7 +575,9 @@ class SiteController {
             }
         }
 
-        def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
+        def selectedAddedValues = addedValues.findAll {
+            it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
+        }
 
         render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/shoppingPanel", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
     }
@@ -575,7 +591,9 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model?.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def modelVariationId = model?.variationValues.find {
+                    it.variationGroup.id == variation.variationGroup.id
+                }?.id?.toLong()
                 def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
@@ -595,7 +613,9 @@ class SiteController {
             }
         }
 
-        def selectedAddedValues = addedValues.findAll { it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString()) }
+        def selectedAddedValues = addedValues.findAll {
+            it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
+        }
 
         render(template: 'product/additives', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, price: priceService.calcProductModelPrice(productModel.id)])
     }
@@ -609,7 +629,9 @@ class SiteController {
             def model = it
             Boolean selected = true
             product.variations.each { variation ->
-                def modelVariationId = model.variationValues.find { it.variationGroup.id == variation.variationGroup.id }?.id?.toLong()
+                def modelVariationId = model.variationValues.find {
+                    it.variationGroup.id == variation.variationGroup.id
+                }?.id?.toLong()
                 def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
                 if (modelVariationId != selectedVariationId)
                     selected = false
@@ -635,7 +657,9 @@ class SiteController {
             imageService.getImageSize(it, product)
         }
 
-        render(template: "productImages", model: [product: product, selectedImage: params.img ? product.images.find { it.id.toString() == params.img.toString() } : product.mainImage])
+        render(template: "productImages", model: [product: product, selectedImage: params.img ? product.images.find {
+            it.id.toString() == params.img.toString()
+        } : product.mainImage])
     }
 
 //    def productImages() {
@@ -666,7 +690,9 @@ class SiteController {
         if (parentCategory.attributes)
             parentCategory.hasAttribute = parentCategory.attributes.count { it } > 0
 
-        parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it, hasAttribute: false] }
+        parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect {
+            [item: it, hasAttribute: false]
+        }
         parentCategory.childCategories.each { childCategory ->
             fillAttibuteCategoryChildren(product, childCategory)
             if (childCategory.hasAttribute)
@@ -697,10 +723,16 @@ class SiteController {
         render "OK"
     }
 
+    def reindex(){
+        searchableService.unindexAll()
+        searchableService.reindexAll()
+    }
+
     def search() {
 
         def model = [:]
         def productIdList = []
+        def productModelIdList = []
 
         if (params.phrase) {
             def query = params.phrase.toString().trim()
@@ -713,11 +745,19 @@ class SiteController {
                 queryString(query)
             },
                     [reload: false, max: 1000])
+            productModelIdList = ProductModel.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
         }
-        def f=params.f
-        if(f instanceof String[] && f.length)
-            f=f[0]
-        model.filters = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        def f = params.f
+        if (f instanceof String[] && f.length){
+            redirect(action: 'search', params: [f:f.join(','), phrase: params.phrase])
+            return
+        }
+        model.filters = browseService.findSearchPageFilters(productIdList.results.collect {
+            it.id
+        } + ProductModel.findAllByIdInList( productModelIdList.results.collect { it?.id})?.collect{it?.product?.id}, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -733,7 +773,9 @@ class SiteController {
         if (!brand)
             brand = ''
 
-        def productType = ProductType.get(f?.split(',').reverse()?.find { it.startsWith('p') }?.replace('p', '')?.toLong())
+        def productType = ProductType.get(f?.split(',').reverse()?.find {
+            it.startsWith('p')
+        }?.replace('p', '')?.toLong())
         model.productTypeTypeLinks = []
         if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
             productType.types.each {
@@ -766,6 +808,7 @@ class SiteController {
 
         def model = [:]
         def productIdList = []
+        def productModelIdList = []
         if (params.phrase) {
             def query = params.phrase.toString().trim()
             query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
@@ -777,11 +820,19 @@ class SiteController {
                 queryString(query)
             },
                     [reload: false, max: 1000])
+            productModelIdList = ProductModel.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
         }
-        def f=params.f
-        if(f instanceof String[] && f.length)
-            f=f[0]
-        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
+        def f = params.f
+        if (f instanceof String[] && f.length){
+            redirect(action: 'searchAutoComplete', params: [f:f.join(','), phrase: params.phrase])
+            return
+        }
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect {
+            it.id
+        } + ProductModel.findAllByIdInList( productModelIdList.results.collect { it?.id})?.collect{it?.product?.id}, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
         model.commonLink = createLink(uri: '/')
 
         if (model.productIds?.size() > 0)
@@ -933,35 +984,35 @@ class SiteController {
         render view: '/site/statics/trust'
     }
 
-    def shoppingRules(){
+    def shoppingRules() {
         render view: '/site/statics/shoppingRules'
     }
 
-    def customerRights(){
+    def customerRights() {
         render view: '/site/statics/customerRights'
     }
 
-    def shoppingSteps(){
+    def shoppingSteps() {
         render view: '/site/statics/shoppingSteps'
     }
 
-    def paymentAndDelivery(){
+    def paymentAndDelivery() {
         render view: '/site/statics/paymentAndDelivery'
     }
 
-    def deliveryTips(){
+    def deliveryTips() {
         render view: '/site/statics/deliveryTips'
     }
 
-    def paymentMethods(){
+    def paymentMethods() {
         render view: '/site/statics/paymentMethods'
     }
 
-    def suppliers(){
+    def suppliers() {
         render view: '/site/statics/suppliers'
     }
 
-    def goldenGuarantee(){
+    def goldenGuarantee() {
         render view: '/site/statics/goldenGuarantee'
     }
 
