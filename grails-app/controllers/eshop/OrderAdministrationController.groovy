@@ -41,8 +41,9 @@ class OrderAdministrationController {
     }
 
     def list() {
-        def orderList = orderTrackingService.filterOrderListForUser(params.status == 'All' ? Order.findAll() : Order.findAllByStatus(params.status), springSecurityService.currentUser)
-        render view: '/orderAdministration/list', model: [orderList: orderList.size() > 0 ? orderList.collect { it.id.toLong() } : [0]]
+        def orderList = orderTrackingService.filterOrderListForUser(springSecurityService.currentUser, params.status)
+                //orderTrackingService.filterOrderListForUser(params.status == 'All' ? Order.findAll() : Order.findAllByStatus(params.status), springSecurityService.currentUser)
+        render view: '/orderAdministration/list', model: [orderList: orderList.size() > 0 ? orderList : [0]]
     }
 
     def act() {

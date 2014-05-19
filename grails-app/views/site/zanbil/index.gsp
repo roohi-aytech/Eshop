@@ -73,7 +73,7 @@
     </tr>
     <tr class="table-row">
         <td class="table-cell" colspan="2">
-            <ehcache:render template="news/window" model="${[productTypeId: productTypeId]}"/>
+            <g:render template="news/window" model="${[productTypeId: productTypeId]}"/>
         </td>
     </tr>
 </table>

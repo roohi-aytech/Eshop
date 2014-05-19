@@ -13,7 +13,7 @@
                    href-extra3="${slide.extraLink3 ?: createLink(controller: 'site', action: 'product', params: [id: slide.product.id])}">
                     <img alt="${slide.product.productTypes?.find {true}?.name?:""} ${slide.product.type?.title?:""}  مدل ${slide.product.name?:""}"
                         <g:if test="${slide.finishDate}">
-                            finishDate="${formatDate(date: slide.finishDate, format: 'yyyy/MM/dd HH:mm:ss')}"
+                            finishDate="${formatDate(date: slide.finishDate, format: 'yyyy/MM/dd HH:mm:ss', timeZone: 'utc')}"
                         </g:if>
                         src="${createLink(controller: "image", action: "index")}/${slide.id}?type=specialSale"
                         src-extra1="${createLink(controller: "image", action: "index")}/${slide.id}?type=specialSale&role=e1"

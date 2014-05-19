@@ -191,7 +191,7 @@
                                         </div>
                                     </div>
 
-                                    <ehcache:render template="product/variation" key="${params.id}"/>
+                                    <g:render template="product/variation" key="${params.id}"/>
 
                                     <div class="product-additives">
                                         <g:render template="product/additives"/>

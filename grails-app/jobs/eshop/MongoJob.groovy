@@ -13,6 +13,7 @@ class MongoJob {
     def timeout = 2000
 
     def execute() {
+        return
         def product = Product.createCriteria().list(max: 1) {
             or {
                 eq('isSynchronized', false)
