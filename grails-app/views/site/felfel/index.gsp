@@ -21,9 +21,9 @@
 <body>
 
 <div id="top-banners">
-    <ehcache:render template="banners/rightsideBanners"/>
-    <ehcache:render template="banners/leftsideBanners"/>
-    <ehcache:render template="/site/felfel/templates/slider"/>
+    <g:render template="banners/rightsideBanners"/>
+    <g:render template="banners/leftsideBanners"/>
+    <g:render template="/site/felfel/templates/slider"/>
     <div class="clearfix"></div>
 </div>
 <ehcache:render template="/site/felfel/templates/testimonials"/>

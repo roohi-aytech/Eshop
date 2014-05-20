@@ -5,10 +5,19 @@
 <dt class="${params.o == "p" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/></a>
 </dt>
 <dd>
-    <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
-    <g:message code="filter.price.range.last"/>
-    <input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>
-    <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
+    <div class="price-filter-form">
+        <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
+        <g:message code="filter.price.range.last"/>
+        <input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>
+    </div>
+
+    <div class="price-filter-toolbar">
+        <input type="button" class="btn btn-danger" onclick="filterByPrice();" value="${message(code:'priceFilter.apply')}"/>
+        <g:if test="${true}">
+            %{--<g:set var="rangeFilter" value="${params}"--}%
+            <a href="${createLink(action: params.actionName, params: params.remove('rf'))}" class="btn btn-inverse"></a>
+        </g:if>
+    </div>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {
             var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');

@@ -6,12 +6,12 @@
 </g:if>
 %{--product types--}%
 %{--<g:if test="${filters.productTypes}">--}%
-    %{--<h3 class="productType-container-title">--}%
-        %{--<g:message code="site.selectSubcategory"--}%
-                   %{--default="Select SubProductType"></g:message>--}%
-    %{--</h3>--}%
-    %{--<g:render template="common/productTypeGrid"--}%
-              %{--model="${[type: 'filter', subProductTypeLinks: filters.productTypes]}"></g:render>--}%
+%{--<h3 class="productType-container-title">--}%
+%{--<g:message code="site.selectSubcategory"--}%
+%{--default="Select SubProductType"></g:message>--}%
+%{--</h3>--}%
+%{--<g:render template="common/productTypeGrid"--}%
+%{--model="${[type: 'filter', subProductTypeLinks: filters.productTypes]}"></g:render>--}%
 %{--</g:if>--}%
 %{--Brands Filters--}%
 <g:if test="${filters?.brands}">
@@ -20,12 +20,12 @@
             brands: filters.brands,
             selectedBrands: filters.selecteds["b"],
             type: 'filter'
-    ]}"></g:render>
+    ]}"/>
 </g:if>
 %{--attributes--}%
-<g:if test="${productTypeTypeLinks && !productTypeTypeLinks.isEmpty()}">
-    %{--<h3 class="productType-container-title">--}%
-        %{--<g:message code="site.selectProductTypeType"></g:message>--}%
-    %{--</h3>--}%
-    <g:render template="common/productTypeTypeCarousel"></g:render>
+<g:if test="${filters?.types && filters?.types?.size() > 1}">
+%{--<h3 class="productType-container-title">--}%
+%{--<g:message code="site.selectProductTypeType"></g:message>--}%
+%{--</h3>--}%
+    <g:render template="common/productTypeTypeCarousel" model="${[types: filters.types, menuType:'filter']}"/>
 </g:if>

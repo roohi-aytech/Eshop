@@ -4089,26 +4089,62 @@ h2.check-out-price span {
     font-size: 11px;
 }
 
-input.priceRange {
-    margin-left: 5px;
-    width: 72px;
+/*price filter*/
+
+.accordion dd span{
+    display:inline-block;
+    color:#808080;
+    font-size:11px;
+}
+
+.price-filter-form{
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top:10px;
+    text-align:center;
+}
+
+.price-filter-toolbar{
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-bottom:10px;
+    text-align:left;
+    padding-left:5px;
+}
+
+.price-filter-form input.priceRange{
+    width: 81px;
     display: inline-block;
     text-align: center;
+    font-size: 10px;
 }
 
-input.priceRange + input.priceRange {
-    margin-right: 5px;
+.price-filter-form input.priceRange + input.priceRange{
 }
 
-input.priceRange + input[type=button] {
-    display: inline-block;
-    height: 30px;
-    margin-top: -9px;
-    background-image: url('../images/felfel/filter.png');
-    background-position: center center;
+.price-filter-toolbar input[type="button"] {
+    background-image: url("../images/filter.png");
+    background-position: 7px 7px;
     background-repeat: no-repeat;
     border-radius: 0;
+    display: inline-block;
+    height: 30px;
+    padding-left: 30px;
+    margin-top:0;
 }
 
+.price-filter-toolbar a.clearFilter {
+    background-image: url("../images/remove-filter.png");
+    background-position: 7px 7px;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    color: #FFFFFF;
+    display: inline-block;
+    height: 28px;
+    margin-right: 13px;
+    padding: 0 0 0 30px;
+    line-height: 28px;
+    padding-right: 15px;
+}
 
 

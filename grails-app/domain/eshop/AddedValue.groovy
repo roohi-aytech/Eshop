@@ -11,6 +11,7 @@ class AddedValue {
     Date endDate
     int remainCount
     Brand brand
+    boolean deleted = false
     static hasMany = [variationValues: VariationValue]
 
     static mapping = {

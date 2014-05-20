@@ -4,6 +4,14 @@
         heightStyle: "content"
     });
 
+    function updateDeliveryMethods() {
+
+        <g:if test="${currentStep >= 4}">
+        $('#delivery-methods-container').html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/> ${message(code: 'waiting')}').load('${createLink(controller: 'basket', action: 'deliveryMethods')}', function () {
+        });
+        </g:if>
+    }
+
 </script>
 
 <div class="shopping-basket accordion" style="margin-bottom: 20px;">
@@ -18,7 +26,7 @@
                 <span class="name"><h3 style="display: inline-block"><a
                         ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">
                     {{itemFirstLine(basketItem.name)}}<br/>{{itemSecondLine(basketItem.name)}}
-                        </a>
+                </a>
                 </h3>
                     <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
                         <span class="plus">+</span> {{addedValueName}}
@@ -29,7 +37,7 @@
                         code="rial"/></span>
                 <span class="count"><g:message code="count"></g:message>: <input type="text"
                                                                                  value="{{basketItem.count}}"
-                                                                                 onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
+                                                                                 onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value, updateDeliveryMethods)"/>
                 </span>
                 <span class="delete">[ <a type="button"
                                           ng-click="removeFromBasket(basketItem.id)"><g:message
@@ -38,6 +46,7 @@
                 <span class="price"><g:message
                         code="basket.totalPrice"/>: <b>{{basketItem.realPrice * basketItem.count | number:0}}</b> <g:message
                         code="rial"/></span>
+
                 <div class="clearfix"></div>
             </li>
         </ul>

@@ -117,7 +117,7 @@
                                     code="enquiry.request.shopping.step4"/></span><g:message
                                 code="enquiry.request.shippingMethod.title"/></h3>
 
-                        <div>
+                        <div id="delivery-methods-container">
                             <g:render template="checkout/delivery_method"/>
                         </div>
                     </div>

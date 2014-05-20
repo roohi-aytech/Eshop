@@ -32,7 +32,7 @@
                 if (loaded_banner_images_count == $bannerImages.length) {
                     $("#top-banners").show();
                     $('.flexslider')
-                            .width($('#main').width() - $('.left-side-banners').width() - $('.right-side-banners').width() - 30)
+                            .width($('#main').width() - $('.left-side-banners').width() - $('.right-side-banners').width() - ($('.right-side-banners').width() > 0 ? 15 : 0) - ($('.left-side-banners').width() > 0 ? 15 : 0))
                             .height($('#top-banners').height() - 15)
                             .flexslider({
                                 animation: "slide",

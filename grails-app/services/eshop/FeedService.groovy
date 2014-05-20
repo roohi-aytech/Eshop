@@ -1,6 +1,7 @@
 package eshop
 
 import grails.plugin.cache.Cacheable
+import grails.util.Environment
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +16,8 @@ class FeedService {
 //    @Cacheable(value='feednews')
     def readNews() {
         def list = []
+        if(Environment.current == Environment.DEVELOPMENT)
+            return list
         try {
             def rssObj = new XmlSlurper().parse('http://www.blog.zanbil.ir/zanbil-and-festival-news/feed')
             rssObj.channel.item.each {
@@ -37,6 +40,8 @@ class FeedService {
 //    @Cacheable(value='feedposts',key='#id.toString()')
     def readPosts(def id) {
         def list = []
+        if(Environment.current == Environment.DEVELOPMENT)
+            return list
         try {
             def productType = ProductType.get(id)
             def name = ""

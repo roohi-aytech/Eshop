@@ -155,6 +155,65 @@ class BasketController {
         ]
     }
 
+    def deliveryMethods(){
+        def deliveryMethods = []
+
+        def customer = springSecurityService.currentUser as Customer
+
+        if (session.checkout_customInvoiceInformation) {
+            def customInvoiceInformation = session.checkout_customInvoiceInformation
+            def currentStep = 4
+
+            //setup delivery methods
+            Order order = new Order()
+            order.ownerName = customer ? message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' + customer.toString() : session.checkout_customerInformation.lastName
+            order.ownerEmail = customer ? customer.email : session.checkout_customerInformation.email
+            order.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation.mobile
+            order.ownerTelephone = customer ? customer.telephone : session.checkout_customerInformation.telephone
+            order.ownerCode = customer ? customer.nationalCode : session.checkout_customInvoiceInformation.ownerCode
+            order.ownerSex = customer ? customer.sex : session.checkout_customerInformation.sex
+
+            order.useAlternateInformation = session.checkout_customInvoiceInformation.customInvoiceInfo
+            order.alternateOwnerCode = session.checkout_customInvoiceInformation.ownerCode
+            order.alternateOwnerMobile = session.checkout_customInvoiceInformation.ownerMobile
+            order.alternateOwnerName = session.checkout_customInvoiceInformation.ownerName
+
+            session["order"] = order
+
+            Address sendingAddress = new Address()
+            sendingAddress.addressLine1 = session.checkout_address.addressLine1
+            sendingAddress.postalCode = session.checkout_address.postalCode
+            sendingAddress.telephone = session.checkout_address.telephone
+            sendingAddress.city = City.get(session.checkout_address.city.id)
+            session["sendingAddress"] = sendingAddress
+
+            Address billingAddress = new Address()
+            billingAddress.addressLine1 = session.checkout_address.addressLine1
+            billingAddress.postalCode = session.checkout_address.postalCode
+            billingAddress.telephone = session.checkout_address.telephone
+            billingAddress.city = City.get(session.checkout_address.city.id)
+            session["billingAddress"] = billingAddress
+
+            order.sendingAddress = sendingAddress
+            order.billingAddress = billingAddress
+
+            def basket = session.getAttribute("basket")
+            basket.each() { basketItem ->
+                def orderItem = new OrderItem()
+                orderItem.productModel = ProductModel.get(basketItem.id)
+                orderItem.order = order
+                orderItem.orderCount = basketItem.count
+                orderItem.unitPrice = basketItem.realPrice
+                order.addToItems(orderItem)
+            }
+
+            deliveryMethods = deliveryService.findAllDeliveryMethods(order)
+            render template: 'checkout/delivery_method', model: [deliveryMethods: deliveryMethods]
+        }
+
+        render ''
+    }
+
     def changeCount() {
         def id = params.id
 

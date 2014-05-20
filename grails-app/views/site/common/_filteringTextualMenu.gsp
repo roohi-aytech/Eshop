@@ -11,14 +11,14 @@
     <li class="divider"></li>
 </g:if>
 
-<g:if test="${productTypeTypeLinks && !productTypeTypeLinks.isEmpty()}">
+<g:if test="${filters?.types && filters?.types?.size() > 1}">
     <li class="nav-header"><g:message code="site.selectProductTypeType"
                                       default="Select SubcategoryType"/></li>
-    <g:each in="${productTypeTypeLinks}"
-            var="productTypeTypeLink">
+    <g:each in="${filters?.types}"
+            var="type">
         <li class="sub-category">
-            <a href="${productTypeTypeLink.href}">
-                ${productTypeTypeLink.name}
+            <a href="${createLink(action: "filter", params: [f: "${params.f},t${type._id.id}"])}">
+                ${type._id.name} <span class='count'>(${type.count})</span>
             </a>
         </li>
     </g:each>
@@ -28,14 +28,34 @@
 
 <li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>
 <li>
-    <input type="text" class="priceRange" id="priceRangeFrom" value="${params.f?.split(',')?.find {it?.toString()?.startsWith('rf')}?.replace('rf', '')?:''}" onkeyup="formatPrice(this)"/>
-    <g:message code="filter.price.range.last"/>
-    <input type="text" class="priceRange" id="priceRangeTo" value="${params.f?.split(',')?.find {it?.toString()?.startsWith('rt')}?.replace('rt', '')?:''}" onkeyup="formatPrice(this)"/>
-    <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
+
+    <div class="price-filter-form">
+        <input type="text" class="priceRange" id="priceRangeFrom"
+               value="${params.f?.split(',')?.find { it?.toString()?.startsWith('rf') }?.replace('rf', '') ?: ''}"
+               onkeyup="formatPrice(this)"/>
+        <g:message code="filter.price.range.last"/>
+        <input type="text" class="priceRange" id="priceRangeTo"
+               value="${params.f?.split(',')?.find { it?.toString()?.startsWith('rt') }?.replace('rt', '') ?: ''}"
+               onkeyup="formatPrice(this)"/>
+    </div>
+
+    <div class="price-filter-toolbar">
+        <input type="button" class="btn btn-danger" onclick="filterByPrice();" value="${message(code:'priceFilter.apply')}"/>
+        <g:if test="${params.f?.toString()?.contains('rf') || params.f?.toString()?.contains('rt')}">
+            <g:set var="params_f" value="${params.f.replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rf')}, '').replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rt')}, '')}"/>
+            <g:if test="${params.action == 'filter'}">
+                <g:set var="clearPriceFilterUrl" value="${createLink(controller: 'site', action: 'filter', params: [f: params.f])}"/>
+            </g:if>
+            <g:if test="${params.action == 'search'}">
+                <g:set var="clearPriceFilterUrl" value="${createLink(controller: 'site', action: 'filter', params: [phrase: params.phrase, f: params.f])}"/>
+            </g:if>
+            <a href="${clearPriceFilterUrl}" class="btn btn-inverse clearFilter"><g:message code="priceFilter.clear"/></a>
+        </g:if>
+    </div>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {
-            var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g,'');
-            var priceFilterTo = $('#priceRangeTo').val().replace(/,/g,'');
+            var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');
+            var priceFilterTo = $('#priceRangeTo').val().replace(/,/g, '');
             var params_f = '${params.f.replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rf')}, '').replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rt')}, '')}';
             <g:if test="${params.action == 'filter'}">
             var url = '${createLink(controller: 'site', action: 'filter')}';

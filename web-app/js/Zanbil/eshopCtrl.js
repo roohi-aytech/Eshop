@@ -175,7 +175,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         return totalPrice;
     }
 
-    $scope.changeCount = function (id, count) {
+    $scope.changeCount = function (id, count, callback) {
 
         var found = false;
         for (var i = 0; i < $scope.basket.length; i++) {
@@ -191,6 +191,9 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
         if (found)
             $http.post(contextRoot + "basket/changeCount/" + id + "?count=" + count).success(function (response) {
+                if(callback){
+                    callback();
+                }
             });
     }
 
@@ -316,7 +319,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     }
 });
 
-function updateBasketItemCount(id, count) {
+function updateBasketItemCount(id, count, callback) {
     var scope = angular.element(document.getElementById('main-container')).scope();
-    scope.changeCount(id, count);
+    scope.changeCount(id, count, callback);
 }

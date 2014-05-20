@@ -111,11 +111,13 @@ class AddedValueController {
         def addedValueInstance = AddedValue.get(params.id)
 
         //required for object being deleted
-        addedValueInstance.properties.each {
-            it
-        }
+//        addedValueInstance.properties.each {
+//            it
+//        }
 
-        addedValueInstance.delete(flush: true)
+//        addedValueInstance.delete(flush: true)
+        addedValueInstance.deleted = true
+        addedValueInstance.save(flush: true)
         render 0
     }
 }

@@ -78,7 +78,7 @@
 <body dir="rtl">
 <div id="bokeh"><div id="container">
     <div id="header" role="banner">
-        <h1 id="logo">Admin Control Panel</h1>
+        <h1 id="logo" style="background-image: url('${resource(dir: 'images', file: "logo-${grailsApplication.config.eShop.instance}.png")}')">Admin Control Panel</h1>
     </div><!-- end #header -->
 
     <div id="content">

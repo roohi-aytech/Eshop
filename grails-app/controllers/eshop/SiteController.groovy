@@ -67,6 +67,7 @@ class SiteController {
         }
 
         ProductType.createCriteria().listDistinct {
+            ne('deleted', true)
             godFathers {
                 eq('id', productType.id)
                 ne('deleted', true)
@@ -77,12 +78,12 @@ class SiteController {
 
         model.articles = JournalArticle.findAllByBaseProduct productType
 
-        model.productTypeTypeLinks = []
-        if (productType.children.isEmpty()) {
-            productType.types.each {
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "p${productType.id},t${it.id}"]), id: it.id]
-            }
-        }
+//        model.productTypeTypeLinks = []
+//        if (productType.children.isEmpty()) {
+//            productType.types.each {
+//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "p${productType.id},t${it.id}"]), id: it.id]
+//            }
+//        }
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
         model.filters = browseService.findProductTypeFilters(model.productType, params.page ?: 0, "${model.productType ? model.productType.id : ''} ${params.page ?: 0}")
@@ -165,12 +166,12 @@ class SiteController {
         def productType = ProductType.get(f?.split(',').reverse()?.find {
             it.startsWith('p')
         }?.replace('p', '')?.toLong())
-        model.productTypeTypeLinks = []
-        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
-            productType.types.each {
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${f},t${it.id}"]), id: it.id]
-            }
-        }
+//        model.productTypeTypeLinks = []
+//        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
+//            productType.types.each {
+//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${f},t${it.id}"]), id: it.id]
+//            }
+//        }
 
         if (productType) {
             model.slides = Slide.createCriteria().list {
@@ -328,6 +329,16 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
+        ProductType.createCriteria().listDistinct {
+            ne('deleted', true)
+            godFathers {
+                eq('id', productType.id)
+                ne('deleted', true)
+            }
+        }.each {
+            model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
+        }
+
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         model.filters = browseService.findProductTypeFilters(null, params.page ?: 0, "${params.page ?: 0}")
@@ -447,7 +458,7 @@ class SiteController {
         }
 
         def productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
-        model.addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
+        model.addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
                 variationValue.value != productModel.variationValues
                         .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
@@ -530,7 +541,7 @@ class SiteController {
                 productModel = model
         }
 
-        def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
+        def addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
             !addedValue?.variationValues.any { variationValue ->
                 variationValue.value != productModel?.variationValues
                         .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
@@ -568,7 +579,7 @@ class SiteController {
                 productModel = model
         }
 
-        def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
+        def addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
             !addedValue?.variationValues.any { variationValue ->
                 variationValue.value != productModel?.variationValues
                         .find { it.variationGroup.id == variationValue.variationGroup.id }?.value
@@ -606,7 +617,7 @@ class SiteController {
                 productModel = model
         }
 
-        def addedValues = AddedValue.findAllByBaseProduct(product).findAll { addedValue ->
+        def addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
             !addedValue?.variationValues?.any { variationValue ->
                 variationValue.value != productModel?.variationValues
                         .find { it?.variationGroup?.id == variationValue?.variationGroup?.id }?.value
@@ -776,12 +787,12 @@ class SiteController {
         def productType = ProductType.get(f?.split(',').reverse()?.find {
             it.startsWith('p')
         }?.replace('p', '')?.toLong())
-        model.productTypeTypeLinks = []
-        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
-            productType.types.each {
-                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${f},t${it.id}"]), id: it.id]
-            }
-        }
+//        model.productTypeTypeLinks = []
+//        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
+//            productType.types.each {
+//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${f},t${it.id}"]), id: it.id]
+//            }
+//        }
 
         trackingService.trackSearch(productType, brandList, params.phrase)
 
@@ -885,6 +896,16 @@ class SiteController {
         def base = "${model.commonLink}/"
 
         model.productType.children.findAll { !it.deleted }.each {
+            model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
+        }
+
+        ProductType.createCriteria().listDistinct {
+            ne('deleted', true)
+            godFathers {
+                eq('id', productType.id)
+                ne('deleted', true)
+            }
+        }.each {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 

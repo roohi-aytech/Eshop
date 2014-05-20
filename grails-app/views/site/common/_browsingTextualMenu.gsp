@@ -7,14 +7,14 @@
     </g:each>
     <li class="divider"></li>
 </g:if>
-<g:if test="${productTypeTypeLinks && !productTypeTypeLinks.isEmpty()}">
+<g:if test="${filters?.types && filters?.types?.size() > 1}">
     <li class="nav-header"><g:message code="site.selectProductTypeType"
                                       default="Select SubcategoryType"/></li>
-    <g:each in="${productTypeTypeLinks}"
-            var="productTypeTypeLink">
+    <g:each in="${filters?.types}"
+            var="type">
         <li class="sub-category">
-            <a href="${productTypeTypeLink.href}">
-                ${productTypeTypeLink.name}
+            <a href="${createLink(action: "filter", params: [f: "p${productTypeId},t${type._id.id}"])}">
+                ${type._id.name} <span class='count'>(${type.count})</span>
             </a>
         </li>
     </g:each>
@@ -25,10 +25,15 @@
 
 <li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>
 <li>
-    <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
-    <g:message code="filter.price.range.last"/>
-    <input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>
-    <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
+    <div class="price-filter-form">
+        <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
+        <g:message code="filter.price.range.last"/>
+        <input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>
+    </div>
+
+    <div class="price-filter-toolbar">
+        <input type="button" class="btn btn-danger" onclick="filterByPrice();" value="${message(code:'priceFilter.apply')}"/>
+    </div>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {
             var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');

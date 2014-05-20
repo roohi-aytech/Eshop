@@ -38,7 +38,7 @@ class PriceService {
         def priceVal = price?.rialPrice
 
         if (priceVal)
-            AddedValue.findAllByBaseProductAndProcessTime(productModel.product, 'mandetory').each { addedValue ->
+            AddedValue.findAllByBaseProductAndProcessTimeAndDeletedNotEqual(productModel.product, 'mandetory', true).each { addedValue ->
                 if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
                     if (addedValue.type == "percent")
                         priceVal += price?.rialPrice * addedValue.value / 100
@@ -108,7 +108,7 @@ class PriceService {
         def priceVal = price?.rialPrice
 
         if (priceVal)
-            AddedValue.findAllByBaseProductAndProcessTime(productModel.product, 'mandetory').each { addedValue ->
+            AddedValue.findAllByBaseProductAndProcessTimeAndDeletedNotEqual(productModel.product, 'mandetory', true).each { addedValue ->
                 if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
                     if (addedValue.type == "percent")
                         priceVal += price?.rialPrice * addedValue.value / 100
@@ -183,7 +183,7 @@ class PriceService {
             orderItem.tax = 0
             if (order.invoiceType == 'with_added_value') {
                 def addedValues = []
-                addedValues.addAll(AddedValue.findAllByBaseProduct(orderItem.productModel.product))
+                addedValues.addAll(AddedValue.findAllByBaseProductAndDeletedNotEqual(orderItem.productModel.product, true))
                 Product.get(product?.id)?.productTypes?.each {
                     getAddedValues(it).each {
                         if (!it.brand || it.brand.id == product.brand.id)

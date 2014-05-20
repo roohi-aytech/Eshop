@@ -17,14 +17,24 @@
             <div class="showbiz" data-left="#showbiz_left_${id}" data-right="#showbiz_right_${id}">
                 <div class="overflowholder">
                     <ul class="productTypeType-carousel">
-                        <g:each in="${productTypeTypeLinks}" var="productTypeTypeLink">
+                        <g:each in="${types}" var="type">
                             <li class="sb-showcase-skin">
-                                <a href="${productTypeTypeLink.href}">
-                                    <img src="${createLink(controller: 'image', params: [type: 'productTypeType', id: productTypeTypeLink.id, wh: '100x100'])}"
-                                         alt="${productTypeTypeLink.name}">
+                                <g:if test="${menuType == 'filter'}">
+                                    <a href="${createLink(action: "filter", params: [f: "${params.f},t${type._id.id}"])}">
+                                        <img src="${createLink(controller: 'image', params: [type: 'productTypeType', id: type._id.id, wh: '100x100'])}"
+                                             alt="${type._id.name}">
 
-                                    <div>${productTypeTypeLink.name}</div>
-                                </a>
+                                        <div>${type._id.name}</div>
+                                    </a>
+                                </g:if>
+                                <g:else>
+                                    <a href="${createLink(action: "filter", params: [f: "p${productTypeId},t${type._id.id}"])}">
+                                        <img src="${createLink(controller: 'image', params: [type: 'productTypeType', id: type._id.id, wh: '100x100'])}"
+                                             alt="${type._id.name}">
+
+                                        <div>${type._id.name}</div>
+                                    </a>
+                                </g:else>
                             </li>
                         </g:each>
                     </ul>
@@ -49,7 +59,7 @@
 
     jQuery(document).ready(function () {
 
-        var itemsCount = ${productTypeTypeLinks.count{it}};
+        var itemsCount = ${types.count{it}};
 
         var visibleElementsArray;
         <g:if test="${mode=='large'}">

@@ -204,6 +204,9 @@ class BrowseService {
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
             it._id.name != null
         }
+        def typesCountMap = countProducts(group: [id: '$type.id', name: '$type.name'], match: match).findAll {
+            it._id.name != null
+        }
 
         def attributesCountMap = [:]
         def pt = productType
@@ -216,7 +219,7 @@ class BrowseService {
         def pageListSessionKey = "pageList_browse_${productType}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
-        [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
+        [brands: brandsCountMap, types: typesCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
@@ -411,9 +414,12 @@ class BrowseService {
             }
         }
 
+        def typesCountMap = countProducts(group: [id: '$type.id', name: '$type.name'], match: match).findAll {
+            it._id.name != null
+        }
         def r = match.remove('brand.id')
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
-            it._id.name != null
+            it._id.name != null && it.count > 0
         }
         if (r)
             match.put('brand.id', r)
@@ -449,7 +455,7 @@ class BrowseService {
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
-        [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+        [brands: brandsCountMap, types:typesCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
     def countAttributes(ProductType productType, match) {
@@ -783,6 +789,9 @@ class BrowseService {
             }
         }
 
+        def typesCountMap = countProducts(group: [id: '$type.id', name: '$type.name'], match: match).findAll {
+            it._id.name != null
+        }
         def r = match.remove('brand.id')
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
             it._id.name != null
@@ -822,7 +831,7 @@ class BrowseService {
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
-        [brands: brandsCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+        [brands: brandsCountMap, types: typesCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
     def breadCrumb(params) {
