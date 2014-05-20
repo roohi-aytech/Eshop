@@ -23,63 +23,63 @@
 
 %{--price range--}%
 
-<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>
-<li>
-    <div class="price-filter-form">
-        <input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>
-        <g:message code="filter.price.range.last"/>
-        <input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>
-    </div>
+%{--<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>--}%
+%{--<li>--}%
+    %{--<div class="price-filter-form">--}%
+        %{--<input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>--}%
+        %{--<g:message code="filter.price.range.last"/>--}%
+        %{--<input type="text" class="priceRange" id="priceRangeTo" onkeyup="formatPrice(this)"/>--}%
+    %{--</div>--}%
 
-    <div class="price-filter-toolbar">
-        <input type="button" class="btn btn-danger" onclick="filterByPrice();" value="${message(code:'priceFilter.apply')}"/>
-    </div>
-    <script language="JavaScript" type="text/javascript">
-        function filterByPrice() {
-            var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');
-            var priceFilterTo = $('#priceRangeTo').val().replace(/,/g, '');
-            var params_f = 'p${productType.id}';
-            var url = '${createLink(controller: 'site', action: 'filter')}';
-            url += '?f=' + params_f;
-            if (priceFilterFrom)
-                url += ',rf' + priceFilterFrom;
-            if (priceFilterTo)
-                url += ',rt' + priceFilterTo;
-            url += '&o=r'
-            window.location.href = url;
-        }
+    %{--<div class="price-filter-toolbar">--}%
+        %{--<input type="button" class="btn btn-danger" onclick="filterByPrice();" value="${message(code:'priceFilter.apply')}"/>--}%
+    %{--</div>--}%
+    %{--<script language="JavaScript" type="text/javascript">--}%
+        %{--function filterByPrice() {--}%
+            %{--var priceFilterFrom = $('#priceRangeFrom').val().replace(/,/g, '');--}%
+            %{--var priceFilterTo = $('#priceRangeTo').val().replace(/,/g, '');--}%
+            %{--var params_f = 'p${productType.id}';--}%
+            %{--var url = '${createLink(controller: 'site', action: 'filter')}';--}%
+            %{--url += '?f=' + params_f;--}%
+            %{--if (priceFilterFrom)--}%
+                %{--url += ',rf' + priceFilterFrom;--}%
+            %{--if (priceFilterTo)--}%
+                %{--url += ',rt' + priceFilterTo;--}%
+            %{--url += '&o=r'--}%
+            %{--window.location.href = url;--}%
+        %{--}--}%
 
-        function formatPrice(item) {
-            $(item).val(addCommasOnKeyPress($(item).val()));
-        }
+        %{--function formatPrice(item) {--}%
+            %{--$(item).val(addCommasOnKeyPress($(item).val()));--}%
+        %{--}--}%
 
-        function addCommasOnKeyPress(nStr) {
-            nStr = nStr.replace(/\,/g, '');
-            nStr += '';
-            var x = nStr.split('.');
-            var x1 = x[0];
-            var x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + ',' + '$2');
-            }
-            return x1 + x2;
-        }
+        %{--function addCommasOnKeyPress(nStr) {--}%
+            %{--nStr = nStr.replace(/\,/g, '');--}%
+            %{--nStr += '';--}%
+            %{--var x = nStr.split('.');--}%
+            %{--var x1 = x[0];--}%
+            %{--var x2 = x.length > 1 ? '.' + x[1] : '';--}%
+            %{--var rgx = /(\d+)(\d{3})/;--}%
+            %{--while (rgx.test(x1)) {--}%
+                %{--x1 = x1.replace(rgx, '$1' + ',' + '$2');--}%
+            %{--}--}%
+            %{--return x1 + x2;--}%
+        %{--}--}%
 
-        $(".priceRange").keydown(function (e) {
-            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                    (e.keyCode == 65 && e.ctrlKey === true) ||
-                    (e.keyCode >= 35 && e.keyCode <= 39)) {
-                return;
-            }
-            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                e.preventDefault();
-            }
-        });
-    </script>
-</li>
+        %{--$(".priceRange").keydown(function (e) {--}%
+            %{--if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||--}%
+                    %{--(e.keyCode == 65 && e.ctrlKey === true) ||--}%
+                    %{--(e.keyCode >= 35 && e.keyCode <= 39)) {--}%
+                %{--return;--}%
+            %{--}--}%
+            %{--if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {--}%
+                %{--e.preventDefault();--}%
+            %{--}--}%
+        %{--});--}%
+    %{--</script>--}%
+%{--</li>--}%
 
-<li class="divider"></li>
+%{--<li class="divider"></li>--}%
 %{--Brands Filters--}%
 <g:if test="${filters?.brands}">
     <li class="nav-header sidebarBrandGroup"><g:message code="site.selectBrand"

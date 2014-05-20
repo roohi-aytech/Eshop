@@ -56,14 +56,15 @@
 </ul>
 
 <h3 class="category_heading top_less bottom_less">
-    <div class="right_text">
-        <g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message
-                code="rial"/>
-    </div>
+    %{--<div class="right_text">--}%
+        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message--}%
+                %{--code="rial"/>--}%
+    %{--</div>--}%
     <g:message code="search.for.label"></g:message> ${params.phrase}
 </h3>
 
 <div class="toolbar_top">
+    <g:render template="/site/common/priceRangeSlider"/>
     <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
     <div class="clearfix"></div>
 </div>

@@ -219,7 +219,7 @@ class BrowseService {
         def pageListSessionKey = "pageList_browse_${productType}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
-        [brands: brandsCountMap, types: typesCountMap, attributes: attributesCountMap, variations: countVariations(match), products: products]
+        [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
@@ -455,7 +455,7 @@ class BrowseService {
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
-        [brands: brandsCountMap, types:typesCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+        [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
     def countAttributes(ProductType productType, match) {
@@ -831,7 +831,7 @@ class BrowseService {
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
-        [brands: brandsCountMap, types: typesCountMap, attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
+        [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
 
     def breadCrumb(params) {
@@ -851,6 +851,15 @@ class BrowseService {
     def brandList(Long productTypeId) {
         def match = productTypeId ? ['productTypes.id': productTypeId] : [:]
         countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
+    }
+
+    def priceRange(Map match) {
+        def criteria = match
+        criteria.displayInList = true
+        criteria.price = [$gt: 0]
+        products.aggregate([$unwind: '$productTypes'], [$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
+            [min: it.minPrice, max: it.maxPrice]
+        }.find() ?: 0
     }
 
     def minPrice(Long productTypeId) {

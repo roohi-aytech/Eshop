@@ -16,12 +16,13 @@
     <g:render template="common/productGridMeta"
               model="${[productIds: filters.products.productIds]}"/>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script language="JavaScript" type="text/javascript" src="${resource(dir:'js', file: 'jquery.transform.js')}"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${resource(dir: 'js', file: 'jquery.transform.js')}"></script>
 </head>
 
 <body>
@@ -45,21 +46,33 @@
 </ul>
 
 <h3 class="category_heading top_less bottom_less">
-    <div class="right_text">
-        <g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productType?.id)} <g:message
-                code="rial"/>
-    </div>
+    %{--<div class="right_text">--}%
+        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productType?.id)} <g:message--}%
+                %{--code="rial"/>--}%
+    %{--</div>--}%
     <g:message code="category.all.products" args="${[productType]}"/>
 </h3>
 
+<g:if test="${productType?.menuImage?.size() > 0}">
+    <div class="clearfix"></div>
+
+    <div class="brands_collections_holder">
+        <div>
+            <img alt=""
+                 src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu'])}"/>
+        </div>
+    </div>
+</g:if>
+
 <div class="toolbar_top">
+    <g:render template="/site/common/priceRangeSlider"/>
     <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
     <div class="clearfix"></div>
 </div>
 
 <div class="filter_left">
     <div class="floating_filter">
-            <g:render template="common/browsingTextualMenu"/>
+        <g:render template="common/browsingTextualMenu"/>
     </div>
 </div>
 
@@ -83,13 +96,13 @@
         resetStickForFilters();
     });
 
-    function resetStickForFilters(){
+    function resetStickForFilters() {
         $(".floating_filter").stick_in_parent({
-            offset_top:75
+            offset_top: 75
         });
     }
 
-    function setFilterSize(){
+    function setFilterSize() {
         $('.filter_left').css('height', Math.max($('.filter_left').height(), $('.listing_right').height()));
     }
 </script>
