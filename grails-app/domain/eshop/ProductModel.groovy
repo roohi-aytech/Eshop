@@ -9,8 +9,8 @@ class ProductModel {
     Boolean isDefaultModel
 
     static searchable = {
-        root true
-        only = ['name','guarantee']
+//        root true
+        only = ['name','guaranteeInfo']
     }
 
     static hasMany = [variationValues: VariationValue, prices: Price]
@@ -28,6 +28,10 @@ class ProductModel {
         variationValues(nullable: true)
         status(inList: ['exists', 'not-exists', 'coming-soon', 'inquiry-required'])
         isDefaultModel()
+    }
+
+    transient String getGuaranteeInfo(){
+        "${guarantee.name} ${guarantee.description}"
     }
 
     @Override
