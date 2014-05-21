@@ -23,7 +23,7 @@
     ]}"/>
 </g:if>
 %{--attributes--}%
-<g:if test="${filters?.types && filters?.types?.size() > 1}">
+<g:if test="${productType?.types?.size() > 0 && filters?.types && filters?.types?.size() > 1}">
 %{--<h3 class="productType-container-title">--}%
 %{--<g:message code="site.selectProductTypeType"></g:message>--}%
 %{--</h3>--}%

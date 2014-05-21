@@ -13,10 +13,6 @@
 
     <div class="price-filter-toolbar">
         <input type="button" class="btn btn-danger" onclick="filterByPrice();" value="${message(code:'priceFilter.apply')}"/>
-        <g:if test="${true}">
-            %{--<g:set var="rangeFilter" value="${params}"--}%
-            <a href="${createLink(action: params.actionName, params: params.remove('rf'))}" class="btn btn-inverse"></a>
-        </g:if>
     </div>
     <script language="JavaScript" type="text/javascript">
         function filterByPrice() {

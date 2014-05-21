@@ -769,6 +769,12 @@ class SiteController {
         model.filters = browseService.findSearchPageFilters(productIdList.results.collect {
             it.id
         } + ProductModel.findAllByIdInList( productModelIdList.results.collect { it?.id})?.collect{it?.product?.id}, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        //sort result again
+        model.filters.products.productIds.sort{
+            def id = it
+            def productIndex = productIdList.results.findIndexOf{it.id == id}
+            -(productIndex >= 0 ? productIdList.scores[productIndex] : 0)
+        }
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
@@ -844,6 +850,12 @@ class SiteController {
         model.productIds = browseService.findSearchPageFilters(productIdList.results.collect {
             it.id
         } + ProductModel.findAllByIdInList( productModelIdList.results.collect { it?.id})?.collect{it?.product?.id}, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
+        //sort result again
+        model.productIds.sort{
+            def id = it
+            def productIndex = productIdList.results.findIndexOf{it.id == id}
+            -(productIndex >= 0 ? productIdList.scores[productIndex] : 0)
+        }
         model.commonLink = createLink(uri: '/')
 
         if (model.productIds?.size() > 0)

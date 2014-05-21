@@ -21,10 +21,10 @@
         <g:if test="${params.f?.toString()?.contains('rf') || params.f?.toString()?.contains('rt')}">
             <g:set var="params_f" value="${params.f.replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rf')}, '').replace(',' + params.f?.split(',')?.find {it?.toString()?.startsWith('rt')}, '')}"/>
             <g:if test="${params.action == 'filter'}">
-                <g:set var="clearPriceFilterUrl" value="${createLink(controller: 'site', action: 'filter', params: [f: params.f])}"/>
+                <g:set var="clearPriceFilterUrl" value="${createLink(controller: 'site', action: 'filter', params: [f: params_f])}"/>
             </g:if>
             <g:if test="${params.action == 'search'}">
-                <g:set var="clearPriceFilterUrl" value="${createLink(controller: 'site', action: 'filter', params: [phrase: params.phrase, f: params.f])}"/>
+                <g:set var="clearPriceFilterUrl" value="${createLink(controller: 'site', action: 'filter', params: [phrase: params.phrase, f: params_f])}"/>
             </g:if>
             <a href="${clearPriceFilterUrl}" class="btn btn-inverse clearFilter"><g:message code="priceFilter.clear"/></a>
         </g:if>
