@@ -40,7 +40,7 @@
                                                                                  onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value, updateDeliveryMethods)"/>
                 </span>
                 <span class="delete">[ <a type="button"
-                                          ng-click="removeFromBasket(basketItem.id)"><g:message
+                                          onclick="removeFromBasket('{{basketItem.id}}', updateDeliveryMethods)"><g:message
                             code="basket.items.delete"/></a> ]</span>
                 <hr/>
                 <span class="price"><g:message

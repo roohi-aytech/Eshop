@@ -48,26 +48,6 @@
                 </p>
             </div>
         </div>
-        %{--<span class="basket-item-image">--}%
-        %{--<img src="<g:createLink controller="image"--}%
-        %{--action="index"/>/{{basketItem.id}}?type=productModel&wh=50x50"/>--}%
-        %{--</span>--}%
-        %{--<span class="basket-item-count">--}%
-        %{--<g:message code="basket-items-count"/><br/>--}%
-        %{--<input type="text" value="{{basketItem.count}}"--}%
-        %{--onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>--}%
-        %{--</span>--}%
-        %{--<span class="basket-item-title">--}%
-        %{--{{basketItem.name}}<br/>--}%
-        %{--<span>{{basketItem.realPrice | number:0}} <g:message code="rial"/>--}%
-        %{--<br/>--}%
-        %{--<a ng-click="removeFromBasket(basketItem.id)" class="removeBasketItem"><g:message--}%
-        %{--code="basket.items.delete"/></a>--}%
-        %{--</span>--}%
-        %{--</span>--}%
-        %{--</li>--}%
-        %{--<li ng-show="!basket.length"><g:message code="basket.empty"/></li>--}%
-        %{--</ul>--}%
 
         <div class="clearfix"></div>
 
