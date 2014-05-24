@@ -10,7 +10,7 @@ class ProductModel {
 
     static searchable = {
 //        root true
-        only = ['name','guaranteeInfo']
+        only = ['name']//,'guaranteeInfo']
     }
 
     static hasMany = [variationValues: VariationValue, prices: Price]
