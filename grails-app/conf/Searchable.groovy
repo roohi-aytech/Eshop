@@ -167,6 +167,7 @@ environments {
     production {
         searchable {
             // add your production settings here
+            bulkIndexOnStartup = false
         }
     }
 }
