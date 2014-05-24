@@ -3,7 +3,7 @@
         <g:message code="specialSale.title"/>
     </h3>
 
-    <g:each in="${specialSaleSlides.size() % 4 != 0 ? specialSaleSlides[(specialSaleSlides.size() % 4)..(specialSaleSlides.size() - 1)] : specialSaleSlides}" status="i" var="slide">
+    <g:each in="${specialSaleSlides.size() > 4 && specialSaleSlides.size() % 4 != 0 ? specialSaleSlides[(specialSaleSlides.size() % 4)..(specialSaleSlides.size() - 1)] : specialSaleSlides}" status="i" var="slide">
         <g:if test="${i % 4 == 0}">
             <div class="row spicy_offers">
         </g:if>
