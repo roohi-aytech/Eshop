@@ -2,8 +2,10 @@ package eshop
 
 import eshop.accounting.Account
 import eshop.accounting.AccountFilter
+import eshop.accounting.CustomerTransaction
 import eshop.accounting.OnlinePayment
 import eshop.accounting.PaymentRequest
+import eshop.accounting.Transaction
 import eshop.delivery.DeliverySourceStation
 import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.plugins.springsecurity.Secured
@@ -441,6 +443,27 @@ class OrderController {
 
                 model.orderPaid = true
             } else {
+
+                //add customer transaction
+                def customerTransaction = new CustomerTransaction()
+                customerTransaction.account = payment.account
+                customerTransaction.value = payment.amount
+                customerTransaction.date = new Date()
+                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+                customerTransaction.order = payment.order
+                customerTransaction.creator = payment.customer
+                customerTransaction.save()
+
+                //add transaction
+                def transaction = new Transaction()
+                transaction.account = payment.account
+                transaction.value = payment.amount
+                transaction.date = new Date()
+                transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+                transaction.order = payment.order
+                transaction.creator = payment.customer
+                transaction.save()
+
                 //send alert to customer
                 mailService.sendMail {
                     to payment.customer ? payment.customer.email : payment.order.ownerEmail
@@ -509,6 +532,7 @@ class OrderController {
             redirect(controller: 'customer', action: 'panel', params: [id: params.order.id])
         } else {
 
+            order.save()
             flash.message = message(code: "order.payment.paymentRequest.notEnough")
             redirect(action: 'remainingPayment', params: [id: params.order.id])
         }

@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="grails.util.Environment" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="site"/>
@@ -64,7 +64,12 @@
 
                     var hiddenField = document.createElement("input");
                     hiddenField.setAttribute("name", "RedirectURL");
+                    <g:if test="${grails.util.Environment.current == Environment.DEVELOPMENT}">
+                    hiddenField.setAttribute("value", "http://localhost:8080/eshop/order/onlinePaymentResultSaman");
+                    </g:if>
+                    <g:else>
                     hiddenField.setAttribute("value", "http://www.zanbil.ir/order/onlinePaymentResultSaman");
+                    </g:else>
                     form.appendChild(hiddenField);
 
                     document.body.appendChild(form);
