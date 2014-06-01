@@ -29,30 +29,32 @@
         <div class="selection_col_middle">
             <h2 class="middle_heading"><g:message code="menu.otherTypes.title"/></h2>
             <ul>
-                <g:each in="${subProductTypeLinks.size() > 8 ? (subProductTypeLinks.size() > 19 ? subProductTypeLinks[8..19] : subProductTypeLinks[8..(subProductTypeLinks.size() - 1)]) : []}"
+                <g:each in="${subProductTypeLinks.size() > 8 ? (subProductTypeLinks.size() > 18 ? subProductTypeLinks[8..18] : subProductTypeLinks[8..(subProductTypeLinks.size() - 1)]) : []}"
                         var="productTypeLink">
                     <li><a href="${productTypeLink.href}" title="${productTypeLink.name}">${productTypeLink.name}</a>
                     </li>
                 </g:each>
             </ul>
-            <g:if test="${subProductTypeLinks.size() > 19}">
+            <g:if test="${subProductTypeLinks.size() > 18}">
                 <ul class="last">
-                    <g:each in="${subProductTypeLinks.size() > 23 ? subProductTypeLinks[21..23] : subProductTypeLinks}">
+                    <g:each in="${subProductTypeLinks.size() > 28 ? subProductTypeLinks[18..27] : subProductTypeLinks[18..subProductTypeLinks.size() - 1]}" var="productTypeLink">
                         <li><a href="${productTypeLink.href}" title="${productTypeLink.name}">${productTypeLink.name}</a>
                     </g:each>
                 </li>
                     <li>&nbsp;</li>
                     <li><img width="140" height="140" alt=""
-                             src="${createLink(controller: 'image', params: [id:productType.id, type:'productTypeMenu', role:'e4'])}"></li>
+                             src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu', role: 'e4'])}">
+                    </li>
                 </ul>
             </g:if>
             <g:else>
                 <div class="selection_col_middle banners_only">
                     <ul class="last">
                         <li><img width="140" height="140" alt=""
-                                 src="${createLink(controller: 'image', params: [id:productType.id, type:'productTypeMenu', role:'e4'])}"></li>
+                                 src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu', role: 'e4'])}">
+                        </li>
                         <li><img width="140" height="140" alt=""
-                                 src="${createLink(controller: 'image', params: [id:productType.id, type:'productTypeMenu', role:'e5'])}">
+                                 src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu', role: 'e5'])}">
                         </li>
                     </ul>
                 </div>

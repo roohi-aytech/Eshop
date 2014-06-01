@@ -27,19 +27,18 @@ class PageDetailsController {
         def pageDetailsInstance
         if (params.id) {
             pageDetailsInstance = PageDetails.get(params.id)
-            if (pageDetailsInstance.brand && !params.brand.id || pageDetailsInstance.productType && !params.productType.id)
-            {
+            if (pageDetailsInstance.brand && !params.brand.id || pageDetailsInstance.productType && !params.productType.id) {
                 pageDetailsInstance.delete()
-                pageDetailsInstance=new PageDetails(params)
-            }else
+                pageDetailsInstance = new PageDetails(params)
+            } else {
                 pageDetailsInstance.properties = params
-        }
-        else
+            }
+        } else                {
             pageDetailsInstance = new PageDetails(params)
+        }
         if (pageDetailsInstance.validate() && pageDetailsInstance.save()) {
             render pageDetailsInstance as JSON
-        }
-        else
+        } else
             render(template: "form", model: [pageDetailsInstance: pageDetailsInstance])
     }
 

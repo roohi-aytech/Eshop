@@ -51,7 +51,8 @@
         %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message--}%
                 %{--code="rial"/>--}%
     %{--</div>--}%
-    <g:message code="category.all.products" args="${[productTypeName]}"/>
+    ${title}
+    %{--<g:message code="category.all.products" args="${[productTypeName]}"/>--}%
 </h3>
 
 <div class="toolbar_top">

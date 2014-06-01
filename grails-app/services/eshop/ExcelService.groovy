@@ -66,7 +66,7 @@ class ExcelService {
         sheet1.addCell(new Label(2, 0, "وضعیت", createHeaderCellFormat()))
         sheet1.addCell(new Label(3, 0, "گارانتی", createHeaderCellFormat()))
         sheet1.addCell(new Label(4, 0, "مدل", createHeaderCellFormat()))
-        sheet1.addCell(new Label(5, 0, "رنگ", createHeaderCellFormat()))
+        sheet1.addCell(new Label(5, 0, "تنوع", createHeaderCellFormat()))
         sheet1.addCell(new Label(6, 0, "برند", createHeaderCellFormat()))
         sheet1.addCell(new Label(7, 0, "نوع", createHeaderCellFormat()))
         sheet1.addCell(new Label(8, 0, "نوع محصول", createHeaderCellFormat()))
@@ -81,9 +81,9 @@ class ExcelService {
             sheet1.addCell(new Label(2, indexer, getStatusCode(it.status.toString()) ?: '-', createNormalCellFormat()))
             sheet1.addCell(new Label(3, indexer, it.guarantee?.name ?: '-', createRightAlignedCellFormat()))
             sheet1.addCell(new Label(4, indexer, it.name ?: '-', createRightAlignedCellFormat()))
-            sheet1.addCell(new Label(5, indexer, it.variationValues?.find {
-                it?.variationGroup?.representationType == 'Color'
-            }?.toString() ?: '-', createRightAlignedCellFormat()))
+            sheet1.addCell(new Label(5, indexer, it.variationValues.sort { it?.variationGroup?.name }.collect {
+                "${it.variationGroup?.name}: ${it.value}"
+            }.join(' - ') ?: '-', createRightAlignedCellFormat()))
             sheet1.addCell(new Label(6, indexer, it.product?.brand?.name ?: '-', createRightAlignedCellFormat()))
             sheet1.addCell(new Label(7, indexer, it.product?.type?.title ?: '-', createRightAlignedCellFormat()))
             sheet1.addCell(new Label(8, indexer, it.product?.productTypes?.find {
