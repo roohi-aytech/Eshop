@@ -6,6 +6,8 @@ import eshop.payment.mellat.PaymentGatewayImplServiceLocator
 
 class MellatService {
 
+    def grailsApplication
+
     IPaymentGateway getService(){
         new PaymentGatewayImplServiceLocator().getPaymentGatewayImplPort()
     }
@@ -21,7 +23,7 @@ class MellatService {
                 new Date().format('yyyyMMdd'),
                 new Date().format('HHmmss'),
                 'OnlinePayment',
-                "http://www.zanbil.ir/order/onlinePaymentResultMellat",
+                "${grailsApplication.config.grails.serverURL}/order/onlinePaymentResultMellat",
                 0).toString().split(',')
 
         return result

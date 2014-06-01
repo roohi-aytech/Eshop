@@ -4,7 +4,7 @@ grails {
     mail {
         ssl = "off"
         host = "127.0.0.1"
-        from = "noreply@zanbil.ir"
+        from = "noreply@felfel.ir"
         port = 25
         ssl = "off"
         username = "noreply@felfel.ir"

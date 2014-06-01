@@ -2826,6 +2826,10 @@ hr {
     padding: 1px 0;
 }
 
+.page-content{
+    padding-top:10px;
+}
+
 .static-page-content h2 {
     border-bottom: 1px solid #C2C2C2;
     font-size: 26px;

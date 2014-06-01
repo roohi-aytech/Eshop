@@ -68,7 +68,7 @@
                     hiddenField.setAttribute("value", "http://localhost:8080/eshop/order/onlinePaymentResultSaman");
                     </g:if>
                     <g:else>
-                    hiddenField.setAttribute("value", "http://www.zanbil.ir/order/onlinePaymentResultSaman");
+                    hiddenField.setAttribute("value", "${createLink(uri: '/order/onlinePaymentResultSaman', absolute: true)}");
                     </g:else>
                     form.appendChild(hiddenField);
 

@@ -18,12 +18,12 @@
     <h2><g:message code="grails.plugin.invitation.pickForm.title"/></h2>
 
     <iv:messageForm provider="${provider}"
-                    link="http://www.zanbil.ir"
+                    link="${createLink(uri: '/', absolute: true)}"
                     subject="${message(code:'grails.plugin.invitation.subject')}"
                     description="grails invitation"
                     caption="picture caption"
                     picture="http://www.grails.org/static/cXmUZIAv28XIiNgkRiz4RRl21TsGZ5HoGpZw1UITNyV.png"
-                    redirectUrl="http://www.zanbil.ir/success"
+                    redirectUrl="${createLink(uri: '/success', absolute: true)}"
                     message="${render(template: 'invitation')}"
                     canEditMessage="true"/>
 </div>
