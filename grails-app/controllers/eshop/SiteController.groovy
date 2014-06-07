@@ -911,10 +911,11 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
+        def productType = model.article.baseProduct
         ProductType.createCriteria().listDistinct {
             ne('deleted', true)
             godFathers {
-                eq('id', productType.id)
+                eq('id', model. productType.id)
                 ne('deleted', true)
             }
         }.each {
