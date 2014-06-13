@@ -148,6 +148,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     margin: 36px auto 0;
     position: relative;
     width: 1000px;
+    background-color: #ffffff;
 }
 
 .header .header_middle {
@@ -539,10 +540,18 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 }
 
+#main-container {
+    background-attachment: fixed;
+    background-position: center 35px;
+    background-repeat: no-repeat;
+}
+
 #main {
     margin: 0 auto;
     position: relative;
     width: 1000px;
+    background-color: #ffffff;
+    padding-bottom: 15px;
     /*padding-top:5px;*/
     /*padding-top: 40px;*/
 }
@@ -2517,16 +2526,18 @@ hr {
 .footer {
     border-top: 2px solid #E6E6E6;
     font-size: 12px;
-    margin-top: 15px;
     overflow: hidden;
     padding-bottom: 20px;
     padding-top: 10px;
     width: 100%;
+    background-color: #ffffff;
+    margin-top: 0;
 }
 
 .footer .footer-inner {
     margin: 0 auto;
     width: 1000px;
+    background-color: #ffffff;
 }
 
 .footer .footer-inner .footer-left {
@@ -2826,8 +2837,8 @@ hr {
     padding: 1px 0;
 }
 
-.page-content{
-    padding-top:10px;
+.page-content {
+    padding-top: 10px;
 }
 
 .static-page-content h2 {
@@ -4181,6 +4192,7 @@ h2.check-out-price span {
     padding: 0 5px;
     opacity: 0.4;
 }
+
 .rangeSliderContainer:hover span.rangeSlider {
     opacity: 1;
 }
@@ -4193,7 +4205,7 @@ h2.check-out-price span {
     display: inline-block;
     height: 30px;
     margin-right: 5px;
-    margin-top:-10px;
+    margin-top: -10px;
 }
 
 

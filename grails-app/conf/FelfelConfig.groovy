@@ -9,6 +9,7 @@ admin.theme='cobalt'
 browse.view.root='browse-root'
 page.size=81
 testimonials=true
+backgrounds=true
 ckeditor {
     upload {
         basedir = "/home/uploads"

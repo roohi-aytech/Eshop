@@ -2,16 +2,17 @@
 <g:hasErrors bean="${slideInstance}">
     <ul class="errors" role="alert">
         <g:eachError bean="${slideInstance}" var="error">
-            <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+            <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+                    error="${error}"/></li>
         </g:eachError>
     </ul>
 </g:hasErrors>
 
 <script language="javascript" type="text/javascript">
-    function clearAll(){
+    function clearAll() {
         var tree = $('#productTypes').combotree('tree');
         var nodes = tree.tree('getChecked', 'checked');
-        for(var i = 0; i < nodes.length; i++)
+        for (var i = 0; i < nodes.length; i++)
             tree.tree('uncheck', nodes[i].target);
 
         $('#productTypesFieldContainer [name=productTypes]').remove();
@@ -19,10 +20,10 @@
         $('#productTypesFieldContainer .combo').append(input);
     }
 
-    function selectAll(){
+    function selectAll() {
         var tree = $('#productTypes').combotree('tree');
         var nodes = tree.tree('getChecked', 'unchecked');
-        for(var i = 0; i < nodes.length; i++){
+        for (var i = 0; i < nodes.length; i++) {
             tree.tree('check', nodes[i].target);
             var input = $('<input class="combo-value" type="hidden" name="productTypes" value="' + nodes[i].id + '"/>');
             $('#productTypesFieldContainer .combo').append(input);
@@ -30,8 +31,8 @@
     }
 </script>
 
-<g:hiddenField name="id" value="${slideInstance?.id}" />
-<g:hiddenField name="version" value="${slideInstance?.version}" />
+<g:hiddenField name="id" value="${slideInstance?.id}"/>
+<g:hiddenField name="version" value="${slideInstance?.version}"/>
 
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'name', 'error')} ">
     <label for="name">
@@ -57,14 +58,16 @@
     <g:textField name="url" value="${slideInstance?.url}" class="count-words" size="50"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'productTypes', 'error')} " id="productTypesFieldContainer">
+<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'productTypes', 'error')} "
+     id="productTypesFieldContainer">
     <label for="productTypes">
         <span style="padding-left: 20px;"><g:message code="slide.productTypes.label" default="Product Types"/></span>
         [<a onclick="selectAll();"><g:message code="selectAll"/></a>]
-        [<a onclick="clearAll();"><g:message code="clearAll"/></a>]
+    [<a onclick="clearAll();"><g:message code="clearAll"/></a>]
     </label>
 
-    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px" cascadeCheck="false"></rg:tree>
+    <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px"
+             cascadeCheck="false"></rg:tree>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'visibleOnFirstPage', 'error')} ">
@@ -74,37 +77,24 @@
     </label>
     <g:checkBox name="visibleOnFirstPage" value="${slideInstance.visibleOnFirstPage}"/>
 </div>
+<g:if test="${grailsApplication.config.backgrounds}">
+    <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'showAsBackground', 'error')} ">
+        <label for="showAsBackground">
+            <g:message code="slide.showAsBackground.label" default="Show As Background"/>
+
+        </label>
+        <g:checkBox name="showAsBackground" value="${slideInstance.showAsBackground}"/>
+    </div>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image', 'error')} required">
     <label for="image">
         <g:message code="slide.image.label" default="image"/>
     </label>
-    <input type="file" id="image" name="image" />
-    <img src="<g:createLink controller="image" action="index" params="${[id:slideInstance?.id, type:'mainSlide']}"/>" style="max-width: 100px"/>
+    <input type="file" id="image" name="image"/>
+    <img src="<g:createLink controller="image" action="index" params="${[id: slideInstance?.id, type: 'mainSlide']}"/>"
+         style="max-width: 100px"/>
 </div>
 
-%{--<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image1024', 'error')} required">--}%
-    %{--<label for="image1024">--}%
-        %{--<g:message code="slide.image1024.label" default="image1024"/>--}%
-    %{--</label>--}%
-    %{--<input type="file" id="image1024" name="image1024" />--}%
-    %{--<img src="<g:createLink controller="slide" action="getImage" params="${[id:slideInstance?.id, size:1024]}"/>" style="max-width: 100px"/>--}%
-%{--</div>--}%
-
-%{--<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image1280', 'error')} required">--}%
-    %{--<label for="image1280">--}%
-        %{--<g:message code="slide.image1280.label" default="image1280"/>--}%
-    %{--</label>--}%
-    %{--<input type="file" id="image1280" name="image1280" />--}%
-    %{--<img src="<g:createLink controller="slide" action="getImage" params="${[id:slideInstance?.id, size:1280]}"/>" style="max-width: 100px"/>--}%
-%{--</div>--}%
-
-%{--<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'image1440', 'error')} required">--}%
-    %{--<label for="image1440">--}%
-        %{--<g:message code="slide.image1440.label" default="image1440"/>--}%
-    %{--</label>--}%
-    %{--<input type="file" id="image1440" name="image1440" />--}%
-    %{--<img src="<g:createLink controller="slide" action="getImage" params="${[id:slideInstance?.id, size:1440]}"/>" style="max-width: 100px"/>--}%
-%{--</div>--}%
 
 

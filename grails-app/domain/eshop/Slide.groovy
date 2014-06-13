@@ -8,6 +8,7 @@ class Slide {
     byte[] image
     String url
     Boolean visibleOnFirstPage = false
+    Boolean showAsBackground = false
     Boolean deleted = false
 
     static hasMany = [productTypes: ProductType]
@@ -17,6 +18,7 @@ class Slide {
         description(nullable: true)
         url(nullable: false)
         visibleOnFirstPage(nullable: true)
+        showAsBackground(nullable: true)
         image(nullable: true, maxSize: 20000000)
     }
 }

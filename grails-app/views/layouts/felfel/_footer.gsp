@@ -69,6 +69,7 @@
                     <li class="y_icon"><a target="_blank" href="http://www.youtube.com/user/felfel"></a></li>
                 </ul>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 

@@ -78,7 +78,7 @@
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"
-    type="text/javascript"></script>
+            type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
@@ -91,12 +91,12 @@
     <link href="${resource(dir: 'css', file: 'felfel.css')}" rel="stylesheet" type="text/css"/>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.watch.js')}" type="text/javascript"></script>--}%
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}"
-    type="text/javascript"></script>
+            type="text/javascript"></script>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>--}%
     <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete-felfel.js')}"
-    type="text/javascript"></script>
+            type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"
-    type="text/javascript"></script>
+            type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.dotdotdot.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'felfel.js')}" type="text/javascript"></script>
@@ -109,7 +109,10 @@
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
-<div id="main-container">
+<div id="main-container"
+    <g:if test="${background}">
+        style="background-image: url('${createLink(controller: "image", action: "index")}/${background.id}?type=mainSlide')"
+    </g:if> >
     %{--<g:render template="/layouts/${grailsApplication.config.eShop.instance}/alexa"/>--}%
     <g:render template="/layouts/${grailsApplication.config.eShop.instance}/header" key="${sec.username()}"/>
     <div id="main">

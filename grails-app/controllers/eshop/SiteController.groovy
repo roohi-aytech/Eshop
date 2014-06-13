@@ -27,6 +27,7 @@ class SiteController {
 
     }
 
+
     def findFilters() {
 
     }
@@ -93,16 +94,33 @@ class SiteController {
             return
         }
 
-        if (productType) {
-            model.slides = Slide.createCriteria().list {
+        model.slides = Slide.createCriteria().list {
+            if (productType) {
                 productTypes {
                     eq('id', productType.id)
                 }
-                eq('deleted', false)
+            } else {
+                eq('visibleOnFirstPage', true)
             }
-        } else {
-            model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
+            or {
+                eq('showAsBackground', false)
+                isNull('showAsBackground')
+            }
+            eq('deleted', false)
         }
+
+        model.background = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            eq('showAsBackground', true)
+            eq('deleted', false)
+        }?.find()
+
         model.pageContext = [:]
         model.pageContext["productTypes.id"] = [productType.id]
 
@@ -173,16 +191,33 @@ class SiteController {
 //            }
 //        }
 
-        if (productType) {
-            model.slides = Slide.createCriteria().list {
+
+        model.slides = Slide.createCriteria().list {
+            if (productType) {
                 productTypes {
                     eq('id', productType.id)
                 }
-                eq('deleted', false)
+            } else {
+                eq('visibleOnFirstPage', true)
             }
-        } else {
-            model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
+            or {
+                eq('showAsBackground', false)
+                isNull('showAsBackground')
+            }
+            eq('deleted', false)
         }
+
+        model.background = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            eq('showAsBackground', true)
+            eq('deleted', false)
+        }?.find()
 
         trackingService.trackExplore(productType, brandList)
 
@@ -344,7 +379,22 @@ class SiteController {
         model.filters = browseService.findProductTypeFilters(null, params.page ?: 0, "${params.page ?: 0}")
 
         //slides
-        model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
+
+        model.slides = Slide.createCriteria().list {
+            eq('visibleOnFirstPage', true)
+            or {
+                eq('showAsBackground', false)
+                isNull('showAsBackground')
+            }
+            eq('deleted', false)
+        }
+
+        model.background = Slide.createCriteria().list {
+            eq('visibleOnFirstPage', true)
+            eq('showAsBackground', true)
+            eq('deleted', false)
+        }?.find()
+
         model.specialSaleSlides = SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
 //        model.specialSaleSlides = SpecialSaleSlide.findAll()
 
@@ -509,7 +559,7 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-        def title = product.toString().replace(product.name, modelNames.unique { it.trim() }.join(','))
+        def title = product.toString().replace(product.name, modelNames.unique { it?.trim() }.join(','))
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
         model.showHistogram = true
@@ -734,7 +784,7 @@ class SiteController {
         render "OK"
     }
 
-    def reindex(){
+    def reindex() {
         searchableService.unindexAll()
         searchableService.reindexAll()
     }
@@ -762,23 +812,24 @@ class SiteController {
                     [reload: false, max: 1000])
         }
         def f = params.f
-        if (f instanceof String[] && f.length){
-            redirect(action: 'search', params: [f:f.join(','), phrase: params.phrase])
+        if (f instanceof String[] && f.length) {
+            redirect(action: 'search', params: [f: f.join(','), phrase: params.phrase])
             return
         }
         model.filters = browseService.findSearchPageFilters(productIdList.results.collect {
             it.id
-        } + ProductModel.findAllByIdInList( productModelIdList.results.collect { it?.id})?.collect{it?.product?.id}, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
+            it?.product?.id
+        }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
         //sort result again
-        model.filters.products.productIds.sort{
+        model.filters.products.productIds.sort {
             def id = it
-            def productIndex = productIdList.results.findIndexOf{it.id == id}
+            def productIndex = productIdList.results.findIndexOf { it.id == id }
             -(productIndex >= 0 ? productIdList.scores[productIndex] : 0)
         }
         model.commonLink = createLink(uri: '/')
 
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
-        model.slides = Slide.findAllByVisibleOnFirstPageAndDeleted(true, false)
 
         def brandList = new ArrayList<Brand>()
         def brand
@@ -793,12 +844,33 @@ class SiteController {
         def productType = ProductType.get(f?.split(',').reverse()?.find {
             it.startsWith('p')
         }?.replace('p', '')?.toLong())
-//        model.productTypeTypeLinks = []
-//        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
-//            productType.types.each {
-//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "search", params: params + [f: "${f},t${it.id}"]), id: it.id]
-//            }
-//        }
+
+        model.slides = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            or {
+                eq('showAsBackground', false)
+                isNull('showAsBackground')
+            }
+            eq('deleted', false)
+        }
+
+        model.background = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            eq('showAsBackground', true)
+            eq('deleted', false)
+        }?.find()
 
         trackingService.trackSearch(productType, brandList, params.phrase)
 
@@ -843,17 +915,19 @@ class SiteController {
                     [reload: false, max: 1000])
         }
         def f = params.f
-        if (f instanceof String[] && f.length){
-            redirect(action: 'searchAutoComplete', params: [f:f.join(','), phrase: params.phrase])
+        if (f instanceof String[] && f.length) {
+            redirect(action: 'searchAutoComplete', params: [f: f.join(','), phrase: params.phrase])
             return
         }
         model.productIds = browseService.findSearchPageFilters(productIdList.results.collect {
             it.id
-        } + ProductModel.findAllByIdInList( productModelIdList.results.collect { it?.id})?.collect{it?.product?.id}, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
+        } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
+            it?.product?.id
+        }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
         //sort result again
-        model.productIds.sort{
+        model.productIds.sort {
             def id = it
-            def productIndex = productIdList.results.findIndexOf{it.id == id}
+            def productIndex = productIdList.results.findIndexOf { it.id == id }
             -(productIndex >= 0 ? productIdList.scores[productIndex] : 0)
         }
         model.commonLink = createLink(uri: '/')
@@ -915,7 +989,7 @@ class SiteController {
         ProductType.createCriteria().listDistinct {
             ne('deleted', true)
             godFathers {
-                eq('id', model. productType.id)
+                eq('id', model.productType.id)
                 ne('deleted', true)
             }
         }.each {

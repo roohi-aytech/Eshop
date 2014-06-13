@@ -31,7 +31,7 @@
 <eshop:mostVisitedProductTypes/>
 <ehcache:render template="/site/common/specialSalesRowList"/>
 <g:if test="${filters?.brands}">
-    <ehcache:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands ]}"/>
+    <g:render template="common/brandList" model="${[brands: filters.brands?.size() > 10 ? filters.brands[0..10] : filters.brands , productType : null]}"/>
 </g:if>
 </body>
 </html>
