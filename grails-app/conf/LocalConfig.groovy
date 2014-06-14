@@ -12,6 +12,6 @@ testimonials=true
 backgrounds=true
 ckeditor {
     upload {
-        basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
+        basedir = "/tmp/"
     }
 }

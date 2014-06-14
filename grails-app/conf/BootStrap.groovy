@@ -47,57 +47,59 @@ class BootStrap {
             UserRole.create adminUser, adminRole
         }
 
-        def attrs = Attribute.findAllByAttributeValueIsNotNull()
-        attrs.each { attr ->
-            def val = attr.attributeType.values.find {it.value == attr.attributeValue}
-            if (!val) {
-                val = new AttributeValue(value: attr.attributeValue).save()
-                if(attr.attributeValue!='N/A')
-                {
-                    attr.attributeType.addToValues(val)
-                    attr.attributeType.save()
-                }
-            }
-            attr.value = val
-            attr.attributeValue = null
-            attr.save()
+        //be nazar miad ina dige lazem nist
 
-        }
-        AttributeValue.findAllByValueLike('%\\n%').each {
-            it.value=it.value.replace("\\n","\n")
-            it.save()
-        }
+//        def attrs = Attribute.findAllByAttributeValueIsNotNull()
+//        attrs.each { attr ->
+//            def val = attr.attributeType.values.find {it.value == attr.attributeValue}
+//            if (!val) {
+//                val = new AttributeValue(value: attr.attributeValue).save()
+//                if(attr.attributeValue!='N/A')
+//                {
+//                    attr.attributeType.addToValues(val)
+//                    attr.attributeType.save()
+//                }
+//            }
+//            attr.value = val
+//            attr.attributeValue = null
+//            attr.save()
+//
+//        }
+//        AttributeValue.findAllByValueLike('%\\n%').each {
+//            it.value=it.value.replace("\\n","\n")
+//            it.save()
+//        }
 
         // ino vase in gozashtam ke variation value haaye tekrari ro hazf kone ,,, badan bayad varesh darim
-        VariationValue.findAll().groupBy {it.variationGroup}.each {vgVariationGroup->
-            vgVariationGroup.value.groupBy {it.value}.each {
-                if(it.value.size()>1){
-                    def baseVariationValue
-                    it.value.eachWithIndex {variationValue,index->
-                        if(index==0)
-                            baseVariationValue=variationValue
-                        else{
-//                            def vs=Variation.findAllByVariationValues([variationValue])
-                            def vs=Variation.createCriteria().list {variationValues{eq('id',variationValue.id)}}
-                            vs.each {
-                                it.removeFromVariationValues(variationValue)
-                                it.addToVariationValues(baseVariationValue)
-                                it.save()
-                            }
-                            def cs=Content.createCriteria().list {variationValues{eq('id',variationValue.id)}}
-                            cs.each {
-                                it.removeFromVariationValues(variationValue)
-                                it.addToVariationValues(baseVariationValue)
-                                it.save()
-                            }
-
-                            vgVariationGroup.key.removeFromVariationValues(variationValue)
-                            variationValue.delete()
-                        }
-                    }
-                }
-            }
-        }
+//        VariationValue.findAll().groupBy {it.variationGroup}.each {vgVariationGroup->
+//            vgVariationGroup.value.groupBy {it.value}.each {
+//                if(it.value.size()>1){
+//                    def baseVariationValue
+//                    it.value.eachWithIndex {variationValue,index->
+//                        if(index==0)
+//                            baseVariationValue=variationValue
+//                        else{
+////                            def vs=Variation.findAllByVariationValues([variationValue])
+//                            def vs=Variation.createCriteria().list {variationValues{eq('id',variationValue.id)}}
+//                            vs.each {
+//                                it.removeFromVariationValues(variationValue)
+//                                it.addToVariationValues(baseVariationValue)
+//                                it.save()
+//                            }
+//                            def cs=Content.createCriteria().list {variationValues{eq('id',variationValue.id)}}
+//                            cs.each {
+//                                it.removeFromVariationValues(variationValue)
+//                                it.addToVariationValues(baseVariationValue)
+//                                it.save()
+//                            }
+//
+//                            vgVariationGroup.key.removeFromVariationValues(variationValue)
+//                            variationValue.delete()
+//                        }
+//                    }
+//                }
+//            }
+//        }
 //        def province = new Province(title: "Tehran")
 //        def city = new City(title: "Tehran", province: province)
 //        province.addToCities(city)

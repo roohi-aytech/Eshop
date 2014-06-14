@@ -9,7 +9,7 @@
         <li class="root">
             <a class="dropdown-toggle rootLink" data-toggle="dropdown"
                href="${createLink(uri: "/browse/${pt.seoFriendlyName}")}"><span>${rpt.name}</span></a>
-            <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)}"/>
+            <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)?:new eshop.MenuConfig()}"/>
             <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
                 <div class="inner">
@@ -52,26 +52,29 @@
                             </li>
                         </ul>
                         <g:set var="columnsCount" value="${0}"/>
-                        <g:each in="${1..3}" var="rptCounter">
-                            <g:set var="rootNode" value="${JSON.parse(menuConfig["column${rptCounter}"])}"/>
-                            <g:if test="${rootNode.children.flatten().size() > 0}">
-                                <ul class="${rptCounter > 1 ? 'border-right' : ''}">
-                                    <g:each in="${rootNode.children.flatten()}">
-                                        <g:render
-                                                template="/layouts/${grailsApplication.config.eShop.instance}/menu_productType"
-                                                model="${[node: it, productTypes: productTypes]}"/>
-                                    </g:each>
-                                    <g:if test="${rptCounter == 3}">
-                                        <li>
-                                            <div class="cat_slogan_banner">
-                                                <img src="${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu', role: 'e2'])}">
-                                            </div>
-                                        </li>
-                                    </g:if>
-                                </ul>
-                                <g:set var="columnsCount" value="${columnsCount + 1}"/>
-                            </g:if>
-                        </g:each>
+
+                            <g:each in="${1..3}" var="rptCounter">
+                                <g:if test="${menuConfig["column${rptCounter}"]}">
+                                <g:set var="rootNode" value="${JSON.parse(menuConfig["column${rptCounter}"])}"/>
+                                <g:if test="${rootNode.children.flatten().size() > 0}">
+                                    <ul class="${rptCounter > 1 ? 'border-right' : ''}">
+                                        <g:each in="${rootNode.children.flatten()}">
+                                            <g:render
+                                                    template="/layouts/${grailsApplication.config.eShop.instance}/menu_productType"
+                                                    model="${[node: it, productTypes: productTypes]}"/>
+                                        </g:each>
+                                        <g:if test="${rptCounter == 3}">
+                                            <li>
+                                                <div class="cat_slogan_banner">
+                                                    <img src="${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu', role: 'e2'])}">
+                                                </div>
+                                            </li>
+                                        </g:if>
+                                    </ul>
+                                    <g:set var="columnsCount" value="${columnsCount + 1}"/>
+                                </g:if>
+                                </g:if>
+                            </g:each>
                         <ul class="shop_by_brands">
                             <li><img
                                     src="${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu', role: 'e3'])}">
