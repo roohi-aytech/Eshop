@@ -2628,6 +2628,7 @@ hr {
     float: left;
     text-align: center;
     width: 125px;
+    display: none;
 }
 
 .footer .footer-right .engage {
@@ -4206,6 +4207,10 @@ h2.check-out-price span {
     height: 30px;
     margin-right: 5px;
     margin-top: -10px;
+}
+
+.deliveryMethodList img {
+    margin-left: 10px;
 }
 
 

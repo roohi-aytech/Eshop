@@ -1021,7 +1021,7 @@ class SiteController {
     }
 
     def contactUs() {
-        render view: '/site/statics/contact_us'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/contact_us"
     }
 
     def sendMail() {
@@ -1065,63 +1065,63 @@ class SiteController {
     }
 
     def termsAndConditions() {
-        render view: '/site/statics/rights_and_laws'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/rights_and_laws"
     }
 
     def aboutUs() {
-        render view: '/site/statics/about_us'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/about_us"
     }
 
     def moneyBackConditions() {
-        render view: '/site/statics/money_back_conditions'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/money_back_conditions"
     }
 
     def guarantee() {
-        render view: '/site/statics/guarantee'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/guarantee"
     }
 
     def addedValue() {
-        render view: '/site/statics/added_value'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/added_value"
     }
 
     def deliveryPrice() {
-        render view: '/site/statics/delivery_price'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/delivery_price"
     }
 
     def trust() {
-        render view: '/site/statics/trust'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/trust"
     }
 
     def shoppingRules() {
-        render view: '/site/statics/shoppingRules'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/shoppingRules"
     }
 
     def customerRights() {
-        render view: '/site/statics/customerRights'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/customerRights"
     }
 
     def shoppingSteps() {
-        render view: '/site/statics/shoppingSteps'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/shoppingSteps"
     }
 
     def paymentAndDelivery() {
-        render view: '/site/statics/paymentAndDelivery'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/paymentAndDelivery"
     }
 
     def deliveryTips() {
-        render view: '/site/statics/deliveryTips'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/deliveryTips"
     }
 
     def paymentMethods() {
-        render view: '/site/statics/paymentMethods'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/paymentMethods"
     }
 
     def suppliers() {
-        render view: '/site/statics/suppliers'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/suppliers"
     }
 
     def goldenGuarantee() {
-        render view: '/site/statics/goldenGuarantee'
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/goldenGuarantee"
     }
 
     def synchMongoItem() {

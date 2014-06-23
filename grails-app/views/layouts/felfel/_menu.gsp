@@ -23,13 +23,13 @@
                             </li>
                             <li>
                                 <div class="free_shipping_hover"><a target="_blank"
-                                                                    href="#"><img
+                                                                    href="${createLink(uri:'/site/paymentAndDelivery')}"><img
                                             width="30" height="19" border="0" alt=""
                                             src="${resource(dir: 'images/felfel', file: 'free_shipping_icon.png')}">
                                 </a>
 
                                     <p><a target="_blank"
-                                          href="#"><g:message code="menu.shipping.title"/></a><span
+                                          href="${createLink(uri:'/site/paymentAndDelivery')}"><g:message code="menu.shipping.title"/></a><span
                                             class="subtitle"><g:message
                                                 code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: pt.id)} <g:message
                                                 code="rial"/>

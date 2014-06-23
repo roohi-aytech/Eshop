@@ -44,7 +44,7 @@
             <td style="padding-left:15px;min-width: 160px;">
                 <div id="loginForm"
                      style="${session.checkout_customerInformation ? 'display:none;opacity:0;' : 'display:block;opacity:1;'}">
-                    <form action='/j_spring_security_check' method='POST' class='cssform' autocomplete='off'>
+                    <form action='${createLink(uri:'/j_spring_security_check')}' method='POST' class='cssform' autocomplete='off'>
                         <p>
                             <label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
                             <input type='text' class='text_' name='j_username' id='username' style="display: block"/>
