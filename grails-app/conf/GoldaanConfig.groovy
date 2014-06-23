@@ -1,17 +1,17 @@
-grails.serverURL = "http://localhost:8080/eshop"
-grails.app.context = "/eshop"
+grails.serverURL = "http://test.goldaan.ir/"
+grails.app.context = "/"
 eShop.instance = 'felfel'
 url.www = false
 locale.language='en'
 locale.country='US'
-events.url='http://localhost:8080/eshop'
-admin.theme='cobalt'
+events.url='http://www.goldaan.ir/'
+admin.theme='ui-lightness'
 browse.view.root='browse-root'
 page.size=81
 testimonials=true
 backgrounds=true
 ckeditor {
     upload {
-        basedir = "/tmp/"
+        basedir = "/home/uploads"
     }
 }
