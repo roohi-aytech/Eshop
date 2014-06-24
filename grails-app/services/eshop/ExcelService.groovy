@@ -37,6 +37,10 @@ class ExcelService {
                 'in'('status', statusList)
             }
             product {
+                or {
+                    eq('deleted', false)
+                    isNull('deleted')
+                }
                 if (brandList && brandList.size() > 0) {
                     brand {
                         'in'('id', brandList)
@@ -217,8 +221,9 @@ class ExcelService {
             //update price
             def lastPrice = Price.findByProductModelAndEndDateIsNull(model)
             def price = (lastPrice?.price ?: 0) as Double
-            if (price != item.price) {
-                item.priceChanged = true
+//            if (price != item.price) {
+            if (true) {
+                item.priceChanged = price != item.price
                 item.oldPrice = price
                 def priceInstance = new Price()
                 priceInstance.productModel = model
