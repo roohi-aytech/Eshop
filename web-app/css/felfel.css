@@ -613,7 +613,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 .new_selection_holder .selection_col_left {
     float: right;
     margin-left: 15px;
-    width: 508px;
+    width: 509px;
 }
 
 .new_selection_holder .selection_col_left ul {
@@ -2168,7 +2168,7 @@ hr {
     float: left;
     margin-right: -1px;
     padding-right: 12px;
-    width: 745px;
+    width: 744px;
 }
 
 .toolbar_top {
@@ -2857,7 +2857,8 @@ hr {
 }
 
 .static-page-content, .static-page-content * {
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 20px;
     text-align: justify;
 }
 
@@ -4057,7 +4058,7 @@ h2.check-out-price span {
 
 .invoice h2 {
     margin-right: 320px;
-    margin-top: 140px;
+    margin-top: 190px;
 }
 
 #invoice-trackingCode {

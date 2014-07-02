@@ -18,6 +18,7 @@ class OrderAdministrationController {
     def pdfService
     def mailService
     def messageService
+    def grailsApplication
 
     def orderNotification() {
         def order = Order.get(params.id)
@@ -252,7 +253,7 @@ class OrderAdministrationController {
             multipart true
             to order.ownerEmail
             subject message(code: 'emailTemplates.inquiry_result.subject')
-            html(view: "/messageTemplates/email_template",
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/inquiry_result', model: [order: order]).toString()])
             attachBytes "Zanbil-Invoice.pdf", "application/pdf", invoice.toByteArray()
         }
@@ -276,7 +277,7 @@ class OrderAdministrationController {
             mailService.sendMail {
                 to order.ownerEmail
                 subject message(code: 'emailTemplates.not_exist.subject')
-                html(view: "/messageTemplates/email_template",
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/not_exist', model: [order: order]).toString()])
             }
 
@@ -395,7 +396,7 @@ class OrderAdministrationController {
         mailService.sendMail {
             to order.ownerEmail
             subject message(code: 'emailTemplates.approve_payment.subject')
-            html(view: "/messageTemplates/email_template",
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
         }
 
@@ -414,7 +415,7 @@ class OrderAdministrationController {
         mailService.sendMail {
             to order.ownerEmail
             subject message(code: 'emailTemplates.decline_payment.subject')
-            html(view: "/messageTemplates/email_template",
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/decline_payment', model: [order: order]).toString()])
         }
 
@@ -455,7 +456,7 @@ class OrderAdministrationController {
             mailService.sendMail {
                 to order.ownerEmail
                 subject message(code: 'emailTemplates.delivery_with_tracking_code.subject')
-                html(view: "/messageTemplates/email_template",
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/delivery_with_tracking_code', model: [order: order]).toString()])
             }
 
@@ -467,7 +468,7 @@ class OrderAdministrationController {
             mailService.sendMail {
                 to order.ownerEmail
                 subject message(code: 'emailTemplates.delivery_without_tracking_code.subject')
-                html(view: "/messageTemplates/email_template",
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/delivery_without_tracking_code', model: [order: order]).toString()])
             }
 

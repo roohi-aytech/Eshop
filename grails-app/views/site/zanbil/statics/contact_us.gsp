@@ -197,7 +197,7 @@
                             <div>
                                 <textarea type="text" name="body" id="body" cols="50" rows="5" style="width: auto"></textarea>
                                 <span class="validator" id="bodyValidator"><g:message
-                                        code="contactUs.email.body.validation.label"></g:message></span>
+                                        code="contactUs.email.body.validation.label"/></span>
                             </div>
 
                             <div>
@@ -207,7 +207,7 @@
                                 </label>
                                 <g:textField name="captcha" id="captcha"/>
                                 <span class="validator" id="captchaValidator"><g:message
-                                        code="contactUs.email.captcha.validation.label"></g:message></span>
+                                        code="contactUs.email.captcha.validation.label"/></span>
                             </div>
 
                             <div>

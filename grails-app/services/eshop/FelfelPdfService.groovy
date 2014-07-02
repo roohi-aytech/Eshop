@@ -53,6 +53,7 @@ class FelfelPdfService {
         def fontPersian = BaseFont.createFont(grailsApplication.mainContext.getResource('/font/b yekan.ttf').getFile().path, BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
         def fontComplex = BaseFont.createFont(grailsApplication.mainContext.getResource('/font/tahoma.ttf').getFile().path, BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
         Font fontPersianGrey = new Font(fontPersian, 9, Font.NORMAL, BaseColor.GRAY);
+        Font fontPersianWhite = new Font(fontPersian, 9, Font.NORMAL, BaseColor.WHITE);
         Font fontPersianBlack = new Font(fontPersian, 9, Font.NORMAL, BaseColor.BLACK);
         Font fontPersianBlackBold = new Font(fontPersian, 9, Font.BOLD, BaseColor.BLACK);
         Font fontPersianHeader = new Font(fontPersian, 16, Font.NORMAL, BaseColor.BLACK);
@@ -60,43 +61,43 @@ class FelfelPdfService {
 
         //date
         addText(
-                520f, 715f, 20f, 20f,
+                90f, 805f, 20f, 20f,
                 g.message(code: 'invoice.date') + ":",
-                fontPersianGrey,
+                fontPersianWhite,
                 writer.directContent)
         addText(
-                458f, 715f, 60f, 20f,
+                25f, 805f, 60f, 20f,
                 rg.formatJalaliDate(date: OrderTrackingLog.findByOrderAndAction(order, OrderHelper.ACTION_INQUIRY).date),
                 fontPersianBlack,
                 writer.directContent)
 
         //serial number
         addText(
-                493f, 697f, 47f, 20f,
+                63f, 790f, 47f, 20f,
                 g.message(code: 'invoice.serialNumber') + ":",
-                fontPersianGrey,
+                fontPersianWhite,
                 writer.directContent)
         addText(
-                391f, 697f, 100f, 20f,
+                0f, 790f, 60f, 20f,
                 order.serialNumber,
                 fontPersianBlack,
                 writer.directContent)
 
         //title
         addText(
-                400f, 645f, 140f, 35f,
+                150f, 615f, 140f, 35f,
                 order.status == OrderHelper.STATUS_PAYMENT_APPROVED || order.status == OrderHelper.STATUS_TRANSMITTED || order.status == OrderHelper.STATUS_DELIVERED ? g.message(code: 'order.finalInvoice.title') : g.message(code: 'order.preInvoice.title'),
                 fontPersianHeader,
                 writer.directContent)
 
         //tracking code
         addText(
-                474f, 626f, 66f, 20f,
+                224f, 596f, 66f, 20f,
                 g.message(code: 'invoice.trackingCode') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                412f, 626f, 60f, 20f,
+                162f, 596f, 60f, 20f,
                 order.trackingCode,
                 fontPersianBlackBold,
                 writer.directContent)
@@ -104,28 +105,28 @@ class FelfelPdfService {
         //seller info
         writer.directContent.saveState();
         writer.directContent.setColorFill(BaseColor.WHITE);
-        writer.directContent.roundRectangle(40, 570, 499, 25, 5);
+        writer.directContent.roundRectangle(40, 540, 499, 25, 5);
         writer.directContent.fillStroke();
         writer.directContent.restoreState();
 
         addText(
-                497f, 574f, 34f, 20f,
+                497f, 544f, 34f, 20f,
                 g.message(code: 'invoice.seller.label') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                232f, 574f, 263f, 20f,
+                232f, 544f, 263f, 20f,
                 g.message(code: 'invoice.seller.value'),
                 fontPersianBlack,
                 writer.directContent)
 
         addText(
-                175f, 574f, 45f, 20f,
+                175f, 544f, 45f, 20f,
                 g.message(code: 'invoice.seller.code.label') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 574f, 123f, 20f,
+                50f, 544f, 123f, 20f,
                 g.message(code: 'invoice.seller.code.value'),
                 fontPersianBlack,
                 writer.directContent)
@@ -133,42 +134,42 @@ class FelfelPdfService {
         //customer info
         writer.directContent.saveState();
         writer.directContent.setColorFill(BaseColor.WHITE);
-        writer.directContent.roundRectangle(40, 500, 499, 65, 5);
+        writer.directContent.roundRectangle(40, 470, 499, 65, 5);
         writer.directContent.fillStroke();
         writer.directContent.restoreState();
 
         //owner name
         addText(
-                504f, 544f, 27f, 20f,
+                504f, 514f, 27f, 20f,
                 g.message(code: 'invoice.owner.name') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                232f, 544f, 270f, 20f,
+                232f, 514f, 270f, 20f,
                 order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : g.message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName,
                 fontPersianBlack,
                 writer.directContent)
 
         //owner code
         addText(
-                145f, 544f, 75f, 20f,
+                145f, 514f, 75f, 20f,
                 g.message(code: 'invoice.ownerCode') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 544f, 93f, 20f,
+                50f, 514f, 93f, 20f,
                 order.ownerCode,
                 fontPersianBlack,
                 writer.directContent)
 
         //owner address
         addText(
-                479f, 524f, 52f, 20f,
+                479f, 494f, 52f, 20f,
                 g.message(code: 'invoice.sendingAddress') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 524f, 427f, 20f,
+                50f, 494f, 427f, 20f,
                 g.message(code: "province") + " " + order.sendingAddress.city.province.title + " - " +
                         g.message(code: "city") + " " + order.sendingAddress.city.title + " - " +
                         order.sendingAddress.addressLine1 + " " + (order.sendingAddress.addressLine2 ? order.sendingAddress.addressLine2 : ""),
@@ -177,36 +178,36 @@ class FelfelPdfService {
 
         //postal code
         addText(
-                497f, 504f, 34f, 20f,
+                497f, 474f, 34f, 20f,
                 g.message(code: 'invoice.postalCode') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                372f, 504f, 123f, 20f,
+                372f, 474f, 123f, 20f,
                 order.sendingAddress.postalCode,
                 fontPersianBlack,
                 writer.directContent)
 
         //telephone
         addText(
-                340f, 504f, 20f, 20f,
+                340f, 474f, 20f, 20f,
                 g.message(code: 'invoice.owner.telephone') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                232f, 504f, 106f, 20f,
+                232f, 474f, 106f, 20f,
                 order.ownerTelephone,
                 fontPersianBlack,
                 writer.directContent)
 
         //mobile
         addText(
-                180f, 504f, 40f, 20f,
+                180f, 474f, 40f, 20f,
                 g.message(code: 'invoice.owner.mobile') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 504f, 128f, 20f,
+                50f, 474f, 128f, 20f,
                 order.ownerMobile,
                 fontPersianBlack,
                 writer.directContent)
@@ -296,7 +297,7 @@ class FelfelPdfService {
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: ['........................']), fontPersianBlack, 8, Element.ALIGN_LEFT, 0, 0))
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign'), fontPersianBlack, 8, Element.ALIGN_RIGHT, 0, 80))
 
-        table.writeSelectedRows(0, -1, 0, -1, 40, 490, writer.directContent)
+        table.writeSelectedRows(0, -1, 0, -1, 40, 460, writer.directContent)
 
         document.close()
     }
@@ -328,49 +329,50 @@ class FelfelPdfService {
         def fontComplex = BaseFont.createFont(grailsApplication.mainContext.getResource('/font/tahoma.ttf').getFile().path, BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
         Font fontPersianGrey = new Font(fontPersian, 9, Font.NORMAL, BaseColor.GRAY);
         Font fontPersianBlack = new Font(fontPersian, 9, Font.NORMAL, BaseColor.BLACK);
+        Font fontPersianWhite = new Font(fontPersian, 9, Font.NORMAL, BaseColor.WHITE);
         Font fontPersianBlackBold = new Font(fontPersian, 9, Font.BOLD, BaseColor.BLACK);
         Font fontPersianHeader = new Font(fontPersian, 16, Font.NORMAL, BaseColor.BLACK);
         Font fontComplexBlack = new Font(fontComplex, 8, Font.NORMAL, BaseColor.BLACK);
 
         //date
         addText(
-                520f, 715f, 20f, 20f,
+                90f, 805f, 20f, 20f,
                 g.message(code: 'invoice.date') + ":",
-                fontPersianGrey,
+                fontPersianWhite,
                 writer.directContent)
         addText(
-                458f, 715f, 60f, 20f,
+                25f, 805f, 60f, 20f,
                 rg.formatJalaliDate(date: OrderTrackingLog.findByOrderAndAction(order, OrderHelper.ACTION_INQUIRY).date),
                 fontPersianBlack,
                 writer.directContent)
 
         //serial number
         addText(
-                493f, 697f, 47f, 20f,
+                63f, 790f, 47f, 20f,
                 g.message(code: 'invoice.serialNumber') + ":",
-                fontPersianGrey,
+                fontPersianWhite,
                 writer.directContent)
         addText(
-                391f, 697f, 100f, 20f,
+                0f, 790f, 60f, 20f,
                 order.serialNumber,
                 fontPersianBlack,
                 writer.directContent)
 
         //title
         addText(
-                400f, 645f, 140f, 35f,
+                150f, 615f, 140f, 35f,
                 order.status == OrderHelper.STATUS_PAYMENT_APPROVED || order.status == OrderHelper.STATUS_TRANSMITTED || order.status == OrderHelper.STATUS_DELIVERED ? g.message(code: 'order.finalInvoice.title') : g.message(code: 'order.preInvoice.title'),
                 fontPersianHeader,
                 writer.directContent)
 
         //tracking code
         addText(
-                474f, 626f, 66f, 20f,
+                224f, 596f, 66f, 20f,
                 g.message(code: 'invoice.trackingCode') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                412f, 626f, 60f, 20f,
+                162f, 596f, 60f, 20f,
                 order.trackingCode,
                 fontPersianBlackBold,
                 writer.directContent)
@@ -378,42 +380,42 @@ class FelfelPdfService {
         //customer info
         writer.directContent.saveState();
         writer.directContent.setColorFill(BaseColor.WHITE);
-        writer.directContent.roundRectangle(40, 530, 499, 65, 5);
+        writer.directContent.roundRectangle(40, 500, 499, 65, 5);
         writer.directContent.fillStroke();
         writer.directContent.restoreState();
 
         //owner name
         addText(
-                504f, 574f, 27f, 20f,
+                504f, 544f, 27f, 20f,
                 g.message(code: 'invoice.owner.name') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                232f, 574f, 270f, 20f,
+                232f, 544f, 270f, 20f,
                 order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : g.message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName,
                 fontPersianBlack,
                 writer.directContent)
 
         //owner code
         addText(
-                145f, 574f, 75f, 20f,
+                145f, 544f, 75f, 20f,
                 g.message(code: 'invoice.ownerCodeWithoutAddedValue') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                100f, 574f, 93f, 20f,
+                100f, 544f, 93f, 20f,
                 order.ownerCode,
                 fontPersianBlack,
                 writer.directContent)
 
         //owner address
         addText(
-                479f, 554f, 52f, 20f,
+                479f, 524f, 52f, 20f,
                 g.message(code: 'invoice.sendingAddress') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 554f, 427f, 20f,
+                50f, 524f, 427f, 20f,
                 g.message(code: "province") + " " + order.sendingAddress.city.province.title + " - " +
                         g.message(code: "city") + " " + order.sendingAddress.city.title + " - " +
                         order.sendingAddress.addressLine1 + " " + (order.sendingAddress.addressLine2 ? order.sendingAddress.addressLine2 : ""),
@@ -422,36 +424,36 @@ class FelfelPdfService {
 
         //postal code
         addText(
-                497f, 534f, 34f, 20f,
+                497f, 504f, 34f, 20f,
                 g.message(code: 'invoice.postalCode') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                372f, 534f, 123f, 20f,
+                372f, 504f, 123f, 20f,
                 order.sendingAddress.postalCode,
                 fontPersianBlack,
                 writer.directContent)
 
         //telephone
         addText(
-                340f, 534f, 20f, 20f,
+                340f, 504f, 20f, 20f,
                 g.message(code: 'invoice.owner.telephone') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                232f, 534f, 106f, 20f,
+                232f, 504f, 106f, 20f,
                 order.ownerTelephone,
                 fontPersianBlack,
                 writer.directContent)
 
         //mobile
         addText(
-                180f, 534f, 40f, 20f,
+                180f, 504f, 40f, 20f,
                 g.message(code: 'invoice.owner.mobile') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 534f, 128f, 20f,
+                50f, 504f, 128f, 20f,
                 order.ownerMobile,
                 fontPersianBlack,
                 writer.directContent)
@@ -538,7 +540,7 @@ class FelfelPdfService {
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: ['........................']), fontPersianBlack, 7, Element.ALIGN_LEFT, 0, 0))
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign'), fontPersianBlack, 7, Element.ALIGN_RIGHT, 0, 80))
 
-        table.writeSelectedRows(0, -1, 0, -1, 40, 520, writer.directContent)
+        table.writeSelectedRows(0, -1, 0, -1, 40, 490, writer.directContent)
 
         document.close()
     }

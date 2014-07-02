@@ -19,7 +19,7 @@
 
     <div class="home_testimonial_right">
         <a id="testimonial" class="write_testi_home" href="${createLink(controller: 'testimonial', action: 'write')}"><g:message code="testimonial.write"/></a>
-        <a class="pepperfry_live" href="/community.html">FELFEL LIVE</a></div>
+        <a class="pepperfry_live" href="#"><g:message code="videoChannel.link"/></a></div>
 
     <div class="clearfix" style="height: 1px;">&nbsp;</div>
 </div>

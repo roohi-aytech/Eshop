@@ -11,6 +11,7 @@ class CustomerController {
     def springSecurityService
     def mailService
     def messageService
+    def grailsApplication
 
     def index() {}
 
@@ -103,7 +104,7 @@ class CustomerController {
             mailService.sendMail {
                 to customerInstance.email
                 subject message(code: 'emailTemplates.email_verification.subject')
-                html(view: "/messageTemplates/email_template",
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance]).toString()])
             }
 
@@ -133,7 +134,7 @@ class CustomerController {
             mailService.sendMail {
                 to customer.email
                 subject message(code: 'emailTemplates.activation_result.subject')
-                html(view: "/messageTemplates/email_template",
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/activation_result', model: [customer: customer]).toString()])
             }
 
@@ -285,7 +286,7 @@ class CustomerController {
             mailService.sendMail {
                 to user.email
                 subject message(code: 'emailTemplates.password_rest.subject')
-                html(view: "/messageTemplates/email_template",
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/password_rest', model: [user: user]).toString()])
             }
 

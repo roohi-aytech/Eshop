@@ -82,7 +82,7 @@ class InvitationController {
                     mailService.sendMail {
                         to address
                         subject params.subject
-                        html(view: "/messageTemplates/email_template",
+                        html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                                 model: [message: messageBody])
                     }
 

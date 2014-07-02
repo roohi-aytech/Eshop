@@ -159,7 +159,7 @@ class ImageController {
             response.setStatus(200)
             response.outputStream << content
             response.outputStream.flush()
-            render null
+//            render null
         } else
             render ""
 

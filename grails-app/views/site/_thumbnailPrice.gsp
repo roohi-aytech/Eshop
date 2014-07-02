@@ -9,5 +9,8 @@
                 </span>
             </g:if>
         </g:if>
+        <g:elseif test="${grailsApplication.config.showProductStatus}">
+            <span class='current'><g:message code="productModel.status.${status}.label"/></span>
+        </g:elseif>
     </span>
 %{--</g:if>--}%

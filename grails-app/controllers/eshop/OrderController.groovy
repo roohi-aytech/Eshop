@@ -23,6 +23,7 @@ class OrderController {
     def messageService
     def pdfRenderingService
     def pdfService
+    def grailsApplication
 
     static exposes = ['jms']
 
@@ -176,7 +177,7 @@ class OrderController {
         mailService.sendMail {
             to order.ownerEmail
             subject message(code: 'emailTemplates.order_created.subject')
-            html(view: "/messageTemplates/email_template",
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
         }
 

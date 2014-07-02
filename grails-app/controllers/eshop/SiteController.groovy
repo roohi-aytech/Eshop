@@ -22,6 +22,7 @@ class SiteController {
     def mailService
     def simpleCaptchaService
     def imageService
+    def grailsApplication
 
     def findProducts() {
 
@@ -191,6 +192,7 @@ class SiteController {
 //            }
 //        }
 
+        model.brand = brand
 
         model.slides = Slide.createCriteria().list {
             if (productType) {
@@ -225,10 +227,12 @@ class SiteController {
             if (brand != '') {
                 //brand and productType def pageDetails
                 def pageDetails = PageDetails.findByProductType(productType)
+                if (!pageDetails)
+                    pageDetails = PageDetails.findByProductTypeIsNull()
                 if (pageDetails) {
-                    model.title = pageDetails?.title?.replace('$BRAND$', brand)
-                    model.description = pageDetails?.description?.replace('$BRAND$', brand)
-                    model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
+                    model.title = pageDetails?.title?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
                 } else {
                     model.title = productType?.toString()
                     if (brand && brand != "")
@@ -236,10 +240,17 @@ class SiteController {
 
                 }
             } else {
-                //productType only
-                model.title = productType.pageTitle ?: productType.name
-                model.description = productType.description
-                model.keywords = productType.keywords
+                def pageDetails = PageDetails.findByProductTypeIsNull()
+                if (pageDetails) {
+                    model.title = pageDetails?.title?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.description = pageDetails?.description?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.keywords = pageDetails?.keywords?.replace('$PRODUCTTYPE$', productType?.toString())
+                } else {
+                    //productType only
+                    model.title = productType.pageTitle ?: productType.name
+                    model.description = productType.description
+                    model.keywords = productType.keywords
+                }
             }
 
             model.articles = JournalArticle.findAllByBaseProduct productType
@@ -877,15 +888,17 @@ class SiteController {
         def pageDetails
         if (productType && brand != '')
             pageDetails = PageDetails.findByProductType(productType)
+        if (!pageDetails)
+            pageDetails = PageDetails.findByProductTypeIsNull()
         if (pageDetails)
-            model.title = pageDetails?.title?.replace('$BRAND$', brand)
+            model.title = pageDetails?.title?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
         else {
             model.title = (productType ? productType.toString() + " - " : "") + params.phrase
             if (brand && brand != '')
                 model.title = (model.title ? model.title + " - " : "") + brand + params.phrase
         }
-        model.description = pageDetails?.description?.replace('$BRAND$', brand)
-        model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)
+        model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+        model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
 
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
@@ -1039,10 +1052,10 @@ class SiteController {
             html(view: "/messageTemplates/mail/contactus",
                     model: [
                             firstName: params.firstName,
-                            lastName: params.lastName,
-                            email: params.email,
-                            phone: params.phone,
-                            body: params.body
+                            lastName : params.lastName,
+                            email    : params.email,
+                            phone    : params.phone,
+                            body     : params.body
                     ])
         }
 
@@ -1050,7 +1063,7 @@ class SiteController {
         mailService.sendMail {
             to params.email
             subject message(code: 'emailTemplates.contact_us.subject')
-            html(view: "/messageTemplates/email_template",
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/contact_us', model: [parameters: params]).toString()])
         }
 
@@ -1069,6 +1082,11 @@ class SiteController {
     }
 
     def aboutUs() {
+
+        messageService.sendMessage(
+                '09122110811',
+                g.render(template: '/messageTemplates/sms/password_reset', model: [user: springSecurityService.currentUser as User]).toString())
+
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/about_us"
     }
 
