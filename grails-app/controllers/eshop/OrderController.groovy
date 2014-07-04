@@ -639,7 +639,7 @@ class OrderController {
                 return
             }
         }
-        response.setHeader("Content-Disposition", "attachment; filename=\"Zanbil-Invoice.pdf\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"Invoice.pdf\"");
         pdfService.generateInvoice(order, response.outputStream, true)
     }
 

@@ -1,7 +1,7 @@
 grails.serverURL = "http://www.felfel.ir"
 grails.app.context = "/"
 eShop.instance = 'felfel'
-url.www = false
+url.www = true
 locale.language='en'
 locale.country='US'
 events.url='http://www.felfel.ir:82'

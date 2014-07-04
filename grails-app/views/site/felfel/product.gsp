@@ -18,9 +18,9 @@
 <body>
 
 <div class="product-page-container">
-    <div style="float:left;padding-top:6px;">
+    <div style="float: left;height: 27px;margin-top: -3px;padding-top: 6px;width: 70px;z-index: 1000;">
 
-        <g:if test="${grailsApplication.config.instance != 'Local'}">
+        <g:if test="${grailsApplication.config.instance == 'Local'}">
             <div class="g-plusone"></div>
 
             <script type="text/javascript">
@@ -65,6 +65,7 @@
             </a>
         </li>
     </ul>
+    <div class="clearfix"></div>
 
     <g:render template="/site/felfel/templates/productQuickView"/>
 

@@ -255,7 +255,7 @@ class OrderAdministrationController {
             subject message(code: 'emailTemplates.inquiry_result.subject')
             html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                     model: [message: g.render(template: '/messageTemplates/mail/inquiry_result', model: [order: order]).toString()])
-            attachBytes "Zanbil-Invoice.pdf", "application/pdf", invoice.toByteArray()
+            attachBytes "Invoice.pdf", "application/pdf", invoice.toByteArray()
         }
 
         messageService.sendMessage(
@@ -480,7 +480,7 @@ class OrderAdministrationController {
 
     def printInvoice() {
         def order = Order.get(params.id)
-        response.setHeader("Content-Disposition", "attachment; filename=\"Zanbil-Invoice.pdf\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"Invoice.pdf\"");
         pdfService.generateInvoice(order, response.outputStream, false)
     }
 }

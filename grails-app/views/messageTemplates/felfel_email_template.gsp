@@ -8,7 +8,7 @@
 <div style='background:url("${resource(dir:'images', file: 'felfel-email-bg.png', absolute: true)}") no-repeat;width:360px;height:400px;font-family:Tahoma,serif;padding-top:177px;padding-right:120px;padding-left:120px;direction:rtl;margin:auto;'>
     <table>
         <tr>
-            <td style='height:200px;font-size:12px;line-height:24px;text-align:justify;'>
+            <td style='height:200px;font-size:12px;line-height:24px;text-align:justify;font-family: tahoma,serif'>
                 ${message}
             </td>
         </tr>
