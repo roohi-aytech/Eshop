@@ -44,6 +44,7 @@
         </g:each>
     </g:if>
 </ul>
+<div class="clearfix"></div>
 <g:render template="common/browsingMixedMenu"/>
 
 <eshop:selectedProductsList productTypeId="${productType.id}"/>

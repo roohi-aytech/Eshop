@@ -48,6 +48,7 @@
                                 </a>
                             </li>
                         </ul>
+                        <div class="clearfix"></div>
                     </td>
                 </tr>
 
