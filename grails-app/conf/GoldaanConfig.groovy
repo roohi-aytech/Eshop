@@ -10,6 +10,7 @@ browse.view.root='browse-root'
 page.size=81
 testimonials=true
 backgrounds=true
+showProductStatus=false
 ckeditor {
     upload {
         basedir = "/home/uploads/"

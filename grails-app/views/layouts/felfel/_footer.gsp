@@ -36,12 +36,12 @@
 
                 <div class="engage">
                     <div class="engage_links">
-                        <a class="bon_homie" href="http://blog.felfel.ir/">
+                        <a class="bon_homie" href="#">
                             <img width="74" height="30"
                                  src="${resource(dir: 'images/felfel', file: 'bon_homie_footer.jpg')}">
                         </a>
                         <a class="write_testi" id="footer_testimonial" href="${createLink(controller: 'testimonial', action: 'write')}"><g:message code="testimonial.write"/></a>
-                        <a class="bulk_order" href="http://www.pepperfry.com/bulkorder.html">Bulk Order</a>
+                        <a class="bulk_order" href="#"><g:message code="bulkOrder.link"/></a>
                     </div>
 
                     <div class="clear_all"></div>

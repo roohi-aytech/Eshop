@@ -54,6 +54,7 @@
         </g:each>
     </g:if>
 </ul>
+<div class="clearfix"></div>
 
 <h3 class="category_heading top_less bottom_less">
     %{--<div class="right_text">--}%

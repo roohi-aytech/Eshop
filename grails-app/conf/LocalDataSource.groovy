@@ -22,7 +22,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/goldaan?useUnicode=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://localhost/felfel?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
             password = ""
             pooled = true

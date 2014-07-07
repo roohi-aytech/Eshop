@@ -31,6 +31,12 @@
             scope.addToCompareList(id, title, price);
             scope.$apply();
         }
+
+
+        function removeWishList(id) {
+            var scope = angular.element(document.getElementById('main-container')).scope();
+            scope.removeFromWishList(id);
+        }
     </script>
 </head>
 
@@ -62,7 +68,7 @@
                                 </a>
                             </span>
                             <span class="delete">[ <a type="button"
-                                                      ng-click="removeFromBasket(wishListItem.id)"><g:message
+                                                      onclick="removeWishList({{wishListItem.id}})"><g:message
                                         code="application_delete"></g:message></a> ]</span>
                         </li>
                     </ul>

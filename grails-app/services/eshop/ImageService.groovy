@@ -43,7 +43,7 @@ class ImageService {
         } else if (wh) {
 
             def fileName = (wh == 'max' ? '' : wh + '-') + img.name;
-            def emptyImagePath = watermark.toString().replace('watermark.png', 'empty.jpg')
+            def emptyImagePath = watermark.toString().replace("${grailsApplication.config.eShop.instance}-watermark.png", 'empty.jpg')
 
             def file = new File(path + "wm/" + fileName)
             if (!file.exists()) {

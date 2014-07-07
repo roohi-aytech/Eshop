@@ -5,18 +5,28 @@ import org.codehaus.groovy.grails.commons.ApplicationHolder
 import org.grails.plugins.wsclient.service.WebService
 
 class MessageService {
+    def grailsApplication
 
-    static String userName = "parmir"
-    static String userPassword = "p@rmir"
-    static String senderNumber = '02142328'
+    static parameters=[
+            zanbil:[
+                    userName : "parmir",
+                    userPassword : "p@rmir",
+                    senderNumber : '02142328'
+            ],
+            felfel:[
+                    userName : "88357438",
+                    userPassword : "Salam123",
+                    senderNumber : '02188357438'
+            ]
+    ]
 
     def sendMessage(String cellphones, String message) {
         def messageService=new SmsLocator().getsmsSoap()
 
         def result = messageService.doSendSMS(
-                userName,
-                userPassword,
-                senderNumber,
+                parameters[grailsApplication.config.eShop.instance].userName,
+                parameters[grailsApplication.config.eShop.instance].userPassword,
+                parameters[grailsApplication.config.eShop.instance].senderNumber,
                 cellphones,
                 message,
                 true)

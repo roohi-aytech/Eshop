@@ -10,8 +10,9 @@ browse.view.root='browse-root'
 page.size=81
 testimonials=true
 backgrounds=true
+showProductStatus=true
 ckeditor {
     upload {
-        basedir = "/tmp/"
+        basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
     }
 }

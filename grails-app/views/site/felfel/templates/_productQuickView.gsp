@@ -20,7 +20,7 @@
 
 
                     <a count-layout="horizontal" class="pint"
-                       href="JavaScript:newPopup('http://pinterest.com/pin/create/button/?url=${createLink(uri:'/product/' + product.id, absolute: true)}&amp;media=http://i1.pepperfry.com/media/catalog/product/i/n/150x165/inalsa-maxie-plus-food-processor--white--inalsa-maxie-plus-food-processor--white--mtkjxg.jpg&amp;description=Inalsa Wonder Maxie Plus Food Processor - The Inalsa Wonder Maxie plus Food Processor (White) is a full juice processor combination available in the glossy white color. With the polycarbonate processing bowl Free Shipping across India &amp; Quality Guarant');"><span></span>
+                       href="JavaScript:newPopup('http://pinterest.com/pin/create/button/?url=${createLink(uri:'/product/' + product.id, absolute: true)}"><span></span>
                     </a>
 
                     <eshop:addToWishList useLongText="true" prodcutId="${product.id}"/>

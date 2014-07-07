@@ -45,13 +45,24 @@
         </g:each>
     </g:if>
 </ul>
+<div class="clearfix"></div>
 
 <h3 class="category_heading top_less bottom_less">
     %{--<div class="right_text">--}%
         %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message--}%
                 %{--code="rial"/>--}%
     %{--</div>--}%
-    ${title}
+    <g:if test="${productTypeName && productTypeName?.size() > 0}">
+        <g:if test="${brand && brand?.size() > 0}">
+            <g:message code="pageTitle.productTypeAndBrand" args="${[productTypeName, brand]}"/>
+        </g:if>
+        <g:else>
+            <g:message code="pageTitle.productTypeOnly" args="${[productTypeName]}"/>
+        </g:else>
+    </g:if>
+    <g:else>
+        <g:message code="pageTitle.brandOnly" args="${[brand]}"/>
+    </g:else>
     %{--<g:message code="category.all.products" args="${[productTypeName]}"/>--}%
 </h3>
 

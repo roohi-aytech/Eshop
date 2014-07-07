@@ -159,7 +159,7 @@ class ImageController {
             response.setStatus(200)
             response.outputStream << content
             response.outputStream.flush()
-            render null
+//            render null
         } else
             render ""
 
@@ -186,7 +186,7 @@ class ImageController {
                         img,
                         params.wh,
                         fileService.filePath(product),
-                        request.getSession().getServletContext().getRealPath("/images/watermark.png"))
+                        request.getSession().getServletContext().getRealPath("/images/${grailsApplication.config.eShop.instance}-watermark.png"))
 
 //                else
 //                    content = imageService.getImage(img, params.wh, fileService.filePath(product))

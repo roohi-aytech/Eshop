@@ -209,7 +209,7 @@
                         var="variationValueCount">
                     <li class="checkable">
                         <eshop:filterStartVariation productType="${productType}"
-                                                    variation="${variationGroup.value.type + variationGroup.key}"
+                                                    variation="${variationGroup.value.type.replace('v', '') + variationGroup.key}"
                                                     value="${variationValueCount._id}" showCount="true"
                                                     count="${variationValueCount.count}"/>
                     </li>
@@ -222,7 +222,7 @@
                             var="variationValueCount">
                         <li class="checkable moreItems moreVariationItems${indexer}">
                             <eshop:filterStartVariation productType="${productType}"
-                                                        variation="${variationGroup.value.type + variationGroup.key}"
+                                                        variation="${variationGroup.value.type.replace('v', '') + variationGroup.key}"
                                                         value="${variationValueCount._id}" showCount="true"
                                                         count="${variationValueCount.count}"/>
                         </li>

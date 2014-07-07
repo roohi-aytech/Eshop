@@ -70,7 +70,7 @@
     <g:message code="enquiry.request.shopping.noRegister.warning"/>
 </p>
 
-<form action='/basket/storeCustomerInformationWithoutRegistration' method='POST' id="customerInformationForm" class='cssform' autocomplete='off' onsubmit="validateCustomerInformation()">
+<form action='${createLink(uri:'/basket/storeCustomerInformationWithoutRegistration')}' method='POST' id="customerInformationForm" class='cssform' autocomplete='off' onsubmit="validateCustomerInformation()">
 
     <p>
         <label for='lastName'><g:message code="springSecurity.register.lastName.label"/>:</label>
