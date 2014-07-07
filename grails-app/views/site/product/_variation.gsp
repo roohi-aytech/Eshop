@@ -73,16 +73,18 @@
             </g:each>
         %{--guarantee select--}%
             <div class="product-variation">
-                <div class="variation-title">
-                    ${message(code: 'guarantee')}:
-                    <g:set var="curVariation"
-                           value="${defaultModel?.guarantee?.name}"/>
-                    <div class="cur-variation"
-                         id="cur-variation-0">${defaultModel?.guarantee?.name}</div>
+                <g:if test="${defaultModel?.guarantee}">
+                    <div class="variation-title">
+                        ${message(code: 'guarantee')}:
+                        <g:set var="curVariation"
+                               value="${defaultModel?.guarantee?.name}"/>
+                        <div class="cur-variation"
+                             id="cur-variation-0">${defaultModel?.guarantee?.name}</div>
 
-                    <div class="hover-variation"></div>
-                    <g:hiddenField id="variation0" name="guarantee" value="${defaultModel?.guarantee?.id}"/>
-                </div>
+                        <div class="hover-variation"></div>
+                        <g:hiddenField id="variation0" name="guarantee" value="${defaultModel?.guarantee?.id}"/>
+                    </div>
+                </g:if>
                 <g:set var="gList" value="${ProductModel.findAllByProduct(product).collect { it.guarantee }.toSet()}"/>
                 <g:if test="${gList.count { it } > 1}">
                     <div class="variation-value" variationId="0">

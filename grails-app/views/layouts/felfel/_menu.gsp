@@ -2,6 +2,7 @@
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
 <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"/>
 <% def browseService = grailsApplication.classLoader.loadClass('eshop.BrowseService').newInstance() %>
+<g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
 
 <ul class="btn-group">
     <g:each in="${rootProductTypes}" var="rpt">
@@ -10,7 +11,6 @@
             <a class="dropdown-toggle rootLink" data-toggle="dropdown"
                href="${createLink(uri: "/browse/${pt.seoFriendlyName}")}"><span>${rpt.name}</span></a>
             <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)?:new eshop.MenuConfig()}"/>
-            <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
                 <div class="inner">
                     <div class="heading"><g:message code="menu.header.title"

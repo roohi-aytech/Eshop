@@ -559,7 +559,9 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-        def title = product.toString().replace(product.name, modelNames.unique { it?.trim() }.join(','))
+        def title = product.toString()
+        if (product.name)
+            title = title.replace(product.name, modelNames.unique { it?.trim() }.join(','))
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
         model.showHistogram = true
@@ -1039,10 +1041,10 @@ class SiteController {
             html(view: "/messageTemplates/mail/contactus",
                     model: [
                             firstName: params.firstName,
-                            lastName: params.lastName,
-                            email: params.email,
-                            phone: params.phone,
-                            body: params.body
+                            lastName : params.lastName,
+                            email    : params.email,
+                            phone    : params.phone,
+                            body     : params.body
                     ])
         }
 
