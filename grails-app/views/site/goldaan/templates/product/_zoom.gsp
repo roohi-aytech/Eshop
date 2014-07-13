@@ -11,7 +11,9 @@
 <link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
 
 <script language="javascript" type="text/javascript">
+
     jQuery(document).ready(function ($) {
+
         $('#etalage').etalage({
             source_image_width: 900,
             source_image_height: 900,
@@ -22,6 +24,7 @@
             smallthumb_inactive_opacity: 0.3,
             smallthumbs_position: 'bottom',
             show_icon: false,
+            align:'right',
             autoplay: false,
             keyboard: false,
             zoom_easing: true,
@@ -63,7 +66,7 @@
         <li>
             <a href='#${it?.id}' >
                 %{--<g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>--}%
-                <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
+                <img class="etalage_thumb_image" zoomable="${it?.dynamicProperties?.zoomable ? '1' : '0'}"
                      width="50" height="50"
                      src="<g:createLink controller="image" params="[id: product?.id, name: it.name, wh: '300x300']"/>"/>
                 <img class="etalage_source_image"

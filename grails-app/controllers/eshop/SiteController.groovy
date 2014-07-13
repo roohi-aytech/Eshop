@@ -570,7 +570,7 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-        def title = product.toString()
+            def title = product.toString()
         if (product.name)
             title = title.replace(product.name, modelNames.unique { it?.trim() }.join(','))
         model.title = title

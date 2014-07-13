@@ -26,22 +26,22 @@
     }
 </script>
 
-<h3><g:message code="order.specifications-goldaan"/></h3>
+%{--<h3><g:message code="order.specifications-goldaan"/></h3>--}%
 <g:if test="${productModel}">
 
-    <h4>${product?.type?.title ?: (productModel?.product?.productTypes?.find { true }?.name ?: "")} ${product?.name ?: ""}</h4>
+    %{--<h4>${product?.type?.title ?: (productModel?.product?.productTypes?.find { true }?.name ?: "")} ${product?.name ?: ""}</h4>--}%
     <p>
-        <g:message code="productCode.label"/>: <b>${params.id}</b>
+        <g:message code="productCode.label-goldaan"/>: <b>${product.id}</b>
     </p>
 %{--variation select--}%
-    <g:each in="${product?.variations}">
-        <div class="product-variation">
-            <div class="variation-title">
-                ${it.name}:
-                <div class="cur-variation">${productModel?.variationValues.find { value -> value.variationGroup.id == it.variationGroup.id }}</div>
-            </div>
-        </div>
-    </g:each>
+    %{--<g:each in="${product?.variations}">--}%
+        %{--<div class="product-variation">--}%
+            %{--<div class="variation-title">--}%
+                %{--${it.name}:--}%
+                %{--<div class="cur-variation">${productModel?.variationValues.find { value -> value.variationGroup.id == it.variationGroup.id }}</div>--}%
+            %{--</div>--}%
+        %{--</div>--}%
+    %{--</g:each>--}%
     <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
     <g:set var="price"
            value="${priceService.calcProductModelPrice(productModel.id, selectedAddedValues.collect { it.id })}"/>
@@ -101,28 +101,31 @@
     </g:if>
 
     <div class="buttons">
+        <eshop:addToBasket prodcutModelId="${productModel.id}"
+            productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
+            useLongText="${true}"/>
 
-        <div class="pro_first_box" style="height: 40px">
+        <a class="btn-email" href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}">
+            <span><g:message code="email-to-firend-goldaan" /></span>
+        </a>
+    </div>
+        %{--<div class="pro_first_box" style="height: 40px">--}%
 
 
-            <div class="hover_fly  fly_3 clearfix">
-                <eshop:addToBasket prodcutModelId="${productModel.id}"
-                                   productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
-                                   useLongText="${true}"/>
+            %{--<div class="hover_fly  fly_3 clearfix">--}%
+
                 %{--<a data-id-product="10" title="Add to cart" rel="nofollow" href="http://transformer.sunnytoo.com/en/cart?qty=1&amp;id_product=10&amp;token=5f2d2499e3a3ae4c0e39accff9ed1f04&amp;add" class="exclusive ajax_add_to_cart_button"><div><i class="icon-basket icon-0x icon-mar-lr2"></i><span>Add to cart</span></div></a>--}%
 
                 %{--<a rel="http://transformer.sunnytoo.com/en/fashion/10-beautiful-lace-half-sleeve-casual-party-jacket-1234567890123.html" href="http://transformer.sunnytoo.com/en/fashion/10-beautiful-lace-half-sleeve-casual-party-jacket-1234567890123.html" class="quick-view"><div><i class="icon-search-1 icon-0x icon-mar-lr2"></i><span>Quick view</span></div></a>--}%
                 %{--<a data-product-name="Beautiful Lace Half-Sleeve Casual/Party Jacket" data-product-cover="http://transformer.sunnytoo.com/17-thumb_default/beautiful-lace-half-sleeve-casual-party-jacket.jpg" rel="nofollow" data-id-product="10" href="http://transformer.sunnytoo.com/en/fashion/10-beautiful-lace-half-sleeve-casual-party-jacket-1234567890123.html" class="add_to_compare"><div><i class="icon-ajust icon-0x icon-mar-lr2"></i><span>Add to compare</span></div></a>--}%
-                <a class="btn-email" href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}">
-                <span><g:message code="email-to-firend-goldaan" /></span>
-                </a>
-                <eshop:addToCompareList prodcutId="${product.id}" productTitle="${product.toString()}" useLongText="${true}"/>
+
+
+                %{--<eshop:addToCompareList prodcutId="${product.id}" productTitle="${product.toString()}" useLongText="${true}"/>--}%
                 %{--<a onclick="WishlistCart('wishlist_block_list', 'add', '10', false, 1,this); return false;" rel="10" href="#" class="addToWishlist wishlistProd_10"><div><i class="icon-heart icon-0x icon-mar-lr2"></i><span>Add to Wishlist</span></div></a>--}%
-            </div>
-        </div>
-    </div>
+            %{--</div>--}%
+        %{--</div>--}%
+    %{--</div>--}%
 </g:if>
 <g:else>
-    <h4>${product}</h4>
-    <g:message code="product.model.notExists"/>
+    <g:message code="product.model.notExists-goldaan"/>
 </g:else>

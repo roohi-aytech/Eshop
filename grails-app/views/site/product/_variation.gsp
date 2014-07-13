@@ -19,7 +19,7 @@
             $(this).addClass('selected');
             var variationId = parseInt($(this).parent().attr('variationId'));
             var variationValueId = parseInt($(this).attr('variationValueId'));
-            $('#cur-variation-' + variationId).html($(this).html());
+            $('#cur-variation-' + variationId).html($(this).text());
             $('#variation' + variationId).val($(this).attr('variationValueId'));
 
             var $form = $("#productVariationForm");

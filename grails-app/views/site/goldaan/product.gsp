@@ -45,32 +45,7 @@
 
 <table class="layout-container table-simulated">
 <tr class="table-row">
-<td class="table-cell product-rightColumn">
-    <g:set var="defaultModel" value="${ProductModel.findByProductAndIsDefaultModel(product, true)}"/>
-    <div class="product-card">
-        <div class="product-card-content" id="product-card">
-            <g:render template="/site/goldaan/templates/product/card" key="${params.id}"
-                      model="${[product: product, productModel: defaultModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
-        </div>
-
-        %{--<div class="product-card-footer">--}%
-           %{----}%
-            %{--<eshop:addToWishList prodcutId="${product.id}"--}%
-                                 %{--productTitle="${product.toString()}" useLongText="${true}"/>--}%
-        %{--</div>--}%
-
-        <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
-             aria-labelledby="priceHistogramModalLabel" aria-hidden="true" style="width: 700px;">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                        onclick="hidePriceHistogram();">×</button>
-            </div>
-
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</td>
+<g:set var="defaultModel" value="${ProductModel.findByProductAndIsDefaultModel(product, true)}"/>
 
 <td class="table-cell">
     <table class="table-simulated" style="margin-left:40px;">
@@ -131,6 +106,21 @@
                 <div itemscope itemtype="http://schema.org/Product">
                     <table class="table-simulated">
                         <tr class="table-row">
+
+                            <td class="table-cell product-imageColumn">
+                                <div id="product-images">
+
+                                    <ehcache:render template="/site/goldaan/templates/product/zoom" key="${params.id}" model="[productModel:defaultModel]"/>
+
+                                </div>
+                                <g:if test="${product.description}">
+                                    <div class="product-description">
+                                        <p itemprop="description">
+                                            ${product.description}
+                                        </p>
+                                    </div>
+                                </g:if>
+                            </td>
                             <td class="table-cell" id="product-description-area">
 
                                 <div class="white-panel">
@@ -145,61 +135,49 @@
 
                                             <h2 class="small product-title" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
                                         </g:else>
+
+
+                                    <div class="social-links">
+
+                                    <div><a href="http://www.facebook.com/sharer.php?u=${createLink(uri: "/product/${params.id}", absolute: true)}"
+                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'facebook.png')}"/></a> </div>
+                                    <div><a href="http://twitter.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}&text=${product.manualTitle ? product.pageTitle : title}"
+                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'twitter.png')}"/></a> </div>
+                                    %{--<div><a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img--}%
+                                    %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
+                                    <div><a href="https://plus.google.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}"
+                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a> </div>
+                                    <div><a href="https://instagram.com/goldaan"
+                                            target="_blank"><img src="${resource(dir: 'images/social', file: 'instagram.png')}"/></a> </div>
                                     </div>
-
-
-
-
-                                    <div class="column-left">
-                                        %{--<p class="brand-badge">--}%
-                                            %{--<img width="80px" height="80px" itemprop="brand"--}%
-                                                 %{--src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"--}%
-                                                 %{--product-titleproduct-titlealt="${product?.brand}"/>--}%
-                                        %{--</p>--}%
-
-
-
-
-                                        %{--<div id="product-price">--}%
-                                            %{--<ehcache:renderShortTTL template="/site/goldaan/templates/product/price"--}%
-                                                                    %{--key="${params.id}"--}%
-                                                                    %{--model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>--}%
-                                        %{--</div>--}%
                                     </div>
+                                    <table class="table-simulated product-info">
+                                        <tr>
+                                            <td class="product-prices table-cell">
+                                                <div class="product-card-content" id="product-card">
+                                                    <g:render template="/site/goldaan/templates/product/card" key="${params.id}"
+                                                        model="${[product: product, productModel: defaultModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
+                                                </div>
+                                            </td>
+                                            <td class="table-cell">
+                                                <div class="product-variation-container">
+                                                    <g:render template="product/variation" key="${params.id}"/>
 
-                                    <g:render template="product/variation" key="${params.id}"/>
+                                                    <div class="product-additives">
+                                                        <g:render template="product/additives"/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                    <div class="product-additives">
-                                        <g:render template="product/additives"/>
-                                    </div>
 
-                                    <g:if test="${product.description}">
-                                        <p itemprop="description">
-                                            ${product.description}
-                                        </p>
-                                        <br/>
-                                    </g:if>
+
                                 </div>
                             </td>
 
-                            <td class="table-cell product-imageColumn">
-                                <div id="product-images">
 
-                                    <ehcache:render template="/site/goldaan/templates/product/zoom" key="${params.id}" model="[productModel:defaultModel]"/>
 
-                                </div>
-                            </td>
-                            <td class="social-links">
-
-                                <div><a href="http://www.facebook.com/sharer.php?u=${createLink(uri: "/product/${params.id}", absolute: true)}"
-                                   target="_blank"><img src="${resource(dir: 'images/social', file: 'facebook.png')}"/></a> </div>
-                                <div><a href="http://twitter.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}&text=${product.manualTitle ? product.pageTitle : title}"
-                                   target="_blank"><img src="${resource(dir: 'images/social', file: 'twitter.png')}"/></a> </div>
-                                %{--<div><a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img--}%
-                                        %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
-                                <div><a href="https://plus.google.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}"
-                                   target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a> </div>
-                            </td>
                             %{--<td class="table-cell product-details">--}%
                                 %{--<ul class="tabs rotate">--}%
                                     %{--<li class="product-specification"><g:message--}%
@@ -220,23 +198,24 @@
         <tr class="table-row">
             <td class="table-cell">
                 <div class="white-panel">
-                    <ul class="tabs">
-                        <li class="product-specification"><g:message code="product.specifications"/></li>
-                        <li class="product-proOpinions"><g:message code="product.proOpinions"/></li>
-                        <li class="product-reviewList"><g:message code="product.review.list"/></li>
-                    </ul>
+                    %{--<ul class="tabs">--}%
+                        %{--<li class="product-specification"><g:message code="product.specifications"/></li>--}%
+                        %{--<li class="product-proOpinions"><g:message code="product.proOpinions"/></li>--}%
+                        %{--<li class="product-reviewList"><g:message code="product.review.list"/></li>--}%
+                    %{--</ul>--}%
 
-                    <div class="product-specification-panel">
-                        <h3><g:message code="product.specifications"/></h3>
-                        <ehcache:render template="product/attributes" key="${params.id}"
-                                        model="${[categories: rootAttributeCategories]}"/>
-                    </div>
-
-                    <div class="product-proOpinions-panel">
-                        <h3><g:message code="product.proOpinions"/></h3>
-                        <ehcache:render template="product/description" key="${params.id}"/>
-                    </div>
-
+                    %{--<div class="product-specification-panel">--}%
+                        %{--<h3><g:message code="product.specifications"/></h3>--}%
+                        %{--<ehcache:render template="product/attributes" key="${params.id}"--}%
+                                        %{--model="${[categories: rootAttributeCategories]}"/>--}%
+                    %{--</div>--}%
+                    <g:if test="${product?.details}">
+                        <div class="product-proOpinions-panel">
+                            <h3><g:message code="product.proOpinions"/></h3>
+                            <ehcache:render template="product/description" key="${params.id}"/>
+                        </div>
+                    </g:if>
+                    <hr/>
                     <div class="product-reviewList-panel">
                         <ehcache:render template="../customerReview/resources"
                                         model="${['product': product]}"/>
