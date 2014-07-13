@@ -11,6 +11,7 @@ class AddedValue {
     Date endDate
     int remainCount
     Brand brand
+    Content image
     boolean deleted = false
     static hasMany = [variationValues: VariationValue]
 
@@ -21,7 +22,7 @@ class AddedValue {
     static constraints = {
         name()
         type(inList: ["percent", "fixed"])
-        processTime(inList: ["mandetory","optional"])
+        processTime(inList: ["mandetory", "optional"])
         value()
         processTime()
         variationValues()
@@ -29,11 +30,11 @@ class AddedValue {
         startDate(nullable: true)
         endDate(nullable: true)
         remainCount(nullable: true)
-
+        image(nullable: true)
     }
 
     @Override
-    String toString(){
+    String toString() {
         name
     }
 }

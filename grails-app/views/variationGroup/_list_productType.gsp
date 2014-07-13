@@ -3,10 +3,14 @@
 <g:set var="entityName" value="${message(code: 'variationGroup.label', default: 'VariationGroup')}"/>
 
 <div class="content scaffold-list" ng-controller="variationGroupController" role="main">
+    <g:set var="actions" value="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"]]}"/>
+    <g:if test="${grailsApplication.config.variationValueImage}">
+        <g:set var="actions" value="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"],[handler: "edit_photoes(#id#)", icon: "application_edit"]]}"/>
+    </g:if>
     <rg:grid domainClass="${VariationGroup}"
              maxColumns="2"
              showCommand="false"
-             commands="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"]]}">
+             commands="${actions}">
         <rg:criteria>
             <rg:eq name="productType.id" value="${params.id}"/>
         </rg:criteria>
@@ -20,6 +24,9 @@
         </rg:fields>
         <rg:saveButton domainClass="${VariationGroup}"/>
         <rg:cancelButton/>
+    </rg:dialog>
+    <rg:dialog id="edit_photoes">
+
     </rg:dialog>
     <input type="button" ng-click="window.alert('ok');openVariationGroupCreateDialog();" value="<g:message code="new"/>"/>
     <input type="button" ng-click="openVariationGroupEditDialog()" value="<g:message code="edit"/>"/>
@@ -41,6 +48,9 @@
                     }
                 });
             }
+        }
+        function edit_photoes(id){
+            $('#edit_photoes').load('<g:createLink controller="variationGroup" action="variationImages" />/'+id).dialog('open')
         }
 
 

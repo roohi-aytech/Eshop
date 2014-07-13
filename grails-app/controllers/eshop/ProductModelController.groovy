@@ -92,7 +92,11 @@ class ProductModelController {
     def validate(ProductModel productModel){
         boolean tmp
         def lastProductModel
-        def allLastProductModels = ProductModel.findAllByProductAndGuarantee(productModel.product, productModel.guarantee)
+        def allLastProductModels
+        if(grailsApplication.config.instance=='Goldaan')
+            allLastProductModels = ProductModel.findAllByProductAndName(productModel.product, productModel.name)
+        else
+            allLastProductModels = ProductModel.findAllByProductAndGuarantee(productModel.product, productModel.guarantee)
         allLastProductModels.each {
             tmp = true
             it.variationValues.each {
@@ -132,7 +136,7 @@ class ProductModelController {
                 modelInstance.variationValues.add(VariationValue.get(params."variation_${it.id}"))
             }
 
-            if (!modelInstance.guarantee) {
+            if (grailsApplication.config.instance!='Goldaan'&&!modelInstance.guarantee) {
                 flash.message = message(code: "default.enter_guarantee")
                 render(template: 'form', model: ['productModelInstance': modelInstance, 'product' : Product.get(params.product.id)])
 

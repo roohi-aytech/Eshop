@@ -34,6 +34,10 @@
             angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
             angular.element(document.getElementById('main-container')).scope().reloadProductAdditives("${createLink(controller: "site", action: "productAdditives")}", serializedData, $('.product-additives'));
             </g:if>
+            <g:if test="${grailsApplication.config.eShop.instance == 'goldaan'}">
+            angular.element(document.getElementById('main-container')).scope().reloadProductAdditives("${createLink(controller: "site", action: "productAdditives")}", serializedData, $('.product-additives'));
+            angular.element(document.getElementById('main-container')).scope().reloadAjax("${createLink(controller: "site", action: "productImages")}", serializedData, $('#product-images'));
+            </g:if>
         });
     });
 </script>
@@ -45,7 +49,7 @@
             <g:hiddenField name="productId" value="${product.id}"/>
             <g:hiddenField name="selectedAddedValues" id="selectedAddedValues" value=""/>
         %{--variation select--}%
-            <g:each in="${product?.variations.sort { it.variationValues.size() }}">
+            <g:each in="${product?.variations.sort { it.variationValues.size()+it.toString()}}">
                 <div class="product-variation">
                     <div class="variation-title">
                         ${it.name}:
@@ -61,9 +65,14 @@
 
                     <g:if test="${it.variationValues.count { it } > 1}">
                         <div class="variation-value" variationId="${it.id}">
-                            <g:each in="${it.variationValues}">
+                            <g:each in="${it.variationValues.sort{it.id}}">
                                 <div variationValueId="${it.id}"
                                      class="variation-value-color ${defaultModel?.variationValues?.find { value -> value?.variationGroup?.id == it.variationGroup.id }?.value == it.value ? 'selected' : ''}">
+                                    <g:if test="${it.image}">
+                                        <div>
+                                            <img class="variationValueImage" src="<g:createLink controller="image" params="[type:'variationValue',uid:Math.random()]" id="${it?.id}"/>" alt="">
+                                        </div>
+                                    </g:if>
                                     ${it}
                                 </div>
                             </g:each>

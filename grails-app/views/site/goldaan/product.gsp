@@ -46,18 +46,18 @@
 <table class="layout-container table-simulated">
 <tr class="table-row">
 <td class="table-cell product-rightColumn">
+    <g:set var="defaultModel" value="${ProductModel.findByProductAndIsDefaultModel(product, true)}"/>
     <div class="product-card">
         <div class="product-card-content" id="product-card">
-            <g:render template="/site/goldaan/product/card" key="${params.id}"
-                      model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
+            <g:render template="/site/goldaan/templates/product/card" key="${params.id}"
+                      model="${[product: product, productModel: defaultModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
         </div>
 
-        <div class="product-card-footer">
-            <eshop:addToCompareList prodcutId="${product.id}"
-                                    productTitle="${product.toString()}" useLongText="${true}"/>
+        %{--<div class="product-card-footer">--}%
+           %{----}%
             %{--<eshop:addToWishList prodcutId="${product.id}"--}%
                                  %{--productTitle="${product.toString()}" useLongText="${true}"/>--}%
-        </div>
+        %{--</div>--}%
 
         <div id="priceHistogramModal" class="modal hide fade" tabindex="-1" role="window"
              aria-labelledby="priceHistogramModalLabel" aria-hidden="true" style="width: 700px;">
@@ -136,43 +136,35 @@
                                 <div class="white-panel">
                                     <div>
                                         <g:if test="${product?.pageTitle}">
-                                            <h1 class="font-koodak"
+                                            <h1 class="font-koodak product-title"
                                                 itemprop="name">${product?.pageTitle}</h1>
                                         </g:if>
                                         <g:else>
-                                            <h1 class="font-koodak"
+                                            <h1 class="font-koodak product-title"
                                                 itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                                            <h2 class="small" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
+                                            <h2 class="small product-title" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
                                         </g:else>
                                     </div>
 
 
-                                    <div itemprop="aggregateRating">
-                                        <g:message code="rate"/>:
-                                        <span class="meta" itemprop="value">${rate}</span>
-                                        <meta itemprop="best" content="5"/>
-                                        <eshop:rate identifier="hidProductRate" currentValue="${rate}"
-                                                    readOnly="true"/>
-                                    </div>
+
 
                                     <div class="column-left">
-                                        <p class="brand-badge">
-                                            <img width="80px" height="80px" itemprop="brand"
-                                                 src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"
-                                                 alt="${product?.brand}"/>
-                                        </p>
-
-                                        <p>
-                                            <g:message code="productCode.label"/>: <b>${params.id}</b>
-                                        </p>
+                                        %{--<p class="brand-badge">--}%
+                                            %{--<img width="80px" height="80px" itemprop="brand"--}%
+                                                 %{--src="${createLink(controller: 'image', params: [id: product?.brand?.id, type: 'brand'])}"--}%
+                                                 %{--product-titleproduct-titlealt="${product?.brand}"/>--}%
+                                        %{--</p>--}%
 
 
-                                        <div id="product-price">
-                                            <ehcache:renderShortTTL template="/site/goldaan/product/price"
-                                                                    key="${params.id}"
-                                                                    model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>
-                                        </div>
+
+
+                                        %{--<div id="product-price">--}%
+                                            %{--<ehcache:renderShortTTL template="/site/goldaan/templates/product/price"--}%
+                                                                    %{--key="${params.id}"--}%
+                                                                    %{--model="${[product: product, productModel: ProductModel.findByProductAndIsDefaultModel(product, true)]}"/>--}%
+                                        %{--</div>--}%
                                     </div>
 
                                     <g:render template="product/variation" key="${params.id}"/>
@@ -191,16 +183,11 @@
                             </td>
 
                             <td class="table-cell product-imageColumn">
-                                <g:if test="${product?.width}">
-                                    <div class="ruler-top"><g:formatNumber number="${product?.width}" type="number" />cm</div>
-                                </g:if>
-                                <div class="${product?.height?'ruler-right':''}">
-                                    <g:if test="${product?.height}">
-                                        <div class="ruler-right-content pull-right"><g:formatNumber number="${product?.height}" type="number" />cm</div>
-                                    </g:if>
-                                    <ehcache:render template="/site/goldaan/product/zoom" key="${params.id}"/>
+                                <div id="product-images">
+
+                                    <ehcache:render template="/site/goldaan/templates/product/zoom" key="${params.id}" model="[productModel:defaultModel]"/>
+
                                 </div>
-                                <div class="clear-float"></div>
                             </td>
                             <td class="social-links">
 
@@ -208,8 +195,8 @@
                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'facebook.png')}"/></a> </div>
                                 <div><a href="http://twitter.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}&text=${product.manualTitle ? product.pageTitle : title}"
                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'twitter.png')}"/></a> </div>
-                                <div><a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img
-                                        src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>
+                                %{--<div><a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img--}%
+                                        %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
                                 <div><a href="https://plus.google.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}"
                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a> </div>
                             </td>

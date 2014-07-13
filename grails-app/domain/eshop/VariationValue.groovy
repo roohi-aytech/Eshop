@@ -3,11 +3,12 @@ package eshop
 class VariationValue {
     static auditable = true
     String value
+    Content image
     VariationGroup variationGroup
 
-    //static hasMany = [variations: Variation, productInstances: ProductInstance]
-
-    static belongsTo = [VariationGroup, Variation, ProductInstance]
+//    static hasMany = [variations: Variation, productInstances: ProductInstance]
+    static hasMany = [productImageVariations:Content]
+    static belongsTo = [VariationGroup, Variation, ProductInstance,Content]
     Boolean deleted
     Integer indx
 
@@ -21,6 +22,7 @@ class VariationValue {
 
     static constraints = {
         value(unique: 'variationGroup')
+        image(nullable:true)
     }
 
     String toString() {

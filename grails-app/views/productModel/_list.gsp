@@ -23,7 +23,7 @@
     <rg:grid domainClass="${ProductModel}"
              showCommand="false"
              firstColumnWidth="50"
-             maxColumns="9"
+             maxColumns="5"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToProductModelGrid", icon: "plus"]]}"
              commands="${actions}">
         <rg:criteria>

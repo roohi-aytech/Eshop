@@ -53,6 +53,22 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
                 );
             });
     }
+    $scope.reloadAjax = function (url, serializedData, container) {
+        $http({
+            url: url,
+            method: "POST",
+            data: serializedData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config) {
+            container.html(data);
+        }).error(function (data, status, headers, config) {
+            console.error(
+                    "The following error occured: " +
+                    textStatus, errorThrown
+            );
+        });
+    }
+
     $scope.reloadProductPrice = function (url, serializedData, productPrice) {
         $http({
             url: url,

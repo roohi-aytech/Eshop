@@ -6,7 +6,8 @@ import grails.converters.JSON
 
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class VariationGroupController {
-
+    def imageService
+    def fileService
     def index() {
         redirect(action: "list", params: params)
     }
@@ -39,8 +40,7 @@ class VariationGroupController {
                 parentProductTypes << pt
                 pt = pt.parentProduct
             }
-        }
-        else if (baseProduct instanceof ProductType) {
+        } else if (baseProduct instanceof ProductType) {
             def pt = baseProduct
             while (pt) {
                 parentProductTypes << pt
@@ -59,15 +59,16 @@ class VariationGroupController {
                 parentProductTypes << pt
                 pt = pt.parentProduct
             }
-        }
-        else if (baseProduct instanceof ProductType) {
+        } else if (baseProduct instanceof ProductType) {
             def pt = baseProduct
             while (pt) {
                 parentProductTypes << pt
                 pt = pt.parentProduct
             }
         }
-        render VariationGroup.findAllByProductTypeIsNullOrProductTypeInList(parentProductTypes).sort {it.name}.collect {[id: it.id, name: it.name]} as JSON
+        render VariationGroup.findAllByProductTypeIsNullOrProductTypeInList(parentProductTypes).sort {
+            it.name
+        }.collect { [id: it.id, name: it.name] } as JSON
     }
 
     @Secured([RoleHelper.ROLE_PRODUCT_ADMIN, RoleHelper.ROLE_PRODUCT_TYPE_ADMIN, RoleHelper.ROLE_PRODUCT_ADD, RoleHelper.ROLE_PRODUCT_ADD_EDIT])
@@ -110,15 +111,19 @@ class VariationGroupController {
             variation = Variation.findByBaseProductAndVariationGroup(baseProduct, variationGroup)
             if (baseProduct instanceof ProductType) {
                 if (baseProduct.parentProduct) {
-                    def parentproductvariation = baseProduct.parentProduct.variations.find { it.variationGroup == variationGroup }
+                    def parentproductvariation = baseProduct.parentProduct.variations.find {
+                        it.variationGroup == variationGroup
+                    }
                     variationValues = parentproductvariation?.variationValues
                 }
             }
             if (baseProduct instanceof Product) {
                 if (variationGroup.productType) {
-                    variationValues=variationGroup.variationValues
+                    variationValues = variationGroup.variationValues
                 } else {
-                    def parentproductvariation = baseProduct?.productTypes.find { true }?.variations?.find { it.variationGroup == variationGroup }
+                    def parentproductvariation = baseProduct?.productTypes.find { true }?.variations?.find {
+                        it.variationGroup == variationGroup
+                    }
                     variationValues = parentproductvariation?.variationValues
 
                     variation?.variationValues?.each {
@@ -183,7 +188,9 @@ class VariationGroupController {
         } else
             variation = new Variation(params)
 
-        variation.variationValues = request.getParameterValues('variationValues').collect { VariationValue.findById(it.toLong()) }
+        variation.variationValues = request.getParameterValues('variationValues').collect {
+            VariationValue.findById(it.toLong())
+        }
         variation.save()
         def baseProduct = variation.baseProduct
         def productType
@@ -245,5 +252,25 @@ class VariationGroupController {
         }
         render "finished"
 
+    }
+
+    def variationImages() {
+        render(template: 'variationImages', model: [variationGroup: VariationGroup.get(params.id)])
+    }
+
+    def variationImagesSave(){
+        def variationGroup=VariationGroup.get(params.id)
+        variationGroup?.variationValues.each {
+            if(params['image_'+it.id]){
+                def img=params['image_'+it.id]
+                if(!it.image)
+                    it.image=new Content(name:it.value,contentType:'image')
+                it.image.fileContent=img.bytes
+
+                it.image.save()
+                it.save()
+            }
+        }
+        render 0
     }
 }
