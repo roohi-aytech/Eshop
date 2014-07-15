@@ -1704,7 +1704,7 @@ input, textarea, select {
     font-size: 12px;
     font-weight: bold;
     margin-top: 0;
-    padding: 12px 40px 7px 10px;
+    padding: 8px 40px 7px 10px;
     text-align: left;
     text-decoration: none;
     width: 112px;
@@ -1718,7 +1718,7 @@ input, textarea, select {
     font-size: 12px;
     font-weight: bold;
     margin-top: 10px;
-    padding: 11px 40px 8px 10px;
+    padding: 8px 40px 8px 10px;
     text-align: right;
     text-decoration: none;
     width: 112px;
@@ -4245,6 +4245,13 @@ h2.check-out-price span {
 .phoneNumber span{
     font-size:12px;
     color:#616163;
+}
+
+.msgGrowl {
+    background: #fafafa !important;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 0 !important;
+    border-color:#dddddd !important;
 }
 
 

@@ -148,6 +148,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             $('body').append(movingItem);
             var basketObject = $('#link-basket');
             var top = basketObject.offset().top - 200;
+//            window.alert(basketObject.offset().left);
             var left = basketObject.offset().left - 130;
             $('#link-basket').qtip('hide');
             movingItem.animate({
