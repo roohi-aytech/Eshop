@@ -4,6 +4,7 @@
 <link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
 
 <script language="javascript" type="text/javascript">
+    var pauseAutoPlay = false;
     jQuery(document).ready(function ($) {
         $('#etalage').etalage({
             source_image_width: 900,
@@ -17,7 +18,7 @@
             smallthumbs_position: 'right',
             show_icon: false,
             autoplay: true,
-            autoplay_interval:2000,
+            autoplay_interval:4000,
             keyboard: false,
             zoom_easing: true,
             smallthumb_hide_single: false,
@@ -37,6 +38,11 @@
         });
 
         $(".etalage_small_thumbs ul li img[src$='50x50']").parent().fadeIn();
+        $('.etalage_thumb_image').mouseenter(function(){
+            pauseAutoPlay = true;
+        }).mouseleave(function(){
+            pauseAutoPlay = false;
+        });
     });
 </script>
 

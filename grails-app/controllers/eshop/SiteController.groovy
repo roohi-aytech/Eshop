@@ -1084,8 +1084,8 @@ class SiteController {
     def aboutUs() {
 
         messageService.sendMessage(
-                '09122110811',
-                g.render(template: '/messageTemplates/sms/password_reset', model: [user: springSecurityService.currentUser as User]).toString())
+                '09125349031',
+                'TO KHOOBI ! :D')
 
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/about_us"
     }

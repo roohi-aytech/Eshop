@@ -9,7 +9,7 @@
         <li class="root">
             <a class="dropdown-toggle rootLink" data-toggle="dropdown"
                href="${createLink(uri: "/browse/${pt.seoFriendlyName}")}"><span>${rpt.name}</span></a>
-            <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)?:new eshop.MenuConfig()}"/>
+            <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt) ?: new eshop.MenuConfig()}"/>
             <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
                 <div class="inner">
@@ -23,13 +23,14 @@
                             </li>
                             <li>
                                 <div class="free_shipping_hover"><a target="_blank"
-                                                                    href="${createLink(uri:'/site/paymentAndDelivery')}"><img
+                                                                    href="${createLink(uri: '/site/paymentAndDelivery')}"><img
                                             width="30" height="19" border="0" alt=""
                                             src="${resource(dir: 'images/felfel', file: 'free_shipping_icon.png')}">
                                 </a>
 
                                     <p><a target="_blank"
-                                          href="${createLink(uri:'/site/paymentAndDelivery')}"><g:message code="menu.shipping.title"/></a><span
+                                          href="${createLink(uri: '/site/paymentAndDelivery')}"><g:message
+                                                code="menu.shipping.title"/></a><span
                                             class="subtitle"><g:message
                                                 code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: pt.id)} <g:message
                                                 code="rial"/>
@@ -53,8 +54,8 @@
                         </ul>
                         <g:set var="columnsCount" value="${0}"/>
 
-                            <g:each in="${1..3}" var="rptCounter">
-                                <g:if test="${menuConfig["column${rptCounter}"]}">
+                        <g:each in="${1..3}" var="rptCounter">
+                            <g:if test="${menuConfig["column${rptCounter}"]}">
                                 <g:set var="rootNode" value="${JSON.parse(menuConfig["column${rptCounter}"])}"/>
                                 <g:if test="${rootNode.children.flatten().size() > 0}">
                                     <ul class="${rptCounter > 1 ? 'border-right' : ''}">
@@ -73,8 +74,8 @@
                                     </ul>
                                     <g:set var="columnsCount" value="${columnsCount + 1}"/>
                                 </g:if>
-                                </g:if>
-                            </g:each>
+                            </g:if>
+                        </g:each>
                         <ul class="shop_by_brands">
                             <li><img
                                     src="${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu', role: 'e3'])}">
@@ -95,17 +96,39 @@
     <li id="span"></li>
 </ul>
 <script language="javascript" type="text/javascript">
+    var disable_mouse_leave = false;
     $(document).ready(function () {
         $('.header .navigation li.root a.rootLink').click(function () {
             window.location.href = $(this).attr('href');
             return false;
         });
         $('.header .navigation li.root').hoverIntent(
-                function () {
-                    $('.header .navigation li.root').removeClass('open');
-                    $(this).addClass('open');
-                }, function () {
-                    $(this).removeClass('open');
-                });
+                {
+                    interval: 100,
+                    sensitivity: 7,
+                    timeout: 800,
+                    over: function () {
+                        var openCount = $('.header .navigation li.root.open').length;
+                        var menuItem = $(this);
+                        if (openCount > 0) {
+
+                            $('.header .navigation li.root').find('div.top-menu').fadeOut(500);
+                            menuItem.addClass('open').find('div.top-menu').fadeIn(500);
+                        }
+                        else {
+                            $('.header .navigation li.root').removeClass('open').find('div.top-menu').hide();
+                            menuItem.addClass('open').find('div.top-menu').css('opacity', 0).animate({
+                                "height": "show",
+                                "marginTop": "show",
+                                "marginBottom": "show",
+                                "paddingTop": "show",
+                                "paddingBottom": "show",
+                                "opacity": 1
+                            }, 500);
+                        }
+                    },
+                    out: function () {
+                        $(this).removeClass('open').find('div.top-menu').hide();
+                    }});
     });
 </script>

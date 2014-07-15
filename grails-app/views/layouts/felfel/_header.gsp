@@ -125,7 +125,7 @@
     </div>
 
     <div class="navigation">
-        <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
         <div class="clearfix"></div>
     </div>
 
