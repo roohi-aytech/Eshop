@@ -52,8 +52,8 @@
         var added_to_wishlist = 'Added to your wishlist.';
         var ajax_allowed = true;
         var ajaxsearch = true;
-        var baseDir = 'http://transformer.sunnytoo.com/';
-        var baseUri = 'http://transformer.sunnytoo.com/';
+//        var baseDir = 'http://transformer.sunnytoo.com/';
+//        var baseUri = 'http://transformer.sunnytoo.com/';
         var blocksearch_type = 'top';
         var comparator_max_item = 3;
         var comparedProductsIds = [];
@@ -64,14 +64,14 @@
         var freeShippingTranslation = 'Free shipping!';
         var generated_date = 1402896138;
         var id_lang = 1;
-        var img_dir = 'http://transformer.sunnytoo.com/themes/transformer/img/';
+//        var img_dir = 'http://transformer.sunnytoo.com/themes/transformer/img/';
         var instantsearch = false;
         var isGuest = 0;
         var isLogged = 0;
         var loggin_required = 'You must be logged in to manage your wishlist.';
         var max_item = 'You cannot add more than 3 product(s) to the product comparison';
         var min_item = 'Please select at least one product';
-        var mywishlist_url = 'http://transformer.sunnytoo.com/en/module/blockwishlist/mywishlist';
+//        var mywishlist_url = 'http://transformer.sunnytoo.com/en/module/blockwishlist/mywishlist';
         var page_name = 'index';
         var priceDisplayMethod = 1;
         var priceDisplayPrecision = 2;
@@ -79,7 +79,7 @@
         var quickViewCaller = null;
         var removingLinkText = 'remove this product from my cart';
         var roundMode = 2;
-        var search_url = 'http://transformer.sunnytoo.com/en/search';
+//        var search_url = 'http://transformer.sunnytoo.com/en/search';
         var static_token = '5f2d2499e3a3ae4c0e39accff9ed1f04';
         var token = 'fc8b2e444c99c8d5fe27b8e61e03e9b2';
         var usingSecureMode = false;
@@ -118,6 +118,9 @@
         var specialSaleSlideSize = 0;
 
         var searchAutoCompleteUrl = '${createLink(controller: 'site', action: 'searchAutoComplete')}';
+        $(document).ready(function(){
+            $('.basket-cell').show();
+        });
     </script>
 
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"--}%
@@ -137,15 +140,15 @@
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"--}%
             %{--type="text/javascript"></script>--}%
     <g:javascript src="goldaan/goldaan.js"/>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"
-
+    %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"--}%
+    <script language="JavaScript" type="text/javascript"
+            src="${resource(dir: 'js', file: 'jquery.sticky-kit.js')}"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${resource(dir: 'js', file: 'jquery.sticky-kit.js')}"></script>
+
 </head>
 
 <body id="index" class="index hide-left-column hide-right-column lang_en " ng-controller="eshopCtrl">

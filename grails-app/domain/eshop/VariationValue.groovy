@@ -8,7 +8,7 @@ class VariationValue {
 
 //    static hasMany = [variations: Variation, productInstances: ProductInstance]
     static hasMany = [productImageVariations:Content]
-    static belongsTo = [VariationGroup, Variation, ProductInstance,Content]
+    static belongsTo = [VariationGroup, Variation, ProductInstance,Content,Set]
     Boolean deleted
     Integer indx
 

@@ -60,12 +60,12 @@
                                         <i class="icon-down-dir-2"></i>
                                     </a>
 
-                                    <div class="stmenu_sub style_wide col-md-12" style="display: none;">
+                                    <div style="background-image: url(${createLink(controller: 'image', params: [id: rpt.id, type: 'productTypeMenu', role: 'e1',wh:'300x300'])})"  class="stmenu_sub style_wide col-md-12" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-12 stmenu_container">
                                                 <ul class="row sttlevel1">
                                                     <g:each in="${pt.children?.findAll { !it?.deleted }}" var="pt1">
-                                                        <li style="" class="mllevel1 col-md-3 pull-right">
+                                                        <li style="" class="mllevel1 ">
                                                             <a title="Women's Clothing" class="ma_level_1" style=""
                                                                href="${createLink(uri: "/browse/${pt1.seoFriendlyName}")}">
                                                                 ${pt1.name}
@@ -85,6 +85,7 @@
                                                         </li>
                                                     </g:each>
                                                 </ul>
+                                                %{--<img src="${createLink(controller: 'image', params: [id: rpt.id, type: 'productTypeMenu', role: 'e1',wh:'300x300'])}">--}%
                                             </div>
                                         </div>
                                     </div>

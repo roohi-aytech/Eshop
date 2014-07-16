@@ -5,7 +5,7 @@
            value="${eshop.Product.findAllByDeleted  (false,[max:2])}"/>
     <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
         <g:each in="${lastVisitedProducts.reverse()}" var="product" status="index">
-               <g:render template="goldaan/templates/productThumbnail"/>
+            <g:render template="goldaan/templates/productThumbnail" model="${[hideActionLabels:true,product:product]}"/>
         </g:each>
     </g:if>
 </div>

@@ -413,6 +413,7 @@ class SiteController {
             or {
                 isNull('isVisible')
                 eq('isVisible', true)
+                eq('deleted',false)
             }
             maxResults(20)
             order("visitCount", "desc")
