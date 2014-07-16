@@ -4,6 +4,8 @@ import eshop.delivery.*
 
 class DeliveryService {
 
+    def priceService
+
     def findAllDeliveryMethods(Order order) {
 
         def deliveryMethods = []
@@ -84,8 +86,8 @@ class DeliveryService {
         }
 
         //round price
-        result.price = Math.floor(result.price / 10000) * 10000
-        result.priceWithInsurance = Math.floor(result.priceWithInsurance / 10000) * 10000
+        result.price = Math.floor(result.price / (10000 * priceService.getDisplayCurrencyExchangeRate())) * 10000
+        result.priceWithInsurance = Math.floor(result.priceWithInsurance / (10000 * priceService.getDisplayCurrencyExchangeRate())) * 10000
 
         result
     }

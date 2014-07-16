@@ -23,7 +23,7 @@
 
 %{--price range--}%
 
-%{--<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>--}%
+%{--<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/> (<eshop:currencyLabel/>)</li>--}%
 %{--<li>--}%
     %{--<div class="price-filter-form">--}%
         %{--<input type="text" class="priceRange" id="priceRangeFrom" onkeyup="formatPrice(this)"/>--}%

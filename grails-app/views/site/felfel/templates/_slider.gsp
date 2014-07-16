@@ -20,9 +20,9 @@
         </ul>
     </div>
     <script language="javascript" type="text/javascript">
+        $("#top-banners").hide();
         $(document).ready(function () {
 
-            $("#top-banners").hide();
             var $bannerImages = $('#top-banners').find('img');
             var loaded_banner_images_count = 0;
 
@@ -30,7 +30,7 @@
                 loaded_banner_images_count++;
 
                 if (loaded_banner_images_count == $bannerImages.length) {
-                    $("#top-banners").show();
+                    $("#top-banners").slideDown();
                     $('.flexslider')
                             .width($('#main').width() - $('.left-side-banners').width() - $('.right-side-banners').width() - ($('.right-side-banners').width() > 0 ? 15 : 0) - ($('.left-side-banners').width() > 0 ? 15 : 0))
                             .height($('#top-banners').height() - 15)
@@ -43,7 +43,9 @@
             }).each(function () {
                 if (this.complete) $(this).load();
             });
-            ;
+            setTimeout(function(){
+                $("#top-banners").show();
+            }, 5000);
         });
     </script>
 </g:if>

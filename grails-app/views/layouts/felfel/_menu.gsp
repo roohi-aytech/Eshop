@@ -5,12 +5,12 @@
 <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
 
 <ul class="btn-group">
-    <g:each in="${rootProductTypes}" var="rpt">
+    <g:each in="${rootProductTypes}" var="rpt" status="index">
         <g:set var="pt" value="${ProductType.get(rpt.id)}"/>
-        <li class="root">
+        <li class="root" data-index="${index}">
             <a class="dropdown-toggle rootLink" data-toggle="dropdown"
                href="${createLink(uri: "/browse/${pt.seoFriendlyName}")}"><span>${rpt.name}</span></a>
-            <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)?:new eshop.MenuConfig()}"/>
+            <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt) ?: new eshop.MenuConfig()}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
                 <div class="inner">
                     <div class="heading"><g:message code="menu.header.title"
@@ -110,13 +110,19 @@
                         var openCount = $('.header .navigation li.root.open').length;
                         var menuItem = $(this);
                         if (openCount > 0) {
+                            $('.header .navigation li.root').find('div.top-menu')
+                                    .css('z-index', 200).css('background', 'transparent').removeClass('open')
+                                    .find('.inner').stop().fadeOut(500, function () {
+                                        $(this).parent().hide().parent();
+                                    });
+                            menuItem.addClass('open').find('div.top-menu').css('z-index', 20).css('background', '#ffffff').show();
+                            menuItem.find('div.top-menu .inner').stop().fadeIn(500);
 
-                            $('.header .navigation li.root').find('div.top-menu').fadeOut(500);
-                            menuItem.addClass('open').find('div.top-menu').fadeIn(500);
                         }
                         else {
                             $('.header .navigation li.root').removeClass('open').find('div.top-menu').hide();
-                            menuItem.addClass('open').find('div.top-menu').css('opacity', 0).animate({
+                            menuItem.addClass('open').find('div.top-menu').find('*').show();
+                            menuItem.addClass('open').find('div.top-menu').css('background', '#ffffff').css('opacity', 0).animate({
                                 "height": "show",
                                 "marginTop": "show",
                                 "marginBottom": "show",

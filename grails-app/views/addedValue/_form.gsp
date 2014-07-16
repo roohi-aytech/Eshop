@@ -43,7 +43,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'value', 'error')} required">
     <label for="value">
-        <g:message code="addedValue.value.label" default="Value"/>
+        <g:message code="addedValue.value.label" args="${[eshop.currencyLabel()]}" default="Value"/>
     </label>
     <g:field type="number" style="direction: ltr;" name="value" step="any" required=""
              value="${addedValueInstance.value}"/>
