@@ -24,7 +24,6 @@ class ImageController {
 
 //        if (Environment.current != Environment.DEVELOPMENT)
 //            cache shared: true, validUntil: new Date() + 1
-
         if (params.id && params.id.toString().contains("{{")) { //angular parameter
             render ""
             return

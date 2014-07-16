@@ -216,26 +216,30 @@
                         </div>
                     </g:if>
                     <hr/>
-                    <div class="product-reviewList-panel">
-                        <ehcache:render template="../customerReview/resources"
-                                        model="${['product': product]}"/>
-                        <ehcache:render template="../customerReview/list"
-                                        model="${['product': product]}" key="${params.id}"/>
-                        <ehcache:render template="../customerReview/create"
-                                        model="${['product': product]}"/>
-                    </div>
-                    <g:render template="common/productCarousel"
-                              key="${product?.productTypes?.toArray()?.find()?.id}"
-                              model="${[title: message(code: 'product.mostVisited.list', args: [breadCrumb.last().name]), productList: mostVisitedProducts]}"/>
-                    <div>
-                        <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
-                        <g:set var="lastVisitedProducts"
-                               value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>
-                        <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
-                            <g:render template="/site/common/productCarousel"
-                                      model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>
-                        </g:if>
-                    </div>
+                    <table class="table-simulated">
+                        <tr>
+                            <td class="product-reviewList-panel-td">
+                                <div class="product-reviewList-panel">
+                                    <g:render template="../customerReview/resources"
+                                                    model="${['product': product]}"/>
+                                    <g:render template="../customerReview/list"
+                                                    model="${['product': product]}" key="${params.id}"/>
+                                    <g:render template="../customerReview/create"
+                                                    model="${['product': product]}"/>
+                                </div>
+                            </td>
+                            <td class="vertical-align-top">
+                                <div class="text-center">
+                                    <g:render template="/site/goldaan/lastVisitedProducts"/>
+                                    <g:render template="/site/goldaan/similarProducts"/>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+
+
                 </div>
             </td>
         </tr>

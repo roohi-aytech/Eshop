@@ -472,7 +472,7 @@ class SiteController {
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
-        def customerReviews = CustomerReview.findAllByProduct product
+        def customerReviews = CustomerReview.findAllByProductAndStatus(product,'approved')
         model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
             it.rate
         }) / customerReviews.count { it })

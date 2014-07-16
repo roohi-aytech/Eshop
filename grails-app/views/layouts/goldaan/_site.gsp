@@ -136,15 +136,16 @@
 
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"--}%
             %{--type="text/javascript"></script>--}%
-    %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"--}%
     <g:javascript src="goldaan/goldaan.js"/>
+    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"
 
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
-
+    <script language="JavaScript" type="text/javascript"
+            src="${resource(dir: 'js', file: 'jquery.sticky-kit.js')}"></script>
 </head>
 
 <body id="index" class="index hide-left-column hide-right-column lang_en " ng-controller="eshopCtrl">
@@ -162,11 +163,12 @@
 
             %{--<g:render template="/inquired_payments"/>--}%
             <r:layoutResources/>
+            <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
         </td>
     </tr>
     <tr>
         <td class="totalFooter">
-            %{--<g:render template="/layouts/${grailsApplication.config.eShop.instance}/footer"/>--}%
+            <g:render template="/layouts/${grailsApplication.config.eShop.instance}/footer"/>
         </td>
     </tr>
 </table>

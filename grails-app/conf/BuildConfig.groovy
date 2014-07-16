@@ -99,6 +99,7 @@ grails.project.dependency.resolution = {
         runtime ":cors:1.1.4"
 
         compile ":jxl:0.54"
+        compile ":pretty-time:2.1.3.Final-1.0.1"
 //        compile ":excel-import:1.0.0"//  {excludes "xmlbeans"}
 //        compile ":joda-time:1.4"
     }

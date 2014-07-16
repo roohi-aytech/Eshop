@@ -4,10 +4,38 @@
 <div class="wide_container">
     <div class="" id="st_mega_menu_container">
         <div class="container">
+            <g:set var="mainPage" value=""/>
+            <g:if test="${controllerName=='site' && actionName=='index'}">
+                <g:set var="mainPage" value="main-page"/>
+                <div class="row">
+                    <div class="main-page-header">
+                        <a href="<g:createLink uri="/"/>" >
+                            <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" class="logo">
+                        </a>
+                        <h4><g:message code="slogan" /></h4>
+                        <div class="order-tracking-container">
+
+
+                            <div class="orderTracking">
+                                <g:form method="post" controller="order" action="track">
+                                    <div class="input-append">
+                                        <g:textField name="trackingCode" id="trackingCodePanel" placeholder="${message(code:"order.tracking.goldaan")}"/>
+                                        <g:submitButton name="submit" class="btn btn-primary"
+                                                    value="${message(code: 'order.tracking.button')}"/>
+                                    </div>
+                                </g:form>
+                            </div>
+                            <script type="text/javascript" language="javascript">
+//                                $('#trackingCodePanel').maskInput('9999999999');
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
             <div class="row">
-                <div class="col-xs-1 text-right pull-right" id="logo_wrapper">
+                <div class="col-xs-1 text-right pull-right ${mainPage}" id="logo_wrapper">
                     <div id="header_logo_inner">
-                        <a title="Transformer" href="#" id="header_logo">
+                        <a href="<g:createLink uri="/"/>" id="header_logo">
                             <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" class="logo">
                         </a>
                     </div>

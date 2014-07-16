@@ -6,7 +6,7 @@
 
         <td class="table-cell">
 
-            <g:if test="${customerReviewInstance?.title}">
+            <g:if test="${customerReviewInstance?.title && !grailsApplication.config.hideCustomerReviewTitle}">
                 <h4><g:fieldValue bean="${customerReviewInstance}" field="title"/></h4>
             </g:if>
 

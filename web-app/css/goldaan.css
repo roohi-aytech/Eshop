@@ -2562,6 +2562,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .breadcrumb {
+    display:none;
     padding: 8px 15px;
     margin-bottom: 18px;
     list-style: none;
@@ -7282,7 +7283,7 @@ a.heading, a.page-heading, a.page-subheading {
 }
 
 .breadcrumb {
-    display: inline;
+    /*display: inline;*/
     background: none;
     margin: 0;
     padding: 0;
@@ -18639,12 +18640,12 @@ ul.wlp_bought_list li .lnkdel {
     border-image: none !important;
     border-radius: 0 2px 2px 0 !important;
     border-style: solid !important;
-    border-width: 1px 1px 1px 0 !important;
+    border-width: 1px 1px 1px  !important;
     display: inline-block;
     height: 26px;
     line-height: 24px;
-    margin-left: 90px;
-    margin-top: -5px !important;
+    margin-left: 88px;
+    margin-top: -6px !important;
     padding-right: 3px;
     text-align: right;
     width: 170px !important;
@@ -18750,12 +18751,12 @@ ul.wlp_bought_list li .lnkdel {
 .ruler-top {
     height: 25px;
     text-align: center;
-    margin-right: 10px;
+    margin-right: 7px;
     background: url("../images/goldaan/ruler.png") repeat-x scroll right bottom 0 rgba(0, 0, 0, 0);
 }
 
 .ruler-right li.etalage_thumb_active img {
-    margin-right: 10px;
+    margin-right: 7px;
 }
 
 .ruler-right li.etalage_thumb_active {
@@ -18921,9 +18922,343 @@ ul.wlp_bought_list li .lnkdel {
     background-color: #d2322d;
     border-color: #ac2925
 }
-h3{
+h3,h1,h2,h4,h5,h6{
     font-family:eYekan,tahoma;
 }
 .social-links div{
     display:inline-block;
+}
+.info {
+    border: 1px solid #87ceeb;
+    background-color: #d4ecf6;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.info div {
+    background: url(../images/icons/info.png) no-repeat top right;
+    padding: 5px 35px 5px 10px;
+}
+
+.info a {
+    margin-top: 5px;
+}
+
+.error {
+    border: 1px solid #feb7b7;
+    background-color: #ffc9c9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.product-reviewList-panel-td{
+    vertical-align: top;
+    width:320px;
+}
+.product-reviewList-panel{
+
+    margin-left: 30px;
+}
+.form-comment{
+    text-align: justify;
+}
+.info div{
+    text-align:justify;
+}
+.mediaholder{
+    display:inline-block;
+    text-align:center;
+}
+.validator {
+    background: url("../images/felfel/validationMessage.png") no-repeat right center;
+    color: #FF0000;
+    display: none;
+    margin-right: 10px;
+    padding-right: 20px;
+}
+
+/*.product-carousel-container {*/
+    /*border: 1px solid #AAAAAA;*/
+    /*border-radius: 0;*/
+    /*margin: 0 auto 10px;*/
+    /*text-align: center;*/
+    /*width: 99%;*/
+/*}*/
+
+/*.product-carousel-container .showbiz-navigation {*/
+    /*height: 222px;*/
+/*}*/
+
+/*.product-carousel-container .showbiz-navigation div {*/
+    /*height: 222px;*/
+/*}*/
+/*.product-carousel .sb-showcase-skin {*/
+    /*min-width: 170px;*/
+/*}*/
+/*.product-carousel {*/
+    /*padding-top: 5px !important;*/
+/*}*/
+
+/*.static-product-carousel {*/
+    /*border-radius: 3px;*/
+    /*list-style: none outside none;*/
+    /*margin-bottom: 0;*/
+    /*margin-right: 0;*/
+    /*padding-bottom: 15px;*/
+    /*padding-top: 5px;*/
+    /*text-align: center;*/
+/*}*/
+
+/*.static-product-carousel li {*/
+    /*display: inline-block;*/
+    /*min-width: 180px;*/
+/*}*/
+
+.waiting {
+    display: none;
+}
+.vote{
+    text-align:center;
+}
+.vote a, .vote span{
+    display:block;
+}
+.vertical-align-top{
+    vertical-align: top;
+}
+.hidden {
+    display:none;
+}
+.customer-review span, .customer-review p{
+    display:inline;
+    text-align: justify;
+}
+.customer-review  span.aggregateRating{
+    display:inline-block;
+    float:left;
+}
+.customer-review br{
+    display:none;
+}
+.comment-user{
+    font-weight:bold;
+}
+.customer-review{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 0;
+    border-top: 1px solid #eeeeee
+}
+.rate-input-msg, .rate-input{
+    display:inline-block;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+.similarProducts{
+    margin-right: 30px;
+    text-align:center;
+    display:inline-block;
+}
+.lastVisitedProducts{
+    text-align:center;
+    display:inline-block;
+}
+
+
+.footer {
+    text-align: center;
+    background: none repeat scroll 0 0 #00A161;
+    color:#D8F6E6;
+    line-height: 20px;
+    padding: 10px;
+}
+
+.filter_left {
+    border-left: 1px solid #DADADA;
+    float: right;
+    padding-left: 10px;
+    width: 10%;
+    /*position: absolute;*/
+}
+.listing_right {
+    /*border-right: 1px solid #DADADA;*/
+    float: left;
+    margin-right: -1px;
+    padding-right: 12px;
+    width: 89%;
+}
+
+.row {
+    clear: both;
+    margin-bottom: 10px;
+    display: block !important;
+}
+
+.product_block {
+    float: right;
+    margin-bottom: 15px;
+    margin-left: 14px;
+}
+
+.row .four_column {
+    overflow: hidden;
+    width: 239px;
+}
+
+.product_block .image {
+    display: block;
+    height: 262px;
+    overflow: hidden;
+    width: 235px;
+}
+
+.product_block .image img {
+    display: inline;
+    background: url('../images/felfel/grey.gif') no-repeat center center;
+}
+
+.product_block .details {
+    line-height: 16px;
+    margin-bottom: 2px;
+    overflow: hidden;
+}
+
+.product_block .details .product-name {
+    color: #000000;
+    font-size: 13px;
+    height: 35px;
+}
+
+.product_block .details .product-name a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.product_block .details .product-name a:hover {
+    color: #EC1E20;
+    text-decoration: none;
+}
+
+.product_block .details .subtitle {
+    color: #949494;
+    font-size: 11px;
+    height: 35px;
+    overflow: hidden;
+}
+
+.product_block .details .subtitle a {
+    color: #949494;
+    text-decoration: none;
+}
+
+.product_block .details .subtitle a p {
+    /*display: inline-block;*/
+    /*max-width: 239px;*/
+    /*height:35px;*/
+    /*overflow: hidden;*/
+    /*text-decoration: none;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: pre-wrap;*/
+
+    /*@include box-sizing(border-box);*/
+    /*display: block;*/
+    /*font-size: 11px;*/
+    /*height: 34px;*/
+    /*line-height: 17px;*/
+    /*margin: 0 auto;*/
+    /*max-width: 239px;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+}
+
+.product_block .price_info {
+    border-bottom: 1px solid #DADADA;
+    display: block;
+    min-height: 47px;
+    padding-bottom: 5px;
+}
+
+.product_block .price_info .price_block {
+    color: #5D5D5D !important;
+    float: right;
+    font-size: 12px;
+}
+.toolbar_top {
+    border-top: 0 none;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #DADADA;
+    clear: both;
+}
+.rangeSliderContainer {
+    float: right;
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+.rangeSliderContainer span.title {
+    color: #949494;
+    margin-left: 5px;
+}
+
+.rangeSliderContainer span.rangeSlider {
+    display: inline-block;
+    width: 400px;
+    padding: 0 5px;
+    opacity: 0.4;
+}
+
+.rangeSliderContainer:hover span.rangeSlider {
+    opacity: 1;
+}
+
+.rangeSliderContainer input[type="button"] {
+    background-image: url("../images/filter.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    display: inline-block;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: -10px;
+}
+#body-container-inner{
+    margin:0px 30px;
+}
+#st_mega_menu_container .main-page #header_logo_inner{
+    display:none;
+}
+.sticky .main-page-header{
+    display:none;
+}
+#st_mega_menu_container.sticky .main-page #header_logo_inner{
+    display:block;
+}
+.main-page-header h4{
+    display:inline-block;
+    position:relative;
+    top:23px;
+}
+.order-tracking-container{
+    display:inline-block;
+    float:left;
+    margin-left:20px;
+}
+.order-tracking-container input{
+    font-size:12px;
+    height:26px;
+    padding-top:3px;
+}
+
+.input-append input, .input-prepend input, .input-append select, .input-prepend select, .input-append .uneditable-input, .input-prepend .uneditable-input{
+    border-radius: 0 3px 3px 0;
+}
+.input-append .add-on:last-child, .input-append .btn:last-child {
+    border-radius: 3px 0 0 3px;
+}
+.sub-nav{
+    height: 40px;
 }

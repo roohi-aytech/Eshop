@@ -218,6 +218,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_browse_${productType}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
+        println match
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), products: products]
     }

@@ -50,7 +50,7 @@ class Product extends BaseProduct implements Comparable{
     }
 
     transient def getGuaranteeList() {
-        models?.collect { it.guarantee }?.unique { it.id }
+        models?.collect { it.guarantee }?.unique { it?.id }
     }
 
     static transients = ['title', 'currentPrice', 'breadCrumb']
