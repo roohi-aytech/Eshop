@@ -472,6 +472,8 @@
                     i.click()
                 };
                 var aq = function () {
+                    if(pauseAutoPlay)
+                        return;
                     var i;
                     if (c.magnifier_invert) {
                         aD.find(".etalage_thumb_active").mouseleave()
@@ -487,7 +489,75 @@
                             i = aR.last()
                         }
                     }
-                    i.click()
+//                    i.click();
+
+                    if(i.hasClass('etalage_smallthumb_first')) {
+                        if (!af || y) {
+                            var a3 = a(i), aX = 1, j = 0, a0, a4, a1, a2, aZ;
+                            if (y) {
+                                aX = y
+                            }
+                            af = true;
+                            for (var aY = 0; aY < aX; aY += 1) {
+                                a0 = a3.removeClass("etalage_smallthumb_first");
+                                a4 = aD.find(".etalage_smallthumb_last").removeClass("etalage_smallthumb_last");
+                                if (a3.prev().length) {
+                                    a1 = a0.prev().addClass("etalage_smallthumb_first");
+                                    a2 = a4.prev().addClass("etalage_smallthumb_last");
+                                    aZ = a0
+                                } else {
+                                    a1 = aR.eq(x - ag).addClass("etalage_smallthumb_first");
+                                    a2 = aR.eq(x - 1).addClass("etalage_smallthumb_last");
+                                    aZ = a2.prev()
+                                }
+                                if (aC === "vert") {
+                                    j = a1.position().top
+                                } else {
+                                    j = a1.position().left
+                                }
+                                if (a3.prev().length) {
+                                    a3 = a3.prev()
+                                }
+                            }
+                            E(j, a1, a2, aZ)
+                        }
+                    }
+                    else if(i.hasClass('etalage_smallthumb_last')) {
+                        if (!af || y) {
+                            var a3 = a(i), aX = 1, j = 0, a0, a4, a1, a2, aZ;
+                            if (y) {
+                                aX = y
+                            }
+                            af = true;
+                            for (var aY = 0; aY < aX;
+                                 aY += 1) {
+                                a0 = aD.find(".etalage_smallthumb_first").removeClass("etalage_smallthumb_first");
+                                a4 = a3.removeClass("etalage_smallthumb_last");
+                                if (a3.next().length) {
+                                    a1 = a0.next().addClass("etalage_smallthumb_first");
+                                    a2 = a4.next().addClass("etalage_smallthumb_last");
+                                    aZ = a4
+                                } else {
+                                    a1 = aR.eq(0).addClass("etalage_smallthumb_first");
+                                    a2 = aR.eq(ag - 1).addClass("etalage_smallthumb_last");
+                                    aZ = a1.next()
+                                }
+                                if (aC === "vert") {
+                                    j = a1.position().top
+                                } else {
+                                    j = a1.position().left
+                                }
+                                if (a3.next().length) {
+                                    a3 = a3.next()
+                                }
+                            }
+                            E(j, a1, a2, aZ)
+                        }
+                    }
+                    else
+                        g(i, false) ;
+
+
                 };
                 var m = function (aY) {
                     if (p <= ag) {

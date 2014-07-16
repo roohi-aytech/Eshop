@@ -62,13 +62,15 @@
                 var scope = angular.element(document.getElementById('main-container')).scope();
                 scope.selectedAddedValues = selectedAddedValues;
                 scope.addToBasket(id, name, price, selectedAddedValues, parseInt($('#qty_${product?.id}').val()));
+                $('#link-basket').qtip('show');
             }
 
             function shopItem(id, name, price){
                 addItemToBasket(id, name, price);
+                $('#link-basket').qtip('show');
                 setTimeout(function(){
                     window.location.href = '${createLink(controller: 'basket', action: 'checkout', absolute: true)}';
-                }, 3000);
+                }, 1000);
             }
 
 

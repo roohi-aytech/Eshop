@@ -14,8 +14,8 @@ class MessageService {
                     senderNumber : '02142328'
             ],
             felfel:[
-                    userName : "88357438",
-                    userPassword : "Salam123",
+                    userName : "felfel",
+                    userPassword : "88357438",
                     senderNumber : '02188357438'
             ]
     ]
