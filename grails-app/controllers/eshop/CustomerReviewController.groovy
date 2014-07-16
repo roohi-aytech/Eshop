@@ -50,8 +50,13 @@ class CustomerReviewController {
             customerReviewInstance.user = springSecurityService.currentUser
             customerReviewInstance.status = 'waiting'
         }
+        if(grailsApplication.config.hideCustomerReviewTitle && !customerReviewInstance.title)
+            customerReviewInstance.title='-'
         if (customerReviewInstance.validate() && customerReviewInstance.save()) {
-            render(template: "show", model: [customerReviewInstance: customerReviewInstance])
+            def template='show'
+            if(grailsApplication.config.customCustomerReviewTemplate)
+                template="/site/${grailsApplication.config.eShop.instance}/templates/product/review"
+            render(template: template, model: [customerReviewInstance: customerReviewInstance])
         } else
             render customerReviewInstance.errors
     }

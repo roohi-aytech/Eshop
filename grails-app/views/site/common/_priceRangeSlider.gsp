@@ -14,7 +14,9 @@
                        it?.toString()?.startsWith('rt')
                    }?.replace('rt', '') ?: filters?.priceRange?.max ?: 1000000000}"/>
         </span>
-        <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
+        <g:if test="${!grailsApplication.config.filterPriceOnChange}">
+            <input type="button" class="btn btn-danger" onclick="filterByPrice();"/>
+        </g:if>
     </div>
     <script type="text/javascript" charset="utf-8">
         jQuery("#priceRangeSlider").slider({
@@ -24,6 +26,11 @@
             smooth: true,
             round: 0,
             dimension: "&nbsp;${message(code:'rial')}",
+            <g:if test="${grailsApplication.config.filterPriceOnChange}">
+            callback: function( event, ui ) {
+                filterByPrice();
+            },
+            </g:if>
             skin: "red"
         });
 

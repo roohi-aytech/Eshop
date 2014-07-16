@@ -19,7 +19,8 @@
             $('#reviewBodyValidator_' + parentReviewId).css('display', 'inline-block');
             isValid = false;
         }
-        if ($('#reviewTitle_' + parentReviewId).val().trim() == ''){
+
+        if (${!grailsApplication.config.hideCustomerReviewTitle} && $('#reviewTitle_' + parentReviewId).val().trim() == ''){
             $('#reviewTitleValidator_' + parentReviewId).css('display', 'inline-block');
             isValid = false;
         }

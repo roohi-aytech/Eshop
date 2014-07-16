@@ -7,6 +7,8 @@ class ProductModel {
     Guarantee guarantee
     String status
     Boolean isDefaultModel
+    Integer width
+    Integer height
 
     static searchable = {
 //        root true
@@ -24,14 +26,17 @@ class ProductModel {
 
     static constraints = {
         name(nullable: true)
-        guarantee()
+        guarantee(nullable:true)
         variationValues(nullable: true)
         status(inList: ['exists', 'not-exists', 'coming-soon', 'inquiry-required'])
         isDefaultModel()
+        prices()
+        width(nullable: true)
+        height(nullable: true)
     }
 
     transient String getGuaranteeInfo(){
-        "${guarantee.name} ${guarantee.description}"
+        "${guarantee?.name} ${guarantee?.description}"
     }
 
     @Override

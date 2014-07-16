@@ -28,6 +28,10 @@ class FileService {
             return "pt${baseProduct?.id}"
         return baseProduct ?: ""
     }
+    def filePath(VariationValue vv) {
+
+        return "variationValue/${vv.id}"
+    }
 
     def filePath(ProductTypeType productTypeType) {
         return "productTypeType/${productTypeType?.id}"

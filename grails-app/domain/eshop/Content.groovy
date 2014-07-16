@@ -10,7 +10,7 @@ class Content {
     static transients = ['dynamicProperties']
 
     static hasMany = [variationValues:VariationValue]
-
+    static mappedBy = [variationValues: 'productImageVariations']
     static mapping = {
         sort 'name'
     }

@@ -37,18 +37,43 @@
     </g:each>
 </div>
 
+<g:if test="${grailsApplication.config.modelHasWidthAndHeight}">
+<div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'width', 'error')} ">
+    <label for="width">
+        <g:message code="productModel.width.label" default="Width"/>
+
+    </label>
+    <g:textField  name="width"  value="${productModelInstance.width}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'height', 'error')} ">
+    <label for="height">
+        <g:message code="productModel.height.label" default="Height"/>
+
+    </label>
+    <g:textField  name="height"  value="${productModelInstance.height}"/>
+</div>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'guarantee', 'error')} ">
     <label for="guarantee">
         <g:message code="productModel.guarantee.label" default="Guarantee"/>
     </label>
-
-    <g:select id="guarantee" name="guarantee.id"
+    <g:if test="${grailsApplication.config.instance=='Goldaan'}">
+        <g:select id="guarantee" name="guarantee.id"
+                  from="${guarantees}"
+                  optionKey="id"
+                  value="${productModelInstance?.guarantee?.id}"
+                  noSelection="['' : '']"/>
+    </g:if>
+    <g:else>
+        <g:select id="guarantee" name="guarantee.id"
               required=""
               from="${guarantees}"
               optionKey="id"
               value="${productModelInstance?.guarantee?.id}"
               noSelection="['' : '']"/>
+    </g:else>
 </div>
 
 

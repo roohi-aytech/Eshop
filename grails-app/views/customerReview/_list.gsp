@@ -9,8 +9,14 @@
         </div>
     </g:if>
 </div>
-<g:each in="${product.customerReviews.findAll {it.parentReview == null && it.status == 'approved'}.sort {-it.totalVotes}}" var="customerReview">
-    <g:render template="/customerReview/show" model="${['customerReviewInstance': customerReview]}"></g:render>
+<g:each in="${product.customerReviews.findAll {it.parentReview == null && it.status == 'approved'}.sort {('-'+(it.totalVotes+''+it.lastUpdate.time))as Long }}" var="customerReview">
+    <g:if test="${grailsApplication.config.customCustomerReviewTemplate}">
+
+        <g:render template="/site/${grailsApplication.config.eShop.instance}/templates/product/review" model="${['customerReviewInstance': customerReview]}"></g:render>
+    </g:if>
+    <g:else>
+        <g:render template="/customerReview/show" model="${['customerReviewInstance': customerReview]}"></g:render>
+    </g:else>
 </g:each>
 <div id="newCustomerReviews_0">
 </div>

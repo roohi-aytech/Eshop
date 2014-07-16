@@ -1,6 +1,7 @@
 <%@ page import="grails.converters.JSON; eshop.MenuConfig; eshop.ProductType" %>
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
 <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"/>
+<g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
 
 <ul class="btn-group pull-right">
     <g:each in="${rootProductTypes}" var="rpt">
@@ -8,7 +9,6 @@
         <li class="root">
             <a class="dropdown-toggle" data-toggle="dropdown" href="${createLink(uri:"/browse/${pt.seoFriendlyName}")}"><span>${rpt.name}</span></a>
             <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)}"/>
-            <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
             <div class="top-menu dropdown-menu content" id="top-menu${pt.id}">
                 <div class="inner"
                      style="background-image: url(${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu'])});">

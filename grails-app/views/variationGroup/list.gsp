@@ -12,11 +12,14 @@
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <div class="content scaffold-list" ng-controller="variationGroupController" role="main">
+    <g:set var="actions" value="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"]]}"/>
+    <g:if test="${grailsApplication.config.variationValueImage}">
+        <g:set var="actions" value="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"],[handler: "edit_photoes(#id#)", icon: "application_edit"]]}"/>
+    </g:if>
     <rg:grid domainClass="${VariationGroup}"
              maxColumns="2"
              showCommand="false"
-             commands="${[[handler: "deleteVariationGroup(#id#)", icon: "application_delete"]]}"
-    >
+             commands="${actions}">
         <rg:criteria>
             <rg:isNull name="productType"/>
         </rg:criteria>
@@ -50,6 +53,9 @@
                     }
                 });
             }
+        }
+        function edit_photoes(id){
+            $('#edit_photoes').load('<g:createLink controller="variationGroup" action="variationImages" />/'+id).dialog('open')
         }
     </script>
 </div>

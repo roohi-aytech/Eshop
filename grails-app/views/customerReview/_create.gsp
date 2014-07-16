@@ -25,24 +25,25 @@
             <input type="hidden" name="parentReviewId" value="${params?.parentReviewId ?: 0}"/>
 
             <div>
-                <div class="field-name">
-                    <g:message code="review.title"></g:message>
-                    <span class="validator" id="reviewTitleValidator_${params?.parentReviewId ?: 0}"><g:message
-                            code="review.title.validation.label"></g:message></span>
-                </div>
+                <g:if test="${!grailsApplication.config.hideCustomerReviewTitle}">
+                    <div class="field-name">
+                        <g:message code="review.title"></g:message>
+                        <span class="validator" id="reviewTitleValidator_${params?.parentReviewId ?: 0}"><g:message
+                                code="review.title.validation.label"></g:message></span>
+                    </div>
 
-                <div class="field-value">
-                    <input type="text" class="reviewTitle" id="reviewTitle_${params?.parentReviewId ?: 0}"
-                           name="reviewTitle"/>
-                </div>
-
+                    <div class="field-value">
+                        <input type="text" class="reviewTitle" id="reviewTitle_${params?.parentReviewId ?: 0}"
+                               name="reviewTitle"/>
+                    </div>
+                </g:if>
                 <g:if test="${params?.parentReviewId}"></g:if>
                 <g:else>
-                    <div>
+                    <div class="rate-input-msg">
                         <g:message code="review.rate"></g:message>
                     </div>
 
-                    <div>
+                    <div class="rate-input">
                         <eshop:rate name="reviewRate" identifier="reviewRate_${params?.parentReviewId ?: 0}"
                                     readOnly="false"/>
                         <span class="validator" id="reviewRateValidator_${params?.parentReviewId ?: 0}"><g:message
@@ -56,13 +57,14 @@
                 </div>
 
                 <div>
-                    <ckeditor:editor name="reviewBody_${params?.parentReviewId ?: 0}" width="440px" height="120px">
+                    <ckeditor:editor name="reviewBody_${params?.parentReviewId ?: 0}" width="${grailsApplication.config.editorReviewWidth?:440}px" height="120px">
                         <ckeditor:config var="toolbar_Full">
                             [
-                                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike' ] },
                                 { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent',
                                     '-','JustifyRight','JustifyCenter','JustifyLeft','JustifyBlock','-','BidiRtl','BidiLtr' ] },
+                                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike' ] },
                                 { name: 'links', items : [ 'Link','Unlink' ] }
+
                             ]
                         </ckeditor:config>
                     </ckeditor:editor>

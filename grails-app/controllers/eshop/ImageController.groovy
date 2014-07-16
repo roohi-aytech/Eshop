@@ -24,7 +24,6 @@ class ImageController {
 
 //        if (Environment.current != Environment.DEVELOPMENT)
 //            cache shared: true, validUntil: new Date() + 1
-
         if (params.id && params.id.toString().contains("{{")) { //angular parameter
             render ""
             return
@@ -96,12 +95,25 @@ class ImageController {
                     content = brand.logo
                 }
                 break;
+            case 'variationValue':
+                def variationValue = VariationValue.get(params.id)
+                if (variationValue) {
+                    content = variationValue?.image?.fileContent
+                }
+                break;
+            case 'addedValue':
+                def addedValue = AddedValue.get(params.id)
+                if (addedValue) {
+                    content = addedValue?.image?.fileContent
+                }
+                break;
             case 'guarantee':
                 def guarantee = Guarantee.get(params.id)
                 if (guarantee) {
                     content = guarantee.logo
                 }
                 break;
+
             case 'specialSale':
                 def specialSaleSlide = SpecialSaleSlide.get(params.id)
                 if (specialSaleSlide) {

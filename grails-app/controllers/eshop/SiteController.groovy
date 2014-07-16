@@ -472,7 +472,7 @@ class SiteController {
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
-        def customerReviews = CustomerReview.findAllByProduct product
+        def customerReviews = CustomerReview.findAllByProductAndStatus(product,'approved')
         model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
             it.rate
         }) / customerReviews.count { it })
@@ -570,7 +570,9 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-        def title = product.toString().replace(product.name, modelNames.unique { it?.trim() }.join(','))
+            def title = product.toString()
+        if (product.name)
+            title = title.replace(product.name, modelNames.unique { it?.trim() }.join(','))
         model.title = title
         model.description = message(code: 'site.product.page.description', args: [title])
         model.showHistogram = true
@@ -595,7 +597,7 @@ class SiteController {
                     selected = false
             }
 
-            if (model.guarantee.id.toLong() != params.guarantee.toLong())
+            if (model.guarantee?.id?.toLong() != params.guarantee?.toLong())
                 selected = false
 
             if (selected)
@@ -671,7 +673,7 @@ class SiteController {
                     selected = false
             }
 
-            if (model.guarantee.id.toLong() != params.guarantee.toLong())
+            if (model?.guarantee?.id?.toLong() != params?.guarantee?.toLong())
                 selected = false
 
             if (selected)
@@ -689,7 +691,47 @@ class SiteController {
             it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
         }
 
-        render(template: 'product/additives', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, price: priceService.calcProductModelPrice(productModel.id)])
+        render(template: 'product/additives', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, price: (productModel?priceService.calcProductModelPrice(productModel.id):0)])
+    }
+
+    def productImages() {
+        def product = Product.get(params.productId)
+
+        def models = ProductModel.findAllByProduct(product)
+        def productModel
+        models.each {
+            def model = it
+            Boolean selected = true
+            product.variations.each { variation ->
+                def modelVariationId = model?.variationValues.find {
+                    it.variationGroup.id == variation.variationGroup.id
+                }?.id?.toLong()
+                def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
+                if (modelVariationId != selectedVariationId)
+                    selected = false
+            }
+
+            if (model?.guarantee?.id?.toLong() != params?.guarantee?.toLong())
+                selected = false
+
+            if (selected)
+                productModel = model
+        }
+
+//        def addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
+//            !addedValue?.variationValues?.any { variationValue ->
+//                variationValue.value != productModel?.variationValues
+//                        .find { it?.variationGroup?.id == variationValue?.variationGroup?.id }?.value
+//            }
+//        }
+
+//        def selectedAddedValues = addedValues.findAll {
+//            it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
+//        }
+
+        render(template: "${grailsApplication.config.eShop.instance}/templates/product/zoom",
+                model: [product: product,
+                        productModel: productModel])
     }
 
     def productPrice() {
