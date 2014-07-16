@@ -45,24 +45,24 @@
 </script>
 <ul id="etalage">
 
-    <g:set var="mainImage" value="${product?.mainImage}"/>
-    <g:if test="${mainImage}">
-        <li>
-            <a href='${mainImage?.id}' >
+    %{--<g:set var="mainImage" value="${product?.mainImage}"/>--}%
+    %{--<g:if test="${mainImage}">--}%
+        %{--<li>--}%
+            %{--<a href='${mainImage?.id}' >--}%
                 %{--<g:set var="image"--}%
                        %{--value="${ImageIO.read(new ByteInputStream(mainImage?.fileContent, mainImage?.fileContent?.length))}"/>--}%
-                <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
-                     width="50" height="50" itemprop="image"
-                     src="<g:createLink controller="image"
-                                        params="[id: product?.id, name: mainImage?.name, wh: '300x300']"/>"/>
-                <img class="etalage_source_image"
-                     src="<g:createLink controller="image"
-                                        params="[id: product?.id, name: mainImage?.name, wh: 'max']"/>"/>
-            </a>
-        </li>
-    </g:if>
+                %{--<img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"--}%
+                     %{--width="50" height="50" itemprop="image"--}%
+                     %{--src="<g:createLink controller="image"--}%
+                                        %{--params="[id: product?.id, name: mainImage?.name, wh: '300x300']"/>"/>--}%
+                %{--<img class="etalage_source_image"--}%
+                     %{--src="<g:createLink controller="image"--}%
+                                        %{--params="[id: product?.id, name: mainImage?.name, wh: 'max']"/>"/>--}%
+            %{--</a>--}%
+        %{--</li>--}%
+    %{--</g:if>--}%
 
-    <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name && it?.variationValues?.collect{it?.id}?.containsAll(productModel?.variationValues?.collect{it?.id}) }}">
+    <g:each in="${product?.images?.findAll {it?.variationValues?.collect{it?.id}?.containsAll(productModel?.variationValues?.collect{it?.id}) }}">
         <li>
             <a href='#${it?.id}' >
                 %{--<g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>--}%

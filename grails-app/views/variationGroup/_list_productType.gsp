@@ -19,6 +19,7 @@
         <rg:fields bean="${new VariationGroup()}">
             <rg:modify>
                 <rg:ignoreField field="variations"/>
+                <rg:ignoreField field="productImageVariations"/>
                 <rg:hiddenReference field="productType"/>
             </rg:modify>
         </rg:fields>

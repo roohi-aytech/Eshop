@@ -5300,10 +5300,6 @@ ul.footer_links li + li {
     display: inline-block
 }
 
-.content_sortPagiBar .display li.grid a, .content_sortPagiBar .display_m li.grid a {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/icons.png) no-repeat center -232px transparent
-}
-
 .content_sortPagiBar .display li.grid a:hover, .content_sortPagiBar .display_m li.grid a:hover {
     background-color: #bbbbbb;
     background-position: center -272px
@@ -5312,10 +5308,6 @@ ul.footer_links li + li {
 .content_sortPagiBar .display li.grid.selected a, .content_sortPagiBar .display_m li.grid.selected a {
     background-color: #bbbbbb;
     background-position: center -272px
-}
-
-.content_sortPagiBar .display li.list a, .content_sortPagiBar .display_m li.list a {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/icons.png) no-repeat center -312px transparent
 }
 
 .content_sortPagiBar .display li.list a:hover, .content_sortPagiBar .display_m li.list a:hover {
@@ -5505,10 +5497,6 @@ ul.step li.step_done {
     overflow: hidden;
     float: left;
     cursor: pointer
-}
-
-.cancel, .cancel a {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../../../modules/productcomments/img/delete.gif) no-repeat 0 -16px !important
 }
 
 .cancel a, .star a {
@@ -5806,17 +5794,6 @@ div.star_hover a, div.star a:hover {
     background: white
 }
 
-#order_carrier .title_block {
-    padding: 0 15px;
-    height: 29px;
-    font-weight: bold;
-    line-height: 29px;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/bg_table_th.png) repeat-x 0 -10px #999999
-}
-
 #order_carrier span {
     display: block;
     padding: 15px;
@@ -5887,17 +5864,6 @@ table#cart_summary .gift-icon {
     margin-right: 6px
 }
 
-.addresses .waitimage {
-    display: none;
-    float: left;
-    width: 24px;
-    height: 24px;
-    background-image: url("http://transformer.sunnytoo.com/themes/transformer/css/../../../img/loader.gif");
-    background-repeat: no-repeat;
-    position: relative;
-    bottom: -2px;
-    margin-right: 6px
-}
 
 .addresses .checkbox.addressesAreEquals {
     margin: 1em 0
@@ -5984,16 +5950,6 @@ table#cart_summary .gift-icon {
     border-bottom: 1px solid #999999
 }
 
-#carrierTable th {
-    padding: 0 15px;
-    height: 29px;
-    font-weight: bold;
-    line-height: 29px;
-    color: white;
-    text-transform: uppercase;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/bg_table_th.png) repeat-x 0 -10px #999999
-}
-
 #carrierTable td {
     padding: 15px;
     font-weight: bold;
@@ -6035,18 +5991,6 @@ p.payment_module a {
     padding: 33px 40px 34px 99px;
     letter-spacing: -1px;
     position: relative
-}
-
-p.payment_module a.bankwire {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/bankwire.png) 15px 12px no-repeat #fbfbfb
-}
-
-p.payment_module a.cheque {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/cheque.png) 15px 15px no-repeat #fbfbfb
-}
-
-p.payment_module a.cash {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/cash.png) 15px 15px no-repeat #fbfbfb
 }
 
 p.payment_module a:hover {
@@ -6386,14 +6330,6 @@ form#sendComment h3 {
     font-size: 12px
 }
 
-#sendComment p.text input {
-    padding: 0 5px;
-    height: 28px;
-    width: 498px;
-    border: 1px solid #cccccc;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/bg_input.png) repeat-x 0 0 white
-}
-
 #sendComment p.textarea textarea {
     height: 80px;
     width: 508px;
@@ -6403,15 +6339,6 @@ form#sendComment h3 {
 #sendComment p.submit {
     padding: 0;
     text-align: right
-}
-
-#sendComment p.closeform {
-    float: right;
-    padding: 0;
-    height: 12px;
-    width: 12px;
-    text-indent: -5000px;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/icon/delete.gif) no-repeat 0 0
 }
 
 .star {
@@ -7108,18 +7035,11 @@ a.heading, a.page-heading, a.page-subheading {
     color: #00A161
 }
 
-.section .title_block {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/title_block_bg.png) repeat-x left center
-}
 
 .section .title_block span, .section .title_block a {
     display: inline-block;
     padding-right: 8px;
     background: #fff
-}
-
-#home-page-tabs {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/title_block_bg.png) repeat-x left center
 }
 
 #brands_slider-column .title_block, #featured-products_block_center .title_block, #featured_products_sldier_block_center .title_block, #featured_products_sldier_block_center_column .title_block, #new-products_block_center .title_block, #new-products_block_center_column .title_block, #related-products_block_center .title_block, #related-products_block_center_column .title_block, #special-products_block_center .title_block, #special-products_block_center_column .title_block, #brands_slider .title_block, #best-sellers_block_center .title_block, #best-sellers_block_center_column .title_block, .product_categories_slider_block .title_block, .product_categories_slider_block_column .title_block, #productscategory-products_block_center .title_block, #crossselling-products_block_center .title_block, #blog_related_products .title_block, #accessories_block .title_block {
@@ -7640,13 +7560,6 @@ html[xmlns] .slides {
     text-align: center
 }
 
-.stajax_loader {
-    display: block;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/loading.gif) no-repeat center center
-}
 
 .price, #our_price_display, .sale_percentage, .sale_percentage_sticker {
     color: #00a161;
@@ -7851,7 +7764,7 @@ span.new {
 
 .hover_fly {
     position: absolute;
-    bottom: -3px;
+    bottom: -35px;
     width: 100%;
     left: 0;
     background: #BBBBBB;
@@ -7861,21 +7774,6 @@ span.new {
 .hover_fly.hover_fly_static {
     position: relative;
     bottom: 0
-}
-
-.hover_fly a {
-    font-size: 1em;
-    color: #fff;
-    display: inline-block;
-    width: 15%;
-    height: 35px;
-    line-height: 34px;
-    position: relative;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/split_f5.gif) repeat-y left top #bbbbbb;
-    float: right;
-    text-align: center;
-    white-space: nowrap;
-    border-top: 1px solid #fafafa !important
 }
 
 .hover_fly a div {
@@ -8185,29 +8083,6 @@ noindex:-o-prefocus, .hover_fly.fly_2 a:hover {
     min-height: 32px
 }
 
-.opener, .grower {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 10px 17px;
-    display: block;
-    cursor: pointer;
-    text-decoration: none;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/opener.png) center center no-repeat #fafafa
-}
-
-.opener:hover, .grower:hover {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/opener-w.png) center center no-repeat #666666
-}
-
-.active > .opener, .open > .opener, .grower.OPEN {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/opener-active.png) center center no-repeat #fafafa
-}
-
-.active > .opener:hover, .open > .opener:hover, .grower.OPEN:hover {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/opener-active-w.png) center center no-repeat #666666
-}
-
 .icon_wrap, .shopping_cart .ajax_cart_right {
     background: #f1f1f1;
     color: #00A161
@@ -8330,17 +8205,6 @@ a.icon_wrap i.icon-0x, .icon_wrap i.icon-0x {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    cursor: pointer
-}
-
-.selectBox-dropdown .selectBox-arrow {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 23px;
-    line-height: 22px;
-    height: 23px;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/jquery.selectBox-arrow.gif) 50% center no-repeat;
     cursor: pointer
 }
 
@@ -9194,13 +9058,6 @@ table#cart_summary_total {
         font-size: 1px
     }
 
-    .example {
-        background-image: url(http://transformer.sunnytoo.com/themes/transformer/css/autoload/../images/example2x.png);
-        -webkit-background-size: 13px 13px;
-        -moz-background-size: 13px 13px;
-        -o-background-size: 13px 13px;
-        background-size: 13px 13px
-    }
 }
 
 table th {
@@ -9270,12 +9127,6 @@ table td, table th {
     }
 }
 
-div.selector, div.selector span, div.checker span, div.radio span, div.uploader, div.uploader span.action, div.button, div.button span {
-    background-image: url("http://transformer.sunnytoo.com/themes/transformer/css/autoload/../../img/jquery/uniform/sprite.png");
-    background-repeat: no-repeat;
-    -webkit-font-smoothing: antialiased
-}
-
 div.selector, div.checker, div.button, div.radio, div.uploader {
     vertical-align: middle
 }
@@ -9287,12 +9138,6 @@ div.selector:focus, div.checker:focus, div.button:focus, div.radio:focus, div.up
 div.selector, div.selector *, div.radio, div.radio *, div.checker, div.checker *, div.uploader, div.uploader *, div.button, div.button * {
     margin: 0;
     padding: 0
-}
-
-.highContrastDetect {
-    background: url("http://transformer.sunnytoo.com/themes/transformer/css/autoload/../../../img/jquery/uniform/bg-input.png") repeat-x 0 0;
-    width: 0;
-    height: 0
 }
 
 input.uniform-input, select.uniform-multiselect, textarea.uniform {
@@ -9875,10 +9720,6 @@ input.uniform-input, input.uniform-input:focus {
     max-height: 100%
 }
 
-#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {
-    background-image: url('http://transformer.sunnytoo.com/js/jquery/plugins/fancybox/fancybox_sprite.png')
-}
-
 #fancybox-loading {
     position: fixed;
     top: 50%;
@@ -9891,12 +9732,6 @@ input.uniform-input, input.uniform-input:focus {
     z-index: 8060
 }
 
-#fancybox-loading div {
-    width: 44px;
-    height: 44px;
-    background: url('http://transformer.sunnytoo.com/js/jquery/plugins/fancybox/fancybox_loading.gif') center center no-repeat
-}
-
 .fancybox-close {
     position: absolute;
     top: -18px;
@@ -9904,18 +9739,6 @@ input.uniform-input, input.uniform-input:focus {
     width: 36px;
     height: 36px;
     cursor: pointer;
-    z-index: 8040
-}
-
-.fancybox-nav {
-    position: absolute;
-    top: 0;
-    width: 40%;
-    height: 100%;
-    cursor: pointer;
-    text-decoration: none;
-    background: transparent url('http://transformer.sunnytoo.com/js/jquery/plugins/fancybox/blank.gif');
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     z-index: 8040
 }
 
@@ -9973,16 +9796,6 @@ input.uniform-input, input.uniform-input:focus {
 
 .fancybox-lock-test {
     overflow-y: hidden !important
-}
-
-.fancybox-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    display: none;
-    z-index: 8010;
-    background: url('http://transformer.sunnytoo.com/js/jquery/plugins/fancybox/fancybox_overlay.png')
 }
 
 .fancybox-overlay-fixed {
@@ -10051,18 +9864,6 @@ input.uniform-input, input.uniform-input:focus {
     padding: 10px;
     background: #000;
     background: rgba(0, 0, 0, .8)
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-    #fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {
-        background-image: url('http://transformer.sunnytoo.com/js/jquery/plugins/fancybox/fancybox_sprite@2x.png');
-        background-size: 44px 152px
-    }
-
-    #fancybox-loading div {
-        background-image: url('http://transformer.sunnytoo.com/js/jquery/plugins/fancybox/fancybox_loading@2x.gif');
-        background-size: 24px 24px
-    }
 }
 
 #blockcart_top_wrap {
@@ -10753,15 +10554,6 @@ ul.product_list.grid > li .product-container .product-image-container {
     }
 }
 
-ul.product_list.grid > li .product-container .product-image-container .content_price {
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 100%;
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/price-container-bg.png);
-    padding: 9px 0;
-    display: none
-}
 
 ul.product_list.grid > li .product-container .product-image-container .content_price span {
     color: white
@@ -10812,10 +10604,6 @@ ul.product_list.grid > li .product-container .button-container .ajax_add_to_cart
     margin: 0 6px 10px 6px
 }
 
-ul.product_list.grid > li .product-container .functional-buttons {
-    background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/functional-bt-shadow.png) repeat-x;
-    padding: 11px 0 5px
-}
 
 @media (min-width: 1200px) {
     ul.product_list.grid > li .product-container .functional-buttons {
@@ -13836,11 +13624,7 @@ ul.wlp_bought_list li .lnkdel {
         clear: left
     }
 
-    #maintenance {
-        margin: 126px 0 0 0;
-        padding: 91px 48px 365px 297px;
-        background: url(http://transformer.sunnytoo.com/themes/transformer/css/../img/bg_maintenance.png) no-repeat
-    }
+
 }
 
 .animated {
@@ -17433,12 +17217,6 @@ ul.wlp_bought_list li .lnkdel {
     z-index: 2
 }
 
-.camera_target_content .camera_link {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/blank.gif);
-    display: block;
-    height: 100%;
-    text-decoration: none
-}
 
 .camera_loader {
     left: 50%;
@@ -17613,15 +17391,7 @@ ul.wlp_bought_list li .lnkdel {
     z-index: 10
 }
 
-.camera_prevThumbs div {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/camera_skins.png) no-repeat -160px 0;
-    display: block;
-    height: 40px;
-    margin-top: -20px;
-    position: absolute;
-    top: 50%;
-    width: 30px
-}
+
 
 .camera_nextThumbs {
     bottom: 4px;
@@ -17634,15 +17404,6 @@ ul.wlp_bought_list li .lnkdel {
     z-index: 10
 }
 
-.camera_nextThumbs div {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/camera_skins.png) no-repeat -190px 0;
-    display: block;
-    height: 40px;
-    margin-top: -20px;
-    position: absolute;
-    top: 50%;
-    width: 30px
-}
 
 .camera_command_wrap .hideNav {
     display: none
@@ -17739,42 +17500,17 @@ ul.wlp_bought_list li .lnkdel {
     filter: alpha(opacity=100)
 }
 
-.camera_prev > span {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/camera_skins.png) no-repeat 0 0;
-    display: block;
-    height: 40px;
-    width: 40px
-}
-
 .camera_next {
     right: 50px;
     opacity: 0.3;
     filter: alpha(opacity=30)
 }
 
-.camera_next > span {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/camera_skins.png) no-repeat -40px 0;
-    display: block;
-    height: 40px;
-    width: 40px
-}
 
 .camera_commands {
     right: 41px
 }
 
-.camera_commands > .camera_play {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/camera_skins.png) no-repeat -80px 0;
-    height: 40px;
-    width: 40px
-}
-
-.camera_commands > .camera_stop {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/camera_skins.png) no-repeat -120px 0;
-    display: block;
-    height: 40px;
-    width: 40px
-}
 
 .camera_wrap .camera_pag .camera_pag_ul li {
     -webkit-border-radius: 8px;
@@ -17846,46 +17582,6 @@ ul.wlp_bought_list li .lnkdel {
     height: 1px;
     margin: -1px 0 25px;
     position: relative
-}
-
-.pattern_1 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay1.png) repeat
-}
-
-.pattern_2 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay2.png) repeat
-}
-
-.pattern_3 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay3.png) repeat
-}
-
-.pattern_4 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay4.png) repeat
-}
-
-.pattern_5 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay5.png) repeat
-}
-
-.pattern_6 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay6.png) repeat
-}
-
-.pattern_7 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay7.png) repeat
-}
-
-.pattern_8 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay8.png) repeat
-}
-
-.pattern_9 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay9.png) repeat
-}
-
-.pattern_10 .camera_overlayer {
-    background: url(http://transformer.sunnytoo.com/modules/stcameraslideshow/views/css/../images/patterns/overlay10.png) repeat
 }
 
 .camera_wrap .camera_pag .camera_pag_ul li {
@@ -19075,6 +18771,7 @@ h3,h1,h2,h4,h5,h6{
     color:#D8F6E6;
     line-height: 20px;
     padding: 10px;
+    margin-top:0px;
 }
 
 .filter_left {
@@ -19259,6 +18956,127 @@ h3,h1,h2,h4,h5,h6{
 .input-append .add-on:last-child, .input-append .btn:last-child {
     border-radius: 3px 0 0 3px;
 }
-.sub-nav{
-    height: 40px;
+
+.mostvisited-nav{
+    margin-top:20px;
+    max-height:520px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
+.mostvisited-nav .thumbnail{
+    border:none;
+    box-shadow:none;
+}
+.hover_fly .btn-buy::before{
+    content: "\e846";
+    font-size: 18px;
+    line-height: 18px;
+    margin-left:3px;
+    font-family:"fontello";
+}
+.hover_fly .btn-email::before{
+    content: "\e835";
+    font-size: 18px;
+    line-height: 18px;
+    margin-left:3px;
+    font-family:"fontello";
+}
+.hover_fly .btn-buy,.hover_fly .btn-email{
+    margin-top:0px;
+    line-height: 18px;
+}
+#link-basket .dropdown-toggle{
+    margin-top:3px !important;
+}
+.pro_first_box:hover .hover_fly {
+    bottom:-3px;
+}
+.top-left-actions .btn-buy span,.top-left-actions .btn-email span{
+    display:none;
+}
+.top-left-actions{
+    position:absolute;
+    top:-40px;
+    transition:all 300ms ease-in-out 0s;
+    width:99%;
+}
+.pro_first_box:hover .top-left-actions{
+    top:0px;
+}
+.top-left-actions .btn-buy,.top-left-actions .btn-email{
+    width:22px;
+    padding:1px;
+}
+.top-left-actions .btn-buy:before{
+    content: "\e846";
+    font-size: 18px;
+    line-height: 18px;
+    margin-left:3px;
+    font-family:"fontello";
+}
+.top-left-actions .btn-buy,.top-left-actions .btn-buy:hover{
+    color:#46A74E;
+    background:none;
+    border:none;
+    float:left;
+}
+.top-left-actions .btn-email,.top-left-actions .btn-email:hover{
+    color:#D9534F;
+    background:none;
+    border:none;
+    float:right;
+}
+.top-left-actions .btn-email:before{
+    content: "\e835";
+    font-size: 18px;
+    line-height: 18px;
+    margin-left:3px;
+    font-family:"fontello";
+}
+.stmenu_container{
+    vertical-align: bottom;
+}
+.stmenu_sub {
+    min-height:300px;
+    background-position:bottom left;
+    background-size:contain;
+    background-repeat:no-repeat;
+    padding-right:40px
+}
+.banners-container .banners-hover{
+    display:inline-block;
+    padding:20px;
+    background-color:#f3f3f3;
+
+}
+.banners-container{
+    text-align: center;
+}
+.banners-container .relative{
+    display:inline-block;
+}
+.banners{
+    display:inline-block;
+}
+.footer-info-container,.footer-info{
+    text-align:center;
+    vertical-align:top;
+}
+.footer-info div{
+    display: inline-block;
+    vertical-align:top;
+    padding:0px 20px;
+    height:75px;
+    text-align:right;
+    border-left:1px solid #f3f3f3;
+}
+.footer-info div:last-child{
+    border-left:none;
+}
+ul.third-party li{
+    display:inline-block;
+    margin:10px;
+}
+.basket-cell{
+    display:none;
 }

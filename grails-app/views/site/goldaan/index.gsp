@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="eshop.Product" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
@@ -15,14 +15,39 @@
     %{--<!--[if lt IE 9]>--}%
     <!--<script src="http://html5shim.googlecode.com/svn/trunk/html5" type="text/javascript"/>-->
     %{--<![endif]-->--}%
+    <script language="JavaScript">
+    var selectedAddedValues = [${selectedAddedValues.collect{it.id}.join(',')}];
+    $(document).ready(function () {
+        $('#selectedAddedValues').val(selectedAddedValues.toString());
+    });
+    function addToBasket(id, name, price) {
+        var scope = angular.element(document.getElementById('main-container')).scope();
+        scope.selectedAddedValues = selectedAddedValues;
+        scope.addToBasket(id, name, price, selectedAddedValues);
+    }
 
-    <!-- Start Alexa Certify Javascript -->
-    <script type="text/javascript">
-        _atrk_opts = { atrk_acct:"y2lmi1a8s700WQ", domain:"zanbil.ir",dynamic: true};
-        (function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+    function addOrRemoveAddedValue(item) {
+
+        var i = selectedAddedValues.indexOf(parseInt($(item).val()));
+        if (i != -1)
+            selectedAddedValues.splice(i, 1);
+        else
+            selectedAddedValues[selectedAddedValues.length] = parseInt($(item).val());
+
+        $('#selectedAddedValues').val(selectedAddedValues.toString());
+        var $form = $("#productVariationForm");
+        var serializedData = $form.serialize();
+        $('#product-card').html('${message(code: 'waiting')}');
+        angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
+    }
     </script>
-    <noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=y2lmi1a8s700WQ" style="display:none" height="1" width="1" alt="" /></noscript>
-    <!-- End Alexa Certify Javascript -->
+    %{--<!-- Start Alexa Certify Javascript -->--}%
+    %{--<script type="text/javascript">--}%
+        %{--_atrk_opts = { atrk_acct:"y2lmi1a8s700WQ", domain:"zanbil.ir",dynamic: true};--}%
+        %{--(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();--}%
+    %{--</script>--}%
+    %{--<noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=y2lmi1a8s700WQ" style="display:none" height="1" width="1" alt="" /></noscript>--}%
+    %{--<!-- End Alexa Certify Javascript -->--}%
 
 </head>
 
@@ -35,8 +60,10 @@
     </tr>
     <tr class="table-row">
         <td colspan="2">
-            <div class="sub-nav">
-
+            <div class="mostvisited-nav">
+                <g:each in="${mostVisitedProducts}" var="product">
+                    <g:render template="goldaan/templates/productThumbnail" model="${[product:product,size:'200x200']}"/>
+                </g:each>
             </div>
         </td>
     </tr>
@@ -55,19 +82,16 @@
             %{--</table>--}%
         %{--</td>--}%
     %{--</tr>--}%
-    %{--<tr class="table-row">--}%
-        %{--<td class="table-cell banners">--}%
-            %{--<ehcache:render template="banners/rightsideBanners"/>--}%
-        %{--</td>--}%
-
-        %{--<td class="table-cell">--}%
-
-            %{--<ehcache:render template="common/browsingGraphicalMenu"/>--}%
-
-            %{--<g:render template="common/productGrid"--}%
-                      %{--model="${[productIds: filters.products.productIds]}"/>--}%
-        %{--</td>--}%
-    %{--</tr>--}%
+    <tr class="table-row">
+        <td class="table-cell">
+            <div class="banners-container">
+                <div class="banners-hover">
+                    <ehcache:render template="banners/rightsideBanners"/>
+                    <ehcache:render template="banners/leftsideBanners"/>
+                </div>
+            </div>
+        </td>
+    </tr>
     %{--<tr class="table-row">--}%
         %{--<td class="table-cell" colspan="2">--}%
             %{--<g:render template="common/productCarousel"--}%
