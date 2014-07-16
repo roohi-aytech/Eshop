@@ -17,7 +17,7 @@
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"
        original-title="${message(code: "basket")}">
         <span id="basketCounter" class="counter">{{basketCounter}} <g:message
-                code="basket.product"/> {{calculateBasketTotalPrice() | number:0}} <g:message code="rial"/></span>
+                code="basket.product"/> {{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></span>
     </a>
 
     <div id="basketItems" class="dropdown-menu content">
@@ -36,7 +36,7 @@
                     <span class="basket-item-title">
                         {{itemFirstLine(basketItem.name)}}<br/>
                         {{itemSecondLine(basketItem.name)}}<br/>
-                        <span>{{basketItem.realPrice | number:0}} <g:message code="rial"/>
+                        <span>{{basketItem.realPrice | number:0}} <eshop:currencyLabel/>
                             <br/>
                             <a ng-click="removeFromBasket(basketItem.id)" class="removeBasketItem"><g:message
                                     code="basket.items.delete"/></a>
@@ -52,7 +52,7 @@
                 <div>
                     <span>{{basketCounter}}</span>
                     <label><g:message code="basket.items.count"/></label>
-                    <span>{{calculateBasketTotalPrice() | number:0}} <g:message code="rial"/></span>
+                    <span>{{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></span>
                     <label><g:message code="basket.items.price"/></label>
                 </div>
             </div>

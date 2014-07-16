@@ -35,13 +35,14 @@ class PriceService {
         if (!price)
             return [showVal: 0D, status: productModel.status]
 
-        def priceVal = price?.rialPrice
+        def displayCurrencyExchangeRate = Currency.findByDisplay(true)?.exchangeRate?.intValue() ?: 1
+        def priceVal = price?.rialPrice / displayCurrencyExchangeRate
 
         if (priceVal)
             AddedValue.findAllByBaseProductAndProcessTimeAndDeletedNotEqual(productModel.product, 'mandetory', true).each { addedValue ->
                 if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
                     if (addedValue.type == "percent")
-                        priceVal += price?.rialPrice * addedValue.value / 100
+                        priceVal += (price?.rialPrice * addedValue.value) / (100 * displayCurrencyExchangeRate)
                     else if (addedValue.type == "fixed")
                         priceVal += addedValue.value
                 }
@@ -105,13 +106,14 @@ class PriceService {
         if (!price)
             return [showVal: 0D, status: productModel.status]
 
-        def priceVal = price?.rialPrice
+        def displayCurrencyExchangeRate = Currency.findByDisplay(true)?.exchangeRate?.intValue() ?: 1
+        def priceVal = price?.rialPrice / displayCurrencyExchangeRate
 
         if (priceVal)
             AddedValue.findAllByBaseProductAndProcessTimeAndDeletedNotEqual(productModel.product, 'mandetory', true).each { addedValue ->
                 if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
                     if (addedValue.type == "percent")
-                        priceVal += price?.rialPrice * addedValue.value / 100
+                        priceVal += (price?.rialPrice * addedValue.value) / (100 * displayCurrencyExchangeRate)
                     else if (addedValue.type == "fixed")
                         priceVal += addedValue.value
                 }

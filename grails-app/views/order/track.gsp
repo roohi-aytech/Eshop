@@ -49,8 +49,7 @@
 
                                     <div class="price">
                                         <g:message code="price"/>: <g:formatNumber number="${orderItem.unitPrice}"
-                                                                                   type="number"/> <g:message
-                                                code="rial"/>
+                                                                                   type="number"/> <eshop:currencyLabel/>
                                     </div>
 
                                     <div class="count">
@@ -69,15 +68,13 @@
                                     <g:message code="free"/>
                                 </g:if>
                                 <g:else>
-                                    <g:formatNumber number="${order.deliveryPrice}" type="number"/> <g:message
-                                        code="rial"/>
+                                    <g:formatNumber number="${order.deliveryPrice}" type="number"/> <eshop:currencyLabel/>
                                 </g:else>
                             </div>
 
                             <div>
                                 <g:message code="order.totalPrice"/>: <b><g:formatNumber number="${order.totalPrice}"
-                                                                                         type="number"/> <g:message
-                                    code="rial"/></b>
+                                                                                         type="number"/> <eshop:currencyLabel/></b>
                             </div>
                         </ul>
 

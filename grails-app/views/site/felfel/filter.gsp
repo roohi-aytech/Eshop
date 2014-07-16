@@ -49,8 +49,7 @@
 
 <h3 class="category_heading top_less bottom_less">
     %{--<div class="right_text">--}%
-        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message--}%
-                %{--code="rial"/>--}%
+        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <eshop:currencyLabel/>--}%
     %{--</div>--}%
     <g:if test="${productTypeName && productTypeName?.size() > 0}">
         <g:if test="${brand && brand?.size() > 0}">

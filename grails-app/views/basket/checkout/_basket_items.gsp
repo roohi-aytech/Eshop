@@ -33,8 +33,7 @@
                     </span>
                 </span>
                 <span class="price"><g:message
-                        code="orderItem.unitPrice"/>: <b>{{basketItem.realPrice | number:0}}</b> <g:message
-                        code="rial"/></span>
+                        code="orderItem.unitPrice"/>: <b>{{basketItem.realPrice | number:0}}</b> <eshop:currencyLabel/></span>
                 <span class="count"><g:message code="count"></g:message>: <input type="text"
                                                                                  value="{{basketItem.count}}"
                                                                                  onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value, updateDeliveryMethods)"/>
@@ -44,8 +43,7 @@
                             code="basket.items.delete"/></a> ]</span>
                 <hr/>
                 <span class="price"><g:message
-                        code="basket.totalPrice"/>: <b>{{basketItem.realPrice * basketItem.count | number:0}}</b> <g:message
-                        code="rial"/></span>
+                        code="basket.totalPrice"/>: <b>{{basketItem.realPrice * basketItem.count | number:0}}</b> <eshop:currencyLabel/></span>
 
                 <div class="clearfix"></div>
             </li>
@@ -56,7 +54,7 @@
 
 <div class="check-out-price">
     <g:message code="basket.totalPrice"></g:message>: <b><span
-        class="totalPrice">{{calculateBasketTotalPrice() | number:0}}</span></b> <g:message code="rial"/>
+        class="totalPrice">{{calculateBasketTotalPrice() | number:0}}</span></b> <eshop:currencyLabel/>
 </div>
 
 <div class="check-out-price" ng-if="deliveryPrice == -1">
@@ -64,12 +62,11 @@
     <span ng-switch on="deliveryPrice">
         <span ng-switch-when="-1"><g:message code="deliveryMethod.notSelected"/></span>
         <span ng-switch-when="0"><b><g:message code="free"/></b></span>
-        <span ng-switch-default><b><span class="totalPrice">{{deliveryPrice | number:0}}</span></b> <g:message
-                code="rial"/></span>
+        <span ng-switch-default><b><span class="totalPrice">{{deliveryPrice | number:0}}</span></b> <eshop:currencyLabel/></span>
     </span>
 </div>
 
 <h2 class="check-out-price">
     <g:message code="basket.totalPayablePrice"></g:message>: <span
-        class="totalPrice">{{calculateBasketPayablePrice() | number:0}} <g:message code="rial"/></span>
+        class="totalPrice">{{calculateBasketPayablePrice() | number:0}} <eshop:currencyLabel/></span>
 </h2>

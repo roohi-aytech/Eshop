@@ -48,8 +48,7 @@
 
 <h3 class="category_heading top_less bottom_less">
     %{--<div class="right_text">--}%
-        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productType?.id)} <g:message--}%
-                %{--code="rial"/>--}%
+        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productType?.id)} <eshop:currencyLabel/>--}%
     %{--</div>--}%
     <g:message code="category.all.products" args="${[productType]}"/>
 </h3>

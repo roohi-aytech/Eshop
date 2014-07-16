@@ -11,7 +11,7 @@
     <common:link class="dropdown-toggle" data-toggle="dropdown" href="#"
                  original-title="${message(code: "basket")}" controller="basket" action="checkout" https="${false}">
         <span id="basketCounter" class="counter">{{basketCounter}} <g:message
-                code="basket.product"/> {{calculateBasketTotalPrice() | number:0}} <g:message code="rial"/></span>
+                code="basket.product"/> {{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></span>
     </common:link>
 </div>
 
@@ -36,7 +36,7 @@
                 </p>
 
                 <p>
-                    <g:message code="price"/> : {{basketItem.realPrice | number:0}} <g:message code="rial"/>
+                    <g:message code="price"/> : {{basketItem.realPrice | number:0}} <eshop:currencyLabel/>
                 </p>
 
                 <p>
@@ -66,8 +66,7 @@
         <div class="clearfix"></div>
 
         <div class="price_block">
-            <p><g:message code="basket.items.price"/> {{calculateBasketTotalPrice() | number:0}} <g:message
-                    code="rial"/></p>
+            <p><g:message code="basket.items.price"/> {{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></p>
             <common:link class="button checkout_button" href="#" controller="basket" action="checkout" https="${false}">
                 <span><g:message code="alerts.basket.button.checkOut"/></span>
             </common:link>

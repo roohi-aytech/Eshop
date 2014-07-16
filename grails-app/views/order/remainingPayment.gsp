@@ -46,8 +46,7 @@
         <div class="info">
             <div>
                 <g:message code="order.usedAccountValue"/> : <b><g:formatNumber number="${order.usedAccountValue}"
-                                                                                type="number"/></b> <g:message
-                    code="rial"/><br/>
+                                                                                type="number"/></b> <eshop:currencyLabel/><br/>
                 <a class="btn btn-primary" href="${createLink(action: 'payment', params: [id: params.id])}"><g:message code="order.usedAccountValue.changes"/></a>
             </div>
         </div>

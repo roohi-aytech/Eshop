@@ -76,10 +76,8 @@
     <div class="info">
         <div>
             <g:message code="customer.account.currentValue"/> : <b><g:formatNumber number="${customerAccountValue}"
-                                                                                   type="number"/></b> <g:message
-                code="rial"/> <br/>
-            <g:message code="order.totalPrice"/> : <b><g:formatNumber number="${orderPrice}" type="number"/></b> <g:message
-                code="rial"/>
+                                                                                   type="number"/></b> <eshop:currencyLabel/> <br/>
+            <g:message code="order.totalPrice"/> : <b><g:formatNumber number="${orderPrice}" type="number"/></b> <eshop:currencyLabel/>
         </div>
     </div>
 
@@ -104,7 +102,7 @@
                 <g:textField name="payFromAccountAmount" id="payFromAccountAmount" onKeyup="formatPrice(this);"
                              style="margin:0;width:100px;direction: ltr;text-align: left;"
                              value="${[orderPrice, customerAccountValue].min()}"/>
-                <g:message code="rial"/>
+                <eshop:currencyLabel/>
                 <span id="payFromAccountAmountValidator"></span>
             </div>
         </div>

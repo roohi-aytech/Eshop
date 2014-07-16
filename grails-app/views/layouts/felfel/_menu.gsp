@@ -32,8 +32,7 @@
                                           href="${createLink(uri: '/site/paymentAndDelivery')}"><g:message
                                                 code="menu.shipping.title"/></a><span
                                             class="subtitle"><g:message
-                                                code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: pt.id)} <g:message
-                                                code="rial"/>
+                                                code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: pt.id)} <eshop:currencyLabel/>
                                     </span></p>
                                 </div>
 

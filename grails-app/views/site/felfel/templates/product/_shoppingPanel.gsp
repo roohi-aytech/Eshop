@@ -28,7 +28,7 @@
                 <div class="total_price">
 
                     <span class="you_pay" id="total-price"><g:message code="basket.totalPrice"/></span> <span
-                        class="red" id="orderPrice_${product?.id}"><g:formatNumber number="${price.showVal}" type="number"/> <g:message code="rial"/></span>
+                        class="red" id="orderPrice_${product?.id}"><g:formatNumber number="${price.showVal}" type="number"/> <eshop:currencyLabel/></span>
 
                 </div>
 
@@ -55,7 +55,7 @@
                 else if (count > 1)
                     count = count - 1;
                 input.val(count);
-                $('#orderPrice_' + id).text((parseInt($('#itemPrice_' + id).val()) * count).formatMoney() + ' ${message(code:'rial')}');
+                $('#orderPrice_' + id).text((parseInt($('#itemPrice_' + id).val()) * count).formatMoney() + ' ${eshop.currencyLabel()}');
             }
 
             function addItemToBasket(id, name, price) {

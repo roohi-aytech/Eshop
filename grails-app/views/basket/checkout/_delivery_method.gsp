@@ -77,7 +77,7 @@
                         <td>
                             <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
                                 <g:message
-                                        code="deliveryPrice"/>: ${(deliveryMethod.price) == 0 ? message(code: 'free') : formatNumber(number: deliveryMethod.price, type: 'number') + ' ' + message(code: 'rial')}
+                                        code="deliveryPrice"/>: ${(deliveryMethod.price) == 0 ? message(code: 'free') : formatNumber(number: deliveryMethod.price, type: 'number') + ' ' + eshop.currencyLabel()}
                             </label>
                         </td>
                     </tr>

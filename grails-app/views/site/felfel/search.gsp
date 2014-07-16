@@ -58,8 +58,7 @@
 
 <h3 class="category_heading top_less bottom_less">
     %{--<div class="right_text">--}%
-        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <g:message--}%
-                %{--code="rial"/>--}%
+        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productTypeId)} <eshop:currencyLabel/>--}%
     %{--</div>--}%
     <g:message code="search.for.label"></g:message> ${params.phrase}
 </h3>
