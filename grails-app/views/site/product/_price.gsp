@@ -12,7 +12,7 @@
                     </div>
                 </g:if>
                 <span class='current'><g:formatNumber
-                        number="${price.showVal}" type="number"/> <g:message code="rial"/></span>
+                        number="${price.showVal}" type="number"/> <eshop:currencyLabel/></span>
 
                 <a id="priceHistogram" class="priceHistogram"
                    onclick="showPriceHistogram(${productModel.id});">

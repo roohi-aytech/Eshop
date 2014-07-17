@@ -56,7 +56,7 @@
             <th><g:message code="invoice.item.addedValue"></g:message></th>
             <th><g:message code="invoice.item.realPrice"></g:message></th>
             <th><g:message code="invoice.item.count"></g:message></th>
-            <th><g:message code="invoice.item.totalPrice"></g:message></th>
+            <th><g:message code="invoice.item.totalPrice"></g:message> (<eshop:currencyLabel/>)</th>
         </tr>
         <g:each in="${basket}" var="basketItem" status="i">
             <tr>

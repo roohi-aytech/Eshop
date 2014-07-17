@@ -13,8 +13,7 @@
 
         <div class="fieldcontain ${hasErrors(bean: discountInstance, field: 'value', 'error')} ">
             <label for="value">
-                <g:message code="discount.value.label" default="Value"/>
-
+                <g:message code="discount.value.label" args="${[eshop.currencyLabel()]}" default="Value"/>
             </label>
             <g:field type="number" name="value" step="any" value=""/>
         </div>

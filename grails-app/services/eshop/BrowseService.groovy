@@ -12,6 +12,7 @@ class BrowseService {
     def searchableService
     def grailsApplication
     def messageSource
+    def priceService
 
     def getProducts() {
         if (!products) {
@@ -225,6 +226,7 @@ class BrowseService {
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findFilteredPageFilters(f, page, cacheKey) {
+        def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
         def productType
         def breadcrumb = []
         def match = [:]
@@ -373,25 +375,25 @@ class BrowseService {
             } else if (filter.startsWith("rf")) {
                 def priceFrom = Integer.parseInt(filter.replace("rf", ""))
                 if (lastbc == "rt") {
-                    match.put('price', [$lte: match['price']['$lte'], $gte: priceFrom])
+                    match.put('price', [$lte: match['price']['$lte'], $gte: priceFrom * priceService.getDisplayCurrencyExchangeRate()])
                     def priceTo = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
                     breadcrumb.remove(breadcrumb.size() - 1)
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [numberFormatter.format(priceFrom), priceTo].toArray(), Locale.default)]
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [numberFormatter.format(priceFrom), priceTo, e.currencyLabel()].toArray(), Locale.default)]
                 } else {
-                    match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.moreThan', [numberFormatter.format(priceFrom)].toArray(), Locale.default)]
+                    match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger() * priceService.getDisplayCurrencyExchangeRate()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.moreThan', [numberFormatter.format(priceFrom), e.currencyLabel()].toArray(), Locale.default)]
                 }
                 lastbc = "rf"
             } else if (filter.startsWith("rt")) {
                 def priceTo = Integer.parseInt(filter.replace("rt", ""))
                 if (lastbc == "rf") {
-                    match.put('price', [$gte: match['price']['$gte'], $lte: priceTo])
+                    match.put('price', [$gte: match['price']['$gte'], $lte: priceTo * priceService.getDisplayCurrencyExchangeRate()])
                     def priceFrom = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
                     breadcrumb.remove(breadcrumb.size() - 1)
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [priceFrom, numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [priceFrom, numberFormatter.format(priceTo), e.currencyLabel()].toArray(), Locale.default)]
                 } else {
-                    match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.lessThan', [numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                    match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger() * priceService.getDisplayCurrencyExchangeRate()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.lessThan', [numberFormatter.format(priceTo), e.currencyLabel()].toArray(), Locale.default)]
                 }
                 lastbc = "rt"
             } else {
@@ -590,11 +592,12 @@ class BrowseService {
 
         }
         [productTypes: productTypes, brands: brands,
-                productIds: productIds, attrs: attrs, attrGroups: attrGroups, totalPages: totalPages]
+         productIds  : productIds, attrs: attrs, attrGroups: attrGroups, totalPages: totalPages]
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findSearchPageFilters(productIdList, f, page, cacheKey) {
+        def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
         def productType
         def breadcrumb = []
         def selecteds = [:]
@@ -748,25 +751,25 @@ class BrowseService {
             } else if (filter.startsWith("rf")) {
                 def priceFrom = Integer.parseInt(filter.replace("rf", ""))
                 if (lastbc == "rt") {
-                    match.put('price', [$lte: match['price']['$lte'], $gte: priceFrom])
+                    match.put('price', [$lte: match['price']['$lte'], $gte: priceFrom * priceService.getDisplayCurrencyExchangeRate()])
                     def priceTo = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
                     breadcrumb.remove(breadcrumb.size() - 1)
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [numberFormatter.format(priceFrom), priceTo].toArray(), Locale.default)]
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [numberFormatter.format(priceFrom), priceTo, e.currencyLabel()].toArray(), Locale.default)]
                 } else {
-                    match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger()])
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.moreThan', [numberFormatter.format(priceFrom)].toArray(), Locale.default)]
+                    match.put('price', [$gte: priceFrom?.toString()?.replace(',', '')?.toInteger() * priceService.getDisplayCurrencyExchangeRate()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.moreThan', [numberFormatter.format(priceFrom), e.currencyLabel()].toArray(), Locale.default)]
                 }
                 lastbc = "rf"
             } else if (filter.startsWith("rt")) {
                 def priceTo = Integer.parseInt(filter.replace("rt", ""))
                 if (lastbc == "rf") {
-                    match.put('price', [$gte: match['price']['$gte'], $lte: priceTo])
+                    match.put('price', [$gte: match['price']['$gte'], $lte: priceTo * priceService.getDisplayCurrencyExchangeRate()])
                     def priceFrom = breadcrumb[breadcrumb.size() - 1]['linkTitle']?.toString()?.findAll(/\d+/).join(',')
                     breadcrumb.remove(breadcrumb.size() - 1)
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [priceFrom, numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.between', [priceFrom, numberFormatter.format(priceTo), e.currencyLabel()].toArray(), Locale.default)]
                 } else {
-                    match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger()])
-                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.lessThan', [numberFormatter.format(priceTo)].toArray(), Locale.default)]
+                    match.put('price', [$lte: priceTo?.toString()?.replace(',', '')?.toInteger() * priceService.getDisplayCurrencyExchangeRate()])
+                    breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: messageSource.getMessage('breadcrumb.lessThan', [numberFormatter.format(priceTo), e.currencyLabel()].toArray(), Locale.default)]
                 }
                 lastbc = "rt"
             } else {
@@ -858,15 +861,16 @@ class BrowseService {
         def criteria = match
         criteria.displayInList = true
         criteria.price = [$gt: 0]
-        products.aggregate([$unwind: '$productTypes'], [$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
-            [min: it.minPrice, max: it.maxPrice]
-        }.find() ?: 0
+        def exchangeRate = priceService.getDisplayCurrencyExchangeRate()
+        (getProducts().aggregate([$unwind: '$productTypes'], [$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
+            [min: it.minPrice / exchangeRate, max: it.maxPrice / exchangeRate]
+        }.find() ?: 0)
     }
 
     def minPrice(Long productTypeId) {
-        products.aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
+        (getProducts().aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
             it.minPrice
-        }.find() ?: 0
+        }.find() ?: 0) / priceService.getDisplayCurrencyExchangeRate()
     }
 
     def findProductTypeSampleProducts(ProductType productType, count) {

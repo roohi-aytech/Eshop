@@ -218,14 +218,14 @@ class OrderController {
         render view: 'payment', model: [
                 order: order,
                 orderPrice: order.totalPrice,
-                customerAccountValue: customer ? accountingService.calculateCustomerAccountValue(customer) : 0,
+                customerAccountValue: customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0,
                 customer: customer
         ]
     }
 
     def payFromAccount() {
         def customer = springSecurityService.currentUser as Customer
-        def customerAccountValue = customer ? accountingService.calculateCustomerAccountValue(customer) : 0
+        def customerAccountValue = customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0
         def order = Order.get(params.order.id)
         if (params.payFromAccountType == 'whole')
             order.usedAccountValue = order.totalPrice
@@ -297,7 +297,7 @@ class OrderController {
 
             def onlinePayment = new OnlinePayment()
             onlinePayment.account = account
-            onlinePayment.amount = params["value"].toInteger()
+            onlinePayment.amount = (params["value"].toInteger() * priceService.getDisplayCurrencyExchangeRate())
             onlinePayment.customer = order.customer
             onlinePayment.date = new Date()
             onlinePayment.order = order
@@ -397,7 +397,27 @@ class OrderController {
 
             def orderPrice = payment.order.totalPayablePrice
 //            def customerAccount = payment.order.usedAccountValue // payment.customer ? accountingService.calculateCustomerAccountValue(payment.customer) : 0
-            def payableAmount = payment.amount
+            def payableAmount = (payment.amount / priceService.getDisplayCurrencyExchangeRate())
+
+            //add customer transaction
+            def customerTransaction = new CustomerTransaction()
+            customerTransaction.account = payment.account
+            customerTransaction.value = payment.amount
+            customerTransaction.date = new Date()
+            customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+            customerTransaction.order = payment.order
+            customerTransaction.creator = payment.customer
+            customerTransaction.save()
+
+            //add transaction
+            def transaction = new Transaction()
+            transaction.account = payment.account
+            transaction.value = payment.amount
+            transaction.date = new Date()
+            transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+            transaction.order = payment.order
+            transaction.creator = payment.customer
+            transaction.save()
 
             if (payableAmount >= orderPrice) {
 
@@ -405,6 +425,25 @@ class OrderController {
                 payment.order.status = OrderHelper.STATUS_PAID
                 payment.order.paymentType = 'online'
                 payment.order.save()
+
+                //add customer transaction
+                customerTransaction = new CustomerTransaction()
+                customerTransaction.value = (payment.order.totalPrice * priceService.getDisplayCurrencyExchangeRate())
+                customerTransaction.date = new Date()
+                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+                customerTransaction.order = payment.order
+                customerTransaction.creator = payment.customer
+                customerTransaction.save()
+
+                //add transaction
+                transaction = new Transaction()
+                transaction.value = (payment.order.totalPrice * priceService.getDisplayCurrencyExchangeRate())
+                transaction.date = new Date()
+                transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+                transaction.order = payment.order
+                transaction.creator = payment.customer
+                transaction.save()
+
 
                 event(topic: 'order_event', data: [id:payment.order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
 
@@ -417,9 +456,9 @@ class OrderController {
                 trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
                 trackingLog.description = """
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.online')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: payment.order.usedAccountValue, type: 'number')} ${message(code: 'rial')}
+                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: payment.order.usedAccountValue, type: 'number')} eshop.currencyLabel()}
                 ${message(code: 'order.payment.bank')}: ${message(code: "account.${payment.account.bankName}.${payment.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: payment.amount, type: 'number')} ${message(code: 'rial')}
+                ${message(code: 'order.payment.value')}: ${formatNumber(number: payment.amount, type: 'number')} ${eshop.currencyLabel()}
                 ${message(code: 'onlinePayment.transactionReferenceCode')}: ${payment.transactionReferenceCode}
 """
                 if (!trackingLog.validate() || !trackingLog.save()) {
@@ -444,26 +483,6 @@ class OrderController {
 
                 model.orderPaid = true
             } else {
-
-                //add customer transaction
-                def customerTransaction = new CustomerTransaction()
-                customerTransaction.account = payment.account
-                customerTransaction.value = payment.amount
-                customerTransaction.date = new Date()
-                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
-                customerTransaction.order = payment.order
-                customerTransaction.creator = payment.customer
-                customerTransaction.save()
-
-                //add transaction
-                def transaction = new Transaction()
-                transaction.account = payment.account
-                transaction.value = payment.amount
-                transaction.date = new Date()
-                transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
-                transaction.order = payment.order
-                transaction.creator = payment.customer
-                transaction.save()
 
                 //send alert to customer
                 mailService.sendMail {
@@ -521,9 +540,9 @@ class OrderController {
             trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
             trackingLog.description = """
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.bankReceipt')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${message(code: 'rial')}
+                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.bank')}: ${message(code: "account.${paymentRequest.account.bankName}.${paymentRequest.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: paymentRequest.value, type: 'number')} ${message(code: 'rial')}
+                ${message(code: 'order.payment.value')}: ${formatNumber(number: paymentRequest.value, type: 'number')} ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.trackingCode')}: ${paymentRequest.trackingCode}
                 ${message(code: 'order.payment.date')}: ${rg.formatJalaliDate(date: paymentRequest.creationDate)}
 """
@@ -548,6 +567,24 @@ class OrderController {
         order.paymentType = 'account-value'
         order.save()
 
+        //add customer transaction
+        def customerTransaction = new CustomerTransaction()
+        customerTransaction.value = (order.totalPrice * priceService.getDisplayCurrencyExchangeRate())
+        customerTransaction.date = new Date()
+        customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+        customerTransaction.order = order
+        customerTransaction.creator = springSecurityService.currentUser as User
+        customerTransaction.save()
+
+        //add transaction
+        def transaction = new Transaction()
+        transaction.value = (order.totalPrice * priceService.getDisplayCurrencyExchangeRate())
+        transaction.date = new Date()
+        transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+        transaction.order = order
+        transaction.creator = springSecurityService.currentUser as User
+        transaction.save()
+
         event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
 
 //        save order tracking log
@@ -559,7 +596,7 @@ class OrderController {
         trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
         trackingLog.description = """
             ${message(code: 'payment.type')}: ${message(code: 'payment.types.account')}
-            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${message(code: 'rial')}
+            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
 """
         trackingLog.save()
 
@@ -585,7 +622,7 @@ class OrderController {
         trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
         trackingLog.description = """
             ${message(code: 'payment.type')}: ${message(code: 'payment.types.payInPlace')}
-            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${message(code: 'rial')}
+            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
 """
         trackingLog.save()
 

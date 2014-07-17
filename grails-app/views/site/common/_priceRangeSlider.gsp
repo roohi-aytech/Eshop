@@ -25,7 +25,7 @@
             step: 1000,
             smooth: true,
             round: 0,
-            dimension: "&nbsp;${message(code:'rial')}",
+            dimension: "&nbsp;${eshop.currencyLabel()}",
             <g:if test="${grailsApplication.config.filterPriceOnChange}">
             callback: function( event, ui ) {
                 filterByPrice();

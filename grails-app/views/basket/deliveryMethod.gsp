@@ -59,7 +59,7 @@
                             <td>
                                 <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
                                     <g:message
-                                            code="deliveryPrice"/>: ${(deliveryMethod.price) == 0 ? message(code: 'free') : deliveryMethod.price + ' ' + message(code: 'rial')}
+                                            code="deliveryPrice"/>: ${(deliveryMethod.price) == 0 ? message(code: 'free') : deliveryMethod.price + ' ' + eshop.currencyLabel()}
                                 </label>
                             </td>
                         </tr>

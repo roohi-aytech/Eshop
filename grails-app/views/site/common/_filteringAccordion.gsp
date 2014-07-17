@@ -2,7 +2,7 @@
 
 <h3 class="quick-access"><g:message code="quickAccess.title"/></h3>
 <dl class="accordion">
-<dt class="${params.o == "r" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/></a>
+<dt class="${params.o == "r" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/> (<eshop:currencyLabel/>)</a>
 </dt>
 <dd>
     <div class="price-filter-form">

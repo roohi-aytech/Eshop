@@ -120,7 +120,7 @@
             options.series = new Array();
             var serie = new Object();
             serie.name = '${message(code:'price')}';
-            var data = ${priceList.collect {["${it.startDate.getAt(Calendar.YEAR)},${it.startDate.getAt(Calendar.MONTH)},${it.startDate.getAt(Calendar.DAY_OF_MONTH)}", it.rialPrice.toInteger()]} as JSON};
+            var data = ${priceList.collect {["${it.startDate.getAt(Calendar.YEAR)},${it.startDate.getAt(Calendar.MONTH)},${it.startDate.getAt(Calendar.DAY_OF_MONTH)}", it.rialPrice.toInteger()/exchanheRate]} as JSON};
             serie.data = new Array();
             for (var i = 0; i < data.length; i++) {
                 var dateParts = data[i][0].split(',');

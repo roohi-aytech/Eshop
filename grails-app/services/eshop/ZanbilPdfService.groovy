@@ -34,6 +34,7 @@ class ZanbilPdfService {
     def generateInvoiceWithAddedValue(Order order, OutputStream outputStream, Boolean useBackground) {
         def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
         def rg = grailsApplication.mainContext.getBean('rapidgrails.JqueryUiTagLib')
+        def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
 
         def document = new Document()
         document.setPageSize(PageSize.A4);
@@ -222,7 +223,7 @@ class ZanbilPdfService {
         def highLightColor = new BaseColor(196, 185, 154)
 
         //header
-        table.addCell(createCell(g.message(code: 'invoice.item.totalPrice'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell("${g.message(code: 'invoice.item.totalPrice')} (${e.currencyLabel()})", fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.tax'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.count'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.discount'), fontPersianBlack, highLightColor, 1, 1))
@@ -308,6 +309,7 @@ class ZanbilPdfService {
     def generateInvoiceWithoutAddedValue(Order order, OutputStream outputStream, Boolean useBackground) {
         def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
         def rg = grailsApplication.mainContext.getBean('rapidgrails.JqueryUiTagLib')
+        def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
 
         def document = new Document()
         document.setPageSize(PageSize.A4);
@@ -467,7 +469,7 @@ class ZanbilPdfService {
         def highLightColor = new BaseColor(196, 185, 154)
 
         //header
-        table.addCell(createCell(g.message(code: 'invoice.item.totalPrice'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell("${g.message(code: 'invoice.item.totalPrice')} (${e.currencyLabel()})", fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.count'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.discount'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.price'), fontPersianBlack, highLightColor, 1, 1))

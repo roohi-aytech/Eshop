@@ -4,6 +4,8 @@ import grails.converters.JSON
 
 class ProductModelController {
 
+    def priceService
+
     static allowedMethods = [save: "POST", delete: "POST"]
 
     def index() {
@@ -210,7 +212,7 @@ class ProductModelController {
 
     def priceHistogram(){
         def productModel = ProductModel.get(params.id)
-        render template: 'priceHistogram', model: [productModel: productModel, priceList: Price.findAllByProductModel(productModel).sort{it.startDate}]
+        render template: 'priceHistogram', model: [productModel: productModel, priceList: Price.findAllByProductModel(productModel).sort{it.startDate}, exchanheRate: priceService.getDisplayCurrencyExchangeRate()]
     }
 
 }

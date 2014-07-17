@@ -12,7 +12,7 @@
                         <li>
                             <span class="strike_through">
                                 <g:formatNumber number="${oldPrice.showVal}" type="number"/>
-                                <g:message code="rial"/>
+                                <eshop:currencyLabel/>
                             </span>
                         </li>
                     </g:if>
@@ -21,8 +21,7 @@
                 <ul class="new_pricing_block last">
                     <li class="first you_pay"><g:message code="price"/></li>
                     <li class="our_price_red" itemprop="price"><span><g:formatNumber number="${price.showVal}"
-                                                                                     type="number"/> <g:message
-                            code="rial"/></span></li>
+                                                                                     type="number"/> <eshop:currencyLabel/></span></li>
                 </ul>
             </div>
 

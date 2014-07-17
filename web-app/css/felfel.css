@@ -350,7 +350,8 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 .header .navigation .dropdown-menu {
     list-style-type: none;
-    z-index: 20;
+    z-index: 200;
+    background: #ffffff;
     color: #575757;
     font-size: 14px;
     margin: 0;
@@ -359,7 +360,6 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    background: none repeat scroll 0 0 #FFFFFF;
     border-image: none;
     border: 1px solid #E3E3E3;
     border-top: medium none -moz-use-text-color;
@@ -369,6 +369,10 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     border-radius: 0;
     top: 26px;
     padding: 0 0 10px;
+    opacity: 1;
+}
+
+.header .navigation .dropdown-menu .inner{
 }
 
 .header .navigation.sticky_nav .dropdown-menu {
@@ -1446,11 +1450,11 @@ input[type=checkbox] + label {
     float: right;
     margin-bottom: 5px;
     text-align: left;
-    width: 170px;
+    width: 163px;
 }
 
 .product_detail_right_block .price_block .selling_price ul.new_pricing_block li.first {
-    width: 43px;
+    width: 50px;
 }
 
 .product_detail_right_block .price_block .selling_price ul.new_pricing_block li.first {

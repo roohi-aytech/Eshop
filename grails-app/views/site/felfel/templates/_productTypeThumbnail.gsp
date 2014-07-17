@@ -13,7 +13,7 @@
     </div>
 
     <div class="price_info">
-        <p><g:message code="menu.startPrice"/> <span class="red"><eshop:productTypeMinPrice productTypeId="${id}"/> <g:message code="rial"/></span></p>
+        <p><g:message code="menu.startPrice"/> <span class="red"><eshop:productTypeMinPrice productTypeId="${id}"/> <eshop:currencyLabel/></span></p>
         <a href="${href}" class="shop_now">
             <img width="64" height="18" alt="" src="${resource(dir:'/images/felfel', file: 'shop_icon.jpg')}"/>
         </a>

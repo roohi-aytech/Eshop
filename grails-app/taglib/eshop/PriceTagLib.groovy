@@ -32,4 +32,8 @@ class PriceTagLib {
     def statusFlag = { attrs, body ->
         out << render(template: "/site/common/productModelStatusFlag", model: priceService.calcProductPrice(attrs.productId))
     }
+
+    def currencyLabel = {attrs, body ->
+        out << Currency.findByDisplay(true)?.name ?: message(code:'rial')
+    }
 }

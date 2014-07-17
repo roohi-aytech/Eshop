@@ -57,7 +57,7 @@
                                     ng-href="{{contextRoot}}site/product/{{wishListItem.id}}">{{wishListItem.title}}</a>
                             </h3>
                             </span>
-                            <span class="price"><g:message code="price"></g:message>: <b>{{wishListItem.price}} <g:message code="rial"/></b>
+                            <span class="price"><g:message code="price"></g:message>: <b>{{wishListItem.price}} <eshop:currencyLabel/></b>
                             </span>
                             <span>
                                 <a href="" class="btn-buy"

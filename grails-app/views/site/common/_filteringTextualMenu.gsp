@@ -26,7 +26,7 @@
 </g:if>
 %{--price range--}%
 
-%{--<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/></li>--}%
+%{--<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/> (<eshop:currencyLabel/>)</li>--}%
 %{--<li>--}%
 
     %{--<div class="price-filter-form">--}%

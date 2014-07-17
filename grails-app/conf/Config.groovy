@@ -1,6 +1,6 @@
 import org.codehaus.groovy.grails.compiler.GrailsClassLoader
 
-instance = "Goldaan"
+instance = "Felfel"
 
 
 def classLoader = new GrailsClassLoader()

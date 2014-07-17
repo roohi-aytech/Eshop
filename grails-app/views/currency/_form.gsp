@@ -27,3 +27,10 @@
 	<g:field type="number" name="exchangeRate" step="any" required="" value="${currencyInstance.exchangeRate}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'display', 'error')}">
+    <label for="exchangeRate">
+        <g:message code="currency.display.label" default="Display" />
+    </label>
+    <g:checkBox name="display" value="${currencyInstance.display}"/>
+</div>
+

@@ -31,9 +31,15 @@ class CurrencyController {
         if (params.id) {
             currencyInstance = Currency.get(params.id)
             currencyInstance.properties = params
-        }
-        else
+        } else
             currencyInstance = new Currency(params)
+
+        if (currencyInstance.display)
+            Currency.findAllByDisplayAndIdNotEqual(true, currencyInstance.id).each {
+                it.display = false
+                it.save(flush: true)
+            }
+
         if (currencyInstance.validate() && currencyInstance.save()) {
 
             def oldCurrencyLog = CurrencyLog.findByCurrencyAndEndDateIsNull(currencyInstance)
@@ -50,7 +56,7 @@ class CurrencyController {
                 it.endDate = new Date();
                 it.save()
 
-                def newPrice = new Price(currency: currencyInstance, price: it.price, product: it.product, startDate: new Date(), rialPrice: (it.price * currencyInstance.exchangeRate))
+                def newPrice = new Price(currency: currencyInstance, price: it.price, productModel: it.productModel, startDate: new Date(), rialPrice: (it.price * currencyInstance.exchangeRate))
                 newPrice.save()
             }
 
@@ -64,6 +70,11 @@ class CurrencyController {
     def delete() {
         try {
             def currencyInstance = Currency.get(params.id)
+
+            CurrencyLog.findAllByCurrency(currencyInstance).each {
+                it.delete(flush: true)
+            }
+
             currencyInstance.delete(flush: true)
             render 0
         } catch (x) {

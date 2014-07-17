@@ -86,7 +86,7 @@
                 <th><g:message code="invoice.item.discount"></g:message></th>
                 <th><g:message code="invoice.item.count"></g:message></th>
                 <th><g:message code="invoice.item.tax"></g:message></th>
-                <th><g:message code="invoice.item.totalPrice"></g:message></th>
+                <th><g:message code="invoice.item.totalPrice"></g:message> (<eshop:currencyLabel/>)</th>
             </tr>
             <g:each in="${order.items.findAll { !it.deleted }.sort { it.id }}" var="orderItem" status="i">
                 <tr>
