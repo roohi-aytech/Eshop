@@ -106,7 +106,7 @@ class BootStrap {
 //        province.save()
 
 
-        if (GrailsUtil.environment == "development") {
+        if (false && GrailsUtil.environment == "development") {
             def validationTagLib = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib')
             Closure messageClosure = { vals ->
                 //println "${attrs.code}"
