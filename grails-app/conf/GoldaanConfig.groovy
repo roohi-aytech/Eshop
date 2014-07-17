@@ -1,10 +1,10 @@
-//grails.serverURL = "http://test.goldaan.ir/"
-//grails.app.context = "/"
+grails.serverURL = "http://www.goldaan.ir/"
+grails.app.context = "/saboo"
 eShop.instance = 'goldaan'
 //url.www = false
 locale.language='gl'
 locale.country='IR'
-events.url='http://test.goldaan.ir/'
+events.url='http://www.goldaan.ir/'
 admin.theme='cobalt'
 browse.view.root='browse'
 page.size=81

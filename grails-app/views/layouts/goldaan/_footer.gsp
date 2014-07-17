@@ -66,33 +66,16 @@
                     <img src="${resource(dir: 'images/third-party', file: 'bonyad-koodak.png')}"/>
                 </li>
                 <li>
-                    <img src="${resource(dir: 'images/third-party', file: 'bimeh-asia.png')}"/>
+                    <img src="${resource(dir: 'images/third-party', file: 'behnam.png')}"/>
+                </li>
+                <li>
+                    <img src="${resource(dir: 'images/third-party', file: 'mahak_chareity.png')}"/>
                 </li>
                 <li>
                     <img src="${resource(dir: 'images/third-party', file: 'bank-mellat.png')}"/>
                 </li>
                 <li>
                     <img src="${resource(dir: 'images/third-party', file: 'bank-saman.png')}"/>
-                </li>
-                <li>
-                    <img src="${resource(dir: 'images/third-party', file: 'post-iran.png')}"/>
-                </li>
-                <li>
-                    <img src="${resource(dir: 'images/third-party', file: 'post-aramex.png')}"/>
-                </li>
-                <li>
-                    <img src="${resource(dir: 'images/third-party', file: 'post-tipax.png')}"/>
-                </li>
-            </ul>
-        </div>
-
-        <div>
-            <ul class="third-party">
-                <li>
-                    <img src="${resource(dir: 'images/third-party', file: 'best-brands.png')}"/>
-                </li>
-                <li>
-                    <img src="${resource(dir: 'images/third-party', file: 'rights-all.png')}"/>
                 </li>
             </ul>
         </div>

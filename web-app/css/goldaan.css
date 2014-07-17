@@ -19051,6 +19051,7 @@ h3,h1,h2,h4,h5,h6{
 }
 .banners-container{
     text-align: center;
+    background-color:#e3e3e3;
 }
 .banners-container .relative{
     display:inline-block;
