@@ -18941,7 +18941,7 @@ h3,h1,h2,h4,h5,h6{
 }
 .order-tracking-container{
     display:inline-block;
-    float:left;
+    /*float:left;*/
     margin-left:20px;
 }
 .order-tracking-container input{
@@ -19051,7 +19051,6 @@ h3,h1,h2,h4,h5,h6{
 }
 .banners-container{
     text-align: center;
-    background-color:#e3e3e3;
 }
 .banners-container .relative{
     display:inline-block;
@@ -19062,6 +19061,10 @@ h3,h1,h2,h4,h5,h6{
 .footer-info-container,.footer-info{
     text-align:center;
     vertical-align:top;
+    background-color:#e3e3e3;
+}
+.footer-info-container div{
+    padding-bottom:5px;
 }
 .footer-info div{
     display: inline-block;
@@ -19069,7 +19072,7 @@ h3,h1,h2,h4,h5,h6{
     padding:0px 20px;
     height:75px;
     text-align:right;
-    border-left:1px solid #f3f3f3;
+    border-left:2px solid #bbbbbb;
 }
 .footer-info div:last-child{
     border-left:none;
@@ -19080,4 +19083,20 @@ ul.third-party li{
 }
 .basket-cell{
     display:none;
+}
+.header-top-left{
+    float:left;
+    display:inline-block;
+}
+.contact-phone-number{
+    font-family:eYekan;
+    font-size:34px;
+    line-height:0px;
+    padding-top: 20px;
+    padding-right:45px;
+    background-image:url(../images/phone-red.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height:40px;
 }

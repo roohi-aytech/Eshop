@@ -13,21 +13,26 @@
                             <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" class="logo">
                         </a>
                         <h4><g:message code="slogan" /></h4>
-                        <div class="order-tracking-container">
+                        <div class="header-top-left">
+                            <div class="order-tracking-container">
 
 
-                            <div class="orderTracking">
-                                <g:form method="post" controller="order" action="track">
-                                    <div class="input-append">
-                                        <g:textField name="trackingCode" id="trackingCodePanel" placeholder="${message(code:"order.tracking.goldaan")}"/>
-                                        <g:submitButton name="submit" class="btn btn-primary"
-                                                    value="${message(code: 'order.tracking.button')}"/>
-                                    </div>
-                                </g:form>
+                                <div class="orderTracking">
+                                    <g:form method="post" controller="order" action="track">
+                                        <div class="input-append">
+                                            <g:textField name="trackingCode" id="trackingCodePanel" placeholder="${message(code:"order.tracking.goldaan")}"/>
+                                            <g:submitButton name="submit" class="btn btn-primary"
+                                                        value="${message(code: 'order.tracking.button')}"/>
+                                        </div>
+                                    </g:form>
+                                </div>
+                                <script type="text/javascript" language="javascript">
+    //                                $('#trackingCodePanel').maskInput('9999999999');
+                                </script>
                             </div>
-                            <script type="text/javascript" language="javascript">
-//                                $('#trackingCodePanel').maskInput('9999999999');
-                            </script>
+                            <div class="contact-phone-number">
+                                <g:message code="contact-phone"/>
+                            </div>
                         </div>
                     </div>
                 </div>
