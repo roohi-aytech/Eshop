@@ -6,7 +6,7 @@
     <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
         <g:each in="${lastVisitedProducts.reverse()}" var="product" status="index">
             <g:if test="${index<2}">
-                <g:render template="goldaan/templates/productThumbnail" model="${[hideActionLabels:true,product:product]}"/>
+                <g:render template="goldaan/templates/productThumbnail" model="${[hideActionLabels:true,product:product,size:'100x100']}"/>
             </g:if>
         </g:each>
     </g:if>

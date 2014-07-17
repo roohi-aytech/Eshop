@@ -2,7 +2,7 @@
     <a href="<g:createLink uri="/product/${product?.id}"/>">
         <img src="${resource(dir: '/images/goldaan', file: 'loadinfo.net.gif')}"
              data-src="<g:createLink controller="image" action="index"
-                                     params="[id: product?.id, wh: size?:'100x100']"/>"
+                                     params="[id: product?.id, wh: size?:'200x200']"/>"
              class="lazy" id="lazy-${product?.id}">
 
         <div class="title">

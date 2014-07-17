@@ -307,7 +307,9 @@ img {
     padding: 4px;
     line-height: 1.42857;
     background-color: white;
-    border: 1px solid #dddddd;
+    border: none;
+    /*1px solid #dddddd;*/
+    box-shadow:none;
     border-radius: 0;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
@@ -6911,6 +6913,7 @@ a, a.ma_level_0, .shopping_cart:hover .icon_wrap, .shopping_cart.active .icon_wr
     -ms-transition: all 300ms ease-in-out;
     -webkit-transition: all 300ms ease-in-out;
     -o-transition: all 300ms ease-in-out
+    text-align:right;
 }
 
 .hover_fly a {
@@ -7813,7 +7816,7 @@ span.new {
 
 .hover_fly a:hover {
     width: 55% !important;
-    background-color: #00a161 !important;
+    /*background-color: #00a161 !important;*/
     color: white !important
 }
 
@@ -7823,7 +7826,7 @@ span.new {
 
 .hover_fly:hover a:first-child {
     width: 15%;
-    background-color: #BBBBBB;
+    /*background-color: #BBBBBB;*/
     text-align: center
 }
 
@@ -18941,7 +18944,7 @@ h3,h1,h2,h4,h5,h6{
 }
 .order-tracking-container{
     display:inline-block;
-    float:left;
+    /*float:left;*/
     margin-left:20px;
 }
 .order-tracking-container input{
@@ -19061,6 +19064,10 @@ h3,h1,h2,h4,h5,h6{
 .footer-info-container,.footer-info{
     text-align:center;
     vertical-align:top;
+    background-color:#e3e3e3;
+}
+.footer-info-container div{
+    padding-bottom:5px;
 }
 .footer-info div{
     display: inline-block;
@@ -19068,7 +19075,7 @@ h3,h1,h2,h4,h5,h6{
     padding:0px 20px;
     height:75px;
     text-align:right;
-    border-left:1px solid #f3f3f3;
+    border-left:2px solid #bbbbbb;
 }
 .footer-info div:last-child{
     border-left:none;
@@ -19079,4 +19086,48 @@ ul.third-party li{
 }
 .basket-cell{
     display:none;
+}
+.header-top-left{
+    float:left;
+    display:inline-block;
+}
+.contact-phone-number{
+    font-family:eYekan;
+    font-size:34px;
+    line-height:0px;
+    padding-top: 20px;
+    padding-right:45px;
+    background-image:url(../images/phone-red.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height:40px;
+}
+.hover_fly.fly_2.clearfix{
+    text-align: right;
+}
+.stay-connected{
+    text-align:center;
+    font-family:eYekan;
+    font-size:20px;
+}
+.sign-up,.stconnected{
+    margin-top:50px;
+    width:300px;
+    vertical-align:top;
+}
+
+.stconnected{
+    padding-right:20px;
+    margin-right:0px;
+    border-right:1px solid #e3e3e3;
+}
+.stconnected .social-links{
+    margin-top:10px;
+}
+.stay-connected div{
+    display:inline-block;
+}
+.sign-up-help{
+    font-size:12px;
 }
