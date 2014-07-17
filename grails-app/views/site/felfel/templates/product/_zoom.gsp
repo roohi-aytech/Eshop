@@ -54,9 +54,9 @@
             <g:if test="${!quickView}">
                 <a href='${mainImage?.id}' >
             </g:if>
-            <g:set var="image"
-            value="${ImageIO.read(new ByteInputStream(mainImage?.fileContent, mainImage?.fileContent?.length))}"/>
-            <img class="etalage_thumb_image" zoomable="${mainImage?.dynamicProperties?.zoomable ? '1' : '0'}"
+            %{--<g:set var="image"--}%
+            %{--value="${ImageIO.read(new ByteInputStream(mainImage?.fileContent, mainImage?.fileContent?.length))}"/>--}%
+            <img class="etalage_thumb_image" zoomable="1"
                  width="50" height="50" itemprop="image"
                  src="<g:createLink controller="image"
                                     params="[id: product?.id, name: mainImage?.name, wh: '400x400']"/>"/>
