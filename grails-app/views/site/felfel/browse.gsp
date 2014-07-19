@@ -23,6 +23,8 @@
 
     <script language="JavaScript" type="text/javascript"
             src="${resource(dir: 'js', file: 'jquery.transform.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'toggles.css')}"/>
+    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'toggles.min.js')}"></script>
 </head>
 
 <body>
@@ -53,8 +55,10 @@
     <g:message code="category.all.products" args="${[productType]}"/>
 </h3>
 
+<g:render template="common/statusFilter"/>
+<div class="clearfix"></div>
+
 <g:if test="${productType?.menuImage?.size() > 0}">
-    <div class="clearfix"></div>
 
     <div class="brands_collections_holder">
         <div>
@@ -62,6 +66,7 @@
                  src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu'])}"/>
         </div>
     </div>
+    <div class="clearfix"></div>
 </g:if>
 
 <div class="toolbar_top">

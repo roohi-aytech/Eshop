@@ -23,8 +23,11 @@ class BrowseService {
     }
 
     def countProducts(params) {
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
+        if(session["status_filter"])
+            params.match['status'] = 0
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$group: [_id: params.group, count: [$sum: 1]]],
@@ -36,8 +39,11 @@ class BrowseService {
     }
 
     def countProductsWithUnwind(params) {
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
+        if(session["status_filter"])
+            params.match['status'] = 0
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$unwind: params.unwind],
@@ -49,7 +55,10 @@ class BrowseService {
     }
 
     def pagesCount(match, pageSize) {
-
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        if(session["status_filter"])
+            match['status'] = 0
+        match["displayInList"] = true
         (products.aggregate(
                 [$match: match],
                 [$group: [_id: null, count: [$sum: 1]]]
@@ -58,8 +67,11 @@ class BrowseService {
 
     def listRandomProducts(params) {
 
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
+        if(session["status_filter"])
+            params.match['status'] = 0
 
         def totalPages = pagesCount(params.match, params.pageSize)
 
@@ -172,9 +184,12 @@ class BrowseService {
     }
 
     def listProducts(params) {
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
 
         def products = getProducts()
         params.match["displayInList"] = true
+        if(session["status_filter"])
+            params.match['status'] = 0
 
         def totalPages = pagesCount(params.match, params.pageSize)
         def productIds = products.aggregate(
@@ -219,7 +234,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_browse_${productType}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        println match
+//        println match
         def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), products: products]
     }

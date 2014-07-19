@@ -12,6 +12,9 @@ class GeneralFilters {
                 //set locale
                 RequestContextUtils.getLocaleResolver(request).setLocale(request, response, new Locale(grailsApplication.config.locale.language, grailsApplication.config.locale.country))
 
+                if(session['status_filter'] == null)
+                    session['status_filter'] = true
+
 
                 if (grailsApplication.config.url.www &&
                         request.serverName != 'localhost' &&

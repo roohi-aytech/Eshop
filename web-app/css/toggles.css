@@ -1,0 +1,85 @@
+
+.toggle-slide {
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    direction: ltr;
+}
+
+.toggle-slide .toggle-on,
+.toggle-slide .toggle-off,
+.toggle-slide .toggle-blob {
+    float: left;
+    text-align: right;
+}
+
+.toggle-slide .toggle-blob {
+    position: relative;
+    z-index: 99;
+    cursor: hand;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+}
+
+.toggle-soft {
+    direction: ltr;
+    width: 50px;
+    display: inline-block;
+}
+
+.toggle-soft .toggle-slide {
+    /*border-radius: 5px;*/
+    -webkit-box-shadow: 0 0 0 1px #999;
+    box-shadow: 0 0 0 1px #999;
+}
+
+.toggle-soft .toggle-on,
+.toggle-soft .toggle-off {
+    font-size: 11px;
+    /*text-shadow: 1px 1px white;*/
+    direction: rtl;
+}
+.toggle-soft .toggle-on{
+    color: #ffffff;
+    text-indent: 18px !important;
+}
+
+.toggle-soft .toggle-off{
+    text-indent: 8px !important;
+    color: #000000;
+}
+
+.toggle-soft .toggle-on,
+.toggle-soft .toggle-select .toggle-inner .active {
+    background: -webkit-gradient(linear, left top, left bottom, from(#ec1e20), to(#ec1e20));
+    background: -webkit-linear-gradient(#ec1e20, #ec1e20);
+    background: linear-gradient(#ec1e20, #ec1e20);
+}
+
+.toggle-soft .toggle-off,
+.toggle-soft .toggle-select .toggle-on {
+    background: -webkit-gradient(linear, left top, left bottom, from(#DADADA), to(#DADADA));
+    background: -webkit-linear-gradient(#DADADA, #DADADA);
+    background: linear-gradient(#DADADA, #DADADA);
+}
+
+.toggle-soft .toggle-blob {
+    /*border-radius: 4px;*/
+    background: -webkit-gradient(linear, left top, left bottom, from(#DADADA), to(#DADADA));
+    background: -webkit-linear-gradient(#DADADA, #DADADA);
+    background: linear-gradient(#DADADA, #DADADA);
+    -webkit-box-shadow: inset 0 0 0 1px #bbb, inset 0 0 0 2px white;
+    box-shadow: inset 0 0 0 1px #bbb, inset 0 0 0 2px white;
+}
+
+.toggle-soft .toggle-blob:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#EEEEEE));
+    background: -webkit-linear-gradient(#EEEEEE, #EEEEEE);
+    background: linear-gradient(#EEEEEE, #EEEEEE);
+    -webkit-box-shadow: inset 0 0 0 1px #bbb, inset 0 0 0 2px white;
+    box-shadow: inset 0 0 0 1px #bbb, inset 0 0 0 2px white;
+}

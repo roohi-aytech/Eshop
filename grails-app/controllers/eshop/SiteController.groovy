@@ -1222,4 +1222,10 @@ class SiteController {
         }
     }
 
+
+    def productStatusFilter() {
+        session['status_filter'] = params.value == 'on'
+        render ''
+    }
+
 }

@@ -338,10 +338,10 @@ class EshopTagLib {
             out << """<div class="row">"""
             def counter = 0
             products.productIds.each {
-                def product = Product.get(it)
-                if (product) {
+                def productModel = ProductModel.get(it)
+                if (productModel) {
                     counter++
-                    out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: product, class: counter == 4 ? 'last' : ''])
+                    out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: productModel?.product, productModel: productModel, class: counter == 4 ? 'last' : ''])
                 }
             }
             out << "</div>"
