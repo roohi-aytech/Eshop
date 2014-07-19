@@ -16,7 +16,6 @@
 
         $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
         $("#myModal").modal({
-                backdrop: false,
                 show: true
                 });
         $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: order?.id])}', function() {});

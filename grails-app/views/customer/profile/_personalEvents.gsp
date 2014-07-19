@@ -19,7 +19,6 @@
     function showCreatePersonalEventsModal() {
         $("#personalEventsModal .modal-body").html('<img style="margin:auto;padding:20px;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
         modal = $("#personalEventsModal").modal({
-            backdrop: false,
             show: true
         });
         $("#personalEventsModal .modal-body").load('${createLink(controller: 'personalEvent', action: 'create')}', function () {
@@ -29,7 +28,6 @@
     function showEditersonalEventsModal(id) {
         $("#personalEventsModal .modal-body").html('<img style="margin:auto;padding:20px;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
         modal = $("#personalEventsModal").modal({
-            backdrop: false,
             show: true
         });
         $("#personalEventsModal .modal-body").load('${createLink(controller: 'personalEvent', action: 'edit')}/' + id, function () {
@@ -107,7 +105,7 @@
 </div>
 
 <div id="personalEventsModal" class="modal hide fade" tabindex="-1" role="window"
-     aria-labelledby="personalEventsModalLabel" aria-hidden="true" style="width: 700px;">
+     aria-labelledby="personalEventsModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 onclick="hidePersonalEventsModal();">×</button>

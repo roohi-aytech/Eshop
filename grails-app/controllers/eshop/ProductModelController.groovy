@@ -215,4 +215,14 @@ class ProductModelController {
         render template: 'priceHistogram', model: [productModel: productModel, priceList: Price.findAllByProductModel(productModel).sort{it.startDate}, exchanheRate: priceService.getDisplayCurrencyExchangeRate()]
     }
 
+    def setDefaultImage(){
+        if(params.mainImage) {
+            def model = ProductModel.get(params.id)
+            model.mainImage = Content.get(params.mainImage)
+            model.save(flush: true)
+        }
+        redirect action: 'productModelDetails', id: params.id
+
+    }
+
 }

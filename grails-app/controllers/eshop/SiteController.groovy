@@ -413,7 +413,7 @@ class SiteController {
             or {
                 isNull('isVisible')
                 eq('isVisible', true)
-                eq('deleted',false)
+                eq('deleted', false)
             }
             maxResults(20)
             order("visitCount", "desc")
@@ -451,7 +451,35 @@ class SiteController {
             it.rate
         }) / customerReviews.count { it })
 
-        render template: '/site/felfel/templates/productQuickView', model: [product: product, rate: rate, quickView: true]
+        def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
+
+        render template: '/site/felfel/templates/productQuickView', model: [product: product, productModel: productModel, rate: rate, quickView: true]
+    }
+
+    def productModelImages() {
+        def product = Product.get(params.productId)
+
+        def models = ProductModel.findAllByProduct(product)
+        def productModel
+        models.each {
+            def model = it
+            Boolean selected = true
+            product.variations.each { variation ->
+                def modelVariationId = model?.variationValues.find {
+                    it.variationGroup.id == variation.variationGroup.id
+                }?.id?.toLong()
+                def selectedVariationId = params."variation${variation.id}" ? params."variation${variation.id}" == '' ? null : params."variation${variation.id}".toLong() : null
+                if (modelVariationId != selectedVariationId)
+                    selected = false
+            }
+
+            if (model.guarantee?.id?.toLong() != params.guarantee?.toLong())
+                selected = false
+
+            if (selected)
+                productModel = model
+        }
+        render template: "/site/${grailsApplication.config.eShop.instance}/templates/product/zoom", model: [product: product, productModel: productModel]
     }
 
     def product() {
@@ -473,7 +501,7 @@ class SiteController {
         def model = [productTypes: productTypeList, product: product]
         model.price = priceService.calcProductPrice(product?.id)
 
-        def customerReviews = CustomerReview.findAllByProductAndStatus(product,'approved')
+        def customerReviews = CustomerReview.findAllByProductAndStatus(product, 'approved')
         model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
             it.rate
         }) / customerReviews.count { it })
@@ -519,7 +547,8 @@ class SiteController {
                 fillAttibuteCategoryChildren(product, category)
         }
 
-        def productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+        def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
+        model.productModel = productModel
         model.addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
                 variationValue.value != productModel.variationValues
@@ -571,7 +600,7 @@ class SiteController {
 
         def modelNames = [product.name]
         product.models.each { if (!modelNames.contains(it.name)) modelNames << it.name }
-            def title = product.toString()
+        def title = product.toString()
         if (product.name)
             title = title.replace(product.name, modelNames.unique { it?.trim() }.join(','))
         model.title = title
@@ -692,7 +721,7 @@ class SiteController {
             it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
         }
 
-        render(template: 'product/additives', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, price: (productModel?priceService.calcProductModelPrice(productModel.id):0)])
+        render(template: 'product/additives', model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, price: (productModel ? priceService.calcProductModelPrice(productModel.id) : 0)])
     }
 
     def productImages() {
@@ -731,7 +760,7 @@ class SiteController {
 //        }
 
         render(template: "${grailsApplication.config.eShop.instance}/templates/product/zoom",
-                model: [product: product,
+                model: [product     : product,
                         productModel: productModel])
     }
 
@@ -1188,6 +1217,7 @@ class SiteController {
             render "0"
         }
         catch (ex) {
+            ex.printStackTrace()
             render "-1"
         }
     }

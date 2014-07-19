@@ -138,14 +138,13 @@
     </div>
 </div>
 <script language="javascript" type="text/javascript">
-    function quickViewProduct(id) {
+    function quickViewProduct(id, modelId) {
 
         $("#quickViewModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
         $("#quickViewModal").modal({
-            backdrop: false,
             show: true
         });
-        $("#quickViewModal .modal-body").load('${createLink(controller: 'site', action: 'productQuickView')}/' + id, function () {
+        $("#quickViewModal .modal-body").load('${createLink(controller: 'site', action: 'productQuickView')}/' + id + '?model=' + modelId, function () {
         });
     }
 </script>

@@ -51,17 +51,19 @@ class ImageController {
                 }
                 break;
             case 'productModel':
-                def product = ProductModel.get(params.id)?.product
-                if (product) {
-                    content = getProdcutImage(product)
+                def productModel = ProductModel.get(params.id)
+                if (productModel) {
+                    content = getProdcutModelImage(productModel)
                 }
                 if (!content || content?.size() == 0) {
                     if (params.name)
-                        content = product.images.find { it.name == params.name }?.fileContent
-                    else if (product.mainImage)
-                        content = product.mainImage?.fileContent
+                        content = productModel.product.images.find { it.name == params.name }?.fileContent
+                    else if (productModel.mainImage)
+                        content = productModel.mainImage?.fileContent
+                    else if (productModel.product.mainImage)
+                        content = productModel.product.mainImage?.fileContent
                     else
-                        content = product.images.find()?.fileContent
+                        content = productModel.product.images.find()?.fileContent
                 }
                 break;
             case 'productType':
@@ -218,6 +220,44 @@ class ImageController {
                         img,
                         params.wh,
                         fileService.filePath(product),
+                        request.getSession().getServletContext().getRealPath("/images/${grailsApplication.config.eShop.instance}-watermark.png"))
+
+//                else
+//                    content = imageService.getImage(img, params.wh, fileService.filePath(product))
+            } else {
+                content = img.fileContent
+            }
+
+        }
+        if (content instanceof Content)
+            return content.fileContent
+
+        content
+    }
+//    @Cacheable(value='pmimage', key='#productModel.id.toString()')
+    byte[] getProdcutModelImage(ProductModel productModel) {
+        def img
+        if (params.name)
+            img = productModel?.product?.images?.find { it.name == params.name }
+        else if (productModel?.mainImage)
+            img = productModel?.mainImage
+        else
+            img = productModel?.product?.images?.find { imageService.imageBelongsToModel(it, productModel) }
+        if (!img)
+            img = productModel?.product?.images?.find()
+        if (!img) {
+            img = new Content(name: "no-image.png", contentType: "", fileContent: this.class.getResource("/no-image.png").bytes)
+            params.wh = ""
+        }
+
+        def content
+        if (img) {
+            if (params.wh) {
+//                if (params.wh == "max")
+                content = imageService.getImage(
+                        img,
+                        params.wh,
+                        fileService.filePath(productModel?.product),
                         request.getSession().getServletContext().getRealPath("/images/${grailsApplication.config.eShop.instance}-watermark.png"))
 
 //                else

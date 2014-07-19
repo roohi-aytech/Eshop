@@ -28,6 +28,7 @@
             angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
             <g:if test="${grailsApplication.config.eShop.instance == 'felfel'}">
             angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productShoppingPanel")}", serializedData, $('#shoppingPanel'));
+            angular.element(document.getElementById('main-container')).scope().reloadProductImages("${createLink(controller: "site", action: "productModelImages")}", serializedData, $('#product-images'));
             </g:if>
             <g:if test="${grailsApplication.config.eShop.instance == 'zanbil'}">
             $('#product-card').html('${message(code: 'waiting')}');
@@ -43,8 +44,7 @@
 </script>
 
 <div class="product-variations">
-    <g:set var="defaultModel" value="${ProductModel.findByProductAndIsDefaultModel(product, true)}"/>
-    <g:if test="${defaultModel}">
+    <g:if test="${productModel}">
         <form id="productVariationForm">
             <g:hiddenField name="productId" value="${product.id}"/>
             <g:hiddenField name="selectedAddedValues" id="selectedAddedValues" value=""/>
@@ -54,7 +54,7 @@
                     <div class="variation-title">
                         ${it.name}:
                         <g:set var="curVariation"
-                               value="${defaultModel?.variationValues?.find { value -> value?.variationGroup?.id == it?.variationGroup?.id }}"/>
+                               value="${productModel?.variationValues?.find { value -> value?.variationGroup?.id == it?.variationGroup?.id }}"/>
                         <div ${curVariation?.variationGroup?.representationType == 'Color' ? 'itemprop="color"' : ''}
                                 class="cur-variation"
                                 id="cur-variation-${it.id}">${curVariation}</div>
@@ -67,7 +67,7 @@
                         <div class="variation-value" variationId="${it.id}">
                             <g:each in="${it.variationValues.sort{it.id}}">
                                 <div variationValueId="${it.id}"
-                                     class="variation-value-color ${defaultModel?.variationValues?.find { value -> value?.variationGroup?.id == it.variationGroup.id }?.value == it.value ? 'selected' : ''}">
+                                     class="variation-value-color ${productModel?.variationValues?.find { value -> value?.variationGroup?.id == it.variationGroup.id }?.value == it.value ? 'selected' : ''}">
                                     <g:if test="${it.image}">
                                         <div>
                                             <img class="variationValueImage" src="<g:createLink controller="image" params="[type:'variationValue',uid:Math.random()]" id="${it?.id}"/>" alt="">
@@ -82,16 +82,16 @@
             </g:each>
         %{--guarantee select--}%
             <div class="product-variation">
-                <g:if test="${defaultModel?.guarantee}">
+                <g:if test="${productModel?.guarantee}">
                     <div class="variation-title">
                         ${message(code: 'guarantee')}:
                         <g:set var="curVariation"
-                               value="${defaultModel?.guarantee?.name}"/>
+                               value="${productModel?.guarantee?.name}"/>
                         <div class="cur-variation"
-                             id="cur-variation-0">${defaultModel?.guarantee?.name}</div>
+                             id="cur-variation-0">${productModel?.guarantee?.name}</div>
 
                         <div class="hover-variation"></div>
-                        <g:hiddenField id="variation0" name="guarantee" value="${defaultModel?.guarantee?.id}"/>
+                        <g:hiddenField id="variation0" name="guarantee" value="${productModel?.guarantee?.id}"/>
                     </div>
                 </g:if>
                 <g:set var="gList" value="${ProductModel.findAllByProduct(product).collect { it.guarantee }.toSet()}"/>
@@ -99,7 +99,7 @@
                     <div class="variation-value" variationId="0">
                         <g:each in="${gList}">
                             <div variationValueId="${it.id}"
-                                 class="variation-value-color ${defaultModel?.guarantee?.id == it.id ? 'selected' : ''}">
+                                 class="variation-value-color ${productModel?.guarantee?.id == it.id ? 'selected' : ''}">
                                 ${it.name}
                             </div>
                         </g:each>

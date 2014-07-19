@@ -250,7 +250,6 @@
 
         $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
         $("#myModal").modal({
-            backdrop: false,
             show: true
         });
         $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage')}/' + id, function () {
@@ -273,7 +272,6 @@
 
     function selectAttributes(id) {
         $("#modal_" + id).modal({
-            backdrop: false,
             show: true
         });
     }

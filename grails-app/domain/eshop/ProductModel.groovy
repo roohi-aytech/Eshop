@@ -9,6 +9,7 @@ class ProductModel {
     Boolean isDefaultModel
     Integer width
     Integer height
+    Content mainImage
 
     static searchable = {
 //        root true
@@ -33,6 +34,7 @@ class ProductModel {
         prices()
         width(nullable: true)
         height(nullable: true)
+        mainImage(nullable: true)
     }
 
     transient String getGuaranteeInfo(){

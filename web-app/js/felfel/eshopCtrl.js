@@ -64,6 +64,22 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         });
     }
 
+    $scope.reloadProductImages = function (url, serializedData, imagesContainer) {
+        $http({
+            url: url,
+            method: "POST",
+            data: serializedData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config) {
+            imagesContainer.html(data);
+        }).error(function (data, status, headers, config) {
+            console.error(
+                    "The following error occured: " +
+                    textStatus, errorThrown
+            );
+        });
+    }
+
     $scope.reloadProductShoppingPanel = function (url, serializedData, shoppingPanel) {
         $http({
             url: url,
@@ -137,7 +153,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
 
         if (animate) {
-            var item = $('#productThumbnail_' + productId);
+            var item = $('#productThumbnail_' + id);
             var movingItem = item.clone()
                 .css('position', 'absolute')
                 .css('top', item.offset().top)

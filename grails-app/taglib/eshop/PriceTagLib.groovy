@@ -9,7 +9,11 @@ class PriceTagLib {
     }
 
     def thumbnailPrice = { attrs, body ->
-        def price = priceService.calcProductPrice(attrs.productId)
+        def price
+        if (attrs.productModelId)
+            price = priceService.calcProductModelPrice(attrs.productModelId)
+        else
+            price = priceService.calcProductPrice(attrs.productId)
         price.hideLastUpdate = attrs.hideLastUpdate
         out << render(template: "/site/thumbnailPrice", model: price)
         if (attrs.flag)
@@ -18,8 +22,15 @@ class PriceTagLib {
     }
 
     def thumbnailOldPrice = { attrs, body ->
-        def newPrice = priceService.calcProductPrice(attrs.productId)
-        def price = priceService.calcProductOldPrice(attrs.productId)
+        def newPrice
+        def price
+        if (attrs.productModelId) {
+            newPrice = priceService.calcProductModelPrice(attrs.productModelId)
+            price = priceService.calcProductModelOldPrice(attrs.productModelId)
+        } else {
+            newPrice = priceService.calcProductPrice(attrs.productId)
+            price = priceService.calcProductOldPrice(attrs.productId)
+        }
         if (newPrice.showVal < price.showVal) {
             out << "${message(code: 'oldPrice')}"
             out << "<span>"
@@ -33,7 +44,7 @@ class PriceTagLib {
         out << render(template: "/site/common/productModelStatusFlag", model: priceService.calcProductPrice(attrs.productId))
     }
 
-    def currencyLabel = {attrs, body ->
-        out << Currency.findByDisplay(true)?.name ?: message(code:'rial')
+    def currencyLabel = { attrs, body ->
+        out << Currency.findByDisplay(true)?.name ?: message(code: 'rial')
     }
 }

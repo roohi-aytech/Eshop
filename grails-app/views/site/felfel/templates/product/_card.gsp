@@ -31,7 +31,7 @@
         <h1 itemprop="name">
             ${productModel?.product?.productTypes?.find {
                 true
-            }?.name ?: ""} ${productModel?.product?.type?.title ?: ""} ${productModel?.product?.brand?.name ?: ""} مدل ${productModel?.name ?: ""}
+            }?.name ?: ""} ${productModel?.product?.type?.title ?: ""} ${productModel?.product?.brand?.name ?: ""} <g:message code="productModel"/> ${productModel?.name ?: ""}
         </h1>
     </div>
 

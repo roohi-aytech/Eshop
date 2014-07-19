@@ -2,7 +2,10 @@
 
     <div class="quick-view">
         <div class="product_img_left_block">
-            <g:render template="/site/felfel/templates/product/zoom" key="${params.id}"/>
+            <div id="product-images">
+                <g:render template="/site/felfel/templates/product/zoom" key="${productModel?.id}"/>
+            </div>
+
             <div class="roolover-product-box">
                 <div class="rollover"><g:message code="zoom.help"/></div>
             </div>
@@ -11,7 +14,7 @@
 
                 <p>
                     <a title="Share on Facebook" target="_blank"
-                       href="http://www.facebook.com/sharer/sharer.php?u=${createLink(uri:'/product/' + product.id, absolute: true)}"
+                       href="http://www.facebook.com/sharer/sharer.php?u=${createLink(uri: '/product/' + product.id, absolute: true)}"
                        rel="nofollow" class="facebook"></a>
 
                     <a onclick="javascript:window.open('http://twitter.com/home?status=Check out the ${createLink(uri:'/product/' + product.id, absolute: true)}', 'target=_pearent', 'width=820,height=455')"
@@ -20,7 +23,7 @@
 
 
                     <a count-layout="horizontal" class="pint"
-                       href="JavaScript:newPopup('http://pinterest.com/pin/create/button/?url=${createLink(uri:'/product/' + product.id, absolute: true)}"><span></span>
+                       href="JavaScript:newPopup('http://pinterest.com/pin/create/button/?url=${createLink(uri: '/product/' + product.id, absolute: true)}"><span></span>
                     </a>
 
                     <eshop:addToWishList useLongText="true" prodcutId="${product.id}"/>
@@ -36,7 +39,7 @@
         <div class="product_detail_right_block">
             <div class="product-card-content" id="product-card">
                 <g:render template="/site/felfel/templates/product/card" key="${params.id}"
-                          model="${[product: product, productModel: eshop.ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
+                          model="${[product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
             </div>
 
 
@@ -60,7 +63,7 @@
                     </div>
                 </div>
 
-                <ehcache:render template="product/variation" key="${params.id}"/>
+                <g:render template="product/variation" key="${productModel.id}"/>
 
                 <div class="product-additives">
                     <g:render template="product/additives"/>
@@ -74,7 +77,7 @@
 
             <div id="shoppingPanel">
                 <g:render template="/site/felfel/templates/product/shoppingPanel"
-                          model="${[product: product, productModel: eshop.ProductModel.findByProductAndIsDefaultModel(product, true), addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
+                          model="${[product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues]}"/>
             </div>
         </div>
 
@@ -99,16 +102,15 @@
     var modal;
     function showPriceHistogram(id) {
         $("#priceHistogramModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
-        if (modal) {
-            modal.show();
-            $('#priceHistogramModal').addClass('in');
-        }
-        else {
-            modal = $("#priceHistogramModal").modal({
-                backdrop: false,
-                show: true
-            });
-        }
+//        if (modal) {
+//            modal.show();
+//            $('#priceHistogramModal').addClass('in');
+//        }
+//        else {
+        modal = $("#priceHistogramModal").modal({
+            show: true
+        });
+//        }
         $("#priceHistogramModal .modal-body").load('${createLink(controller: 'productModel', action: 'priceHistogram')}/' + id, function () {
         });
     }

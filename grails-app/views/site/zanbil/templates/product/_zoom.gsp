@@ -23,7 +23,6 @@
 
                 $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
                 $("#myModal").modal({
-                        backdrop: false,
                         show: true
                         });
                 $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor.replace('#', ''), function() {});

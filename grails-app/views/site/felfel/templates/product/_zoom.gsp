@@ -28,7 +28,6 @@
 
                 $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
                 $("#myModal").modal({
-                    backdrop: false,
                     show: true
                 });
                 $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor.replace('#', ''), function () {
@@ -48,8 +47,9 @@
 
 <ul id="etalage">
 
-    <g:set var="mainImage" value="${product?.mainImage}"/>
-    <g:if test="${mainImage}">
+    <% def imageService = grailsApplication.classLoader.loadClass('eshop.ImageService').newInstance() %>
+    <g:set var="mainImage" value="${productModel?.mainImage ?: product?.mainImage}"/>
+    <g:if test="${mainImage && imageService.imageBelongsToModel(mainImage, productModel)}">
         <li>
             <g:if test="${!quickView}">
                 <a href='${mainImage?.id}' >
@@ -69,7 +69,7 @@
             </g:if>
         </li>
     </g:if>
-    <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name }}">
+    <g:each in="${product?.images?.findAll { it?.name != mainImage?.name && imageService.imageBelongsToModel(it, productModel) }.sort{it.id}}">
         <li>
             <g:if test="${!quickView}">
                 <a href='#${it?.id}'>

@@ -165,7 +165,7 @@ class BrowseService {
                     [$sort: [status: 1, sortOrder: 1]],
                     [$skip: randomizedStart],
                     [$limit: params.pageSize]
-            ).results().collect { it.baseProductId }
+            ).results().collect { it.modelId }
         }
 
         [totalPages: totalPages, productIds: productIds]
@@ -182,7 +182,7 @@ class BrowseService {
                 [$sort: [status: 1, sortOrder: 1]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
-        ).results().collect { it.baseProductId }
+        ).results().collect { it.modelId }
 
 //        println('page size:' + params.pageSize)
 //        println('productIds:' + productIds)
@@ -552,7 +552,7 @@ class BrowseService {
                 [$match: match],
                 [$skip: start],
                 [$limit: pageSize]
-        ).results().collect { it.baseProductId }
+        ).results().collect { it.modelId }
 
         def totalPages = (products.aggregate(
                 [$match: match],

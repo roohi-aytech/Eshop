@@ -6,7 +6,7 @@
     <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
     <style>
-    td[aria-describedby='MongoProductGrid_name'] {
+    td[aria-describedby='ProductGrid_name'] {
         direction: ltr;
     }
     </style>
@@ -30,7 +30,7 @@
                 data: { id: id }
             }).done(function (response) {
                         if (response == "0") {
-                            var grid = $("#MongoProductGrid");
+                            var grid = $("#ProductGrid");
                             grid.trigger('reloadGrid');
                         }
                         else {
@@ -162,9 +162,16 @@
     <script language="javascript" type="text/javascript">
         var curSelectedProductType=${ptid ?: 0}
         var loadProducts = function (rowId) {
-            curSelectedProductType = rowId
-            var criteria = "[{'op':'in', 'field':'productTypes.id', 'val':" + rowId + "}]"
-            loadGridWithCriteria("MongoProductGrid", criteria)
+            var url = "<g:createLink controller="productType" action="getChildProductTypesIdList"/>";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { id: rowId }
+            }).success(function (idList) {
+                curSelectedProductType = idList
+                var criteria = "[{'op':'productTypes','data':[{'op':'in','val':[" + idList + "],'field':'id'}]}]"
+                loadGridWithCriteria("ProductGrid", criteria)
+            });
         }
 
         function formatIsVisible(cellvalue, options, rowObject){  debugger
@@ -178,12 +185,18 @@
     <div style="margin: 10px;">
         <div class="criteria-div">
             <rg:criteria>
-                <rg:eq name="baseProductId" label="product.baseProductId"/>
-                <rg:ilike name="productTypes.name" label="product.productType"/>
-                <rg:ilike name="type.name" label="product.type"/>
-                <rg:ilike name="brand.name" label="product.brand"/>
+                <rg:eq name="id" label="product.baseProductId"/>
+                <rg:nest name="productTypes">
+                    <rg:like name="name" label='product.productType'/>
+                </rg:nest>
+                <rg:nest name="type">
+                    <rg:like name="title" label='product.type'/>
+                </rg:nest>
+                <rg:nest name="brand">
+                    <rg:eq name="name" label='product.brand'/>
+                </rg:nest>
                 <rg:ilike name="name" label='product.name'/>
-                <rg:filterGrid grid="MongoProductGrid" label='search'/>
+                <rg:filterGrid grid="ProductGrid" label='search'/>
             </rg:criteria>
         </div>
         <script type="text/javascript">
@@ -195,17 +208,17 @@
         <g:set var="productActions" value="[]"/>
         <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_ADD_EDIT}">
             <g:set var="productActions"
-                   value="${[[controller: 'product', action: 'productDetails', param: 'id=#id#', icon: "application_form"]]}"/>
+                   value="${[[controller: 'product', action: 'productDetails', param: 'pid=#id#', icon: "application_form"]]}"/>
         </sec:ifAllGranted>
         <sec:ifAllGranted roles="${eshop.RoleHelper.ROLE_PRODUCT_ADMIN}">
             <g:set var="productActions"
-                   value="${[[controller: 'product', action: 'productDetails', param: 'id=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}"/>
+                   value="${[[controller: 'product', action: 'productDetails', param: 'pid=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}"/>
         </sec:ifAllGranted>
-        <rg:grid domainClass="${eshop.mongo.MongoProduct}"
+        <rg:grid domainClass="${eshop.Product}"
                  maxColumns="4"
                  showCommand="false"
                  firstColumnWidth="30"
-                 columns="[[name: 'baseProductId'], [name: 'image', expression: '\\\'%3cimg height=30 src=%22\\\'%2bg.createLink(controller: \\\'image\\\',id:obj.baseProductId )%2b\\\'%22/%3e\\\''], [name: 'productTypes', expression: 'obj[\\\'productTypes\\\']?.find{true}?.name'], [name: 'type', expression: 'obj[\\\'type\\\'][\\\'name\\\']'], [name: 'brand', expression: 'obj[\\\'brand\\\'][\\\'name\\\']'], [name: 'name'], [name: 'guaranteeList'], [name: 'isVisible', expression: 'g.message(code:  obj[\\\'isVisible\\\'].toString() )']]"
+                 columns="[[name: 'id'], [name: 'image', expression: '\\\'%3cimg height=30 src=%22\\\'%2bg.createLink(controller: \\\'image\\\',id:obj.id )%2b\\\'%22/%3e\\\''], [name: 'productTypes', expression: 'obj[\\\'productTypes\\\']?.find{true}?.name'], [name: 'type', expression: 'obj[\\\'type\\\'][\\\'title\\\']'], [name: 'brand', expression: 'obj[\\\'brand\\\'][\\\'name\\\']'], [name: 'name'], [name: 'guaranteeList'], [name: 'isVisible', expression: 'g.message(code:  obj[\\\'isVisible\\\'].toString() )']]"
                  toolbarCommands="${[[caption: message(code: "add"), function: "addToProductGrid", icon: "plus"]]}"
                  commands="${productActions}">
             <g:if test="${ptid}">

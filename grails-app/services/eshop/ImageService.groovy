@@ -24,11 +24,10 @@ class ImageService {
     def getImageSize(Content img, Product product) {
         byte[] bytes = fileService.getFileContent(img.name, "image", fileService.filePath(product).toString()) as byte[]
         def image = ImageIO.read(new ByteInputStream(bytes, bytes.length))
-        if (!image){
+        if (!image) {
             img.dynamicProperties.width = 0
             img.dynamicProperties.height = 0
-        }
-        else{
+        } else {
             img.dynamicProperties.width = Math.max(image.width, image.height)
             img.dynamicProperties.height = Math.max(image.width, image.height)
         }
@@ -132,7 +131,6 @@ class ImageService {
     }
 
 
-
     def saveAndScaleImages(byte[] content, String name, String parent) {
 
         fileService.saveFile(content, name, "image", parent)
@@ -160,5 +158,23 @@ class ImageService {
             fileService.saveFile(thumb, tfname, "image", parent)
         }
         return thumb
+    }
+
+    def imageBelongsToModel(Content image, ProductModel model) {
+        def result = true
+        image = Content.get(image?.id)
+        model?.variationValues?.each { modelVariationValue ->
+            modelVariationValue = VariationValue.get(modelVariationValue?.id)
+            if (image?.variationValues?.any {
+                imageVariationValue ->
+                    imageVariationValue?.variationGroup?.id == modelVariationValue?.variationGroup?.id
+            })
+                if (!image?.variationValues?.any {
+                    imageVariationValue ->
+                        imageVariationValue?.variationGroup?.id == modelVariationValue?.variationGroup?.id && imageVariationValue?.value == modelVariationValue?.value
+                })
+                    result = false
+        }
+        result
     }
 }

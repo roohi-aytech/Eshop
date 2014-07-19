@@ -14,6 +14,7 @@
     <ul>
         <li><a href="#price"><g:message code="price"/></a></li>
         <li><a href="#producer"><g:message code="producer"/></a></li>
+        <li><a href="#main-image"><g:message code="main-image"/></a></li>
     </ul>
 
     <div id="price" style="width: 98%">
@@ -22,6 +23,10 @@
 
     <div id="producer" style="width: 98%">
         <g:render template="../producerProductModel/list"/>
+    </div>
+
+    <div id="main-image" style="width: 98%">
+        <g:render template="images_details"/>
     </div>
 
 </div>

@@ -24,7 +24,6 @@
             }
             else {
                 modal = $("#priceHistogramModal").modal({
-                    backdrop: false,
                     show: true
                 });
             }

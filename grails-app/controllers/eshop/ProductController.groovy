@@ -24,7 +24,7 @@ class ProductController {
 
     def list() {
         [
-                ptid: params.ptid ?: 0,
+                ptid                       : params.ptid ?: 0,
                 unSynchronizedProductsCount:
                         Product.createCriteria().count {
                             or {
@@ -434,12 +434,12 @@ class ProductController {
                 product[contentType + "s"].each {
 
                     results << [
-                            name: it.name,
-                            size: it.fileContent.length,
+                            name         : it.name,
+                            size         : it.fileContent.length,
 //                            url: createLink( action:'image', pa: params.id),
                             thumbnail_url: contentType == "image" ? createLink(action: contentType, params: [id: params.id, name: it.name]) : resource(dir: 'images', file: 'video.png'),
-                            delete_url: createLink(action: "delete${contentType}", params: [id: params.id, name: it.name]),
-                            delete_type: "GET"
+                            delete_url   : createLink(action: "delete${contentType}", params: [id: params.id, name: it.name]),
+                            delete_type  : "GET"
                     ]
                 }
                 render results as JSON
@@ -459,11 +459,11 @@ class ProductController {
                     def content = new Content(contentType: contentType, name: file.originalFilename, fileContent: bytes)
                     content.save()
                     images << content
-                    result << [name: file.originalFilename,
-                            size: file.size,
-                            thumbnail_url: contentType == "image" ? createLink(action: 'image', params: [id: params.id, name: file.originalFilename]) : resource(dir: 'images', file: 'video.png'),
-                            delete_url: createLink(action: "delete${contentType}", params: [id: params.id, name: file.originalFilename]),
-                            delete_type: "GET"]
+                    result << [name         : file.originalFilename,
+                               size         : file.size,
+                               thumbnail_url: contentType == "image" ? createLink(action: 'image', params: [id: params.id, name: file.originalFilename]) : resource(dir: 'images', file: 'video.png'),
+                               delete_url   : createLink(action: "delete${contentType}", params: [id: params.id, name: file.originalFilename]),
+                               delete_type  : "GET"]
                 }
                 if (contentType == "image")
                     productService.addImageToProduct(params.id, images)
@@ -620,27 +620,28 @@ class ProductController {
 
     def delete() {
 
-        def mongoProductInstance = MongoProduct.get(params.id)
-        if (!mongoProductInstance) {
+        def productInstance = Product.get(params.id)
+        if (!productInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
             render 1
         }
 
         try {
 //            def tmp = []
-            def product = Product.get(mongoProductInstance.baseProductId)
+//            def product = Product.get(productInstance.baseProductId)
 //            product.productTypes.each {
 //                tmp << it
 //            }
 //            tmp.each {
 //                product.removeFromProductTypes(it)
 //            }
-            product.isSynchronized = false
-            product.save()
+            productInstance.deleted = true
+            productInstance.isSynchronized = false
+            productInstance.save()
 
-            mongoProductInstance.delete(flush: true)
-            product.deleted = true
-            product.save()
+//            productInstance.delete(flush: true)
+//            product.deleted = true
+//            product.save()
 //            product.mainImage?.delete()
 //            product.images.each {it.delete()}
 //            product.videos.each {it.delete()}
@@ -672,31 +673,17 @@ class ProductController {
     }
 
     def synchMongo() {
-//        Thread.start {
 
         Product.findAllByDeletedOrDeletedIsNull(false).each {
             it.isSynchronized = false
             it.save()
         }
 
-//        if (!params.start)
-//            MongoProduct.findAll().each { it.delete() }
-//        def i = 0
-//        if (params.start)
-//            i = params.start.toInteger()
-//        def ps = Product.findAll()
-//        ps.toArray()[i..ps.size() - 1].each {
-//            try {
-//                println "${i++} of ${ps.size()}"
-//                it.isSynchronized = false
-//                it.save()
-//                println it
-//            } catch (e) {
-//                println(e)
-//            }
-//        }
-////        }
         render "Synch Reset OK"
+    }
+
+    def clearMongo() {
+        render mongoService.clear().toString()
     }
 
     def findDuplicates() {

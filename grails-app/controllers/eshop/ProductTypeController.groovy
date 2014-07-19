@@ -809,4 +809,9 @@ class ProductTypeController {
         redirect(action: "details", id: giftInformation.productType?.id)
     }
 
+    def getChildProductTypesIdList(){
+        def productType = ProductType.get(params.id)
+        render (getChildProductTypes(productType).collect{it.id}.join(','))
+    }
+
 }

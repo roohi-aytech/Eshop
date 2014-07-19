@@ -5,6 +5,7 @@ import eshop.Product
 
 class MongoProduct {
     Long baseProductId
+    Long modelId
 
     static mapWith = "mongo"
 
@@ -28,6 +29,6 @@ class MongoProduct {
     }
 
     static constraints = {
-        baseProductId(unique: true)
+        modelId(unique: true)
     }
 }
