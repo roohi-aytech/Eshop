@@ -27,7 +27,7 @@ class MongoJob {
             }
         }
         if (product.size() > 0) {
-            def http = new HTTPBuilder("${(grailsApplication.config.grails.serverURL ?: 'http://localhost:8080/EShop')}/site/synchMongoItem/${product.first()}")
+            def http = new HTTPBuilder("${(grailsApplication.config.grails.serverURLj ?: 'http://localhost:8080/saboo')}/site/synchMongoItem/${product.first()}")
             try {
                 def result = http.get([:]).toString().trim()
 //            withHttp(uri: grailsApplication.config.grails.serverURL ?: 'http://localhost') {

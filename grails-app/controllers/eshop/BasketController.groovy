@@ -146,16 +146,16 @@ class BasketController {
         }
 
         [
-                basket: session.getAttribute("basket"),
-                customer: customer,
-                currentStep: currentStep,
-                address: session.checkout_address,
+                basket                  : session.getAttribute("basket"),
+                customer                : customer,
+                currentStep             : currentStep,
+                address                 : session.checkout_address,
                 customInvoiceInformation: customInvoiceInformation,
-                deliveryMethods: deliveryMethods
+                deliveryMethods         : deliveryMethods
         ]
     }
 
-    def deliveryMethods(){
+    def deliveryMethods() {
         def deliveryMethods = []
 
         def customer = springSecurityService.currentUser as Customer
@@ -286,8 +286,8 @@ class BasketController {
         session["order"] = order
 
         [
-                basket: session.getAttribute("basket"),
-                order: session.getAttribute("order"),
+                basket        : session.getAttribute("basket"),
+                order         : session.getAttribute("order"),
                 sendingAddress: session.getAttribute("sendingAddress"),
                 billingAddress: session.getAttribute("billingAddress")
         ]
@@ -345,6 +345,6 @@ class BasketController {
         def id = params.id
         def productModel = ProductModel.get(id)
 
-        render template: 'alert', model: [name: "${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title ?: ''} ${productModel?.product?.brand} ${productModel?.variationValues?.find { it.variationGroup.representationType == 'Color' }?.value}"]
+        render template: 'alert', model: [name: productModel?.product?.manualTitle ?productModel?.product?.pageTitle : ("${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title ?: ''} ${productModel?.product?.brand} ${productModel?.variationValues?.find { it.variationGroup.representationType == 'Color' }?.value}")]
     }
 }

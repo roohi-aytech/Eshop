@@ -82,7 +82,7 @@
 
 <div class="listing_right">
 
-    <g:render template="common/productRowList"
+    <g:render template="goldaan/templates/productRowList"
               model="${[productIds: filters.products.productIds]}"/>
 </div>
 

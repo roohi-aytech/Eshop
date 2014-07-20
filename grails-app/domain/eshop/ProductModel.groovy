@@ -1,6 +1,7 @@
 package eshop
 
 class ProductModel {
+
     static auditable = true
     String name
     Product product
@@ -12,7 +13,7 @@ class ProductModel {
 
     static searchable = {
 //        root true
-        only = ['name','guaranteeInfo']
+        only = ['name', 'guaranteeInfo']
     }
 
     static hasMany = [variationValues: VariationValue, prices: Price]
@@ -26,7 +27,7 @@ class ProductModel {
 
     static constraints = {
         name(nullable: true)
-        guarantee(nullable:true)
+        guarantee(nullable: true)
         variationValues(nullable: true)
         status(inList: ['exists', 'not-exists', 'coming-soon', 'inquiry-required'])
         isDefaultModel()
@@ -35,21 +36,25 @@ class ProductModel {
         height(nullable: true)
     }
 
-    transient String getGuaranteeInfo(){
+    transient String getGuaranteeInfo() {
         "${guarantee?.name} ${guarantee?.description}"
     }
 
     @Override
     int compareTo(def t) {
-        name <=>t?.name
+        name <=> t?.name
     }
 
     @Override
     String toString() {
-        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} مدل ${name?:""} با گارانتی ${guarantee?:""}"
+        "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} مدل ${name ?: ""} با گارانتی ${guarantee ?: ""}"
     }
 
-    String toBasketItemString(){
-        "${product?.productTypes?.find {true}?.name?:""} ${product?.type?.title?:""} ${product?.brand?.name?:""} ${variationValues?.find {it?.variationGroup?.representationType == 'Color'}?:""} با گارانتی ${guarantee?:""}<br/> مدل ${name?:""}"
+    String toBasketItemString() {
+
+        if (domainClass.grailsApplication.config.eShop.instance == 'goldaan') {
+            return product?.manualTitle ? product?.pageTitle : product?.title
+        } else
+            return "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} با گارانتی ${guarantee ?: ""}<br/> مدل ${name ?: ""}"
     }
 }
