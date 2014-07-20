@@ -4275,3 +4275,53 @@ h2.check-out-price span {
 }
 
 
+.btn-group > .btn:first-child{
+    border-radius: 0;
+}
+
+.dropdown-menu{
+    border-radius: 0;
+}
+
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a{
+    background: #ffffff;
+}
+
+.dropdown-menu li > a:hover span, .dropdown-menu li > a:focus span, .dropdown-submenu:hover > a span{
+    color:#ec1e20;
+}
+
+.bootstrap-select > .btn{
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.btn-group.open .btn.dropdown-toggle{
+    box-shadow: none;
+    /*border-color: #ec1e20;*/
+    background: #ffffff;
+}
+
+.btn-group.open .btn.dropdown-toggle span{
+    color:#ec1e20 !important;
+}
+
+.bootstrap-select.btn-group .btn .caret{
+    right:auto;
+    left:12px;
+}
+
+.nav .dropdown-toggle .caret {
+    border-bottom-color: #ec1e20 !important;
+    border-top-color: #ec1e20 !important;
+}
+
+.bootstrap-select.btn-group .btn .filter-option{
+    text-align: right;
+}
+
+.bootstrap-select > .btn{
+    padding-left: 25px;
+    padding-right: 14px;
+}
+

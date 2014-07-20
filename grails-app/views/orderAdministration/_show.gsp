@@ -129,20 +129,22 @@
 
             </li>
         </g:if>
-        <g:if test="${orderInstance?.deliveryPrice || orderInstance?.deliveryPrice == 0}">
-            <li class="fieldcontain">
-                <span id="deliveryPrice-label" class="property-label"><g:message code="deliveryPrice"/></span>
+        <g:if test="${!orderInstance.deliverySourceStation.method.hidePrice}">
+            <g:if test="${orderInstance?.deliveryPrice || orderInstance?.deliveryPrice == 0}">
+                <li class="fieldcontain">
+                    <span id="deliveryPrice-label" class="property-label"><g:message code="deliveryPrice"/></span>
 
-                <span class="property-value" aria-labelledby="deliveryPrice-label">
-                    <g:if test="${orderInstance?.deliveryPrice == 0}">
-                        <g:message code="free"/>
-                    </g:if>
-                    <g:else>
-                        <g:formatNumber number="${orderInstance?.deliveryPrice}" type="number"/>
-                    </g:else>
-                </span>
+                    <span class="property-value" aria-labelledby="deliveryPrice-label">
+                        <g:if test="${orderInstance?.deliveryPrice == 0}">
+                            <g:message code="free"/>
+                        </g:if>
+                        <g:else>
+                            <g:formatNumber number="${orderInstance?.deliveryPrice}" type="number"/>
+                        </g:else>
+                    </span>
 
-            </li>
+                </li>
+            </g:if>
         </g:if>
         <g:if test="${orderInstance?.totalPrice}">
             <li class="fieldcontain">

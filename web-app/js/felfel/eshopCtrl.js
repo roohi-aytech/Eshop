@@ -226,7 +226,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             totalPrice += item.realPrice * item.count;
         });
 
-        if ($scope.deliveryPrice != -1)
+        if ($scope.deliveryPrice > -1)
             totalPrice += $scope.deliveryPrice
 
         return totalPrice;

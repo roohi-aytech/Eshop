@@ -212,6 +212,10 @@ class ProductModelController {
 
     def priceHistogram(){
         def productModel = ProductModel.get(params.id)
+        if(!productModel){
+            render ''
+            return
+        }
         render template: 'priceHistogram', model: [productModel: productModel, priceList: Price.findAllByProductModel(productModel).sort{it.startDate}, exchanheRate: priceService.getDisplayCurrencyExchangeRate()]
     }
 

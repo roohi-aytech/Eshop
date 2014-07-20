@@ -61,6 +61,14 @@
     <g:textField size="35" name="addedValuePercent" value="${deliveryMethodInstance?.addedValuePercent}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: deliveryMethodInstance, field: 'hidePrice', 'error')} ">
+    <label for="insuranceIsRequired">
+        <g:message code="deliveryMethod.hidePrice.label" default="hidePrice" />
+
+    </label>
+    <g:checkBox name="hidePrice" value="${deliveryMethodInstance?.hidePrice}"/>
+</div>
+
 
 
 

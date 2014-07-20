@@ -16,7 +16,7 @@ addedValueImage=true
 modelHasWidthAndHeight=false
 hideCustomerReviewTitle=false
 customCustomerReviewTemplate=false
-filterPriceOnChange=false
+filterPriceOnChange=true
 ckeditor {
     upload {
         basedir = "/home/uploads"

@@ -36,7 +36,7 @@ class DeliveryService {
 
     def calculateDeliveryMethodPrice(Order order, DeliveryMethod deliveryMethod) {
 
-        def result = [deliveryMethod: deliveryMethod, sourceStation: null, price: 999999999, priceWithInsurance: 0]
+        def result = [deliveryMethod: deliveryMethod, sourceStation: null, price: 999999999, priceWithInsurance: 0, hidePrice : false]
 
         def targetCity = order?.sendingAddress?.city
         if (targetCity) {
@@ -74,6 +74,7 @@ class DeliveryService {
                     if (price <= result.price) {
                         result.sourceStation = sourceStation
                         result.price = price
+                        result.hidePrice = deliveryMethod.hidePrice ?: false
 
                         if (deliveryMethod.insurancePercent)
                             result.priceWithInsurance = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)

@@ -15,7 +15,7 @@ class DefaultController {
     }
 
     def notFound(){
-        response.status = 404
+//        response.status = 404
         render(view: "/notFound")
     }
 

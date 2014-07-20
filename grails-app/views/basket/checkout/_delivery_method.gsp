@@ -1,27 +1,45 @@
 <script language="javascript" type="text/javascript">
-    function setDeliveryPrice(element, price) {
+    function setDeliveryPrice(element, name, price, hidePrice) {
         if (element.checked) {
-            $('#price').val(price);
-            var scope = angular.element(document.getElementById('main-container')).scope();
-            scope.deliveryPrice = price;
-            scope.$apply();
-            $('.deliveryMethodList b').removeClass('selected');
-            $(element).parent().next('td').next('td').find('b').addClass('selected');
+            if(hidePrice){
+                $('#price').val(price);
+
+                var scope = angular.element(document.getElementById('main-container')).scope();
+                scope.deliveryPrice = name;
+                scope.$apply();
+            }
+            else {
+                $('#price').val(price);
+                var scope = angular.element(document.getElementById('main-container')).scope();
+                scope.deliveryPrice = price;
+                scope.$apply();
+                $('.deliveryMethodList b').removeClass('selected');
+                $(element).parent().next('td').next('td').find('b').addClass('selected');
+            }
         }
     }
-    function setDeliveryPriceWithInsurance(element, price, priceWithInsurance) {
-        if (element.checked) {
-           $('#price').val(priceWithInsurance);
+    function setDeliveryPriceWithInsurance(element, name, price, priceWithInsurance, hidePrice) {
+        if(hidePrice){
+            $('#price').val(price);
 
             var scope = angular.element(document.getElementById('main-container')).scope();
-            scope.deliveryPrice = priceWithInsurance;
+            scope.deliveryPrice = name;
             scope.$apply();
-        } else {
-           $('#price').val(price);
+        }
+        else {
+            if (element.checked) {
+                $('#price').val(priceWithInsurance);
 
-            var scope = angular.element(document.getElementById('main-container')).scope();
-            scope.deliveryPrice = price;
-            scope.$apply();
+                var scope = angular.element(document.getElementById('main-container')).scope();
+                scope.deliveryPrice = priceWithInsurance;
+                scope.$apply();
+            } else {
+                $('#price').val(price);
+
+                var scope = angular.element(document.getElementById('main-container')).scope();
+                scope.deliveryPrice = price;
+                scope.$apply();
+            }
         }
     }
 </script>
@@ -40,11 +58,11 @@
                         <td rowspan="3">
                             <input type="radio" id="deliverySourceStation${deliveryMethod.sourceStation?.id}"
                                    name="deliverySourceStation" ${indexer == 0 ? 'checked' : ''}
-                                   value="${deliveryMethod.sourceStation?.id}" onchange="setDeliveryPrice(this, ${deliveryMethod.price});"/>
+                                   value="${deliveryMethod.sourceStation?.id}" onchange="setDeliveryPrice(this, '${deliveryMethod.deliveryMethod}', ${deliveryMethod.price}, ${deliveryMethod.hidePrice});"/>
                             <g:if test="${indexer == 0}">
                                 <script language="javascript" type="text/javascript">
                                     $(document).ready(function () {
-                                        setDeliveryPrice(document.getElementById("deliverySourceStation${deliveryMethod.sourceStation?.id}"), ${deliveryMethod.price});
+                                        setDeliveryPrice(document.getElementById("deliverySourceStation${deliveryMethod.sourceStation?.id}"), '${deliveryMethod.deliveryMethod}', ${deliveryMethod.price}, ${deliveryMethod.hidePrice});
                                     });
                                 </script>
                             </g:if>
@@ -65,7 +83,7 @@
                             <g:if test="${!deliveryMethod.deliveryMethod.insuranceIsRequired && deliveryMethod.deliveryMethod.insurancePercent > 0}">
                                 <input type="checkbox" id="insurance${deliveryMethod.sourceStation?.id}"
                                        name="insurance${deliveryMethod.sourceStation?.id}"
-                                       onchange="setDeliveryPriceWithInsurance(this, ${deliveryMethod.price}, ${deliveryMethod.priceWithInsurance});"/>
+                                       onchange="setDeliveryPriceWithInsurance(this, '${deliveryMethod.deliveryMethod}', ${deliveryMethod.price}, ${deliveryMethod.priceWithInsurance}, ${deliveryMethod.hidePrice});"/>
                                 <label for="insurance${deliveryMethod.sourceStation?.id}">
                                     <g:message
                                             code="applyInsurance"/> (${deliveryMethod.deliveryMethod.insurancePercent}%)
@@ -75,7 +93,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
+                            <label ${deliveryMethod.hidePrice ? "style='display:none;'" : ''} for="deliverySourceStation${deliveryMethod.sourceStation?.id}">
                                 <g:message
                                         code="deliveryPrice"/>: ${(deliveryMethod.price) == 0 ? message(code: 'free') : formatNumber(number: deliveryMethod.price, type: 'number') + ' ' + eshop.currencyLabel()}
                             </label>

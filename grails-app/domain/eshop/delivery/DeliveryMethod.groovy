@@ -9,6 +9,7 @@ class DeliveryMethod {
     Boolean insuranceIsRequired = false
     Double insurancePercent = 0D
     Double addedValuePercent = 0D
+    Boolean hidePrice = false
     byte[] logo
 
     Boolean deleted = false
@@ -27,6 +28,7 @@ class DeliveryMethod {
         insurancePercent(nullable: true)
         addedValuePercent(nullable: true)
         logo(nullable: true, maxSize: 20000000)
+        hidePrice(nullable: true)
     }
 
     @Override

@@ -7,7 +7,7 @@ class CustomerReviewController {
 
     def springSecurityService
 
-    static allowedMethods = [save: "POST", delete: "POST"]
+//    static allowedMethods = [save: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -30,6 +30,11 @@ class CustomerReviewController {
     }
 
     def save() {
+        if(!params.id && !params.productId)
+        {
+            render ''
+            return
+        }
         def customerReviewInstance
         if (params.id) {
             customerReviewInstance = CustomerReview.get(params.id)

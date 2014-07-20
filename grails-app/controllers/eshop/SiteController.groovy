@@ -161,7 +161,7 @@ class SiteController {
             return
         }
 
-        model.filters = browseService.findFilteredPageFilters(f, params.page ?: 0, "${f} ${params.page ?: 0}")
+        model.filters = browseService.findFilteredPageFilters(f, params.sort, params.dir, params.page ?: 0, "${f} ${params.page ?: 0}")
 
         if (model.filters.products.productIds.size() == 0) {
             redirect(uri: "/notFound")
@@ -612,6 +612,10 @@ class SiteController {
 
     def productCard() {
         def product = Product.get(params.productId)
+        if(!product){
+            render ''
+            return
+        }
 
         def models = ProductModel.findAllByProduct(product)
         def productModel
@@ -649,7 +653,14 @@ class SiteController {
     }
 
     def productShoppingPanel() {
+
         def product = Product.get(params.productId)
+
+        if(!product)
+        {
+            render ''
+            return
+        }
 
         def models = ProductModel.findAllByProduct(product)
         def productModel
@@ -894,6 +905,8 @@ class SiteController {
             },
                     [reload: false, max: 1000])
         }
+        if(!params.f)
+            params.f = 'p0'
         def f = params.f
         if (f instanceof String[] && f.length) {
             redirect(action: 'search', params: [f: f.join(','), phrase: params.phrase])
@@ -903,7 +916,7 @@ class SiteController {
             it.id
         } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
             it?.product?.id
-        }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        }, f, params.sort, params.dir, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
         //sort result again
         model.filters.products.productIds.sort {
             def id = it
@@ -983,6 +996,10 @@ class SiteController {
         def model = [:]
         def productIdList = []
         def productModelIdList = []
+        if(!params.phrase) {
+            render ''
+            return
+        }
         if (params.phrase) {
             def query = params.phrase.toString().trim()
             query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())

@@ -62,7 +62,14 @@
     <span ng-switch on="deliveryPrice">
         <span ng-switch-when="-1"><g:message code="deliveryMethod.notSelected"/></span>
         <span ng-switch-when="0"><b><g:message code="free"/></b></span>
-        <span ng-switch-default><b><span class="totalPrice">{{deliveryPrice | number:0}}</span></b> <eshop:currencyLabel/></span>
+        <span ng-switch-default>
+            <span ng-show="deliveryPrice > -1">
+            <b><span class="totalPrice">{{deliveryPrice | number:0}}</span></b> <eshop:currencyLabel/>
+            </span>
+            <span ng-hide="deliveryPrice > -1">
+                <b><span class="totalPrice">{{deliveryPrice}}</span></b>
+            </span>
+        </span>
     </span>
 </div>
 

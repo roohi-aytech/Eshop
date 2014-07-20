@@ -276,12 +276,6 @@
         });
     }
 
-    $('.easyui-tree').tree({
-        url: '${createLink()}',
-        checkbox: true,
-        cascadeCheck: true
-    });
-
     function gatherData(productTypeId) {
         var input = $('#selectedNodes-' + productTypeId);
         input.val('');

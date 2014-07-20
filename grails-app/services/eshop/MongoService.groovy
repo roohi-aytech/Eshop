@@ -50,6 +50,11 @@ class MongoService {
 
             def productTypeList = collectProductTypes(prod)
 
+            def customerReviews = CustomerReview.findAllByProduct prod
+            def rate = CustomerReview.findAllByProduct(prod).count { it } == 0 ? 0 : ((double)customerReviews.sum(0, {
+                it.rate
+            }) / customerReviews.count { it })
+
             def totalResult = true
             //iterate prod types
             def productModels = ProductModel.findAllByProduct(prod)
@@ -67,6 +72,7 @@ class MongoService {
                 mongoProduct['type'] = [id: prod?.type?.id, name: prod?.type?.title]
                 mongoProduct['visitCount'] = prod?.visitCount ?: 0
                 mongoProduct['saleCount'] = prod?.saleCount
+                mongoProduct['customerRate'] = rate
 
                 //prod types
                 mongoProduct['productTypes'] = productTypeList.collect {
@@ -100,6 +106,9 @@ class MongoService {
                 //model based
                 def priceData = priceService.calcProductModelPrice(productModel.id)
                 mongoProduct['price'] = priceData.showVal
+                def oldPriceData = priceService.calcProductModelOldPrice(productModel.id)
+                mongoProduct['priceChange'] = (oldPriceData.showVal ?: 0) - (priceData.showVal ?: 0)
+                mongoProduct['priceChangeDate'] = priceData.lastUpdate?.time ?: 0
 
                 switch (priceData.status) {
                     case 'exists':

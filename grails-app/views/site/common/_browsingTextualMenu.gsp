@@ -1,4 +1,12 @@
 <ul class="nav nav-list">
+
+<li class="nav-header">
+    <g:message code="sort.label"/>
+</li>
+<li class="sub-category">
+    <g:render template="common/sortFilter"/>
+</li>
+
 <g:if test="${productType.children}">
     <li class="nav-header"><g:message code="site.selectSubcategory"
                                       default="Select SubProductType"/></li>

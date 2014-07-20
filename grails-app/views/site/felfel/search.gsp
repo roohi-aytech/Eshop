@@ -22,6 +22,10 @@
     <![endif]-->
 
     <script language="JavaScript" type="text/javascript" src="${resource(dir:'js', file: 'jquery.transform.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'toggles.css')}"/>
+    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'toggles.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'bootstrap-select.css')}"/>
+    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'bootstrap-select.min.js')}"></script>
 
 </head>
 
@@ -62,6 +66,9 @@
     %{--</div>--}%
     <g:message code="search.for.label"></g:message> ${params.phrase}
 </h3>
+
+<g:render template="common/statusFilter"/>
+<div class="clearfix"></div>
 
 <div class="toolbar_top">
     <g:render template="/site/common/priceRangeSlider"/>

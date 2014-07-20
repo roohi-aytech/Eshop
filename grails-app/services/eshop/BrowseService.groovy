@@ -26,7 +26,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
-        if(session["status_filter"])
+        if (session["status_filter"])
             params.match['status'] = 0
         def countMap = products.aggregate(
                 [$match: params.match],
@@ -42,7 +42,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
-        if(session["status_filter"])
+        if (session["status_filter"])
             params.match['status'] = 0
         def countMap = products.aggregate(
                 [$match: params.match],
@@ -56,7 +56,7 @@ class BrowseService {
 
     def pagesCount(match, pageSize) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
-        if(session["status_filter"])
+        if (session["status_filter"])
             match['status'] = 0
         match["displayInList"] = true
         (products.aggregate(
@@ -70,7 +70,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
-        if(session["status_filter"])
+        if (session["status_filter"])
             params.match['status'] = 0
 
         def totalPages = pagesCount(params.match, params.pageSize)
@@ -188,13 +188,20 @@ class BrowseService {
 
         def products = getProducts()
         params.match["displayInList"] = true
-        if(session["status_filter"])
+        if (session["status_filter"])
             params.match['status'] = 0
 
         def totalPages = pagesCount(params.match, params.pageSize)
+        def sortExpression = [status: 1, sortOrder: 1]
+        if (params.sort) {
+            if (params.sort == 'default')
+                sortExpression = [status: -(params.dir?.toInteger() ?: -1), sortOrder: -(params.dir?.toInteger() ?: -1)]
+            else
+                sortExpression = ["${params.sort}": (params.dir?.toInteger() ?: -1), status: 1, sortOrder: 1]
+        }
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: [status: 1, sortOrder: 1]],
+                [$sort: sortExpression],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results().collect { it.modelId }
@@ -240,7 +247,7 @@ class BrowseService {
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
-    def findFilteredPageFilters(f, page, cacheKey) {
+    def findFilteredPageFilters(f, sort, dir, page, cacheKey) {
         def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
         def productType
         def breadcrumb = []
@@ -471,7 +478,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_filter_${f}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, sort: sort, dir: dir, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
@@ -611,7 +618,7 @@ class BrowseService {
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
-    def findSearchPageFilters(productIdList, f, page, cacheKey) {
+    def findSearchPageFilters(productIdList, f, sort, dir, page, cacheKey) {
         def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
         def productType
         def breadcrumb = []
@@ -848,7 +855,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_search_${f}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, sort: sort, dir: dir, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }

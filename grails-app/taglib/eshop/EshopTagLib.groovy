@@ -93,13 +93,13 @@ class EshopTagLib {
 
     def filterStart = { attrs, body ->
         def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
-        def link = g.createLink(action: "filter", params: [f: f, o: attrs.attribute])
+        def link = g.createLink(controller: 'site',action: "filter", params: [f: f, o: attrs.attribute])
         out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterStartBrand = { attrs, body ->
         def f = attrs.productType?.id ? "p${attrs.productType.id},b${attrs.brandId}" : "b${attrs.brandId}"
-        def link = g.createLink(action: "filter", params: [f: f, o: 'b'])
+        def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'b'])
         def brand = Brand.get(attrs.brandId)
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}'><img class='lazy' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
@@ -109,13 +109,13 @@ class EshopTagLib {
 
     def filterStartVariation = { attrs, body ->
         def f = "p${attrs.productType.id},v${attrs.variation}|${attrs.value}"
-        def link = g.createLink(action: "filter", params: [f: f, o: 'v' + attrs.variation])
+        def link = g.createLink(controller: 'site',action: "filter", params: [f: f, o: 'v' + attrs.variation])
         out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterAddProductType = { attrs, body ->
         def f = "${attrs.f},p${attrs.id}"
-        def link = g.createLink(action: params.action, params: params + [f: f])
+        def link = g.createLink(controller: 'site',action: params.action, params: params + [f: f])
         out << "<a href='${link}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 

@@ -18,7 +18,6 @@
 
 .toggle-slide .toggle-blob {
     position: relative;
-    z-index: 99;
     cursor: hand;
     cursor: -webkit-grab;
     cursor: -moz-grab;
