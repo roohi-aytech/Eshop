@@ -18365,7 +18365,7 @@ ul.wlp_bought_list li .lnkdel {
     left: 0;
     right: auto;
     top: 25px;
-    width: 318px;
+    width: 280px;
     box-shadow: none;
     border-radius: 0;
     border-width: 0;
@@ -18381,7 +18381,7 @@ ul.wlp_bought_list li .lnkdel {
     height: 12px;
     background-color: #ffffff;
     /*float:left;*/
-    width: 288px;
+    width: 258px;
     border: 1px solid #68C16F;
     border-bottom-width: 0;
     border-top-width: 0;
@@ -19131,3 +19131,109 @@ ul.third-party li{
 .sign-up-help{
     font-size:12px;
 }
+
+#basketItems ul {
+    max-height: 235px;
+    min-width: 263px;
+}
+
+#basketItems .total {
+    padding: 15px 15px 20px;
+    background-color: #ffffff;
+    border: 1px solid #68C16F;
+    border-top-width: 0;
+    border-radius: 0 0 2px 2px;
+}
+
+#basketItems .total div {
+    background-color: #f8f7f4;
+    border: 1px solid #e1ddd5;
+    height: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size:11px;
+    line-height:11px;
+}
+
+#basketItems .total span {
+    float: left;
+    width: 100px;
+    clear: both;
+    margin-right: 30px;
+}
+
+#basketItems .total label {
+    float: left;
+}
+
+#wishListItems ul {
+    max-height: 200px;
+    min-width: 263px;
+}
+
+.basket-item-image img {
+    display: inline-block;
+    float: right;
+    height: 50px;
+    width: 50px;
+    background-color: #eeeeee;
+    margin-left: 10px;
+}
+
+.link-basket a.removeBasketItem {
+    display: inline-block;
+    margin: 0;
+    color: #941010;
+    padding: 0 0 0 20px;
+    background: url(../images/remove-basket-item.png) left center no-repeat;
+    line-height: 22px;
+    height: 16px;
+    font-size:11px;
+}
+
+.basket-item-title {
+    display: inline-block;
+    width: 165px;
+    white-space: normal;
+}
+
+.basket-item-count {
+    float: left;
+    display: block;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.basket-item-count input {
+    width: 40px;
+    border: 1px solid #cbcbcb;
+    box-shadow: none;
+    border-radius: 0;
+    text-align: center;
+    font-size: 11px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+#basketItems ul {
+    margin: 5px;
+    margin-bottom: 10px;
+}
+
+#basketItems li {
+    list-style: none;
+    margin-right: 15px;
+    margin-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebecde;
+    font-size:12px;
+}
+
+#basketItems .rollbar-content li {
+    margin-left: 5px;
+}
+
+

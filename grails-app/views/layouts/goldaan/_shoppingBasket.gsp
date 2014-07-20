@@ -35,13 +35,11 @@
                                onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)"/>
                     </span>
                     <span class="basket-item-title">
-                        {{itemFirstLine(basketItem.name)}}<br/>
-                        {{itemSecondLine(basketItem.name)}}<br/>
-                        <span>{{basketItem.realPrice | number:0}} <g:message code="rial"/>
-                            <br/>
-                            <a ng-click="removeFromBasket(basketItem.id)" class="removeBasketItem"><g:message
-                                    code="basket.items.delete"/></a>
-                        </span>
+                        <div>{{itemFirstLine(basketItem.name)}}</div>
+                        <div>{{itemSecondLine(basketItem.name)}}</div>
+                        <div>{{basketItem.realPrice | number:0}} <g:message code="rial"/></div>
+                        <div><a ng-click="removeFromBasket(basketItem.id)" class="removeBasketItem"><g:message
+                                code="basket.items.delete"/></a></div>
                     </span>
                 </li>
                 <li ng-show="!basket.length"><g:message code="basket.empty"/></li>
