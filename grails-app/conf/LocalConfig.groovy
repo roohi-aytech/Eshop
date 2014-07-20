@@ -11,6 +11,12 @@ page.size=81
 testimonials=true
 backgrounds=true
 showProductStatus=true
+variationValueImage=false
+addedValueImage=false
+modelHasWidthAndHeight=false
+hideCustomerReviewTitle=false
+customCustomerReviewTemplate=false
+filterPriceOnChange=false
 ckeditor {
     upload {
         basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"

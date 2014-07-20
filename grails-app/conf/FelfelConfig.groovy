@@ -11,6 +11,12 @@ page.size=81
 testimonials=true
 backgrounds=true
 showProductStatus=true
+variationValueImage=true
+addedValueImage=true
+modelHasWidthAndHeight=false
+hideCustomerReviewTitle=false
+customCustomerReviewTemplate=false
+filterPriceOnChange=false
 ckeditor {
     upload {
         basedir = "/home/uploads"

@@ -1126,10 +1126,6 @@ class SiteController {
 
     def aboutUs() {
 
-        messageService.sendMessage(
-                '09125349031',
-                'TO KHOOBI ! :D')
-
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/about_us"
     }
 

@@ -31,7 +31,7 @@ class ImageController {
 
         if (!params.type)
             params.type = 'product'
-        def content
+        def content = []
 
         switch (params.type) {
             case 'product':
@@ -41,17 +41,37 @@ class ImageController {
                 if (product) {
                     content = getProdcutImage(product)
                 }
+                if (!content || content?.size() == 0) {
+                    if (params.name)
+                        content = product.images.find { it.name == params.name }?.fileContent
+                    else if (product.mainImage)
+                        content = product.mainImage?.fileContent
+                    else
+                        content = product.images.find()?.fileContent
+                }
                 break;
             case 'productModel':
                 def product = ProductModel.get(params.id)?.product
                 if (product) {
                     content = getProdcutImage(product)
                 }
+                if (!content || content?.size() == 0) {
+                    if (params.name)
+                        content = product.images.find { it.name == params.name }?.fileContent
+                    else if (product.mainImage)
+                        content = product.mainImage?.fileContent
+                    else
+                        content = product.images.find()?.fileContent
+                }
                 break;
             case 'productType':
                 def productType = ProductType.get(params.id)
                 if (productType) {
                     content = getProdcutTypeImage(productType)
+                }
+                if (!content || content?.size() == 0) {
+                    if (productType?.image)
+                        content = productType?.image
                 }
                 break;
             case 'productTypeMenu':
