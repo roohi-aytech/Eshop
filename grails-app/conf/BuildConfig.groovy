@@ -85,6 +85,7 @@ grails.project.dependency.resolution = {
         compile(":mongodb:1.0.0.GA") {
             excludes 'mongo-java-driver', 'gmongo'
         }
+        compile ":quartz:1.0.2"
 
         compile ":events-push:1.0.M7"
 
