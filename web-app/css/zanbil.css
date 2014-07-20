@@ -2983,6 +2983,15 @@ ul.nav.nav-tabs {
     padding-right: 20px;
 }
 
+.product-card .modal-body h3{
+    color: #ff8c00;
+    font-family: 'b koodak',koodak,times,serif !important;
+    font-size: 20px;
+    margin: 0;
+    background: transparent;
+    border-width: 0;
+}
+
 .product-card-content {
     /*background: none repeat scroll 0 0 #CCE0FF;*/
     border: 5px solid #c0c0c0;
@@ -3153,6 +3162,11 @@ a.btn.btn-primary.dropdown-toggle + ul.dropdown-menu {
 }
 
 /*product image slideshow*/
+
+.modal-backdrop{
+    display: none !important;
+}
+
 #myModal {
     position: fixed;
     top: 65px;
