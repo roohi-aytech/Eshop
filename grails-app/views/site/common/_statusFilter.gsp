@@ -24,7 +24,7 @@
             sw = 'on';
         $.ajax({
             type: "POST",
-            url: '${createLink(action: 'productStatusFilter')}',
+            url: '${createLink(controller: 'site', action: 'productStatusFilter')}',
             data: { value: sw }
         }).done(function (response) {
             window.location.href = window.location.href;

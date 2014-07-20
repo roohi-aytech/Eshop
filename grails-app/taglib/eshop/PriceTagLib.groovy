@@ -45,6 +45,10 @@ class PriceTagLib {
     }
 
     def currencyLabel = { attrs, body ->
-        out << Currency.findByDisplay(true)?.name ?: message(code: 'rial')
+        def currency = Currency.findByDisplay(true)
+        if (currency)
+            out << currency?.name
+        else
+            out << message(code: 'rial')
     }
 }

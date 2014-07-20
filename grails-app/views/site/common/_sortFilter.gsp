@@ -19,13 +19,13 @@
 
         var url;
         <g:if test="${actionName == 'browse'}">
-            url = '${createLink(action: 'filter', params: [f: "p${productType.id}", sort: 'sortField', dir: 'sortDirection'])}';
+            url = '${createLink(action: 'filter', params: [f: "p${productType.id}", sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
         <g:if test="${actionName == 'filter'}">
-        url = '${createLink(action: 'filter', params: [f: params.f, sort: 'sortField', dir: 'sortDirection'])}';
+        url = '${createLink(action: 'filter', params: [f: params.f, sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
         <g:if test="${actionName == 'search'}">
-        url = '${createLink(action: 'search', params: [f: params.f, phrase: params.phrase, sort: 'sortField', dir: 'sortDirection'])}';
+        url = '${createLink(action: 'search', params: [f: params.f, phrase: params.phrase, sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
         $('.sortFilterSelect').selectpicker().change(function(){
             window.location.href = url.replace('sortField', $('#sortField').val()).replace('sortDirection', $('#sortDirection').val())

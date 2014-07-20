@@ -264,8 +264,13 @@ class EshopTagLib {
     }
 
     def specifications = { attrs, body ->
+        def url = "${createLink(uri: '/product/' + attrs.prodcutId)}"
+        if(attrs.productModelId){
+            def productModel = ProductModel.get(attrs.productModelId)
+            url = "${createLink(uri: '/product/' + productModel?.product?.id)}?model=${productModel?.id}"
+        }
         out << """
-                <a class="btn-spec" href="${createLink(uri: '/product/' + attrs.prodcutId)}" ><span>${
+                <a class="btn-spec" href="${url}" ><span>${
             g.message(code: "specifications")
         }</span></a>
                 """

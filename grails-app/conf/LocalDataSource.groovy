@@ -14,6 +14,7 @@ grails {
         host = "127.0.0.1"
         username = "roohi"
         password = ""
+//        databaseName = "zanbil"
     }
 }
 
@@ -22,7 +23,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/felfel?useUnicode=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
             password = ""
             pooled = true

@@ -95,6 +95,10 @@
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"
             type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'toggles-zanbil.css')}"/>
+    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'toggles.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'bootstrap-select.css')}"/>
+    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'bootstrap-select.min.js')}"></script>
 </head>
 
 <body class="main" ng-controller="eshopCtrl">

@@ -133,6 +133,9 @@ class SiteController {
         model.productTypeName = productType?.name
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            models {
+                eq('status', 'exists')
+            }
             or {
                 isNull('isVisible')
                 eq('isVisible', true)
@@ -276,6 +279,9 @@ class SiteController {
 
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            models {
+                eq('status', 'exists')
+            }
             or {
                 isNull('isVisible')
                 eq('isVisible', true)
@@ -410,6 +416,9 @@ class SiteController {
 //        model.specialSaleSlides = SpecialSaleSlide.findAll()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            models {
+                eq('status', 'exists')
+            }
             or {
                 isNull('isVisible')
                 eq('isVisible', true)
@@ -525,6 +534,9 @@ class SiteController {
         model.rootProductTypes = ProductType.findAllByParentProductIsNull()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            models {
+                eq('status', 'exists')
+            }
             or {
                 isNull('isVisible')
                 eq('isVisible', true)
@@ -548,6 +560,11 @@ class SiteController {
         }
 
         def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
+        if(!params.model && productModel.status != 'exists'){
+            def newModel = ProductModel.findByProductAndStatus(product, 'exists')
+            if(newModel)
+                productModel = newModel
+        }
         model.productModel = productModel
         model.addedValues = AddedValue.findAllByBaseProductAndDeletedNotEqual(product, true).findAll { addedValue ->
             !addedValue.variationValues.any { variationValue ->
@@ -612,7 +629,7 @@ class SiteController {
 
     def productCard() {
         def product = Product.get(params.productId)
-        if(!product){
+        if (!product) {
             render ''
             return
         }
@@ -656,8 +673,7 @@ class SiteController {
 
         def product = Product.get(params.productId)
 
-        if(!product)
-        {
+        if (!product) {
             render ''
             return
         }
@@ -905,7 +921,7 @@ class SiteController {
             },
                     [reload: false, max: 1000])
         }
-        if(!params.f)
+        if (!params.f)
             params.f = 'p0'
         def f = params.f
         if (f instanceof String[] && f.length) {
@@ -996,7 +1012,7 @@ class SiteController {
         def model = [:]
         def productIdList = []
         def productModelIdList = []
-        if(!params.phrase) {
+        if (!params.phrase) {
             render ''
             return
         }

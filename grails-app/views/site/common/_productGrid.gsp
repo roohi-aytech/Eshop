@@ -2,11 +2,11 @@
     <ul class="showbiz thumbnailGrid row-fluid">
     %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
-            <g:set var="product" value="${eshop.Product.get(productId)}"/>
+            <g:set var="productModel" value="${eshop.ProductModel.get(productId)}"/>
             %{--${System.out.println('product id: ' + productId)}--}%
-            <g:if test="${product}">
+            <g:if test="${productModel}">
                 <li class="span3">
-                    <g:render template="/site/common/productThumbnail" model="[product: product]"/>
+                    <g:render template="/site/common/productThumbnail" model="[productModel: productModel]"/>
                 </li>
             </g:if>
         </g:each>

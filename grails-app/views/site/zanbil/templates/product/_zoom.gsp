@@ -35,8 +35,9 @@
 
 <ul id="etalage">
 
-    <g:set var="mainImage" value="${product?.mainImage}"/>
-    <g:if test="${mainImage}">
+    <% def imageService = grailsApplication.classLoader.loadClass('eshop.ImageService').newInstance() %>
+    <g:set var="mainImage" value="${productModel?.mainImage ?: product?.mainImage}"/>
+    <g:if test="${mainImage && imageService.imageBelongsToModel(mainImage, productModel)}">
         <li>
             <a href='${mainImage?.id}' >
                 <g:set var="image"
@@ -51,7 +52,7 @@
             </a>
         </li>
     </g:if>
-    <g:each in="${product?.images?.findAll { it?.name != product?.mainImage?.name }}">
+    <g:each in="${product?.images?.findAll { it?.name != mainImage?.name && imageService.imageBelongsToModel(it, productModel) }.sort{it.id}}">
         <li>
             <a href='#${it?.id}' >
                 <g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>

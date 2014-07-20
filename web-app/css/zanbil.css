@@ -4756,6 +4756,104 @@ ul.article-list li span {
     padding-right: 15px;
 }
 
+.statusFilter{
+    float: left;
+    margin-left:10px;
+    margin-top:5px;
+}
+
+.statusFilter span{
+    display: block;
+    float:left;
+    padding-left: 10px;
+    color: #ffffff;
+}
+
+.statusFilter .toggle-soft{
+    float: left;
+}
+
+.statusFilter .toggle-soft .toggle-slide{
+    box-shadow: 0 0 0 1px #DADADA !important;
+}
+
+
+.btn-group > .btn:first-child{
+    border-radius: 0;
+}
+
+.dropdown-menu{
+    border-radius: 0;
+}
+
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a{
+    background: #ffffff;
+}
+
+.dropdown-menu li > a:hover span, .dropdown-menu li > a:focus span, .dropdown-submenu:hover > a span{
+    color:#08c;
+}
+
+.bootstrap-select > .btn{
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.btn-group.open .btn.dropdown-toggle{
+    box-shadow: none;
+    /*border-color: #ec1e20;*/
+    background: #ffffff;
+}
+
+.btn-group.open .btn.dropdown-toggle span{
+    color:#08c !important;
+}
+
+.bootstrap-select.btn-group .btn .caret{
+    right:auto !important;
+    left:12px;
+}
+
+.nav .dropdown-toggle .caret {
+    border-bottom-color: #08c !important;
+    border-top-color: #08c !important;
+}
+
+.bootstrap-select.btn-group .btn .filter-option{
+    text-align: right !important;
+}
+
+.bootstrap-select > .btn{
+    padding-left: 25px;
+    padding-right: 14px !important;
+}
+
+.bootstrap-select .dropdown-menu .dropdown-menu{
+    display: block;
+}
+.bootstrap-select{
+    margin-top:10px;
+}
+
+#sortField + .bootstrap-select {
+    width: 120px !important;
+    margin-right: 10px;
+}
+
+#sortDirection + .bootstrap-select {
+    width: 70px !important;
+    margin-right:4px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li > a {
+    background: none !important;
+    padding-right: 10px !important;
+    padding: 0 !important;
+    padding-right: 10px !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+}
+
 
 
 

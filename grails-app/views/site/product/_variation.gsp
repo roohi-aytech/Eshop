@@ -34,6 +34,7 @@
             $('#product-card').html('${message(code: 'waiting')}');
             angular.element(document.getElementById('main-container')).scope().reloadProductPrice("${createLink(controller: "site", action: "productPrice")}", serializedData, $('#product-price'));
             angular.element(document.getElementById('main-container')).scope().reloadProductAdditives("${createLink(controller: "site", action: "productAdditives")}", serializedData, $('.product-additives'));
+            angular.element(document.getElementById('main-container')).scope().reloadProductImages("${createLink(controller: "site", action: "productModelImages")}", serializedData, $('#product-images'));
             </g:if>
             <g:if test="${grailsApplication.config.eShop.instance == 'goldaan'}">
             angular.element(document.getElementById('main-container')).scope().reloadProductAdditives("${createLink(controller: "site", action: "productAdditives")}", serializedData, $('.product-additives'));

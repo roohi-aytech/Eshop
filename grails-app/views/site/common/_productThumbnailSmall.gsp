@@ -1,5 +1,4 @@
 <%@ page import="eshop.Product" %>
-
 <div class="thumbnail mediaholder small">
     <a href="<g:createLink uri="/product/${product.id}"/>">
         <img src="<g:createLink controller="image" action="index"

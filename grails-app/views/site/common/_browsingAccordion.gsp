@@ -2,6 +2,14 @@
 
 <h3 class="quick-access"><g:message code="quickAccess.title"/></h3>
 <dl class="accordion">
+
+<dt class="${params.o == "s" ? 'open' : ''}">
+    <a href=""><g:message code="sort.label"/></a>
+</dt>
+<dd>
+    <g:render template="common/sortFilter"/>
+</dd>
+
 <dt class="${params.o == "p" ? 'open' : ''}"><a href=""><g:message code="filter.price.range" default="Price Range"/> (<eshop:currencyLabel/>)</a>
 </dt>
 <dd>

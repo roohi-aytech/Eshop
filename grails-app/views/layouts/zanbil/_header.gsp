@@ -68,6 +68,8 @@
 <tr class="header-menu-row">
     <td colspan="2">
         <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+
+        <g:render template="/site/common/statusFilter"/>
     </td>
 </tr>
 </table>
