@@ -9,6 +9,7 @@ class NewsLetterJob {
     def mailService
 
     static triggers = {
+        simple repeatInterval: 60000, startDelay: 60000 // execute job once in 2 minutes
     }
 
     def execute(params) {

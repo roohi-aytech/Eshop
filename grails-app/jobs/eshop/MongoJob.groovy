@@ -12,6 +12,11 @@ class MongoJob {
     def startDelay = 60000
     def timeout = 2000
 
+
+    static triggers = {
+        simple repeatInterval: 2000, startDelay: 60000 // execute job once in 2 minutes
+    }
+
     def execute() {
         def product = Product.createCriteria().list(max: 1) {
             or {
