@@ -456,9 +456,9 @@ class OrderController {
                 trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
                 trackingLog.description = """
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.online')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: payment.order.usedAccountValue, type: 'number')} eshop.currencyLabel()}
+                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: payment.order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} eshop.currencyLabel()}
                 ${message(code: 'order.payment.bank')}: ${message(code: "account.${payment.account.bankName}.${payment.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: payment.amount, type: 'number')} ${eshop.currencyLabel()}
+                ${message(code: 'order.payment.value')}: ${formatNumber(number: payment.amount / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
                 ${message(code: 'onlinePayment.transactionReferenceCode')}: ${payment.transactionReferenceCode}
 """
                 if (!trackingLog.validate() || !trackingLog.save()) {
@@ -596,7 +596,7 @@ class OrderController {
         trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
         trackingLog.description = """
             ${message(code: 'payment.type')}: ${message(code: 'payment.types.account')}
-            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
+            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
 """
         trackingLog.save()
 
@@ -622,7 +622,7 @@ class OrderController {
         trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
         trackingLog.description = """
             ${message(code: 'payment.type')}: ${message(code: 'payment.types.payInPlace')}
-            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
+            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
 """
         trackingLog.save()
 
