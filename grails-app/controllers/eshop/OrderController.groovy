@@ -540,9 +540,9 @@ class OrderController {
             trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
             trackingLog.description = """
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.bankReceipt')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
+                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.bank')}: ${message(code: "account.${paymentRequest.account.bankName}.${paymentRequest.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: paymentRequest.value, type: 'number')} ${eshop.currencyLabel()}
+                ${message(code: 'order.payment.value')}: ${formatNumber(number: paymentRequest.value / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.trackingCode')}: ${paymentRequest.trackingCode}
                 ${message(code: 'order.payment.date')}: ${rg.formatJalaliDate(date: paymentRequest.creationDate)}
 """
