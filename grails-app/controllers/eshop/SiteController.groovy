@@ -1041,7 +1041,7 @@ class SiteController {
             it.id
         } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
             it?.product?.id
-        }, f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
+        }, f, null, null, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
         //sort result again
         model.productIds.sort {
             def id = it
