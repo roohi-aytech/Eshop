@@ -560,9 +560,9 @@ class SiteController {
         }
 
         def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
-        if(!params.model && productModel.status != 'exists'){
+        if (!params.model && productModel.status != 'exists') {
             def newModel = ProductModel.findByProductAndStatus(product, 'exists')
-            if(newModel)
+            if (newModel)
                 productModel = newModel
         }
         model.productModel = productModel
@@ -1037,11 +1037,22 @@ class SiteController {
             redirect(action: 'searchAutoComplete', params: [f: f.join(','), phrase: params.phrase])
             return
         }
-        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect {
+
+        def productIds = productIdList.results.collect {
             it.id
         } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
             it?.product?.id
-        }, f, null, null, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
+        }
+        def productModelIds = ProductModel.createCriteria().list {
+            product {
+                'in'('id', productIds)
+            }
+            projections{
+                property('id')
+            }
+        }
+
+        model.productIds = browseService.findSearchPageFilters(productModelIds, f, null, null, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
         //sort result again
         model.productIds.sort {
             def id = it
