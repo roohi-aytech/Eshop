@@ -560,7 +560,7 @@ class SiteController {
         }
 
         def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
-        if (!params.model && productModel.status != 'exists') {
+        if (!params.model && productModel?.status != 'exists') {
             def newModel = ProductModel.findByProductAndStatus(product, 'exists')
             if (newModel)
                 productModel = newModel

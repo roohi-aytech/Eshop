@@ -45,10 +45,10 @@ class OrderController {
             suggestedActions = ['completion']
 
         render view: '/order/list', model: [
-                orderList: orderList.sort { -it.id },
-                status: status,
+                orderList       : orderList.sort { -it.id },
+                status          : status,
                 suggestedActions: suggestedActions,
-                actions: actions,
+                actions         : actions,
         ]
     }
 
@@ -82,11 +82,11 @@ class OrderController {
         }
 
         [
-                order: order,
-                customer: customer,
-                actions: actions,
+                order           : order,
+                customer        : customer,
+                actions         : actions,
                 suggestedActions: suggestedActions,
-                invoiceTitle: invoiceTitle
+                invoiceTitle    : invoiceTitle
         ]
     }
 
@@ -215,12 +215,17 @@ class OrderController {
             redirect(uri: '/notFound')
             return
         }
-        render view: 'payment', model: [
-                order: order,
-                orderPrice: order.totalPrice,
-                customerAccountValue: customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0,
-                customer: customer
-        ]
+        def customerAccountValue = customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0
+        if (customerAccountValue > 0)
+            render view: 'payment', model: [
+                    order               : order,
+                    orderPrice          : order.totalPrice,
+                    customerAccountValue: customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0,
+                    customer            : customer
+            ]
+        else
+            redirect(action: 'remainingPayment', params: [id: params.id])
+
     }
 
     def payFromAccount() {
@@ -231,9 +236,8 @@ class OrderController {
             order.usedAccountValue = order.totalPrice
         else
             order.usedAccountValue = params.payFromAccountAmount.replace(',', '').toInteger()
-        if(order.usedAccountValue > customerAccountValue)
-        {
-            flash.message = message(code:'order.payment.payFromAccountAmount.moreThanCustomerAccount.validator')
+        if (order.usedAccountValue > customerAccountValue) {
+            flash.message = message(code: 'order.payment.payFromAccountAmount.moreThanCustomerAccount.validator')
             redirect(action: 'payment', params: [id: params.order.id])
             return
         }
@@ -261,7 +265,7 @@ class OrderController {
                         } && (!accountFilter.brands
                                 || accountFilter?.brands?.isEmpty()
                                 || accountFilter?.brands?.any { it.id == orderItem?.productModel?.product?.brand?.id })
-                        && accountFilter?.account?.hasOnlinePayment)
+                                && accountFilter?.account?.hasOnlinePayment)
                             accountsForOnlinePayment.add(accountFilter.account)
                 }
 
@@ -270,22 +274,26 @@ class OrderController {
         }
 
         accountsForOnlinePayment.addAll(
-                Account.findAllByBankNameNotInListAndTypeAndHasOnlinePayment(accountsForOnlinePayment.collect { it.bankName } ?: [''], 'legal', true))
+                Account.findAllByBankNameNotInListAndTypeAndHasOnlinePayment(accountsForOnlinePayment.collect {
+                    it.bankName
+                } ?: [''], 'legal', true))
 
         accountsForOnlinePayment.addAll(
-                Account.findAllByBankNameNotInListAndHasOnlinePayment(accountsForOnlinePayment.collect { it.bankName } ?: [''], true))
+                Account.findAllByBankNameNotInListAndHasOnlinePayment(accountsForOnlinePayment.collect {
+                    it.bankName
+                } ?: [''], true))
 
         accountsForOnlinePayment.unique { it.bankName }
 
         def customer = springSecurityService.currentUser as Customer
 
         [
-                order: order,
-                orderPrice: order.totalPayablePrice,
+                order                   : order,
+                orderPrice              : order.totalPayablePrice,
                 accountsForOnlinePayment: accountsForOnlinePayment,
-                accounts: Account.findAllByType('legal'),
-                customerAccountValue: customer ? accountingService.calculateCustomerAccountValue(customer) : 0,
-                customer: customer
+                accounts                : Account.findAllByType('legal'),
+                customerAccountValue    : customer ? accountingService.calculateCustomerAccountValue(customer) : 0,
+                customer                : customer
         ]
     }
 
@@ -307,7 +315,7 @@ class OrderController {
             switch (account.bankName) {
                 case 'mellat':
 
-                    def result = mellatService.prepareForPayment(account, onlinePayment.id, params.value, order.customerId)
+                    def result = mellatService.prepareForPayment(account, onlinePayment.id, onlinePayment.amount, order.customerId)
                     if (result[0] == "0")
                         model.refId = result[1]
                     else
@@ -383,7 +391,7 @@ class OrderController {
         onlinePayment.transactionReferenceCode = params.MID
         onlinePayment.save()
 
-        if (state.toInteger() > 0){
+        if (state.toInteger() > 0) {
             model.verificationResult = 0
             payOrder(onlinePayment, model)
         }
@@ -445,7 +453,7 @@ class OrderController {
                 transaction.save()
 
 
-                event(topic: 'order_event', data: [id:payment.order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
+                event(topic: 'order_event', data: [id: payment.order.id, status: OrderHelper.STATUS_PAID], namespace: 'browser')
 
                 //save order tracking log
                 def trackingLog = new OrderTrackingLog()
@@ -456,9 +464,15 @@ class OrderController {
                 trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
                 trackingLog.description = """
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.online')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: payment.order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} eshop.currencyLabel()}
-                ${message(code: 'order.payment.bank')}: ${message(code: "account.${payment.account.bankName}.${payment.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: payment.amount / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
+                ${message(code: 'order.usedAccountValue')}: ${
+                    formatNumber(number: payment.order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
+                } eshop.currencyLabel()}
+                ${message(code: 'order.payment.bank')}: ${
+                    message(code: "account.${payment.account.bankName}.${payment.account.type}")
+                }
+                ${message(code: 'order.payment.value')}: ${
+                    formatNumber(number: payment.amount / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
+                } ${eshop.currencyLabel()}
                 ${message(code: 'onlinePayment.transactionReferenceCode')}: ${payment.transactionReferenceCode}
 """
                 if (!trackingLog.validate() || !trackingLog.save()) {
@@ -540,9 +554,15 @@ class OrderController {
             trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
             trackingLog.description = """
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.bankReceipt')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
-                ${message(code: 'order.payment.bank')}: ${message(code: "account.${paymentRequest.account.bankName}.${paymentRequest.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: paymentRequest.value / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
+                ${message(code: 'order.usedAccountValue')}: ${
+                formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
+            } ${eshop.currencyLabel()}
+                ${message(code: 'order.payment.bank')}: ${
+                message(code: "account.${paymentRequest.account.bankName}.${paymentRequest.account.type}")
+            }
+                ${message(code: 'order.payment.value')}: ${
+                formatNumber(number: paymentRequest.value / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
+            } ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.trackingCode')}: ${paymentRequest.trackingCode}
                 ${message(code: 'order.payment.date')}: ${rg.formatJalaliDate(date: paymentRequest.creationDate)}
 """
@@ -596,7 +616,9 @@ class OrderController {
         trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
         trackingLog.description = """
             ${message(code: 'payment.type')}: ${message(code: 'payment.types.account')}
-            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
+            ${message(code: 'order.usedAccountValue')}: ${
+            formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
+        } ${eshop.currencyLabel()}
 """
         trackingLog.save()
 
@@ -622,7 +644,9 @@ class OrderController {
         trackingLog.title = "order.actions.${OrderHelper.ACTION_COMPLETION}"
         trackingLog.description = """
             ${message(code: 'payment.type')}: ${message(code: 'payment.types.payInPlace')}
-            ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}
+            ${message(code: 'order.usedAccountValue')}: ${
+            formatNumber(number: order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
+        } ${eshop.currencyLabel()}
 """
         trackingLog.save()
 
@@ -635,7 +659,7 @@ class OrderController {
         if (order.customer) {
             def customer = springSecurityService.currentUser as Customer
             if (customer && customer?.id != order.customer?.id) {
-                redirect(uri:'/notFound')
+                redirect(uri: '/notFound')
                 return
             }
         }
