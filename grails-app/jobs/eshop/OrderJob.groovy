@@ -9,7 +9,7 @@ class OrderJob {
 
     def execute(params) {
         def order = Order.get(params.jobDataMap.orderId)
-        if(order.status == OrderHelper.STATUS_INQUIRED){
+        if(order?.status == OrderHelper.STATUS_INQUIRED){
             order.status = OrderHelper.STATUS_INCOMPLETE
             order.save(flash: true)
 
