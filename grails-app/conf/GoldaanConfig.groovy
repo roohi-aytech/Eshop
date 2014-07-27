@@ -18,6 +18,8 @@ hideCustomerReviewTitle=true
 editorReviewWidth=320
 customCustomerReviewTemplate=true
 filterPriceOnChange=true
+customCheckout=true
+addedValueType=true
 ckeditor {
     upload {
         basedir = "/home/uploads/"

@@ -20,6 +20,15 @@
     </label>
     <g:textField name="name" value="${addedValueInstance?.name}"/>
 </div>
+<g:if test="${grailsApplication.config.addedValueType}">
+    <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'addedValueType', 'error')} ">
+        <label for="brand">
+            <g:message code="addedValueInstance.type.label" default="AddedValueType"/>
+        </label>
+        <g:select name="addedValueType.id" from="${eshop.AddedValueType.list()}" value="${addedValueInstance?.addedValueType?.id}"
+                  optionKey="id" optionValue="title" noSelection="['':'']"/>
+    </div>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'type', 'error')} ">
     <label for="type">

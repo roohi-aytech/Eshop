@@ -4032,259 +4032,259 @@ if (!jQuery)throw new Error("Bootstrap requires jQuery");
         };
     }
 
-    var allowStyling = true, highContrastTest = false, uniformHandlers = [
-        {match: function ($el) {
-            return $el.is("a, button, :submit, :reset, input[type='button']");
-        }, apply: function ($el, options) {
-            var $div, defaultSpanHtml, ds, getHtml, doingClickEvent;
-            defaultSpanHtml = options.submitDefaultHtml;
-            if ($el.is(":reset")) {
-                defaultSpanHtml = options.resetDefaultHtml;
-            }
-            if ($el.is("a, button")) {
-                getHtml = function () {
-                    return $el.html() || defaultSpanHtml;
-                };
-            } else {
-                getHtml = function () {
-                    return htmlify(attrOrProp($el, "value")) || defaultSpanHtml;
-                };
-            }
-            ds = divSpan($el, options, {divClass: options.buttonClass, spanHtml: getHtml()});
-            $div = ds.div;
-            bindUi($el, $div, options);
-            doingClickEvent = false;
-            bindMany($div, options, {"click touchend": function () {
-                var ev, res, target, href;
-                if (doingClickEvent) {
-                    return;
-                }
-                if ($el.is(':disabled')) {
-                    return;
-                }
-                doingClickEvent = true;
-                if ($el[0].dispatchEvent) {
-                    ev = document.createEvent("MouseEvents");
-                    ev.initEvent("click", true, true);
-                    res = $el[0].dispatchEvent(ev);
-                    if ($el.is('a') && res) {
-                        target = attrOrProp($el, 'target');
-                        href = attrOrProp($el, 'href');
-                        if (!target || target === '_self') {
-                            document.location.href = href;
-                        } else {
-                            wind.open(href, target);
-                        }
-                    }
-                } else {
-                    $el.click();
-                }
-                doingClickEvent = false;
-            }});
-            noSelect($div, options);
-            return{remove: function () {
-                $div.after($el);
-                $div.remove();
-                $el.unbind(options.eventNamespace);
-                return $el;
-            }, update: function () {
-                classClearStandard($div, options);
-                classUpdateDisabled($div, $el, options);
-                $el.detach();
-                ds.span.html(getHtml()).append($el);
-            }};
-        }},
-        {match: function ($el) {
-            return $el.is(":checkbox");
-        }, apply: function ($el, options) {
-            var ds, $div, $span;
-            ds = divSpan($el, options, {divClass: options.checkboxClass});
-            $div = ds.div;
-            $span = ds.span;
-            bindUi($el, $div, options);
-            bindMany($el, options, {"click touchend": function () {
-                classUpdateChecked($span, $el, options);
-            }});
-            classUpdateChecked($span, $el, options);
-            return{remove: unwrapUnwrapUnbindFunction($el, options), update: function () {
-                classClearStandard($div, options);
-                $span.removeClass(options.checkedClass);
-                classUpdateChecked($span, $el, options);
-                classUpdateDisabled($div, $el, options);
-            }};
-        }},
-        {match: function ($el) {
-            return $el.is(":file");
-        }, apply: function ($el, options) {
-            var ds, $div, $filename, $button;
-            ds = divSpan($el, options, {divClass: options.fileClass, spanClass: options.fileButtonClass, spanHtml: options.fileButtonHtml, spanWrap: "after"});
-            $div = ds.div;
-            $button = ds.span;
-            $filename = $("<span />").html(options.fileDefaultHtml);
-            $filename.addClass(options.filenameClass);
-            $filename = divSpanWrap($el, $filename, "after");
-            if (!attrOrProp($el, "size")) {
-                attrOrProp($el, "size", $div.width() / 10);
-            }
-            function filenameUpdate() {
-                setFilename($el, $filename, options);
-            }
-
-            bindUi($el, $div, options);
-            filenameUpdate();
-            if (isMsie()) {
-                bindMany($el, options, {click: function () {
-                    $el.trigger("change");
-                    setTimeout(filenameUpdate, 0);
-                }});
-            } else {
-                bindMany($el, options, {change: filenameUpdate});
-            }
-            noSelect($filename, options);
-            noSelect($button, options);
-            return{remove: function () {
-                $filename.remove();
-                $button.remove();
-                return $el.unwrap().unbind(options.eventNamespace);
-            }, update: function () {
-                classClearStandard($div, options);
-                setFilename($el, $filename, options);
-                classUpdateDisabled($div, $el, options);
-            }};
-        }},
-        {match: function ($el) {
-            if ($el.is("input")) {
-                var t = (" " + attrOrProp($el, "type") + " ").toLowerCase(), allowed = " color date datetime datetime-local email month number password search tel text time url week ";
-                return allowed.indexOf(t) >= 0;
-            }
-            return false;
-        }, apply: function ($el, options) {
-            var elType, $wrapper;
-            elType = attrOrProp($el, "type");
-            $el.addClass(options.inputClass);
-            $wrapper = wrapWithWrapperClass($el, options);
-            bindUi($el, $el, options);
-            if (options.inputAddTypeAsClass) {
-                $el.addClass(elType);
-            }
-            return{remove: function () {
-                $el.removeClass(options.inputClass);
-                if (options.inputAddTypeAsClass) {
-                    $el.removeClass(elType);
-                }
-                if ($wrapper) {
-                    $el.unwrap();
-                }
-            }, update: returnFalse};
-        }},
-        {match: function ($el) {
-            return $el.is(":radio");
-        }, apply: function ($el, options) {
-            var ds, $div, $span;
-            ds = divSpan($el, options, {divClass: options.radioClass});
-            $div = ds.div;
-            $span = ds.span;
-            bindUi($el, $div, options);
-            bindMany($el, options, {"click touchend": function () {
-                $.uniform.update($(':radio[name="' + attrOrProp($el, "name") + '"]'));
-            }});
-            classUpdateChecked($span, $el, options);
-            return{remove: unwrapUnwrapUnbindFunction($el, options), update: function () {
-                classClearStandard($div, options);
-                classUpdateChecked($span, $el, options);
-                classUpdateDisabled($div, $el, options);
-            }};
-        }},
-        {match: function ($el) {
-            if ($el.is("select") && !isMultiselect($el)) {
-                return true;
-            }
-            return false;
-        }, apply: function ($el, options) {
-            var ds, $div, $span, origElemWidth;
-            if (options.selectAutoWidth) {
-                sizingInvisible($el, function () {
-                    origElemWidth = $el.width();
-                });
-            }
-            ds = divSpan($el, options, {divClass: options.selectClass, spanHtml: ($el.find(":selected:first") || $el.find("option:first")).html(), spanWrap: "before"});
-            $div = ds.div;
-            $span = ds.span;
-            if (options.selectAutoWidth) {
-                sizingInvisible($el, function () {
-                    swap($([$span[0], $div[0]]), {display: "block"}, function () {
-                        var spanPad;
-                        spanPad = $span.outerWidth() - $span.width();
-                        $div.width(origElemWidth);
-                        $span.width(origElemWidth - spanPad);
-                    });
-                });
-            } else {
-                $div.addClass('fixedWidth');
-            }
-            bindUi($el, $div, options);
-            bindMany($el, options, {change: function () {
-                $span.html($el.find(":selected").html());
-                $div.removeClass(options.activeClass);
-            }, "click touchend": function () {
-                var selHtml = $el.find(":selected").html();
-                if ($span.html() !== selHtml) {
-                    $el.trigger('change');
-                }
-            }, keyup: function () {
-                $span.html($el.find(":selected").html());
-            }});
-            noSelect($span, options);
-            return{remove: function () {
-                $span.remove();
-                $el.unwrap().unbind(options.eventNamespace);
-                return $el;
-            }, update: function () {
-                if (options.selectAutoWidth) {
-                    $.uniform.restore($el);
-                    $el.uniform(options);
-                } else {
-                    classClearStandard($div, options);
-                    $span.html($el.find(":selected").html());
-                    classUpdateDisabled($div, $el, options);
-                }
-            }};
-        }},
-        {match: function ($el) {
-            if ($el.is("select") && isMultiselect($el)) {
-                return true;
-            }
-            return false;
-        }, apply: function ($el, options) {
-            var $wrapper;
-            $el.addClass(options.selectMultiClass);
-            $wrapper = wrapWithWrapperClass($el, options);
-            bindUi($el, $el, options);
-            return{remove: function () {
-                $el.removeClass(options.selectMultiClass);
-                if ($wrapper) {
-                    $el.unwrap();
-                }
-            }, update: returnFalse};
-        }},
-        {match: function ($el) {
-            return $el.is("textarea");
-        }, apply: function ($el, options) {
-            var $wrapper;
-            $el.addClass(options.textareaClass);
-            $wrapper = wrapWithWrapperClass($el, options);
-            bindUi($el, $el, options);
-            return{remove: function () {
-                $el.removeClass(options.textareaClass);
-                if ($wrapper) {
-                    $el.unwrap();
-                }
-            }, update: returnFalse};
-        }}
-    ];
-    if (isMsie() && !isMsieSevenOrNewer()) {
-        allowStyling = false;
-    }
+    var allowStyling = true, highContrastTest = false, uniformHandlers = []
+//        {match: function ($el) {
+//            return $el.is("a, button, :submit, :reset, input[type='button']");
+//        }, apply: function ($el, options) {
+//            var $div, defaultSpanHtml, ds, getHtml, doingClickEvent;
+//            defaultSpanHtml = options.submitDefaultHtml;
+//            if ($el.is(":reset")) {
+//                defaultSpanHtml = options.resetDefaultHtml;
+//            }
+//            if ($el.is("a, button")) {
+//                getHtml = function () {
+//                    return $el.html() || defaultSpanHtml;
+//                };
+//            } else {
+//                getHtml = function () {
+//                    return htmlify(attrOrProp($el, "value")) || defaultSpanHtml;
+//                };
+//            }
+//            ds = divSpan($el, options, {divClass: options.buttonClass, spanHtml: getHtml()});
+//            $div = ds.div;
+//            bindUi($el, $div, options);
+//            doingClickEvent = false;
+//            bindMany($div, options, {"click touchend": function () {
+//                var ev, res, target, href;
+//                if (doingClickEvent) {
+//                    return;
+//                }
+//                if ($el.is(':disabled')) {
+//                    return;
+//                }
+//                doingClickEvent = true;
+//                if ($el[0].dispatchEvent) {
+//                    ev = document.createEvent("MouseEvents");
+//                    ev.initEvent("click", true, true);
+//                    res = $el[0].dispatchEvent(ev);
+//                    if ($el.is('a') && res) {
+//                        target = attrOrProp($el, 'target');
+//                        href = attrOrProp($el, 'href');
+//                        if (!target || target === '_self') {
+//                            document.location.href = href;
+//                        } else {
+//                            wind.open(href, target);
+//                        }
+//                    }
+//                } else {
+//                    $el.click();
+//                }
+//                doingClickEvent = false;
+//            }});
+//            noSelect($div, options);
+//            return{remove: function () {
+//                $div.after($el);
+//                $div.remove();
+//                $el.unbind(options.eventNamespace);
+//                return $el;
+//            }, update: function () {
+//                classClearStandard($div, options);
+//                classUpdateDisabled($div, $el, options);
+//                $el.detach();
+//                ds.span.html(getHtml()).append($el);
+//            }};
+//        }},
+//        {match: function ($el) {
+//            return $el.is(":checkbox");
+//        }, apply: function ($el, options) {
+//            var ds, $div, $span;
+//            ds = divSpan($el, options, {divClass: options.checkboxClass});
+//            $div = ds.div;
+//            $span = ds.span;
+//            bindUi($el, $div, options);
+//            bindMany($el, options, {"click touchend": function () {
+//                classUpdateChecked($span, $el, options);
+//            }});
+//            classUpdateChecked($span, $el, options);
+//            return{remove: unwrapUnwrapUnbindFunction($el, options), update: function () {
+//                classClearStandard($div, options);
+//                $span.removeClass(options.checkedClass);
+//                classUpdateChecked($span, $el, options);
+//                classUpdateDisabled($div, $el, options);
+//            }};
+//        }},
+//        {match: function ($el) {
+//            return $el.is(":file");
+//        }, apply: function ($el, options) {
+//            var ds, $div, $filename, $button;
+//            ds = divSpan($el, options, {divClass: options.fileClass, spanClass: options.fileButtonClass, spanHtml: options.fileButtonHtml, spanWrap: "after"});
+//            $div = ds.div;
+//            $button = ds.span;
+//            $filename = $("<span />").html(options.fileDefaultHtml);
+//            $filename.addClass(options.filenameClass);
+//            $filename = divSpanWrap($el, $filename, "after");
+//            if (!attrOrProp($el, "size")) {
+//                attrOrProp($el, "size", $div.width() / 10);
+//            }
+//            function filenameUpdate() {
+//                setFilename($el, $filename, options);
+//            }
+//
+//            bindUi($el, $div, options);
+//            filenameUpdate();
+//            if (isMsie()) {
+//                bindMany($el, options, {click: function () {
+//                    $el.trigger("change");
+//                    setTimeout(filenameUpdate, 0);
+//                }});
+//            } else {
+//                bindMany($el, options, {change: filenameUpdate});
+//            }
+//            noSelect($filename, options);
+//            noSelect($button, options);
+//            return{remove: function () {
+//                $filename.remove();
+//                $button.remove();
+//                return $el.unwrap().unbind(options.eventNamespace);
+//            }, update: function () {
+//                classClearStandard($div, options);
+//                setFilename($el, $filename, options);
+//                classUpdateDisabled($div, $el, options);
+//            }};
+//        }},
+//        {match: function ($el) {
+//            if ($el.is("input")) {
+//                var t = (" " + attrOrProp($el, "type") + " ").toLowerCase(), allowed = " color date datetime datetime-local email month number password search tel text time url week ";
+//                return allowed.indexOf(t) >= 0;
+//            }
+//            return false;
+//        }, apply: function ($el, options) {
+//            var elType, $wrapper;
+//            elType = attrOrProp($el, "type");
+//            $el.addClass(options.inputClass);
+//            $wrapper = wrapWithWrapperClass($el, options);
+//            bindUi($el, $el, options);
+//            if (options.inputAddTypeAsClass) {
+//                $el.addClass(elType);
+//            }
+//            return{remove: function () {
+//                $el.removeClass(options.inputClass);
+//                if (options.inputAddTypeAsClass) {
+//                    $el.removeClass(elType);
+//                }
+//                if ($wrapper) {
+//                    $el.unwrap();
+//                }
+//            }, update: returnFalse};
+//        }},
+//        {match: function ($el) {
+//            return $el.is(":radio");
+//        }, apply: function ($el, options) {
+//            var ds, $div, $span;
+//            ds = divSpan($el, options, {divClass: options.radioClass});
+//            $div = ds.div;
+//            $span = ds.span;
+//            bindUi($el, $div, options);
+//            bindMany($el, options, {"click touchend": function () {
+//                $.uniform.update($(':radio[name="' + attrOrProp($el, "name") + '"]'));
+//            }});
+//            classUpdateChecked($span, $el, options);
+//            return{remove: unwrapUnwrapUnbindFunction($el, options), update: function () {
+//                classClearStandard($div, options);
+//                classUpdateChecked($span, $el, options);
+//                classUpdateDisabled($div, $el, options);
+//            }};
+//        }},
+//        {match: function ($el) {
+//            if ($el.is("select") && !isMultiselect($el)) {
+//                return true;
+//            }
+//            return false;
+//        }, apply: function ($el, options) {
+//            var ds, $div, $span, origElemWidth;
+//            if (options.selectAutoWidth) {
+//                sizingInvisible($el, function () {
+//                    origElemWidth = $el.width();
+//                });
+//            }
+//            ds = divSpan($el, options, {divClass: options.selectClass, spanHtml: ($el.find(":selected:first") || $el.find("option:first")).html(), spanWrap: "before"});
+//            $div = ds.div;
+//            $span = ds.span;
+//            if (options.selectAutoWidth) {
+//                sizingInvisible($el, function () {
+//                    swap($([$span[0], $div[0]]), {display: "block"}, function () {
+//                        var spanPad;
+//                        spanPad = $span.outerWidth() - $span.width();
+//                        $div.width(origElemWidth);
+//                        $span.width(origElemWidth - spanPad);
+//                    });
+//                });
+//            } else {
+//                $div.addClass('fixedWidth');
+//            }
+//            bindUi($el, $div, options);
+//            bindMany($el, options, {change: function () {
+//                $span.html($el.find(":selected").html());
+//                $div.removeClass(options.activeClass);
+//            }, "click touchend": function () {
+//                var selHtml = $el.find(":selected").html();
+//                if ($span.html() !== selHtml) {
+//                    $el.trigger('change');
+//                }
+//            }, keyup: function () {
+//                $span.html($el.find(":selected").html());
+//            }});
+//            noSelect($span, options);
+//            return{remove: function () {
+//                $span.remove();
+//                $el.unwrap().unbind(options.eventNamespace);
+//                return $el;
+//            }, update: function () {
+//                if (options.selectAutoWidth) {
+//                    $.uniform.restore($el);
+//                    $el.uniform(options);
+//                } else {
+//                    classClearStandard($div, options);
+//                    $span.html($el.find(":selected").html());
+//                    classUpdateDisabled($div, $el, options);
+//                }
+//            }};
+//        }},
+//        {match: function ($el) {
+//            if ($el.is("select") && isMultiselect($el)) {
+//                return true;
+//            }
+//            return false;
+//        }, apply: function ($el, options) {
+//            var $wrapper;
+//            $el.addClass(options.selectMultiClass);
+//            $wrapper = wrapWithWrapperClass($el, options);
+//            bindUi($el, $el, options);
+//            return{remove: function () {
+//                $el.removeClass(options.selectMultiClass);
+//                if ($wrapper) {
+//                    $el.unwrap();
+//                }
+//            }, update: returnFalse};
+//        }},
+//        {match: function ($el) {
+//            return $el.is("textarea");
+//        }, apply: function ($el, options) {
+//            var $wrapper;
+//            $el.addClass(options.textareaClass);
+//            $wrapper = wrapWithWrapperClass($el, options);
+//            bindUi($el, $el, options);
+//            return{remove: function () {
+//                $el.removeClass(options.textareaClass);
+//                if ($wrapper) {
+//                    $el.unwrap();
+//                }
+//            }, update: returnFalse};
+//        }}
+//    ];
+//    if (isMsie() && !isMsieSevenOrNewer()) {
+//        allowStyling = false;
+//    }
     $.uniform = {defaults: {activeClass: "active", autoHide: true, buttonClass: "button", checkboxClass: "checker", checkedClass: "checked", disabledClass: "disabled", eventNamespace: ".uniform", fileButtonClass: "action", fileButtonHtml: "Choose File", fileClass: "uploader", fileDefaultHtml: "No file selected", filenameClass: "filename", focusClass: "focus", hoverClass: "hover", idPrefix: "uniform", inputAddTypeAsClass: true, inputClass: "uniform-input", radioClass: "radio", resetDefaultHtml: "Reset", resetSelector: false, selectAutoWidth: true, selectClass: "selector", selectMultiClass: "uniform-multiselect", submitDefaultHtml: "Submit", textareaClass: "uniform", useID: true, wrapperClass: null}, elements: []};
     $.fn.uniform = function (options) {
         var el = this;
@@ -4292,7 +4292,7 @@ if (!jQuery)throw new Error("Bootstrap requires jQuery");
         if (!highContrastTest) {
             highContrastTest = true;
             if (highContrast()) {
-                allowStyling = false;
+//                allowStyling = false;
             }
         }
         if (!allowStyling) {

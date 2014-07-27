@@ -129,6 +129,12 @@ class ImageController {
                     content = addedValue?.image?.fileContent
                 }
                 break;
+            case 'addedValueType':
+                def addedValue = AddedValueType.get(params.id)
+                if (addedValue) {
+                    content = addedValue?.image?.fileContent
+                }
+                break;
             case 'guarantee':
                 def guarantee = Guarantee.get(params.id)
                 if (guarantee) {

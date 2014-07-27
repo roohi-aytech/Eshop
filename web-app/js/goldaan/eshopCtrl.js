@@ -112,7 +112,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             .done(function (html) {
                 $('#link-basket').qtip({
                     content: {
-                        title: 'توجه',
+                        title: '<img src="'+contextRoot+'images/goldaan/logo.png" class="alertlogo">',
                         text: html,
                         button: 'Close'
                     },

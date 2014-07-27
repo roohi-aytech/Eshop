@@ -45,7 +45,11 @@ class ProvinceController {
         render 0
     }
 
-    def getProvinceCities(){
-        render City.findAllByProvince(Province.get(params.id)) as JSON
+    def getProvinceCities() {
+        def provience = Province.get(params.id)
+        def res = []
+        if (provience)
+            res = City.findAllByProvince(provience)
+        render res as JSON
     }
 }

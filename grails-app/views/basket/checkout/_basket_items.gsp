@@ -21,7 +21,7 @@
         <ul>
             <li ng-repeat="basketItem in basket" class="basketItem">
                 <span class="image"><img
-                        ng-src="{{contextRoot}}site/image/{{basketItem.id}}?type=productModel&wh=100x100"/>
+                        ng-src="{{contextRoot}}image/index/{{basketItem.id}}?type=productModel&wh=100x100"/>
                 </span>
                 <span class="name"><h3 style="display: inline-block"><a
                         ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">

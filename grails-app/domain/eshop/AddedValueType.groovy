@@ -1,0 +1,15 @@
+package eshop
+
+class AddedValueType {
+    String title
+    String description
+    boolean needDescription=false
+    Content image
+    static hasMany = [addedValues: AddedValue]
+    static constraints = {
+        title()
+        description(nullable: true)
+        image(nullable: true)
+        needDescription(nullable:true)
+    }
+}

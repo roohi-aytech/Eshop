@@ -62,8 +62,8 @@ grails.project.dependency.resolution = {
         runtime 'xerces:xercesImpl:2.9.0'
         compile 'com.itextpdf:itextpdf:5.4.2'
         build 'com.itextpdf:itextpdf:5.4.2'
-        compile 'org.apache.ant:ant:1.7.1'
-        compile 'org.apache.ant:ant-launcher:1.7.1'
+        compile 'org.apache.ant:ant:1.8.2'
+        compile 'org.apache.ant:ant-launcher:1.8.2'
         runtime 'com.itextpdf:itextpdf:5.4.2'
 
     }

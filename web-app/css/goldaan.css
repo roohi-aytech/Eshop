@@ -19235,5 +19235,290 @@ ul.third-party li{
 #basketItems .rollbar-content li {
     margin-left: 5px;
 }
+.qtip-content{
+    font-size:12px;
+}
+
+.alertlogo{
+    width:60px;
+}
+
+.checkoutbtn {
+    color: white;
+    background-color: #46a74e;
+    border-color: #3e9546;
+    background-image:-moz-linear-gradient(center top , #46a74e, #3e9546);
+}
+
+.checkoutbtn:hover, .checkoutbtn:focus, .checkoutbtn:active, .checkoutbtn.active {
+    color: white;
+    background-color: #3a8a41;
+    border-color: #2c6a31
+}
+
+.checkoutbtn:active, .checkoutbtn.active {
+    background-image: none
+}
+
+.open .checkoutbtn.dropdown-toggle {
+    background-image: none
+}
+
+.checkoutbtn.disabled, .checkoutbtn.disabled:hover, .checkoutbtn.disabled:focus, .checkoutbtn.disabled:active, .checkoutbtn.disabled.active, .checkoutbtn[disabled], .checkoutbtn[disabled]:hover, .checkoutbtn[disabled]:focus, .checkoutbtn[disabled]:active, .checkoutbtn[disabled].active, fieldset[disabled] .checkoutbtn, fieldset[disabled] .checkoutbtn:hover, fieldset[disabled] .checkoutbtn:focus, fieldset[disabled] .checkoutbtn:active, fieldset[disabled] .checkoutbtn.active {
+    background-color: #46a74e;
+    border-color: #3e9546
+}
+
+.continueshoppingbtn {
+    color: white;
+    background-color: #D2322D;
+    border-color: #AC2925;
+    background-image:-moz-linear-gradient(center top , #AC2925, #D2322D);
+}
+
+.continueshoppingbtn:hover, .continueshoppingbtn:focus, .continueshoppingbtn:active, .continueshoppingbtn.active {
+    color: white;
+    background-color: #D2322D;
+    border-color: #AC2925
+}
+
+.open .continueshoppingbtn.dropdown-toggle {
+    color: white;
+    background-color: #D2322D;
+    border-color: #AC2925
+}
+
+.continueshoppingbtn.disabled, .continueshoppingbtn.disabled:hover, .continueshoppingbtn.disabled:focus, .continueshoppingbtn.disabled:active, .continueshoppingbtn.disabled.active, .continueshoppingbtn[disabled], .continueshoppingbtn[disabled]:hover, .continueshoppingbtn[disabled]:focus, .continueshoppingbtn[disabled]:active, .continueshoppingbtn[disabled].active, fieldset[disabled] .continueshoppingbtn, fieldset[disabled] .continueshoppingbtn:hover, fieldset[disabled] .continueshoppingbtn:focus, fieldset[disabled] .continueshoppingbtn:active, fieldset[disabled] .continueshoppingbtn.active {
+    background-color: #D2322D;
+    border-color: #AC2925
+}
+.register-login-actions{
+    margin-top:20px;
+    text-align:center;
+}
+.register-login-actions .btn{
+    width:120px;
+}
+.register-login-actions div{
+    display:inline-block;
+    width:120px;
+    text-align:center;
+    margin:10px;
+}
+.register-login-actions div p{
+    text-align:center;
+}
 
 
+.shopping-basket {
+    padding:0px 20px;
+    position:relative;
+    top:-45px;
+}
+
+.shopping-basket h2 {
+    margin-bottom: 0;
+}
+
+.shopping-basket .group {
+    border: 1px solid #DCDCDC;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.shopping-basket ul {
+    margin-left: 0;
+}
+
+.shopping-basket ul li {
+    list-style-type: none;
+    border-bottom: 1px dashed #eeeeee;
+    padding: 10px 0;
+    height: 110px;
+    clear: both;
+}
+
+.shopping-basket ul li:last-of-type {
+    border-bottom-width: 0;
+}
+
+.shopping-basket .image {
+    display: inline-block;
+    /*float: right;*/
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin-left: 10px;
+    position: relative;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/*.shopping-basket .image img {*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+/*}*/
+
+.shopping-basket .name {
+    display: inline-block;
+    /*margin: 0;*/
+    /*font-family: tahoma !important :;;*/
+    /*font-size: 11px;*/
+    /*line-height: 14px;*/
+}
+
+.shopping-basket h3 a {
+    /*font-family: times !important;*/
+    /*font-size: 16px;*/
+}
+
+.shopping-basket .price {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.shopping-basket .count {
+}
+
+.shopping-basket .count input[type=text] {
+    width: 30px;
+    height: 15px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.shopping-basket .delete {
+    color: #808080;
+}
+
+.shopping-basket .totalPrice {
+    font-size: 14px;
+    color: #ff4500;
+    font-weight: bold;
+}
+
+.check-out-price {
+    padding-right: 20px;
+}
+
+h2.check-out-price {
+    font-size: 18px !important;
+}
+
+h2.check-out-price span {
+    font-size: 14px;
+}
+
+.factor{
+    border:1px solid #EEEEEE;
+    width:300px;
+    /*height:200px;*/
+    padding: 5px;
+}
+.step-content .step-title{
+    position:relative;
+    display:inline-block;
+    top:-45px;
+    right:10px;
+    padding:0 5px;
+    background:white;
+    font-family:eYekan,tahoma;
+    font-size:16px;
+}
+.step-content.selected{
+    display:block;
+    visibility: visible;
+    opacity:1;
+}
+.step-content{
+    border:1px solid #EEEEEE;
+    padding: 5px;
+    margin-left:20px;
+    display:none;
+    visibility: hidden;
+    opacity:0;
+    transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+}
+.factor .factor-title{
+    position:relative;
+    display:inline-block;
+    top:-17px;
+    right:10px;
+    padding:0 5px;
+    background:white;
+    font-family:eYekan,tahoma;
+    font-size:16px;
+}
+.factor table{
+    background-color:#D3D3D3;
+    width:100%;
+}
+.factor td{
+    font-size:11px;
+    padding:5px;
+}
+.factor .price-sep{
+    width:80%;
+    border-top:1px dashed #f8f8f8;
+}
+.shopping-basket .basketItem{
+    border-bottom: 1px solid #D3D3D3;
+}
+.shopping-basket table .small input[type="text"]{
+    font-size:10px;
+    height:22px;
+}
+.shopping-basket table .small{
+    text-align: center;
+    width:85px;
+    font-size:10px;
+}
+.shopping-basket table{
+    width:100%;
+}
+.basketItem .name a {
+    font-size:20px;
+}
+.basketItem .name .smaller{
+    font-size:16px;
+}
+.steps{
+    margin-left:20px;
+}
+.steps .step{
+    float:right;
+    width:25%;
+    height:35px;
+    text-align: center;
+    top:-45px;
+    position:relative;
+    background:url("../images/goldaan/chk.png") no-repeat scroll center bottom 0 rgba(0, 0, 0, 0);
+    font-family:eYekan,tahoma;
+    font-size:14px;
+}
+.steps .step.selected{
+    background-image:url("../images/goldaan/chk-checked.png");
+}
+
+.basket-actions{
+    margin-top:10px;
+    text-align:left;
+}
+.delivery-methods{
+    margin-right:10px;
+    margin-top:20px;
+}
+.delivery-method {
+    margin-right:70px;
+}
+.basketItem textarea{
+    width:100%;
+    height:50px;
+    margin-top:10px;
+}
+.added-value-types-select{
+    display:inline-block;
+    margin-left:25%;
+}

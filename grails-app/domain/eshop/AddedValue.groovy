@@ -12,9 +12,10 @@ class AddedValue {
     int remainCount
     Brand brand
     Content image
+    AddedValueType addedValueType
     boolean deleted = false
     static hasMany = [variationValues: VariationValue]
-
+    static belongsTo = [AddedValueType]
     static mapping = {
         sort 'name'
     }
@@ -31,6 +32,7 @@ class AddedValue {
         endDate(nullable: true)
         remainCount(nullable: true)
         image(nullable: true)
+        addedValueType(nullable: true)
     }
 
     @Override

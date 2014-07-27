@@ -43,6 +43,13 @@
                                 src="images/variations.png"/><span><g:message
                                 code="variationGroup.label"
                                 default="VariationGroups"/></span></g:link></li>
+                    <g:if test="${grailsApplication.config.addedValueType}">
+                        <li>
+                            <g:link controller="addedValueType" action="list"><img
+                                    src="images/addedValueType.png"/><span><g:message
+                                    code="addedVaueType.label"
+                                    default="AddedValueType"/></span></g:link></li>
+                    </g:if>
                     <li>
                         <g:link controller="brand" action="list"><img
                                 src="images/brand.png"/><span><g:message
