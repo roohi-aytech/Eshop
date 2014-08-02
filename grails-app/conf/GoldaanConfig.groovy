@@ -20,6 +20,7 @@ customCustomerReviewTemplate=true
 filterPriceOnChange=true
 customCheckout=true
 addedValueType=true
+customShoppingAlert=true
 ckeditor {
     upload {
         basedir = "/home/uploads/"

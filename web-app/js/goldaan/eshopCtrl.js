@@ -162,6 +162,27 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             });
         }
     };
+    $scope.removeAddedValueFromBasket = function (id,typeId, callback) {
+        var found = false;
+        for (var i = 0; i < $scope.basket.length; i++) {
+            if ($scope.basket[i].id == id) {
+                for (var j in $scope.basket[i].selectedAddedValueInstances) {
+                    if(j==typeId) {
+                        delete $scope.basket[i].selectedAddedValueInstances[j];
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (found) {
+            $http.post(contextRoot + "basket/removeAddedValue/" + id+'&typeId='+typeId).success(function (response) {
+                if(callback){
+                    callback();
+                }
+            });
+        }
+    };
 
     $scope.itemFirstLine = function(name){
         return name.split('<br/>')[0];
@@ -169,6 +190,9 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
 
     $scope.itemSecondLine = function(name){
         return name.split('<br/>')[1];
+    }
+    $scope.itemThirdLine = function(name){
+        return name.split('<br/>')[2];
     }
 
     $scope.calculateBasketTotalPrice = function () {
@@ -346,5 +370,9 @@ function updateBasketItemCount(id, count, callback) {
 function removeFromBasket(id, callback) {
     var scope = angular.element(document.getElementById('main-container')).scope();
     scope.removeFromBasket(id, callback);
+}
+function removeAddedValue(id,typeId, callback) {
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    scope.removeAddedValueFromBasket(id,typeId, callback);
 }
 

@@ -3,7 +3,8 @@ package eshop
 class AddedValueInstance {
     AddedValue addedValue
     String description
-    int count = 1
+    String from
+    int orderCount = 1
     OrderItem orderItem
     Content image
     static belongsTo = [AddedValue, OrderItem]
@@ -11,7 +12,8 @@ class AddedValueInstance {
         addedValue()
         description(nullable: true)
         orderItem()
+        from(nullable:true)
         image(nullable: true)
-        count(nullable: true)
+        orderCount(nullable: true)
     }
 }

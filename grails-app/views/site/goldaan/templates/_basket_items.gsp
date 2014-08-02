@@ -31,12 +31,35 @@
                 </span>
                 <span class="name"><h3><a
                         ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">
-                    {{itemFirstLine(basketItem.name)}}<br/><span class="smaller">{{itemSecondLine(basketItem.name)}}</span>
+                    {{itemFirstLine(basketItem.name)}}
+                    <br/><span class="smaller">{{itemSecondLine(basketItem.name)}}</span>
+                    <br/><span class="smaller"><g:message code="seller-goldaan"/>: {{itemThirdLine(basketItem.name)}}</span>
+
                 </a>
                 </h3>
                     <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
                         <span class="plus">+</span> {{addedValueName}}
                     </span>
+                    <div ng-repeat="addedValueInstance in basketItem.selectedAddedValueInstances" class="addedValue added-value-instance">
+                        <span class="plus">+</span> {{addedValueInstance.title}} <span onclick="removeAddedValue('{{basketItem.id}}','{{addedValueInstance.typeId}}')" class="added-value-remove">x</span>
+                        <div class="hidden added-value-qtip">
+                            <div class="added-value-qtip-content">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div ng-show="addedValueInstance.title">{{addedValueInstance.title}} {{addedValueInstance.subTitle}}</div>
+                                            <div ng-show="addedValueInstance.description"><g:message code="addedValue-desc" args="['']" /> {{addedValueInstance.title}}: {{addedValueInstance.description}}</div>
+                                            <div ng-show="addedValueInstance.from"><g:message code="addedValue.from" />: {{addedValueInstance.from}}</div>
+                                            <div ng-show="addedValueInstance.price"><g:message code="addedValue.price" />: {{addedValueInstance.price}}</div>
+                                        </td>
+                                        <td>
+                                            <img ng-show="addedValueInstance.id" src="<g:createLink controller="image" params="[type:'addedValue']" />&id={{addedValueInstance.id}}" alt="">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </span>
                 
                 <div class="added-value-types-select pull-left">

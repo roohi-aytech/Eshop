@@ -45,5 +45,27 @@
 	<g:checkBox name="needDescription" value="${addedValueTypeInstance?.needDescription}" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: addedValueTypeInstance, field: 'hasCustomImage', 'error')} ">
+	<label for="hasCustomImage">
+		<g:message code="addedValueType.hasCustomImage.label" default="Has Custom Image" />
+		
+	</label>
+	<g:checkBox name="hasCustomImage" value="${addedValueTypeInstance?.hasCustomImage}" />
+</div>
 
+<div class="fieldcontain ${hasErrors(bean: addedValueTypeInstance, field: 'hasAddedValueCount', 'error')} ">
+	<label for="hasAddedValueCount">
+		<g:message code="addedValueType.hasAddedValueCount.label" default="Has Added Value Count" />
+		
+	</label>
+	<g:checkBox name="hasAddedValueCount" value="${addedValueTypeInstance?.hasAddedValueCount}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: addedValueTypeInstance, field: 'defaultPrice', 'error')} ">
+	<label for="defaultPrice">
+		<g:message code="addedValueType.defaultPrice.label" default="Default Price" />
+		
+	</label>
+	<g:field type="number" name="defaultPrice" step="any" value="${addedValueTypeInstance.defaultPrice}"/>
+</div>
 

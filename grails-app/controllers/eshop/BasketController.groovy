@@ -2,6 +2,7 @@ package eshop
 
 import eshop.delivery.DeliveryMethod
 import eshop.delivery.DeliverySourceStation
+import grails.converters.JSON
 
 class BasketController {
     def springSecurityService
@@ -370,7 +371,93 @@ class BasketController {
 
         def id = params.id
         def productModel = ProductModel.get(id)
+        def template = 'alert'
+        if (grailsApplication.config.customShoppingAlert)
+            template = "/site/${grailsApplication.config.eShop.instance}/templates/alert" +
+                    ""
+        render template: template, model: [name: productModel?.product?.manualTitle ? productModel?.product?.pageTitle : ("${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title ?: ''} ${productModel?.product?.brand} ${productModel?.variationValues?.find { it.variationGroup.representationType == 'Color' }?.value}")]
+    }
+    private void collectProductTypes(ProductType pt, res) {
+        res.add(pt)
+        if (pt.parentProduct)
+            collectProductTypes(pt.parentProduct, res)
+    }
 
-        render template: 'alert', model: [name: productModel?.product?.manualTitle ? productModel?.product?.pageTitle : ("${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title ?: ''} ${productModel?.product?.brand} ${productModel?.variationValues?.find { it.variationGroup.representationType == 'Color' }?.value}")]
+    def addedValueSelect() {
+        def addedValueType = AddedValueType.get(params.addedValueTypeId)
+        def product = Product.get(params.productId)
+        if (addedValueType && product) {
+            def productTypes = []
+            product.productTypes.each {
+                collectProductTypes(it, productTypes)
+            }
+            def addedValues = AddedValue.findAllByAddedValueTypeAndBaseProductInList(addedValueType, productTypes)
+            render(template: "/site/${grailsApplication.config.eShop.instance}/templates/addedValuesForm",
+                    model: [addedValues: addedValues, addedValueType: addedValueType, basketItemId: params.basketItemId])
+        }
+    }
+
+    def addedValueSelectSubmit() {
+        def basket = session.getAttribute("basket")
+        if (!basket)
+            basket = [];
+        basket.each {
+            if (it.id == params.basketItemId) {
+                if (!it.selectedAddedValueInstances)
+                    it.selectedAddedValueInstances = [:]
+                def addedValueType = AddedValueType.get(params.typeId)
+                def addedValue=AddedValue.get(params.addedValueId)
+                def customImage
+                if (params.customImage) {
+                    customImage = UUID.randomUUID().toString()
+                    session[customImage] = params.customImage.bytes
+                }
+
+
+                it.selectedAddedValueInstances["${addedValueType?.id}"]= [
+                        id         : params.addedValueId,
+                        typeId     : params.typeId,
+                        title      : addedValueType?.title,
+                        subTitle   : addedValue?.name,
+                        price      : addedValue?.value?:addedValueType.defaultPrice,
+                        description: params.description,
+                        from       : params.from,
+                        orderCount : params.int('count'),
+                        image      : customImage]
+
+                def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect{it.value.id},addedValueType?.defaultPrice?:0)
+                it.price = price.showVal
+                it.realPrice = price.showVal + price.addedVal
+
+            }
+        }
+        session.setAttribute("basket", basket)
+        render(basket as JSON)
+//        def instance = new AddedValueInstance()
+//        instance.addedValue = AddedValue.get(params.addedValueId)
+//        instance.orderItem = OrderItem.get(params.basketItemId)
+//        instance.from = params.from
+//        if (instance.description)
+//            instance.description = params.description
+//        if (params.count)
+//            instance.orderCount = params.int('count')
+//        if (params.customImage)
+//            instance.image = new Content(name: params.customImage.fileItem.fileName, contentType: 'image', fileContent: params.customImage.bytes).save()
+//
+//        if (instance.save()) {
+//
+//                    if (!it.selectedAddedValueInstances)
+//                        it.selectedAddedValueInstances = []
+//                    it.selectedAddedValueInstances << instance.id
+//                    if (!it.selectedAddedValueInstanceNames)
+//                        it.selectedAddedValueInstanceNames = []
+//                    it.selectedAddedValueInstanceNames << instance.addedValue.addedValueType.title
+//                }
+//            }
+//            session.setAttribute("basket", basket)
+//            render 0
+//        }
+
+
     }
 }

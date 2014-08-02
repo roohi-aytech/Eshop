@@ -59,6 +59,33 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${addedValueTypeInstance?.hasCustomImage}">
+				<li class="fieldcontain">
+					<span id="hasCustomImage-label" class="property-label"><g:message code="addedValueType.hasCustomImage.label" default="Has Custom Image" /></span>
+					
+						<span class="property-value" aria-labelledby="hasCustomImage-label"><g:formatBoolean boolean="${addedValueTypeInstance?.hasCustomImage}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${addedValueTypeInstance?.hasAddedValueCount}">
+				<li class="fieldcontain">
+					<span id="hasAddedValueCount-label" class="property-label"><g:message code="addedValueType.hasAddedValueCount.label" default="Has Added Value Count" /></span>
+					
+						<span class="property-value" aria-labelledby="hasAddedValueCount-label"><g:formatBoolean boolean="${addedValueTypeInstance?.hasAddedValueCount}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${addedValueTypeInstance?.defaultPrice}">
+				<li class="fieldcontain">
+					<span id="defaultPrice-label" class="property-label"><g:message code="addedValueType.defaultPrice.label" default="Default Price" /></span>
+					
+						<span class="property-value" aria-labelledby="defaultPrice-label"><g:fieldValue bean="${addedValueTypeInstance}" field="defaultPrice"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${addedValueTypeInstance?.addedValues}">
 				<li class="fieldcontain">
 					<span id="addedValues-label" class="property-label"><g:message code="addedValueType.addedValues.label" default="Added Values" /></span>

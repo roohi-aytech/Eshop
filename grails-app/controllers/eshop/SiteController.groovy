@@ -1272,25 +1272,4 @@ class SiteController {
         render ''
     }
 
-    private void collectProductTypes(ProductType pt, res) {
-        res.add(pt)
-        if (pt.parentProduct)
-            collectProductTypes(pt.parentProduct, res)
-    }
-
-    def addedValueSelect() {
-        def addedValueType = AddedValueType.get(params.addedValueTypeId)
-        def product = Product.get(params.productId)
-        if (addedValueType && product) {
-            def productTypes = []
-            product.productTypes.each {
-                collectProductTypes(it, productTypes)
-            }
-            def addedValues = AddedValue.findAllByAddedValueTypeAndBaseProductInList(addedValueType, productTypes)
-            render(template: "/site/${grailsApplication.config.eShop.instance}/templates/addedValuesForm",
-                    model: [addedValues: addedValues, addedValueType: addedValueType,basketItemId:params.basketItemId])
-        }
-    }
-
-
 }

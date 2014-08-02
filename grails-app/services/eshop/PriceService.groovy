@@ -36,7 +36,6 @@ class PriceService {
             return [showVal: 0D, status: productModel.status]
 
         def priceVal = price?.rialPrice / getDisplayCurrencyExchangeRate()
-
         if (priceVal)
             AddedValue.findAllByBaseProductAndProcessTimeAndDeletedNotEqual(productModel.product, 'mandetory', true).each { addedValue ->
                 if (!addedValue.variationValues.any { v1 -> !productModel.variationValues.any { v2 -> v1.id == v2.id } }) {
@@ -51,20 +50,28 @@ class PriceService {
     }
 
     @Cacheable(value = 'pmmservice', key = '#productModelId.toString().concat(#selectedAddedValues.toString())')
-    def calcProductModelPrice(productModelId, selectedAddedValues) {
+    def calcProductModelPrice(productModelId, selectedAddedValues, defaultPrice = 0D) {
         def result = calcProductModelPrice(productModelId)
 
         if (!result.showVal)
             return result
 
         def addedVal = 0
-        selectedAddedValues.collect { AddedValue.get(it.toLong()) }.findAll {
-            it.processTime == 'optional'
-        }.each { addedValue ->
-            if (addedValue.type == "percent")
-                addedVal += result.showVal * addedValue.value / 100
-            else if (addedValue.type == "fixed")
-                addedVal += addedValue.value
+        selectedAddedValues.each {
+            def addedValue
+
+            if (it.isNumber())
+                addedValue = AddedValue.get(it.toLong())
+            if (addedValue) {
+                if (addedValue.processTime == 'optional') {
+                    if (addedValue.type == "percent")
+                        addedVal += result.showVal * addedValue.value / 100
+                    else if (addedValue.type == "fixed")
+                        addedVal += addedValue.value
+                }
+            } else
+                addedVal += defaultPrice
+
         }
 
         result.addedVal = addedVal
@@ -98,9 +105,9 @@ class PriceService {
             return [showVal: 0D, status: 'not-exists']
         def now = new Date()
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
-        if(price) {
+        if (price) {
             def oldPriceList = Price.findAllByProductModelAndStartDateLessThanEqualsAndEndDateIsNotNull(productModel, price.startDate)
-            price = oldPriceList.find {it.startDate >= oldPriceList.collect {it.startDate}.max()}
+            price = oldPriceList.find { it.startDate >= oldPriceList.collect { it.startDate }.max() }
         }
         if (!price)
             return [showVal: 0D, status: productModel.status]
@@ -256,7 +263,7 @@ class PriceService {
         result
     }
 
-    int getDisplayCurrencyExchangeRate(){
+    int getDisplayCurrencyExchangeRate() {
         Currency.findByDisplay(true)?.exchangeRate?.intValue() ?: 1
     }
 }

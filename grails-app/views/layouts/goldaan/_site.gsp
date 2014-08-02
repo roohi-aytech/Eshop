@@ -169,6 +169,8 @@
     <script language="JavaScript" type="text/javascript"
             src="${resource(dir: 'js', file: 'jquery.sticky-kit.js')}"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
+    <script src="${resource(dir: 'js', file: 'jquery.form.js', plugin: 'rapid-grails')}" language="javascript"
+            type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>

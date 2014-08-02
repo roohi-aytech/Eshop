@@ -45,12 +45,34 @@
                 }
             }
         }
+        function selectAddedValueInstance(){
+            $('#addedValueSelect').ajaxSubmit({
+                success:function(res){
+                    basket=res;
+                    $('.qtip-added-value').qtip('destroy');
+                    var scope = angular.element(document.getElementById('main-container')).scope();
+                    scope.basket = basket;
+                    scope.$apply();
+                    $('.added-value-instance').qtip('destroy');
+                    $('.added-value-instance').each(function() {
+                        $(this).qtip({
+                            content: $(this).find('.added-value-qtip').html(),
+                            position: {
+                                my: 'top right',
+                                at: 'bottom center'
+                            }
+                        });
+                    });
+                }
+            })
+        }
         function nextstep(){
 
         }
 
         function showAddedValueDialog(obj,addedValueTypeId,productId,basketItemId){
-            $.ajax({ url: '<g:createLink action="addedValueSelect" controller="site" />',data:{addedValueTypeId:addedValueTypeId,productId:productId,basketItemId:basketItemId}})
+            $('.qtip-added-value').qtip('destroy');
+            $.ajax({ url: '<g:createLink action="addedValueSelect" controller="basket" />',data:{addedValueTypeId:addedValueTypeId,productId:productId,basketItemId:basketItemId}})
             .done(function (html) {
                 $('#'+obj.id).qtip({
                     content: {
@@ -59,7 +81,7 @@
                         button: 'Close'
                     },
                     style: {
-                        classes: 'qtip-bootstrap',
+                        classes: 'qtip-bootstrap qtip-added-value',
                         width: 700
                     },
                     position: {
@@ -102,6 +124,15 @@
                     });
                 }
 
+            });
+            $('.added-value-instance').each(function() {
+                $(this).qtip({
+                    content: $(this).find('.added-value-qtip').html(),
+                    position: {
+                        my: 'top right',
+                        at: 'bottom center'
+                    }
+                });
             });
         });
     </script>

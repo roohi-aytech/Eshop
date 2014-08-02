@@ -55,7 +55,7 @@ class ProductModel {
     String toBasketItemString() {
 
         if (domainClass.grailsApplication.config.eShop.instance == 'goldaan') {
-            return "${product?.manualTitle ? product?.pageTitle : product?.title}<br/>${name}"
+            return "${product?.manualTitle ? product?.pageTitle : product?.title}<br/>${name}<br/>${product?.brand?.name ?: ""}"
         } else
             return "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} با گارانتی ${guarantee ?: ""}<br/> مدل ${name ?: ""}"
     }

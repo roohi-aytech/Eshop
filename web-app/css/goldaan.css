@@ -19524,11 +19524,24 @@ h2.check-out-price span {
 }
 .added-value-form-added-values{
     width:450px;
-    max-height:500px;
+    max-height:300px;
     overflow-y: auto;
 }
 .added-value-form-added-actions{
     width:200px;
+}
+.added-value-form-added-actions div{
+    margin-top:10px;
+}
+.added-value-form-added-actions input,.added-value-form-added-actions textarea{
+    width:200px;
+    text-align: right;
+    font-size:11px;
+    min-height:25px;
+}
+.added-value-content{
+    cursor: pointer;
+    border:1px solid white;
 }
 .added-value-content.selected{
     border:1px solid green;
@@ -19536,3 +19549,28 @@ h2.check-out-price span {
 .qtip{
     max-width:800px !important;
 }
+.added-value-qtip-content{
+    direction:rtl;
+    text-align:right;
+}
+.added-value-qtip-content img{
+    max-width:200px;
+}
+.added-value-qtip-content div{
+    margin:5px;
+}
+.added-value-instance{
+    cursor:pointer;
+}
+.added-value-instance{
+    display:block;
+}
+.added-value-remove{
+    color:red;
+    /*display:none;*/
+}
+/*.added-value-instance:hover .added-value-remove{*/
+    /*display:inline-block;*/
+    /*color:red;*/
+/*}*/
+
