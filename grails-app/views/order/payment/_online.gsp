@@ -33,7 +33,7 @@ label {
                     code="order.payment.bank.${account.bankName}.label"/></option>
         </g:each>
     </select>
-    <label><g:message code="order.payment.value"></g:message></label>
+    <label><g:message code="order.payment.value"></g:message> (<eshop:currencyLabel/>)</label>
     <input type="text" name="value" id="onlineValue" onblur="onlineValidateValue()" value="${orderPrice}"/>
     <span id="onlineValueValidationMessage"></span>
 

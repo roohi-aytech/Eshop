@@ -64,7 +64,7 @@ class CustomerController {
     }
 
     def checkUserNameIsRepetitive() {
-        if (User.findByUsername(params.username?.toString().trim().toLowerCase()))
+        if (User.findByUsername(params.username?.toString()?.trim()?.toLowerCase()))
             render message(code: 'springSecurity.register.username.repetitive')
         else
             render message(code: 'springSecurity.register.username.valid')
