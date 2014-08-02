@@ -4,6 +4,8 @@ class AddedValueType {
     String title
     String description
     boolean needDescription=false
+    boolean hasCustomImage=false
+    boolean hasAddedValueCount=false
     Content image
     static hasMany = [addedValues: AddedValue]
     static constraints = {
@@ -11,5 +13,7 @@ class AddedValueType {
         description(nullable: true)
         image(nullable: true)
         needDescription(nullable:true)
+        hasCustomImage(nullable:true)
+        hasAddedValueCount(nullable:true)
     }
 }

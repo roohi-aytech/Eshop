@@ -50,6 +50,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${addedValueTypeInstance?.needDescription}">
+				<li class="fieldcontain">
+					<span id="needDescription-label" class="property-label"><g:message code="addedValueType.needDescription.label" default="Need Description" /></span>
+					
+						<span class="property-value" aria-labelledby="needDescription-label"><g:formatBoolean boolean="${addedValueTypeInstance?.needDescription}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${addedValueTypeInstance?.addedValues}">
 				<li class="fieldcontain">
 					<span id="addedValues-label" class="property-label"><g:message code="addedValueType.addedValues.label" default="Added Values" /></span>

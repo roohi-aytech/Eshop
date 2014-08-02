@@ -1288,7 +1288,7 @@ class SiteController {
             }
             def addedValues = AddedValue.findAllByAddedValueTypeAndBaseProductInList(addedValueType, productTypes)
             render(template: "/site/${grailsApplication.config.eShop.instance}/templates/addedValuesForm",
-                    model: [addedValues: addedValues, addedValueType: addedValueType])
+                    model: [addedValues: addedValues, addedValueType: addedValueType,basketItemId:params.basketItemId])
         }
     }
 

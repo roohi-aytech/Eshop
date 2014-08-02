@@ -19522,3 +19522,17 @@ h2.check-out-price span {
     display:inline-block;
     margin-left:25%;
 }
+.added-value-form-added-values{
+    width:450px;
+    max-height:500px;
+    overflow-y: auto;
+}
+.added-value-form-added-actions{
+    width:200px;
+}
+.added-value-content.selected{
+    border:1px solid green;
+}
+.qtip{
+    max-width:800px !important;
+}

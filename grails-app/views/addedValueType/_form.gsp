@@ -29,12 +29,21 @@
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: addedValueTypeInstance, field: 'image', 'error')} ">
-	<label for="image">
-		<g:message code="addedValueType.image.label" default="Image" />
-		
-	</label>
-	<input type="file" name="imageFile">
+    <label for="image">
+        <g:message code="addedValueType.image.label" default="Image" />
+    </label>
+    <input type="file" name="imageFile">
     <img src="${createLink(controller: 'image', params: [id: addedValueTypeInstance?.id, type: 'addedValueType',r:Math.random()])}"/>
 </div>
+
+
+<div class="fieldcontain ${hasErrors(bean: addedValueTypeInstance, field: 'needDescription', 'error')} ">
+	<label for="needDescription">
+		<g:message code="addedValueType.needDescription.label" default="Need Description" />
+		
+	</label>
+	<g:checkBox name="needDescription" value="${addedValueTypeInstance?.needDescription}" />
+</div>
+
 
 

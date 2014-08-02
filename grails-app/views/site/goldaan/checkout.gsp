@@ -48,8 +48,9 @@
         function nextstep(){
 
         }
-        function showAddedValueDialog(obj,addedValueTypeId,productId){
-            $.ajax({ url: '<g:createLink action="addedValueSelect" controller="site" />',data:{addedValueTypeId:addedValueTypeId,productId:productId}})
+
+        function showAddedValueDialog(obj,addedValueTypeId,productId,basketItemId){
+            $.ajax({ url: '<g:createLink action="addedValueSelect" controller="site" />',data:{addedValueTypeId:addedValueTypeId,productId:productId,basketItemId:basketItemId}})
             .done(function (html) {
                 $('#'+obj.id).qtip({
                     content: {
@@ -59,11 +60,11 @@
                     },
                     style: {
                         classes: 'qtip-bootstrap',
-                        width: 400
+                        width: 700
                     },
                     position: {
-                        my: 'top center',
-                        at: 'bottom center'
+                        my: 'top right',
+                        at: 'bottom left'
                     },
                     show: {
                         ready: true,
@@ -81,6 +82,11 @@
                 });
             });
 
+        }
+        function selectAddedValue(addedValueId){
+            $('#addedValueId').val(addedValueId);
+            $('.added-value-content').removeClass('selected');
+            $('#addedValue'+addedValueId).addClass('selected');
         }
         $(function () {
 

@@ -42,7 +42,7 @@
                 <div class="added-value-types-select pull-left">
                     <g:each in="${addedValueTypes}">
                         <div class="">
-                            <a id="{{basketItem.id}}_${it.id}" href="#" onclick="showAddedValueDialog(this,${it.id},'{{basketItem.productId}}')">
+                            <a id="{{basketItem.id}}_${it.id}" href="#" onclick="showAddedValueDialog(this,${it.id},'{{basketItem.productId}}','{{basketItem.id}}')">
                                 <img src="<g:createLink controller="image" params="[type:'addedValueType']" id="${it?.id}"/>" alt="">
                                 ${it.title}${it.description?"(${it.description})":''}
                             </a>
