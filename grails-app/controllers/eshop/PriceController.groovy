@@ -77,8 +77,9 @@ class PriceController {
 
     def bulkUpdate() {
         def model = [:]
-        model.productTypes = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
-            getProductTypesJson(it)
+        model.productTypesKey = UUID.randomUUID()
+        session["bulkUpdate_productTypes_${model.productTypesKey}"] = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
+            getProductTypesJson(it, [])
         }
         model.productTypeTypes = ProductTypeType.findAll().collect { [id: it.id, text: it.title] }
         model.brands = Brand.findAll().collect { [id: it.id, text: it.name] }
@@ -86,18 +87,197 @@ class PriceController {
         model
     }
 
-    def getProductTypesJson(ProductType parent) {
+    def bulkUpdateForm() {
+
+        def productTypeList = params.productTypes instanceof String ? [params.productTypes as Long] : params.productTypes.collect {
+            it as Long
+        } ?: []
+        def productTypeTypeList = params.productTypeTypes instanceof String ? [params.productTypeTypes as Long] : params.productTypeTypes.collect {
+            it as Long
+        }
+        def brandList = params.brands instanceof String ? [params.brands as Long] : params.brands.collect { it as Long }
+        def guaranteeList = params.guarantees instanceof String ? [params.guarantees as Long] : params.guarantees.collect {
+            it as Long
+        }
+        def statusList = params.statuses instanceof String ? [params.statuses as String] : params.statuses
+
+        def model = [:]
+
+//        model.productTypesKey = UUID.randomUUID()
+//        session["bulkUpdate_productTypes_${model.productTypesKey}"] = ProductType.findAllByIdInList(ProductModel.createCriteria().listDistinct {
+//            if (guaranteeList && guaranteeList.size() > 0) {
+//                guarantee {
+//                    'in'('id', guaranteeList)
+//                }
+//            }
+//            if (statusList && statusList.size() > 0) {
+//                'in'('status', statusList)
+//            }
+//            product {
+//                or {
+//                    eq('isVisible', true)
+//                    isNull('isVisible')
+//                }
+//                or {
+//                    eq('deleted', false)
+//                    isNull('deleted')
+//                }
+//                if (brandList && brandList.size() > 0) {
+//                    brand {
+//                        'in'('id', brandList)
+//                    }
+//                }
+//                if (productTypeTypeList && productTypeTypeList.size() > 0) {
+//                    type {
+//                        'in'('id', productTypeTypeList)
+//                    }
+//                }
+//            }
+//            projections {
+//                product {
+//                    productTypes {
+//                        property('id')
+//                    }
+//                }
+//            }
+//        }).collect {
+//            getProductTypesJson(it, productTypeList)
+//        }
+        model.selectedProductTypeTypes = productTypeTypeList
+        model.productTypeTypes = ProductTypeType.findAllByIdInList(ProductModel.createCriteria().listDistinct {
+            if (guaranteeList && guaranteeList.size() > 0) {
+                guarantee {
+                    'in'('id', guaranteeList)
+                }
+            }
+            if (statusList && statusList.size() > 0) {
+                'in'('status', statusList)
+            }
+            product {
+                or {
+                    eq('isVisible', true)
+                    isNull('isVisible')
+                }
+                or {
+                    eq('deleted', false)
+                    isNull('deleted')
+                }
+                if (brandList && brandList.size() > 0) {
+                    brand {
+                        'in'('id', brandList)
+                    }
+                }
+
+                if (productTypeList && productTypeList.size() > 0) {
+                    productTypes {
+                        'in'('id', productTypeList)
+                    }
+                }
+            }
+            projections {
+                product {
+                    type {
+                        property('id')
+                    }
+                }
+            }
+        }).collect { [id: it.id, text: it.title] }
+        model.selectedBrands = brandList
+        model.brands = Brand.findAllByIdInList(ProductModel.createCriteria().listDistinct {
+            if (guaranteeList && guaranteeList.size() > 0) {
+                guarantee {
+                    'in'('id', guaranteeList)
+                }
+            }
+            if (statusList && statusList.size() > 0) {
+                'in'('status', statusList)
+            }
+            product {
+                or {
+                    eq('isVisible', true)
+                    isNull('isVisible')
+                }
+                or {
+                    eq('deleted', false)
+                    isNull('deleted')
+                }
+                if (productTypeTypeList && productTypeTypeList.size() > 0) {
+                    type {
+                        'in'('id', productTypeTypeList)
+                    }
+                }
+
+                if (productTypeList && productTypeList.size() > 0) {
+                    productTypes {
+                        'in'('id', productTypeList)
+                    }
+                }
+            }
+            projections {
+                product {
+                    brand {
+                        property('id')
+                    }
+                }
+            }
+        }).collect { [id: it.id, text: it.name] }
+        model.selectedGuarantees = guaranteeList
+        model.guarantees = Guarantee.findAllByIdInList(ProductModel.createCriteria().listDistinct {
+            if (statusList && statusList.size() > 0) {
+                'in'('status', statusList)
+            }
+            product {
+                or {
+                    eq('isVisible', true)
+                    isNull('isVisible')
+                }
+                or {
+                    eq('deleted', false)
+                    isNull('deleted')
+                }
+                if (brandList && brandList.size() > 0) {
+                    brand {
+                        'in'('id', brandList)
+                    }
+                }
+                if (productTypeTypeList && productTypeTypeList.size() > 0) {
+                    type {
+                        'in'('id', productTypeTypeList)
+                    }
+                }
+
+                if (productTypeList && productTypeList.size() > 0) {
+                    productTypes {
+                        'in'('id', productTypeList)
+                    }
+                }
+            }
+            projections {
+                guarantee {
+                    property('id')
+                }
+            }
+        }).collect { [id: it.id, text: it.name] }
+        render template: 'bulkUpdateForm', model: model
+    }
+
+    def getProductTypesJson(ProductType parent, selectedIds) {
         def result = [:]
         result.id = parent.id
         result.text = parent.name
+        result.checked = selectedIds.contains(result.id)
         def children = ProductType.findAllByParentProductAndDeleted(parent, false)
         if (children?.size() > 0) {
             result.children = []
             children.each {
-                result.children.add(getProductTypesJson(it))
+                result.children.add(getProductTypesJson(it, selectedIds))
             }
         }
         result
+    }
+
+    def bulkUpdateProductTypesTree(){
+        render session["bulkUpdate_productTypes_${params.id}"] as JSON
     }
 
     def exportPriceList() {
@@ -118,8 +298,10 @@ class PriceController {
 
     def importPriceList() {
         def model = excelService.importPriceList(request.getFile('file').inputStream)
-        model.productTypes = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
-            getProductTypesJson(it)
+
+        model.productTypesKey = UUID.randomUUID()
+        session["bulkUpdate_productTypes_${model.productTypesKey}"] = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
+            getProductTypesJson(it, [])
         }
         model.productTypeTypes = ProductTypeType.findAll().collect { [id: it.id, text: it.title] }
         model.brands = Brand.findAll().collect { [id: it.id, text: it.name] }

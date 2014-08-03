@@ -22,6 +22,7 @@ import java.text.NumberFormat
 class ExcelService {
 
     def productService
+    def grailsApplication
 
     def exportPriceList(
             def productTypeList,
@@ -37,6 +38,10 @@ class ExcelService {
                 'in'('status', statusList)
             }
             product {
+                or {
+                    eq('isVisible', true)
+                    isNull('isVisible')
+                }
                 or {
                     eq('deleted', false)
                     isNull('deleted')
@@ -74,7 +79,8 @@ class ExcelService {
         sheet1.addCell(new Label(6, 0, "برند", createHeaderCellFormat()))
         sheet1.addCell(new Label(7, 0, "نوع", createHeaderCellFormat()))
         sheet1.addCell(new Label(8, 0, "نوع محصول", createHeaderCellFormat()))
-        sheet1.addCell(new Label(9, 0, "#", createHeaderCellFormat()))
+        sheet1.addCell(new Label(9, 0, "کد محصول", createHeaderCellFormat()))
+        sheet1.addCell(new Label(10, 0, "#", createHeaderCellFormat()))
 
         def indexer = 0
         productModels.each {
@@ -93,7 +99,8 @@ class ExcelService {
             sheet1.addCell(new Label(8, indexer, it.product?.productTypes?.find {
                 true
             }?.name ?: '-', createRightAlignedCellFormat()))
-            sheet1.addCell(new Label(9, indexer, it.id.toString(), createNormalCellFormat()))
+            sheet1.addCell(new Label(9, indexer, it?.product?.id?.toString(), createNormalCellFormat()))
+            sheet1.addCell(new Label(10, indexer, it.id.toString(), createNormalCellFormat()))
         }
 
         int c = 10;
@@ -163,6 +170,7 @@ class ExcelService {
     }
 
     def importPriceList(InputStream inputFileStream) {
+        def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
 
         def result = [:]
 
@@ -177,14 +185,15 @@ class ExcelService {
             for (def i = 1; i < sheet.rows; i++) {
                 def item = [:]
                 try {
-                    item.currency = sheet.getCell(0, i).contents
+                    item.currency = Currency.findByName(sheet.getCell(0, i).contents as String)
                     item.guarantee = sheet.getCell(3, i).contents
                     item.model = sheet.getCell(4, i).contents
                     item.color = sheet.getCell(5, i).contents
                     item.brand = sheet.getCell(6, i).contents
                     item.type = sheet.getCell(7, i).contents
                     item.productType = sheet.getCell(8, i).contents
-                    item.id = sheet.getCell(9, i).contents as Long
+                    item.id = sheet.getCell(10, i).contents as Long
+                    item.productId = sheet.getCell(9, i).contents as Long
                     item.price = (sheet.getCell(1, i).contents ?: '0').replace(',', '').replace('-', '0') as Double
                     item.status = getStatus(sheet.getCell(2, i).contents)
                     item.statusChanged = false
@@ -218,24 +227,25 @@ class ExcelService {
                 }
             }
 
-            //update price
+            //update lastRialPrice
             def lastPrice = Price.findByProductModelAndEndDateIsNull(model)
-            def price = (lastPrice?.price ?: 0) as Double
-//            if (price != item.price) {
+            def lastRialPrice = lastPrice ? lastPrice.currency ? lastPrice.price * lastPrice.currency.exchangeRate : lastPrice.price : 0
+
+            def priceInstance = new Price()
+            priceInstance.productModel = model
+            priceInstance.price = item.price
+            priceInstance.currency = item.currency
+            priceInstance.startDate = new Date()
+            priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
+
             if (true) {
-                item.priceChanged = price != item.price
-                item.oldPrice = price
-                def priceInstance = new Price()
-                priceInstance.productModel = model
-                priceInstance.price = item.price
-                priceInstance.startDate = new Date()
+                item.priceChanged = lastRialPrice != priceInstance.rialPrice
+                item.oldPrice = lastPrice ? "${g.formatNumber(number:lastPrice.price, type: 'number')} ${lastPrice.currency ?: g.message(code:'rial')}" : '-'
 
                 if (lastPrice) {
                     lastPrice.endDate = new Date()
                     lastPrice.save(flush: true)
                 }
-
-                priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
                 if (!priceInstance.validate() || !priceInstance.save(flush: true)) {
                     item.hasError = true
                     item.errorList.add('priceSave')
