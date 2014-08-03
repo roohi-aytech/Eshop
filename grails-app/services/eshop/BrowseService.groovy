@@ -30,6 +30,7 @@ class BrowseService {
             params.match['status'] = 0
         def countMap = products.aggregate(
                 [$match: params.match],
+//                [$group: [_id: '$baseProductId', count: [$sum: 1]]],
                 [$group: [_id: params.group, count: [$sum: 1]]],
                 [$match: [count: [$gt: 0], _id: [$ne: null]]],
                 [$match: [_id: [$ne: 'N/A']]],
@@ -47,6 +48,7 @@ class BrowseService {
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$unwind: params.unwind],
+                [$group: [_id: '$baseProductId', count: [$sum: 1]]],
                 [$group: [_id: params.group, count: [$sum: 1]]],
                 [$match: [count: [$gt: 0], _id: [$ne: null]]],
                 [$sort: [count: -1]]
@@ -61,6 +63,7 @@ class BrowseService {
         match["displayInList"] = true
         (products.aggregate(
                 [$match: match],
+//                [$group: [_id: '$baseProductId', count: [$sum: 1]]],
                 [$group: [_id: null, count: [$sum: 1]]]
         ).results().collect { it.count }.find() ?: 0) / pageSize
     }
@@ -204,7 +207,9 @@ class BrowseService {
                 [$sort: sortExpression],
                 [$skip: params.start],
                 [$limit: params.pageSize]
-        ).results().collect { it.modelId }
+        ).results()
+//                .unique{a, b -> a.baseProductId <=> b.baseProductId}
+                .collect { it.modelId }
 
 //        println('page size:' + params.pageSize)
 //        println('productIds:' + productIds)
