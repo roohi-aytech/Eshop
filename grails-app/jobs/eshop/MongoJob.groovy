@@ -13,6 +13,8 @@ class MongoJob {
     def timeout = 2000
 
 
+    static concurrent = false
+
     static triggers = {
         simple repeatInterval: 2000, startDelay: 60000 // execute job once in 2 minutes
     }
