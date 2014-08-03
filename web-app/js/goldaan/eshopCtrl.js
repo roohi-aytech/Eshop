@@ -176,7 +176,10 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             }
         }
         if (found) {
-            $http.post(contextRoot + "basket/removeAddedValue/" + id+'&typeId='+typeId).success(function (response) {
+            $http.post(contextRoot + "basket/removeAddedValue/" + id+'?typeId='+typeId).success(function (response) {
+                basket=response;
+                $scope.basket = basket;
+//                $scope.$apply();
                 if(callback){
                     callback();
                 }
@@ -372,6 +375,7 @@ function removeFromBasket(id, callback) {
     scope.removeFromBasket(id, callback);
 }
 function removeAddedValue(id,typeId, callback) {
+    $('.added-value-instance').qtip('destroy');
     var scope = angular.element(document.getElementById('main-container')).scope();
     scope.removeAddedValueFromBasket(id,typeId, callback);
 }

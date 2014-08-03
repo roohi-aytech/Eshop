@@ -396,7 +396,26 @@ class BasketController {
                     model: [addedValues: addedValues, addedValueType: addedValueType, basketItemId: params.basketItemId])
         }
     }
+    def removeAddedValue(){
+        def basket = session.getAttribute("basket")
+        if (!basket)
+            basket = [];
+        basket.each {
+            if (it.id == params.id) {
+                if (!it.selectedAddedValueInstances)
+                    it.selectedAddedValueInstances = [:]
+                def addedValueType = AddedValueType.get(params.typeId)
+                it.selectedAddedValueInstances.remove(params.typeId)
 
+                def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect{it.value.id},addedValueType?.defaultPrice?:0)
+                it.price = price.showVal
+                it.realPrice = price.showVal + price.addedVal
+
+            }
+        }
+        session.setAttribute("basket", basket)
+        render(basket as JSON)
+    }
     def addedValueSelectSubmit() {
         def basket = session.getAttribute("basket")
         if (!basket)
