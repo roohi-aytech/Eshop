@@ -116,6 +116,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sourceforge.jexcelapi/jxl/jars/jxl-2.6.12.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.ocpsoft.prettytime/prettytime/jars/prettytime-2.1.3.Final.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-2.2.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/xml-resolver/xml-resolver/jars/xml-resolver-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -318,6 +319,8 @@
     <orderEntry type="library" name="grails-2.0.4" level="application" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="module" module-name="EShop-grailsPlugins" />
   </component>
 </module>
 
