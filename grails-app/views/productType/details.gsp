@@ -15,6 +15,9 @@
         <li><a href="#godFathers"><g:message code="godFathers"/></a></li>
         <li><a href="#variations"><g:message code="variations"/></a></li>
         <li><a href="#addedValue"><g:message code="addedValue"/></a></li>
+        <g:if test="${grailsApplication.config.addedValueType}">
+            <li><a href="#addedValueType"><g:message code="addedValueType"/></a></li>
+        </g:if>
         <li><a href="#articles"><g:message code="articles"/></a></li>
         <li><a href="#gift"><g:message code="gift"/></a></li>
         <li><a href="#vendors"><g:message code="vendors"/></a></li>
@@ -31,6 +34,11 @@
     <div id="addedValue" style="width: 98%">
         <g:render template="../addedValue/list"/>
     </div>
+    <g:if test="${grailsApplication.config.addedValueType}">
+        <div id="addedValueType" style="width: 98%">
+            <g:render template="../addedValueType/assign"/>
+        </div>
+    </g:if>
     <div id="articles" style="width: 98%">
         <g:render template="../journalArticle/list"/>
     </div>

@@ -63,15 +63,15 @@
                 </span>
                 
                 <div class="added-value-types-select pull-left">
-                    <g:each in="${addedValueTypes}">
-                        <div class="">
-                            <a id="{{basketItem.id}}_${it.id}" href="#" onclick="showAddedValueDialog(this,${it.id},'{{basketItem.productId}}','{{basketItem.id}}')">
-                                <img src="<g:createLink controller="image" params="[type:'addedValueType']" id="${it?.id}"/>" alt="">
-                                ${it.title}${it.description?"(${it.description})":''}
+                    %{--<g:each in="${addedValueTypes}">--}%
+                        <div class="" ng-repeat="addedValueType in basketItem.addedValueTypes">
+                            <a id="{{basketItem.id}}_{{addedValueType.id}}" href="#" onclick="showAddedValueDialog(this,'{{addedValueType.id}}','{{basketItem.productId}}','{{basketItem.id}}')">
+                                <img src="<g:createLink controller="image" params="[type:'addedValueType']"/>&id={{addedValueType.id}}" alt="">
+                                {{addedValueType.title}}{{addedValueType.description}}
                             </a>
                             %{--<button class="btn btn-info btn-mini">${it.title}</button>--}%
                         </div>
-                    </g:each>
+                    %{--</g:each>--}%
                 </div>
                 
                 <div class="clearfix"></div>

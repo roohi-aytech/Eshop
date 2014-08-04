@@ -2,6 +2,7 @@ package eshop
 
 import eshop.delivery.DeliveryMethod
 import eshop.delivery.DeliverySourceStation
+import eshop.discout.Discount
 import grails.converters.JSON
 
 class BasketController {
@@ -17,6 +18,7 @@ class BasketController {
             count = params.count as Integer
         def id = params.id
         def productModel = ProductModel.get(id)
+
         if (params.type == 'product') {
             def product = Product.get(id)
             productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
@@ -51,6 +53,10 @@ class BasketController {
 
         def basketCounter = 0
         basket.each { basketCounter += it.count }
+        def addedValueTypes = productModel?.product?.productTypes?.collect {
+            it.addedValueTypes
+        }.flatten().unique().collect { [id: it.id, title: it.title, description: it.description] }
+        basketItem.addedValueTypes = addedValueTypes
 
         session.setAttribute("basketCounter", basketCounter)
         session.setAttribute("basket", basket)
@@ -86,7 +92,8 @@ class BasketController {
             customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
 
             def deliveryMethods = DeliveryMethod.list().sort { it.name }
-            def addedValueTypes = AddedValueType.list().sort { it.title }
+//            def addedValueTypes = AddedValueType.findAllBy.sort { it.title }
+
             session['currentStep'] = currentStep
             render(model: [
                     basket                  : session.getAttribute("basket"),
@@ -94,7 +101,7 @@ class BasketController {
                     currentStep             : currentStep,
                     address                 : session.checkout_address,
                     customInvoiceInformation: customInvoiceInformation,
-                    addedValueTypes         : addedValueTypes,
+//                    addedValueTypes         : addedValueTypes,
                     deliveryMethods         : deliveryMethods
             ], view: view)
         } else {
@@ -377,6 +384,7 @@ class BasketController {
                     ""
         render template: template, model: [name: productModel?.product?.manualTitle ? productModel?.product?.pageTitle : ("${productModel?.product?.productTypes?.find()} ${productModel?.product?.type?.title ?: ''} ${productModel?.product?.brand} ${productModel?.variationValues?.find { it.variationGroup.representationType == 'Color' }?.value}")]
     }
+
     private void collectProductTypes(ProductType pt, res) {
         res.add(pt)
         if (pt.parentProduct)
@@ -391,12 +399,19 @@ class BasketController {
             product.productTypes.each {
                 collectProductTypes(it, productTypes)
             }
-            def addedValues = AddedValue.findAllByAddedValueTypeAndBaseProductInList(addedValueType, productTypes)
+            def addedValues = AddedValue.createCriteria().list {
+                eq('addedValueType', addedValueType)
+                or {
+                    'in'('baseProduct', productTypes)
+                    isNull('baseProduct')
+                }
+            }
             render(template: "/site/${grailsApplication.config.eShop.instance}/templates/addedValuesForm",
                     model: [addedValues: addedValues, addedValueType: addedValueType, basketItemId: params.basketItemId])
         }
     }
-    def removeAddedValue(){
+
+    def removeAddedValue() {
         def basket = session.getAttribute("basket")
         if (!basket)
             basket = [];
@@ -407,7 +422,9 @@ class BasketController {
                 def addedValueType = AddedValueType.get(params.typeId)
                 it.selectedAddedValueInstances.remove(params.typeId)
 
-                def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect{it.value.id},addedValueType?.defaultPrice?:0)
+                def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect {
+                    it.value.id
+                }, addedValueType?.defaultPrice ?: 0)
                 it.price = price.showVal
                 it.realPrice = price.showVal + price.addedVal
 
@@ -416,6 +433,7 @@ class BasketController {
         session.setAttribute("basket", basket)
         render(basket as JSON)
     }
+
     def addedValueSelectSubmit() {
         def basket = session.getAttribute("basket")
         if (!basket)
@@ -425,7 +443,7 @@ class BasketController {
                 if (!it.selectedAddedValueInstances)
                     it.selectedAddedValueInstances = [:]
                 def addedValueType = AddedValueType.get(params.typeId)
-                def addedValue=AddedValue.get(params.addedValueId)
+                def addedValue = AddedValue.get(params.addedValueId)
                 def customImage
                 if (params.customImage) {
                     customImage = UUID.randomUUID().toString()
@@ -433,18 +451,20 @@ class BasketController {
                 }
 
 
-                it.selectedAddedValueInstances["${addedValueType?.id}"]= [
+                it.selectedAddedValueInstances["${addedValueType?.id}"] = [
                         id         : params.addedValueId,
                         typeId     : params.typeId,
                         title      : addedValueType?.title,
                         subTitle   : addedValue?.name,
-                        price      : addedValue?.value?:addedValueType.defaultPrice,
+                        price      : addedValue?.value ?: addedValueType.defaultPrice,
                         description: params.description,
                         from       : params.from,
                         orderCount : params.int('count'),
                         image      : customImage]
 
-                def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect{it.value.id},addedValueType?.defaultPrice?:0)
+                def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect {
+                    it.value.id
+                }, addedValueType?.defaultPrice ?: 0)
                 it.price = price.showVal
                 it.realPrice = price.showVal + price.addedVal
 

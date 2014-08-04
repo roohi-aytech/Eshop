@@ -46,7 +46,7 @@ class ProductType extends BaseProduct {
 
     static transients = ['urlName']
 
-    static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType]
+    static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType,addedValueTypes:AddedValueType]
     static belongsTo = [ProducingProduct, ProductTypeBrand]
     static mapping = {
         sort 'name'

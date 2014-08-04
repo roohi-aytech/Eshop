@@ -24,6 +24,7 @@ class AddedValue {
         name()
         type(inList: ["percent", "fixed"])
         processTime(inList: ["mandetory", "optional"])
+        baseProduct(nullable: true)
         value()
         processTime()
         variationValues()

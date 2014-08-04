@@ -266,4 +266,29 @@ class PriceService {
     int getDisplayCurrencyExchangeRate() {
         Currency.findByDisplay(true)?.exchangeRate?.intValue() ?: 1
     }
+
+    //todo this implementation is incomplete
+    @Cacheable(value = 'findDiscounts', key = '#discountType.toString().concat(#basketPrice.toString()).concat(#basketCount.toString())')
+    def findDiscounts(discountType,basketPrice,basketCount){
+        Discount.createCriteria().list {
+            eq('type',discountType)
+            if(basketPrice) {
+                or {
+                    isNull('basketPriceMin')
+                    le('basketPriceMin', basketPrice)
+                }
+                or{
+                    isNull('basketPriceMax')
+                    ge('basketPriceMax', basketPrice)
+                }
+            }
+            if(basketCount){
+                or {
+                    isNull('basketCountMin')
+                    le('basketCountMin', basketCount)
+                }
+
+            }
+        }
+    }
 }

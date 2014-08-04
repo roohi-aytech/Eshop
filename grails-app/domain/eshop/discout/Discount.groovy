@@ -29,7 +29,7 @@ class Discount {
         fromDate(nullable: true, persian: true)
         toDate(nullable: true, persian: true)
         remainCount(nullable: true)
-        usageType(inList: ["General", "DiscountCard"])
+        usageType(inList: ["General", "DiscountCard","Bon"])
         image1024(nullable: true, maxSize: 20000000)
         image1280(nullable: true, maxSize: 20000000)
         image1440(nullable: true, maxSize: 20000000)
