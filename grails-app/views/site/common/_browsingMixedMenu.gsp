@@ -37,14 +37,17 @@
             </ul>
             <g:if test="${subProductTypeLinks.size() > 18}">
                 <ul class="last">
-                    <g:each in="${subProductTypeLinks.size() > 28 ? subProductTypeLinks[18..27] : subProductTypeLinks[18..subProductTypeLinks.size() - 1]}" var="productTypeLink">
+                    <g:each in="${subProductTypeLinks.size() > 28 ? subProductTypeLinks[18..27] : subProductTypeLinks[18..subProductTypeLinks.size() - 1]}"
+                            var="productTypeLink">
                         <li><a href="${productTypeLink.href}" title="${productTypeLink.name}">${productTypeLink.name}</a>
                     </g:each>
                 </li>
                     <li>&nbsp;</li>
-                    <li><img width="140" height="140" alt=""
-                             src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu', role: 'e4'])}">
-                    </li>
+                    <g:if test="${subProductTypeLinks.size() < 23}">
+                        <li><img width="140" height="140" alt=""
+                                 src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu', role: 'e4'])}">
+                        </li>
+                    </g:if>
                 </ul>
             </g:if>
             <g:else>

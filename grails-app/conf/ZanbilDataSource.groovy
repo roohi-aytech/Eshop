@@ -42,7 +42,7 @@ environments {
             pooled = true
             logSql = false
             driverClassName = "com.mysql.jdbc.Driver"
-            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            dialect = "org.hibernate.dialect.MySQLMyISAMDialect"
             properties {
                 maxActive = -1
                 minEvictableIdleTimeMillis = 1800000
@@ -65,7 +65,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            dialect = "org.hibernate.dialect.MySQLMyISAMDialect"
             jndiName = "java:comp/env/jdbc/EshopPool"
 
             properties {

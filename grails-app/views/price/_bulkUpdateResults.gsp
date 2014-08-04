@@ -3,6 +3,7 @@
     <table class="import-report">
         <tr>
             <th><g:message code="price.bulkUpdate.excel.import.result.id"/></th>
+            <th><g:message code="price.bulkUpdate.excel.import.result.productCode"/></th>
             <th><g:message code="price.bulkUpdate.excel.import.result.name"/></th>
             <th><g:message code="price.bulkUpdate.excel.import.result.statusChanged"/></th>
             <th><g:message code="price.bulkUpdate.excel.import.result.priceChanged"/></th>
@@ -11,6 +12,7 @@
         <g:each in="${priceList}" var="item" status="i">
             <tr class="${i % 2 == 0 ? 'even' : 'odd'} ${item.hasError ? 'error' : ''}  ${item.statusChanged || item.priceChanged ? 'edited' : ''}">
                 <td>${item.id}</td>
+                <td>${item.productId}</td>
                 <td>${item.name}</td>
                 <td>
                     <g:if test="${item.statusChanged}">
@@ -19,7 +21,7 @@
                 </td>
                 <td>
                     <g:if test="${item.priceChanged}">
-                        <g:formatNumber type="number" number="${item.oldPrice}"/> -> <g:formatNumber type="number" number="${item.price}"/>
+                        ${item.oldPrice} -> <g:formatNumber type="number" number="${item.price}"/> ${item.currency?: message(code:'rial')}
                     </g:if>
                 </td>
                 <td><b>${item.errorList.collect{message(code:"price.bulkUpdate.excel.import.result.error.${it}")}.join('<br/>')}</b></td>

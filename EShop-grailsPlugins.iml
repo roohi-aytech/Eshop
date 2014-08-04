@@ -6,34 +6,34 @@
         <webroots>
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/twitter-bootstrap-2.0.2.25/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/twitter-bootstrap-2.0.2.25/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cors-1.1.4/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/modernizr-2.5.3/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/uploadr-0.5.11/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/uploadr-0.5.11/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/modernizr-2.5.3/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-1.7.2/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/fields-1.3/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cache-headers-1.1.5/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/famfamfam-1.0.1/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/mail-1.0.1/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/platform-core-1.0.RC5/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cached-resources-1.1/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/zipped-resources-1.0.1/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/zipped-resources-1.0.1/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/bootstrap-file-upload-2.1.1/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/events-push-1.0.M7/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/fields-1.3/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/famfamfam-1.0.1/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/database-migration-1.1/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ckeditor-3.6.2.2/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ckeditor-3.6.2.2/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/database-migration-1.1/grails-app/views" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cors-1.1.4/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-1.7.2/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cached-resources-1.1/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/mail-1.0.1/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/cache-headers-1.1.5/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/jquery-ui-1.8.15/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -42,14 +42,13 @@
       <configuration>
         <datasource-map>
           <unit-entry name="Gorm" />
-          <unit-entry name="sessionFactory" />
         </datasource-map>
         <naming-strategy-map />
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://D:/backup" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/audit-logging-0.5.4/grails-app/i18n" isTestSource="false" />
@@ -229,9 +228,12 @@
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/zipped-resources-1.0.1">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/zipped-resources-1.0.1/grails-app/i18n" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="commons-math-1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.0.4" level="application" />
@@ -426,12 +428,6 @@
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (EShop-grailsPlugins)">
         <CLASSES>
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/burning-image-0.5.1/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/lib" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ws-client-1.0/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.activation/activation/jars/activation-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.mail/mail/jars/mail-1.4.3.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.atmosphere/atmosphere-runtime/jars/atmosphere-runtime-1.1.0-SNAPSHOT.jar!/" />
@@ -475,6 +471,13 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sourceforge.jexcelapi/jxl/jars/jxl-2.6.12.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.ocpsoft.prettytime/prettytime/jars/prettytime-2.1.3.Final.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-2.2.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/xml-resolver/xml-resolver/jars/xml-resolver-1.2.jar!/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/ws-client-1.0/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/yui-minify-resources-0.1.5/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/burning-image-0.5.1/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/browser-detection-0.4.3/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/searchable-0.6.4/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/EShop/plugins/dynamic-jasper-0.6/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

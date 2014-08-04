@@ -9,12 +9,10 @@ class MongoJob {
     def mongoService
     def grailsApplication
 
-    def startDelay = 60000
-    def timeout = 2000
-
+    static concurrent = false
 
     static triggers = {
-        simple repeatInterval: 2000, startDelay: 60000 // execute job once in 2 minutes
+        simple repeatInterval: 4000, startDelay: 60000 // execute job once in 2 minutes
     }
 
     def execute() {

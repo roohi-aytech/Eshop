@@ -27,7 +27,7 @@
             round: 0,
             dimension: "&nbsp;${eshop.currencyLabel()}",
             <g:if test="${grailsApplication.config.filterPriceOnChange}">
-            callback: function( event, ui ) {
+            callback: function (event, ui) {
                 filterByPrice();
             },
             </g:if>
@@ -54,9 +54,15 @@
                 url += ',rf' + priceRange[0];
             if (priceRange[1])
                 url += ',rt' + priceRange[1];
+            <g:if test="${params.sort}">
+            url += '&sort=${params.sort}';
+            </g:if>
+            <g:if test="${params.dir}">
+            url += '&dir=${params.dir}';
+            </g:if>
             </g:if>
             <g:if test="${params.action == 'search'}">
-            var url = '${createLink(controller: 'site', action: 'search', params: [phrase:params.phrase])}';
+            var url = '${createLink(controller: 'site', action: 'search', params: [phrase:params.phrase, sort: params.sort?:'default',dir:params.dir?:-1])}';
             url += '&f=' + params_f;
             if (priceRange[0])
                 url += ',rf' + priceRange[0];
