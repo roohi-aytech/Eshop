@@ -67,7 +67,8 @@
                         <div class="" ng-repeat="addedValueType in basketItem.addedValueTypes">
                             <a id="{{basketItem.id}}_{{addedValueType.id}}" href="#" onclick="showAddedValueDialog(this,'{{addedValueType.id}}','{{basketItem.productId}}','{{basketItem.id}}')">
                                 <img src="<g:createLink controller="image" params="[type:'addedValueType']"/>&id={{addedValueType.id}}" alt="">
-                                {{addedValueType.title}}{{addedValueType.description}}
+                                {{addedValueType.title}}
+                                <span ng-show="addedValueType.description">({{addedValueType.description}})</span>
                             </a>
                             %{--<button class="btn btn-info btn-mini">${it.title}</button>--}%
                         </div>

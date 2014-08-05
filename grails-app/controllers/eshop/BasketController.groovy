@@ -53,7 +53,9 @@ class BasketController {
 
         def basketCounter = 0
         basket.each { basketCounter += it.count }
-        def addedValueTypes = productModel?.product?.productTypes?.collect {
+        def pts=[]
+        productModel?.product?.productTypes?.each {collectProductTypes(it,pts)}
+        def addedValueTypes = pts?.collect {
             it.addedValueTypes
         }.flatten().unique().collect { [id: it.id, title: it.title, description: it.description] }
         basketItem.addedValueTypes = addedValueTypes
