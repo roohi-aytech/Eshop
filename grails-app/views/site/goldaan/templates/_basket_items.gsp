@@ -87,7 +87,7 @@
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <textarea name="description_{{basketItem.id}}" placeholder="<g:message code="description" />"></textarea>
+                            <textarea name="description_{{basketItem.id}}" class="basket-item-description" placeholder="<g:message code="description" />">{{basketItem.description}}</textarea>
                         </td>
                     </tr>
                 </table>
@@ -102,7 +102,7 @@
                         <g:each in="${deliveryMethods}">
                             <div class="delivery-method">
                                 <label>
-                                    <input type="radio" value="${it.id}" name="deliveryMethod" onchange="setDeliveryPrice(this, '${it}', ${it.sourceStations?.find()?.targetZones?.find()?.pricingRules?.find()?.netFactor}, ${it.hidePrice});">
+                                    <input ng-model="deliveryMethod" type="radio" value="${it.id}" name="deliveryMethod" onchange="setDeliveryPrice(this, '${it}', ${it.sourceStations?.find()?.targetZones?.find()?.pricingRules?.find()?.netFactor}, ${it.hidePrice});">
                                     <img src="${createLink(controller: 'image', params: [id: it.id, type: 'deliveryMethod'])}"/>
                                     ${it.name} (${it.description})
                                 </label>
@@ -114,6 +114,6 @@
         </tr>
     </table>
     <div class="basket-actions">
-        <button class="btn btn-success" onclick="nextstep()"><g:message code="next-step" /></button>
+        <button class="btn btn-success" onclick="updateDescriptionAndDeliverMethod()"><g:message code="next-step" /></button>
     </div>
 </div>

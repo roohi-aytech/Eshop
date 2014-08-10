@@ -5,7 +5,15 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.compareListCounter = compareListCounter;
     $scope.wishListCounter = wishListCounter;
     $scope.basket = basket;
-    $scope.deliveryPrice = -1;
+    $scope.deliveryPrice = deliveryPrice;
+    $scope.sendFactor = sendFactor;
+    $scope.customerAccountValue = customerAccountValue;
+    $scope.useGolBon = customerAccountValue>0;
+    $scope.golbonDiscount = golbonDiscount;
+    $scope.deliveryMethod = deliveryMethod;
+    $scope.buyerName = buyerName;
+    $scope.paymentType = paymentType;
+
     $scope.compareList = compareList;
     $scope.wishList = wishList;
     $scope.wishListEnabled = wishListEnabled;
@@ -216,9 +224,12 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
         });
 
         if ($scope.deliveryPrice > -1)
-            totalPrice += $scope.deliveryPrice
+            totalPrice += $scope.deliveryPrice;
 
-        return totalPrice;
+        if($scope.useGolBon)
+            totalPrice-=$scope.customerAccountValue;
+
+        return Math.max(totalPrice,0);
     }
 
     $scope.changeCount = function (id, count, callback) {
@@ -378,5 +389,56 @@ function removeAddedValue(id,typeId, callback) {
     $('.added-value-instance').qtip('destroy');
     var scope = angular.element(document.getElementById('main-container')).scope();
     scope.removeAddedValueFromBasket(id,typeId, callback);
+}
+function updateDescriptionAndDeliverMethod() {
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    var data={
+        deliveryMethod:$('[name=deliveryMethod]:checked').val(),
+        deliveryPrice:scope.deliveryPrice
+    };
+    $('.basket-item-description').each(function(){
+        data[this.name]=this.value;
+    });
+
+    $.ajax({
+        url:contextRoot+'basket/updateDescriptionAndDelivery',
+        data:data,
+        type:'post'
+    });
+    $('.steps .selected').removeClass('selected');
+    $('.step-content.selected').removeClass('selected');
+    $('.steps .step2').addClass('selected');
+    $('.step-content.step2').addClass('selected');
+
+}
+function updateBuyerAndPaymentTypeAndSendFactor() {
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    var data={
+        paymentType:scope.paymentType,
+        buyerName:scope.buyerName,
+        sendFactor:scope.sendFactor
+    };
+
+
+    $.ajax({
+        url:contextRoot+'basket/updateBuyerAndPaymentTypeAndSendFactor',
+        data:data,
+        type:'post'
+    });
+    $('.steps .selected').removeClass('selected');
+    $('.step-content.selected').removeClass('selected');
+    $('.steps .step3').addClass('selected');
+    $('.step-content.step3').addClass('selected');
+
+}
+function basketReview(){
+    $.ajax({
+        url:contextRoot+'basket/basketReview',
+        type:'post'
+    });
+    $('.steps .selected').removeClass('selected');
+    $('.step-content.selected').removeClass('selected');
+    $('.steps .step1').addClass('selected');
+    $('.step-content.step1').addClass('selected');
 }
 

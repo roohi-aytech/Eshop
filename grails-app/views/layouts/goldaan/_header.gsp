@@ -69,7 +69,9 @@
         %{--</div>--}%
     </section>
     <section id="top_extra">
-        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+        <g:if test="${controllerName!='basket' && actionName!='checkout'}">
+            <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+        </g:if>
         %{--<div class="wide_container">--}%
         %{--<div class="" id="st_mega_menu_container">--}%
         %{--<div class="container">--}%

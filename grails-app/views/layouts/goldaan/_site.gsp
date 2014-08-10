@@ -39,6 +39,8 @@
     <link href="${resource(dir: 'css', file: 'jquery.rollbar.css')}" rel="stylesheet" type="text/css"/>
     <link href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}" rel="stylesheet" type="text/css"/>
     <link href="${resource(dir: 'css', file: 'jquery.tipsy.css')}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.qtip.css')}"/>
+
 
     <r:layoutResources/>
     <script type="text/javascript"
@@ -92,14 +94,25 @@
         var basket = ${(session.getAttribute("basket")?: []) as grails.converters.JSON};
         var compareListCounter = ${session.getAttribute("compareListCounter") ?: 0};
         var compareList = ${(session.getAttribute("compareList")?: []) as grails.converters.JSON};
+        var golbonDiscount=${session.getAttribute("bonDiscount")?:0}
+        var deliveryMethod='${session.getAttribute("deliveryMethod")?:''}'
+        var deliveryPrice=${session.getAttribute("deliveryPrice")?:'-1'}
+        var sendFactor=${session.getAttribute("sendFactor")?:true}
+
+        var paymentType='${session.getAttribute("paymentType")?:'online'}'
         <sec:ifLoggedIn>
         <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+        <% def accountingService = grailsApplication.classLoader.loadClass('eshop.AccountingService').newInstance() %>
         <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username())?.wishList?.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).showVal]}?:[]}"/>
+        var buyerName='${session.getAttribute("buyerName")?:"${eshop.Customer.findByUsername(sec.username())?.toString()}"}'
+        var customerAccountValue=${accountingService.calculateCustomerAccountValue(eshop.Customer.findByUsername(sec.username()))};
         var wishListCounter = ${wishList? wishList.count {it}: 0};
         var wishList = ${(wishList?: []) as grails.converters.JSON};
         var wishListEnabled = true;
         </sec:ifLoggedIn>
         <sec:ifNotLoggedIn>
+        var buyerName='${session.getAttribute("buyerName")?:""}'
+        var customerAccountValue=-1;
         var wishListCounter = 0;
         var wishList = ${[] as grails.converters.JSON};
         var wishListEnabled = false;
@@ -175,6 +188,9 @@
             type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
     <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'jquery.qtip.js')}"></script>
+    <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'imagesloaded.js')}"></script>
+
 
 </head>
 

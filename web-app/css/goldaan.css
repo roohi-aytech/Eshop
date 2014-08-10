@@ -19398,6 +19398,10 @@ ul.third-party li{
     color: #ff4500;
     font-weight: bold;
 }
+.totalPrice-reciept{
+    font-size: 14px;
+    font-weight: bold;
+}
 
 .check-out-price {
     padding-right: 20px;
@@ -19411,12 +19415,15 @@ h2.check-out-price span {
     font-size: 14px;
 }
 
-.factor{
+.factor,.discount-golbon{
     border:1px solid #EEEEEE;
     width:300px;
     /*height:200px;*/
     padding: 5px;
+    margin-top:20px;
 }
+
+
 .step-content .step-title{
     position:relative;
     display:inline-block;
@@ -19440,6 +19447,16 @@ h2.check-out-price span {
     visibility: hidden;
     opacity:0;
     transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+}
+.discount-golbon .discount-title{
+    position:relative;
+    display:inline-block;
+    top:-17px;
+    right:10px;
+    padding:0 5px;
+    background:white;
+    font-family:eYekan,tahoma;
+    font-size:16px;
 }
 .factor .factor-title{
     position:relative;
@@ -19533,7 +19550,7 @@ h2.check-out-price span {
 .added-value-form-added-actions div{
     margin-top:10px;
 }
-.added-value-form-added-actions input,.added-value-form-added-actions textarea{
+.added-value-form-added-actions input,.added-value-form-added-actions textarea,.added-value-form-added-actions select{
     width:200px;
     text-align: right;
     font-size:11px;
@@ -19573,4 +19590,22 @@ h2.check-out-price span {
     /*display:inline-block;*/
     /*color:red;*/
 /*}*/
-
+.buyer-info{
+    margin:10px 0px;
+}
+/*.buyer-info textarea{*/
+    /*width:80%;*/
+/*}*/
+.buyer-info input[type=text]{
+    /*width:90%;*/
+    height:30px;
+}
+.buyer-info-header{
+    height:30px;
+    margin:5px 0px;
+    background-color:#F9F9F9;
+    padding:5px;
+}
+.payment-type span{
+    margin:5px;
+}

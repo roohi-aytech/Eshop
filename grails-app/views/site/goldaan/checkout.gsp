@@ -151,25 +151,25 @@
                     <div class="step step3 ${currentStep==3?'selected':''}">3. <g:message code="basket.delivery"/></div>
                     <div class="step step4 ${currentStep==4?'selected':''}">4. <g:message code="basket.buyerinfo"/></div>
                 </div>
-                <div class="step-content ${currentStep==1?'selected':''}">
+                <div class="step-content step1 ${currentStep==1?'selected':''}">
                     <div class="step-title">
                         <span><g:message code="basket.content"/></span>
                     </div>
                     <g:render template="/site/goldaan/templates/basket_items"/>
                 </div>
-                <div class="step-content ${currentStep==2?'selected':''}">
+                <div class="step-content step2 ${currentStep==2?'selected':''}">
                     <div class="step-title">
                         <span><g:message code="basket.receipt"/></span>
                     </div>
-                    ad
+                    <g:render template="/site/goldaan/templates/reciept"/>
                 </div>
-                <div class="step-content ${currentStep==3?'selected':''}">
+                <div class="step-content step3 ${currentStep==3?'selected':''}">
                     <div class="step-title">
                         <span><g:message code="basket.delivery"/></span>
                     </div>
                     adoi
                 </div>
-                <div class="step-content ${currentStep==4?'selected':''}">
+                <div class="step-content step4 ${currentStep==4?'selected':''}">
                     <div class="step-title">
                         <span><g:message code="basket.buyerinfo"/></span>
                     </div>
@@ -180,6 +180,12 @@
                 <div class="factor">
                     <div class="factor-title"><g:message code="factor-title" /></div>
                     <g:render template="/site/goldaan/templates/checkout_price"/>
+                </div>
+
+                <div ng-show="golbonDiscount>0" class="discount-golbon">
+                    <div class="discount-title"><g:message code="discount-title" /></div>
+                    <br/>
+                    <g:message code="with-this-buy-get-golbon" args="${["{{golbonDiscount}} ${eshop.currencyLabel()}"]}"/>
                 </div>
             </div>
         </div>

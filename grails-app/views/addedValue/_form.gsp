@@ -22,10 +22,17 @@
 </div>
 <g:if test="${grailsApplication.config.addedValueType}">
     <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'addedValueType', 'error')} ">
-        <label for="brand">
+        <label for="addedValueType.id">
             <g:message code="addedValueInstance.type.label" default="AddedValueType"/>
         </label>
         <g:select name="addedValueType.id" from="${eshop.AddedValueType.list()}" value="${addedValueInstance?.addedValueType?.id}"
+                  optionKey="id" optionValue="title" noSelection="['':'']"/>
+    </div>
+    <div class="fieldcontain ${hasErrors(bean: addedValueInstance, field: 'addedValueSubType', 'error')} ">
+        <label for="addedValueSubType.id">
+            <g:message code="addedValueInstance.subtype.label" default="AddedValueSubType"/>
+        </label>
+        <g:select name="addedValueSubType.id" from="${addedValueInstance?.addedValueType?.addedValueSubTypes}" value="${addedValueInstance?.addedValueSubType?.id}"
                   optionKey="id" optionValue="title" noSelection="['':'']"/>
     </div>
 </g:if>
@@ -104,16 +111,31 @@
     <input type="button" value="${message(code: "add")}" onclick="addVariation()"/>
 </div>
 <script type="text/javascript">
-    function addVariation() {
-        $.ajax({
-            url:'<g:createLink action="variation" controller="addedValue"/>',
-            data:{
-                'baseProduct.id':${addedValueInstance?.baseProduct?.id}
-            },
-            type:'GET'
-        }).done(function (response) {
-                    $("#addValueVariations")
-                            .append(response)
-                })
-    }
+    <g:if test="${addedValueInstance?.baseProduct?.id}">
+        function addVariation() {
+            $.ajax({
+                url:'<g:createLink action="variation" controller="addedValue"/>',
+                data:{
+                    'baseProduct.id':${addedValueInstance?.baseProduct?.id}
+                },
+                type:'GET'
+            }).done(function (response) {
+                        $("#addValueVariations")
+                                .append(response)
+                    })
+        }
+    </g:if>
+    $(function(){
+        $('#addedValueType\\.id').change(function(){
+            $.ajax({
+                url:'<g:createLink controller="addedValueType" action="subTypes" />/'+this.value
+            }).success(function(res){
+                var options='<option></option>';
+                for(var i in res){
+                   options+='<option value="'+res[i].id+'">'+res[i].title+'</option>';
+                };
+                $('#addedValueSubType\\.id').html(options)
+            })
+        })
+    })
 </script>

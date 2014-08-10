@@ -59,4 +59,7 @@ class AddedValueTypeController {
         productType.save()
         render 0
     }
+    def subTypes(){
+        render (AddedValueType.get(params.id)?.addedValueSubTypes as JSON)
+    }
 }

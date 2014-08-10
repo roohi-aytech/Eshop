@@ -2,15 +2,18 @@ package eshop
 
 import eshop.delivery.DeliveryMethod
 import eshop.delivery.DeliverySourceStation
-import eshop.discout.Discount
 import grails.converters.JSON
 
 class BasketController {
     def springSecurityService
     def priceService
     def deliveryService
+    def accountingService
 
-    def index() {}
+    def index() {
+        session['currentStep'] = 1
+	    redirect(action:'checkout')
+    }
 
     def add() {
         def count = 1
@@ -51,15 +54,23 @@ class BasketController {
         basketItem.realPrice = price.showVal + price.addedVal
 
 
-        def basketCounter = 0
-        basket.each { basketCounter += it.count }
-        def pts=[]
-        productModel?.product?.productTypes?.each {collectProductTypes(it,pts)}
+        def pts = []
+        productModel?.product?.productTypes?.each { collectProductTypes(it, pts) }
         def addedValueTypes = pts?.collect {
             it.addedValueTypes
         }.flatten().unique().collect { [id: it.id, title: it.title, description: it.description] }
         basketItem.addedValueTypes = addedValueTypes
 
+
+        def basketCounter = 0
+        def basketPrice = 0
+        basket.each {
+            basketCounter += it.count
+            basketPrice += (it.realPrice * it.count)
+        }
+        def bonDiscount = priceService.findDiscounts("Bon", basketPrice, basketCounter)
+
+        session.setAttribute("bonDiscount", bonDiscount)
         session.setAttribute("basketCounter", basketCounter)
         session.setAttribute("basket", basket)
         render "1"
@@ -85,7 +96,7 @@ class BasketController {
         if (grailsApplication.config.customCheckout) {
             def customer = springSecurityService.currentUser as Customer
             def view = "/site/${grailsApplication.config.eShop.instance}/checkout"
-            def currentStep = 1
+            def currentStep = session['currentStep'] ?: 1
 
             def customInvoiceInformation = [:]
             customInvoiceInformation.ownerName = message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' +
@@ -263,8 +274,14 @@ class BasketController {
 
 
         def basketCounter = 0
-        basket.each { basketCounter += it.count }
+        def basketPrice = 0
+        basket.each {
+            basketCounter += it.count
+            basketPrice += (it.realPrice * it.count)
+        }
+        def bonDiscount = priceService.findDiscounts("Bon", basketPrice, basketCounter)
 
+        session.setAttribute("bonDiscount", bonDiscount)
         session.setAttribute("basketCounter", basketCounter)
 
         render "1"
@@ -500,5 +517,30 @@ class BasketController {
 //        }
 
 
+    }
+
+    def updateDescriptionAndDelivery() {
+        def basket = session.getAttribute("basket")
+        if (!basket)
+            basket = [];
+        basket.each {
+            it.description = params['description_' + it.id]
+        }
+        session.setAttribute('basket', basket)
+        session.setAttribute('deliveryMethod', params.deliveryMethod)
+        session.setAttribute('deliveryPrice', params.deliveryPrice)
+        session['currentStep'] = 2
+        render 0
+    }
+    def updateBuyerAndPaymentTypeAndSendFactor(){
+        session.setAttribute('paymentType', params.paymentType)
+        session.setAttribute('buyerName', params.buyerName)
+        session.setAttribute('sendFactor', params.sendFactor)
+        session['currentStep'] = 3
+        render 0
+    }
+    def basketReview(){
+        session['currentStep'] = 1
+        render 0
     }
 }

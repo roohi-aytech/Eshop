@@ -21,7 +21,8 @@ class Discount {
 
     static hasMany = [discountProductsCriteria: ProductCriteria, basketProductCriteria: ProductCriteria]
 
-    static composites = ["discountProductsCriteria", "basketProductCriteria"]
+
+
     static constraints = {
         type(inList: ["Percent", "Fixed"])
         value(nullable: true)
