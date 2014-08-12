@@ -90,6 +90,102 @@ class OrderController {
         ]
     }
 
+    def finalizeOrder() {
+        def customer = springSecurityService.currentUser as Customer
+        Order order = new Order()
+        order.ownerName = session['buyerName']
+        if (customer) {
+            order.ownerEmail = customer.email
+            order.ownerMobile = customer.mobile
+            order.ownerTelephone = customer.telephone
+            order.customer = customer
+        } else {
+            order.ownerEmail = session['buyerEmail']
+            order.ownerMobile = session['buyerMobile']
+            order.ownerTelephone = session['buyerMobile']
+        }
+        order.sendFactorWith = session['sendFactor'] as boolean
+        Address address = new Address()
+        address.addressLine1 = session['deliveryAddressLine']
+        address.telephone = session['deliveryPhone']
+        address.city = City.get(session['deliveryCity'])
+        address.title = session['deliveryName']
+        address.save()
+        order.sendingAddress = address
+        order.billingAddress = address
+        order.deliveryPrice = (session['deliveryPrice']?:'0') as double
+        order.callBeforeSend = session['callBeforeSend']
+        order.deliverySourceStation = eshop.delivery.DeliveryMethod.get(session['deliveryMethod'])?.sourceStations?.find()
+
+        order.status = OrderHelper.STATUS_CREATED
+        order.save()
+
+        def cal = Calendar.getInstance()
+        cal.setTime(new Date())
+        def jc = new JalaliCalendar(cal)
+        order.trackingCode = String.format(
+                "%02d%02d%02d%01d%03d",
+                jc.getYear() % 100,
+                jc.getMonth(),
+                jc.getDay(),
+                0, //customer type flag
+                order.id % 1000
+        )
+
+        def basket = session.getAttribute("basket")
+        basket.each() { basketItem ->
+            def orderItem = new OrderItem()
+            orderItem.productModel = ProductModel.get(basketItem.id)
+            orderItem.order = order
+            orderItem.orderCount = basketItem.count
+            orderItem.unitPrice = basketItem.realPrice
+            orderItem.description = basketItem.description
+            basketItem.selectedAddedValueInstances?.each {
+                orderItem.addToAddedValueInstances(new AddedValueInstance(
+                        addedValue: AddedValue.get(it.id),
+                        description: it.description,
+                        from: it.from,
+                        orderCount: it.orderCount,
+                        image: it.image ? new Content(name: it.title, contentType: 'image', fileContent: session['it.image']) : null
+                ))
+            }
+            orderItem.save()
+        }
+
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_CREATION
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = springSecurityService.currentUser as User
+        trackingLog.title = "order.actions.${OrderHelper.ACTION_CREATION}"
+        if (!trackingLog.validate() || !trackingLog.save()) {
+            //tracking log save error
+            return
+        }
+        event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
+
+        mailService.sendMail {
+            to order.ownerEmail
+            subject message(code: 'emailTemplates.order_created.subject')
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                    model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+        }
+
+        messageService.sendMessage(
+                order.ownerMobile,
+                g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString())
+        session.setAttribute("basket", [])
+        session.setAttribute("basketCounter", 0)
+        session.removeAttribute("order")
+        session.removeAttribute("sendingAddress")
+        session.removeAttribute("billingAddress")
+        session.removeAttribute("checkout_customerInformation")
+        session.removeAttribute("checkout_address")
+        session.removeAttribute("checkout_customInvoiceInformation")
+        session.removeAttribute("forwardUri")
+        render(view: 'create', model: [trackingCode: order.trackingCode])
+    }
+
     def create() {
 
         //save order

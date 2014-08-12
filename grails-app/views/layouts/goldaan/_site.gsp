@@ -48,6 +48,7 @@
 
     <script type="text/javascript">
         var CUSTOMIZE_TEXTFIELD = 1;
+
         var FancyboxI18nNext = 'Next';
         var FancyboxI18nPrev = 'Previous';
         var FancyboxboxI18nClose = 'Close';
@@ -90,6 +91,7 @@
         var st_sticky_menu = 1;
     </script>
     <script type="text/javascript">
+        var cities=[];
         var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
         var basket = ${(session.getAttribute("basket")?: []) as grails.converters.JSON};
         var compareListCounter = ${session.getAttribute("compareListCounter") ?: 0};
@@ -97,9 +99,18 @@
         var golbonDiscount=${session.getAttribute("bonDiscount")?:0}
         var deliveryMethod='${session.getAttribute("deliveryMethod")?:''}'
         var deliveryPrice=${session.getAttribute("deliveryPrice")?:'-1'}
-        var sendFactor=${session.getAttribute("sendFactor")?:true}
+        var sendFactor=${session.getAttribute("sendFactor")?:false}
 
         var paymentType='${session.getAttribute("paymentType")?:'online'}'
+        var deliveryAddress='${session.getAttribute("deliveryAddress")?:''}'
+        var deliveryAddressLine='${session.getAttribute("deliveryAddressLine")?:''}'
+        var deliveryCity='${session.getAttribute("deliveryCity")?:''}'
+        var deliveryName='${session.getAttribute("deliveryName")?:''}'
+        var deliveryPhone='${session.getAttribute("deliveryPhone")?:''}'
+        var callBeforeSend='${session.getAttribute("callBeforeSend")?:'true'}'
+        var buyerPhone='${session.getAttribute("buyerPhone")?:''}'
+        var buyerEmail='${session.getAttribute("buyerEmail")?:''}'
+
         <sec:ifLoggedIn>
         <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
         <% def accountingService = grailsApplication.classLoader.loadClass('eshop.AccountingService').newInstance() %>

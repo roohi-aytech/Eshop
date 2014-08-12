@@ -26,19 +26,22 @@
                 });
             });
         }
-        function setDeliveryPrice(element, name, price, hidePrice) {
+        function setDeliveryPrice(element, name, price, hidePrice,title) {
             if (element.checked) {
                 if(hidePrice){
                     $('#price').val(price);
 
                     var scope = angular.element(document.getElementById('main-container')).scope();
                     scope.deliveryPrice = name;
+                    scope.deliveryTitle = title;
+
                     scope.$apply();
                 }
                 else {
                     $('#price').val(price);
                     var scope = angular.element(document.getElementById('main-container')).scope();
                     scope.deliveryPrice = price;
+                    scope.deliveryTitle = title;
                     scope.$apply();
                     $('.deliveryMethodList b').removeClass('selected');
 //                    $(element).parent().next('td').next('td').find('b').addClass('selected');
@@ -145,11 +148,16 @@
         <div class="row">
             <div class="span10">
                 <div class="steps">
+        <sec:ifLoggedIn>
+            <g:set var="trclass" value="stp3"/>
+        </sec:ifLoggedIn>
                     <hr/>
-                    <div class="step step1 ${currentStep==1?'selected':''}">1. <g:message code="basket.content"/></div>
-                    <div class="step step2 ${currentStep==2?'selected':''}">2. <g:message code="basket.receipt"/></div>
-                    <div class="step step3 ${currentStep==3?'selected':''}">3. <g:message code="basket.delivery"/></div>
-                    <div class="step step4 ${currentStep==4?'selected':''}">4. <g:message code="basket.buyerinfo"/></div>
+                    <div onclick="changeStep(1)" class="step step1 ${trclass} ${currentStep==1?'selected':''}">1. <g:message code="basket.content"/></div>
+                    <div onclick="changeStep(2)" class="step step2 ${trclass} ${currentStep==2?'selected':''}">2. <g:message code="basket.receipt"/></div>
+                    <div onclick="changeStep(3)" class="step step3 ${trclass} ${currentStep==3?'selected':''}">3. <g:message code="basket.delivery"/></div>
+                    <sec:ifNotLoggedIn>
+                        <div onclick="changeStep(4)" class="step step4 ${trclass} ${currentStep==4?'selected':''}">4. <g:message code="basket.buyerinfo"/></div>
+                    </sec:ifNotLoggedIn>
                 </div>
                 <div class="step-content step1 ${currentStep==1?'selected':''}">
                     <div class="step-title">
@@ -167,14 +175,16 @@
                     <div class="step-title">
                         <span><g:message code="basket.delivery"/></span>
                     </div>
-                    adoi
+                    <g:render template="/site/goldaan/templates/deliveryAddress"/>
                 </div>
+                <sec:ifNotLoggedIn>
                 <div class="step-content step4 ${currentStep==4?'selected':''}">
                     <div class="step-title">
                         <span><g:message code="basket.buyerinfo"/></span>
                     </div>
-                    adioi
+                    <g:render template="/site/goldaan/templates/buyerInfo"/>
                 </div>
+                </sec:ifNotLoggedIn>
             </div>
             <div class="span4 vertical-align-top">
                 <div class="factor">
@@ -186,9 +196,126 @@
                     <div class="discount-title"><g:message code="discount-title" /></div>
                     <br/>
                     <g:message code="with-this-buy-get-golbon" args="${["{{golbonDiscount}} ${eshop.currencyLabel()}"]}"/>
-                </div>
+            </div>
             </div>
         </div>
+        <div id="confirm-dialog" class="hidden">
+            <div class="confirm-dialog">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <td>
+                            <g:message code="buyer-name"/>
+                        </td>
+                        <td>
+                            <g:message code="buyer-phone" />
+                        </td>
+                        <td>
+                            <g:message code="buyer-email" />
+                        </td>
+                        <td>
+                            <g:message code="payment.type" />
+                        </td>
+                        <td>
+                            <g:message code="deliveryMethod" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{buyerName}}</td>
+                        <td>{{buyerPhone}}</td>
+                        <td>{{buyerEmail}}</td>
+                        <td><span ng-show="paymentType=='online'"><g:message code="payment.types.online" /></span><span ng-show="paymentType=='payInPlace'"><g:message code="payment.types.payInPlace" /></span></td>
+                        <td>{{deliveryTitle}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <g:message code="delivery-person" />
+                        </td>
+                        <td>
+                            <g:message code="delivery-phone" />
+                        </td>
+                        <td colspan="3">
+                            <g:message code="delivery-address" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{deliveryName}}</td>
+                        <td>{{deliveryPhone}}</td>
+                        <td colspan="3">{{deliveryAddressLine}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span ng-show="callBeforeSend"><g:message code="call-before-send"/></span>
+                            <span ng-hide="callBeforeSend"><g:message code="send-surprise"/></span>
+                        </td>
+                        <td colspan="3">
+                            <div ng-show="sendFactor">
+                                <g:message code="sendFactorWith" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th class="small"><g:message code="index" /></th>
+                            <th class=""><g:message code="product.title" /></th>
+                            <th class="small"><g:message code="seller-goldaan"/></th>
+                            <th class="small"><g:message code="orderItem.unitPrice"/> (<eshop:currencyLabel/>)</th>
+                            <th class="small"><g:message code="count"/></th>
+                            <th class="small"><g:message code="basket.totalPrice"/> (<eshop:currencyLabel/>)</th>
+                        </tr>
+                        <tr ng-repeat="basketItem in basket" class="basketItemReceipt">
+                            <td class="small">{{$index+1}}</td>
+                            <td>
+                                <span class="name">
+                                    {{itemFirstLine(basketItem.name)}}/<span class="smaller">{{itemSecondLine(basketItem.name)}}</span>
+                                    <span ng-repeat="addedValueInstance in basketItem.selectedAddedValueInstances" class="addedValue">
+                                        <span class="plus"> +</span>{{addedValueInstance.title}}
+                                    </span>
+                                </span>
+                            </td>
+                            <td class="small"><span class="smaller">{{itemThirdLine(basketItem.name)}}</span></td>
+                            <td class="small"><span class="price"><b>{{basketItem.realPrice | number:0}}</b> </span></td>
+                            <td class="small"><span class="count">{{basketItem.count}}</span></td>
+                            <td class="small"><span class="price"><b>{{basketItem.realPrice * basketItem.count | number:0}}</b></span></td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+
+                            </td>
+                            <td colspan="3" >
+                                <div>
+                                    <span class="reciept-price-label" ><g:message code="basket.totalPrice"/>:</span>
+                                    <span class="totalPrice-reciept">{{calculateBasketTotalPrice() | number:0}}</span> <eshop:currencyLabel/>
+                                </div>
+                                <div ng-show="deliveryPrice > 0">
+                                    <span class="reciept-price-label" ><g:message code="deliveryPrice"/>:</span>
+                                    <span>
+                                        <b><span class="totalPrice-reciept">{{deliveryPrice | number:0}}</span></b> <eshop:currencyLabel/>
+                                    </span>
+                                </div>
+                                <div ng-show="customerAccountValue > 0 && useGolBon">
+                                    <span class="reciept-price-label" ><g:message code="basket.paycurgolbol"/>:</span>
+                                    <span>
+                                        <b><span class="totalPrice-reciept">{{customerAccountValue | number:0}}-</span></b> <eshop:currencyLabel/>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="reciept-price-label" ><g:message code="basket.totalPayablePrice"/>:</span>
+                                    <span class="totalPrice-reciept">{{calculateBasketPayablePrice() | number:0}}</span> <eshop:currencyLabel/>
+                                </div>
+                        </tr>
+                    </table>
+
+                </div>
+                <g:form name="finalizebasket" controller="order" action="finalizeOrder" method="post">
+                    <g:submitButton name="submit" class="btn btn-success" value="${message(code:"submit")}"/>
+                    <div class="btn btn-danger" onclick="$('.factor').qtip('destroy')"><g:message code="cancel"/> </div>
+                </g:form>
+            </div>
+        </div>
+
         %{--<table class="table-simulater" style="width: 100%;">--}%
             %{--<tr>--}%
                 %{--<td style="width: 50%;vertical-align: top;">--}%

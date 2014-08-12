@@ -4535,9 +4535,9 @@ p.info-account {
 }
 
 .alert {
-    padding: 14px 10px;
+    padding: 8px 10px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    margin-bottom: 1em
+    margin:10px;
 }
 
 .alert ul, .alert ol {
@@ -19399,7 +19399,7 @@ ul.third-party li{
     font-weight: bold;
 }
 .totalPrice-reciept{
-    font-size: 14px;
+    font-size: 11px;
     font-weight: bold;
 }
 
@@ -19514,6 +19514,10 @@ h2.check-out-price span {
     background:url("../images/goldaan/chk.png") no-repeat scroll center bottom 0 rgba(0, 0, 0, 0);
     font-family:eYekan,tahoma;
     font-size:14px;
+    cursor: pointer;
+}
+.steps .step.stp3{
+    width:33%;
 }
 .steps .step.selected{
     background-image:url("../images/goldaan/chk-checked.png");
@@ -19537,7 +19541,10 @@ h2.check-out-price span {
 }
 .added-value-types-select{
     display:inline-block;
-    margin-left:25%;
+    /*margin-left:25%;*/
+    /*margin:0px 5%;*/
+    vertical-align: top;
+
 }
 .added-value-form-added-values{
     width:450px;
@@ -19606,6 +19613,59 @@ h2.check-out-price span {
     background-color:#F9F9F9;
     padding:5px;
 }
+.payment-type{
+    border: 1px solid #EEEEEE;
+}
+.payment-type-title{
+    background: none repeat scroll 0 0 #FFFFFF;
+    display: inline-block;
+    font-family: eYekan,tahoma;
+    font-size: 16px;
+    padding: 0 5px;
+    position: relative;
+    right: 10px;
+    top: -12px;
+}
 .payment-type span{
+
+    margin:5px;
+
+}
+.delivery-address input[type=text]{
+    height:30px;
+}
+.delivery-address select{
+    width:80px;
+}
+.delivery-address textarea{
+    width:500px;
+}
+.buyer-info-items input[type=text]{
+    height:30px;
+}
+.btn-added-value{
+    margin: 5px;
+    text-align: right;
+    width: 100%;
+}
+.btn-added-value img{
+    max-height:20px;
+}
+.basket-item-info{
+    display:inline-block;
+}
+.reciept-price-label{
+    min-width:120px;
+    display:inline-block;
+}
+.payment-type span.payment-type-item{
+    display:block;
+}
+.confirm-dialog{
+    background-color:white;
+    direction:rtl;
+    text-align: right;
+}
+.confirm-dialog div{
     margin:5px;
 }

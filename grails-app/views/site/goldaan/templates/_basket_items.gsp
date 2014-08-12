@@ -20,54 +20,55 @@
             <th></th>
             <th class="small"><g:message code="orderItem.unitPrice"/>(<eshop:currencyLabel/>)</th>
             <th class="small"><g:message code="count"/></th>
-            <th class="small"><g:message code="basket.totalPrice"/>(<eshop:currencyLabel/>)</th>
+            <th class="small"><g:message code="basket.totalPriceItems"/>(<eshop:currencyLabel/>)</th>
             <th class="small"><g:message code="basket.items.delete"/></th>
         </tr>
         <tr ng-repeat="basketItem in basket" class="basketItem">
 
             <td>
-                <span class="image"><img
-                        ng-src="{{contextRoot}}image/index/{{basketItem.id}}?type=productModel&wh=100x100"/>
-                </span>
-                <span class="name"><h3><a
-                        ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">
-                    {{itemFirstLine(basketItem.name)}}
-                    <br/><span class="smaller">{{itemSecondLine(basketItem.name)}}</span>
-                    <br/><span class="smaller"><g:message code="seller-goldaan"/>: {{itemThirdLine(basketItem.name)}}</span>
-
-                </a>
-                </h3>
-                    <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
-                        <span class="plus">+</span> {{addedValueName}}
+                <div class="basket-item-info">
+                    <span class="image"><img
+                            ng-src="{{contextRoot}}image/index/{{basketItem.id}}?type=productModel&wh=100x100"/>
                     </span>
-                    <div ng-repeat="addedValueInstance in basketItem.selectedAddedValueInstances" class="addedValue added-value-instance">
-                        <span class="plus">+</span> {{addedValueInstance.title}} <span onclick="removeAddedValue('{{basketItem.id}}','{{addedValueInstance.typeId}}')" class="added-value-remove">x</span>
-                        <div class="hidden added-value-qtip">
-                            <div class="added-value-qtip-content">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div ng-show="addedValueInstance.title">{{addedValueInstance.title}} {{addedValueInstance.subTitle}}</div>
-                                            <div ng-show="addedValueInstance.description"><g:message code="addedValue-desc" args="['']" /> {{addedValueInstance.title}}: {{addedValueInstance.description}}</div>
-                                            <div ng-show="addedValueInstance.from"><g:message code="addedValue.from" />: {{addedValueInstance.from}}</div>
-                                            <div ng-show="addedValueInstance.price"><g:message code="addedValue.price" />: {{addedValueInstance.price}}</div>
-                                        </td>
-                                        <td>
-                                            <img ng-show="addedValueInstance.id" src="<g:createLink controller="image" params="[type:'addedValue']" />&id={{addedValueInstance.id}}" alt="">
-                                        </td>
-                                    </tr>
-                                </table>
+                    <span class="name"><h3><a
+                            ng-href="{{contextRoot}}site/product/{{basketItem.productId}}">
+                        {{itemFirstLine(basketItem.name)}}
+                        <br/><span class="smaller">{{itemSecondLine(basketItem.name)}}</span>
+                        <br/><span class="smaller"><g:message code="seller-goldaan"/>: {{itemThirdLine(basketItem.name)}}</span>
+
+                    </a>
+                    </h3>
+                        <span ng-repeat="addedValueName in basketItem.selectedAddedValueNames" class="addedValue">
+                            <span class="plus">+</span> {{addedValueName}}
+                        </span>
+                        <div ng-repeat="addedValueInstance in basketItem.selectedAddedValueInstances" class="addedValue added-value-instance">
+                            <span class="plus">+</span> {{addedValueInstance.title}} <span onclick="removeAddedValue('{{basketItem.id}}','{{addedValueInstance.typeId}}')" class="added-value-remove">x</span>
+                            <div class="hidden added-value-qtip">
+                                <div class="added-value-qtip-content">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div ng-show="addedValueInstance.title">{{addedValueInstance.title}} {{addedValueInstance.subTitle}}</div>
+                                                <div ng-show="addedValueInstance.description"><g:message code="addedValue-desc" args="['']" /> {{addedValueInstance.title}}: {{addedValueInstance.description}}</div>
+                                                <div ng-show="addedValueInstance.from"><g:message code="addedValue.from" />: {{addedValueInstance.from}}</div>
+                                                <div ng-show="addedValueInstance.price"><g:message code="addedValue.price" />: {{addedValueInstance.price}}</div>
+                                            </td>
+                                            <td>
+                                                <img ng-show="addedValueInstance.id" src="<g:createLink controller="image" params="[type:'addedValue']" />&id={{addedValueInstance.id}}" alt="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </span>
-                
-                <div class="added-value-types-select pull-left">
+                    </span>
+                </div>
+                <div class="added-value-types-select">
                     %{--<g:each in="${addedValueTypes}">--}%
                         <div class="" ng-repeat="addedValueType in basketItem.addedValueTypes">
-                            <a id="{{basketItem.id}}_{{addedValueType.id}}" href="#" onclick="showAddedValueDialog(this,'{{addedValueType.id}}','{{basketItem.productId}}','{{basketItem.id}}')">
+                            <a class="btn btn-added-value btn-{{btnClasses[$index%4]}}" id="{{basketItem.id}}_{{addedValueType.id}}" href="#" onclick="showAddedValueDialog(this,'{{addedValueType.id}}','{{basketItem.productId}}','{{basketItem.id}}')">
                                 <img src="<g:createLink controller="image" params="[type:'addedValueType']"/>&id={{addedValueType.id}}" alt="">
-                                {{addedValueType.title}}
+                                <g:message code="adding" /> {{addedValueType.title}}
                                 <span ng-show="addedValueType.description">({{addedValueType.description}})</span>
                             </a>
                             %{--<button class="btn btn-info btn-mini">${it.title}</button>--}%
@@ -102,7 +103,7 @@
                         <g:each in="${deliveryMethods}">
                             <div class="delivery-method">
                                 <label>
-                                    <input ng-model="deliveryMethod" type="radio" value="${it.id}" name="deliveryMethod" onchange="setDeliveryPrice(this, '${it}', ${it.sourceStations?.find()?.targetZones?.find()?.pricingRules?.find()?.netFactor}, ${it.hidePrice});">
+                                    <input ng-model="deliveryMethod" type="radio" value="${it.id}" name="deliveryMethod" onchange="setDeliveryPrice(this, '${it}', ${it.sourceStations?.find()?.targetZones?.find()?.pricingRules?.find()?.netFactor}, ${it.hidePrice},'${it.name}');">
                                     <img src="${createLink(controller: 'image', params: [id: it.id, type: 'deliveryMethod'])}"/>
                                     ${it.name} (${it.description})
                                 </label>

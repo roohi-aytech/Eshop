@@ -7,24 +7,10 @@
         %{--</td>--}%
     %{--</tr>--}%
     <tr>
-        <td><input type="text" ng-model="buyerName" placeholder="<g:message code="buyer-name" />"/></td>
+        <td><input id="buyerName" type="text" ng-model="buyerName" placeholder="<g:message code="buyer-name" />"/></td>
         %{--<td><input type="text" ng-model="buyerPhone" placeholder="<g:message code="buyer-phone" />"/></td>--}%
         %{--<td><input type="text" ng-model="buyerEmail" placeholder="<g:message code="buyer-email" />"/></td>--}%
-        <td>
-            <div class="payment-type">
-                <span><g:message code="payment.type" />:</span>
-                <span>
-                    <span><input type="radio" ng-model="paymentType" value="online"><g:message code="payment.types.online" /></span>
-                    <span><input type="radio" ng-model="paymentType" value="payInPlace"><g:message code="payment.types.payInPlace" /></span>
-                </span>
-            </div>
-        </td>
-        </tr>
-    %{--<tr>--}%
-        %{--<td colspan="3"><textarea ng-model="buyerName" placeholder="<g:message code="buyer-address" />"></textarea></td>--}%
-    %{--</tr>--}%
-    <tr>
-        <td><input type="checkbox" ng-model="sendFactor"><g:message code="sendFactorWith" /></td>
+        <td></td>
     </tr>
 </table>
 
@@ -54,33 +40,43 @@
 
     </tr>
     <tr>
-        <td colspan="3"></td>
+        <td colspan="3">
+            <input type="checkbox" ng-model="sendFactor"> <g:message code="sendFactorWith" />
+        </td>
         <td colspan="3" >
             <div>
-                <g:message code="basket.totalPrice"/>:
+                <span class="reciept-price-label" ><g:message code="basket.totalPrice"/>:</span>
                 <span class="totalPrice-reciept">{{calculateBasketTotalPrice() | number:0}}</span> <eshop:currencyLabel/>
             </div>
             <div ng-show="deliveryPrice > 0">
-                <g:message code="deliveryPrice"/>:
+                <span class="reciept-price-label" ><g:message code="deliveryPrice"/>:</span>
                 <span>
                     <b><span class="totalPrice-reciept">{{deliveryPrice | number:0}}</span></b> <eshop:currencyLabel/>
                 </span>
             </div>
             <div ng-show="customerAccountValue > 0 && useGolBon">
-                <g:message code="basket.paycurgolbol"/>:
+                <span class="reciept-price-label" ><g:message code="basket.paycurgolbol"/>:</span>
                 <span>
                     <b><span class="totalPrice-reciept">{{customerAccountValue | number:0}}-</span></b> <eshop:currencyLabel/>
                 </span>
             </div>
             <div>
-                <g:message code="basket.totalPayablePrice"/>:
+                <span class="reciept-price-label" ><g:message code="basket.totalPayablePrice"/>:</span>
                 <span class="totalPrice-reciept">{{calculateBasketPayablePrice() | number:0}}</span> <eshop:currencyLabel/>
             </div>
     </tr>
 </table>
-
+    <div class="payment-type">
+        <div>
+            <div class="payment-type-title"><g:message code="payment.type" /></div>
+            <span>
+                <span class="payment-type-item"><input type="radio" ng-model="paymentType" value="online"> <g:img dir="images/goldaan" file="online.png"/> <b><g:message code="payment.types.online" /></b> (<g:message code="online-pay-info" />)</span>
+                <span class="payment-type-item"><input type="radio" ng-model="paymentType" value="payInPlace"> <g:img dir="images/goldaan" file="money.png"/> <b><g:message code="payment.types.payInPlace" /></b> (<g:message code="money-pay-info" />)</span>
+            </span>
+        </div>
+    </div>
     <div class="basket-actions">
-        <button class="btn btn-primary" onclick="basketReview()"><g:message code="prev-step" /></button>
-        <button class="btn btn-success" onclick="updateBuyerAndPaymentTypeAndSendFactor()"><g:message code="next-step" /></button>
+        <button class="btn btn-primary" onclick="basketReview()"> <g:message code="prev-step" /></button>
+        <button class="btn btn-success" onclick="updateBuyerAndPaymentTypeAndSendFactor()"> <g:message code="next-step" /></button>
     </div>
 </div>

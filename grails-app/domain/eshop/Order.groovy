@@ -29,6 +29,8 @@ class Order {
     int usedAccountValue = 0
     int totalPayablePrice = 0
     Boolean optionalInsurance = false
+    Boolean sendFactorWith = false
+    Boolean callBeforeSend = false
 
     String status
     String trackingCode
@@ -63,6 +65,8 @@ class Order {
         alternateOwnerName(nullable: true)
         alternateOwnerCode(nullable: true)
         alternateOwnerMobile(nullable: true)
+        sendFactorWith(nullable: true)
+        callBeforeSend(nullable: true)
         items()
         billingAddress(nullable: false)
         sendingAddress(nullable: false)

@@ -1,18 +1,31 @@
 var eshop = angular.module('eshop', []);
 
 eshop.controller('eshopCtrl', function ($scope, $http) {
+    $scope.btnClasses = ['warning','info','success','primary'];
+
     $scope.basketCounter = basketCounter;
     $scope.compareListCounter = compareListCounter;
     $scope.wishListCounter = wishListCounter;
     $scope.basket = basket;
     $scope.deliveryPrice = deliveryPrice;
+    $scope.deliveryTitle  = '';
     $scope.sendFactor = sendFactor;
     $scope.customerAccountValue = customerAccountValue;
     $scope.useGolBon = customerAccountValue>0;
     $scope.golbonDiscount = golbonDiscount;
     $scope.deliveryMethod = deliveryMethod;
     $scope.buyerName = buyerName;
+    $scope.buyerPhone = buyerPhone;
+    $scope.buyerEmail = buyerEmail;
     $scope.paymentType = paymentType;
+    $scope.deliveryAddress = deliveryAddress;
+    $scope.deliveryAddressLine = deliveryAddressLine;
+    $scope.deliveryCity = deliveryCity;
+    $scope.deliveryName = deliveryName;
+    $scope.deliveryPhone = deliveryPhone;
+    $scope.callBeforeSend = callBeforeSend;
+
+    $scope.cities = cities;
 
     $scope.compareList = compareList;
     $scope.wishList = wishList;
@@ -392,53 +405,211 @@ function removeAddedValue(id,typeId, callback) {
 }
 function updateDescriptionAndDeliverMethod() {
     var scope = angular.element(document.getElementById('main-container')).scope();
-    var data={
-        deliveryMethod:$('[name=deliveryMethod]:checked').val(),
-        deliveryPrice:scope.deliveryPrice
-    };
-    $('.basket-item-description').each(function(){
-        data[this.name]=this.value;
-    });
+    if(scope.deliveryMethod) {
 
-    $.ajax({
-        url:contextRoot+'basket/updateDescriptionAndDelivery',
-        data:data,
-        type:'post'
-    });
-    $('.steps .selected').removeClass('selected');
-    $('.step-content.selected').removeClass('selected');
-    $('.steps .step2').addClass('selected');
-    $('.step-content.step2').addClass('selected');
+        var data = {
+            deliveryMethod: scope.deliveryMethod,
+            deliveryPrice: scope.deliveryPrice
+        };
+        $('.basket-item-description').each(function () {
+            data[this.name] = this.value;
+        });
 
+        $.ajax({
+            url: contextRoot + 'basket/updateDescriptionAndDelivery',
+            data: data,
+            type: 'post'
+        });
+        $('.steps .selected').removeClass('selected');
+        $('.step-content.selected').removeClass('selected');
+        $('.steps .step2').addClass('selected');
+        $('.step-content.step2').addClass('selected');
+    }
+    else{
+        showAlert('.delivery-methods span:first','لطفا روش ارسال را انتخاب فرمایید')
+    }
 }
 function updateBuyerAndPaymentTypeAndSendFactor() {
     var scope = angular.element(document.getElementById('main-container')).scope();
-    var data={
-        paymentType:scope.paymentType,
-        buyerName:scope.buyerName,
-        sendFactor:scope.sendFactor
-    };
+    if(scope.buyerName) {
+        var data = {
+            paymentType: scope.paymentType,
+            buyerName: scope.buyerName,
+            sendFactor: scope.sendFactor
+        };
 
 
-    $.ajax({
-        url:contextRoot+'basket/updateBuyerAndPaymentTypeAndSendFactor',
-        data:data,
-        type:'post'
-    });
-    $('.steps .selected').removeClass('selected');
-    $('.step-content.selected').removeClass('selected');
-    $('.steps .step3').addClass('selected');
-    $('.step-content.step3').addClass('selected');
-
+        $.ajax({
+            url: contextRoot + 'basket/updateBuyerAndPaymentTypeAndSendFactor',
+            data: data,
+            type: 'post'
+        });
+        $('.steps .selected').removeClass('selected');
+        $('.step-content.selected').removeClass('selected');
+        $('.steps .step3').addClass('selected');
+        $('.step-content.step3').addClass('selected');
+    }
+    else{
+        showAlert('#buyerName','لطفا نام خریدار را وارد فرمایید')
+    }
 }
 function basketReview(){
+    changeStep(1);
+}
+function factorReview(){
+    changeStep(2)
+}
+function deliveryReview(){
+    changeStep(3)
+}
+function updateDeliveryInfo(){
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    if(!scope.deliveryName){
+        showAlert('#deliveryName','لطفا نام تحویل گیرنده را وارد فرمایید')
+        return false;
+    }
+    else if(!scope.deliveryPhone){
+        showAlert('#deliveryPhone','لطفا تلفن تحویل گیرنده را وارد فرمایید')
+        return false;
+    }
+    else if(!scope.deliveryAddressLine){
+        showAlert('#deliveryAddressLine','لطفا آدرس تحویل را وارد فرمایید')
+        return false;
+    }
+    else {
+        var data = {
+            callBeforSend: scope.callBeforeSend,
+            deliveryName: scope.deliveryName,
+            deliveryAddressLine: scope.deliveryAddressLine,
+            deliveryPhone: scope.deliveryPhone
+        };
+
+
+        $.ajax({
+            url: contextRoot + 'basket/updateDeliveryInfo',
+            data: data,
+            type: 'post'
+        });
+        $('.steps .selected').removeClass('selected');
+        $('.step-content.selected').removeClass('selected');
+        $('.steps .step4').addClass('selected');
+        $('.step-content.step4').addClass('selected');
+        return true;
+    }
+}
+//function updateBuyerAndPaymentTypeAndSendFactor() {
+//    var scope = angular.element(document.getElementById('main-container')).scope();
+//    var data={
+//        paymentType:scope.paymentType,
+//        buyerName:scope.buyerName,
+//        sendFactor:scope.sendFactor
+//    };
+//
+//
+//    $.ajax({
+//        url:contextRoot+'basket/updateBuyerAndPaymentTypeAndSendFactor',
+//        data:data,
+//        type:'post'
+//    });
+//    $('.steps .selected').removeClass('selected');
+//    $('.step-content.selected').removeClass('selected');
+//    $('.steps .step3').addClass('selected');
+//    $('.step-content.step3').addClass('selected');
+//
+//}
+function updateBuyerInfo() {
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    if(!scope.buyerPhone){
+        showAlert('#buyerPhone','لطفا تلفن را وارد فرمایید')
+        return false;
+    }
+    else if (!scope.buyerEmail){
+        showAlert('#buyerEmail','لطفا پست الکترونیک را وارد فرمایید')
+        return false;
+    }
+    else {
+        var data = {
+            buyerPhone: scope.buyerPhone,
+            buyerEmail: scope.buyerEmail
+        };
+
+
+        $.ajax({
+            url: contextRoot + 'basket/updateBuyerInfo',
+            data: data,
+            type: 'post'
+        });
+        return true;
+    }
+}
+
+function changeStep(i){
     $.ajax({
-        url:contextRoot+'basket/basketReview',
+        url:contextRoot+'basket/changeStep/'+i,
         type:'post'
     });
     $('.steps .selected').removeClass('selected');
     $('.step-content.selected').removeClass('selected');
-    $('.steps .step1').addClass('selected');
-    $('.step-content.step1').addClass('selected');
+    $('.steps .step'+i).addClass('selected');
+    $('.step-content.step'+i).addClass('selected');
+}
+function updateDeliveryAddressesJs(id){
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    if(!id){
+        scope.deliveryAddressLine = '';
+        scope.deliveryName = '';
+        scope.deliveryPhone = '';
+        scope.deliveryCity = '';
+    }
+    else {
+        for (var i in deliveryAddresses) {
+            if (deliveryAddresses[i].id == id) {
+                scope.deliveryAddressLine = deliveryAddresses[i].addressLine1;
+                scope.deliveryName = deliveryAddresses[i].title;
+                scope.deliveryPhone = deliveryAddresses[i].telephone;
+                scope.deliveryCity = deliveryAddresses[i].city.id;
+
+
+            }
+        }
+    }
+}
+function finalizeBasket(btn){
+    //$('#finalizebasket').submit()
+    $('.factor').qtip({
+        content:$('#confirm-dialog').html(),
+        position: {
+            my: 'top left',
+            at: 'top right'
+        },
+        style: {
+            classes: 'qtip-bootstrap qtip-added-value',
+            width: 700
+        },
+        show: {
+            ready: true,
+            event: 'ready',
+            effect: function (offset) {
+                $(this).slideDown(100);
+            }
+        }
+
+    });
+}
+function showAlert(selector,text){
+    $(selector).qtip({
+        content:text,
+        position: {
+            my: 'center right',
+            at: 'center left'
+        },
+        show: {
+            ready: true,
+            event: 'ready',
+            effect: function (offset) {
+                $(this).slideDown(100);
+            }
+        }
+    });
 }
 

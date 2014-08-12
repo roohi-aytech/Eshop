@@ -2,6 +2,7 @@ package eshop
 
 import eshop.delivery.DeliveryMethod
 import eshop.delivery.DeliverySourceStation
+import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.converters.JSON
 
 class BasketController {
@@ -12,7 +13,7 @@ class BasketController {
 
     def index() {
         session['currentStep'] = 1
-	    redirect(action:'checkout')
+        redirect(action: 'checkout')
     }
 
     def add() {
@@ -106,7 +107,11 @@ class BasketController {
 
             def deliveryMethods = DeliveryMethod.list().sort { it.name }
 //            def addedValueTypes = AddedValueType.findAllBy.sort { it.title }
-
+            def prevAddresses
+            if (customer)
+                prevAddresses = Order.findAllByCustomer(customer)?.collect { it.sendingAddress }?.groupBy {
+                    it.title
+                }?.collect { it.value.find() }
             session['currentStep'] = currentStep
             render(model: [
                     basket                  : session.getAttribute("basket"),
@@ -115,6 +120,7 @@ class BasketController {
                     address                 : session.checkout_address,
                     customInvoiceInformation: customInvoiceInformation,
 //                    addedValueTypes         : addedValueTypes,
+                    prevAddresses           : prevAddresses,
                     deliveryMethods         : deliveryMethods
             ], view: view)
         } else {
@@ -532,15 +538,39 @@ class BasketController {
         session['currentStep'] = 2
         render 0
     }
-    def updateBuyerAndPaymentTypeAndSendFactor(){
+
+    def updateBuyerAndPaymentTypeAndSendFactor() {
         session.setAttribute('paymentType', params.paymentType)
         session.setAttribute('buyerName', params.buyerName)
         session.setAttribute('sendFactor', params.sendFactor)
         session['currentStep'] = 3
         render 0
     }
-    def basketReview(){
+    def updateDeliveryInfo(){
+        session['callBeforeSend']=params.callBeforeSend
+        session['deliveryName']=params.deliveryName
+        session['deliveryPhone']=params.deliveryPhone
+        session['deliveryAddressLine']=params.deliveryAddressLine
+        session['deliveryCity']=params.deliveryCity
+        def customer=springSecurityService.currentUser as Customer
+        if(!customer)
+            session['currentStep']=4
+        render 0
+    }
+    def updateBuyerInfo(){
+        session['buyerPhone']=params.buyerPhone
+        session['buyerEmail']=params.buyerEmail
+        render 0
+    }
+
+    def basketReview() {
         session['currentStep'] = 1
         render 0
     }
+
+    def changeStep() {
+        session['currentStep'] = params.int('id')
+        render 0
+    }
+
 }
