@@ -1,5 +1,5 @@
-grails.serverURL = "http://www.goldaan.ir/"
-grails.app.context = "/saboo"
+grails.serverURL = "http://www.goldaan.ir"
+grails.app.context = "/"
 eShop.instance = 'goldaan'
 //url.www = false
 locale.language='gl'
