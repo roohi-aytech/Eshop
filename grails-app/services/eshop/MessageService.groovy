@@ -29,15 +29,26 @@ class MessageService {
         def result
 
         try {
-            def messageService = new SmsLocator().getsmsSoap()
+            if(grailsApplication.config.eShop.instance=='goldaan'){
+                def messageService = new eshop.sms.rahyab.SmsLocator().getsmsSoap()
+                result = messageService.doSendSMS(
+                        parameters[grailsApplication.config.eShop.instance].userName,
+                        parameters[grailsApplication.config.eShop.instance].userPassword,
+                        parameters[grailsApplication.config.eShop.instance].senderNumber,
+                        cellphones,
+                        message,
+                        true,false,false,'')
+            }else {
+                def messageService = new SmsLocator().getsmsSoap()
 
-            result = messageService.doSendSMS(
-                    parameters[grailsApplication.config.eShop.instance].userName,
-                    parameters[grailsApplication.config.eShop.instance].userPassword,
-                    parameters[grailsApplication.config.eShop.instance].senderNumber,
-                    cellphones,
-                    message,
-                    true)
+                result = messageService.doSendSMS(
+                        parameters[grailsApplication.config.eShop.instance].userName,
+                        parameters[grailsApplication.config.eShop.instance].userPassword,
+                        parameters[grailsApplication.config.eShop.instance].senderNumber,
+                        cellphones,
+                        message,
+                        true)
+            }
         } catch (x) {
             x.printStackTrace()
         }
