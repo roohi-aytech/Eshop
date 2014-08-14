@@ -70,8 +70,10 @@ class PriceController {
 
     def delete() {
         def priceInstance = Price.get(params.id)
-
+        def product = priceInstance.productModel.product
         priceInstance.delete(flush: true)
+        product.isSynchronized = false
+        product.save(flush: true)
         render 0
     }
 

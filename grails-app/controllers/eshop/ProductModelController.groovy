@@ -165,6 +165,8 @@ class ProductModelController {
             modelInstance.isDefaultModel = true
 
         if (modelInstance.validate() && modelInstance.save()) {
+            modelInstance.product.isSynchronized = false
+            modelInstance.product.save(flush:true)
             render modelInstance as JSON
         } else
             render(template: "form", model: [modelInstance: modelInstance])

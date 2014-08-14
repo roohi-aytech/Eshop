@@ -8,6 +8,9 @@
             <g:render template="/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail"
                       model="[productModel: productModel]"/>
         </g:if>
+        <g:else>
+            <span style="display: none">product id : ${productId}</span>
+        </g:else>
         <g:if test="${i % 3 == 2 || i == productIds.size() - 1}">
             </div>
         </g:if>

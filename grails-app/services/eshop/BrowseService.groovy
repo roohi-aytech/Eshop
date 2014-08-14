@@ -197,10 +197,10 @@ class BrowseService {
         def totalPages = pagesCount(params.match, params.pageSize)
         def sortExpression = [status: 1, sortOrder: 1]
         if (params.sort) {
-            if (params.sort == 'default')
-                sortExpression = [status: -(params.dir?.toInteger() ?: -1), sortOrder: -(params.dir?.toInteger() ?: -1)]
+            if (params.sort == 'default' || params.sort == 'sortField')
+                sortExpression = [status: -(params.dir == 'sortDirection' ? -1 : params.dir?.toInteger() ?: -1), sortOrder: -(params.dir == 'sortDirection' ? -1 : params.dir?.toInteger() ?: -1)]
             else
-                sortExpression = ["${params.sort}": (params.dir?.toInteger() ?: -1), status: 1, sortOrder: 1]
+                sortExpression = ["${params.sort}": (params.dir == 'sortDirection' ? -1 : params.dir?.toInteger() ?: -1), status: 1, sortOrder: 1]
         }
         def productIds = products.aggregate(
                 [$match: params.match],

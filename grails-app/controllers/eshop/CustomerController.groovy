@@ -64,6 +64,10 @@ class CustomerController {
     }
 
     def checkUserNameIsRepetitive() {
+        if (!params.username) {
+            render message(code: 'springSecurity.register.username.valid')
+            return
+        }
         if (User.findByUsername(params.username?.toString()?.trim()?.toLowerCase()))
             render message(code: 'springSecurity.register.username.repetitive')
         else
@@ -264,7 +268,9 @@ class CustomerController {
         customer.favoriteStyle = params.favoriteStyle
 
         customer.favoriteProductTypes.clear()
-        customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect { it.toLong() }).toArray())
+        customer.favoriteProductTypes.addAll(ProductType.findAllByIdInList(params.favoriteProductTypes.split(',').collect {
+            it.toLong()
+        }).toArray())
 
         customer.profileFavoritesFilled = true
         customer.save()
@@ -290,7 +296,7 @@ class CustomerController {
                         model: [message: g.render(template: '/messageTemplates/mail/password_rest', model: [user: user]).toString()])
             }
 
-            if (user instanceof Customer && ((Customer)user).mobile)
+            if (user instanceof Customer && ((Customer) user).mobile)
                 messageService.sendMessage(
                         user.mobile,
                         g.render(template: '/messageTemplates/sms/password_reset', model: [user: user]).toString())
@@ -346,7 +352,8 @@ class CustomerController {
         [customerInstance: springSecurityService.currentUser as Customer]
     }
 
-    @Secured([RoleHelper.ROLE_CUSTOMER]) v
+    @Secured([RoleHelper.ROLE_CUSTOMER])
+            v
 
     def saveNewsLetter() {
 
@@ -354,11 +361,15 @@ class CustomerController {
 
         customer.newsLetterCategories.clear()
         if (params.categories)
-            customer.newsLetterCategories.addAll(NewsLetterCategory.findAllByIdInList(params.categories.collect { it.toLong() }).toArray())
+            customer.newsLetterCategories.addAll(NewsLetterCategory.findAllByIdInList(params.categories.collect {
+                it.toLong()
+            }).toArray())
 
         customer.newsLetterProductTypes.clear()
         if (params.newsLetterProductTypes)
-            customer.newsLetterProductTypes.addAll(ProductType.findAllByIdInList(params.newsLetterProductTypes.split(',').collect { it.toLong() }).toArray())
+            customer.newsLetterProductTypes.addAll(ProductType.findAllByIdInList(params.newsLetterProductTypes.split(',').collect {
+                it.toLong()
+            }).toArray())
 
         customer.profileNewsLettersFilled = true
         customer.registrationLevel = 'full'

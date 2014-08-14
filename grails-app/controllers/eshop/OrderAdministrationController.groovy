@@ -102,6 +102,8 @@ class OrderAdministrationController {
         priceInstance.startDate = new Date()
         priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
         priceInstance.save()
+        priceInstance.productModel.product.isSynchronized = false
+        priceInstance.productModel.product.save()
 
         //update order
         priceService.updateOrderPrice(OrderItem.get(params.orderItem.id).order)
@@ -127,6 +129,8 @@ class OrderAdministrationController {
         def productModel = ProductModel.get(params.productModel.id)
         productModel.status = params.status
         productModel.save()
+        productModel.product.isSynchronized = false
+        productModel.product.save()
 
         //update order
         priceService.updateOrderPrice(OrderItem.get(params.orderItem.id).order)

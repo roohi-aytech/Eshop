@@ -26,7 +26,7 @@
     }
 </script>
 
-<g:if test="${productModel}">
+<g:if test="${productModel && productModel.status == 'exists'}">
     <div class="product_title">
         <h1 itemprop="name">
             ${productModel?.product?.productTypes?.find {

@@ -2,22 +2,22 @@
     <ul>
     %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
-            <g:set var="product" value="${eshop.Product.get(productId)}"/>
-            <g:if test="${product}">
+            <g:set var="productModel" value="${eshop.ProductModel.get(productId)}"/>
+            <g:if test="${productModel}">
                 <li>
-                    <a href="${createLink(controller: 'site', action: 'product', params: [id: product.id])}">
+                    <a href="${createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")}">
                         <table>
                             <tr>
                                 <td rowspan="2">
-                                    <img src="${createLink(controller: 'image', params: [id: product.id, wh: '50x50'])}"/>
+                                    <img src="${createLink(controller: 'image', params: [id: productModel?.id, wh: '50x50', type: 'productModel'])}"/>
                                 </td>
                                 <td>
-                                    <h4>${product.manualTitle ? product.pageTitle : product.toString()}</h4>
+                                    <h4>${productModel}</h4>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <eshop:thumbnailPrice productId="${product.id}" hideLastUpdate="true"></eshop:thumbnailPrice>
+                                    <eshop:thumbnailPrice productModelId="${productModel.id}" hideLastUpdate="true"/>
                                 </td>
                             </tr>
                         </table>

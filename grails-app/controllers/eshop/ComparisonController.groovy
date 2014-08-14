@@ -34,6 +34,10 @@ class ComparisonController {
     def addAndShow(){
         def id = params.id
         def product = Product.get(id)
+        if(!product) {
+            render ''
+            return
+        }
 
         def compareList = session.getAttribute("compareList")
         if (!compareList)

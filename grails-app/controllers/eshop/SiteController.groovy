@@ -38,6 +38,7 @@ class SiteController {
         def productType = params.productType ? ProductType.findBySeoFriendlyNameAndDeleted(params.productType, false) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
         if (!productType || productType.deleted) {
             redirect(uri: "/notFound")
+//            render ''
             return
         }
 
@@ -467,6 +468,11 @@ class SiteController {
 
     def productModelImages() {
         def product = Product.get(params.productId)
+        if(!product)
+        {
+            render ''
+            return
+        }
 
         def models = ProductModel.findAllByProduct(product)
         def productModel
@@ -560,6 +566,8 @@ class SiteController {
         }
 
         def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
+        if(!productModel)
+            productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (!params.model && productModel?.status != 'exists') {
             def newModel = ProductModel.findByProductAndStatus(product, 'exists')
             if (newModel)
@@ -753,6 +761,10 @@ class SiteController {
 
     def productImages() {
         def product = Product.get(params.productId)
+        if(!product){
+            render ''
+            return
+        }
 
         def models = ProductModel.findAllByProduct(product)
         def productModel
@@ -821,6 +833,10 @@ class SiteController {
     def productImage() {
         def product = Product.get(params.id)
 
+        if(!product){
+            render ''
+            return
+        }
         if (product.mainImage)
             imageService.getImageSize(product.mainImage, product)
 
@@ -905,6 +921,10 @@ class SiteController {
         def productIdList = []
         def productModelIdList = []
 
+        if (!params.phrase) {
+            render ''
+            return
+        }
         if (params.phrase) {
             def query = params.phrase.toString().trim()
             query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
@@ -928,11 +948,13 @@ class SiteController {
             redirect(action: 'search', params: [f: f.join(','), phrase: params.phrase])
             return
         }
-        model.filters = browseService.findSearchPageFilters(productIdList.results.collect {
+
+        def productIds = productIdList.results.collect {
             it.id
         } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
             it?.product?.id
-        }, f, params.sort, params.dir, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        }
+        model.filters = browseService.findSearchPageFilters(productIds, f, params.sort, params.dir, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
         //sort result again
         model.filters.products.productIds.sort {
             def id = it
@@ -1012,6 +1034,7 @@ class SiteController {
         def model = [:]
         def productIdList = []
         def productModelIdList = []
+
         if (!params.phrase) {
             render ''
             return
@@ -1032,6 +1055,8 @@ class SiteController {
             },
                     [reload: false, max: 1000])
         }
+        if (!params.f)
+            params.f = 'p0'
         def f = params.f
         if (f instanceof String[] && f.length) {
             redirect(action: 'searchAutoComplete', params: [f: f.join(','), phrase: params.phrase])
@@ -1043,16 +1068,8 @@ class SiteController {
         } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
             it?.product?.id
         }
-        def productModelIds = ProductModel.createCriteria().list {
-            product {
-                'in'('id', productIds)
-            }
-            projections {
-                property('id')
-            }
-        }
 
-        model.productIds = browseService.findSearchPageFilters(productModelIds, f, null, null, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
+        model.productIds = browseService.findSearchPageFilters(productIds, f, null, null, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}").products.productIds
         //sort result again
         model.productIds.sort {
             def id = it
