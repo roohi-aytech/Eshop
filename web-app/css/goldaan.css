@@ -19669,3 +19669,6 @@ h2.check-out-price span {
 .confirm-dialog div{
     margin:5px;
 }
+#login .inner .cssform input[type="text"], #login .inner .cssform input[type="password"]{
+    height:30px;
+}

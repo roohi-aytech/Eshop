@@ -101,8 +101,8 @@ class OrderController {
             order.customer = customer
         } else {
             order.ownerEmail = session['buyerEmail']
-            order.ownerMobile = session['buyerMobile']
-            order.ownerTelephone = session['buyerMobile']
+            order.ownerMobile = session['buyerPhone']
+//            order.ownerTelephone = session['buyerPhone']
         }
         order.sendFactorWith = session['sendFactor'] as boolean
         Address address = new Address()
@@ -113,7 +113,9 @@ class OrderController {
         address.save()
         order.sendingAddress = address
         order.billingAddress = address
-        order.deliveryPrice = (session['deliveryPrice']?:'0') as double
+
+
+        order.deliveryPrice = (session['deliveryPrice'] ?: '0') as double
         order.callBeforeSend = session['callBeforeSend']
         order.deliverySourceStation = eshop.delivery.DeliveryMethod.get(session['deliveryMethod'])?.sourceStations?.find()
 
@@ -137,20 +139,27 @@ class OrderController {
             def orderItem = new OrderItem()
             orderItem.productModel = ProductModel.get(basketItem.id)
             orderItem.order = order
+            orderItem.description = basketItem.description
             orderItem.orderCount = basketItem.count
             orderItem.unitPrice = basketItem.realPrice
+
             orderItem.description = basketItem.description
             basketItem.selectedAddedValueInstances?.each {
                 orderItem.addToAddedValueInstances(new AddedValueInstance(
-                        addedValue: AddedValue.get(it.id),
-                        description: it.description,
-                        from: it.from,
-                        orderCount: it.orderCount,
-                        image: it.image ? new Content(name: it.title, contentType: 'image', fileContent: session['it.image']) : null
+                        addedValue: AddedValue.get(it.value.id),
+                        description: it.value.description,
+                        from: it.value.from,
+                        orderCount: (it.value.orderCount ?: '0') as int,
+                        image: it.value.image ? new Content(name: it.value.title, contentType: 'image', fileContent: session[it.value.image]) : null
                 ))
             }
             orderItem.save()
         }
+        if (session['payFromAccount'] && customer) {
+            def acctValue = accountingService.calculateCustomerAccountValue(customer)
+            order.usedAccountValue = acctValue
+        }
+        priceService.updateOrderPrice(order);
 
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = OrderHelper.ACTION_CREATION
@@ -164,16 +173,19 @@ class OrderController {
         }
         event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
 
-        mailService.sendMail {
-            to order.ownerEmail
-            subject message(code: 'emailTemplates.order_created.subject')
-            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                    model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+        Thread.start {
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.order_created.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+            }
         }
-
-        messageService.sendMessage(
-                order.ownerMobile,
-                g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString())
+        Thread.start {
+            messageService.sendMessage(
+                    order.ownerMobile,
+                    g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString())
+        }
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
         session.removeAttribute("order")

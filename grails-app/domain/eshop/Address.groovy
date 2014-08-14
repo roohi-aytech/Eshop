@@ -22,10 +22,6 @@ class Address {
     }
 
     String toString() {
-        city?.province?.toString() + " - " +
-                city.toString() + " - " +
-                addressLine1 + (addressLine2 ? ' ' + addressLine2 : "") + " - " +
-                postalCode ? (postalCode + ' - ') : '' +
-                telephone ?: ''
+        "${title?"${title} - ":''}${city?.province?"${city?.province} - ":''}${city?"${city} - ":''}${addressLine1?:''} ${addressLine2?:''} - ${postalCode?"${postalCode} - ":''}${telephone?: ''}"
     }
 }

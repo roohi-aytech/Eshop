@@ -60,8 +60,8 @@ class PriceService {
         selectedAddedValues.each {
             def addedValue
 
-            if (it.isNumber())
-                addedValue = AddedValue.get(it.toLong())
+            if (it.toString().isNumber())
+                addedValue = AddedValue.get(it.toString().toLong())
             if (addedValue) {
                 if (addedValue.processTime == 'optional') {
                     if (addedValue.type == "percent")
@@ -152,7 +152,12 @@ class PriceService {
     def updateOrderPrice(Order order) {
 
         OrderItem.findAllByOrderAndDeleted(order, false).each { orderItem ->
-            def price = calcProductModelPrice(orderItem.productModel.id, orderItem.addedValues?.collect { it.id })
+            def addedValues= []
+            if(orderItem.addedValues)
+                addedValues.addAll(orderItem.addedValues?.collect { it.id })
+            if(orderItem.addedValueInstances)
+                addedValues.addAll(orderItem.addedValueInstances?.collect { it.addedValue.id })
+            def price = calcProductModelPrice(orderItem.productModel.id,addedValues)
             if (price.status == 'exists') {
                 orderItem.baseUnitPrice = price.showVal ?: 0
                 orderItem.addedValuesPrice = price.addedVal ?: 0
@@ -172,7 +177,7 @@ class PriceService {
 
             //set discount
             orderItem.discount = 0
-            def discountList = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThanEquals(new Date(), new Date(), 0)
+            def discountList = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThanEqualsAndUsageTypeNotEqual(new Date(), new Date(), 0,'Bon')
             discountList = discountList.findAll { discount ->
                 !discount.discountProductsCriteria.any { criteria -> !ProductCriteriaMatches(criteria, orderItem) } &&
                         order.items.any { basketItem ->
@@ -217,7 +222,9 @@ class PriceService {
         order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
             it.totalPrice
         }) as Integer) + order.deliveryPrice) / 1000) * 1000
-        if (!order.usedAccountValue)
+        if (order.usedAccountValue)
+            order.usedAccountValue = Math.min(order.usedAccountValue,order.totalPrice)
+        else
             order.usedAccountValue = 0
         order.totalPayablePrice = order.totalPrice - order.usedAccountValue
         order.save()

@@ -129,7 +129,7 @@
 
             </li>
         </g:if>
-        <g:if test="${!orderInstance.deliverySourceStation.method.hidePrice}">
+        <g:if test="${!orderInstance?.deliverySourceStation?.method?.hidePrice}">
             <g:if test="${orderInstance?.deliveryPrice || orderInstance?.deliveryPrice == 0}">
                 <li class="fieldcontain">
                     <span id="deliveryPrice-label" class="property-label"><g:message code="deliveryPrice"/></span>
@@ -152,6 +152,24 @@
 
                 <span class="property-value" aria-labelledby="totalPrice-label">
                     <g:formatNumber number="${orderInstance?.totalPrice}" type="number"/>
+                </span>
+
+            </li>
+        </g:if>
+        <g:if test="${orderInstance?.usedAccountValue}">
+            <li class="fieldcontain">
+                <span id="usedAccountValue-label" class="property-label"><g:message code="orderItem.usedAccountValue"/></span>
+
+                <span class="property-value" aria-labelledby="totalPrice-label">
+                    <g:formatNumber number="${orderInstance?.usedAccountValue}" type="number"/>
+                </span>
+
+            </li>
+            <li class="fieldcontain">
+                <span id="totalPayablePrice-label" class="property-label"><g:message code="orderItem.totalPayablePrice"/></span>
+
+                <span class="property-value" aria-labelledby="totalPrice-label">
+                    <g:formatNumber number="${orderInstance?.totalPayablePrice}" type="number"/>
                 </span>
 
             </li>

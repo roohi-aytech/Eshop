@@ -574,6 +574,17 @@ function updateDeliveryAddressesJs(id){
         }
     }
 }
+function changeUseGolbon(){
+    var scope = angular.element(document.getElementById('main-container')).scope();
+    $.ajax({
+        url:contextRoot+'basket/payFromAccount',
+        type:'post',
+        data:{
+            payFromAccount:scope.useGolBon
+        }
+    });
+
+}
 function finalizeBasket(btn){
     //$('#finalizebasket').submit()
     $('.factor').qtip({

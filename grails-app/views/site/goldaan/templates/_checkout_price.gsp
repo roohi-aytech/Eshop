@@ -22,7 +22,7 @@
     </tr>
     <tr>
         <td>
-            <input type="checkbox" name="usegolbon" ng-model="useGolBon" ng-show="customerAccountValue>0">
+            <input type="checkbox" onchange="changeUseGolbon()" name="usegolbon" ng-model="useGolBon" ng-show="customerAccountValue>0">
             <g:message code="basket.paycurgolbol"/>
         </td>
         <td>
