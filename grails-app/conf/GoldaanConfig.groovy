@@ -1,4 +1,4 @@
-grails.serverURL = "http://localhost:8080"
+grails.serverURL = "http://www.goldaan.ir"
 grails.app.context = "/"
 eShop.instance = 'goldaan'
 //url.www = false
