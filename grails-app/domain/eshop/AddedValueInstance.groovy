@@ -8,6 +8,9 @@ class AddedValueInstance {
     OrderItem orderItem
     Content image
     static belongsTo = [AddedValue, OrderItem]
+    static mapping = {
+        from column: 'from_person'
+    }
     static constraints = {
         addedValue()
         description(nullable: true)

@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.qtip.css')}"/>
-<script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'jquery.qtip.js')}"></script>
-<script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'imagesloaded.js')}"></script>
 
 <div class="btn-group pull-left topNavigationItem link-basket ng-cloak"
      id="link-basket-empty" ng-show="!basket.length">
@@ -95,7 +92,7 @@
             </div>
             <div class="noregister-checkout-comments">
                 <p><g:message code="noregister-checkout-comments"/></p>
-                <common:link class="btn btn-danger" controller="basket" action="checkout" https="${false}">
+                <common:link class="btn btn-danger" controller="basket" action="index" https="${false}">
                     <g:message code="enquiry.request.shopping.noRegister"/>
                 </common:link>
             </div>

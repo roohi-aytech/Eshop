@@ -49,6 +49,11 @@
                                     src="images/addedValueType.png"/><span><g:message
                                     code="addedVaueType.label"
                                     default="AddedValueType"/></span></g:link></li>
+                        <li>
+                            <g:link controller="addedValue" action="list"><img
+                                    src="images/addedValueType.png"/><span><g:message
+                                    code="addedVaue.label"
+                                    default="AddedValue"/></span></g:link></li>
                     </g:if>
                     <li>
                         <g:link controller="brand" action="list"><img

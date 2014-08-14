@@ -13,9 +13,10 @@ class AddedValue {
     Brand brand
     Content image
     AddedValueType addedValueType
+    AddedValueSubType addedValueSubType
     boolean deleted = false
     static hasMany = [variationValues: VariationValue]
-    static belongsTo = [AddedValueType]
+    static belongsTo = [AddedValueType,AddedValueSubType]
     static mapping = {
         sort 'name'
     }
@@ -24,6 +25,7 @@ class AddedValue {
         name()
         type(inList: ["percent", "fixed"])
         processTime(inList: ["mandetory", "optional"])
+        baseProduct(nullable: true)
         value()
         processTime()
         variationValues()
@@ -33,6 +35,7 @@ class AddedValue {
         remainCount(nullable: true)
         image(nullable: true)
         addedValueType(nullable: true)
+        addedValueSubType(nullable: true)
     }
 
     @Override

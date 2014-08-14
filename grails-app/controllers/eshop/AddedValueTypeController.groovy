@@ -48,4 +48,18 @@ class AddedValueTypeController {
         addedValueTypeInstance.delete(flush: true)
         render 0
     }
+
+    def assign(){
+        def productType=ProductType.get(params.ptId)
+        productType.addedValueTypes.clear()
+
+        params.addedValueTypes?.split(',')?.each {
+            productType.addToAddedValueTypes(AddedValueType.get(it.toLong()))
+        }
+        productType.save()
+        render 0
+    }
+    def subTypes(){
+        render (AddedValueType.get(params.id)?.addedValueSubTypes as JSON)
+    }
 }

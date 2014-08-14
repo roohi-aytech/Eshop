@@ -8,18 +8,22 @@
 
 
                     <div class="header_user_info clearfix pull-right" id="header_user_info">
-                        <a title="Login to your customer account" rel="nofollow"
-                           href="#" class="terms_and_conditions">
+                        <a rel="nofollow" href="#" class="terms_and_conditions">
                             <g:message code="terms-and-conditions-goldaan"/>
                         </a>
-                        <a title="Login to your customer account" rel="nofollow"
-                           href="#" class="sing_up">
-                            <g:message code="register-goldaan"/>
-                        </a>
-                        <a title="Login to your customer account" rel="nofollow"
-                           href="#" class="login">
-                            <g:message code="login-goldaan"/>
-                        </a>
+                        <sec:ifLoggedIn>
+                            <a rel="nofollow" href="<g:createLink controller="logout" action="index" />" class="logout">
+                                <g:message code="logout"/>
+                            </a>
+                        </sec:ifLoggedIn>
+                        <sec:ifNotLoggedIn>
+                            <a rel="nofollow" href="<g:createLink controller="customer" action="register" />" class="sing_up">
+                                <g:message code="register-goldaan"/>
+                            </a>
+                            <a rel="nofollow" href="<g:createLink controller="login" action="auth" />" class="login">
+                                <g:message code="login-goldaan"/>
+                            </a>
+                        </sec:ifNotLoggedIn>
 
                     </div>
                     <dl class="stlinkgroups_top pull-right dropdown_wrap first-item  hidden-xs " id="multilink_1">
@@ -69,7 +73,9 @@
         %{--</div>--}%
     </section>
     <section id="top_extra">
-        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+        <g:if test="${controllerName!='basket' && actionName!='checkout'}">
+            <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+        </g:if>
         %{--<div class="wide_container">--}%
         %{--<div class="" id="st_mega_menu_container">--}%
         %{--<div class="container">--}%

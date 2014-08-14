@@ -8,7 +8,9 @@ class AddedValueType {
     boolean hasAddedValueCount = false
     Double defaultPrice = 0D
     Content image
-    static hasMany = [addedValues: AddedValue]
+    static hasMany = [addedValueSubTypes: AddedValueSubType, addedValues: AddedValue, productTypes: ProductType]
+    static belongsTo = [ProductType]
+    static composites = ["addedValueSubTypes"]
     static constraints = {
         title()
         description(nullable: true)
