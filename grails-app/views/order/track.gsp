@@ -76,20 +76,21 @@
                                                                                          type="number"/> <eshop:currencyLabel/></b>
                             </div>
                         </ul>
-
-                        <div>
-                            <input type="button" onclick="showPreInvoice();"
-                                   value="${invoiceTitle}" class="btn btn-success"
-                                   style="margin:10px;height:30px;"/>
-                            <g:each in="${suggestedActions}" var="action">
-                                    <g:link controller="order" action="${action}" params="${['id': order.id]}" class="btn btn-primary"><g:message
-                                            code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
-                            </g:each>
-                            <g:each in="${actions}" var="action">
-                                    <g:link controller="order" action="${action}" params="${['id': order.id]}"><g:message
-                                            code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
-                            </g:each>
-                        </div>
+                        <g:if test="${!grailsApplication.config.disableTrackingActions}">
+                            <div>
+                                <input type="button" onclick="showPreInvoice();"
+                                       value="${invoiceTitle}" class="btn btn-success"
+                                       style="margin:10px;height:30px;"/>
+                                <g:each in="${suggestedActions}" var="action">
+                                        <g:link controller="order" action="${action}" params="${['id': order.id]}" class="btn btn-primary"><g:message
+                                                code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
+                                </g:each>
+                                <g:each in="${actions}" var="action">
+                                        <g:link controller="order" action="${action}" params="${['id': order.id]}"><g:message
+                                                code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
+                                </g:each>
+                            </div>
+                        </g:if>
                     </td>
                     <td>
                         <h3><g:message code="order.history"/></h3>

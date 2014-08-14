@@ -21,6 +21,7 @@ filterPriceOnChange=true
 customCheckout=true
 addedValueType=true
 customShoppingAlert=true
+disableTrackingActions=true
 ckeditor {
     upload {
         basedir = "/home/uploads/"
