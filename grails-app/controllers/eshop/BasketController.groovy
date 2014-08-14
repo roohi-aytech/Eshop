@@ -572,5 +572,9 @@ class BasketController {
         session['currentStep'] = params.int('id')
         render 0
     }
+    def payFromAccount(){
+        session['payFromAccount'] = params.payFromAccount
+        render 0
+    }
 
 }

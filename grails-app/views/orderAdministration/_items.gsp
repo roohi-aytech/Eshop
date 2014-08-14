@@ -4,6 +4,7 @@
 <table class="clear table-simulated" dir="rtl">
     <tr class="ui-widget-header">
         <th><g:message code="orderItem.product"/></th>
+        <th><g:message code="description"/></th>
         <th><g:message code="invoice.item.price"></g:message></th>
         <th><g:message code="invoice.item.addedValue"></g:message></th>
         <th><g:message code="invoice.item.realPrice"></g:message></th>
@@ -33,7 +34,13 @@
                 <g:each in="${orderItem.addedValues}">
                     + ${it}
                 </g:each>
+                <g:each in="${orderItem.addedValueInstances}">
+                    <div>
+                        ${it?.addedValue?.addedValueType?.title ?:''} ${it.addedValue}${it.description?"(${it.description})":''}${it.from?" - ${message(code:'addedValue.from')}: ${it.from}":''}${it.orderCount?" : ${it.orderCount}":''}
+                    </div>
+                </g:each>
             </td>
+            <td>${orderItem.description?:''}</td>
             <td><g:formatNumber number="${orderItem.baseUnitPrice}"
                                 type="number"/></td>
             <td><g:formatNumber number="${orderItem.addedValuesPrice}"
