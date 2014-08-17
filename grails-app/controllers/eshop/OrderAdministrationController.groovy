@@ -65,6 +65,9 @@ class OrderAdministrationController {
                 availableActions = [OrderHelper.ACTION_MARK_AS_INCORRECT, OrderHelper.ACTION_APPROVE]
                 break
             case OrderHelper.STATUS_UPDATING:
+                if(grailsApplication.config.payOnCheckout)
+                    availableActions = [OrderHelper.ACTION_APPROVE_PAYMENT, OrderHelper.ACTION_MARK_AS_NOT_EXIST]
+                else
                 availableActions = [OrderHelper.ACTION_INQUIRY, OrderHelper.ACTION_MARK_AS_NOT_EXIST]
                 break
             case OrderHelper.STATUS_NOT_EXIST:
@@ -391,6 +394,26 @@ class OrderAdministrationController {
         transaction.creator = order.customer
         transaction.save()
 
+        def bonDiscount = priceService.findDiscounts("Bon", order.totalPrice, order.items.sum {it.orderCount})
+        if(bonDiscount){
+            def boncustomerTransaction = new CustomerTransaction()
+            boncustomerTransaction.account = request.account
+            boncustomerTransaction.value = bonDiscount
+            boncustomerTransaction.date = new Date()
+            boncustomerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+            boncustomerTransaction.order = order
+            boncustomerTransaction.creator = order.customer
+            boncustomerTransaction.save()
+
+            //add transaction
+            def bontransaction = new Transaction()
+            bontransaction.account = request.account
+            bontransaction.value = bonDiscount
+            bontransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+            bontransaction.order = order
+            bontransaction.creator = order.customer
+            bontransaction.save()
+        }
         actOnOrder(
                 OrderHelper.STATUS_PAID,
                 OrderHelper.STATUS_PAYMENT_APPROVED,

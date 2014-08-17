@@ -8,8 +8,8 @@
 
 
                     <div class="header_user_info clearfix pull-right" id="header_user_info">
-                        <a rel="nofollow" href="#" class="terms_and_conditions">
-                            <g:message code="terms-and-conditions-goldaan"/>
+                        <a rel="nofollow" href="<g:createLink controller="site" action="shoppingRules" />" class="terms_and_conditions">
+                            <g:message code="rules.shoppingRules"/>
                         </a>
                         <sec:ifLoggedIn>
                             <a rel="nofollow" href="<g:createLink controller="logout" action="index" />" class="logout">
@@ -38,13 +38,13 @@
                             <ul>
                                 <li>
                                     <a rel="nofollow" title="Contact us"
-                                       href="#">
+                                       href="<g:createLink controller="site" action="contactUs" />">
                                         <g:message code="contact.label"/>
                                     </a>
                                 </li>
                                 <li>
                                     <a rel="nofollow" title="Delivery"
-                                       href="#">
+                                       href="<g:createLink controller="site" action="shoppingSteps" />">
                                         <g:message code="buy-help-goldaan"/>
                                     </a>
                                 </li>
