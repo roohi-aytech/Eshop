@@ -3,10 +3,10 @@
         <g:if test="${i % 3 == 0}">
             <div class="row">
         </g:if>
-        <g:set var="productModel" value="${eshop.ProductModel.get(productId)}"/>
+        <g:set var="productModel" value="${eshop.ProductModel.get(productId.modelId)}"/>
         <g:if test="${productModel}">
             <g:render template="/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail"
-                      model="[productModel: productModel]"/>
+                      model="[productModel: productModel, productId: productId.id, modelCount: productId.modelCount]"/>
         </g:if>
         <g:else>
             <span style="display: none">product id : ${productId}</span>

@@ -833,6 +833,7 @@ a img {
     float: right;
     margin-bottom: 15px;
     margin-left: 14px;
+    position: relative;
 }
 
 .row .four_column {
@@ -4327,5 +4328,24 @@ h2.check-out-price span {
 .bootstrap-select > .btn{
     padding-left: 25px;
     padding-right: 14px;
+}
+
+.modelCount-flag{
+    background: #ec1e20;
+    border-radius: 0.25em;
+    box-shadow: 0 0 0 white, 0 0 2px grey inset;
+    color: #fff;
+    display: inline;
+    font-size: 12px !important;
+    font-weight: 700;
+    left: 5px;
+    line-height: 1;
+    padding: 4px 10px 2px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 2px black;
+    top: 5px;
+    vertical-align: baseline;
+    white-space: nowrap;
 }
 
