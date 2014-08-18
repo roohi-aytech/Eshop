@@ -172,19 +172,18 @@ class OrderController {
             return
         }
         event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
-        def mailHtml=g.render(template: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
-        Thread.start {
-            mailService.sendMail {
-                to order.ownerEmail
-                subject message(code: 'emailTemplates.order_created.subject')
-                html(mailHtml)
-            }
+        mailService.sendMail {
+            to order.ownerEmail
+            subject message(code: 'emailTemplates.order_created.subject')
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                    model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
         }
+        def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
+        def mobile = order.ownerMobile
         Thread.start {
             messageService.sendMessage(
-                    order.ownerMobile,
-                    g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString())
+                    mobile,
+                    messageText)
         }
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
