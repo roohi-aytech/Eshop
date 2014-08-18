@@ -343,7 +343,7 @@ class EshopTagLib {
             out << """<div class="row">"""
             def counter = 0
             products.productIds.each {
-                def productModel = ProductModel.get(it)
+                def productModel = ProductModel.get(it.modelId)
                 if (productModel) {
                     counter++
                     out << render(template: "/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail", model: [product: productModel?.product, productModel: productModel, class: counter == 4 ? 'last' : ''])
