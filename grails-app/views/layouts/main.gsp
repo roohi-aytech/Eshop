@@ -148,5 +148,6 @@
     }
 </script>
 <g:render template="/events_push"/>
+<g:render template="/layouts/${grailsApplication.config.eShop.instance}/google_analytics"/>
 </body>
 </html>
