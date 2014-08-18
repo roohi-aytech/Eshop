@@ -19,8 +19,11 @@ editorReviewWidth=320
 customCustomerReviewTemplate=true
 filterPriceOnChange=true
 customCheckout=true
+payOnCheckout=true
 addedValueType=true
 customShoppingAlert=true
+disableTrackingActions=true
+notifyOnChangeStatus=true
 ckeditor {
     upload {
         basedir = "/home/uploads/"

@@ -1,5 +1,6 @@
 import eshop.EShopWebKeyGenerator
 import eshop.FelfelPdfService
+import eshop.GoldaanPdfService
 import eshop.ZanbilPdfService
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
 
@@ -12,6 +13,9 @@ beans = {
     }
     else if (grailsApplication.config.eShop.instance == 'zanbil') {
         pdfService(ZanbilPdfService) { bean -> bean.autowire = 'byName' }
+    }
+    else if (grailsApplication.config.eShop.instance == 'goldaan') {
+        pdfService(GoldaanPdfService) { bean -> bean.autowire = 'byName' }
     }
 
 

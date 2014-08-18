@@ -42,16 +42,17 @@
                 </li>
                 <li>
                     <a href="${createLink(controller: 'site', action: 'shoppingSteps')}"><g:message
-                            code="help.shoppingSteps"/></a>
+                            code="buy-help-goldaan"/></a>
                 </li>
                 <li>
                     <a href="${createLink(controller: 'site', action: 'paymentMethods')}"><g:message
                             code="help.payment"/></a>
                 </li>
-                <li>
-                    <a href="${createLink(controller: 'site', action: 'paymentAndDelivery')}"><g:message
-                            code="help.paymentAndDelivery"/></a>
-                </li>
+
+                %{--<li>--}%
+                    %{--<a href="${createLink(controller: 'site', action: 'paymentAndDelivery')}"><g:message--}%
+                            %{--code="help.paymentAndDelivery"/></a>--}%
+                %{--</li>--}%
             </ul>
         </div>
 
@@ -67,6 +68,10 @@
                 <li>
                     <a href="${createLink(controller: 'site', action: 'suppliers')}"><g:message
                             code="help.supplier"/></a>
+                </li>
+                <li>
+                    <a href="${createLink(controller: 'site', action: 'contactUs')}"><g:message
+                            code="contact.label"/></a>
                 </li>
             </ul>
         </div>

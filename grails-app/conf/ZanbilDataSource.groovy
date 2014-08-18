@@ -65,7 +65,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            dialect = "org.hibernate.dialect.MySQLMyISAMDialect"
+            dialect = "org.hibernate.dialect.MySQL5Dialect"
             jndiName = "java:comp/env/jdbc/EshopPool"
 
             properties {
