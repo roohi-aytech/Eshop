@@ -187,6 +187,9 @@ class ProductModelController {
 
         ProducerProductModel.list().findAll{it -> it.productModelId == productModelInstance.id}.each {it.delete(flush: true)}
 
+        productModelInstance.product.isSynchronized = false
+        productModelInstance.product.save()
+
         productModelInstance.delete(flush: true)
         render 0
     }
