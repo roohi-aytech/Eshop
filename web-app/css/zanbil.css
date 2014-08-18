@@ -3579,11 +3579,28 @@ a.btn.btn-inverse.dropdown-toggle + ul.dropdown-menu {
 }
 
 .showbiz .mediaholder.thumbnail img.flag {
-    width: 60px !important;
     height: 17px !important;
     margin: 5px 0 0 !important;
     padding: 0 !important;
     top: 0 !important;
+    width: 60px !important;
+    display: block;
+    float: right;
+}
+
+.showbiz .mediaholder.thumbnail .price {
+    display:block;
+}
+
+.showbiz .mediaholder.thumbnail .modelCount-flag{
+    color: #808080 !important;
+    display: block;
+    float: right;
+    font-size: 8px;
+    line-height: 20px;
+    margin-right: 10px;
+    padding-top: 3px;
+    font-weight: bold;
 }
 
 .showbiz .mediaholder.thumbnail.small img {
