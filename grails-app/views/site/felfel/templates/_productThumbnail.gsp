@@ -11,11 +11,7 @@
         <div class="product-name">
             <a title="${productModel}"
                href="${createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")}">
-                %{--<p>${productModel?.product?.productTypes?.find {--}%
-                    %{--true--}%
-                %{--}?.name ?: ""} ${productModel?.product?.type?.title ?: ""} ${productModel?.product?.brand?.name ?: ""} <g:message--}%
-                        %{--code="productModel"/> ${productModel?.name ?: ""}</p>--}%
-                <p>${productModel}</p>
+                <p>${productModel?.product}</p>
             </a>
         </div>
 
@@ -80,5 +76,11 @@
 
         </div>
     </div>
+
+    <g:if test="${modelCount > 1}">
+        <span class="modelCount-flag">
+            <g:message code="modelCount-flag" args="${[modelCount]}"/>
+        </span>
+    </g:if>
 </div>
 

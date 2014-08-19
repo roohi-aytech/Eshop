@@ -2,7 +2,7 @@
     <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
     <g:set var="price" value="${priceService.calcProductModelPrice(productModel.id)}"/>
     <g:set var="oldPrice" value="${priceService.calcProductModelOldPrice(productModel.id)}"/>
-    <g:if test="${price.showVal}">
+    <g:if test="${price.showVal && price.status == 'exists'}">
         <div class="action_block">
 
             <div class="action_block_left without_config ">

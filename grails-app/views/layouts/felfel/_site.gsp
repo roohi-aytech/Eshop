@@ -148,5 +148,6 @@
         });
     }
 </script>
+<g:render template="/layouts/felfel/google_analytics"/>
 </body>
 </html>

@@ -63,7 +63,7 @@ class BrowseService {
         match["displayInList"] = true
         (products.aggregate(
                 [$match: match],
-//                [$group: [_id: '$baseProductId', count: [$sum: 1]]],
+                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId']]],
                 [$group: [_id: null, count: [$sum: 1]]]
         ).results().collect { it.count }.find() ?: 0) / pageSize
     }
@@ -205,14 +205,11 @@ class BrowseService {
         def productIds = products.aggregate(
                 [$match: params.match],
                 [$sort: sortExpression],
+                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId'], modelCount: [$sum: 1]]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results()
-//                .unique{a, b -> a.baseProductId <=> b.baseProductId}
-                .collect { it.modelId }
-
-//        println('page size:' + params.pageSize)
-//        println('productIds:' + productIds)
+                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
 
         [totalPages: totalPages, productIds: productIds]
     }

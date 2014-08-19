@@ -5,11 +5,15 @@
         <img src="${createLink(controller: 'image', params: [id: productModel?.id, wh: '150x150', type: 'productModel'])}"/>
 
         <div class="title">
-            %{--<h4>${productModel?.product?.manualTitle ? productModel?.product?.pageTitle :--}%
-                %{--"<span>${productModel?.product?.productTypes?.find {true}?.name?:""} ${productModel?.product?.type?.title?:""} ${productModel?.product?.brand?.name?:""}</span><br/> ${message(code:'productModel')} ${productModel.name?:""}"}</h4>--}%
-            <h4>${productModel}</h4>
+            <h4>${productModel?.product?.manualTitle ? productModel?.product?.pageTitle :
+                "<span>${productModel?.product?.productTypes?.find {true}?.name?:""} ${productModel?.product?.type?.title?:""} ${productModel?.product?.brand?.name?:""}</span><br/> ${message(code:'productModel')} ${productModel.name?:""}"}</h4>
+            %{--<h4>${productModel}</h4>--}%
             <eshop:thumbnailPrice productModelId="${productModel?.id}" flag="true"/>
-            %{--<eshop:statusFlag productId="${product.id}"/>--}%
+
+            <span class="modelCount-flag">
+                <g:message code="modelCount-flag" args="${[modelCount]}"/>
+            </span>
+            <div class="clear-float"></div>
         </div>
 
         <div class="attributes scrollable"
