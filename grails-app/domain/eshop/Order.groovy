@@ -22,6 +22,7 @@ class Order {
 
     Address billingAddress
     Address sendingAddress
+    String deliveryTime
 
     DeliverySourceStation deliverySourceStation
     Double deliveryPrice = 0D
@@ -42,7 +43,7 @@ class Order {
     String deliveryTrackingCode
 
     transient Date getLastActionDate() {
-        if(this.id)
+        if (this.id)
             return OrderTrackingLog.findAllByOrder(this)?.sort { -it.id }?.find()?.date
         return null
     }
@@ -85,6 +86,7 @@ class Order {
         totalPayablePrice nullable: true
 
         serialNumber nullable: true
+        deliveryTime(nullable: true)
     }
 
     static mapping = {

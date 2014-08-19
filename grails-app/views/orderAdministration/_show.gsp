@@ -83,6 +83,16 @@
 
             </li>
         </g:if>
+        <g:if test="${orderInstance?.deliveryTime}">
+            <li class="fieldcontain">
+                <span id="deliveryTime-label" class="property-label"><g:message code="order.deliveryTime"
+                                                                                  default="DeliveryTime"/></span>
+
+                <span class="property-value"
+                      aria-labelledby="sendingAddress-label">${orderInstance?.deliveryTime?.encodeAsHTML()}</span>
+
+            </li>
+        </g:if>
 
         <g:if test="${orderInstance?.ownerEmail}">
             <li class="fieldcontain">
@@ -117,6 +127,17 @@
                     <div>${it}</div>
                 </g:each>
             </div>
+
+        </li>
+
+        <li class="fieldcontain">
+            <g:if test="${orderInstance?.sendFactorWith}">
+                <span id="sendFactorWith-label" class="property-label"><g:message code="sendFactorWith"/></span>
+            </g:if>
+            <g:else>
+                <span id="sendFactorWith-label" class="property-label"><g:message code="send-surprise"/></span>
+            </g:else>
+
 
         </li>
         <g:if test="${orderInstance?.deliverySourceStation}">
@@ -174,6 +195,7 @@
 
             </li>
         </g:if>
+
 
     </ol>
 </div>

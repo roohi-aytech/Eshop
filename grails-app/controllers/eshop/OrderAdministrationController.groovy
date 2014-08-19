@@ -321,27 +321,29 @@ class OrderAdministrationController {
             case 'online':
 
                 def payment = OnlinePayment.findAllByOrder(order)?.sort { -it.id }?.find()
-                paymentAmount += payment.amount
+                if(payment) {
+                    paymentAmount += payment.amount
 
-                //add customer transaction
-                def customerTransaction = new CustomerTransaction()
-                customerTransaction.account = payment.account
-                customerTransaction.value = payment.amount
-                customerTransaction.date = new Date()
-                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
-                customerTransaction.order = payment.order
-                customerTransaction.creator = payment.customer
-                customerTransaction.save()
+                    //add customer transaction
+                    def customerTransaction = new CustomerTransaction()
+                    customerTransaction.account = payment.account
+                    customerTransaction.value = payment.amount
+                    customerTransaction.date = new Date()
+                    customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+                    customerTransaction.order = payment.order
+                    customerTransaction.creator = payment.customer
+                    customerTransaction.save()
 
-                //add transaction
-                def transaction = new Transaction()
-                transaction.account = payment.account
-                transaction.value = payment.amount
-                transaction.date = new Date()
-                transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
-                transaction.order = payment.order
-                transaction.creator = payment.customer
-                transaction.save()
+                    //add transaction
+                    def transaction = new Transaction()
+                    transaction.account = payment.account
+                    transaction.value = payment.amount
+                    transaction.date = new Date()
+                    transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+                    transaction.order = payment.order
+                    transaction.creator = payment.customer
+                    transaction.save()
+                }
 
                 break
             case 'bank-receipt':

@@ -5,10 +5,15 @@
 
 <body>
 <p>&nbsp;</p>
-<div style='background:url("${resource(dir:'images', file: 'felfel-email-bg.png', absolute: true)}") no-repeat;width:360px;height:400px;font-family:Tahoma,serif;padding-top:177px;padding-right:120px;padding-left:120px;direction:rtl;margin:auto;'>
+<div style='width:360px;font-family:Tahoma,serif;padding-top:20px;padding-bottom:20px;padding-right:50px;padding-left:50px;direction:rtl;margin:auto;border:1px solid #EEEEEE'>
+    <div style="background: none repeat scroll 0 0 #FFFFFF;display: inline-block;font-family: eYekan,tahoma;font-size: 16px;padding: 0 5px;position: relative;right: -30px;top: -44px;">
+        <a href="<g:createLink uri="/" absolute="true"/>" >
+            <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" width="80px">
+        </a>
+    </div>
     <table>
         <tr>
-            <td style='height:200px;font-size:12px;line-height:24px;text-align:justify;font-family: tahoma,serif'>
+            <td style='font-size:12px;line-height:24px;text-align:justify;font-family: tahoma,serif'>
                 ${message}
             </td>
         </tr>

@@ -8,6 +8,9 @@
     </div>
     <table class="table-simulated">
         <tr>
+            <td colspan="2"><hr/></td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <input type="radio" ng-model="callBeforeSend" value="true">
                 <g:message code="call-before-send"/>
@@ -17,6 +20,21 @@
                 <br/>
                 <br/>
             </td>
+        </tr>
+        <tr>
+            <td colspan="2"><hr/></td>
+        </tr>
+        <tr>
+            <td>
+                <g:message code="delivery-time"/>
+            </td>
+            <td>
+
+                <rg:datePicker angular="true" minuteRange="${[0,15,30,45]}" hourRange="${(8..22)}" hm="true" name="deliveryDate"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><hr/></td>
         </tr>
         <tr>
             <td class="vertical-align-top">

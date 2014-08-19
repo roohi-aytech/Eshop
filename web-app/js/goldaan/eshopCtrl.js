@@ -14,6 +14,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.useGolBon = customerAccountValue>0;
     $scope.golbonDiscount = golbonDiscount;
     $scope.deliveryMethod = deliveryMethod;
+    $scope.deliveryMethodInfo = deliveryMethodInfo;
     $scope.buyerName = buyerName;
     $scope.buyerPhone = buyerPhone;
     $scope.buyerEmail = buyerEmail;
@@ -42,6 +43,9 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.specialSaleSlideSize = specialSaleSlideSize;
     $scope.specialSaleSlideWidth = specialSaleSlideWidth;
     $scope.specialSaleSlideHeight = specialSaleSlideHeight;
+    $scope.deliveryDate=deliveryDate;
+    $scope.deliveryDate_hour=deliveryDate_hour;
+    $scope.deliveryDate_minute=deliveryDate_minute;
 
 //    product cart
     $scope.reloadProductCart = function (url, serializedData, productCard) {
@@ -419,6 +423,8 @@ function updateDescriptionAndDeliverMethod() {
             url: contextRoot + 'basket/updateDescriptionAndDelivery',
             data: data,
             type: 'post'
+        }).success(function(res){
+            scope.deliveryMethodInfo=res;
         });
         $('.steps .selected').removeClass('selected');
         $('.step-content.selected').removeClass('selected');
@@ -464,6 +470,23 @@ function deliveryReview(){
 }
 function updateDeliveryInfo(){
     var scope = angular.element(document.getElementById('main-container')).scope();
+    scope.deliveryDate=$('#deliveryDate_control').val();
+    if(!scope.deliveryDate || !scope.deliveryDate_hour || !scope.deliveryDate_minute ){
+        showAlert('#deliveryDate_control','لطفا زمان تحویل را وارد فرمایید')
+        return false;
+    }
+    var deliveryInterval=0
+    if(scope.deliveryMethodInfo.minIntervalFromOrder)
+        deliveryInterval=scope.deliveryMethodInfo.minIntervalFromOrder;
+
+    var delivery=scope.deliveryDate.split('/');
+    var dates = jd_to_gregorian(persian_to_jd(parseInt(delivery[0]),parseInt(delivery[1]),parseInt(delivery[2])))
+    var deliveryTime=new Date(parseInt(dates[0]),parseInt(dates[1])-1,parseInt(dates[2]),parseInt(scope.deliveryDate_hour),parseInt(scope.deliveryDate_minute),0,0).getTime();
+    var diff=(deliveryTime-curDate)/1000/60/60;
+    if(diff<deliveryInterval){
+        showAlert('#deliveryDate_control','با توجه به نوع تحویل ('+scope.deliveryMethodInfo.name+') تاریخ وارد شده صحیح نمیباشد.')
+        return false;
+    }
     if(!scope.deliveryName){
         showAlert('#deliveryName','لطفا نام تحویل گیرنده را وارد فرمایید')
         return false;
@@ -481,7 +504,10 @@ function updateDeliveryInfo(){
             callBeforSend: scope.callBeforeSend,
             deliveryName: scope.deliveryName,
             deliveryAddressLine: scope.deliveryAddressLine,
-            deliveryPhone: scope.deliveryPhone
+            deliveryPhone: scope.deliveryPhone,
+            deliveryDate: scope.deliveryDate,
+            deliveryDate_hour: scope.deliveryDate_hour,
+            deliveryDate_minute: scope.deliveryDate_minute
         };
 
 

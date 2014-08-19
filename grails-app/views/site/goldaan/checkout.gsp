@@ -144,9 +144,21 @@
 <body>
 
 <div class="page-content" style="margin-top: 20px;">
-    <g:if test="${session.getAttribute("basket")?.size() > 0}">
+
+    <g:if test="${session.getAttribute("basket" )?.size() > 0}">
         <div class="row">
             <div class="span10">
+                <div class="checkout-header">
+                    <a href="<g:createLink uri="/"/>" >
+                        <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" class="logo">
+                    </a>
+                    <span class="checkout-header-title">
+                        <h3>
+                            <g:message code="checkout-title"/>
+                        </h3>
+                    </span>
+                </div>
+                <div class='clearfix'></div>
                 <div class="steps">
         <sec:ifLoggedIn>
             <g:set var="trclass" value="stp3"/>
@@ -218,13 +230,17 @@
                         <td>
                             <g:message code="deliveryMethod" />
                         </td>
+                        <td>
+                            <g:message code="delivery-time"/>
+                        </td>
                     </tr>
                     <tr>
                         <td>{{buyerName}}</td>
                         <td>{{buyerPhone}}</td>
                         <td>{{buyerEmail}}</td>
-                        <td><span ng-show="paymentType=='online'"><g:message code="payment.types.online" /></span><span ng-show="paymentType=='payInPlace'"><g:message code="payment.types.payInPlace" /></span></td>
-                        <td>{{deliveryTitle}}</td>
+                        <td><span ng-show="paymentType=='online'"><g:message code="payment.types.online" /></span><span ng-show="paymentType=='in-place'"><g:message code="payment.types.payInPlace" /></span></td>
+                        <td>{{deliveryMethodInfo.name}}</td>
+                        <td>{{deliveryDate_hour}}:{{deliveryDate_minute}} {{deliveryDate}}</td>
                     </tr>
                     <tr>
                         <td>
@@ -233,17 +249,17 @@
                         <td>
                             <g:message code="delivery-phone" />
                         </td>
-                        <td colspan="3">
+                        <td colspan="4">
                             <g:message code="delivery-address" />
                         </td>
                     </tr>
                     <tr>
                         <td>{{deliveryName}}</td>
                         <td>{{deliveryPhone}}</td>
-                        <td colspan="3">{{deliveryAddressLine}}</td>
+                        <td colspan="4">{{deliveryAddressLine}}</td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             <span ng-show="callBeforeSend"><g:message code="call-before-send"/></span>
                             <span ng-hide="callBeforeSend"><g:message code="send-surprise"/></span>
                         </td>
@@ -252,6 +268,7 @@
                                 <g:message code="sendFactorWith" />
                             </div>
                         </td>
+
                     </tr>
                 </table>
                 <div>

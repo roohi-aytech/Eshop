@@ -1,4 +1,4 @@
-<%@ page import="eshop.ProductService" %>
+<%@ page import="grails.converters.JSON; eshop.ProductService" %>
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" ng-app='eshop' xmlns:ng="http://angularjs.org" id="ng-app"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7" ng-app='eshop' xmlns:ng="http://angularjs.org" id="ng-app"> <![endif]-->
@@ -92,12 +92,15 @@
     </script>
     <script type="text/javascript">
         var cities=[];
+        var curDate=${new Date().getTime()}
         var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
         var basket = ${(session.getAttribute("basket")?: []) as grails.converters.JSON};
         var compareListCounter = ${session.getAttribute("compareListCounter") ?: 0};
         var compareList = ${(session.getAttribute("compareList")?: []) as grails.converters.JSON};
         var golbonDiscount=${session.getAttribute("bonDiscount")?:0}
         var deliveryMethod='${session.getAttribute("deliveryMethod")?:''}'
+        var deliveryMethodInfo=${(eshop.delivery.DeliveryMethod.get(session.getAttribute("deliveryMethod")?:'0') as grails.converters.JSON)?:'{}'};
+
         var deliveryPrice=${session.getAttribute("deliveryPrice")?:'-1'}
         var sendFactor=${session.getAttribute("sendFactor")?:false}
 
@@ -107,6 +110,9 @@
         var deliveryCity='${session.getAttribute("deliveryCity")?:''}'
         var deliveryName='${session.getAttribute("deliveryName")?:''}'
         var deliveryPhone='${session.getAttribute("deliveryPhone")?:''}'
+        var deliveryDate='${session.getAttribute("deliveryDate")?:''}'
+        var deliveryDate_hour='${session.getAttribute("deliveryDate_hour")?:''}'
+        var deliveryDate_minute='${session.getAttribute("deliveryDate_minute")?:''}'
         var callBeforeSend='${session.getAttribute("callBeforeSend")?:'true'}'
         var buyerPhone='${session.getAttribute("buyerPhone")?:''}'
         var buyerEmail='${session.getAttribute("buyerEmail")?:''}'
@@ -202,7 +208,9 @@
     <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'jquery.qtip.js')}"></script>
     <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'imagesloaded.js')}"></script>
 
-
+    <link href="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.css')}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.js')}"></script>
+    <script type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.fa.min.js')}"></script>
 </head>
 
 <body id="index" class="index hide-left-column hide-right-column lang_en " ng-controller="eshopCtrl">

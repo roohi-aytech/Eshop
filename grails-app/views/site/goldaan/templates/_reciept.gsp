@@ -71,7 +71,7 @@
             <div class="payment-type-title"><g:message code="payment.type" /></div>
             <span>
                 <span class="payment-type-item"><input type="radio" ng-model="paymentType" value="online"> <g:img dir="images/goldaan" file="online.png"/> <b><g:message code="payment.types.online" /></b> (<g:message code="online-pay-info" />)</span>
-                <span class="payment-type-item"><input type="radio" ng-model="paymentType" value="payInPlace"> <g:img dir="images/goldaan" file="money.png"/> <b><g:message code="payment.types.payInPlace" /></b> (<g:message code="money-pay-info" />)</span>
+                <span class="payment-type-item"><input type="radio" ng-model="paymentType" value="in-place"> <g:img dir="images/goldaan" file="money.png"/> <b><g:message code="payment.types.payInPlace" /></b> (<g:message code="money-pay-info" />)</span>
             </span>
         </div>
     </div>

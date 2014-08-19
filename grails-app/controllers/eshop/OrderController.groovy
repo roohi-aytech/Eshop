@@ -113,12 +113,14 @@ class OrderController {
         address.save()
         order.sendingAddress = address
         order.billingAddress = address
+        order.paymentType = session['paymentType']
+        order.sendFactorWith=Boolean.parseBoolean(session['sendFactor']?:'false')
 
 
         order.deliveryPrice = (session['deliveryPrice'] ?: '0') as double
         order.callBeforeSend = session['callBeforeSend']
         order.deliverySourceStation = eshop.delivery.DeliveryMethod.get(session['deliveryMethod'])?.sourceStations?.find()
-
+        order.deliveryTime = "${session['deliveryDate_hour']}:${session['deliveryDate_minute']} ${session['deliveryDate']}"
         order.status = OrderHelper.STATUS_CREATED
         order.save()
 

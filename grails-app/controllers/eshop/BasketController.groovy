@@ -13,6 +13,9 @@ class BasketController {
 
     def index() {
         session['currentStep'] = 1
+        def customer = springSecurityService.currentUser as Customer
+        def accountValue = customer ? accountingService.calculateCustomerAccountValue(customer) : 0
+        session['payFromAccount'] = accountValue > 0
         redirect(action: 'checkout')
     }
 
@@ -536,7 +539,8 @@ class BasketController {
         session.setAttribute('deliveryMethod', params.deliveryMethod)
         session.setAttribute('deliveryPrice', params.deliveryPrice)
         session['currentStep'] = 2
-        render 0
+        def deliveryMethod = DeliveryMethod.get(params.deliveryMethod)
+        render(deliveryMethod as JSON)
     }
 
     def updateBuyerAndPaymentTypeAndSendFactor() {
@@ -546,20 +550,25 @@ class BasketController {
         session['currentStep'] = 3
         render 0
     }
-    def updateDeliveryInfo(){
-        session['callBeforeSend']=params.callBeforeSend
-        session['deliveryName']=params.deliveryName
-        session['deliveryPhone']=params.deliveryPhone
-        session['deliveryAddressLine']=params.deliveryAddressLine
-        session['deliveryCity']=params.deliveryCity
-        def customer=springSecurityService.currentUser as Customer
-        if(!customer)
-            session['currentStep']=4
+
+    def updateDeliveryInfo() {
+        session['callBeforeSend'] = params.callBeforeSend
+        session['deliveryName'] = params.deliveryName
+        session['deliveryPhone'] = params.deliveryPhone
+        session['deliveryAddressLine'] = params.deliveryAddressLine
+        session['deliveryCity'] = params.deliveryCity
+        session['deliveryDate'] = params.deliveryDate
+        session['deliveryDate_hour'] = params.deliveryDate_hour
+        session['deliveryDate_minute'] = params.deliveryDate_minute
+        def customer = springSecurityService.currentUser as Customer
+        if (!customer)
+            session['currentStep'] = 4
         render 0
     }
-    def updateBuyerInfo(){
-        session['buyerPhone']=params.buyerPhone
-        session['buyerEmail']=params.buyerEmail
+
+    def updateBuyerInfo() {
+        session['buyerPhone'] = params.buyerPhone
+        session['buyerEmail'] = params.buyerEmail
         render 0
     }
 
@@ -572,7 +581,8 @@ class BasketController {
         session['currentStep'] = params.int('id')
         render 0
     }
-    def payFromAccount(){
+
+    def payFromAccount() {
         session['payFromAccount'] = params.payFromAccount
         render 0
     }

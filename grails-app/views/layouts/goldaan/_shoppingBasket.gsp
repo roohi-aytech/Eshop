@@ -64,7 +64,7 @@
     </script>
 
     <sec:ifLoggedIn>
-        <common:link class="btn-shop" controller="basket" action="checkout" https="${false}">
+        <common:link class="btn-shop" controller="basket" action="index" https="${false}">
             <g:message code="basket.show"/>
         </common:link>
     </sec:ifLoggedIn>

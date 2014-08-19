@@ -17,6 +17,7 @@ import eshop.accounting.PaymentRequest
 
 class GoldaanPdfService {
     def grailsApplication
+    def priceService
     def rg
 
     def generateInvoice(Order order, OutputStream outputStream, Boolean useBackground) {
@@ -67,7 +68,7 @@ class GoldaanPdfService {
                 writer.directContent)
         addText(
                 25f, 805f, 60f, 20f,
-                rg.formatJalaliDate(date: OrderTrackingLog.findByOrderAndAction(order, OrderHelper.ACTION_INQUIRY).date),
+                rg.formatJalaliDate(date: OrderTrackingLog.findByOrderAndAction(order, OrderHelper.ACTION_APPROVE_PAYMENT).date),
                 fontPersianBlack,
                 writer.directContent)
 
@@ -149,72 +150,94 @@ class GoldaanPdfService {
                 order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : g.message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName,
                 fontPersianBlack,
                 writer.directContent)
-
-        //owner code
+        //mobile
         addText(
                 145f, 514f, 75f, 20f,
-                g.message(code: 'invoice.ownerCode') + ":",
+                g.message(code: 'invoice.owner.mobile') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 514f, 93f, 20f,
-                order.ownerCode,
+                118, 514f, 60f, 20f,
+                order.ownerMobile,
+                fontPersianBlack,
+                writer.directContent)
+
+//        //owner code
+//        addText(
+//                145f, 514f, 75f, 20f,
+//                g.message(code: 'invoice.ownerCode') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                50f, 514f, 93f, 20f,
+//                order.ownerCode,
+//                fontPersianBlack,
+//                writer.directContent)
+
+        //delivery name
+        addText(
+                441f, 494f, 90f, 20f,
+                g.message(code: 'invoice.deliveryName') + ":",
+                fontPersianGrey,
+                writer.directContent)
+        addText(
+                217f, 494f, 250f, 20f,
+                order.sendingAddress.title,
+                fontPersianBlack,
+                writer.directContent)
+
+        //delivery telephone
+        addText(
+                150f, 494f, 70f, 20f,
+                g.message(code: 'invoice.deliveryPhone') + ":",
+                fontPersianGrey,
+                writer.directContent)
+        addText(
+                92f, 494f, 60f, 20f,
+                order.sendingAddress.telephone,
                 fontPersianBlack,
                 writer.directContent)
 
         //owner address
         addText(
-                479f, 494f, 52f, 20f,
+                479f, 474f, 52f, 20f,
                 g.message(code: 'invoice.sendingAddress') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                50f, 494f, 427f, 20f,
-                g.message(code: "province") + " " + order.sendingAddress.city.province.title + " - " +
-                        g.message(code: "city") + " " + order.sendingAddress.city.title + " - " +
-                        order.sendingAddress.addressLine1 + " " + (order.sendingAddress.addressLine2 ? order.sendingAddress.addressLine2 : ""),
+                50f, 474f, 427f, 20f,
+                order.sendingAddress.addressLine1 + " " + (order.sendingAddress.addressLine2 ? order.sendingAddress.addressLine2 : ""),
                 fontPersianBlack,
                 writer.directContent)
 
         //postal code
-        addText(
-                497f, 474f, 34f, 20f,
-                g.message(code: 'invoice.postalCode') + ":",
-                fontPersianGrey,
-                writer.directContent)
-        addText(
-                372f, 474f, 123f, 20f,
-                order.sendingAddress.postalCode,
-                fontPersianBlack,
-                writer.directContent)
+//        addText(
+//                497f, 474f, 34f, 20f,
+//                g.message(code: 'invoice.postalCode') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                372f, 474f, 123f, 20f,
+//                order.sendingAddress.postalCode,
+//                fontPersianBlack,
+//                writer.directContent)
 
         //telephone
-        addText(
-                340f, 474f, 20f, 20f,
-                g.message(code: 'invoice.owner.telephone') + ":",
-                fontPersianGrey,
-                writer.directContent)
-        addText(
-                232f, 474f, 106f, 20f,
-                order.ownerTelephone,
-                fontPersianBlack,
-                writer.directContent)
+//        addText(
+//                340f, 474f, 20f, 20f,
+//                g.message(code: 'invoice.owner.telephone') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                232f, 474f, 106f, 20f,
+//                order.ownerTelephone,
+//                fontPersianBlack,
+//                writer.directContent)
 
-        //mobile
-        addText(
-                180f, 474f, 40f, 20f,
-                g.message(code: 'invoice.owner.mobile') + ":",
-                fontPersianGrey,
-                writer.directContent)
-        addText(
-                50f, 474f, 128f, 20f,
-                order.ownerMobile,
-                fontPersianBlack,
-                writer.directContent)
 
-        def table = new PdfPTable(8)
+        def table = new PdfPTable(6)
         table.setTotalWidth(500)
-        table.setWidths([4, 4, 1.5, 3, 3.5, 12, 2, 1.5] as float[])
+        table.setWidths([4, 4, 1.5, 3.5, 12, 1.5] as float[])
 
         def highLightColor = new BaseColor(238, 238, 238)
 
@@ -222,31 +245,39 @@ class GoldaanPdfService {
         table.addCell(createCell("${g.message(code: 'invoice.item.totalPrice')} (${e.currencyLabel()})", fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.tax'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.count'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.message(code: 'invoice.item.discount'), fontPersianBlack, highLightColor, 1, 1))
+//        table.addCell(createCell(g.message(code: 'invoice.item.discount'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.price'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.name'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.message(code: 'invoice.productCode'), fontPersianBlack, highLightColor, 1, 1))
+//        table.addCell(createCell(g.message(code: 'invoice.productCode'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.rowNumber'), fontPersianBlack, highLightColor, 1, 1))
 
         //items
         OrderItem.findAllByOrderAndDeleted(order, false).sort { it.id }.eachWithIndex { orderItem, i ->
 
-            def description = "${orderItem?.productModel?.product?.productTypes?.find { true }?.name ?: ""} ${orderItem?.productModel?.product?.type?.title ?: ""} ${orderItem?.productModel?.product?.brand?.name ?: ""} ${orderItem?.productModel?.variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} ${orderItem?.productModel?.name ?"مدل ${orderItem?.productModel?.name}": ""}"
+            def description = "${orderItem?.productModel?.product?.pageTitle ?: ""} ${orderItem?.productModel?.product?.type?.title ?: ""} ${orderItem?.productModel?.product?.brand?.name ?: ""} ${orderItem?.productModel?.variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} ${orderItem?.productModel?.name ? "مدل ${orderItem?.productModel?.name}" : ""}"
             orderItem.addedValues.each { description += " + " + it }
+            orderItem.addedValueInstances.each { description += " + " + it.addedValue }
+
             table.addCell(createCell(g.formatNumber(number: orderItem.totalPrice, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(g.formatNumber(number: orderItem.tax, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(g.formatNumber(number: orderItem.orderCount, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
-            table.addCell(createCell(g.formatNumber(number: orderItem.discount, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
+//            table.addCell(createCell(g.formatNumber(number: orderItem.discount, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(g.formatNumber(number: orderItem.unitPrice, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(description, fontComplexBlack, BaseColor.WHITE, 1, 1))
-            table.addCell(createCell(g.formatNumber(number: orderItem.productModel.product.id, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
+//            table.addCell(createCell(g.formatNumber(number: orderItem.productModel.product.id, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(i + 1, fontPersianBlack, BaseColor.WHITE, 1, 1))
         }
 
         //total rows
-        table.addCell(createCell(g.formatNumber(number: order.items.sum { it.totalPrice }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.formatNumber(number: order.items.sum { it.tax }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.formatNumber(number: order.items.sum { it.orderCount }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell(g.formatNumber(number: order.items.sum {
+            it.totalPrice
+        }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell(g.formatNumber(number: order.items.sum {
+            it.tax
+        }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell(g.formatNumber(number: order.items.sum {
+            it.orderCount
+        }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: "invoice.item.totalSum"), fontPersianBlack, highLightColor, 5, 1))
 
         def paymentRequest = PaymentRequest.findAllByOrder(order)?.sort { -it.id }?.toArray()?.find() as PaymentRequest
@@ -276,8 +307,24 @@ class GoldaanPdfService {
 
         table.addCell(createCell(g.formatNumber(number: order.usedAccountValue, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.customerAccount'), fontPersianBlack, BaseColor.WHITE, 2, 1))
-        cell = createCell(g.message(code: "invoice.deliveryType") + ": " +
-                g.message(code: "invoice.deliveryType.label") + " " + order.deliverySourceStation.method.toString(), fontPersianBlack, BaseColor.WHITE, 5, 1)
+
+        //bon discount
+        def bonDiscount = priceService?.findDiscounts("Bon", order.totalPrice, order.items.sum { it.orderCount })
+        if (order.customer && bonDiscount) {
+            def currency = Currency.findByDisplay(true)
+            def currencyLabel = g.message(code: 'rial')
+            if (currency)
+                currencyLabel = currency?.name
+            cell = createCell(g.message(code: 'invoice.golbon.assign', args: [
+                    g.formatNumber(number:bonDiscount ,type:'number')+' '+ currencyLabel]), fontPersianBlack, BaseColor.WHITE, 5, 1)
+
+        } else {
+            cell = createCell('', fontPersianBlack, BaseColor.WHITE, 5, 1)
+        }
+//        cell = createCell(g.message(code: "invoice.deliveryType") + ": " +
+//                g.message(code: "invoice.deliveryType.label") + " " + order.deliverySourceStation.method.toString(), fontPersianBlack, BaseColor.WHITE, 5, 1)
+
+
         cell.setBorderWidthTop(0)
         cell.setBorderWidthBottom(0)
         table.addCell(cell)
@@ -291,10 +338,10 @@ class GoldaanPdfService {
 
         //descriptions
         table.addCell(createDescriptionCell(g.message(code: 'invoice.description'), fontPersianBlackBold, 8, Element.ALIGN_LEFT, 0, 0))
-        table.addCell(createDescriptionCell("1. " + g.message(code: 'invoice.description.1'), fontPersianBlack, 8, Element.ALIGN_LEFT, 20, 0))
+        table.addCell(createDescriptionCell("1. " + g.message(code: "invoice.deliveryType", args:[order.deliverySourceStation.method.toString()]) , fontPersianBlack, 7, Element.ALIGN_LEFT, 20, 0))
         table.addCell(createDescriptionCell("2. " + g.message(code: 'invoice.description.2'), fontPersianBlack, 8, Element.ALIGN_LEFT, 20, 0))
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: ['........................']), fontPersianBlack, 8, Element.ALIGN_LEFT, 0, 0))
-        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign'), fontPersianBlack, 8, Element.ALIGN_RIGHT, 0, 80))
+        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign')+' '+rg.formatJalaliDate(date: order.lastActionDate).split('/').reverse().join('/'), fontPersianBlack, 8, Element.ALIGN_RIGHT, 0, 80))
 
         table.writeSelectedRows(0, -1, 0, -1, 40, 460, writer.directContent)
 
@@ -340,11 +387,11 @@ class GoldaanPdfService {
                 g.message(code: 'invoice.date') + ":",
                 fontPersianWhite,
                 writer.directContent)
-//        addText(
-//                25f, 805f, 60f, 20f,
-//                rg.formatJalaliDate(date: OrderTrackingLog.findByOrderAndAction(order, OrderHelper.ACTION_INQUIRY).date),
-//                fontPersianBlack,
-//                writer.directContent)
+        addText(
+                25f, 805f, 60f, 20f,
+                rg.formatJalaliDate(date: OrderTrackingLog.findByOrderAndAction(order, OrderHelper.ACTION_APPROVE_PAYMENT).date),
+                fontPersianBlack,
+                writer.directContent)
 
         //serial number
 
@@ -396,102 +443,141 @@ class GoldaanPdfService {
                 order.useAlternateInformation ? order.alternateOwnerName : (order.customer ? '' : g.message(code: "customer.title." + order.ownerSex) + " ") + order.ownerName,
                 fontPersianBlack,
                 writer.directContent)
-
-        //owner code
+        //mobile
         addText(
                 145f, 544f, 75f, 20f,
-                g.message(code: 'invoice.ownerCodeWithoutAddedValue') + ":",
+                g.message(code: 'invoice.owner.mobile') + ":",
                 fontPersianGrey,
                 writer.directContent)
         addText(
-                100f, 544f, 93f, 20f,
-                order.ownerCode,
+                118, 544f, 60f, 20f,
+                order.ownerMobile,
+                fontPersianBlack,
+                writer.directContent)
+
+//        //owner code
+//        addText(
+//                145f, 514f, 75f, 20f,
+//                g.message(code: 'invoice.ownerCode') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                50f, 514f, 93f, 20f,
+//                order.ownerCode,
+//                fontPersianBlack,
+//                writer.directContent)
+
+        //delivery name
+        addText(
+                441f, 524f, 90f, 20f,
+                g.message(code: 'invoice.deliveryName') + ":",
+                fontPersianGrey,
+                writer.directContent)
+        addText(
+                217f, 524f, 250f, 20f,
+                order.sendingAddress.title,
+                fontPersianBlack,
+                writer.directContent)
+
+        //delivery telephone
+        addText(
+                150f, 524f, 70f, 20f,
+                g.message(code: 'invoice.deliveryPhone') + ":",
+                fontPersianGrey,
+                writer.directContent)
+        addText(
+                92f, 524f, 60f, 20f,
+                order.sendingAddress.telephone,
                 fontPersianBlack,
                 writer.directContent)
 
         //owner address
         addText(
-                479f, 524f, 52f, 20f,
+                479f, 504f, 52f, 20f,
                 g.message(code: 'invoice.sendingAddress') + ":",
                 fontPersianGrey,
                 writer.directContent)
+        addText(
+                50f, 504f, 427f, 20f,
+                order.sendingAddress.addressLine1 + " " + (order.sendingAddress.addressLine2 ? order.sendingAddress.addressLine2 : ""),
+                fontPersianBlack,
+                writer.directContent)
+
+//        //postal code
 //        addText(
-//                50f, 524f, 427f, 20f,
-//                g.message(code: "province") + " " + order.sendingAddress.city.province.title + " - " +
-//                        g.message(code: "city") + " " + order.sendingAddress.city.title + " - " +
-//                        order.sendingAddress.addressLine1 + " " + (order.sendingAddress.addressLine2 ? order.sendingAddress.addressLine2 : ""),
+//                497f, 504f, 34f, 20f,
+//                g.message(code: 'invoice.postalCode') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                372f, 504f, 123f, 20f,
+//                order.sendingAddress.postalCode,
 //                fontPersianBlack,
 //                writer.directContent)
 
-        //postal code
-        addText(
-                497f, 504f, 34f, 20f,
-                g.message(code: 'invoice.postalCode') + ":",
-                fontPersianGrey,
-                writer.directContent)
-        addText(
-                372f, 504f, 123f, 20f,
-                order.sendingAddress.postalCode,
-                fontPersianBlack,
-                writer.directContent)
+//        //telephone
+//        addText(
+//                340f, 504f, 20f, 20f,
+//                g.message(code: 'invoice.owner.telephone') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                232f, 504f, 106f, 20f,
+//                order.ownerTelephone,
+//                fontPersianBlack,
+//                writer.directContent)
 
-        //telephone
-        addText(
-                340f, 504f, 20f, 20f,
-                g.message(code: 'invoice.owner.telephone') + ":",
-                fontPersianGrey,
-                writer.directContent)
-        addText(
-                232f, 504f, 106f, 20f,
-                order.ownerTelephone,
-                fontPersianBlack,
-                writer.directContent)
+//        //mobile
+//        addText(
+//                180f, 504f, 40f, 20f,
+//                g.message(code: 'invoice.owner.mobile') + ":",
+//                fontPersianGrey,
+//                writer.directContent)
+//        addText(
+//                50f, 504f, 128f, 20f,
+//                order.ownerMobile,
+//                fontPersianBlack,
+//                writer.directContent)
 
-        //mobile
-        addText(
-                180f, 504f, 40f, 20f,
-                g.message(code: 'invoice.owner.mobile') + ":",
-                fontPersianGrey,
-                writer.directContent)
-        addText(
-                50f, 504f, 128f, 20f,
-                order.ownerMobile,
-                fontPersianBlack,
-                writer.directContent)
-
-        def table = new PdfPTable(7)
+        def table = new PdfPTable(5)
         table.setTotalWidth(500)
-        table.setWidths([4, 1.5, 3, 3.5, 12, 2, 1.5] as float[])
+
+        table.setWidths([4, 1.5, 3.5, 12, 1.5] as float[])
 
         def highLightColor = new BaseColor(238, 238, 238)
 
         //header
         table.addCell(createCell("${g.message(code: 'invoice.item.totalPrice')} (${e.currencyLabel()})", fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.count'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.message(code: 'invoice.item.discount'), fontPersianBlack, highLightColor, 1, 1))
+//        table.addCell(createCell(g.message(code: 'invoice.item.discount'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.price'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.item.name'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.message(code: 'invoice.productCode'), fontPersianBlack, highLightColor, 1, 1))
+//        table.addCell(createCell(g.message(code: 'invoice.productCode'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.rowNumber'), fontPersianBlack, highLightColor, 1, 1))
 
         //items
         OrderItem.findAllByOrderAndDeleted(order, false).sort { it.id }.eachWithIndex { orderItem, i ->
 
-            def description = "${orderItem?.productModel?.product?.productTypes?.find { true }?.name ?: ""} ${orderItem?.productModel?.product?.type?.title ?: ""} ${orderItem?.productModel?.product?.brand?.name ?: ""} ${orderItem?.productModel?.variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} ${orderItem?.productModel?.name ?"مدل ${orderItem?.productModel?.name}": ""}"
+            def description = "${orderItem?.productModel?.product?.pageTitle?: ""} ${orderItem?.productModel?.product?.type?.title ?: ""} ${orderItem?.productModel?.product?.brand?.name ?: ""} ${orderItem?.productModel?.variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} ${orderItem?.productModel?.name ? "مدل ${orderItem?.productModel?.name}" : ""}"
             orderItem.addedValues.each { description += " + " + it }
+            orderItem.addedValueInstances.each { description += " + " + it.addedValue }
 
             table.addCell(createCell(g.formatNumber(number: orderItem.totalPrice, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(g.formatNumber(number: orderItem.orderCount, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
-            table.addCell(createCell(g.formatNumber(number: orderItem.discount, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
+//            table.addCell(createCell(g.formatNumber(number: orderItem.discount, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(g.formatNumber(number: orderItem.unitPrice, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(description, fontComplexBlack, BaseColor.WHITE, 1, 1))
-            table.addCell(createCell(g.formatNumber(number: orderItem.productModel.product.id, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
+//            table.addCell(createCell(g.formatNumber(number: orderItem.productModel.product.id, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
             table.addCell(createCell(i + 1, fontPersianBlack, BaseColor.WHITE, 1, 1))
         }
 
         //total rows
-        table.addCell(createCell(g.formatNumber(number: order.items.sum { it.totalPrice }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
-        table.addCell(createCell(g.formatNumber(number: order.items.sum { it.orderCount }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell(g.formatNumber(number: order.items.sum {
+            it.totalPrice
+        }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
+        table.addCell(createCell(g.formatNumber(number: order.items.sum {
+            it.orderCount
+        }, type: 'number'), fontPersianBlack, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: "invoice.item.totalSum"), fontPersianBlack, highLightColor, 5, 1))
 
         def paymentRequest = PaymentRequest.findAllByOrder(order)?.sort { -it.id }?.toArray()?.find() as PaymentRequest
@@ -521,11 +607,26 @@ class GoldaanPdfService {
 
         table.addCell(createCell(g.formatNumber(number: order.usedAccountValue, type: 'number'), fontPersianBlack, BaseColor.WHITE, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.customerAccount'), fontPersianBlack, BaseColor.WHITE, 2, 1))
-        cell = createCell(g.message(code: "invoice.deliveryType") + ": " +
-                g.message(code: "invoice.deliveryType.label") + " " + order.deliverySourceStation.method.toString(), fontPersianBlack, BaseColor.WHITE, 4, 1)
+
+        //bon discount
+        def bonDiscount = priceService?.findDiscounts("Bon", order.totalPrice, order.items.sum { it.orderCount })
+        if (order.customer && bonDiscount) {
+            def currency = Currency.findByDisplay(true)
+            def currencyLabel = g.message(code: 'rial')
+            if (currency)
+                currencyLabel = currency?.name
+            cell = createCell(g.message(code: 'invoice.golbon.assign', args: [
+                    g.formatNumber(number:bonDiscount ,type:'number')+' '+ currencyLabel]), fontPersianBlack, BaseColor.WHITE, 4, 1)
+
+        } else {
+            cell = createCell('', fontPersianBlack, BaseColor.WHITE, 4, 1)
+        }
+//        cell = createCell(g.message(code: "invoice.deliveryType") + ": " +
+//                g.message(code: "invoice.deliveryType.label") + " " + order.deliverySourceStation.method.toString(), fontPersianBlack, BaseColor.WHITE, 4, 1)
         cell.setBorderWidthTop(0)
         cell.setBorderWidthBottom(0)
         table.addCell(cell)
+
 
         table.addCell(createCell(g.formatNumber(number: order.totalPayablePrice, type: 'number'), fontPersianBlackBold, highLightColor, 1, 1))
         table.addCell(createCell(g.message(code: 'invoice.remainingPayablePrice'), fontPersianBlackBold, highLightColor, 2, 1))
@@ -536,10 +637,10 @@ class GoldaanPdfService {
 
         //descriptions
         table.addCell(createDescriptionCell(g.message(code: 'invoice.description'), fontPersianBlackBold, 7, Element.ALIGN_LEFT, 0, 0))
-        table.addCell(createDescriptionCell("1. " + g.message(code: 'invoice.description.1'), fontPersianBlack, 7, Element.ALIGN_LEFT, 20, 0))
+        table.addCell(createDescriptionCell("1. " + g.message(code: "invoice.deliveryType", args:[order.deliverySourceStation.method.toString()]) , fontPersianBlack, 7, Element.ALIGN_LEFT, 20, 0))
         table.addCell(createDescriptionCell("2. " + g.message(code: 'invoice.description.2'), fontPersianBlack, 7, Element.ALIGN_LEFT, 20, 0))
         table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation', args: ['........................']), fontPersianBlack, 7, Element.ALIGN_LEFT, 0, 0))
-        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign'), fontPersianBlack, 7, Element.ALIGN_RIGHT, 0, 80))
+        table.addCell(createDescriptionCell(g.message(code: 'invoice.aggreegation.sign')+' '+rg.formatJalaliDate(date: order.lastActionDate).split('/').reverse().join('/'), fontPersianBlack, 7, Element.ALIGN_RIGHT, 0, 80))
 
         table.writeSelectedRows(0, -1, 0, -1, 40, 490, writer.directContent)
 
