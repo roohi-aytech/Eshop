@@ -104,7 +104,6 @@ class OrderController {
             order.ownerMobile = session['buyerPhone']
 //            order.ownerTelephone = session['buyerPhone']
         }
-        order.sendFactorWith = session['sendFactor'] as boolean
         Address address = new Address()
         address.addressLine1 = session['deliveryAddressLine']
         address.telephone = session['deliveryPhone']
@@ -191,11 +190,28 @@ class OrderController {
         session.setAttribute("basketCounter", 0)
         session.removeAttribute("order")
         session.removeAttribute("sendingAddress")
+        session.removeAttribute('buyerName')
+        session.removeAttribute('buyerEmail')
+        session.removeAttribute('buyerPhone')
+        session.removeAttribute('sendFactor')
+        session.removeAttribute('deliveryAddressLine')
+        session.removeAttribute('deliveryPhone')
+        session.removeAttribute('deliveryCity')
+        session.removeAttribute('deliveryName')
+        session.removeAttribute('paymentType')
+        session.removeAttribute('deliveryPrice')
+        session.removeAttribute('callBeforeSend')
+        session.removeAttribute('deliveryMethod')
+        session.removeAttribute('deliveryDate_hour')
+        session.removeAttribute('deliveryDate_minute')
+        session.removeAttribute('deliveryDate')
+        session.removeAttribute('payFromAccount')
         session.removeAttribute("billingAddress")
         session.removeAttribute("checkout_customerInformation")
         session.removeAttribute("checkout_address")
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
+
         render(view: 'create', model: [trackingCode: order.trackingCode])
     }
 
