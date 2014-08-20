@@ -19695,3 +19695,18 @@ display: inline-block;
     background:none !important;
     cursor:text !important;
 }
+.sortFilterSelect{
+    width:100%;
+}
+.nav-list > li > a, .nav-list .nav-header{
+    margin-left:-10px;
+}
+.nav-list > .active > a, .nav-list > .active > a:hover{
+    background-color:#e4752b;
+}
+.test-version{
+    color: #555555;
+    position: relative;
+    right: -126px;
+    top: 49px;
+}

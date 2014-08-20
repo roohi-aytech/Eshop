@@ -176,6 +176,7 @@
             $('#product-card').html('${message(code: 'waiting')}');
             angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
         }
+
     </script>
 
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"--}%
@@ -211,6 +212,7 @@
     <link href="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.css')}" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.js')}"></script>
     <script type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.fa.min.js')}"></script>
+
 </head>
 
 <body id="index" class="index hide-left-column hide-right-column lang_en " ng-controller="eshopCtrl">
