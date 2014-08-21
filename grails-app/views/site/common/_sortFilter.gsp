@@ -27,7 +27,12 @@
         <g:if test="${actionName == 'search'}">
         url = '${createLink(action: 'search', params: [f: params.f, phrase: params.phrase, sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
-        $('.sortFilterSelect').selectpicker().change(function(){
+        try {
+            $('.sortFilterSelect').selectpicker();
+        }catch (x){
+            console.log(x);
+        }
+        $('.sortFilterSelect').change(function(){
             window.location.href = url.replace('sortField', $('#sortField').val()).replace('sortDirection', $('#sortDirection').val())
         })
 

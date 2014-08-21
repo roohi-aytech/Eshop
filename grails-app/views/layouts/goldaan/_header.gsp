@@ -15,6 +15,12 @@
                             <a rel="nofollow" href="<g:createLink controller="logout" action="index" />" class="logout">
                                 <g:message code="logout"/>
                             </a>
+                            <g:link controller="customer" action="profile">
+                                    <g:message code="profile"/>
+                            </g:link>
+                            <span>
+                                <common:userFullName/>
+                            </span>
                         </sec:ifLoggedIn>
                         <sec:ifNotLoggedIn>
                             <a rel="nofollow" href="<g:createLink controller="customer" action="register" />" class="sing_up">
@@ -24,6 +30,7 @@
                                 <g:message code="login-goldaan"/>
                             </a>
                         </sec:ifNotLoggedIn>
+
 
                     </div>
                     <dl class="stlinkgroups_top pull-right dropdown_wrap first-item  hidden-xs " id="multilink_1">

@@ -28,8 +28,10 @@ class DeliveryMethodController {
         if (params.id) {
             deliveryMethodInstance = DeliveryMethod.get(params.id)
             deliveryMethodInstance.properties = params
-        } else
+        } else {
             deliveryMethodInstance = new DeliveryMethod(params)
+        }
+        deliveryMethodInstance.minIntervalFromOrder=params.int('minIntervalFromOrder')
         if (deliveryMethodInstance.validate() && deliveryMethodInstance.save()) {
             render deliveryMethodInstance as JSON
         } else

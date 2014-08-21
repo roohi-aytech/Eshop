@@ -1,7 +1,7 @@
 package eshop
 
 class CommonTagLib {
-
+    def springSecurityService
     static namespace = "common"
 
     def loginLink = { attrs, body ->
@@ -50,5 +50,7 @@ class CommonTagLib {
             out << g.link(attrs, body)
     }
 
-
+    def userFullName = { attr, body ->
+        out << springSecurityService.currentUser
+    }
 }

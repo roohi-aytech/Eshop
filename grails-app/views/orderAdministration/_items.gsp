@@ -16,7 +16,12 @@
     <g:each in="${order.items.findAll {!it.deleted}}" var="orderItem">
         <tr>
             <td>
-                ${orderItem.productModel}
+                <g:if test="${grailsApplication.config.eShop.instance == 'goldaan'}">
+                    ${orderItem?.productModel?.product?.pageTitle ?: ""} ${orderItem?.productModel?.product?.type?.title ?: ""} ${orderItem?.productModel?.product?.brand?.name ?: ""} ${orderItem?.productModel?.variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} ${orderItem?.productModel?.name ? "مدل ${orderItem?.productModel?.name}" : ""}
+                </g:if>
+                <g:else>
+                    ${orderItem.productModel}
+                </g:else>
                 <g:if test="${orderItem.productModel.variationValues?.size() > 0}">
                     <g:each in="${orderItem.productModel.variationValues}" var="variationValue" status="index">
                         <g:if test="${index == 0}">

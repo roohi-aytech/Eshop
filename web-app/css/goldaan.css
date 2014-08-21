@@ -1933,7 +1933,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .nav-tabs > li {
-    float: left;
+    float: right;
+    margin-top:10px;
     margin-bottom: -1px
 }
 
@@ -19487,6 +19488,10 @@ h2.check-out-price span {
     font-size:10px;
     height:22px;
 }
+.shopping-basket table th{
+    text-align: center;
+    font-size:10px;
+}
 .shopping-basket table .small{
     text-align: center;
     width:85px;
@@ -19670,5 +19675,41 @@ h2.check-out-price span {
     margin:5px;
 }
 #login .inner .cssform input[type="text"], #login .inner .cssform input[type="password"]{
+    height:30px;
+}
+.checkout-header{
+    margin-bottom:20px;
+}
+.checkout-header img{
+    max-width:80px;
+    float: left;
+    margin-left:20px;
+}
+.checkout-header-title, .checkout-header-title h3{
+display: inline-block;
+}
+.hasDatepicker{
+    vertical-align: top;
+    height:30px !important;
+    width:90px;
+    background:none !important;
+    cursor:text !important;
+}
+.sortFilterSelect{
+    width:100%;
+}
+.nav-list > li > a, .nav-list .nav-header{
+    margin-left:-10px;
+}
+.nav-list > .active > a, .nav-list > .active > a:hover{
+    background-color:#e4752b;
+}
+.test-version{
+    color: #555555;
+    position: relative;
+    right: -126px;
+    top: 49px;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
     height:30px;
 }

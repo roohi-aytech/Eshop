@@ -75,7 +75,8 @@
         <td class="table-cell">
             <div class="stay-connected">
                 <div class="sign-up">
-                    <a class="signup-a"><g:message code="signup-in-goldaan"/></a>
+                    <g:link controller="customer" action="register" class="signup-a"><g:message
+                            code="signup-in-goldaan"/></g:link>
                     <div class="sign-up-help"><g:message code="signup-in-goldaan-help"/></div>
                 </div>
 
@@ -84,6 +85,7 @@
                         <g:message code="stay-connected"/>
                     </div>
                     <br/>
+
                     <div>
                         <div class="social-links">
 

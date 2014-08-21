@@ -23,7 +23,7 @@ payOnCheckout=true
 addedValueType=true
 customShoppingAlert=true
 disableTrackingActions=true
-notifyOnChangeStatus=true
+deliveryMinIntervalFromOrderEnabled=true
 ckeditor {
     upload {
         basedir = "/home/uploads/"

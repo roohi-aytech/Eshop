@@ -19,15 +19,17 @@ class OrderTrackingService {
             }
             items {
                 eq('deleted', false)
-                productModel {
-                    product {
-                        if (brandsList?.size() > 0) {
-                            brand {
-                                'in'('id', brandsList)
+                if(brandsList || productTypeList) {
+                    productModel {
+                        product {
+                            if (brandsList?.size() > 0) {
+                                brand {
+                                    'in'('id', brandsList)
+                                }
                             }
-                        }
-                        productTypes {
-                            'in'('id', productTypeList)
+                            productTypes {
+                                'in'('id', productTypeList)
+                            }
                         }
                     }
                 }

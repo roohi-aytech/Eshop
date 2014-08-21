@@ -110,7 +110,7 @@
     <tr>
         <td style="width:160px;border-width:0;">
             <ul style="border:1px solid #dddddd;border-radius: 4px;background: white;">
-                <g:each in="${eshop.OrderHelper.STATUS_LIST}">
+                <g:each in="${grailsApplication.config.payOnCheckout?eshop.OrderHelper.STATUS_LIST_PAY_ON_CHECKOUT:eshop.OrderHelper.STATUS_LIST}">
                     <li style="text-align: right;margin:5px;list-style: none;" class="menuItem" id="menuItem${it}">
                         <a data-color="${message(code:"order.status.${it}.color", default: '#f8f8f8')}" style="padding:3px;text-align: right;display: block;background: ${message(code:"order.status.${it}.color", default: '#f8f8f8')};border-radius: 4px;"
                            onclick="loadOrderList('${it}')"><g:message code="order.status.${it}"/></a>

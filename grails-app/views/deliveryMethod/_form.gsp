@@ -68,6 +68,15 @@
     </label>
     <g:checkBox name="hidePrice" value="${deliveryMethodInstance?.hidePrice}"/>
 </div>
+<g:if test="${grailsApplication.config.deliveryMinIntervalFromOrderEnabled}">
+<div class="fieldcontain ${hasErrors(bean: deliveryMethodInstance, field: 'hidePrice', 'error')} ">
+    <label for="minIntervalFromOrder">
+        <g:message code="deliveryMethod.minIntervalFromOrder.label" default="minIntervalFromOrder" />
+
+    </label>
+    <g:textField name="minIntervalFromOrder" value="${deliveryMethodInstance?.minIntervalFromOrder}"/>
+</div>
+</g:if>
 
 
 
