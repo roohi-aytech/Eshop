@@ -5,7 +5,7 @@
 
 <body>
 <p>&nbsp;</p>
-<div style="margin:auto;height:40px;width: 462;background-image:url('${resource(dir:'images/goldaan', file: 'logo-email.png', absolute: true)}') ">
+<div style="margin:auto;height:40px;width: 462px;background-image:url('${resource(dir:'images/goldaan', file: 'logo-email.png', absolute: true)}') ">
 
 </div>
 <div style='width:360px;font-family:Tahoma,serif;padding-top:20px;padding-bottom:20px;padding-right:50px;padding-left:50px;direction:rtl;margin:auto;border:1px solid #EEEEEE;border-top:none;'>
