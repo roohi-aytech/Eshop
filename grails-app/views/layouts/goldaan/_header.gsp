@@ -15,8 +15,10 @@
                             <a rel="nofollow" href="<g:createLink controller="logout" action="index" />" class="logout">
                                 <g:message code="logout"/>
                             </a>
+                            <g:link controller="customer" action="profile">
+                                    <g:message code="profile"/>
+                            </g:link>
                             <span>
-
                                 <common:userFullName/>
                             </span>
                         </sec:ifLoggedIn>
