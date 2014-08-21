@@ -10,9 +10,11 @@
             %{--<h4>${productModel}</h4>--}%
             <eshop:thumbnailPrice productModelId="${productModel?.id}" flag="true"/>
 
+            <g:if test="${modelCount > 1}">
             <span class="modelCount-flag">
                 <g:message code="modelCount-flag" args="${[modelCount]}"/>
             </span>
+            </g:if>
             <div class="clear-float"></div>
         </div>
 
