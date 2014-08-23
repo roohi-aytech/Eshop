@@ -10,10 +10,19 @@ class PriceTagLib {
 
     def thumbnailPrice = { attrs, body ->
         def price
-        if (attrs.productModelId)
+        if (attrs.productModelId) {
             price = priceService.calcProductModelPrice(attrs.productModelId)
-        else
+            if (price.status != 'exists' && session['status_filter']) {
+                def productModel = ProductModel.get(attrs.productModelId)
+                out << eshop.synchronizeProduct(productId:[id: productModel?.product?.id, modelId: attrs.productModelId])
+            }
+        } else {
             price = priceService.calcProductPrice(attrs.productId)
+            if (price.status != 'exists' && session['status_filter']) {
+                out << eshop.synchronizeProduct(productId:[id: attrs.productId])
+            }
+        }
+
         price.hideLastUpdate = attrs.hideLastUpdate
         out << render(template: "/site/thumbnailPrice", model: price)
         if (attrs.flag)

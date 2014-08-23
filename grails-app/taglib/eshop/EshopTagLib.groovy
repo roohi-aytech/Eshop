@@ -474,4 +474,18 @@ class EshopTagLib {
             out << "</ul>"
         }
     }
+
+    def synchronizeProduct = {attrs, body ->
+        def productId = attrs.productId
+        def product = Product.get(productId.id)
+        product.isSynchronized = false
+        def result = product.save() ? true : false
+        out << """
+            <span style="display: none">
+                product id : ${productId}
+                <br/>
+                synchronization result: ${result}
+            </span>
+"""
+    }
 }

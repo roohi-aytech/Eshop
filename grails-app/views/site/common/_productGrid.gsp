@@ -1,15 +1,16 @@
 <div class="container-fluid">
     <g:set var="productModelList" value="${eshop.ProductModel.findAllByIdInList(productIds?.collect{it.modelId})}"/>
     <ul class="showbiz thumbnailGrid row-fluid">
-    %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
             <g:set var="productModel" value="${productModelList.find{it.id == productId.modelId}}"/>
-            %{--${System.out.println('product id: ' + productId)}--}%
             <g:if test="${productModel}">
                 <li class="span3">
                     <g:render template="/site/common/productThumbnail" model="[productModel: productModel, productId: productId.id, modelCount: productId.modelCount]"/>
                 </li>
             </g:if>
+            <g:else>
+                <eshop:synchronizeProduct productId="${productId}"/>
+            </g:else>
         </g:each>
     </ul>
     <g:if test="${filters.products.totalPages > 1}">

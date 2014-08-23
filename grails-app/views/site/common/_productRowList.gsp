@@ -14,15 +14,7 @@
             </g:if>
         </g:if>
         <g:else>
-            <span style="display: none">
-                product id : ${productId}
-                <br/>
-                <g:set var="product" value="${eshop.Product.get(productId.id)}"/>
-                synchronization result: ${
-                    (product.isSynchronized = false) ||
-                            product.save()
-                }
-            </span>
+            <eshop:synchronizeProduct productId="${productId}"/>
         </g:else>
     </g:each>
 </g:if>

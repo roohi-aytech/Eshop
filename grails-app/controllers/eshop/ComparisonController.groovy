@@ -19,7 +19,7 @@ class ComparisonController {
             compareList = [];
         def compareListItem = compareList.find { it -> it.id == id }
         if (!compareListItem) {
-            compareListItem = [id: id, title: product?.toString(), type:product?.productTypes?.find()?.name, price: priceService.calcProductPrice(product.id).showVal]
+            compareListItem = [id: id, title: product?.toString(), type: product?.productTypes?.find()?.name, price: priceService.calcProductPrice(product.id).showVal]
             compareList << compareListItem
         }
 
@@ -31,10 +31,10 @@ class ComparisonController {
         render "1"
     }
 
-    def addAndShow(){
+    def addAndShow() {
         def id = params.id
         def product = Product.get(id)
-        if(!product) {
+        if (!product) {
             render ''
             return
         }
@@ -44,7 +44,7 @@ class ComparisonController {
             compareList = [];
         def compareListItem = compareList.find { it -> it.id == id }
         if (!compareListItem) {
-            compareListItem = [id: id, title: product.toString(), type:product?.productTypes?.find()?.name, price: priceService.calcProductPrice(product.id).showVal]
+            compareListItem = [id: id, title: product.toString(), type: product?.productTypes?.find()?.name, price: priceService.calcProductPrice(product.id).showVal]
             compareList << compareListItem
         }
 
@@ -98,7 +98,9 @@ class ComparisonController {
             def selectedList = session["selected-nodes-${productType?.item?.id}"]
 
             productType.rootAttributeCategories = AttributeCategory.findAllByProductTypeAndParentCategoryIsNull(productType.item)
-                    .toList().collect { [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))] }
+                    .toList().collect {
+                [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))]
+            }
 
             productType.rootAttributeCategories << [item: null, hasAttribute: false, selected: (!selectedList || selectedList.contains('c'))]
 
@@ -124,11 +126,15 @@ class ComparisonController {
         def selectedList = session["selected-nodes-${productType?.item?.id}"] as Collection
 
         if (parentCategory.item) {
-            parentCategory.attributeTypes = AttributeType.findAllByCategoryAndDeleted(parentCategory.item, false).findAll { it.showPositions.contains('compare') }.
+            parentCategory.attributeTypes = AttributeType.findAllByCategoryAndDeleted(parentCategory.item, false).findAll {
+                it.showPositions.contains('compare')
+            }.
                     collect { [item: it, selected: (!selectedList || selectedList.contains(it.id.toString()))] }
             if (parentCategory.attributeTypes) {
                 parentCategory.hasAttribute = parentCategory.attributeTypes.count { it } > 0
-                parentCategory.selected = parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.item.id.toString())) } > 0
+                parentCategory.selected = parentCategory.selected || parentCategory.attributeTypes.count {
+                    (!selectedList || selectedList.contains(it.item.id.toString()))
+                } > 0
             }
 
             parentCategory.attributeTypes.each { attributeType ->
@@ -142,7 +148,9 @@ class ComparisonController {
                 }
             }
 
-            parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect { [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))] }
+            parentCategory.childCategories = AttributeCategory.findAllByParentCategory(parentCategory.item).collect {
+                [item: it, hasAttribute: false, selected: (!selectedList || selectedList.contains('c' + it.id.toString()))]
+            }
             parentCategory.childCategories.each { childCategory ->
                 fillAttibuteCategoryChildren(products, childCategory, productType)
                 parentCategory.hasAttribute = parentCategory.hasAttribute || childCategory.hasAttribute
@@ -163,7 +171,9 @@ class ComparisonController {
             if (parentCategory.attributeTypes) {
                 parentCategory.hasAttribute = (parentCategory.attributeTypes.count { it } > 0)
 
-                parentCategory.selected = (parentCategory.selected || parentCategory.attributeTypes.count { (!selectedList || selectedList.contains(it.item.id.toString())) } > 0)
+                parentCategory.selected = (parentCategory.selected || parentCategory.attributeTypes.count {
+                    (!selectedList || selectedList.contains(it.item.id.toString()))
+                } > 0)
             }
 
             parentCategory.attributeTypes.each { attributeType ->
@@ -182,6 +192,11 @@ class ComparisonController {
     }
 
     def productSelector() {
+
+        if (!params.productTypeId) {
+            render ''
+            return
+        }
 
         render(
                 template: 'productSelector',
@@ -206,7 +221,7 @@ class ComparisonController {
         if (params.phrase) {
             def query = params.phrase.toString().trim()
             query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
-            while(query.contains('  '))
+            while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
             BooleanQuery.setMaxClauseCount(10000);
@@ -216,29 +231,33 @@ class ComparisonController {
                     [reload: false, max: 1000])
         }
 
-        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect { it.id }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}").products.productIds
+        model.productIds = browseService.findSearchPageFilters(productIdList.results.collect {
+            it.id
+        }, params.f, params.page ?: 0, "${productIdList.results.collect { it.id }} ${params.f} ${params.page ?: 0}").products.productIds
         model.commonLink = createLink(uri: '/')
         model.productType = ProductType.get(params.id)
 
-        if(model.productIds?.size() > 0)
+        if (model.productIds?.size() > 0)
             render(template: 'search_autoComplete', model: model)
         else
             render ''
     }
 
-    def alert(){
+    def alert() {
 
         def id = params.id
         def product = Product.get(id)
 
         def map = [:]
-        session["compareList"]?.each {item ->
-            if(!map.containsKey(item.type))
+        session["compareList"]?.each { item ->
+            if (!map.containsKey(item.type))
                 map.put(item.type, 0)
             map[item.type]++
         }
 
 
-        render template: 'alert', model: [name: "${product?.productTypes?.find()} ${product?.type?.title?:''} ${product?.brand}", map: map, enabled: map.any {it.value > 1}]
+        render template: 'alert', model: [name: "${product?.productTypes?.find()} ${product?.type?.title ?: ''} ${product?.brand}", map: map, enabled: map.any {
+            it.value > 1
+        }]
     }
 }
