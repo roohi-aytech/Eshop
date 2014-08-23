@@ -1,11 +1,13 @@
-<jqui:resources theme="${grailsApplication.config.admin.theme}"></jqui:resources>
-<link rel="stylesheet"
-      href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
-<link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>
-<link href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}" rel="stylesheet" type="text/css"/>
-<script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
-<script src="${resource(dir: 'js/datepicker', file: 'calendar.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
-<script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc-fa.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+<g:if test="${!grailsApplication.config.profileSimplePersonalEvents}">
+    <jqui:resources theme="${grailsApplication.config.admin.theme}"></jqui:resources>
+    <link rel="stylesheet"
+          href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
+    <link href="${resource(dir: 'css/jquery.easyui/metro', file: 'easyui.css')}" rel="stylesheet" type="text/css"/>
+    <link href="${resource(dir: 'css/jquery.easyui', file: 'easyui-rtl.css')}" rel="stylesheet" type="text/css"/>
+    <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+    <script src="${resource(dir: 'js/datepicker', file: 'calendar.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+    <script src="${resource(dir: 'js/datepicker', file: 'jquery.ui.datepicker-cc-fa.js', plugin: 'rapid-grails')}" language="javascript" type="text/javascript"></script>
+</g:if>
 <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.draggable.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.panel.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js/jquery.easyui', file: 'jquery.parser.js')}"></script>
@@ -55,8 +57,10 @@
             <th><g:message code="personalEvent.relationship"/></th>
             <th><g:message code="personalEvent.sex"/></th>
             <th><g:message code="personalEvent.date"/></th>
-            <th><g:message code="personalEvent.jobTitle"/></th>
-            <th><g:message code="personalEvent.favoriteStyle"/></th>
+            <g:if test="${!grailsApplication.config.profileSimplePersonalEvents}">
+                <th><g:message code="personalEvent.jobTitle"/></th>
+                <th><g:message code="personalEvent.favoriteStyle"/></th>
+            </g:if>
             <th><g:message code="personalEvent.minPrice"/></th>
             <th><g:message code="personalEvent.maxPrice"/></th>
 
@@ -90,8 +94,10 @@
                 <td>${personalEvent.relationship}</td>
                 <td><g:message code="personalEvent.sex.${personalEvent.sex}"/></td>
                 <td><rg:formatJalaliDate date="${personalEvent.date}"/></td>
-                <td><g:message code="personalEvent.jobTitle.${personalEvent.jobTitle}"/></td>
-                <td><g:message code="personalEvent.favoriteStyle.${personalEvent.favoriteStyle}"/></td>
+                <g:if test="${!grailsApplication.config.profileSimplePersonalEvents}">
+                    <td><g:message code="personalEvent.jobTitle.${personalEvent.jobTitle}"/></td>
+                    <td><g:message code="personalEvent.favoriteStyle.${personalEvent.favoriteStyle}"/></td>
+                </g:if>
                 <td><g:formatNumber number="${personalEvent.minPrice}" type="number"/></td>
                 <td><g:formatNumber number="${personalEvent.maxPrice}" type="number"/></td>
             </tr>
@@ -104,11 +110,12 @@
     </div>
 </div>
 
-<div id="personalEventsModal" class="modal hide fade" tabindex="-1" role="window"
+<div id="personalEventsModal" class="modal fade" tabindex="-1" role="window"
      aria-labelledby="personalEventsModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 onclick="hidePersonalEventsModal();">×</button>
+        <div class="clearfix"></div>
     </div>
 
     <div class="modal-body">

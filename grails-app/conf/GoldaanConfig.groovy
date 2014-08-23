@@ -24,6 +24,10 @@ addedValueType=true
 customShoppingAlert=true
 disableTrackingActions=true
 deliveryMinIntervalFromOrderEnabled=true
+disableProfileFavorits=true
+enableProfilePersonalEventsNotifications=true
+profileSimplePersonalEvents=true
+profilePersonalEventDefaultProductType='مناسبت'
 ckeditor {
     upload {
         basedir = "/home/uploads/"

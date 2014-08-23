@@ -176,7 +176,47 @@
             $('#product-card').html('${message(code: 'waiting')}');
             angular.element(document.getElementById('main-container')).scope().reloadProductCart("${createLink(controller: "site", action: "productCard")}", serializedData, $('#product-card'));
         }
-
+        function suggestFriend(id){
+            $('#suggest-container #productId').val(id);
+            $('#suggest-container #yourName').val('');
+            $('#suggest-container #friendsEmail').val('');
+            $('#productThumbnail_'+id).qtip({
+                content:$('#suggest-container').html(),
+                position: {
+                    my: 'top middle',
+                    at: 'bottom middle'
+                },
+                style: {
+                    classes: 'qtip-bootstrap qtip-suggestion'
+                },
+                show: {
+                    ready: true,
+                    event: 'ready',
+                    effect: function (offset) {
+                        $(this).slideDown(100);
+                    }
+                },
+                hide: {
+                    event: ''
+                },
+                metadata: {
+                    type: 'html5'
+                }
+            });
+        }
+        function sendSuggestion(){
+            $.ajax({
+                url:'<g:createLink controller="site" action="suggestFriend" />',
+                data:{
+                    id:$('.qtip-suggestion #productId').val(),
+                    name:$('.qtip-suggestion #yourName').val(),
+                    email:$('.qtip-suggestion #friendsEmail').val()
+                },
+                type:'post'
+            }).success(function(){
+                $('#productThumbnail_'+$('#productId').val()).qtip('destroy');
+            })
+        }
     </script>
 
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.mousewheel.js')}"--}%
@@ -216,6 +256,21 @@
 </head>
 
 <body id="index" class="index hide-left-column hide-right-column lang_en " ng-controller="eshopCtrl">
+<div id="suggest-container" class="hide">
+    <div>
+        <g:message code="please.enter.your.name"/>
+    </div>
+    <input type="hidden" id="productId"/>
+    <div>
+        <input type="text" placeholder="<g:message code="your.name" />" id="yourName">
+    </div>
+    <div>
+        <input type="text" placeholder="<g:message code="friends.email" />" id="friendsEmail">
+    </div>
+    <div>
+        <input type="button" class="btn btn-success" onclick="sendSuggestion()" value="<g:message code="submit.suggestion" />"/>
+    </div>
+</div>
 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/alexa"/>
 
 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/header" key="${sec.username()}"/>

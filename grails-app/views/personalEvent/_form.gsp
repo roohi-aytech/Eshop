@@ -59,7 +59,7 @@
                 </label>
             </td>
             <td>
-                <g:select name="title" from="${ProductType.findByName(grailsApplication.config.profilePersonalEventDefaultProductType).children}" optionKey="id" optionValue="name" noSelection="['':'']"/>
+                <g:select name="title" from="${ProductType.findByName(grailsApplication.config.profilePersonalEventDefaultProductType).children}" optionKey="name" value="${personalEventInstance?.title}" optionValue="name" noSelection="['':'']"/>
                 %{--<g:textField name="title" value="${personalEventInstance?.title}" style="width:450px"/>--}%
             </td>
         </tr>
@@ -204,5 +204,33 @@
             </td>
         </tr>
     </g:if>
+    <g:if test="${grailsApplication.config.enableProfilePersonalEventsNotifications}">
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'emailNotification', 'error')} ">
+            <td>
+                <g:checkBox name="emailNotification" value="${personalEventInstance?.emailNotification}" />
+            </td>
+            <td>
+                <label for="emailNotification">
+                    <g:message code="personalEvent.emailNotification.label" default="Email Notification" />
+
+                </label>
+            </td>
+
+        </tr>
+
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'smsNotification', 'error')} ">
+            <td>
+                <g:checkBox name="smsNotification" value="${personalEventInstance?.smsNotification}" />
+            </td>
+            <td>
+                <label for="smsNotification">
+                    <g:message code="personalEvent.smsNotification.label" default="Sms Notification" />
+
+                </label>
+            </td>
+
+        </tr>
+    </g:if>
+
 </table>
 

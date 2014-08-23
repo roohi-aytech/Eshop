@@ -19713,3 +19713,22 @@ display: inline-block;
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
     height:30px;
 }
+.fieldcontain td{
+    vertical-align: middle;
+}
+.fieldcontain select {
+    margin-bottom:9px !important;
+}
+#personalEventsModal{
+    margin-left:auto;
+    margin-top:-250px;
+}
+#personalEventsModal .modal-body{
+    max-height:500px;
+}
+#trackingCodePanel{
+    height:26px;
+}
+.btn {
+    background-image: none;
+}
