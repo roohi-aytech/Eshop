@@ -202,10 +202,15 @@ class BrowseService {
             else
                 sortExpression = ["${params.sort}": (params.dir == 'sortDirection' ? -1 : params.dir?.toInteger() ?: -1), status: 1, sortOrder: 1]
         }
-        def productIds = products.aggregate(
+
+        def modelList = products.aggregate(
                 [$match: params.match],
+                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId']]]
+        ).results()
+                .collect {it.modelId}
+        def productIds = products.aggregate(
+                [$match: [modelId: [$in: modelList]]],
                 [$sort: sortExpression],
-                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId'], modelCount: [$sum: 1]]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results()
