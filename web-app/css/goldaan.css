@@ -4385,9 +4385,11 @@ a [class^="icon-"], a [class*=" icon-"] {
 a:hover {
     text-decoration: none
 }
-
+html {
+    min-width: 1024px;
+}
 body {
-    min-width: 320px;
+    min-width: 1024px;
     height: 100%;
     line-height: 18px;
     font-size: 12px;

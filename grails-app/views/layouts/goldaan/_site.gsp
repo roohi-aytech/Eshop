@@ -10,6 +10,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <canonical:show/>
     <meta name="robots" content="index, follow"/>
+    <meta name="viewport" content="width=device-width, user-scalable=yes">
+
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
     <link rel="shortcut icon" href="${resource(dir: 'images/goldaan', file: 'fav-icon.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
