@@ -1,12 +1,16 @@
 <%@ page import="grails.converters.JSON; eshop.MenuConfig; eshop.ProductType" %>
 <% def productService = grailsApplication.classLoader.loadClass('eshop.ProductService').newInstance() %>
 <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"/>
-<div class="wide_container">
+<g:set var="mainPage" value=""/>
+<g:if test="${controllerName=='site' && actionName=='index'}">
+    <g:set var="mainPage" value="main-page"/>
+</g:if>
+<div class="wide_container wc_${mainPage}">
     <div class="" id="st_mega_menu_container">
         <div class="container">
-            <g:set var="mainPage" value=""/>
+
             <g:if test="${controllerName=='site' && actionName=='index'}">
-                <g:set var="mainPage" value="main-page"/>
+
                 <div class="row">
                     <div class="main-page-header">
                         <a href="<g:createLink uri="/"/>" >

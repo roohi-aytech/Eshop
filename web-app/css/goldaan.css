@@ -19710,7 +19710,7 @@ display: inline-block;
     right: -126px;
     top: 49px;
 }
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
     height:30px;
 }
 .fieldcontain td{
@@ -19731,4 +19731,16 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 .btn {
     background-image: none;
+}
+html,body,#main-container{
+    height:100%;
+}
+#main-container td{
+    vertical-align:top;
+}
+.wide_container{
+    min-height:58px;
+}
+.wide_container.wc_main-page{
+    min-height:142px;
 }

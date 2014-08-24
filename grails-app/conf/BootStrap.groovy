@@ -7,6 +7,7 @@ import grails.converters.JSON
 class BootStrap {
 
     def grailsApplication
+    def searchableService
 
     def saveIt = {
         if (!it.save()) {
@@ -19,7 +20,8 @@ class BootStrap {
     def roles = RoleHelper.visibleRoles
 
     def init = { servletContext ->
-
+        searchableService.unindexAll()
+        searchableService.reindexAll()
         JSON.registerObjectMarshaller(VariationGroup) {
             def returnArray = [:]
             returnArray['name'] = it.name

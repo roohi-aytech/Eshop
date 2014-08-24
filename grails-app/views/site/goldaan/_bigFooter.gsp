@@ -1,4 +1,4 @@
-<div class="footer-info-container">
+<div class="footer-info-container footer1">
 
     <div>
         <hr/>

@@ -121,7 +121,7 @@ input[type=checkbox] {
 
 <script language="javascript" type="text/javascript">
     $('.productTypesTree').tree({
-        url: '${createLink(plugin:'rapid-grails', controller: 'rapidGrails', action: 'treeStructure', params:[domainClass: 'eshop.ProductType', relationProperty:'parentProduct', titleProperty:'name', selected:customerInstance.newsLetterProductTypes?.collect{it.id}?.join(',')])}',
+        url: '${createLink(plugin:'rapid-grails', controller: 'rapidGrails', action: 'treeStructure', params:[domainClass: 'eshop.ProductType', relationProperty:'parentProduct', titleProperty:'name', selected:customerInstance?.newsLetterProductTypes?.collect{it.id}?.join(',')])}',
         checkbox: true,
         cascadeCheck: true
     });

@@ -147,9 +147,9 @@
                                     %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
                                     <div><a href="https://plus.google.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}"
                                     target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a> </div>
-                                    <div><a href="https://instagram.com/goldaan"
-                                            target="_blank"><img src="${resource(dir: 'images/social', file: 'instagram.png')}"/></a> </div>
-                                    </div>
+                                    %{--<div><a href="https://instagram.com/goldaan"--}%
+                                            %{--target="_blank"><img src="${resource(dir: 'images/social', file: 'instagram.png')}"/></a> </div>--}%
+                                    %{--</div>--}%
                                     </div>
                                     <table class="table-simulated product-info">
                                         <tr>

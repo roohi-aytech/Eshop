@@ -22,9 +22,9 @@
 
             //build items
             var ul = $(this);
-            $('#body-container').prepend('<div class="slider-container"></div>');
+            $('#body-container-slider').prepend('<div class="slider-container"></div>');
             var container = $('body .slider-container').first();
-            $('#body-container').css('padding-top', '5px');
+            $('#body-container-slider').css('padding-top', '5px');
             container.css('height', ul.attr('height'));
             ul.find('li img').each(function () {
                 var img = $(this);

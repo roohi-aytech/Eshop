@@ -45,9 +45,10 @@
 </script>
 
 <div>
+    <br/>
     %{--<h2><g:message--}%
     %{--code="controlPanel.settings.personalEvents.label"></g:message></h2>--}%
-    <table class="zebra table-simulated">
+    <table class="table table-bordered table-striped table-simulated">
         <thead>
         <tr>
             <th style="width: 16px">&nbsp;</th>
@@ -64,24 +65,25 @@
             <th><g:message code="personalEvent.minPrice"/></th>
             <th><g:message code="personalEvent.maxPrice"/></th>
 
+
         </tr>
         </thead>
         <tfoot>
-        <tr>
-            <td>&nbsp;</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        %{--<tr>--}%
+            %{--<td>&nbsp;</td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+            %{--<td></td>--}%
+        %{--</tr>--}%
         </tfoot>
-        <g:each in="${customerInstance.personalEvents.sort { it.id }}" var="personalEvent">
+        <g:each in="${customerInstance?.personalEvents?.sort { it.id }}" var="personalEvent">
             <tr>
                 <td><img class="action-btn" original-title="${message(code: 'edit')}" style="cursor: pointer"
                          onclick="showEditersonalEventsModal(${personalEvent.id});"

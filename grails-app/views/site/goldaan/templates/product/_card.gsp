@@ -105,7 +105,7 @@
             productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
             useLongText="${true}"/>
 
-        <a class="btn-email" href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}">
+        <a id="productThumbnail_${product.id}" class="btn-email" href="javascript:suggestFriend(${product.id})">
             <span><g:message code="email-to-firend-goldaan" /></span>
         </a>
     </div>

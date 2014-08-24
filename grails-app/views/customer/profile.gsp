@@ -90,16 +90,16 @@
         <g:set var="tab" value="${params.tab}"/>
         <g:if test="${!tab}">
             <g:set var="tab" value="${'personal'}"/>
-            <g:if test="${customerInstance.profilePersonalInfoFilled}">
+            <g:if test="${customerInstance?.profilePersonalInfoFilled}">
                 <g:set var="tab" value="${'reagent'}"/>
             </g:if>
-            <g:if test="${customerInstance.profileReagentFilled}">
+            <g:if test="${customerInstance?.profileReagentFilled}">
                 <g:set var="tab" value="${'favorites'}"/>
             </g:if>
-            <g:if test="${customerInstance.profileFavoritesFilled}">
+            <g:if test="${customerInstance?.profileFavoritesFilled}">
                 <g:set var="tab" value="${'newsLetters'}"/>
             </g:if>
-            <g:if test="${customerInstance.profileNewsLettersFilled}">
+            <g:if test="${customerInstance?.profileNewsLettersFilled}">
                 <g:set var="tab" value="${'personal'}"/>
             </g:if>
         </g:if>
