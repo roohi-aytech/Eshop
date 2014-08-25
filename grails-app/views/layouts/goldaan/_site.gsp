@@ -235,8 +235,8 @@
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}"--}%
             %{--type="text/javascript"></script>--}%
 
-    %{--<script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"--}%
-            %{--type="text/javascript"></script>--}%
+    <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"
+            type="text/javascript"></script>
     <g:javascript src="goldaan/goldaan.js"/>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"--}%
     <script language="JavaScript" type="text/javascript"

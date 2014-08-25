@@ -2,7 +2,7 @@
     <ul>
     %{--<div class="span" style="display: none;"></div>--}%
         <g:each in="${productIds}" status="i" var="productId">
-            <g:set var="productModel" value="${eshop.ProductModel.get(productId)}"/>
+            <g:set var="productModel" value="${eshop.ProductModel.get(productId.modelId)}"/>
             <g:if test="${productModel}">
                 <li>
                     <a href="${createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")}">
