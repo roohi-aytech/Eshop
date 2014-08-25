@@ -1031,7 +1031,7 @@ class SiteController {
         else {
             model.title = (productType ? productType.toString() + " - " : "") + params.phrase
             if (brand && brand != '')
-                model.title = (model.title ? model.title + " - " : "") + brand + params.phrase
+                model.title = (model.title ? model.title + " - " : "") + brand +' '+ params.phrase
         }
         model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())

@@ -105,7 +105,7 @@
                             </a>
                             </div>
 
-                            <div><a href="https://instagram.com/goldaan"
+                            <div><a href="https://instagram.com/goldaan.ir"
                                     target="_blank"><img
                                         src="${resource(dir: 'images/social', file: 'instagram.png')}"/>
                             </a></div>

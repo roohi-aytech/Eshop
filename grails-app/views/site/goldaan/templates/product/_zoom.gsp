@@ -86,13 +86,34 @@
     </div>
 </div>
 
-<div id="aggregateRating" itemprop="aggregateRating">
+    <div id="aggregateRating" itemprop="aggregateRating">
         %{--<g:message code="rate"/>:--}%
         %{--<span class="meta" itemprop="value">${rate}</span>--}%
         <meta itemprop="best" content="5"/>
         <eshop:rate identifier="hidProductRate" currentValue="${rate}"
                     readOnly="true"/>
+
+        <g:if test="${grailsApplication.config.instance != 'Local'}">
+            <div style="float: left;">
+                <div class="g-plusone"></div>
+
+                <script type="text/javascript">
+                    window.___gcfg = {lang: 'fa'};
+
+                    (function () {
+                        var po = document.createElement('script');
+                        po.type = 'text/javascript';
+                        po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+            </div>
+        </g:if>
+
     </div>
+
 </div>
 <div class="clear-float"></div>
 

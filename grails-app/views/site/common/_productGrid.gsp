@@ -9,7 +9,7 @@
                 </li>
             </g:if>
             <g:else>
-                <eshop:synchronizeProduct productId="${productId}"/>
+                <eshop:synchronizeProduct ModelId="${productId.modelId}"/>
             </g:else>
         </g:each>
     </ul>
