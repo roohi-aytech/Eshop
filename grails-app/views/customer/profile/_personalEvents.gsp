@@ -18,6 +18,7 @@
 
 <script language="javascript" type="text/javascript">
     var modal;
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
     function showCreatePersonalEventsModal() {
         $("#personalEventsModal .modal-body").html('<img style="margin:auto;padding:20px;" class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
         modal = $("#personalEventsModal").modal({

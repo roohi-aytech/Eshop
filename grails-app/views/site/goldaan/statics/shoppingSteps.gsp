@@ -148,7 +148,7 @@ div.WordSection1
 embed'><span lang=FA style='font-family:"Tahoma","sans-serif";mso-bidi-language:
 FA'>برا&#1740; خر&#1740;د از گلدان شما م&#1740;توان&#1740;د با حرکت موس خود بر
 رو&#1740; هر &#1740;ک از محصولات و مشاهده گز&#1740;نه افزودن به سبد خر&#1740;د،
-آن محصول را به موارد مورد نظر خر&#1740;د خود اصابه نما&#1740;&#1740;د.</span><span
+آن محصول را به موارد مورد نظر خر&#1740;د خود اضافه نما&#1740;&#1740;د.</span><span
         dir=LTR style='font-family:"Tahoma","sans-serif";mso-bidi-language:FA'><o:p></o:p></span></p>
 
 <p class=MsoNormal align=center dir=RTL style='text-align:center;direction:
