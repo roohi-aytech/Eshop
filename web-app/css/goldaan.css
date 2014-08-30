@@ -19558,6 +19558,9 @@ h2.check-out-price span {
     max-height:300px;
     overflow-y: auto;
 }
+.added-value-form-added-values img{
+    max-width:80px !important;
+}
 .added-value-form-added-actions{
     width:200px;
 }
