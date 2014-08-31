@@ -112,7 +112,7 @@ class BasketController {
 //            def addedValueTypes = AddedValueType.findAllBy.sort { it.title }
             def prevAddresses
             if (customer)
-                prevAddresses = Order.findAllByCustomer(customer)?.collect { it.sendingAddress }?.groupBy {
+                prevAddresses = Order.findAllByCustomer(customer)?.collect { it.sendingAddress }?.findAll{it.title?.trim()}?.groupBy {
                     it.title
                 }?.collect { it.value.find() }
             session['currentStep'] = currentStep

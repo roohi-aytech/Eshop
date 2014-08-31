@@ -49,7 +49,11 @@ class ProductModel {
 
     @Override
     String toString() {
-        "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} مدل ${name ?: ""} با گارانتی ${guarantee ?: ""}"
+        if (domainClass.grailsApplication.config.eShop.instance == 'goldaan') {
+            return "${product?.manualTitle ? product?.pageTitle : "<span>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</span>${product?.name ?: ""}"}"
+        } else
+            "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} مدل ${name ?: ""} با گارانتی ${guarantee ?: ""}"
+
     }
 
     String toBasketItemString() {

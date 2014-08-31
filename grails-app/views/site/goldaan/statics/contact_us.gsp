@@ -169,19 +169,19 @@
                             <div>
                                 <label><g:message code="contactUs.email.department"/></label>
                                 <select id="department" name="department">
-                                    <option value="sales@zanbil.ir">
+                                    <option value="sales@goldaan.ir">
                                         فروش
                                     </option>
-                                    <option value="order-tracking@zanbil.ir">
+                                    <option value="order-tracking@goldaan.ir">
                                         پیگیری سفارشات
                                     </option>
-                                    <option value="suppliers@zanbil.ir">
+                                    <option value="suppliers@goldaan.ir">
                                         تامین کنندگان و همکاران
                                     </option>
-                                    <option value="web-support@zanbil.ir">
+                                    <option value="web-support@goldaan.ir">
                                         پشتیبانی سایت
                                     </option>
-                                    <option value="feedback@zanbil.ir">
+                                    <option value="feedback@goldaan.ir">
                                         انتقادات و پیشنهادات
                                     </option>
                                 </select>

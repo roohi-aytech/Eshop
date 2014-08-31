@@ -51,25 +51,7 @@
     <table class="table-simulated" style="margin-left:40px;">
         <tr class="table-row">
             <td class="table-cell" style="padding-left:5px;">
-                <div style="float:left;padding-top:6px;">
 
-                    <g:if test="${grailsApplication.config.instance != 'Local'}">
-                        <div class="g-plusone"></div>
-
-                        %{--<script type="text/javascript">--}%
-                            %{--window.___gcfg = {lang: 'fa'};--}%
-
-                            %{--(function () {--}%
-                                %{--var po = document.createElement('script');--}%
-                                %{--po.type = 'text/javascript';--}%
-                                %{--po.async = true;--}%
-                                %{--po.src = 'https://apis.google.com/js/plusone.js';--}%
-                                %{--var s = document.getElementsByTagName('script')[0];--}%
-                                %{--s.parentNode.insertBefore(po, s);--}%
-                            %{--})();--}%
-                        %{--</script>--}%
-                    </g:if>
-                </div>
                 <ul class="breadcrumb">
                     <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                         <a itemprop="url" href="${createLink(uri: '/')}">
@@ -110,7 +92,7 @@
                             <td class="table-cell product-imageColumn">
                                 <div id="product-images">
 
-                                    <ehcache:render template="/site/goldaan/templates/product/zoom" key="${params.id}" model="[productModel:defaultModel]"/>
+                                    <g:render template="/site/goldaan/templates/product/zoom" key="${params.id}" model="[productModel:defaultModel]"/>
 
                                 </div>
                                 <g:if test="${product.description}">
@@ -147,9 +129,9 @@
                                     %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
                                     <div><a href="https://plus.google.com/share?url=${createLink(uri: "/product/${params.id}", absolute: true)}"
                                     target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a> </div>
-                                    <div><a href="https://instagram.com/goldaan"
-                                            target="_blank"><img src="${resource(dir: 'images/social', file: 'instagram.png')}"/></a> </div>
-                                    </div>
+                                    %{--<div><a href="https://instagram.com/goldaan"--}%
+                                            %{--target="_blank"><img src="${resource(dir: 'images/social', file: 'instagram.png')}"/></a> </div>--}%
+                                    %{--</div>--}%
                                     </div>
                                     <table class="table-simulated product-info">
                                         <tr>

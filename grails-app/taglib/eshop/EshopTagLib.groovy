@@ -93,7 +93,7 @@ class EshopTagLib {
 
     def filterStart = { attrs, body ->
         def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
-        def link = g.createLink(controller: 'site',action: "filter", params: [f: f, o: attrs.attribute])
+        def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: attrs.attribute])
         out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
@@ -109,13 +109,13 @@ class EshopTagLib {
 
     def filterStartVariation = { attrs, body ->
         def f = "p${attrs.productType.id},v${attrs.variation}|${attrs.value}"
-        def link = g.createLink(controller: 'site',action: "filter", params: [f: f, o: 'v' + attrs.variation])
+        def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'v' + attrs.variation])
         out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterAddProductType = { attrs, body ->
         def f = "${attrs.f},p${attrs.id}"
-        def link = g.createLink(controller: 'site',action: params.action, params: params + [f: f])
+        def link = g.createLink(controller: 'site', action: params.action, params: params + [f: f])
         out << "<a href='${link}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
@@ -265,7 +265,7 @@ class EshopTagLib {
 
     def specifications = { attrs, body ->
         def url = "${createLink(uri: '/product/' + attrs.prodcutId)}"
-        if(attrs.productModelId){
+        if (attrs.productModelId) {
             def productModel = ProductModel.get(attrs.productModelId)
             url = "${createLink(uri: '/product/' + productModel?.product?.id)}?model=${productModel?.id}"
         }
@@ -475,17 +475,22 @@ class EshopTagLib {
         }
     }
 
-    def synchronizeProduct = {attrs, body ->
-        def productId = attrs.productId
-        def product = Product.get(productId.id)
-        product.isSynchronized = false
-        def result = product.save() ? true : false
-        out << """
+    def synchronizeProduct = { attrs, body ->
+        def product
+        if (attrs.productId)
+            product = Product.get(productId.id)
+        if (attrs.modelId)
+            product = ProductModel.get(attrs.modelId)?.product
+        if (product) {
+            product.isSynchronized = false
+            def result = product.save() ? true : false
+            out << """
             <span style="display: none">
                 product id : ${productId}
                 <br/>
                 synchronization result: ${result}
             </span>
 """
+        }
     }
 }

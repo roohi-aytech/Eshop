@@ -59,21 +59,21 @@
         <p>
             <label for='firstName'><g:message
                     code="springSecurity.register.firstName.label"/>:</label>
-            <input type='text' class='text_' name='firstName' id='firstName' value="${customerInstance.firstName}" />
+            <input type='text' class='text_' name='firstName' id='firstName' value="${customerInstance?.firstName}" />
         </p>
 
         <p>
             <label for='lastName'><g:message
                     code="springSecurity.register.lastName.label"/>:</label> *
             <span id="lastNameValidationMessage"></span>
-            <input type='text' class='text_' name='lastName' id='lastName' value="${customerInstance.lastName}" onblur="validateLastName()"/>
+            <input type='text' class='text_' name='lastName' id='lastName' value="${customerInstance?.lastName}" onblur="validateLastName()"/>
         </p>
 
         <p>
             <label for='sex'><g:message code="springSecurity.register.sex.label"/>:</label>
             <select name="sex" id="sex">
-                <option value="female" ${customerInstance.sex == 'female'?'selected':''}><g:message code="sex.female"></g:message></option>
-                <option value="male"${customerInstance.sex == 'male'?'selected':''}><g:message code="sex.male"></g:message></option>
+                <option value="female" ${customerInstance?.sex == 'female'?'selected':''}><g:message code="sex.female"></g:message></option>
+                <option value="male"${customerInstance?.sex == 'male'?'selected':''}><g:message code="sex.male"></g:message></option>
             </select>
         </p>
 
@@ -81,7 +81,7 @@
             <label for='birthDate'><g:message
                     code="springSecurity.register.birthDate.label"/>:</label> *
             <span id="birthDateValidationMessage"></span>
-            <rg:datePicker name="birthDate" yearRange="1320:1390" value="${customerInstance.birthDate}"></rg:datePicker>
+            <rg:datePicker name="birthDate" yearRange="1320:1390" value="${customerInstance?.birthDate}"></rg:datePicker>
             <script type="text/javascript" language="javascript">
                 $('#birthDate_control').blur(function(){
                     validateBirthDate();
@@ -94,14 +94,14 @@
         <p>
             <label for='nationalCode'><g:message
                     code="springSecurity.register.nationalCode.label"/>:</label>
-            <input type='text' class='text_' name='nationalCode' id='nationalCode' value="${customerInstance.nationalCode}"/>
+            <input type='text' class='text_' name='nationalCode' id='nationalCode' value="${customerInstance?.nationalCode}"/>
         </p>
 
         <p>
             <label for='jobTitle'><g:message
                     code="springSecurity.register.jobTitle.label"/>:</label> *
             <span id="jobTitleValidationMessage"></span>
-            <g:select name="jobTitle" from="${customerInstance.constraints.jobTitle.inList}"
+            <g:select name="jobTitle" from="${customerInstance?.constraints?.jobTitle?.inList}"
                       value="${customerInstance?.jobTitle}" onblur="validateJobTitle()"
                       valueMessagePrefix="customer.jobTitle" noSelection="['': '']"/>
         </p>
@@ -109,13 +109,13 @@
         <p>
             <label for='mobile'><g:message code="springSecurity.register.mobile.label"/>:</label> *
             <span id="mobileValidationMessage"></span>
-            <input type='text' class='text_' name='mobile' id='mobile' value="${customerInstance.mobile}" onblur="validateMobile()"/>
+            <input type='text' class='text_' name='mobile' id='mobile' value="${customerInstance?.mobile}" onblur="validateMobile()"/>
         </p>
 
         <p>
             <label for='telephone'><g:message
                     code="springSecurity.register.telephone.label"/>:</label>
-            <input type='text' class='text_' name='telephone' id='telephone' value="${customerInstance.telephone}"/>
+            <input type='text' class='text_' name='telephone' id='telephone' value="${customerInstance?.telephone}"/>
         </p>
 
     </div>

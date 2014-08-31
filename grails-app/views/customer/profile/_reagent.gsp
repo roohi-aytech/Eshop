@@ -57,7 +57,7 @@ return false;
         <label for='wayOfKnowing'><g:message
                 code="customer.wayOfKnowing.label"/>:</label> *
         <span id="wayOfKnowingValidationMessage"></span>
-        <g:select name="wayOfKnowing" id="wayOfKnowing" from="${customerInstance.constraints.wayOfKnowing.inList}"
+        <g:select name="wayOfKnowing" id="wayOfKnowing" from="${customerInstance?.constraints?.wayOfKnowing?.inList}"
                   value="${customerInstance?.wayOfKnowing}"
                   valueMessagePrefix="customer.wayOfKnowing" noSelection="['': '']"/>
     </p>

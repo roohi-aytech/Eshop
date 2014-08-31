@@ -21,7 +21,7 @@
             <eshop:addToBasket prodcutId="${product.id}" angular="false" buttonOnly="${true}"
                                useLongText="${true}"/>
             %{--<eshop:addToCompareList prodcutId="${product.id}" productTitle="${product.toString()}" useLongText="${true}"/>--}%
-            <a class="btn-email" href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${product?.id}", absolute: true)}">
+            <a class="btn-email" href="javascript:suggestFriend(${product.id})">
                 <span><g:message code="email-to-firend-goldaan" /></span>
             </a>
         </div>

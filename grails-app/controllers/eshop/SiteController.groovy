@@ -33,6 +33,20 @@ class SiteController {
 
     }
 
+    def suggestFriend() {
+        def product = Product.get(params.id)
+        def name = params.name
+        def email=params.email
+        if (product && name) {
+            mailService.sendMail {
+                to email
+                subject(message(code: 'emailTemplates.suggest.subject',args: [name,message(code:'name')]))
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/suggest_friend', model: [product: product, name: name]).toString()])
+            }
+        }
+        render 0
+    }
 
     def browse() {
         def productType = params.productType ? ProductType.findBySeoFriendlyNameAndDeleted(params.productType, false) ?: ProductType.findBySeoFriendlyAlternativeName(params.productType) ?: ProductType.findByName(params.productType) : null
@@ -468,8 +482,7 @@ class SiteController {
 
     def productModelImages() {
         def product = Product.get(params.productId)
-        if(!product)
-        {
+        if (!product) {
             render ''
             return
         }
@@ -566,7 +579,7 @@ class SiteController {
         }
 
         def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
-        if(!productModel)
+        if (!productModel)
             productModel = ProductModel.findByProductAndIsDefaultModel(product, true)
         if (!params.model && productModel?.status != 'exists') {
             def newModel = ProductModel.findByProductAndStatus(product, 'exists')
@@ -761,7 +774,7 @@ class SiteController {
 
     def productImages() {
         def product = Product.get(params.productId)
-        if(!product){
+        if (!product) {
             render ''
             return
         }
@@ -833,7 +846,7 @@ class SiteController {
     def productImage() {
         def product = Product.get(params.id)
 
-        if(!product){
+        if (!product) {
             render ''
             return
         }
@@ -1018,7 +1031,7 @@ class SiteController {
         else {
             model.title = (productType ? productType.toString() + " - " : "") + params.phrase
             if (brand && brand != '')
-                model.title = (model.title ? model.title + " - " : "") + brand + params.phrase
+                model.title = (model.title ? model.title + " - " : "") + brand +' '+ params.phrase
         }
         model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())

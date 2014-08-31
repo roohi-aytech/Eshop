@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td class="vertical-align-top">
-                <g:select name="prevAddress" from="${prevaddresses}"
+                <g:select name="prevAddress" from="${prevAddresses}"
                           optionKey="id" optionValue="title" noSelection="['':message(code:'newAddress')]"
                           ng-model="deliveryAddress" />
                 <script type="application/javascript">

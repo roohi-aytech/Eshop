@@ -593,9 +593,7 @@ function updateDeliveryAddressesJs(id){
                 scope.deliveryAddressLine = deliveryAddresses[i].addressLine1;
                 scope.deliveryName = deliveryAddresses[i].title;
                 scope.deliveryPhone = deliveryAddresses[i].telephone;
-                scope.deliveryCity = deliveryAddresses[i].city.id;
-
-
+//                scope.deliveryCity = deliveryAddresses[i].city.id;
             }
         }
     }

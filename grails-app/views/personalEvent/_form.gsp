@@ -1,3 +1,4 @@
+<%@ page import="eshop.ProductType" %>
 %{--easy ui--}%
 
 <style>
@@ -31,8 +32,8 @@
             type: "get",
             url: url
         }).done(function (response) {
-                    $('#sex').val(response);
-                });
+            $('#sex').val(response);
+        });
     }
 </script>
 
@@ -49,17 +50,33 @@
 <g:hiddenField name="version" value="${personalEventInstance?.version}"/>
 
 <table style="margin-top: 10px;">
-    <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'title', 'error')} ">
-        <td style="width: 100px">
-            <label for="title">
-                <g:message code="personalEvent.title.label" default="Title"/>
+    <g:if test="${grailsApplication.config.profileSimplePersonalEvents}">
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'title', 'error')} ">
+            <td style="width: 100px">
+                <label for="title">
+                    <g:message code="personalEvent.title.label" default="Title"/>
 
-            </label>
-        </td>
-        <td>
-            <g:textField name="title" value="${personalEventInstance?.title}" style="width:450px"/>
-        </td>
-    </tr>
+                </label>
+            </td>
+            <td>
+                <g:select name="title" from="${ProductType.findByName(grailsApplication.config.profilePersonalEventDefaultProductType).children}" optionKey="name" value="${personalEventInstance?.title}" optionValue="name" noSelection="['':'']"/>
+                %{--<g:textField name="title" value="${personalEventInstance?.title}" style="width:450px"/>--}%
+            </td>
+        </tr>
+    </g:if>
+    <g:else>
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'title', 'error')} ">
+            <td style="width: 100px">
+                <label for="title">
+                    <g:message code="personalEvent.title.label" default="Title"/>
+
+                </label>
+            </td>
+            <td>
+                <g:textField name="title" value="${personalEventInstance?.title}" style="width:450px"/>
+            </td>
+        </tr>
+    </g:else>
 
     <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'fullName', 'error')} ">
         <td>
@@ -118,35 +135,36 @@
             <rg:datePicker name="date" value="${personalEventInstance?.date}" style="width:120px"/>
         </td>
     </tr>
+    <g:if test="${!grailsApplication.config.profileSimplePersonalEvents}">
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'jobTitle', 'error')} ">
+            <td>
+                <label for="jobTitle">
+                    <g:message code="personalEvent.jobTitle.label" default="Job Title"/>
 
-    <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'jobTitle', 'error')} ">
-        <td>
-            <label for="jobTitle">
-                <g:message code="personalEvent.jobTitle.label" default="Job Title"/>
+                </label>
+            </td>
+            <td>
+                <g:select name="jobTitle" from="${personalEventInstance.constraints.jobTitle.inList}"
+                          value="${personalEventInstance?.jobTitle}" valueMessagePrefix="personalEvent.jobTitle"
+                          noSelection="['': '']" style="width:130px"/>
+            </td>
+        </tr>
 
-            </label>
-        </td>
-        <td>
-            <g:select name="jobTitle" from="${personalEventInstance.constraints.jobTitle.inList}"
-                      value="${personalEventInstance?.jobTitle}" valueMessagePrefix="personalEvent.jobTitle"
-                      noSelection="['': '']" style="width:130px"/>
-        </td>
-    </tr>
 
-    <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'favoriteStyle', 'error')} ">
-        <td>
-            <label for="favoriteStyle">
-                <g:message code="personalEvent.favoriteStyle.label" default="Favorite Style"/>
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'favoriteStyle', 'error')} ">
+            <td>
+                <label for="favoriteStyle">
+                    <g:message code="personalEvent.favoriteStyle.label" default="Favorite Style"/>
 
-            </label>
-        </td>
-        <td>
-            <g:select name="favoriteStyle" from="${personalEventInstance.constraints.favoriteStyle.inList}"
-                      value="${personalEventInstance?.favoriteStyle}" valueMessagePrefix="personalEvent.favoriteStyle"
-                      noSelection="['': '']" style="width:80px"/>
-        </td>
-    </tr>
-
+                </label>
+            </td>
+            <td>
+                <g:select name="favoriteStyle" from="${personalEventInstance.constraints.favoriteStyle.inList}"
+                          value="${personalEventInstance?.favoriteStyle}" valueMessagePrefix="personalEvent.favoriteStyle"
+                          noSelection="['': '']" style="width:80px"/>
+            </td>
+        </tr>
+    </g:if>
     <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'minPrice', 'error')} ">
         <td>
             <label for="minPrice">
@@ -171,18 +189,48 @@
         </td>
     </tr>
 
-    <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'favoriteProductTypes', 'error')} ">
-        <td>
-            <label for="favoriteProductTypes">
-                <g:message code="personalEvent.favoriteProductTypes.label" default="Favorite Product Types"/>
+    <g:if test="${!grailsApplication.config.profileSimplePersonalEvents}">
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'favoriteProductTypes', 'error')} ">
+            <td>
+                <label for="favoriteProductTypes">
+                    <g:message code="personalEvent.favoriteProductTypes.label" default="Favorite Product Types"/>
 
-            </label>
-        </td>
-        <td>
-            <rg:tree bean="${personalEventInstance}" name="favoriteProductTypes" field="favoriteProductTypes"
-                     relationField="parentProduct" width="520px"
-                     cascadeCheck="true"></rg:tree>
-        </td>
-    </tr>
+                </label>
+            </td>
+            <td>
+                <rg:tree bean="${personalEventInstance}" name="favoriteProductTypes" field="favoriteProductTypes"
+                         relationField="parentProduct" width="520px"
+                         cascadeCheck="true"></rg:tree>
+            </td>
+        </tr>
+    </g:if>
+    <g:if test="${grailsApplication.config.enableProfilePersonalEventsNotifications}">
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'emailNotification', 'error')} ">
+            <td>
+                <g:checkBox name="emailNotification" value="${personalEventInstance?.emailNotification}" />
+            </td>
+            <td>
+                <label for="emailNotification">
+                    <g:message code="personalEvent.emailNotification.label" default="Email Notification" />
+
+                </label>
+            </td>
+
+        </tr>
+
+        <tr class="fieldcontain ${hasErrors(bean: personalEventInstance, field: 'smsNotification', 'error')} ">
+            <td>
+                <g:checkBox name="smsNotification" value="${personalEventInstance?.smsNotification}" />
+            </td>
+            <td>
+                <label for="smsNotification">
+                    <g:message code="personalEvent.smsNotification.label" default="Sms Notification" />
+
+                </label>
+            </td>
+
+        </tr>
+    </g:if>
+
 </table>
 
