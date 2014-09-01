@@ -478,7 +478,7 @@ class EshopTagLib {
     def synchronizeProduct = { attrs, body ->
         def product
         if (attrs.productId)
-            product = Product.get(productId.id)
+            product = Product.get(attrs.productId.id)
         if (attrs.modelId)
             product = ProductModel.get(attrs.modelId)?.product
         if (product) {
@@ -486,7 +486,7 @@ class EshopTagLib {
             def result = product.save() ? true : false
             out << """
             <span style="display: none">
-                product id : ${productId}
+                product id : ${attrs.productId}
                 <br/>
                 synchronization result: ${result}
             </span>
