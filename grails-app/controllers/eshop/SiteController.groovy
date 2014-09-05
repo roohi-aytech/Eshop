@@ -926,6 +926,7 @@ class SiteController {
     def reindex() {
         searchableService.unindexAll()
         searchableService.reindexAll()
+        render 'reindex completed.'
     }
 
     def search() {

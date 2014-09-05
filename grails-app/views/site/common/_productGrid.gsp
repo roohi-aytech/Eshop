@@ -1,3 +1,4 @@
+<%@ page import="eshop.ProductModel" %>
 <div class="container-fluid">
     <g:set var="productModelList" value="${eshop.ProductModel.findAllByIdInList(productIds?.collect{it.modelId})}"/>
     <ul class="showbiz thumbnailGrid row-fluid">
@@ -5,7 +6,7 @@
             <g:set var="productModel" value="${productModelList.find{it.id == productId.modelId}}"/>
             <g:if test="${productModel}">
                 <li class="span3">
-                    <g:render template="/site/common/productThumbnail" model="[productModel: productModel, productId: productId.id, modelCount: productId.modelCount]"/>
+                    <g:render template="/site/common/productThumbnail" model="[productModel: productModel, productId: productId.id, modelCount: ProductModel.countByProduct(productModel.product)]"/>
                 </li>
             </g:if>
             <g:else>

@@ -1,12 +1,12 @@
 grails.serverURL = "http://localhost:8080/eshop"
 grails.app.context = "/eshop"
-eShop.instance = 'zanbil'
+eShop.instance = 'felfel'
 url.www = false
-locale.language='fa'
-locale.country='IR'
+locale.language='en'
+locale.country='US'
 events.url='http://localhost:8080/eshop'
 admin.theme='cobalt'
-browse.view.root='browse'
+browse.view.root='browse-root'
 page.size=12
 testimonials=true
 backgrounds=true
