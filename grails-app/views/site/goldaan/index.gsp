@@ -100,11 +100,14 @@
                             </div>
                             %{--<div><a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img--}%
                             %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
-                            <div><a href="https://plus.google.com/share?url=${createLink(uri: "/", absolute: true)}"
-                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/>
-                            </a>
-                            </div>
 
+                            %{--<div><a href="https://plus.google.com/share?url=${createLink(uri: "/", absolute: true)}"--}%
+                                    %{--target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/>--}%
+                            %{--</a>--}%
+                            %{--</div>--}%
+                            <div>
+                            <a href="https://plus.google.com/101996537594125028951" rel="publisher"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a>
+                            </div>
                             <div><a href="https://instagram.com/goldaan.ir"
                                     target="_blank"><img
                                         src="${resource(dir: 'images/social', file: 'instagram.png')}"/>
