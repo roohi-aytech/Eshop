@@ -7,9 +7,6 @@
     <div class="ruler-right-content pull-right"><g:formatNumber number="${(productModel?.height?:product?.height)}" type="number" />cm</div>
 </g:if>
 
-<script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.modified.js')}" type="text/javascript"></script>
-<link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
-
 <ul id="etalage">
 
     %{--<g:set var="mainImage" value="${product?.mainImage}"/>--}%

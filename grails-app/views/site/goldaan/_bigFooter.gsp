@@ -4,13 +4,13 @@
         <hr/>
         <ul class="third-party">
             <li>
-                <img src="${resource(dir: 'images/third-party', file: 'bonyad-koodak.png')}"/>
+                <img src="${resource(dir: 'images/third-party', file: 'mahak_chareity.png')}"/>
             </li>
             %{--<li>--}%
                 %{--<img src="${resource(dir: 'images/third-party', file: 'behnam.png')}"/>--}%
             %{--</li>--}%
             <li>
-                <img src="${resource(dir: 'images/third-party', file: 'mahak_chareity.png')}"/>
+                <img src="${resource(dir: 'images/third-party', file: 'bonyad-koodak.png')}"/>
             </li>
         </ul>
     </div>
