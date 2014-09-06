@@ -292,6 +292,9 @@
             <r:layoutResources/>
             <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
         </td>
+        <td>
+            <g:render template="/site/banners/enamad"/>
+        </td>
     </tr>
     <tr>
         <td class="totalFooter">

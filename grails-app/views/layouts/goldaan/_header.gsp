@@ -85,9 +85,9 @@
                 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
             </g:if>
         </td><td>
-            <div style="">
-                <iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>
-            </div>
+            %{--<div style="">--}%
+                %{--<iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>--}%
+            %{--</div>--}%
         </td></tr></table>
 
 
