@@ -18,9 +18,7 @@
                             <span class="test-version"><g:message code="test-ver"/></span>
                         </a>
                         <h4><g:message code="slogan"/></h4>
-                        <div style="display: inline-block;float: left">
-                            <iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>
-                        </div>
+
                         <div class="header-top-left">
                             <div class="order-tracking-container">
 
@@ -147,5 +145,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
