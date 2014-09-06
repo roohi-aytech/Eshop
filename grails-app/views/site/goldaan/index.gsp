@@ -35,6 +35,7 @@
             <ehcache:render template="common/slideshowMain_goldaan"/>
         </td>
     </tr>
+    <tr><td><ehcache:render template="banners/enamad"/></td></tr>
     <tr class="table-row">
         <td colspan="2">
             <div class="mostvisited-nav">
