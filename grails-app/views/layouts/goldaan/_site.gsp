@@ -258,6 +258,7 @@
 </head>
 
 <body id="index" class="index hide-left-column hide-right-column lang_en " ng-controller="eshopCtrl">
+<iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>
 <div id="suggest-container" class="hide">
     <div>
         <g:message code="please.enter.your.name"/>
@@ -291,9 +292,6 @@
             %{--<g:render template="/inquired_payments"/>--}%
             <r:layoutResources/>
             <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
-        </td>
-        <td>
-            <g:render template="/site/banners/enamad"/>
         </td>
     </tr>
     <tr>
