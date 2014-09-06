@@ -42,9 +42,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="">
-                        <ehcache:render template="banners/enamad"/>
-                    </div>
+                    %{--<div class="">--}%
+                        %{--<ehcache:render template="banners/enamad"/>--}%
+                    %{--</div>--}%
                 </div>
             </g:if>
             <div class="row">
