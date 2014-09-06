@@ -19826,3 +19826,8 @@ html,body,#main-container{
 .search-auto-complete-drop-down-inner .rollbar-content{
     float:right!important;
 }
+.namad-goldaan{
+    position:absolute;
+    top:0px;
+    left:290px;
+}

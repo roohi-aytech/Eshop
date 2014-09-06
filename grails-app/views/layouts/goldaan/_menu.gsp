@@ -42,6 +42,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="namad-goldaan">
+                        <ehcache:render template="banners/enamad"/>
+                    </div>
                 </div>
             </g:if>
             <div class="row">
