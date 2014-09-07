@@ -126,8 +126,9 @@
                 <div id="tab5" class="tab-pane">
                 <br>
                     همکاری با گلدان: partners@goldaan.ir<br>
-                    دریافت اطلاعات: Info@@goldaan.ir<br>
+                    دریافت اطلاعات: Info@goldaan.ir<br>
                     پیشنهادات و انتقادات: Suggestions@goldaan.ir<br>
+                    پشتیبانی فنی سایت: Support@goldaan.ir<br>
                 </div>
 
                 %{--<div id="tab6" class="tab-pane">--}%

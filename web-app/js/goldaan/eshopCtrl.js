@@ -55,6 +55,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
             data: serializedData,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
+            console.debug(data)
                 productCard.html(data);
             }).error(function (data, status, headers, config) {
                 console.error(

@@ -247,10 +247,15 @@ class ImageController {
             img = productModel?.product?.images?.find { it.name == params.name }
         else if (productModel?.mainImage)
             img = productModel?.mainImage
-        else if (productModel?.product?.mainImage)
-            img = productModel?.product?.mainImage
         else
-            img = productModel?.product?.images?.find { imageService.imageBelongsToModel(it, productModel) }
+            img = productModel?.product?.images?.find { imageService.imageSpecificToModel(it, productModel) }
+        if (!img) {
+            if (productModel?.product?.mainImage)
+                img = productModel?.product?.mainImage
+            else
+                img = productModel?.product?.images?.find { imageService.imageBelongsToModel(it, productModel) }
+        }
+
         if (!img)
             img = productModel?.product?.images?.find()
         if (!img) {

@@ -15,7 +15,7 @@
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"
        original-title="${message(code: "basket")}">
         <span id="basketCounter" class="counter">{{basketCounter}} <g:message
-                code="basket.product"/> {{calculateBasketTotalPrice() | number:0}} <g:message code="rial"/></span>
+                code="basket.product"/> {{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></span>
     </a>
 
     <div id="basketItems" class="dropdown-menu content">
@@ -34,7 +34,7 @@
                     <span class="basket-item-title">
                         <div>{{itemFirstLine(basketItem.name)}}</div>
                         <div>{{itemSecondLine(basketItem.name)}}</div>
-                        <div>{{basketItem.realPrice | number:0}} <g:message code="rial"/></div>
+                        <div>{{basketItem.realPrice | number:0}} <eshop:currencyLabel/></div>
                         <div><a ng-click="removeFromBasket(basketItem.id)" class="removeBasketItem"><g:message
                                 code="basket.items.delete"/></a></div>
                     </span>
@@ -48,7 +48,7 @@
                 <div>
                     <span>{{basketCounter}}</span>
                     <label><g:message code="basket.items.count"/></label>
-                    <span>{{calculateBasketTotalPrice() | number:0}} <g:message code="rial"/></span>
+                    <span>{{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></span>
                     <label><g:message code="basket.items.price"/></label>
                 </div>
             </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="login-comments">
                 <p><g:message code="login-comments"/></p>
-                <common:link class="btn btn-primary" controller="login" action="auth" https="${false}">
+                <common:link class="btn btn-primary" controller="login" action="auth" https="${false}" params="[redirectURL:'/basket/index']">
                     <g:message code="login.link"/>
                 </common:link>
             </div>

@@ -80,16 +80,15 @@
         %{--</div>--}%
     </section>
     <section id="top_extra">
-        <table><tr><td>
-            <g:if test="${controllerName!='basket' && actionName!='checkout'}">
+        <g:if test="${controllerName!='basket' && actionName!='checkout'}">
+            <table><tr><td>
                 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
-            </g:if>
-        </td><td>
-            <div style="">
-                <iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>
-            </div>
-        </td></tr></table>
-
+            </td><td>
+                <div style="">
+                    <iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>
+                </div>
+            </td></tr></table>
+        </g:if>
 
         %{--<div class="wide_container">--}%
         %{--<div class="" id="st_mega_menu_container">--}%

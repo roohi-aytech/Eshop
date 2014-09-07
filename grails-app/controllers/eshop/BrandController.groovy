@@ -7,6 +7,7 @@ import grails.plugins.springsecurity.Secured
 @Secured(RoleHelper.ROLE_PRODUCT_TYPE_ADMIN)
 class BrandController {
     def mongoService
+
     def form() {
         def brand
         if (params.id)
@@ -25,11 +26,10 @@ class BrandController {
             brand.properties = params
             if (!brand.logo)
                 brand.logo = logo
-        }
-        else
+        } else
             brand = new Brand(params)
-        if(params.imageDeleted){
-            brand.logo=null
+        if (params.imageDeleted) {
+            brand.logo = null
         }
         if (brand.validate()) {
             brand.save(flush: true)
@@ -39,16 +39,20 @@ class BrandController {
             }
 
             render brand as JSON
-        }
-        else {
+        } else {
             render(template: "/brand/form", model: [brandInstance: brand])
         }
     }
 
     def delete() {
         def brand = Brand.get(params.id)
-        if (brand)
+        if (brand) {
+            Product.findAllByBrand(brand).each {
+                it.brand = null
+                it.save()
+            }
             brand.delete()
+        }
         render 0
     }
 
@@ -67,8 +71,7 @@ class BrandController {
 //        response.contentType = "image/jpeg"
             response.contentLength = brand.logo.length
             response.outputStream << brand.logo
-        }
-        else {
+        } else {
             response.contentLength = 0
             response.outputStream << []
         }
