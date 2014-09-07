@@ -13,7 +13,7 @@
 
                 <div class="row">
                     <div class="main-page-header">
-                        <a href="<g:createLink uri="/"/>">
+                        <a style="margin-right:40px;" href="<g:createLink uri="/"/>">
                             <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" class="logo">
                             <span class="test-version"><g:message code="test-ver"/></span>
                         </a>
