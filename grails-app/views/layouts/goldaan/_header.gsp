@@ -84,9 +84,12 @@
             <table><tr><td>
                 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
             </td><td>
+                <g:if test="${controllerName=='site' && actionName=='index'}">
                 <div style="">
-                    <iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>
+                    <ehcache:render template="/site/banners/enamad"/>
+                    %{--<iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>--}%
                 </div>
+                </g:if>
             </td></tr></table>
         </g:if>
 

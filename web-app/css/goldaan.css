@@ -19425,7 +19425,12 @@ h2.check-out-price span {
     padding: 5px;
     margin-top:20px;
 }
-
+.enamad-checkout{
+    padding:5px;
+    margin-top:20px;
+    text-align:right;
+    display:inline-block;
+}
 
 .step-content .step-title{
     position:relative;
