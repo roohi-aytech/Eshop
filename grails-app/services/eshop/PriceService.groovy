@@ -5,6 +5,7 @@ import eshop.discout.ProductCriteria
 import grails.plugin.cache.Cacheable
 
 class PriceService {
+    def grailsApplication
 
     @Cacheable(value = 'pservice', key = '#productId.toString()')
     def calcProductPrice(productId) {
@@ -152,12 +153,12 @@ class PriceService {
     def updateOrderPrice(Order order) {
 
         OrderItem.findAllByOrderAndDeleted(order, false).each { orderItem ->
-            def addedValues= []
-            if(orderItem.addedValues)
+            def addedValues = []
+            if (orderItem.addedValues)
                 addedValues.addAll(orderItem.addedValues?.collect { it.id })
-            if(orderItem.addedValueInstances)
+            if (orderItem.addedValueInstances)
                 addedValues.addAll(orderItem.addedValueInstances?.collect { it.addedValue.id })
-            def price = calcProductModelPrice(orderItem.productModel.id,addedValues)
+            def price = calcProductModelPrice(orderItem.productModel.id, addedValues)
             if (price.status == 'exists') {
                 orderItem.baseUnitPrice = price.showVal ?: 0
                 orderItem.addedValuesPrice = price.addedVal ?: 0
@@ -177,7 +178,7 @@ class PriceService {
 
             //set discount
             orderItem.discount = 0
-            def discountList = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThanEqualsAndUsageTypeNotEqual(new Date(), new Date(), 0,'Bon')
+            def discountList = Discount.findAllByFromDateLessThanEqualsAndToDateGreaterThanEqualsAndRemainCountGreaterThanEqualsAndUsageTypeNotEqual(new Date(), new Date(), 0, 'Bon')
             discountList = discountList.findAll { discount ->
                 !discount.discountProductsCriteria.any { criteria -> !ProductCriteriaMatches(criteria, orderItem) } &&
                         order.items.any { basketItem ->
@@ -219,11 +220,17 @@ class PriceService {
             orderItem.save()
         }
 
-        order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
-            it.totalPrice
-        }) as Integer) + order.deliveryPrice) / 1000) * 1000
+        if (grailsApplication.config.disableRoundingPrices) {
+            order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
+                it.totalPrice
+            }) as Integer) + order.deliveryPrice))
+        } else {
+            order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
+                it.totalPrice
+            }) as Integer) + order.deliveryPrice) / 1000) * 1000
+        }
         if (order.usedAccountValue)
-            order.usedAccountValue = Math.min(order.usedAccountValue,order.totalPrice)
+            order.usedAccountValue = Math.min(order.usedAccountValue, order.totalPrice)
         else
             order.usedAccountValue = 0
         order.totalPayablePrice = order.totalPrice - order.usedAccountValue
