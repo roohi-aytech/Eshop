@@ -25,7 +25,7 @@
         <div style="padding: 10px;line-height: 20px;">
             <div>
                 <g:message code="onlinePayment.amount"/>:
-                <b>${onlinePayment?.amount}</b>
+                <b>${onlinePayment?.amount} <g:message code="rial" /></b>
             </div>
 
             <div>
