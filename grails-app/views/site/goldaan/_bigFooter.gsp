@@ -1,7 +1,7 @@
 <div class="footer-info-container footer1">
 
     %{--<div>--}%
-        %{--<hr/>--}%
+        <hr/>
         %{--<ul class="third-party">--}%
             %{--<li>--}%
                 %{--<img src="${resource(dir: 'images/third-party', file: 'mahak_chareity.png')}"/>--}%
