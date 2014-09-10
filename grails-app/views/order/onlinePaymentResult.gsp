@@ -25,7 +25,7 @@
         <div style="padding: 10px;line-height: 20px;">
             <div>
                 <g:message code="onlinePayment.amount"/>:
-                <b>${onlinePayment?.amount}</b>
+                <b>${onlinePayment?.amount} <g:message code="rial" /></b>
             </div>
 
             <div>
@@ -36,7 +36,7 @@
             <g:if test="${onlinePayment?.order}">
                 <div>
                     <g:message code="onlinePayment.order"/>:
-                    <b>${onlinePayment?.order?.id}</b>
+                    <b>${onlinePayment?.order?.trackingCode}</b>
                 </div>
 
                 <div>
@@ -50,6 +50,13 @@
                         </g:else>
                     </b>
                 </div>
+                <g:if test="${grailsApplication.config.payOnCheckout}">
+                    <div class='info'><div><g:message code="order.creation.success.message"/>
+                        <h2 style="font-size: 16px !important;margin-bottom:0;">
+                            <g:message code="order.trackingCode.label"/>: <b>${onlinePayment?.order?.trackingCode}</b>
+                        </h2>
+                    </div></div>
+                </g:if>
             </g:if>
         </div>
     </g:if>

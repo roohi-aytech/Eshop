@@ -36,10 +36,13 @@
             $('#priceHistogramModal').removeClass('in');
             modal.hide();
         }
+
     </script>
 </head>
 
 <body>
+<script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.modified.js')}" type="text/javascript"></script>
+<link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
 
 <div class="product-page-container">
 

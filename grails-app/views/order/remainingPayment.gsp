@@ -59,11 +59,13 @@
                 <g:message code="payment.types.online"></g:message>
             </a>
         </li>
-        <li>
-            <a href="#tabBankReceipt" data-toggle="tab">
-                <g:message code="payment.types.bankReceipt"></g:message>
-            </a>
-        </li>
+        <g:if test="${!grailsApplication.config.disablebankReceipt}">
+            <li>
+                <a href="#tabBankReceipt" data-toggle="tab">
+                    <g:message code="payment.types.bankReceipt"></g:message>
+                </a>
+            </li>
+        </g:if>
         <g:if test="${order.sendingAddress.city == City.findByTitle(message(code: 'city.homeTown'))}">
             <li>
                 <a href="#tabPayInPlace" data-toggle="tab">
@@ -77,10 +79,11 @@
         <div id="tabOnline" class="tab-pane active">
             <g:render template="payment/online"></g:render>
         </div>
-
-        <div id="tabBankReceipt" class="tab-pane">
-            <g:render template="payment/bankReceipt"></g:render>
-        </div>
+        <g:if test="${!grailsApplication.config.disablebankReceipt}">
+            <div id="tabBankReceipt" class="tab-pane">
+                <g:render template="payment/bankReceipt"></g:render>
+            </div>
+        </g:if>
         <g:if test="${order.sendingAddress.city == City.findByTitle(message(code: 'city.homeTown'))}">
             <div id="tabPayInPlace" class="tab-pane">
                 <g:render template="payment/inPlace"></g:render>

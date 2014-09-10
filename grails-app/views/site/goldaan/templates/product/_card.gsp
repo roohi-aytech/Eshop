@@ -62,7 +62,7 @@
                 </td>
                 <td>
                     <g:formatNumber
-                            number="${price.showVal}" type="number"/> <g:message code="rial"/>
+                            number="${price.showVal}" type="number"/> <eshop:currencyLabel/>
                 </td>
             </tr>
             <g:each in="${selectedAddedValues.findAll { it.processTime != 'mandetory' }}" var="addedValue">
@@ -73,10 +73,10 @@
                     <td>
                         <g:if test="${addedValue.type == 'percent'}">
                             <g:formatNumber number="${Math.round((addedValue.value * price.showVal) / 100)}"
-                                            type="number"/> <g:message code="rial"/>
+                                            type="number"/> <eshop:currencyLabel/>
                         </g:if>
                         <g:else>
-                            <g:formatNumber number="${addedValue.value}" type="number"/> <g:message code="rial"/>
+                            <g:formatNumber number="${addedValue.value}" type="number"/> <eshop:currencyLabel/>
                         </g:else>
                     </td>
                 </tr>
@@ -93,7 +93,7 @@
                     </td>
                     <td>
                         <g:formatNumber
-                                number="${price.showVal + price.addedVal}" type="number"/> <g:message code="rial"/>
+                                number="${price.showVal + price.addedVal}" type="number"/> <eshop:currencyLabel/>
                     </td>
                 </tr>
             </g:if>

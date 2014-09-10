@@ -27,6 +27,9 @@ deliveryMinIntervalFromOrderEnabled=true
 disableProfileFavorits=true
 enableProfilePersonalEventsNotifications=true
 profileSimplePersonalEvents=true
+paymentValueUserSelect=true
+disablebankReceipt=true
+disableRoundingPrices=true
 profilePersonalEventDefaultProductType='مناسبت'
 ckeditor {
     upload {

@@ -19425,7 +19425,12 @@ h2.check-out-price span {
     padding: 5px;
     margin-top:20px;
 }
-
+.enamad-checkout{
+    padding:5px;
+    margin-top:20px;
+    text-align:right;
+    display:inline-block;
+}
 
 .step-content .step-title{
     position:relative;
@@ -19825,4 +19830,9 @@ html,body,#main-container{
 }
 .search-auto-complete-drop-down-inner .rollbar-content{
     float:right!important;
+}
+.namad-goldaan{
+    position:absolute;
+    top:0px;
+    left:290px;
 }

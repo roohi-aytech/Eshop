@@ -33,8 +33,15 @@ label {
                     code="order.payment.bank.${account.bankName}.label"/></option>
         </g:each>
     </select>
-    <label><g:message code="order.payment.value"></g:message> (<eshop:currencyLabel/>)</label>
-    <input type="text" name="value" id="onlineValue" onblur="onlineValidateValue()" value="${orderPrice}"/>
+
+    <g:if test="${grailsApplication.config.paymentValueUserSelect}">
+        <input type="hidden" name="value" id="onlineValue" onblur="onlineValidateValue()" value="${orderPrice}"/>
+        <label><g:message code="order.payment.value"></g:message> <g:formatNumber number="${orderPrice}" type="number"/> (<eshop:currencyLabel/>)</label>
+    </g:if>
+    <g:else>
+        <label><g:message code="order.payment.value"></g:message> (<eshop:currencyLabel/>)</label>
+        <input type="text" name="value" id="onlineValue" onblur="onlineValidateValue()" value="${orderPrice}"/>
+    </g:else>
     <span id="onlineValueValidationMessage"></span>
 
     <g:if test="${customer}">

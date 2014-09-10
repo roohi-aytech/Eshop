@@ -177,4 +177,18 @@ class ImageService {
         }
         result
     }
+    def imageSpecificToModel(Content image, ProductModel model) {
+        def result = false
+        image = Content.get(image?.id)
+        model?.variationValues?.each { modelVariationValue ->
+            modelVariationValue = VariationValue.get(modelVariationValue?.id)
+
+            if (image?.variationValues?.any {
+                imageVariationValue ->
+                    imageVariationValue?.variationGroup?.id == modelVariationValue?.variationGroup?.id && imageVariationValue?.value == modelVariationValue?.value
+            })
+                result = true
+        }
+        result
+    }
 }

@@ -1,19 +1,19 @@
 <div class="footer-info-container footer1">
 
-    <div>
+    %{--<div>--}%
         <hr/>
-        <ul class="third-party">
-            <li>
-                <img src="${resource(dir: 'images/third-party', file: 'bonyad-koodak.png')}"/>
-            </li>
-            <li>
-                <img src="${resource(dir: 'images/third-party', file: 'behnam.png')}"/>
-            </li>
-            <li>
-                <img src="${resource(dir: 'images/third-party', file: 'mahak_chareity.png')}"/>
-            </li>
-        </ul>
-    </div>
+        %{--<ul class="third-party">--}%
+            %{--<li>--}%
+                %{--<img src="${resource(dir: 'images/third-party', file: 'mahak_chareity.png')}"/>--}%
+            %{--</li>--}%
+            %{--<li>--}%
+                %{--<img src="${resource(dir: 'images/third-party', file: 'behnam.png')}"/>--}%
+            %{--</li>--}%
+            %{--<li>--}%
+                %{--<img src="${resource(dir: 'images/third-party', file: 'bonyad-koodak.png')}"/>--}%
+            %{--</li>--}%
+        %{--</ul>--}%
+    %{--</div>--}%
 
     <div class="footer-info">
 

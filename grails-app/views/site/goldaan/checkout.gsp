@@ -208,7 +208,10 @@
                     <div class="discount-title"><g:message code="discount-title" /></div>
                     <br/>
                     <g:message code="with-this-buy-get-golbon" args="${["{{golbonDiscount}} ${eshop.currencyLabel()}"]}"/>
-            </div>
+                </div>
+                <div class="enamad-checkout">
+                    <ehcache:render template="/site/banners/enamad"/>
+                </div>
             </div>
         </div>
         <div id="confirm-dialog" class="hidden">

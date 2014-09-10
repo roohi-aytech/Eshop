@@ -81,8 +81,18 @@
     </section>
     <section id="top_extra">
         <g:if test="${controllerName!='basket' && actionName!='checkout'}">
-            <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+            <table><tr><td>
+                <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+            </td><td>
+                <g:if test="${controllerName=='site' && actionName=='index'}">
+                <div style="">
+                    <ehcache:render template="/site/banners/enamad"/>
+                    %{--<iframe src="/eNamadLogo.htm" frameborder="0" scrolling="no" allowtransparency="true" style="width: 150px; height:150px;"></iframe>--}%
+                </div>
+                </g:if>
+            </td></tr></table>
         </g:if>
+
         %{--<div class="wide_container">--}%
         %{--<div class="" id="st_mega_menu_container">--}%
         %{--<div class="container">--}%

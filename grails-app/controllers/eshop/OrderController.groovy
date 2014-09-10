@@ -113,7 +113,7 @@ class OrderController {
         order.sendingAddress = address
         order.billingAddress = address
         order.paymentType = session['paymentType']
-        order.sendFactorWith=Boolean.parseBoolean(session['sendFactor']?:'false')
+        order.sendFactorWith = Boolean.parseBoolean(session['sendFactor'] ?: 'false')
 
 
         order.deliveryPrice = (session['deliveryPrice'] ?: '0') as double
@@ -211,8 +211,10 @@ class OrderController {
         session.removeAttribute("checkout_address")
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
-
-        render(view: 'create', model: [trackingCode: order.trackingCode])
+        if (order.paymentType == 'online')
+            redirect(controller: 'order', action: 'remainingPayment', id: order.id)
+        else
+            render(view: 'create', model: [trackingCode: order.trackingCode])
     }
 
     def create() {
@@ -513,7 +515,7 @@ class OrderController {
         if (state.toInteger() > 0)
             onlinePayment.amount = state.toInteger()
         onlinePayment.resultCode = state.toString()
-        onlinePayment.transactionReferenceCode = params.MID
+        onlinePayment.transactionReferenceCode =referenceNumber //params.MID
         onlinePayment.save()
 
         if (state.toInteger() > 0) {
@@ -555,7 +557,8 @@ class OrderController {
             if (payableAmount >= orderPrice) {
 
                 //set order status
-                payment.order.status = OrderHelper.STATUS_PAID
+                if (!grailsApplication.config.payOnCheckout)
+                    payment.order.status = OrderHelper.STATUS_PAID
                 payment.order.paymentType = 'online'
                 payment.order.save()
 
@@ -591,7 +594,7 @@ class OrderController {
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.online')}
                 ${message(code: 'order.usedAccountValue')}: ${
                     formatNumber(number: payment.order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
-                } eshop.currencyLabel()}
+                } ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.bank')}: ${
                     message(code: "account.${payment.account.bankName}.${payment.account.type}")
                 }

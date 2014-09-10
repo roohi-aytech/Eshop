@@ -7,42 +7,6 @@
     <div class="ruler-right-content pull-right"><g:formatNumber number="${(productModel?.height?:product?.height)}" type="number" />cm</div>
 </g:if>
 
-<script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.modified.js')}" type="text/javascript"></script>
-<link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
-
-<script language="javascript" type="text/javascript">
-
-    jQuery(document).ready(function ($) {
-
-        $('#etalage').etalage({
-            source_image_width: 900,
-            source_image_height: 900,
-            zoom_area_width: $('#product-description-area').width(),
-            zoom_area_height: Math.max($('#product-description-area').height(), 300),
-            zoom_area_distance: 20,
-            small_thumbs: 4,
-            smallthumb_inactive_opacity: 0.3,
-            smallthumbs_position: 'bottom',
-            show_icon: false,
-            align:'right',
-            autoplay: false,
-            keyboard: false,
-            zoom_easing: true,
-            show_hint: true,
-            click_callback: function (image_anchor, instance_id) {
-
-                $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
-                $("#myModal").modal({
-                        backdrop: false,
-                        show: true
-                        });
-                $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor.replace('#', ''), function() {});
-            }
-        });
-
-        $(".etalage_small_thumbs ul li img[src$='50x50']").parent().fadeIn();
-    });
-</script>
 <ul id="etalage">
 
     %{--<g:set var="mainImage" value="${product?.mainImage}"/>--}%
@@ -119,3 +83,37 @@
 
 
 
+
+<script language="javascript" type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        $('#etalage').etalage({
+            source_image_width: 900,
+            source_image_height: 900,
+            zoom_area_width: $('#product-description-area').width(),
+            zoom_area_height: Math.max($('#product-description-area').height(), 300),
+            zoom_area_distance: 20,
+            small_thumbs: 4,
+            smallthumb_inactive_opacity: 0.3,
+            smallthumbs_position: 'bottom',
+            show_icon: false,
+            align:'right',
+            autoplay: false,
+            keyboard: false,
+            zoom_easing: true,
+            show_hint: true,
+            click_callback: function (image_anchor, instance_id) {
+
+                $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
+                $("#myModal").modal({
+                    backdrop: false,
+                    show: true
+                });
+                $("#myModal .modal-body").load('${createLink(controller: 'site', action: 'productImage', params: [id: product?.id])}?img=' + image_anchor.replace('#', ''), function() {});
+            }
+        });
+
+        $(".etalage_small_thumbs ul li img[src$='50x50']").parent().fadeIn();
+    });
+</script>

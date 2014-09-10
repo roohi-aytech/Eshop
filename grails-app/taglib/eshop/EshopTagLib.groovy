@@ -206,25 +206,11 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a href="javascript://" type="basket" original-title="${
-                            message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
-                        }" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${
-                            defaultModel.id
-                        }, '${defaultModel.toBasketItemString()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${
-                            attrs.animate
-                        }');"><img src='${
-                            resource(dir: 'images/menu', file: 'basket_new.png')
-                        }' /></a>
+                            <a href="javascript://" type="basket" original-title="${message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString().encodeAsHTML()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                     else
                         out << """
-                            <a href="javascript://" class="btn-buy addToBasket" ${
-                            attrs.angular == "false" ? "on" : "ng-"
-                        }click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString()}', '${
-                            price
-                        }', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${
-                            g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
-                        }</span></a>
+                            <a href="javascript://" class="btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString().encodeAsHTML()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
                             """
                 } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
