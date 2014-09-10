@@ -515,7 +515,7 @@ class OrderController {
         if (state.toInteger() > 0)
             onlinePayment.amount = state.toInteger()
         onlinePayment.resultCode = state.toString()
-        onlinePayment.transactionReferenceCode = params.MID
+        onlinePayment.transactionReferenceCode =referenceNumber //params.MID
         onlinePayment.save()
 
         if (state.toInteger() > 0) {
@@ -594,7 +594,7 @@ class OrderController {
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.online')}
                 ${message(code: 'order.usedAccountValue')}: ${
                     formatNumber(number: payment.order.usedAccountValue / priceService.getDisplayCurrencyExchangeRate(), type: 'number')
-                } eshop.currencyLabel()}
+                } ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.bank')}: ${
                     message(code: "account.${payment.account.bankName}.${payment.account.type}")
                 }
