@@ -509,6 +509,8 @@ class OrderAdministrationController {
 
     def printInvoice() {
         def order = Order.get(params.id)
+        if(!order)
+            order=Order.findByTrackingCode(params.id)
         response.setHeader("Content-Disposition", "attachment; filename=\"Invoice.pdf\"");
         pdfService.generateInvoice(order, response.outputStream, false)
     }

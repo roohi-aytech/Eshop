@@ -30,6 +30,7 @@ profileSimplePersonalEvents=true
 paymentValueUserSelect=true
 disablebankReceipt=true
 disableRoundingPrices=true
+getInvoiceOnTracking=true
 profilePersonalEventDefaultProductType='مناسبت'
 ckeditor {
     upload {

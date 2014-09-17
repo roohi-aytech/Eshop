@@ -76,21 +76,37 @@
                                                                                          type="number"/> <eshop:currencyLabel/></b>
                             </div>
                         </ul>
-                        <g:if test="${!grailsApplication.config.disableTrackingActions}">
-                            <div>
-                                <input type="button" onclick="showPreInvoice();"
-                                       value="${invoiceTitle}" class="btn btn-success"
-                                       style="margin:10px;height:30px;"/>
-                                <g:each in="${suggestedActions}" var="action">
-                                        <g:link controller="order" action="${action}" params="${['id': order.id]}" class="btn btn-primary"><g:message
-                                                code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
-                                </g:each>
-                                <g:each in="${actions}" var="action">
-                                        <g:link controller="order" action="${action}" params="${['id': order.id]}"><g:message
-                                                code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
-                                </g:each>
-                            </div>
-                        </g:if>
+                        <div>
+                            <g:if test="${!grailsApplication.config.disableTrackingActions}">
+
+                                    <input type="button" ordenclick="showPreInvoice();"
+                                           value="${invoiceTitle}" class="btn btn-success"
+                                           style="margin:10px;height:30px;"/>
+                                    <g:each in="${suggestedActions}" var="action">
+                                            <g:link controller="order" action="${action}" params="${['id': order.id]}" class="btn btn-primary"><g:message
+                                                    code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
+                                    </g:each>
+                                    <g:each in="${actions}" var="action">
+                                            <g:link controller="order" action="${action}" params="${['id': order.id]}"><g:message
+                                                    code="controlPanel.orders.actions.${action}.label"></g:message></g:link>
+                                    </g:each>
+
+                            </g:if>
+                            <g:if test="${grailsApplication.config.payOnCheckout}">
+                                <g:if test="${!payment?.transactionReferenceCode}">
+                                    <g:link controller="order" action="remainingPayment" id="${order?.id}">
+                                        <g:message code="controlPanel.orders.actions.payment.label"/>
+                                    </g:link>
+                                </g:if>
+                            </g:if>
+                            <g:if  test="${grailsApplication.config.getInvoiceOnTracking}">
+                                <g:if test="${[eshop.OrderHelper.STATUS_PAYMENT_APPROVED, eshop.OrderHelper.STATUS_TRANSMITTED, eshop.OrderHelper.STATUS_DELIVERED].contains(order?.status)}">
+                                    <g:link controller="orderAdministration" action="printInvoice" id="${order?.trackingCode}">
+                                        <g:message code="invoice.export.pdf.admin"/>
+                                    </g:link>
+                                </g:if>
+                            </g:if>
+                        </div>
                     </td>
                     <td>
                         <h3><g:message code="order.history"/></h3>

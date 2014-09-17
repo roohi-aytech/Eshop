@@ -68,6 +68,10 @@ class OrderController {
         if (order.status == OrderHelper.STATUS_INQUIRED)
             suggestedActions = [OrderHelper.ACTION_COMPLETION]
 
+        def payment
+        if (order.paymentType == 'online')
+            payment = OnlinePayment.findByOrder(order)
+
         def invoiceTitle = message(code: 'order.preInvoice.title')
         switch (order.status) {
             case OrderHelper.STATUS_PAID:
@@ -86,6 +90,7 @@ class OrderController {
                 customer        : customer,
                 actions         : actions,
                 suggestedActions: suggestedActions,
+                payment         : payment,
                 invoiceTitle    : invoiceTitle
         ]
     }
@@ -515,7 +520,7 @@ class OrderController {
         if (state.toInteger() > 0)
             onlinePayment.amount = state.toInteger()
         onlinePayment.resultCode = state.toString()
-        onlinePayment.transactionReferenceCode =referenceNumber //params.MID
+        onlinePayment.transactionReferenceCode = referenceNumber //params.MID
         onlinePayment.save()
 
         if (state.toInteger() > 0) {
