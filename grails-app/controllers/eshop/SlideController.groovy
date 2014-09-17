@@ -27,8 +27,8 @@ class SlideController {
         def slideInstance
         if (params.id) {
             slideInstance = Slide.get(params.id)
-            slideInstance.properties = params
             def image = slideInstance.image
+            slideInstance.properties = params
             if(!params.image)
                 slideInstance.image = image
         } else {

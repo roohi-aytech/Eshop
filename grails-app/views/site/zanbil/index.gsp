@@ -38,7 +38,7 @@
             <table class="table-simulated">
                 <tr>
                     <td class="specialSales-cell">
-                        <ehcache:render template="common/slideshowSpecialSales"
+                        <g:render template="common/slideshowSpecialSales"
                                   model="[specialSaleSlides: specialSaleSlides]"/>
                     </td>
                     <td class="namad-cell">

@@ -48,6 +48,18 @@ class Order {
         return null
     }
 
+    transient String getDeliveryMethodName(){
+        deliverySourceStation?.method?.name
+    }
+
+    transient String getDeliveryCityName(){
+        "${sendingAddress?.city?.province?.title} - ${sendingAddress?.city?.title}"
+    }
+
+    transient String getProductsName(){
+        items?.collect {it?.productModel?.toString()}?.join(' - ')
+    }
+
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
 
     static constraints = {

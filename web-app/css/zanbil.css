@@ -4313,6 +4313,7 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
     margin: 10px;
     background-repeat: no-repeat;
     background-position: bottom left;
+    min-height: 210px;
 }
 
 .top-menu .inner a {

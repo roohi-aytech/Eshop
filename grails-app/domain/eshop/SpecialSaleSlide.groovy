@@ -16,6 +16,9 @@ class SpecialSaleSlide {
     String extraLink1
     String extraLink2
     String extraLink3
+    Boolean visibleOnFirstPage = false
+
+    static hasMany = [productTypes: ProductType]
 
     static constraints = {
         product(nullable: false)
@@ -30,5 +33,6 @@ class SpecialSaleSlide {
         extraLink1(nullable: true, maxSize: 2048)
         extraLink2(nullable: true, maxSize: 2048)
         extraLink3(nullable: true, maxSize: 2048)
+        visibleOnFirstPage(nullable: true)
     }
 }

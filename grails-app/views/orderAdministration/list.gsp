@@ -42,7 +42,7 @@
     <rg:grid domainClass="${Order}"
              sortname="id"
              showCommand="false"
-             columns="[[name: 'trackingCode'],[name: 'status'],[name: 'ownerName'],[name: 'ownerEmail'],[name: 'ownerMobile'],[name: 'ownerTelephone'],[name: 'ownerCode'],[name: 'paymentTimeout', expression: 'rg.formatJalaliDate(date:  obj[\\\'paymentTimeout\\\'], hm:\\\'true\\\' )'],[name: 'lastActionDate', expression: 'rg.formatJalaliDate(date:  obj[\\\'lastActionDate\\\'], hm:\\\'true\\\' )']]"
+             columns="[[name: 'trackingCode'],[name: 'ownerName'],[name: 'productsName', width: '300px'],[name: 'ownerMobile'],[name: 'deliveryMethodName'],[name: 'deliveryCityName'],[name: 'status'],[name: 'lastActionDate', expression: 'rg.formatJalaliDate(date:  obj[\\\'lastActionDate\\\'], hm:\\\'true\\\' )']]"
              commands="${[[handler: "viewOrder(#id#)", icon: "application_form"]]}">
         <rg:criteria>
             <rg:inCrit name="id" value="${orderList}"/>

@@ -23,18 +23,29 @@ class SpecialSaleSlideController {
     }
 
     def save() {
-        def specialSaleSlideInstance
-        if(params.id){
-            specialSaleSlideInstance = SpecialSaleSlide.get(params.id)
-            specialSaleSlideInstance.properties = params
+        def slideSaleInstance
+        if (params.id) {
+            slideSaleInstance = SpecialSaleSlide.get(params.id)
+            def image = slideSaleInstance.image
+            def extraImage1 = slideSaleInstance.extraImage1
+            def extraImage2 = slideSaleInstance.extraImage2
+            def extraImage3 = slideSaleInstance.extraImage3
+            slideSaleInstance.properties = params
+            if(!params.image)
+                slideSaleInstance.image = image
+            if(!params.extraImage1)
+                slideSaleInstance.extraImage1 = extraImage1
+            if(!params.extraImage2)
+                slideSaleInstance.extraImage2 = extraImage2
+            if(!params.extraImage3)
+                slideSaleInstance.extraImage3 = extraImage3
+        } else {
+            slideSaleInstance = new SpecialSaleSlide(params)
         }
-        else
-            specialSaleSlideInstance = new SpecialSaleSlide(params)
-        if(specialSaleSlideInstance.validate() && specialSaleSlideInstance.save()){
-            render specialSaleSlideInstance as JSON
-        }
-        else
-            render(template: "form", model: [specialSaleSlideInstance: specialSaleSlideInstance])
+        if (slideSaleInstance.validate() && slideSaleInstance.save()) {
+            render slideSaleInstance as grails.converters.JSON
+        } else
+            render(template: "form", model: [slideInstance: slideSaleInstance])
     }
 
 

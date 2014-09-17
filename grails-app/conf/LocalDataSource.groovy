@@ -23,13 +23,13 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/felfel?useUnicode=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
             password = ""
             pooled = true
             logSql = false
             driverClassName = "com.mysql.jdbc.Driver"
-            dialect = "org.hibernate.dialect.MySQLMyISAMDialect"
+            dialect = "org.hibernate.dialect.MySQL5Dialect"
             properties {
                 maxActive = -1
                 minEvictableIdleTimeMillis = 1800000

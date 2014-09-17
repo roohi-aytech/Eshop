@@ -47,6 +47,8 @@
 
                 <tr class="table-row">
                     <td class="table-cell">
+                        <g:render template="common/slideshowSpecialSales"
+                                  model="[specialSaleSlides: specialSaleSlides]"/>
                         <ul class="breadcrumb">
                             <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                 <a href="${createLink(uri: '/')}" itemprop="url">

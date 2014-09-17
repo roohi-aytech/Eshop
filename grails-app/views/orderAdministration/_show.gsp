@@ -62,16 +62,16 @@
             </li>
         </g:if>
 
-        <g:if test="${orderInstance?.billingAddress}">
-            <li class="fieldcontain">
-                <span id="billingAddress-label" class="property-label"><g:message code="order.billingAddress"
-                                                                                  default="Billing Address"/></span>
+        %{--<g:if test="${orderInstance?.billingAddress}">--}%
+            %{--<li class="fieldcontain">--}%
+                %{--<span id="billingAddress-label" class="property-label"><g:message code="order.billingAddress"--}%
+                                                                                  %{--default="Billing Address"/></span>--}%
 
-                <span class="property-value"
-                      aria-labelledby="billingAddress-label">${orderInstance?.billingAddress?.encodeAsHTML()}</span>
+                %{--<span class="property-value"--}%
+                      %{--aria-labelledby="billingAddress-label">${orderInstance?.billingAddress?.encodeAsHTML()}</span>--}%
 
-            </li>
-        </g:if>
+            %{--</li>--}%
+        %{--</g:if>--}%
 
         <g:if test="${orderInstance?.sendingAddress}">
             <li class="fieldcontain">
@@ -105,30 +105,30 @@
             </li>
         </g:if>
 
-        <g:set var="creationTrackingLogItem"
-               value="${orderInstance?.trackingLogs.find { it?.action == OrderHelper.ACTION_CREATION }}"/>
-        <g:if test="${creationTrackingLogItem}">
-            <li class="fieldcontain">
-                <span id="creationDate-label" class="property-label"><g:message code="order.created.date"/></span>
+        %{--<g:set var="creationTrackingLogItem"--}%
+               %{--value="${orderInstance?.trackingLogs.find { it?.action == OrderHelper.ACTION_CREATION }}"/>--}%
+        %{--<g:if test="${creationTrackingLogItem}">--}%
+            %{--<li class="fieldcontain">--}%
+                %{--<span id="creationDate-label" class="property-label"><g:message code="order.created.date"/></span>--}%
 
-                <span class="property-value" aria-labelledby="creationDate-label"><rg:formatJalaliDate
-                        date="${creationTrackingLogItem?.date}" hm="true"/></span>
+                %{--<span class="property-value" aria-labelledby="creationDate-label"><rg:formatJalaliDate--}%
+                        %{--date="${creationTrackingLogItem?.date}" hm="true"/></span>--}%
 
-            </li>
-        </g:if>
+            %{--</li>--}%
+        %{--</g:if>--}%
 
-        <li class="fieldcontain">
-            <span id="vendors-label" class="property-label"><g:message code="order.vendors"/></span>
+        %{--<li class="fieldcontain">--}%
+            %{--<span id="vendors-label" class="property-label"><g:message code="order.vendors"/></span>--}%
 
-            <div class="property-value" aria-labelledby="vendors-label" style="line-height: 18px">
-                <% def orderTrackingService = grailsApplication.classLoader.loadClass('eshop.OrderTrackingService').newInstance() %>
-                <g:set var="vendors" value="${orderTrackingService.findAllVendorsOfOrder(orderInstance)}"></g:set>
-                <g:each in="${vendors}">
-                    <div>${it}</div>
-                </g:each>
-            </div>
+            %{--<div class="property-value" aria-labelledby="vendors-label" style="line-height: 18px">--}%
+                %{--<% def orderTrackingService = grailsApplication.classLoader.loadClass('eshop.OrderTrackingService').newInstance() %>--}%
+                %{--<g:set var="vendors" value="${orderTrackingService.findAllVendorsOfOrder(orderInstance)}"></g:set>--}%
+                %{--<g:each in="${vendors}">--}%
+                    %{--<div>${it}</div>--}%
+                %{--</g:each>--}%
+            %{--</div>--}%
 
-        </li>
+        %{--</li>--}%
 
         <li class="fieldcontain">
             <g:if test="${orderInstance?.sendFactorWith}">

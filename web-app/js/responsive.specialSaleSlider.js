@@ -47,18 +47,18 @@ $('.responsive-specialSalesSlider').each(function () {
 });
 
 function setSpecialSaleSliderSize(container) {
-    var width = $(window).width();
-    if (width < 1260) {
+    var width = $('.specialSalesSlider-container').width();
+    if (width < 1108) {
         $('.extra1').css('display', 'none');
         $('.extra2').css('display', 'none');
         $('.extra3').css('display', 'none');
     }
-    else if (width < 1510) {
+    else if (width < 1385) {
         $('.extra1').css('display', 'table-cell');
         $('.extra2').css('display', 'none');
         $('.extra3').css('display', 'none');
     }
-    else if (width < 1760) {
+    else if (width < 1608) {
         $('.extra1').css('display', 'table-cell');
         $('.extra2').css('display', 'table-cell');
         $('.extra3').css('display', 'none');

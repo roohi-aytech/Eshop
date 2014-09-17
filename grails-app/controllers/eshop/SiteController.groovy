@@ -36,11 +36,11 @@ class SiteController {
     def suggestFriend() {
         def product = Product.get(params.id)
         def name = params.name
-        def email=params.email
+        def email = params.email
         if (product && name) {
             mailService.sendMail {
                 to email
-                subject(message(code: 'emailTemplates.suggest.subject',args: [name,message(code:'name')]))
+                subject(message(code: 'emailTemplates.suggest.subject', args: [name, message(code: 'name')]))
                 html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/suggest_friend', model: [product: product, name: name]).toString()])
             }
@@ -123,6 +123,19 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+        }
+
+        model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            le('startDate', new Date())
+            ge('finishDate', new Date())
+            gt('remainingCount', 0)
         }
 
         model.background = Slide.createCriteria().list {
@@ -225,6 +238,19 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+        }
+
+        model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            le('startDate', new Date())
+            ge('finishDate', new Date())
+            gt('remainingCount', 0)
         }
 
         model.background = Slide.createCriteria().list {
@@ -421,14 +447,18 @@ class SiteController {
             eq('deleted', false)
         }
 
+        model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
+            eq('visibleOnFirstPage', true)
+            le('startDate', new Date())
+            ge('finishDate', new Date())
+            gt('remainingCount', 0)
+        }
+
         model.background = Slide.createCriteria().list {
             eq('visibleOnFirstPage', true)
             eq('showAsBackground', true)
             eq('deleted', false)
         }?.find()
-
-        model.specialSaleSlides = SpecialSaleSlide.findAllByStartDateLessThanEqualsAndFinishDateGreaterThanEqualsAndRemainingCountGreaterThan(new Date(), new Date(), 0)
-//        model.specialSaleSlides = SpecialSaleSlide.findAll()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
             models {
@@ -1032,7 +1062,7 @@ class SiteController {
         else {
             model.title = (productType ? productType.toString() + " - " : "") + params.phrase
             if (brand && brand != '')
-                model.title = (model.title ? model.title + " - " : "") + brand +' '+ params.phrase
+                model.title = (model.title ? model.title + " - " : "") + brand + ' ' + params.phrase
         }
         model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
         model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
