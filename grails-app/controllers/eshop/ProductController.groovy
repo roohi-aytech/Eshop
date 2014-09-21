@@ -434,7 +434,7 @@ class ProductController {
                 product[contentType + "s"].each {
 
                     results << [
-                            name         : it.name,
+                            name         : it.name?.toLowerCase(),
                             size         : it.fileContent.length,
 //                            url: createLink( action:'image', pa: params.id),
                             thumbnail_url: contentType == "image" ? createLink(action: contentType, params: [id: params.id, name: it.name]) : resource(dir: 'images', file: 'video.png'),
@@ -451,18 +451,18 @@ class ProductController {
                     def file = request.getFile(it)
                     def bytes = file.bytes
                     if (contentType == "image")
-                        bytes = imageService.saveAndScaleImages(bytes, file.originalFilename, fileService.filePath(Product.get(params.id)))
+                        bytes = imageService.saveAndScaleImages(bytes, file.originalFilename?.toLowerCase(), fileService.filePath(Product.get(params.id)))
                     else if (contentType == "video") {
-                        fileService.saveFile(bytes, file.originalFilename, "video", fileService.filePath(Product.get(params.id)))
+                        fileService.saveFile(bytes, file.originalFilename?.toLowerCase(), "video", fileService.filePath(Product.get(params.id)))
                         bytes = [0]
                     }
-                    def content = new Content(contentType: contentType, name: file.originalFilename, fileContent: bytes)
+                    def content = new Content(contentType: contentType, name: file.originalFilename?.toLowerCase(), fileContent: bytes)
                     content.save()
                     images << content
-                    result << [name         : file.originalFilename,
+                    result << [name         : file.originalFilename?.toLowerCase(),
                                size         : file.size,
-                               thumbnail_url: contentType == "image" ? createLink(action: 'image', params: [id: params.id, name: file.originalFilename]) : resource(dir: 'images', file: 'video.png'),
-                               delete_url   : createLink(action: "delete${contentType}", params: [id: params.id, name: file.originalFilename]),
+                               thumbnail_url: contentType == "image" ? createLink(action: 'image', params: [id: params.id, name: file.originalFilename?.toLowerCase()]) : resource(dir: 'images', file: 'video.png'),
+                               delete_url   : createLink(action: "delete${contentType}", params: [id: params.id, name: file.originalFilename?.toLowerCase()]),
                                delete_type  : "GET"]
                 }
                 if (contentType == "image")
