@@ -4,7 +4,7 @@
 <head>
     <r:require modules="bootstrap-file-upload"/>
     <meta name="layout" content="main">
-    <title>${productInstance}</title>
+    <title>${productInstance?.name?productInstance:message(code:'product.new.title')}</title>
 
 </head>
 
@@ -71,7 +71,7 @@
     $(function() {
         $( "#details-tabs" ).tabs({
             selected:${curtab ?: 0}
-    ${productInstance.id ? "" : ",disabled:[1,2,3,4,5,6,7]"}
+    ${productInstance.id ? "" : ",disabled:[1,2,3,4,5,6,7,8]"}
     });
     });
 </script>
