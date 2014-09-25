@@ -15,7 +15,7 @@
                     <div class="main-page-header">
                         <a style="margin-right:40px;" href="<g:createLink uri="/"/>">
                             <img src="${resource(dir: 'images/goldaan', file: 'logo.png')}" class="logo">
-                            <span class="test-version"><g:message code="test-ver"/></span>
+                            %{--<span class="test-version"><g:message code="test-ver"/></span>--}%
                         </a>
                         <h4><g:message code="slogan"/></h4>
 
