@@ -257,6 +257,8 @@ function setExternalLinksTarget() {
 }
 
 function setupMenu() {
-    $('.top-menu').width($('#header').width()).css('left', $('#header').position().left);
+    if($('#header').length) {
+        $('.top-menu').width($('#header').width()).css('left', $('#header').position().left);
+    }
 }
 
