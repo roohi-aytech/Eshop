@@ -20094,7 +20094,7 @@ html,body,#main-container{
 
 .navigation .dropdown-menu .links_container ul.shop_by_brands {
     float: left;
-    width: 250px;
+    width: 221px;
     padding: 0;
 }
 
@@ -20111,13 +20111,13 @@ html,body,#main-container{
 
 .navigation .dropdown-menu .links_container ul.shop_by_brands ul {
     padding-left: 0;
-    width: 250px;
+    width: 221px;
 }
 
 .navigation .dropdown-menu .links_container ul.shop_by_brands ul li {
     float: right;
     line-height: 18px;
-    width: 120px;
+    width: 110px;
     text-align:center;
 }
 
