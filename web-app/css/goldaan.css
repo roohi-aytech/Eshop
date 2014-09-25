@@ -20117,7 +20117,8 @@ html,body,#main-container{
 .navigation .dropdown-menu .links_container ul.shop_by_brands ul li {
     float: right;
     line-height: 18px;
-    width: 150px;
+    width: 120px;
+    text-align:center;
 }
 
 .header .navigation ul li.root a:hover,
