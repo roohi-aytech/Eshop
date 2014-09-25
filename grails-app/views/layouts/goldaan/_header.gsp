@@ -69,7 +69,7 @@
             </div>
         </div>
     </div>
-    <section class="" id="header">
+    %{--<section class="" id="header">--}%
         %{--<div class="wide_container">--}%
             %{--<div class="container">--}%
                 %{--<div class="row">--}%
@@ -78,11 +78,12 @@
                 %{--</div>--}%
             %{--</div>--}%
         %{--</div>--}%
-    </section>
+    %{--</section>--}%
     <section id="top_extra">
         <g:if test="${controllerName!='basket' && actionName!='checkout'}">
             <table><tr><td>
                 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+
             </td><td>
                 <g:if test="${controllerName=='site' && actionName=='index'}">
                 <div style="">
