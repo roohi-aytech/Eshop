@@ -42,6 +42,7 @@
             var url = '<g:createLink action="form"/>'
             if (id)
                 url += "/" + id
+            url+='?product.id='+${params.id}
             loadOverlay(url, '<g:createLink action="save"/>', function () {
                 $("#SlideGrid").trigger("reloadGrid")
             }, function () {
