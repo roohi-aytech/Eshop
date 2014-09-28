@@ -469,7 +469,7 @@ class SiteController {
                 eq('isVisible', true)
                 eq('deleted', false)
             }
-            maxResults(20)
+            maxResults(40)
             order("visitCount", "desc")
         }
 
