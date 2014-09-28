@@ -191,6 +191,17 @@ class OrderController {
                     mobile,
                     messageText)
         }
+        if (grailsApplication.config.orderCreateNotifiers) {
+            def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order]).toString()
+            def adminNotifiers = grailsApplication.config.orderCreateNotifiers
+            Thread.start {
+                adminNotifiers.split(',').each {
+                    messageService.sendMessage(
+                            it,
+                            adminText)
+                }
+            }
+        }
         session.setAttribute("basket", [])
         session.setAttribute("basketCounter", 0)
         session.removeAttribute("order")
