@@ -3,7 +3,8 @@
     <tr class="table-row">
 
         <td class="table-cell">
-
+            <meta itemprop="name" content="${(product?.pageTitle)?:"${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}"}">
+            <meta itemprop="about" content="${(product?.pageTitle)?:"${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}"}">
             <g:if test="${customerReviewInstance?.user}">
                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
                     <span itemprop="name"  class="comment-user">
@@ -16,7 +17,7 @@
                 <meta itemprop="datePublished" content="${customerReviewInstance?.lastUpdate}">
             </g:if>
             <g:if test="${customerReviewInstance?.body}">
-                :<span itemprop="reviewBody" class="comment-body">
+                :<span itemprop="reviewBody" itemprop="description" class="comment-body">
                     ${customerReviewInstance.body}
                 </span>
             </g:if>
