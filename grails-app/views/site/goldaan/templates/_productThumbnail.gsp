@@ -1,9 +1,12 @@
 <div itemscope itemtype="http://schema.org/Product" class="thumbnail mediaholder small pro_first_box" id="productThumbnail_${product?.id}">
     <a itemprop="url"  href="<g:createLink uri="/product/${product?.id}"/>">
-        <img itemprop="image" src="${resource(dir: '/images/goldaan', file: 'loadinfo.net.gif')}"
+        <img  src="${resource(dir: '/images/goldaan', file: 'loadinfo.net.gif')}"
              data-src="<g:createLink controller="image" action="index"
                                      params="[id: product?.id, wh: size?:'200x200']"/>"
              class="lazy" id="lazy-${product?.id}">
+        <meta itemprop="image" content="<g:createLink controller="image" action="index"
+                                                      params="[id: product?.id, wh: size?:'300x300']"/>" src="<g:createLink controller="image" action="index"
+                                                                                                                            params="[id: product?.id, wh: size?:'200x200']"/>">
 
         <div class="title">
             <h4 itemprop="name">${product?.manualTitle ? product?.pageTitle : "<span>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</span><br/> ${product?.name ?: ""}"}</h4>

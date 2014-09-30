@@ -12,7 +12,8 @@
                 </span>
             </g:if>
             <g:if test="${customerReviewInstance?.lastUpdate}">
-                (<span class="date" itemprop="datePublished">${new PrettyTime(new Locale('fa')).format(customerReviewInstance?.lastUpdate)}</span>)
+                (<span class="date">${new PrettyTime(new Locale('fa')).format(customerReviewInstance?.lastUpdate)}</span>)
+                <meta itemprop="datePublished" content="${customerReviewInstance?.lastUpdate}">
             </g:if>
             <g:if test="${customerReviewInstance?.body}">
                 :<span itemprop="reviewBody" class="comment-body">
