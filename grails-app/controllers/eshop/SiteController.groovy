@@ -563,7 +563,7 @@ class SiteController {
         model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
             it.rate
         }) / customerReviews.count { it })
-
+        model.rateCount=customerReviews.count { it }
         model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []

@@ -99,8 +99,8 @@
 
                                 </div>
                                 <g:if test="${product.description}">
-                                    <div class="product-description">
-                                        <p itemprop="description">
+                                    <div  itemprop="description" class="product-description">
+                                        <p>
                                             ${product.description}
                                         </p>
                                     </div>
@@ -110,17 +110,18 @@
 
                                 <div class="white-panel">
                                     <div>
-                                        <g:if test="${product?.pageTitle}">
-                                            <h1 class="font-koodak product-title"
-                                                itemprop="name">${product?.pageTitle}</h1>
-                                        </g:if>
-                                        <g:else>
-                                            <h1 class="font-koodak product-title"
-                                                itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+                                        <a itemprop="url"  href="<g:createLink uri="/product/${product?.id}"/>">
+                                            <g:if test="${product?.pageTitle}">
+                                                <h1 class="font-koodak product-title"
+                                                    itemprop="name">${product?.pageTitle}</h1>
+                                            </g:if>
+                                            <g:else>
+                                                <h1 class="font-koodak product-title"
+                                                    itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                                            <h2 class="small product-title" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
-                                        </g:else>
-
+                                                <h2 class="small product-title" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
+                                            </g:else>
+                                        </a>
 
                                     <div class="social-links">
 

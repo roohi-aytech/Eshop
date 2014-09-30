@@ -30,7 +30,7 @@
         <li>
             <a href='#${it?.id}' >
                 %{--<g:set var="image" value="${ImageIO.read(new ByteInputStream(it.fileContent, it.fileContent.length))}"/>--}%
-                <img class="etalage_thumb_image" zoomable="${it?.dynamicProperties?.zoomable ? '1' : '0'}"
+                <img class="etalage_thumb_image"  itemprop="image"  zoomable="${it?.dynamicProperties?.zoomable ? '1' : '0'}"
                      width="50" height="50"
                      src="<g:createLink controller="image" params="[id: product?.id, name: it.name, wh: '300x300']"/>"/>
                 <img class="etalage_source_image"
@@ -50,10 +50,13 @@
     </div>
 </div>
 
-    <div id="aggregateRating" itemprop="aggregateRating">
+    <div id="aggregateRating"  itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" >
         %{--<g:message code="rate"/>:--}%
         %{--<span class="meta" itemprop="value">${rate}</span>--}%
-        <meta itemprop="best" content="5"/>
+        <meta itemprop="bestRating" content="5">
+        <meta itemprop="worstRating" content="0">
+        <meta itemprop="ratingValue" content="${rate}">
+        <meta itemprop="ratingCount" content="${rateCount}">
         <eshop:rate identifier="hidProductRate" currentValue="${rate}"
                     readOnly="true"/>
 

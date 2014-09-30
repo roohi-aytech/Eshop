@@ -48,19 +48,19 @@
 
     <g:if test="${price.showVal}">
         <table class="table-simulated price-table">
-            <tr>
+            <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
                 <td>
                     <g:message code="seller-goldaan"/>:
                 </td>
-                <td>
+                <td  itemprop="name">
                     ${product?.brand?.name ?: ""}
                 </td>
             </tr>
-            <tr>
+            <tr itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 <td>
                     <g:message code="price"/>:
                 </td>
-                <td>
+                <td itemprop="price">
                     <g:formatNumber
                             number="${price.showVal}" type="number"/> <eshop:currencyLabel/>
                 </td>

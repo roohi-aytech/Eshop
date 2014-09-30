@@ -1,14 +1,19 @@
-<div class="thumbnail mediaholder small pro_first_box" id="productThumbnail_${product?.id}">
-    <a href="<g:createLink uri="/product/${product?.id}"/>">
-        <img src="${resource(dir: '/images/goldaan', file: 'loadinfo.net.gif')}"
+<div itemscope itemtype="http://schema.org/Product" class="thumbnail mediaholder small pro_first_box" id="productThumbnail_${product?.id}">
+    <a itemprop="url"  href="<g:createLink uri="/product/${product?.id}"/>">
+        <img itemprop="image" src="${resource(dir: '/images/goldaan', file: 'loadinfo.net.gif')}"
              data-src="<g:createLink controller="image" action="index"
                                      params="[id: product?.id, wh: size?:'200x200']"/>"
              class="lazy" id="lazy-${product?.id}">
 
         <div class="title">
-            <h4>${product?.manualTitle ? product?.pageTitle : "<span>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</span><br/> ${product?.name ?: ""}"}</h4>
+            <h4 itemprop="name">${product?.manualTitle ? product?.pageTitle : "<span>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</span><br/> ${product?.name ?: ""}"}</h4>
             <eshop:thumbnailPrice productId="${product?.id}" hideLastUpdate="true"/>
             %{--<eshop:statusFlag productId="${product.id}"/>--}%
+        </div>
+        <div class="hidden">
+            <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                <span itemprop="name">${product?.brand}</span>
+            </span>
         </div>
     </a>
     %{--<div class="pro_first_box" style="height: 40px">--}%
