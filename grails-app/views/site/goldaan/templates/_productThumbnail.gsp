@@ -4,7 +4,7 @@
              data-src="<g:createLink controller="image" action="index"
                                      params="[id: product?.id, wh: size?:'200x200']"/>"
              class="lazy" id="lazy-${product?.id}">
-        <meta itemprop="image" content="<g:createLink controller="image" action="index" params="[id: product?.id, wh: size?:'300x300']"/>" src="<g:createLink controller="image" action="index" params="[id: product?.id, wh: size?:'200x200']"/>">
+        <meta itemprop="image" content="${createLink (controller:"image", action:"index", params:[id: product?.id, wh: size?:'300x300'])}">
 
         <div class="title">
             <h4 itemprop="name">${product?.manualTitle ? product?.pageTitle : "<span>${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</span><br/> ${product?.name ?: ""}"}</h4>
