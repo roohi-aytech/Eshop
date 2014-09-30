@@ -15,8 +15,8 @@
     <meta name="google-site-verification" content="mH1bB8PXNP_Qn0W29M_XLwI2aFf5EuHhkPRfTJCEW8M"/>
     <link rel="shortcut icon" href="${resource(dir: 'images/goldaan', file: 'fav-icon.ico')}" type="image/x-icon">
     <!--[if lte IE 8]>
-    <script language="javascript" src="${resource(dir: 'js', file: 'ieFix.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'json3.js')}" type="text/javascript"></script>
+    <script async language="javascript" src="${resource(dir: 'js', file: 'ieFix.js')}" type="text/javascript"></script>
+    <script async language="javascript" src="${resource(dir: 'js', file: 'json3.js')}" type="text/javascript"></script>
     <script>
         document.createElement('ng-include');
         document.createElement('ng-pluralize');
@@ -28,24 +28,24 @@
         document.createElement('ng:view');
       </script>
     <![endif]-->
-    <g:javascript library="jquery"/>
+    <g:javascript  library="jquery"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css/templates', file: 'firstPage.css')}" type="text/css">--}%
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'siteUI.css')}" type="text/css">--}%
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet"
+    <link async rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap.min.css', plugin: 'rapid-grails')}"/>
+    <link async rel="stylesheet"
           href="${resource(dir: 'bootstrap/css', file: 'bootstrap-responsive.min.css', plugin: 'rapid-grails')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
+    <link async rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-amazon.css')}"/>
+    <link async rel="stylesheet" href="${resource(dir: 'bootstrap/css', file: 'bootstrap-rtl.css', plugin: 'rapid-grails')}"/>
     %{--<link href="${resource(dir: 'css', file: 'siteUI.css')}" rel="stylesheet" type="text/css"/>--}%
-    <link href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>
-    <link href="${resource(dir: 'css', file: 'jquery.rollbar.css')}" rel="stylesheet" type="text/css"/>
-    <link href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}" rel="stylesheet" type="text/css"/>
-    <link href="${resource(dir: 'css', file: 'jquery.tipsy.css')}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.qtip.css')}"/>
+    <link async href="${resource(dir: 'css', file: 'site.css')}" rel="stylesheet" type="text/css"/>
+    <link async href="${resource(dir: 'css', file: 'jquery.rollbar.css')}" rel="stylesheet" type="text/css"/>
+    <link async href="${resource(dir: 'css', file: 'jquery.msgGrowl.css')}" rel="stylesheet" type="text/css"/>
+    <link async href="${resource(dir: 'css', file: 'jquery.tipsy.css')}" rel="stylesheet" type="text/css"/>
+    <link async rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.qtip.css')}"/>
 
 
     <r:layoutResources/>
-    <script type="text/javascript"
+    <script async type="text/javascript"
             src="${resource(plugin: 'rapid-grails', dir: 'js', file: 'angular.min.js')}"></script>
 
     <script type="text/javascript">
@@ -226,34 +226,34 @@
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.msgGrowl.js')}"--}%
             %{--type="text/javascript"></script>--}%
 
-    <script language="javascript" src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'eshopCtrl.js')}" type="text/javascript"></script>
+    <script async language="javascript" src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'eshopCtrl.js')}" type="text/javascript"></script>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.tpl_layout1.1.6.min.js')}"--}%
             %{--type="text/javascript"></script>--}%
     <g:layoutHead/>
-    <link href="${resource(dir: 'css', file: 'goldaan.css')}" rel="stylesheet" type="text/css"/>
+    <link async href="${resource(dir: 'css', file: 'goldaan.css')}" rel="stylesheet" type="text/css"/>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.watch.js')}" type="text/javascript"></script>--}%
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.hoverIntent.js')}"--}%
             %{--type="text/javascript"></script>--}%
 
-    <script language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"
+    <script async language="javascript" src="${resource(dir: 'js', file: 'search-auto-complete.js')}"
             type="text/javascript"></script>
     <g:javascript src="goldaan/goldaan.js"/>
     %{--<script language="javascript" src="${resource(dir: 'js', file: 'jquery.maskinput.js')}"--}%
-    <script language="JavaScript" type="text/javascript"
+    <script async language="JavaScript" type="text/javascript"
             src="${resource(dir: 'js', file: 'jquery.sticky-kit.js')}"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
-    <script src="${resource(dir: 'js', file: 'jquery.form.js', plugin: 'rapid-grails')}" language="javascript"
+    <script async language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
+    <script async src="${resource(dir: 'js', file: 'jquery.form.js', plugin: 'rapid-grails')}" language="javascript"
             type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
+    <script async language="javascript" src="${resource(dir: 'js', file: 'jquery.rollbar.js')}"
             type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
-    <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'jquery.qtip.js')}"></script>
-    <script type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'imagesloaded.js')}"></script>
+    <script async language="javascript" src="${resource(dir: 'js', file: 'common.js')}" type="text/javascript"></script>
+    <script async language="javascript" src="${resource(dir: 'js', file: 'jquery.tipsy.js')}" type="text/javascript"></script>
+    <script async type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'jquery.qtip.js')}"></script>
+    <script async type="text/javascript" language="javascript" src="${resource(dir: 'js', file: 'imagesloaded.js')}"></script>
 
-    <link href="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.css')}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.js')}"></script>
-    <script type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.fa.min.js')}"></script>
+    <link async href="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.css')}" rel="stylesheet" type="text/css"/>
+    <script async type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.min.js')}"></script>
+    <script async type="text/javascript" language="javascript" src="${resource(dir: 'js/bootstrapcss', file: 'bootstrap-datepicker.fa.min.js')}"></script>
 
 </head>
 
@@ -290,7 +290,7 @@
 
             %{--<g:render template="/inquired_payments"/>--}%
             <r:layoutResources/>
-            <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
+            <script async language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
         </td>
     </tr>
     <tr>
