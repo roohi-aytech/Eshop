@@ -469,7 +469,7 @@ function factorReview(){
 function deliveryReview(){
     changeStep(3)
 }
-function updateDeliveryInfo(){
+function updateDeliveryInfo(loggedIn){
     var scope = angular.element(document.getElementById('main-container')).scope();
     scope.deliveryDate=$('#deliveryDate_control').val();
     if(!scope.deliveryDate || !scope.deliveryDate_hour || !scope.deliveryDate_minute ){
@@ -502,7 +502,7 @@ function updateDeliveryInfo(){
     }
     else {
         var data = {
-            callBeforSend: scope.callBeforeSend,
+            callBeforeSend: scope.callBeforeSend,
             deliveryName: scope.deliveryName,
             deliveryAddressLine: scope.deliveryAddressLine,
             deliveryPhone: scope.deliveryPhone,
@@ -517,10 +517,12 @@ function updateDeliveryInfo(){
             data: data,
             type: 'post'
         });
-        $('.steps .selected').removeClass('selected');
-        $('.step-content.selected').removeClass('selected');
-        $('.steps .step4').addClass('selected');
-        $('.step-content.step4').addClass('selected');
+        if(!loggedIn) {
+            $('.steps .selected').removeClass('selected');
+            $('.step-content.selected').removeClass('selected');
+            $('.steps .step4').addClass('selected');
+            $('.step-content.step4').addClass('selected');
+        }
         return true;
     }
 }

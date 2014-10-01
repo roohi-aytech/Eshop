@@ -72,13 +72,15 @@
     <div class="alert alert-warning">
         <g:message code="delivery-alert"/>
     </div>
-    <g:set var="nextStep" value="${message(code:'next-step')}"/>
+    <g:set var="loggedIn" value="${false}"/>
+    <g:set var="submitForm" value="finalizeBasket(this);"/>
     <sec:ifLoggedIn>
+        <g:set var="loggedIn" value="${true}"/>
         <g:set var="submitForm" value="finalizeBasket(this);"/>
         <g:set var="nextStep" value="${message(code:'alerts.basket.button.checkOut')}"/>
     </sec:ifLoggedIn>
     <div class="basket-actions">
         <button class="btn btn-primary" onclick="factorReview()"><g:message code="prev-step" /></button>
-        <button class="btn btn-success" onclick="if(updateDeliveryInfo()){${submitForm}}">${nextStep}</button>
+        <button class="btn btn-success" onclick="if(updateDeliveryInfo(${loggedIn})){${submitForm}}">${nextStep}</button>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<%@ page import="eshop.OrderHelper; eshop.Order" %>
+<%@ page import="eshop.accounting.OnlinePayment; eshop.OrderHelper; eshop.Order" %>
 
 <g:if test="${modified}">
     <div id="modificationFlag">
@@ -132,14 +132,26 @@
 
         <li class="fieldcontain">
             <g:if test="${orderInstance?.sendFactorWith}">
-                <span id="sendFactorWith-label" class="property-label"><g:message code="sendFactorWith"/></span>
+                <span id="sendFactorWith-label" class="property-value"><b><g:message code="sendFactorWith"/></b></span>
             </g:if>
+
             <g:else>
-                <span id="sendFactorWith-label" class="property-label"><g:message code="send-surprise"/></span>
+                <span id="sendFactorWith-label" class="property-value"><b><g:message code="dont-send-factor"/></b></span>
             </g:else>
 
 
         </li>
+    <li class="fieldcontain">
+        <g:if test="${orderInstance?.callBeforeSend}">
+            <span id="sendFactorWith-label" class="property-value"><g:message code="call-before-send"/></span>
+        </g:if>
+
+        <g:else>
+            <span id="sendFactorWith-label" class="property-value"><b><g:message code="send-surprise"/></b></span>
+        </g:else>
+
+
+    </li>
         <g:if test="${orderInstance?.deliverySourceStation}">
             <li class="fieldcontain">
                 <span id="deliverySourceStation-label" class="property-label"><g:message code="deliveryMethod"/></span>
@@ -194,8 +206,34 @@
                 </span>
 
             </li>
+
+
         </g:if>
 
+    <li class="fieldcontain">
+        <span id="paymenttype-label" class="property-label"><g:message code="payment.type"/></span>
+
+        <span class="property-value" aria-labelledby="totalPrice-label">
+            <g:message code="${orderInstance?.paymentType}"/>
+        </span>
+
+    </li>
+    <g:if test="${orderInstance}">
+        <g:set var="payments" value="${OnlinePayment.findAllByOrderAndTransactionReferenceCodeIsNotNull(orderInstance)}"/>
+        <g:if test="${payments}">
+            <g:each in="${payments}">
+                <li class="fieldcontain">
+                    <span id="payment${it.id}-label" class="property-label"><g:message code="payment.online.payed"/></span>
+
+                    <span class="property-value" aria-labelledby="totalPrice-label">
+                        <g:formatNumber number="${it?.amount}" type="number"/> <g:message code="rial"/> -
+                        ${it.account} - ${it.referenceId} - ${it.transactionReferenceCode}
+                    </span>
+
+                </li>
+            </g:each>
+        </g:if>
+    </g:if>
 
     </ol>
 </div>
