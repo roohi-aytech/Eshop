@@ -42,7 +42,7 @@ environments {
             pooled = true
             logSql = false
             driverClassName = "com.mysql.jdbc.Driver"
-            dialect = "org.hibernate.dialect.MySQL5Dialect                                 "
+            dialect = "org.hibernate.dialect.MySQL5Dialect"
             properties {
                 maxActive = -1
                 minEvictableIdleTimeMillis = 1800000

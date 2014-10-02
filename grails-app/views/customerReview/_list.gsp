@@ -15,7 +15,7 @@
         <g:render template="/site/${grailsApplication.config.eShop.instance}/templates/product/review" model="${['customerReviewInstance': customerReview]}"></g:render>
     </g:if>
     <g:else>
-        <g:render template="/customerReview/show" model="${['customerReviewInstance': customerReview]}"></g:render>
+        <g:render template="/customerReview/show" model="${['customerReviewInstance': customerReview,product:product]}"></g:render>
     </g:else>
 </g:each>
 <div id="newCustomerReviews_0">

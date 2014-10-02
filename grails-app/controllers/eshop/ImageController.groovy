@@ -25,7 +25,17 @@ class ImageController {
 //        if (Environment.current != Environment.DEVELOPMENT)
 //            cache shared: true, validUntil: new Date() + 1
         if (params.id && params.id.toString().contains("{{")) { //angular parameter
-            render ""
+            def seconds = 3600 * 24 * 365
+            DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+            httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Calendar cal = new GregorianCalendar();
+            cal.add(Calendar.SECOND, seconds);
+            response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
+            response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
+            response.contentType = 'image/png'
+            response.setStatus(200)
+            response.outputStream << new byte[0]
+            response.outputStream.flush()
             return
         }
 
@@ -188,7 +198,7 @@ class ImageController {
                 break;
         }
         if (content) {
-            def seconds = 3600 * 24
+            def seconds = 3600 * 24 * 7
             DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
             httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             Calendar cal = new GregorianCalendar();
@@ -200,8 +210,19 @@ class ImageController {
             response.outputStream << content
             response.outputStream.flush()
 //            render null
-        } else
-            render ""
+        } else {
+            def seconds = 3600 * 24 * 7
+            DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+            httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Calendar cal = new GregorianCalendar();
+            cal.add(Calendar.SECOND, seconds);
+            response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
+            response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
+            response.contentType = 'image/png'
+            response.setStatus(200)
+            response.outputStream << new byte[1]
+            response.outputStream.flush()
+        }
 
     }
 //    @Cacheable(value='pimage', key='#product.id.toString()')

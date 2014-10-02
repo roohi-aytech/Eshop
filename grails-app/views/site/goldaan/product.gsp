@@ -9,11 +9,11 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script language="javascript" src="${resource(dir: 'js', file: 'browse.js')}" type="text/javascript"></script>
-    <script language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
+    <script async language="javascript" src="${resource(dir: 'js', file: 'browse.js')}" type="text/javascript"></script>
+    <script async language="javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         var modal;
         function showPriceHistogram(id) {
@@ -41,7 +41,7 @@
 </head>
 
 <body>
-<script language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.modified.js')}" type="text/javascript"></script>
+<script async language="javascript" src="${resource(dir: 'js', file: 'jquery.etalage.modified.js')}" type="text/javascript"></script>
 <link href="${resource(dir: 'css', file: 'jquery.etalage.css')}" rel="stylesheet" type="text/css"/>
 
 <div class="product-page-container">
@@ -99,8 +99,8 @@
 
                                 </div>
                                 <g:if test="${product.description}">
-                                    <div class="product-description">
-                                        <p itemprop="description">
+                                    <div  itemprop="description" class="product-description">
+                                        <p>
                                             ${product.description}
                                         </p>
                                     </div>
@@ -110,17 +110,18 @@
 
                                 <div class="white-panel">
                                     <div>
-                                        <g:if test="${product?.pageTitle}">
-                                            <h1 class="font-koodak product-title"
-                                                itemprop="name">${product?.pageTitle}</h1>
-                                        </g:if>
-                                        <g:else>
-                                            <h1 class="font-koodak product-title"
-                                                itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
+                                        <a itemprop="url"  href="<g:createLink uri="/product/${product?.id}"/>">
+                                            <g:if test="${product?.pageTitle}">
+                                                <h1 class="font-koodak product-title"
+                                                    itemprop="name">${product?.pageTitle}</h1>
+                                            </g:if>
+                                            <g:else>
+                                                <h1 class="font-koodak product-title"
+                                                    itemprop="name">${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""}</h1>
 
-                                            <h2 class="small product-title" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
-                                        </g:else>
-
+                                                <h2 class="small product-title" itemprop="model"><span class="font-calibri">${product?.name ?: ""}</span></h2>
+                                            </g:else>
+                                        </a>
 
                                     <div class="social-links">
 

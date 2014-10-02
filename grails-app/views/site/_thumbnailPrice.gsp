@@ -1,8 +1,11 @@
 %{--<g:if test="${status == 'exists'}">--}%
     <span class="price">
         <g:if test="${showVal && status == 'exists'}">
-            <span class='current'>
-            <g:formatNumber number="${showVal}" type="number"/> <eshop:currencyLabel/></span>
+            <span  itemprop="offers" itemscope itemtype="http://schema.org/Offer"  class='current'>
+                <span  itemprop="price">
+                    <g:formatNumber number="${showVal}" type="number"/> <eshop:currencyLabel/>
+                </span>
+            </span>
             <g:if test="${lastUpdate && !hideLastUpdate}">
                 <span class="price-last-update" original-title="${message(code: 'price.lastUpdate')}">
                     <rg:formatJalaliDate date="${lastUpdate}"/>

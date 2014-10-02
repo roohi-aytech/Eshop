@@ -31,6 +31,8 @@ paymentValueUserSelect=true
 disablebankReceipt=true
 disableRoundingPrices=true
 getInvoiceOnTracking=true
+showFactorAfterDelivery=true
+orderCreateNotifiers='09121057012,09124022033,09128194077,09192681571,09123482334'
 profilePersonalEventDefaultProductType='مناسبت'
 ckeditor {
     upload {

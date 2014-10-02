@@ -33,6 +33,7 @@
 
 <g:hiddenField name="id" value="${specialSaleSlideInstance?.id}"/>
 <g:hiddenField name="version" value="${specialSaleSlideInstance?.version}"/>
+<g:hiddenField name="product.id" value="${specialSaleSlideInstance?.product?.id}"/>
 
 <div class="fieldcontain ${hasErrors(bean: specialSaleSlideInstance, field: 'price', 'error')} ">
     <label for="price">

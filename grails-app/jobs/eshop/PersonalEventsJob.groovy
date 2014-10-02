@@ -29,7 +29,7 @@ class PersonalEventsJob {
 
         PersonalEvent.findAllByDateInList(dates).each { personalEvent ->
             def productType = ProductType.findByName(personalEvent.title)
-            def dayRemaining = (personalEvent - now).days
+            def dayRemaining = personalEvent.date.minus(now)
             if (personalEvent.emailNotification && personalEvent.customer.email) {
                 mailService.sendMail {
                     to personalEvent.customer.email
