@@ -10,6 +10,7 @@ class ProductModel {
     Boolean isDefaultModel
     Integer width
     Integer height
+    Integer weight
     Content mainImage
 
     static searchable = {
@@ -35,6 +36,7 @@ class ProductModel {
         prices()
         width(nullable: true)
         height(nullable: true)
+        weight(nullable: true)
         mainImage(nullable: true)
     }
 

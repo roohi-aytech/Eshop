@@ -43,6 +43,10 @@ class BasketController {
             basketItem = [id: id, productId: productModel.product.id, name: productModel.toBasketItemString(), count: count]
             basket << basketItem
         }
+        basketItem.width=productModel?.width?:productModel?.product?.width?:1
+        basketItem.height=productModel?.height?:productModel?.product?.height?:1
+        basketItem.length=productModel?.product?.length?:1
+        basketItem.weight=productModel?.weight?:productModel?.product?.weight?:0
 
         if (params.addedValues) {
             basketItem.selectedAddedValues = params.addedValues?.toString().split(',')
@@ -108,7 +112,8 @@ class BasketController {
             customInvoiceInformation.ownerCode = customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode
             customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
 
-            def deliveryMethods = DeliveryMethod.list().sort { it.name }
+//            def deliveryMethods = DeliveryMethod.list().sort { it.name }
+            def deliveryMethods = deliveryService.findAllDeliveryMethodsWithBasket(session.getAttribute("basket")).sort { it.name }
 //            def addedValueTypes = AddedValueType.findAllBy.sort { it.title }
             def prevAddresses
             if (customer)
