@@ -16,7 +16,7 @@ addedValueImage=false
 modelHasWidthAndHeight=false
 hideCustomerReviewTitle=false
 customCustomerReviewTemplate=false
-filterPriceOnChange=false
+filterPriceOnChange=true
 ckeditor {
     upload {
         basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
