@@ -103,7 +103,7 @@
                         <g:each in="${deliveryMethods}">
                             <div class="delivery-method">
                                 <label>
-                                    <input ng-model="deliveryMethod" type="radio" value="${it.id}" name="deliveryMethod" onchange="setDeliveryPrice(this, '${it}', ${it.sourceStations?.find()?.targetZones?.find()?.pricingRules?.find()?.netFactor}, ${it.hidePrice},'${it.name}');">
+                                    <input ng-model="deliveryMethod" type="radio" value="${it.id}" name="deliveryMethod" onchange="setDeliveryPrice(this, '${it}', ${it.price}, ${it.hidePrice},'${it.name}');">
                                     <img src="${createLink(controller: 'image', params: [id: it.id, type: 'deliveryMethod'])}"/>
                                     ${it.name} (${it.description})
                                 </label>
