@@ -11,6 +11,7 @@ page.size=12
 testimonials=false
 backgrounds=false
 showProductStatus=false
+filterPriceOnChange=true
 ckeditor {
     upload {
         basedir = "/home/uploads/"
