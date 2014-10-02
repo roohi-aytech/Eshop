@@ -92,6 +92,18 @@
             <g:render template="history" model="${[order: order]}"/>
         </div>
     </div>
+
+<div style="border:1px solid #cccccc;padding: 4px;border-radius: 4px;background: #ffffff">
+
+    <g:if test="${actions.size()>0  || (order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED ||(grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED,eshop.OrderHelper.STATUS_TRANSMITTED,eshop.OrderHelper.STATUS_DELIVERED]) )}">
+        <div style="display: block;background: #f4f4f4;border:1px solid #dddddd;border-radius: 4px;padding:5px;">
+            <g:message code="actOnOrder"/>
+        </div>
+    </g:if>
+
+    <form id="actionForm" style="margin-right: 10px;margin-bottom: 5px;">
+        <g:hiddenField name="id" value="${order.id}"/>
+
     <g:if test="${actions.size() > 0}">
         <div>
             <br/>
@@ -99,12 +111,8 @@
                 <g:render template="corrent_payment"/>
             </g:if>
 
-            <div style="border:1px solid #cccccc;padding: 4px;border-radius: 4px;background: #ffffff">
-                <div style="display: block;background: #f4f4f4;border:1px solid #dddddd;border-radius: 4px;padding:5px;"><g:message
-                        code="actOnOrder"/></div>
 
-                <form id="actionForm" style="margin-right: 10px;margin-bottom: 5px;">
-                    <g:hiddenField name="id" value="${order.id}"/>
+
 
 
                     <g:if test="${order.status == eshop.OrderHelper.STATUS_UPDATING || order.status == eshop.OrderHelper.STATUS_PAID }">
@@ -143,20 +151,23 @@
                                   style="margin:0;display: block;"></textarea>
                     </div>
 
-                    <div>
-                        <g:each in="${actions}" var="action">
-                            <input type="button" onclick="actOnOrder('${action}');"
-                                   value='${message(code: "order.actions.${action}")}'/>
-                        </g:each>
-                        <g:if test="${order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED}">
-                            <input type="button" onclick="printInvoice(${order.id});"
-                                   value='${message(code: "invoice.export.pdf.admin")}'/>
-                        </g:if>
-                    </div>
-                </form>
-            </div>
-        </div>
     </g:if>
+    <div>
+        <g:if test="${actions}">
+            <g:each in="${actions}" var="action">
+                <input type="button" onclick="actOnOrder('${action}');"
+                       value='${message(code: "order.actions.${action}")}'/>
+            </g:each>
+        </g:if>
+        <g:if test="${order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED ||(grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED,eshop.OrderHelper.STATUS_TRANSMITTED,eshop.OrderHelper.STATUS_DELIVERED]) }">
+            <input type="button" onclick="printInvoice(${order.id});"
+                   value='${message(code: "invoice.export.pdf.admin")}'/>
+        </g:if>
+    </div>
+</form>
+</div>
+</div>
+
 </div>
 <script language="javascript" type="text/javascript">
     $(function () {

@@ -48,16 +48,16 @@ class Order {
         return null
     }
 
-    transient String getDeliveryMethodName(){
+    transient String getDeliveryMethodName() {
         deliverySourceStation?.method?.name
     }
 
-    transient String getDeliveryCityName(){
-        "${sendingAddress?.city?.province?.title} - ${sendingAddress?.city?.title}"
+    transient String getDeliveryCityName() {
+        (sendingAddress?.city?.title) ? "${sendingAddress?.city?.province?.title} - ${sendingAddress?.city?.title}" : sendingAddress.toString()
     }
 
-    transient String getProductsName(){
-        items?.collect {it?.productModel?.toString()}?.join(' - ')
+    transient String getProductsName() {
+        items?.collect { it?.productModel?.toString() }?.join(' - ')
     }
 
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
