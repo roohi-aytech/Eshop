@@ -4892,6 +4892,7 @@ ul.article-list li span {
     padding-top: 20px;
     padding-bottom: 10px;
     padding-right: 10px;
+    direction: ltr;
 }
 
 .rangeSliderContainer span.title {

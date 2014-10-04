@@ -115,7 +115,7 @@ class UrlMappings {
 
         "/admin"(controller: "/default")
 
-        "/test/$id?"(controller: "/default", action: "test")
+//        "/test/$id?"(controller: "/default", action: "test")
 
         "/notFound"(controller: "/default", action: "notFound")
 

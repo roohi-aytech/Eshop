@@ -192,7 +192,7 @@ class OrderAdministrationController {
         trackingLog.order = order
         trackingLog.user = (User) springSecurityService.currentUser
         trackingLog.title = "order.actions.${action}"
-        trackingLog.description = params.description + "\n" + description
+        trackingLog.description = "${params.description}\n${description}"
         if (!trackingLog.validate() || !trackingLog.save()) {
             //tracking log save error
             return
