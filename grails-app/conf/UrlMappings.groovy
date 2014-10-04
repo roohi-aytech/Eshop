@@ -72,6 +72,11 @@ class UrlMappings {
             action = "aboutUs"
         }
 
+        "/personalEvent_help"{
+            controller = "site"
+            action = "personalEventHelp"
+        }
+
         "/moneyBackConditions"{
             controller = "site"
             action = "moneyBackConditions"

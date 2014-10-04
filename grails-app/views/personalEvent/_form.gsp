@@ -59,7 +59,7 @@
                 </label>
             </td>
             <td>
-                <g:select name="title" from="${ProductType.findByName(grailsApplication.config.profilePersonalEventDefaultProductType).children}" optionKey="name" value="${personalEventInstance?.title}" optionValue="name" noSelection="['':'']"/>
+                <g:select name="title" from="${ProductType.findByName(grailsApplication.config.profilePersonalEventDefaultProductType).children?.findAll {!it.deleted}}" optionKey="name" value="${personalEventInstance?.title}" optionValue="name" noSelection="['':'']"/>
                 %{--<g:textField name="title" value="${personalEventInstance?.title}" style="width:450px"/>--}%
             </td>
         </tr>

@@ -1314,6 +1314,9 @@ class SiteController {
     def goldenGuarantee() {
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/goldenGuarantee"
     }
+    def personalEvent_help() {
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/personalEventHelp"
+    }
 
     def synchMongoItem() {
         try {
