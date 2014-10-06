@@ -114,7 +114,10 @@ class OrderController {
         address.telephone = session['deliveryPhone']
         address.city = City.get(session['deliveryCity'])
         address.title = session['deliveryName']
-        address.save()
+        if(!address.save())
+            println(address.errors.allErrors)
+
+
         order.sendingAddress = address
         order.billingAddress = address
         order.paymentType = session['paymentType']
