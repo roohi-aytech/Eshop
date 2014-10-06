@@ -123,7 +123,7 @@
             <div style="float: right;padding-right: 10px;">
                 <common:registerLink></common:registerLink>
                 <br/>
-                <common:link controller='customer' action='forgetPassword' https="true">
+                <common:link controller='customer' action='forgetPassword'>
                     <g:message code="forgetPassword"/>
                 </common:link>
             </div>
