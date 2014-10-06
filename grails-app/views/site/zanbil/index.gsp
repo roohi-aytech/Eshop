@@ -18,10 +18,18 @@
 
     <!-- Start Alexa Certify Javascript -->
     <script type="text/javascript">
-        _atrk_opts = { atrk_acct:"y2lmi1a8s700WQ", domain:"zanbil.ir",dynamic: true};
-        (function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+        _atrk_opts = { atrk_acct: "y2lmi1a8s700WQ", domain: "zanbil.ir", dynamic: true};
+        (function () {
+            var as = document.createElement('script');
+            as.type = 'text/javascript';
+            as.async = true;
+            as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js";
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(as, s);
+        })();
     </script>
-    <noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=y2lmi1a8s700WQ" style="display:none" height="1" width="1" alt="" /></noscript>
+    <noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=y2lmi1a8s700WQ" style="display:none"
+                   height="1" width="1" alt=""/></noscript>
     <!-- End Alexa Certify Javascript -->
 
 </head>
@@ -33,21 +41,23 @@
             <ehcache:render template="common/slideshowMain"/>
         </td>
     </tr>
-    <tr class="table-row">
-        <td colspan="2">
-            <table class="table-simulated">
-                <tr>
-                    <td class="specialSales-cell">
-                        <g:render template="common/slideshowSpecialSales"
-                                  model="[specialSaleSlides: specialSaleSlides]"/>
-                    </td>
-                    <td class="namad-cell">
-                        <ehcache:render template="banners/enamad"/>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+    <g:if test="${specialSaleSlides && !specialSaleSlides?.isEmpty()}">
+        <tr class="table-row">
+            <td colspan="2">
+                <table class="table-simulated">
+                    <tr>
+                        <td class="specialSales-cell">
+                            <g:render template="common/slideshowSpecialSales"
+                                      model="[specialSaleSlides: specialSaleSlides]"/>
+                        </td>
+                        <td class="namad-cell">
+                            <ehcache:render template="banners/enamad"/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </g:if>
     <tr class="table-row">
         <td class="table-cell banners">
             <ehcache:render template="banners/rightsideBanners"/>
@@ -60,7 +70,7 @@
             <g:render template="common/productGrid"
                       model="${[productIds: filters.products.productIds]}"/>
         </td>
-    %{--</tr>--}%
+        %{--</tr>--}%
     <tr class="table-row">
         <td class="table-cell" colspan="2">
             <g:render template="common/productCarousel"

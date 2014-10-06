@@ -98,7 +98,7 @@ $(document).ready(function () {
     changeAddToBasketButtonLabel();
     resizeThumbnails();
 
-    $('.scrollable').rollbar({zIndex: 80, wheelSpeed: 10});
+    $('.scrollable').css('overflow', 'auto');//.rollbar({zIndex: 80, wheelSpeed: 10});
 
     $('.price-last-update').tipsy({live: true});
     $('.addedValues .item').tipsy({live: true, gravity: 'e'});

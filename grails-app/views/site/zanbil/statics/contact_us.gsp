@@ -121,7 +121,9 @@
                     <br/>
                     کدپستی: 1513755619
                     <br/><br/>
-                    <iframe src="https://maps.google.com/maps/ms?msid=209325791262870687657.0004c592742721d83f188&amp;msa=0&amp;ie=UTF8&amp;t=m&amp;ll=35.734861,51.41814&amp;spn=0.008587,0.021136&amp;output=embed" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" align="right" width="425" height="350"></iframe>
+                    <iframe src="https://maps.google.com/maps/ms?msid=209325791262870687657.0004c592742721d83f188&amp;msa=0&amp;ie=UTF8&amp;t=m&amp;ll=35.734861,51.41814&amp;spn=0.008587,0.021136&amp;output=embed"
+                            frameborder="0" marginwidth="0" marginheight="0" scrolling="no" align="right" width="425"
+                            height="350"></iframe>
                 </div>
 
                 <div id="tab3" class="tab-pane">
@@ -195,7 +197,8 @@
                             </div>
 
                             <div>
-                                <textarea type="text" name="body" id="body" cols="50" rows="5" style="width: auto"></textarea>
+                                <textarea type="text" name="body" id="body" cols="50" rows="5"
+                                          style="width: auto"></textarea>
                                 <span class="validator" id="bodyValidator"><g:message
                                         code="contactUs.email.body.validation.label"/></span>
                             </div>
@@ -238,5 +241,6 @@
         </div>
 
     </div>
+</div>
 </body>
 </html>
