@@ -36,7 +36,7 @@ class OrderTrackingService {
             }
             projections {
                 property('id')
-                maxResults(1000)
+                maxResults(500)
             }
         })
     }
