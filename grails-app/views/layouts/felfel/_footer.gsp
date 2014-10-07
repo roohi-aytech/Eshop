@@ -64,8 +64,19 @@
                 </ul>
                 <ul class="footer_social">
                     <li style="padding-top:6px;padding-left:10px;">
-                        <script src="https://apis.google.com/js/platform.js" async defer></script>
-                        <div class="g-plusone" data-annotation="none"></div>
+                        <span class="g-plusone" data-annotation="none"></span>
+                        <script type="text/javascript">
+                            window.___gcfg = {lang: 'fa'};
+
+                            (function () {
+                                var po = document.createElement('script');
+                                po.type = 'text/javascript';
+                                po.async = true;
+                                po.src = 'https://apis.google.com/js/plusone.js';
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(po, s);
+                            })();
+                        </script>
                     </li>
                     <li class="f_icon"><a target="_blank" href="http://twitter.com/felfel">twitter</a></li>
                     <li class="t_icon"><a target="_blank" href="http://www.facebook.com/felfel">Facebook</a></li>
