@@ -67,7 +67,7 @@
                         <script src="https://apis.google.com/js/platform.js" async defer>
                             {lang: 'fa'}
                         </script>
-                        <div class="g-plusone" data-annotation="none" data-href="http://www.felfel.ir"></div>
+                        <div class="g-plusone" data-annotation="none"></div>
                     </li>
                     <li class="f_icon"><a target="_blank" href="http://twitter.com/felfel">twitter</a></li>
                     <li class="t_icon"><a target="_blank" href="http://www.facebook.com/felfel">Facebook</a></li>
