@@ -20,15 +20,15 @@
                     <a onclick="javascript:window.open('http://twitter.com/home?status=Check out the ${createLink(uri:'/product/' + product.id, absolute: true)}', 'target=_pearent', 'width=820,height=455')"
                        href="javascript://" class="twitter"></a>
 
+                    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+                <div style="float: right">
+                    <div class="g-plusone" data-size="medium" data-annotation="none"></div>
+                </div>
 
-                    <a count-layout="horizontal" class="pint"
-                       href="JavaScript:newPopup('http://pinterest.com/pin/create/button/?url=${createLink(uri: '/product/' + product.id, absolute: true)}"><span></span>
-                    </a>
-
-                    <eshop:addToWishList useLongText="true" prodcutId="${product.id}"/>
-                    <eshop:addToCompareList useLongText="true" prodcutId="${product.id}"/>
-                </p>
+                <eshop:addToWishList useLongText="true" prodcutId="${product.id}"/>
+                <eshop:addToCompareList useLongText="true" prodcutId="${product.id}"/>
+            </p>
 
                 <div class="clearfix"></div>
             </div>

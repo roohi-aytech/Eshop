@@ -63,9 +63,15 @@
                             code="footerItems.tour"/></a>
                 </ul>
                 <ul class="footer_social">
+                    <li style="padding-top:6px;padding-left:10px;">
+                        <script src="https://apis.google.com/js/platform.js" async defer>
+                            {lang: 'fa'}
+                        </script>
+                        <div class="g-plusone" data-annotation="none" data-href="http://www.felfel.ir"></div>
+                    </li>
                     <li class="f_icon"><a target="_blank" href="http://twitter.com/felfel">twitter</a></li>
                     <li class="t_icon"><a target="_blank" href="http://www.facebook.com/felfel">Facebook</a></li>
-                    <li class="p_icon"><a target="_blank" href="http://pinterest.com/felfel/">Pinterest</a></li>
+                    %{--<li class="p_icon"><a target="_blank" href="http://pinterest.com/felfel/">Pinterest</a></li>--}%
                     <li class="y_icon"><a target="_blank" href="http://www.youtube.com/user/felfel"></a></li>
                 </ul>
             </div>
