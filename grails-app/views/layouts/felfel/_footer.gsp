@@ -64,9 +64,7 @@
                 </ul>
                 <ul class="footer_social">
                     <li style="padding-top:6px;padding-left:10px;">
-                        <script src="https://apis.google.com/js/platform.js" async defer>
-                            {lang: 'fa'}
-                        </script>
+                        <script src="https://apis.google.com/js/platform.js" async defer></script>
                         <div class="g-plusone" data-annotation="none"></div>
                     </li>
                     <li class="f_icon"><a target="_blank" href="http://twitter.com/felfel">twitter</a></li>
