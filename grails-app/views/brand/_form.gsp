@@ -41,6 +41,14 @@
     <g:textArea rows="5" cols="50" name="keywords" value="${brandInstance?.keywords}" class="count-words"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'searchKeys', 'error')} ">
+    <label for="keywords">
+        <g:message code="brand.searchKeys.label" default="searchKeys"/>
+
+    </label>
+    <g:textArea rows="5" cols="50" name="searchKeys" value="${brandInstance?.searchKeys}" class="count-words"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: brandInstance, field: 'logo', 'error')} required">
     <label for="logo">
         <g:message code="brand.logo.label" default="Logo"/>

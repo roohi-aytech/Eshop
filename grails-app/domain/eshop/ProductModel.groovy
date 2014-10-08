@@ -12,10 +12,11 @@ class ProductModel {
     Integer height
     Integer weight
     Content mainImage
+    String searchKeys
 
     static searchable = {
 //        root true
-        only = ['name', 'guaranteeInfo']
+        only = ['name', 'guaranteeInfo', 'searchString']
     }
 
     static hasMany = [variationValues: VariationValue, prices: Price]
@@ -25,6 +26,7 @@ class ProductModel {
     static mapping = {
         sort 'id'
         prices cascade: "all-delete-orphan"
+        searchKeys type: 'text'
     }
 
     static constraints = {
@@ -38,10 +40,15 @@ class ProductModel {
         height(nullable: true)
         weight(nullable: true)
         mainImage(nullable: true)
+        searchKeys(nullable:true)
     }
 
     transient String getGuaranteeInfo() {
         "${guarantee?.name} ${guarantee?.description}"
+    }
+
+    transient String getSearchString(){
+        "${name} ${guarantee?.searchKeys} ${variationValues?.collect{"${it?.variationGroup?.name} ${it?.value}"}?.join(' ')} ${product?.searchString} ${searchKeys}"
     }
 
     @Override

@@ -30,6 +30,8 @@ class Product extends BaseProduct implements Comparable{
 
     Double currentPrice
 
+    String searchKeys
+
     String getTitle() {
         toString()
     }
@@ -53,7 +55,7 @@ class Product extends BaseProduct implements Comparable{
         models?.collect { it.guarantee }?.unique { it?.id }
     }
 
-    static transients = ['title', 'currentPrice', 'breadCrumb']
+    static transients = ['title', 'currentPrice', 'breadCrumb', 'searchString']
 
     static hasMany = [productTypes: ProductType, attributes: Attribute, images: Content, videos: Content, customerReviews: CustomerReview, specialSaleSlides: SpecialSaleSlide, models: ProductModel]
 
@@ -61,7 +63,7 @@ class Product extends BaseProduct implements Comparable{
 
     static searchable = {
         root true
-        only = ['title', 'breadCrumb', 'description', 'details', 'variations', 'attributes', 'customerReviews', 'models']
+        only = ['title', 'breadCrumb', 'description', 'details', 'variations', 'attributes', 'customerReviews', 'models', 'searchString']
         variations reference:[lazy:true]
         attributes reference:[lazy:true]
         customerReviews reference:[lazy:true]
@@ -73,6 +75,7 @@ class Product extends BaseProduct implements Comparable{
 //        attributes cascade: 'all'
         details type: "text"
         version false
+        searchKeys type: 'text'
     }
 
     static constraints = {
@@ -99,9 +102,14 @@ class Product extends BaseProduct implements Comparable{
         visitCount(nullable:true)
         isVisible(nullable: true)
         deleted(nullable: true)
+        searchKeys(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)
+    }
+
+    String getSearchString(){
+        "${name} ${type} ${description} ${brand?.searchKeys} ${manufactureCountry} ${details} ${keywords} ${pageTitle} ${manualTitle} ${guaranteeList?.collect {it.searchKeys}?.join(' ')} ${productTypes?.collect {it.searchKeys}?.join(' ')} ${searchKeys}"
     }
 
     @Override

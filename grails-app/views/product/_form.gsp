@@ -135,6 +135,13 @@
     <g:checkBox name="isVisible" id="isVisible" checked="${productInstance?.isVisible}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: productInstance, field: 'searchKeys', 'error')} ">
+    <label for="searchKeys">
+        <g:message code="product.searchKeys.label" default="searchKeys" />
+
+    </label>
+    <g:textArea name="searchKeys" value="${productInstance?.searchKeys}" cols="50" rows="5" class="count-words"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'productTypes', 'error')} ">
     <label for="productTypes">

@@ -37,6 +37,14 @@
     <g:textArea cols="50" rows="5" name="description" value="${guaranteeInstance?.description}" class="count-words"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'searchKeys', 'error')} ">
+    <label for="description">
+        <g:message code="guarantee.searchKeys.label" default="searchKeys"/>
+
+    </label>
+    <g:textArea cols="50" rows="5" name="searchKeys" value="${guaranteeInstance?.searchKeys}" class="count-words"/>
+</div>
+
 
 <div class="fieldcontain ${hasErrors(bean: guaranteeInstance, field: 'logo', 'error')} required">
     <label for="logo">

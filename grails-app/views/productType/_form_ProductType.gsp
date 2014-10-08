@@ -46,6 +46,13 @@
     </label>
     <g:textArea name="keywords" value="${productTypeInstance?.keywords}" cols="50" rows="5" class="count-words"/>
 </div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'searchKeys', 'error')} ">
+    <label for="searchKeys">
+        <g:message code="product.searchKeys.label" default="searchKeys" />
+
+    </label>
+    <g:textArea name="searchKeys" value="${productTypeInstance?.searchKeys}" cols="50" rows="5" class="count-words"/>
+</div>
 <div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'image', 'error')} ">
     <label for="image">
         <g:message code="productType.image.label" default="image" />

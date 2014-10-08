@@ -240,6 +240,7 @@
                     $("#edit-form-productType [name=description]").val(row.description)
                     $("#edit-form-productType [name=pageTitle]").val(row.pageTitle)
                     $("#edit-form-productType [name=keywords]").val(row.keywords)
+                    $("#edit-form-productType [name=searchKeys]").val(row.searchKeys)
                     $("#edit-form-productType [name=seoFriendlyAlternativeName]").val(row.seoFriendlyAlternativeName)
                     $("#edit-form-productType [name=seoFriendlyName]").val(row.seoFriendlyName)
                     $("#edit-form-productType #img").attr("src",'<g:createLink controller="image"/>?id='+id+'&type=productType&wh=100x100')

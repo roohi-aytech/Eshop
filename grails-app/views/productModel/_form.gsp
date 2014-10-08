@@ -95,3 +95,11 @@
 
 
 </div>
+
+<div class="fieldcontain ${hasErrors(bean: productModelInstance, field: 'searchKeys', 'error')} ">
+    <label for="searchKeys">
+        <g:message code="productModel.searchKeys.label" default="searchKeys" />
+
+    </label>
+    <g:textArea name="searchKeys" value="${productModelInstance?.searchKeys}" cols="50" rows="5" class="count-words"/>
+</div>

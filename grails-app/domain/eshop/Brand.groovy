@@ -6,6 +6,7 @@ class Brand {
     String description
     String keywords
     String pageTitle
+    String searchKeys
 
     byte[] logo
 
@@ -13,6 +14,7 @@ class Brand {
 
     static mapping = {
         sort 'name'
+        searchKeys type: 'text'
     }
     static constraints = {
 
@@ -21,6 +23,7 @@ class Brand {
         pageTitle(nullable: true)
         keywords(nullable: true)
         logo(nullable: true,maxSize: 1000000000)
+        searchKeys(nullable:true)
     }
     String toString(){
         name

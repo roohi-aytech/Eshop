@@ -40,7 +40,9 @@
                             <img width="74" height="30"
                                  src="${resource(dir: 'images/felfel', file: 'bon_homie_footer.jpg')}">
                         </a>
-                        <a class="write_testi" id="footer_testimonial" href="${createLink(controller: 'testimonial', action: 'write')}"><g:message code="testimonial.write"/></a>
+                        <a class="write_testi" id="footer_testimonial"
+                           href="${createLink(controller: 'testimonial', action: 'write')}"><g:message
+                                code="testimonial.write"/></a>
                         <a class="bulk_order" href="#"><g:message code="bulkOrder.link"/></a>
                     </div>
 
@@ -58,25 +60,16 @@
                             code="help.paymentAndDelivery"/></a> |
                     <a href="${createLink(controller: 'site', action: 'deliveryTips')}"><g:message
                             code="help.deliveryTips"/></a> |
-                    <a href="${createLink(controller: 'site', action: 'shoppingRules')}"><g:message code="rules.shoppingRules"/></a> |
+                    <a href="${createLink(controller: 'site', action: 'shoppingRules')}"><g:message
+                            code="rules.shoppingRules"/></a> |
                     <a href="${createLink(controller: 'site', action: 'aboutUs')}"><g:message
                             code="footerItems.tour"/></a>
                 </ul>
                 <ul class="footer_social">
                     <li style="padding-top:6px;padding-left:10px;">
-                        <span class="g-plusone" data-annotation="none"></span>
-                        <script type="text/javascript">
-                            window.___gcfg = {lang: 'fa'};
+                        <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-                            (function () {
-                                var po = document.createElement('script');
-                                po.type = 'text/javascript';
-                                po.async = true;
-                                po.src = 'https://apis.google.com/js/plusone.js';
-                                var s = document.getElementsByTagName('script')[0];
-                                s.parentNode.insertBefore(po, s);
-                            })();
-                        </script>
+                        <div class="g-plusone" data-annotation="none"></div>
                     </li>
                     <li class="f_icon"><a target="_blank" href="http://twitter.com/felfel">twitter</a></li>
                     <li class="t_icon"><a target="_blank" href="http://www.facebook.com/felfel">Facebook</a></li>
@@ -84,6 +77,7 @@
                     <li class="y_icon"><a target="_blank" href="http://www.youtube.com/user/felfel"></a></li>
                 </ul>
             </div>
+
             <div class="clearfix"></div>
         </div>
     </div>

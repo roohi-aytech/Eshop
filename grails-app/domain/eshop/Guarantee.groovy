@@ -7,6 +7,7 @@ class Guarantee {
     String description
     String period
     byte[] logo
+    String searchKeys
 
     static hasMany = [productTypeBrands: ProductTypeBrand]
  //   static composites = ["productTypeBrands"]
@@ -17,6 +18,7 @@ class Guarantee {
 
     static mapping = {
         sort 'name'
+        searchKeys type: 'text'
     //    productTypeBrands cascade: "all-delete-orphan"
     }
 
@@ -25,6 +27,7 @@ class Guarantee {
         period(nullable: true)
         description(nullable: true)
         logo(nullable: true,maxSize: 1000000000)
+        searchKeys(nullable: true)
 
     }
 

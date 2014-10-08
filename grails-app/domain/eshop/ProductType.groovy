@@ -15,6 +15,7 @@ class ProductType extends BaseProduct {
     Boolean deleted = false
     byte[] image
     byte[] menuImage
+    String searchKeys
 
     transient Integer getChildrenCount() {
         def count = 0
@@ -44,7 +45,7 @@ class ProductType extends BaseProduct {
 
     static searchable = [only: ['name']]
 
-    static transients = ['urlName']
+    static transients = ['urlName', 'searchString']
 
     static hasMany = [children: ProductType, godFathers: ProductType, products: Product, attributeTypes: AttributeType, types: ProductTypeType,addedValueTypes:AddedValueType]
     static belongsTo = [ProducingProduct, ProductTypeBrand]
@@ -54,6 +55,7 @@ class ProductType extends BaseProduct {
         products cascade: 'all'
         attributeTypes cascade: 'all'
         variations cascade: 'all'
+        searchKeys type: 'text'
     }
     static mappedBy = [children: 'parentProduct', godFathers: 'godFathers']
     static constraints = {
@@ -70,6 +72,11 @@ class ProductType extends BaseProduct {
         image(nullable: true, maxSize: 1000000000)
         menuImage(nullable: true, maxSize: 1000000000)
         deleted(nullable: true)
+        searchKeys(nullable: true)
+    }
+
+    String getSearchString(){
+        "${name} ${description} ${keywords} ${pageTitle} ${seoFriendlyName} ${seoFriendlyAlternativeName} ${searchKeys}"
     }
 
     @Override

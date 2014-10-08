@@ -364,7 +364,8 @@ class ProductTypeController {
                 else if (menuImage)
                     productType.menuImage = menuImage
             }
-            productType.save()
+            productType.searchKeys = params.searchKeys
+            productType.save(flush:true)
         } catch (x) {
 
         }
