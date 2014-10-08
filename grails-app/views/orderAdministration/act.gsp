@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="eshop.Order; eshop.OrderHelper" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <style>
@@ -93,79 +93,87 @@
         </div>
     </div>
 
-<div style="border:1px solid #cccccc;padding: 4px;border-radius: 4px;background: #ffffff">
+    <div style="border:1px solid #cccccc;padding: 4px;border-radius: 4px;background: #ffffff">
 
-    <g:if test="${actions.size()>0  || (order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED ||(grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED,eshop.OrderHelper.STATUS_TRANSMITTED,eshop.OrderHelper.STATUS_DELIVERED]) )}">
-        <div style="display: block;background: #f4f4f4;border:1px solid #dddddd;border-radius: 4px;padding:5px;">
-            <g:message code="actOnOrder"/>
-        </div>
-    </g:if>
+        <g:if test="${actions.size() > 0 || (order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED || (grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED, eshop.OrderHelper.STATUS_TRANSMITTED, eshop.OrderHelper.STATUS_DELIVERED]))}">
+            <div style="display: block;background: #f4f4f4;border:1px solid #dddddd;border-radius: 4px;padding:5px;">
+                <g:message code="actOnOrder"/>
+            </div>
+        </g:if>
 
-    <form id="actionForm" style="margin-right: 10px;margin-bottom: 5px;">
-        <g:hiddenField name="id" value="${order.id}"/>
+        <form id="actionForm" style="margin-right: 10px;margin-bottom: 5px;">
+            <g:hiddenField name="id" value="${order.id}"/>
 
-    <g:if test="${actions.size() > 0}">
-        <div>
-            <br/>
-            <g:if test="${order.status == eshop.OrderHelper.STATUS_PAID}">
-                <g:render template="corrent_payment"/>
+            <g:if test="${actions.size() > 0}">
+                <div>
+                    <br/>
+                <g:if test="${order.status == eshop.OrderHelper.STATUS_PAID}">
+                    <g:render template="corrent_payment"/>
+                </g:if>
+
+
+
+                <g:if test="${order.status == OrderHelper.STATUS_UPDATING}">
+                    <div id="deliveryTrackingCodeContainer">
+                        <g:message code="deliveryPrice"/>:
+                        <g:textField name="deliveryPrice" value="${order.deliveryPrice?.toInteger()}"/> <g:message code="rial"/>
+                    </div>
+                </g:if>
+
+
+                <g:if test="${order.status == eshop.OrderHelper.STATUS_UPDATING || order.status == eshop.OrderHelper.STATUS_PAID}">
+                    <div id="ValidityDateContainer">
+                        <g:message code="order.inquiry.ValidityDate.label"/>
+
+                        <rg:datePicker name="ValidityDate"/>
+
+                        <input type="text" id="ValidityTime" name="ValidityTime" value="00:00"/>
+                        <script>
+                            $('#ValidityTime').timepicker();
+                        </script>
+                    </div>
+
+                    <div id="invoiceTypeContainer">
+                        <g:message code="order.invoiceType"/>:
+                        <g:select name="invoiceType"
+                                  valueMessagePrefix="order.invoiceType"
+                                  from="${order.constraints.invoiceType.inList}"/>
+                    </div>
+                </g:if>
+
+                <g:if test="${order.status == OrderHelper.STATUS_TRANSMITTED}">
+                    <div id="deliveryTrackingCodeContainer">
+                        <g:message code="order.deliveryTrackingCode"/>:
+                        <g:textField name="deliveryTrackingCode"/>
+                    </div>
+                </g:if>
+
+                <div>
+                    <label for="description" style="margin:5px;">
+                        <g:message code="description"/>
+                    </label>
+                </div>
+
+                <div>
+                    <textarea name="description" id="description" cols="100" rows="5"
+                              style="margin:0;display: block;"></textarea>
+                </div>
+
             </g:if>
-
-
-
-
-
-                    <g:if test="${order.status == eshop.OrderHelper.STATUS_UPDATING || order.status == eshop.OrderHelper.STATUS_PAID }">
-                        <div id="ValidityDateContainer">
-                            <g:message code="order.inquiry.ValidityDate.label"/>
-
-                            <rg:datePicker name="ValidityDate"/>
-
-                            <input type="text" id="ValidityTime" name="ValidityTime" value="00:00"/>
-                            <script>
-                                $('#ValidityTime').timepicker();
-                            </script>
-                        </div>
-                        <div id="invoiceTypeContainer">
-                            <g:message code="order.invoiceType"/>:
-                            <g:select name="invoiceType"
-                                      valueMessagePrefix="order.invoiceType" from="${order.constraints.invoiceType.inList}"/>
-                        </div>
-                    </g:if>
-
-                    <g:if test="${order.status == eshop.OrderHelper.STATUS_TRANSMITTED }">
-                        <div id="deliveryTrackingCodeContainer">
-                            <g:message code="order.deliveryTrackingCode"/>:
-                            <g:textField name="deliveryTrackingCode"/>
-                        </div>
-                    </g:if>
-
-                    <div>
-                        <label for="description" style="margin:5px;">
-                            <g:message code="description"/>
-                        </label>
-                    </div>
-
-                    <div>
-                        <textarea name="description" id="description" cols="100" rows="5"
-                                  style="margin:0;display: block;"></textarea>
-                    </div>
-
-    </g:if>
-    <div>
-        <g:if test="${actions}">
-            <g:each in="${actions}" var="action">
-                <input type="button" onclick="actOnOrder('${action}');"
-                       value='${message(code: "order.actions.${action}")}'/>
-            </g:each>
-        </g:if>
-        <g:if test="${order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED ||(grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED,eshop.OrderHelper.STATUS_TRANSMITTED,eshop.OrderHelper.STATUS_DELIVERED]) }">
-            <input type="button" onclick="printInvoice(${order.id});"
-                   value='${message(code: "invoice.export.pdf.admin")}'/>
-        </g:if>
+            <div>
+                <g:if test="${actions}">
+                    <g:each in="${actions}" var="action">
+                        <input type="button" onclick="actOnOrder('${action}');"
+                               value='${message(code: "order.actions.${action}")}'/>
+                    </g:each>
+                </g:if>
+                <g:if test="${order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED || (grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED, eshop.OrderHelper.STATUS_TRANSMITTED, eshop.OrderHelper.STATUS_DELIVERED])}">
+                    <input type="button" onclick="printInvoice(${order.id});"
+                           value='${message(code: "invoice.export.pdf.admin")}'/>
+                </g:if>
+            </div>
+        </form>
     </div>
-</form>
-</div>
 </div>
 
 </div>

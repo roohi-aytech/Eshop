@@ -239,6 +239,7 @@ class OrderAdministrationController {
         if (!order.serialNumber)
             order.serialNumber = 1100
         order.serialNumber++
+        order.deliveryPrice = params.deliveryPrice as Double
         order.save()
 
         priceService.updateOrderPrice(order)
