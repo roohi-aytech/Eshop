@@ -1,6 +1,7 @@
 <g:if test="${productIds?.size() > 0}">
-    <g:set var="productModelList" value="${eshop.ProductModel.findAllByIdInList(productIds?.collect{it.modelId})}"/>
-    <g:each in="${productModelList}" status="i" var="productModel">
+
+    <g:each in="${productIds?.collect{it.modelId}}" status="i" var="productModelId">
+        <g:set var="productModel" value="${eshop.ProductModel.findById(productModelId)}"/>
         %{--<g:if test="${i % 3 == 0}">--}%
             %{--<div class="row">--}%
         %{--</g:if>--}%
