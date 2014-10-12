@@ -26,6 +26,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <script language="javascript" type="text/javascript"
+            src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'ajaxFilter.js')}"></script>
 </head>
 
 <body>
@@ -38,7 +40,9 @@
     </tr>
     <tr class="table-row">
         <td class="banners table-cell">
-            <g:render template="common/filteringAccordion" key="${params.f}"/>
+            <div id="filterBar">
+                <g:render template="common/filteringAccordion" key="${params.f}"/>
+            </div>
             <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
@@ -49,34 +53,35 @@
                     <td class="table-cell">
                         <g:render template="common/slideshowSpecialSales"
                                   model="[specialSaleSlides: specialSaleSlides]"/>
-                        <ul class="breadcrumb">
-                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="${createLink(uri: '/')}" itemprop="url">
-                                    <span itemprop="title">
-                                        <g:message code="home"/>
-                                    </span>
-                                </a>
-                                %{--<span class="divider">${">"}</span>--}%
-                            </li>
-                            <g:if test="${filters.breadcrumb.size() > 0}">
-                                <g:each in="${filters.breadcrumb[0..-1]}">
-                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                        <span class="divider">${">"}</span>
-                                        <a href="${commonLink}${it.linkTail}"
-                                           itemprop="url"><span itemprop="title">${it.linkTitle}</span></a>
-                                    </li>
-                                </g:each>
-                            </g:if>
-                        %{--<li class="active">${filters.breadcrumb[-1].linkTitle}</li>--}%
-                        </ul>
+                        <div id="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <a href="${createLink(uri: '/')}" itemprop="url">
+                                        <span itemprop="title">
+                                            <g:message code="home"/>
+                                        </span>
+                                    </a>
+                                    %{--<span class="divider">${">"}</span>--}%
+                                </li>
+                                <g:if test="${filters.breadcrumb.size() > 0}">
+                                    <g:each in="${filters.breadcrumb[0..-1]}">
+                                        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                            <span class="divider">${">"}</span>
+                                            <a href="${commonLink}${it.linkTail}"
+                                               itemprop="url"><span itemprop="title">${it.linkTitle}</span></a>
+                                        </li>
+                                    </g:each>
+                                </g:if>
+                            </ul>
+                        </div>
 
                         <ehcache:render template="common/filteringGraphicalMenu" key="${params.f}"/>
 
 
-                        %{--<g:if test="${filters.productTypes?.isEmpty()}">--}%
-                        <g:render template="common/productGrid"
-                                  model="${[productIds: filters.products.productIds]}"/>
-                        %{--</g:if>--}%
+                        <div id="products">
+                            <g:render template="common/productGrid"
+                                      model="${[productIds: filters.products.productIds]}"/>
+                        </div>
 
                     </td>
                 </tr>

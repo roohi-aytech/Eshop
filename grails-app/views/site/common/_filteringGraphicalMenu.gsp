@@ -14,18 +14,16 @@
 %{--model="${[type: 'filter', subProductTypeLinks: filters.productTypes]}"></g:render>--}%
 %{--</g:if>--}%
 %{--Brands Filters--}%
-<g:if test="${filters?.brands}">
-    <g:render template="common/brandCarousel" model="${[
-            title: message(code: 'site.selectBrand'),
-            brands: filters.brands,
-            selectedBrands: filters.selecteds["b"],
-            type: 'filter'
-    ]}"/>
-</g:if>
-%{--attributes--}%
-<g:if test="${productType?.types?.size() > 0 && filters?.types && filters?.types?.size() > 1}">
-%{--<h3 class="productType-container-title">--}%
-%{--<g:message code="site.selectProductTypeType"></g:message>--}%
-%{--</h3>--}%
-    <g:render template="common/productTypeTypeCarousel" model="${[types: filters.types, menuType:'filter']}"/>
-</g:if>
+<div id="graphicalFilter">
+    <g:if test="${filters?.brands}">
+        <g:render template="common/brandCarousel" model="${[
+                title         : message(code: 'site.selectBrand'),
+                brands        : filters.brands,
+                selectedBrands: filters.selecteds["b"],
+                type          : 'filter'
+        ]}"/>
+    </g:if>
+    <g:if test="${productType?.types?.size() > 0 && filters?.types && filters?.types?.size() > 1}">
+        <g:render template="common/productTypeTypeCarousel" model="${[types: filters.types, menuType: 'filter']}"/>
+    </g:if>
+</div>

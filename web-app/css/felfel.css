@@ -4349,3 +4349,27 @@ h2.check-out-price span {
     white-space: nowrap;
 }
 
+#products {
+    position: relative;
+}
+
+.ajaxLoading {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.ajaxLoading div {
+    background: white url("../images/filter-loading.gif") no-repeat 35px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    height: 40px;
+    margin: 30px auto auto;
+    padding-top: 110px;
+    text-align: center;
+    width: 150px;
+    /*box-shadow: 0 0 2px darkgray;*/
+}
+

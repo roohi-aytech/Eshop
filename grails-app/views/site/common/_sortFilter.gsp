@@ -21,10 +21,10 @@
         <g:if test="${actionName == 'browse'}">
             url = '${createLink(action: 'filter', params: [f: "p${productType.id}", sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
-        <g:if test="${actionName == 'filter'}">
+        <g:if test="${actionName == 'filter' || actionName == 'ajaxFilter'}">
         url = '${createLink(action: 'filter', params: [f: params.f, sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
-        <g:if test="${actionName == 'search'}">
+        <g:if test="${actionName == 'search' || actionName == 'ajaxSearch'}">
         url = '${createLink(action: 'search', params: [f: params.f, phrase: params.phrase, sort: 'sortField', dir: 'sortDirection', o: 's'])}';
         </g:if>
         try {
@@ -32,9 +32,18 @@
         }catch (x){
             console.log(x);
         }
-        $('.sortFilterSelect').change(function(){
-            window.location.href = url.replace('sortField', $('#sortField').val()).replace('sortDirection', $('#sortDirection').val())
-        })
+        $('.sortFilterSelect').change(function() {
+            <g:if test="${grailsApplication.config.ajaxFilter}">
+            var ajaxUrl = url.replace('/filter?', '/ajaxFilter?');
+            ajaxUrl = ajaxUrl.replace('/search?', '/ajaxSearch?');
+            ajaxUrl = ajaxUrl.replace('sortField', $('#sortField').val()).replace('sortDirection', $('#sortDirection').val());
+
+            ajaxFilter(ajaxUrl);
+            </g:if>
+            <g:else>
+            window.location.href = url.replace('sortField', $('#sortField').val()).replace('sortDirection', $('#sortDirection').val());
+            </g:else>
+        });
 
     });
 </script>

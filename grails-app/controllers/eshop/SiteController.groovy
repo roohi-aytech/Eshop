@@ -216,12 +216,6 @@ class SiteController {
         def productType = ProductType.get(f?.split(',').reverse()?.find {
             it.startsWith('p')
         }?.replace('p', '')?.toLong())
-//        model.productTypeTypeLinks = []
-//        if (productType && productType.children.isEmpty() && !f?.split(',')?.find { it.startsWith('t') }) {
-//            productType.types.each {
-//                model.productTypeTypeLinks << [name: it.title, href: createLink(action: "filter", params: [f: "${f},t${it.id}"]), id: it.id]
-//            }
-//        }
 
         model.brand = brand
 
@@ -339,31 +333,165 @@ class SiteController {
         render(model: model, view: "${grailsApplication.config.eShop.instance}/filter")
     }
 
-//    def filter1() {
-//        def x = browseService.search()
-//        def rootProductTypes = ProductType.findAllByParentProductIsNull()
-//
-//        params.remove("page")
-//        def pageParams = params
-//
-//        def subProductTypes = x.productTypes.collect { ProductType.get(it) }
-//        def brands = x.brands.collect { Brand.get(it) }
-//        def products = x.productIds.collect { Product.get(it) }
-//        def totalPages = x.totalPages
-//        def attrs = x.attrs
-//        def attrgroups = x.attrGroups
-//        def page = (params.page as Integer) ?: 0
-//        [rootProductTypes: rootProductTypes, subProductTypes: subProductTypes,
-//                brands: brands, products: products,
-//                attrs: attrs, attrGroups: attrgroups,
-//                totalPages: totalPages, page: page,
-//                pageParams: pageParams]
-//    }
+    def ajaxFilter() {
+        def model = [:]
+        def f = params.f
+        if (f instanceof String[] && f.length)
+            f = f[0]
+        if (!f) {
+            redirect(uri: "/")
+            return
+        }
 
-//    def index2() {
-//        def rootProductTypes = ProductType.findAllByParentProductIsNull()
-//        [rootProductTypes: rootProductTypes]
-//    }
+        model.filters = browseService.findFilteredPageFilters(f, params.sort, params.dir, params.page ?: 0, "${f} ${params.page ?: 0}")
+
+        if (model.filters.products.productIds.size() == 0) {
+            redirect(uri: "/notFound")
+            return
+        }
+
+        model.commonLink = createLink(uri: '/')
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+        def brandList = new ArrayList<Brand>()
+        def brand
+        if (model.filters["selecteds"]["b"])
+            brandList.addAll(Brand.createCriteria().list {
+                'in'('id', model.filters["selecteds"]["b"])
+            })
+        brand = brandList.collect { it.name }.join(', ')
+        if (!brand)
+            brand = ''
+
+        def productType = ProductType.get(f?.split(',').reverse()?.find {
+            it.startsWith('p')
+        }?.replace('p', '')?.toLong())
+
+        model.brand = brand
+
+        model.slides = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            or {
+                eq('showAsBackground', false)
+                isNull('showAsBackground')
+            }
+            eq('deleted', false)
+        }
+
+        model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            le('startDate', new Date())
+            ge('finishDate', new Date())
+            gt('remainingCount', 0)
+        }
+
+        model.background = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            eq('showAsBackground', true)
+            eq('deleted', false)
+        }?.find()
+
+        trackingService.trackExplore(productType, brandList)
+
+        if (productType) {
+            if (brand != '') {
+                //brand and productType def pageDetails
+                def pageDetails = PageDetails.findByProductType(productType)
+                if (!pageDetails)
+                    pageDetails = PageDetails.findByProductTypeIsNull()
+                if (pageDetails) {
+                    model.title = pageDetails?.title?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+                } else {
+                    model.title = productType?.toString()
+                    if (brand && brand != "")
+                        model.title = (model.title ? model.title + " - " : "") + brand
+
+                }
+            } else {
+                def pageDetails = PageDetails.findByProductTypeIsNull()
+                if (pageDetails) {
+                    model.title = pageDetails?.title?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.description = pageDetails?.description?.replace('$PRODUCTTYPE$', productType?.toString())
+                    model.keywords = pageDetails?.keywords?.replace('$PRODUCTTYPE$', productType?.toString())
+                } else {
+                    //productType only
+                    model.title = productType.pageTitle ?: productType.name
+                    model.description = productType.description
+                    model.keywords = productType.keywords
+                }
+            }
+
+            model.articles = JournalArticle.findAllByBaseProduct productType
+
+        } else if (brand != '') {
+            //brand only
+            if (brandList.count { it } == 1) {
+                model.title = brandList.first()?.pageTitle ?: brandList.first()?.name
+                model.description = brandList.first()?.description
+                model.keywords = brandList.first()?.keywords
+            } else {
+                model.title = brand
+            }
+        } else {
+            //no filter
+            model.title = message(code: 'site.mainPage.title')
+            model.description = message(code: 'site.mainPage.description')
+            model.keywords = message(code: 'site.mainPage.keywords')
+        }
+
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
+
+
+        model.mostVisitedProducts = Product.createCriteria().listDistinct {
+            models {
+                eq('status', 'exists')
+            }
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+            }
+            if (productType) {
+                productTypes {
+                    'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+                }
+            }
+            maxResults(20)
+            order("visitCount", "desc")
+        }
+
+        def result = [:]
+        result.pageTitle = model.title
+        result.title = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/pageTitle", model: model).toString()
+        result.products = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/products", model: model).toString()
+        result.filterBar = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/filterBar", model: model).toString()
+        result.graphicalFilter = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/graphicalFilter", model: model).toString()
+        result.breadCrumb = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/breadCrumb", model: model).toString()
+        result.pagination = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/pagination", model: model).toString()
+
+        render (result as JSON)
+    }
 
     def sidebar() {
         def subProductTypes = []//olapService.productTypes()
@@ -373,21 +501,6 @@ class SiteController {
 
         render resp as JSON
     }
-
-//    def products() {
-//        def list = ProductClosure.createCriteria().listDistinct {
-//            if ((params.browsingProductTypeId as Long) > 0)
-//                eq("productType", ProductType.get(params.browsingProductTypeId))
-//            if ((params.browsingBrandId as Long) > 0)
-//                eq("brand", Brand.get(params.browsingBrandId))
-//        }
-//        list*.product.each {
-//            def model = [product: it]
-//            model << priceService.calcProductPrice(it.id)
-//            render(template: "product_search", model: model)
-//        }
-//    }
-
 
     def index() {
 
@@ -892,20 +1005,6 @@ class SiteController {
         } : product.mainImage])
     }
 
-//    def productImages() {
-//        def product = Product.get(params.id)
-//
-//        //fill zoomable property of images
-//        if (product.mainImage)
-//            imageService.getImageSize(product.mainImage, product)
-//
-//        product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
-//            imageService.getImageSize(it, product)
-//        }
-//
-//        [product: product, selectedImage: params.img ? product.images.find { it.id.toString() == params.img.toString() } : product.mainImage]
-//    }
-
     def fillAttibuteCategoryChildren(Product product, parentCategory) {
 
         parentCategory.attributes = product.attributes.findAll {
@@ -1071,6 +1170,130 @@ class SiteController {
         model.productTypeName = productType?.name
 
         render(view: "${grailsApplication.config.eShop.instance}/search", model: model)
+    }
+
+    def ajaxSearch() {
+
+        def model = [:]
+        def productIdList = []
+        def productModelIdList = []
+
+        if (!params.phrase) {
+            render ''
+            return
+        }
+        if (params.phrase) {
+            def query = params.phrase.toString().trim()
+            query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
+            while (query.contains('  '))
+                query = query.replace('  ', ' ')
+            query = "*${query.replace(' ', '* *')}*"
+            BooleanQuery.setMaxClauseCount(10000);
+            productIdList = Product.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
+            productModelIdList = ProductModel.search({
+                queryString(query)
+            },
+                    [reload: false, max: 1000])
+        }
+        if (!params.f)
+            params.f = 'p0'
+        def f = params.f
+        if (f instanceof String[] && f.length) {
+            redirect(action: 'search', params: [f: f.join(','), phrase: params.phrase])
+            return
+        }
+
+        def productIds = productIdList.results.collect {
+            it.id
+        } + ProductModel.findAllByIdInList(productModelIdList.results.collect { it?.id })?.collect {
+            it?.product?.id
+        }
+        model.filters = browseService.findSearchPageFilters(productIds, f, params.sort, params.dir, params.page ?: 0, "${productIdList.results.collect { it.id }} ${f} ${params.page ?: 0}")
+        //sort result again
+        model.filters.products.productIds.sort {
+            def id = it
+            def productIndex = productIdList.results.findIndexOf { it.id == id }
+            -(productIndex >= 0 ? productIdList.scores[productIndex] : 0)
+        }
+        model.commonLink = createLink(uri: '/')
+
+        model.rootProductTypes = ProductType.findAllByParentProductIsNull()
+
+        def brandList = new ArrayList<Brand>()
+        def brand
+        if (model.filters["selecteds"]["b"])
+            brandList.addAll(Brand.createCriteria().list {
+                'in'('id', model.filters["selecteds"]["b"])
+            })
+        brand = brandList.collect { it.name }.join(', ')
+        if (!brand)
+            brand = ''
+
+        def productType = ProductType.get(f?.split(',').reverse()?.find {
+            it.startsWith('p')
+        }?.replace('p', '')?.toLong())
+
+        model.slides = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            or {
+                eq('showAsBackground', false)
+                isNull('showAsBackground')
+            }
+            eq('deleted', false)
+        }
+
+        model.background = Slide.createCriteria().list {
+            if (productType) {
+                productTypes {
+                    eq('id', productType.id)
+                }
+            } else {
+                eq('visibleOnFirstPage', true)
+            }
+            eq('showAsBackground', true)
+            eq('deleted', false)
+        }?.find()
+
+        trackingService.trackSearch(productType, brandList, params.phrase)
+
+        def pageDetails
+        if (productType && brand != '')
+            pageDetails = PageDetails.findByProductType(productType)
+        if (!pageDetails)
+            pageDetails = PageDetails.findByProductTypeIsNull()
+        if (pageDetails)
+            model.title = pageDetails?.title?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+        else {
+            model.title = (productType ? productType.toString() + " - " : "") + params.phrase
+            if (brand && brand != '')
+                model.title = (model.title ? model.title + " - " : "") + brand + ' ' + params.phrase
+        }
+        model.description = pageDetails?.description?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+        model.keywords = pageDetails?.keywords?.replace('$BRAND$', brand)?.replace('$PRODUCTTYPE$', productType?.toString())
+
+        model.productTypeId = productType?.id
+        model.productTypeName = productType?.name
+
+
+        def result = [:]
+        result.pageTitle = model.title
+        result.title = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/pageTitle", model: model).toString()
+        result.products = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/products", model: model).toString()
+        result.filterBar = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/filterBar", model: model).toString()
+        result.graphicalFilter = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/graphicalFilter", model: model).toString()
+        result.breadCrumb = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/breadCrumb", model: model).toString()
+        result.pagination = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/pagination", model: model).toString()
+
+        render (result as JSON)
     }
 
     def searchAutoComplete() {
@@ -1314,6 +1537,7 @@ class SiteController {
     def goldenGuarantee() {
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/goldenGuarantee"
     }
+
     def personalEvent_help() {
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/personalEventHelp"
     }
@@ -1329,7 +1553,6 @@ class SiteController {
             render "-1"
         }
     }
-
 
     def productStatusFilter() {
         session['status_filter'] = params.value == 'on'

@@ -94,7 +94,7 @@ class EshopTagLib {
     def filterStart = { attrs, body ->
         def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
         def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: attrs.attribute])
-        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+        out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterStartBrand = { attrs, body ->
@@ -102,15 +102,15 @@ class EshopTagLib {
         def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'b'])
         def brand = Brand.get(attrs.brandId)
         if (attrs.type == 'icon')
-            out << "<a class='brand-filter' href='${link}'><img class='lazy' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img class='lazy' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
-            out << "<a href='${link}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterStartVariation = { attrs, body ->
         def f = "p${attrs.productType.id},v${attrs.variation}|${attrs.value}"
         def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'v' + attrs.variation])
-        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+        out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterAddProductType = { attrs, body ->
@@ -130,9 +130,9 @@ class EshopTagLib {
             f = "${attrs.f},b${attrs.id}"
         def link = (f == '' ? g.createLink(uri: '/') : g.createLink(action: params.action, params: params + [f: f, o: 'b']))
         if (attrs.type == 'icon')
-            out << "<a class='brand-filter' href='${link}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img alt='${attrs.name}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
         else
-            out << "<a href='${link}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span></a>"
+            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span></a>"
     }
 
     def filterAddVariation = { attrs, body ->
@@ -144,7 +144,7 @@ class EshopTagLib {
         } else
             f = "${attrs.f},${attrs.id}|${attrs.value}"
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
-        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+        out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterAddAttribute = { attrs, body ->
@@ -156,7 +156,7 @@ class EshopTagLib {
         } else
             f = "${attrs.f},${attrs.id}|${attrs.value}"
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
-        out << "<a href='${link}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+        out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filter = { attrs, body ->
