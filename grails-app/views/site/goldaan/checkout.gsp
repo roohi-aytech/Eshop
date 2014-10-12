@@ -165,10 +165,10 @@
         </sec:ifLoggedIn>
                     <hr/>
                     <div onclick="changeStep(1)" class="step step1 ${trclass} ${currentStep==1?'selected':''}">1. <g:message code="basket.content"/></div>
-                    <div onclick="changeStep(2)" class="step step2 ${trclass} ${currentStep==2?'selected':''}">2. <g:message code="basket.receipt"/></div>
-                    <div onclick="changeStep(3)" class="step step3 ${trclass} ${currentStep==3?'selected':''}">3. <g:message code="basket.delivery"/></div>
+                    <div onclick="updateDescriptionAndDeliverMethod()" class="step step2 ${trclass} ${currentStep==2?'selected':''}">2. <g:message code="basket.receipt"/></div>
+                    <div onclick="if(updateDescriptionAndDeliverMethod())updateBuyerAndPaymentTypeAndSendFactor()" class="step step3 ${trclass} ${currentStep==3?'selected':''}">3. <g:message code="basket.delivery"/></div>
                     <sec:ifNotLoggedIn>
-                        <div onclick="changeStep(4)" class="step step4 ${trclass} ${currentStep==4?'selected':''}">4. <g:message code="basket.buyerinfo"/></div>
+                        <div onclick="if(updateDescriptionAndDeliverMethod() && updateBuyerAndPaymentTypeAndSendFactor())updateDeliveryInfo(false)" class="step step4 ${trclass} ${currentStep==4?'selected':''}">4. <g:message code="basket.buyerinfo"/></div>
                     </sec:ifNotLoggedIn>
                 </div>
                 <div class="step-content step1 ${currentStep==1?'selected':''}">

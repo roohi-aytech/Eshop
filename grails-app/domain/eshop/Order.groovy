@@ -42,6 +42,10 @@ class Order {
     String paymentType
     String deliveryTrackingCode
 
+    String buyerName
+    String buyerAmount
+
+
     transient Date getLastActionDate() {
         if (this.id)
             return OrderTrackingLog.findAllByOrder(this)?.sort { -it.id }?.find()?.date
@@ -99,6 +103,8 @@ class Order {
 
         serialNumber nullable: true
         deliveryTime(nullable: true)
+        buyerName(nullable:true)
+        buyerAmount(nullable:true)
     }
 
     static mapping = {

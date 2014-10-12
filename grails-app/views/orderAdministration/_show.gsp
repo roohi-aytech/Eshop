@@ -152,6 +152,26 @@
 
 
     </li>
+    <g:if test="${orderInstance?.buyerName}">
+        <li class="fieldcontain">
+            <span class="property-label"><g:message code="order.buyerName"/></span>
+
+            <span class="property-value" aria-labelledby="deliverySourceStation-label">
+                ${orderInstance?.buyerName}
+            </span>
+
+        </li>
+    </g:if>
+    <g:if test="${orderInstance?.buyerAmount}">
+        <li class="fieldcontain">
+            <span class="property-label"><g:message code="order.buyerAmount"/></span>
+
+            <span class="property-value" aria-labelledby="deliverySourceStation-label">
+                ${orderInstance?.buyerAmount}
+            </span>
+
+        </li>
+    </g:if>
         <g:if test="${orderInstance?.deliverySourceStation}">
             <li class="fieldcontain">
                 <span id="deliverySourceStation-label" class="property-label"><g:message code="deliveryMethod"/></span>

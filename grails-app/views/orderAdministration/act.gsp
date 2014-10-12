@@ -142,6 +142,16 @@
                 </g:if>
 
                 <g:if test="${order.status == OrderHelper.STATUS_TRANSMITTED}">
+                    <g:if test="${grailsApplication.config.buyerPersonInfo}">
+                        <div>
+                            <g:message code="order.buyerName"/>:
+                            <g:textField name="buyerName"/>
+                        </div>
+                        <div>
+                            <g:message code="order.buyerAmount"/>:
+                            <g:textField name="buyerAmount"/>
+                        </div>
+                    </g:if>
                     <div id="deliveryTrackingCodeContainer">
                         <g:message code="order.deliveryTrackingCode"/>:
                         <g:textField name="deliveryTrackingCode"/>

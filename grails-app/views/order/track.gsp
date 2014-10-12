@@ -93,15 +93,15 @@
 
                             </g:if>
                             <g:if test="${grailsApplication.config.payOnCheckout}">
-                                <g:if test="${!payment?.transactionReferenceCode}">
-                                    <g:link controller="order" action="remainingPayment" id="${order?.id}">
+                                <g:if test="${!payment?.transactionReferenceCode || payment?.amount<order?.totalPayablePrice}">
+                                    <g:link class="btn btn-success" controller="order" action="remainingPayment" id="${order?.id}">
                                         <g:message code="controlPanel.orders.actions.payment.label"/>
                                     </g:link>
                                 </g:if>
                             </g:if>
                             <g:if  test="${grailsApplication.config.getInvoiceOnTracking}">
                                 <g:if test="${[eshop.OrderHelper.STATUS_PAYMENT_APPROVED, eshop.OrderHelper.STATUS_TRANSMITTED, eshop.OrderHelper.STATUS_DELIVERED].contains(order?.status)}">
-                                    <g:link controller="orderAdministration" action="printInvoice" id="${order?.trackingCode}">
+                                    <g:link class="btn btn-primary" controller="orderAdministration" action="printInvoice" id="${order?.trackingCode}">
                                         <g:message code="invoice.export.pdf.admin"/>
                                     </g:link>
                                 </g:if>
