@@ -109,7 +109,7 @@ class Product extends BaseProduct implements Comparable{
     }
 
     String getSearchString(){
-        "${name} ${type} ${description} ${brand?.searchKeys} ${manufactureCountry} ${details} ${keywords} ${pageTitle} ${manualTitle} ${guaranteeList?.collect {it.searchKeys}?.join(' ')} ${productTypes?.collect {it.searchKeys}?.join(' ')} ${searchKeys}"
+        "${name} ${type} ${description} ${brand?.searchKeys} ${manufactureCountry} ${details} ${keywords} ${pageTitle} ${manualTitle} ${guaranteeList?.collect {it?.searchKeys?:''}?.join(' ')} ${productTypes?.collect {it?.searchKeys?:''}?.join(' ')} ${searchKeys}"
     }
 
     @Override
