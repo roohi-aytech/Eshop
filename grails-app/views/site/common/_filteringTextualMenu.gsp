@@ -19,19 +19,19 @@
     <li class="divider"></li>
 </g:if>
 
-<g:if test="${filters?.types && filters?.types?.size() > 1}">
-    <li class="nav-header"><g:message code="site.selectProductTypeType"
-                                      default="Select SubcategoryType"/></li>
-    <g:each in="${filters?.types}"
-            var="type">
-        <li class="sub-category">
-            <a href="${createLink(action: "filter", params: [f: "${params.f},t${type._id.id}"])}">
-                ${type._id.name} <span class='count'>(${type.count})</span>
-            </a>
-        </li>
-    </g:each>
-    <li class="divider"></li>
-</g:if>
+%{--<g:if test="${filters?.types && filters?.types?.size() > 1}">--}%
+    %{--<li class="nav-header"><g:message code="site.selectProductTypeType"--}%
+                                      %{--default="Select SubcategoryType"/></li>--}%
+    %{--<g:each in="${filters?.types}"--}%
+            %{--var="type">--}%
+        %{--<li class="sub-category">--}%
+            %{--<a href="${createLink(action: "filter", params: [f: "${params.f},t${type._id.id}"])}">--}%
+                %{--${type._id.name} <span class='count'>(${type.count})</span>--}%
+            %{--</a>--}%
+        %{--</li>--}%
+    %{--</g:each>--}%
+    %{--<li class="divider"></li>--}%
+%{--</g:if>--}%
 %{--price range--}%
 
 %{--<li class="nav-header"><g:message code="filter.price.range" default="Price Range"/> (<eshop:currencyLabel/>)</li>--}%

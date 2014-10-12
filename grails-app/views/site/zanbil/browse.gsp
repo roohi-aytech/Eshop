@@ -20,6 +20,9 @@
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <script language="javascript" type="text/javascript"
+            src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'ajaxFilter.js')}"></script>
 </head>
 
 <body>
@@ -31,7 +34,9 @@
     </tr>
     <tr class="table-row">
         <td class="banners table-cell">
-            <g:render template="common/browsingAccordion"/>
+            <div id="filterBar">
+                <g:render template="common/browsingAccordion"/>
+            </div>
             <ehcache:render template="banners/rightsideBanners"/>
         </td>
 
@@ -40,30 +45,34 @@
                 <tr class="table-row">
                     <td class="table-cell">
                         <g:render template="common/slideshowSpecialSales"
-                                        model="[specialSaleSlides: specialSaleSlides]"/>
-                        <ul class="breadcrumb">
-                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="${createLink(uri: '/')}" itemprop="url">
-                                    <span itemprop="title">
-                                        <g:message code="home"/>
-                                    </span>
-                                </a>
-                            </li>
-                            <g:if test="${breadCrumb.size() > 0}">
-                                <g:each in="${breadCrumb[0..-1]}">
-                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                        <span class="divider">${">"}</span>
-                                        <a href="${it.href}" itemprop="url">
-                                            <span itemprop="title">${it.name}</span></a>
-                                    </li>
-                                </g:each>
-                            </g:if>
-                        </ul>
+                                  model="[specialSaleSlides: specialSaleSlides]"/>
+                        <div id="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <a href="${createLink(uri: '/')}" itemprop="url">
+                                        <span itemprop="title">
+                                            <g:message code="home"/>
+                                        </span>
+                                    </a>
+                                </li>
+                                <g:if test="${breadCrumb.size() > 0}">
+                                    <g:each in="${breadCrumb[0..-1]}">
+                                        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                            <span class="divider">${">"}</span>
+                                            <a href="${it.href}" itemprop="url">
+                                                <span itemprop="title">${it.name}</span></a>
+                                        </li>
+                                    </g:each>
+                                </g:if>
+                            </ul>
+                        </div>
 
                         <ehcache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
 
-                        <g:render template="common/productGrid"
-                                  model="${[productIds: filters.products.productIds]}"/>
+                        <div id="products">
+                            <g:render template="common/productGrid"
+                                      model="${[productIds: filters.products.productIds]}"/>
+                        </div>
 
                     </td>
                 </tr>

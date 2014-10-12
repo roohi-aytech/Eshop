@@ -1,5 +1,5 @@
 <div class="thumbnail">
-    <a class="thumbnail-link" href="${link.href}"
+    <a class="thumbnail-link" href="${link.href}" data-ajax="${grailsApplication.config.ajaxFilter}"
        class="title">
         <div class="content">
             <div class="main">

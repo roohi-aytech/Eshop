@@ -26,6 +26,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <script language="javascript" type="text/javascript"
+            src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'ajaxFilter.js')}"></script>
 </head>
 
 <body>
@@ -38,7 +40,9 @@
         <g:else>
             <td class="banners table-cell">
                 <div class="sidebar-nav">
-                    <ehcache:render template="common/filteringAccordion" key="${params.phrase}${params.f}"/>
+                    <div id="filterBar">
+                        <ehcache:render template="common/filteringAccordion" key="${params.phrase}${params.f}"/>
+                    </div>
                 </div>
             </td>
         </g:else>
@@ -48,43 +52,47 @@
 
                 <tr class="table-row">
                     <td class="span600 table-cell">
-                        <ul class="breadcrumb">
-                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="${createLink(uri: '/')}" itemprop="url">
-                                    <span itemprop="title">
-                                        <g:message code="home"/>
-                                    </span>
-                                </a>
-                                <span class="divider">${">"}</span>
-                            </li>
-                            <g:if test="${filters.breadcrumb.size() > 0}">
-                                <g:each in="${filters.breadcrumb[0..-1]}">
-                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                        <a href="${commonLink}${it.linkTail}"
-                                           itemprop="url">
-                                            <span itemprop="title">${it.linkTitle}</span>
-                                        </a>
-                                        <span class="divider">${">"}</span>
-                                    </li>
-                                </g:each>
-                            </g:if>
-                            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="${request.requestURI.replace('.dispatch', '').replace('grails/site/', '') + '?' + request.queryString}"
-                                   itemprop="url">
-                                    <span itemprop="title">
-                                        <g:message code="search.for.label"></g:message> ${params.phrase}
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                        <div id="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <a href="${createLink(uri: '/')}" itemprop="url">
+                                        <span itemprop="title">
+                                            <g:message code="home"/>
+                                        </span>
+                                    </a>
+                                    <span class="divider">${">"}</span>
+                                </li>
+                                <g:if test="${filters.breadcrumb.size() > 0}">
+                                    <g:each in="${filters.breadcrumb[0..-1]}">
+                                        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                            <a href="${commonLink}${it.linkTail}"
+                                               itemprop="url">
+                                                <span itemprop="title">${it.linkTitle}</span>
+                                            </a>
+                                            <span class="divider">${">"}</span>
+                                        </li>
+                                    </g:each>
+                                </g:if>
+                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <a href="${request.requestURI.replace('.dispatch', '').replace('grails/site/', '') + '?' + request.queryString}"
+                                       itemprop="url">
+                                        <span itemprop="title">
+                                            <g:message code="search.for.label"></g:message> ${params.phrase}
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
                         <g:if test="${filters.products.productIds.isEmpty() && params.page == 0}">
                             <g:message code="search.nothingMatchedYourQuery"/>
                         </g:if>
                         <g:else>
                         %{--<g:render template="common/filteringGraphicalMenu"></g:render>--}%
-                            <g:render template="common/productGrid"
-                                      model="${[productIds: filters.products.productIds]}"/>
+                            <div id="products">
+                                <g:render template="common/productGrid"
+                                          model="${[productIds: filters.products.productIds]}"/>
+                            </div>
                         </g:else>
                     </td>
                 </tr>

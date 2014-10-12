@@ -20,7 +20,7 @@
                         <g:each in="${types}" var="type">
                             <li class="sb-showcase-skin">
                                 <g:if test="${menuType == 'filter'}">
-                                    <a href="${createLink(action: "filter", params: [f: "${params.f},t${type._id.id}"])}">
+                                    <a href="${createLink(action: "filter", params: [f: "${params.f},t${type._id.id}"])}" data-ajax="${grailsApplication.config.ajaxFilter}">
                                         <img src="${createLink(controller: 'image', params: [type: 'productTypeType', id: type._id.id, wh: '100x100'])}"
                                              alt="${type._id.name}">
 
@@ -28,7 +28,7 @@
                                     </a>
                                 </g:if>
                                 <g:else>
-                                    <a href="${createLink(action: "filter", params: [f: "p${productTypeId},t${type._id.id}"])}">
+                                    <a href="${createLink(action: "filter", params: [f: "p${productTypeId},t${type._id.id}"])}" data-ajax="${grailsApplication.config.ajaxFilter}">
                                         <img src="${createLink(controller: 'image', params: [type: 'productTypeType', id: type._id.id, wh: '100x100'])}"
                                              alt="${type._id.name}">
 

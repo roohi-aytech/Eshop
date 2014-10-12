@@ -23,36 +23,43 @@
 
     <script language="JavaScript" type="text/javascript"
             src="${resource(dir: 'js', file: 'jquery.transform.js')}"></script>
-    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'toggles-felfel.css')}"/>
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'toggles-felfel.css')}"/>
     <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'toggles.min.js')}"></script>
-    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file: 'bootstrap-select.css')}"/>
-    <script language="javascript" type="text/javascript" src="${resource(dir: 'js', file: 'bootstrap-select.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap-select.css')}"/>
+    <script language="javascript" type="text/javascript"
+            src="${resource(dir: 'js', file: 'bootstrap-select.min.js')}"></script>
+
+    <script language="javascript" type="text/javascript"
+            src="${resource(dir: "js/${grailsApplication.config.eShop.instance}", file: 'ajaxFilter.js')}"></script>
 </head>
 
 <body>
-<ul class="breadcrumb">
-    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a class="home" href="${createLink(uri: '/')}" itemprop="url">
-            <span itemprop="title">
-                <g:message code="home"/>
-            </span>
-        </a>
-    </li>
-    <g:if test="${breadCrumb.size() > 0}">
-        <g:each in="${breadCrumb[0..-1]}">
-            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <span class="divider">${"/"}</span>
-                <a href="${it.href}" itemprop="url">
-                    <span itemprop="title">${it.name}</span></a>
-            </li>
-        </g:each>
-    </g:if>
-</ul>
+<div id="breadcrumb">
+    <ul class="breadcrumb">
+        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+            <a class="home" href="${createLink(uri: '/')}" itemprop="url">
+                <span itemprop="title">
+                    <g:message code="home"/>
+                </span>
+            </a>
+        </li>
+        <g:if test="${breadCrumb.size() > 0}">
+            <g:each in="${breadCrumb[0..-1]}">
+                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span class="divider">${"/"}</span>
+                    <a href="${it.href}" itemprop="url">
+                        <span itemprop="title">${it.name}</span></a>
+                </li>
+            </g:each>
+        </g:if>
+    </ul>
+</div>
+
 <div class="clearfix"></div>
 
-<h3 class="category_heading top_less bottom_less">
+<h3 class="category_heading top_less bottom_less" id="title">
     %{--<div class="right_text">--}%
-        %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productType?.id)} <eshop:currencyLabel/>--}%
+    %{--<g:message code="menu.startPrice"/> ${eshop.productTypeMinPrice(productTypeId: productType?.id)} <eshop:currencyLabel/>--}%
     %{--</div>--}%
     <g:message code="category.all.products" args="${[productType]}"/>
 </h3>
@@ -68,22 +75,28 @@
                  src="${createLink(controller: 'image', params: [id: productType.id, type: 'productTypeMenu'])}"/>
         </div>
     </div>
+
     <div class="clearfix"></div>
 </g:if>
 
 <div class="toolbar_top">
-    <g:render template="/site/common/priceRangeSlider"/>
-    <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
+    <span id="graphicalFilter">
+        <g:render template="/site/common/priceRangeSlider"/>
+    </span>
+    <span id="pagination">
+        <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
+    </span>
+
     <div class="clearfix"></div>
 </div>
 
 <div class="filter_left">
-    <div class="floating_filter">
+    <div class="floating_filter" id="filterBar">
         <g:render template="common/browsingTextualMenu"/>
     </div>
 </div>
 
-<div class="listing_right">
+<div id="products" class="listing_right">
 
     <g:render template="common/productRowList"
               model="${[productIds: filters.products.productIds]}"/>
@@ -93,7 +106,10 @@
 
 <div class="toolbar_bottom">
     <div class="toolbar_top">
-        <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
+        <span id="secondPagination">
+            <g:render template="/site/common/pagination" model="${totalPages = filters.products.totalPages}"/>
+        </span>
+
         <div class="clearfix"></div>
     </div>
 </div>

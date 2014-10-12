@@ -12,6 +12,7 @@ testimonials=false
 backgrounds=false
 showProductStatus=false
 filterPriceOnChange=true
+ajaxFilter = true
 ckeditor {
     upload {
         basedir = "/home/uploads/"

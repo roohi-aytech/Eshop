@@ -17,6 +17,7 @@ modelHasWidthAndHeight=false
 hideCustomerReviewTitle=false
 customCustomerReviewTemplate=false
 filterPriceOnChange=true
+ajaxFilter = true
 ckeditor {
     upload {
         basedir = "/home/uploads"

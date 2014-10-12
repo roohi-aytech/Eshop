@@ -12,9 +12,19 @@ class UrlMappings {
             action = "filter"
         }
 
+        "/ajaxFilter" {
+            controller = "site"
+            action = "ajaxFilter"
+        }
+
         "/search" {
             controller = "site"
             action = "search"
+        }
+
+        "/ajaxSearch" {
+            controller = "site"
+            action = "ajaxSearch"
         }
 
         "/product/$id?" {
