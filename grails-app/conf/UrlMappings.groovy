@@ -71,6 +71,10 @@ class UrlMappings {
             controller = "site"
             action = "contactUs"
         }
+        "/contactUsNewProducts"{
+            controller = "site"
+            action = "contactUsNewProducts"
+        }
 
         "/termsAndConditions"{
             controller = "site"
