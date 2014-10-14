@@ -1,6 +1,6 @@
 <div itemscope itemtype="http://schema.org/Product" class="thumbnail mediaholder small pro_first_box"
      id="productThumbnail_${product?.id}">
-    <a itemprop="url" href="<g:createLink uri="/product/${product?.id}"/>">
+    <a itemprop="url" href="<g:createLink uri="/product/${product?.id}?${productModel?"modelId=${productModel?.id}":''}"/>">
         <img src="${resource(dir: '/images/goldaan', file: 'loadinfo.net.gif')}"
              data-src="<g:createLink controller="image" action="index"
                                      params="[id: product?.id, wh: size ?: '200x200']"/>"
