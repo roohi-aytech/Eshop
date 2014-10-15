@@ -101,7 +101,7 @@
                             </g:if>
                             <g:if  test="${grailsApplication.config.getInvoiceOnTracking}">
                                 <g:if test="${[eshop.OrderHelper.STATUS_PAYMENT_APPROVED, eshop.OrderHelper.STATUS_TRANSMITTED, eshop.OrderHelper.STATUS_DELIVERED].contains(order?.status)}">
-                                    <g:link class="btn btn-primary" controller="orderAdministration" action="printInvoice" id="${order?.trackingCode}">
+                                    <g:link class="btn btn-primary" controller="orderAdministration" action="printInvoice" id="${order?.trackingCode}" params="[bg:true]">
                                         <g:message code="invoice.export.pdf.admin"/>
                                     </g:link>
                                 </g:if>

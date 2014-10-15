@@ -450,11 +450,24 @@ class OrderAdministrationController {
                 OrderHelper.ACTION_APPROVE_PAYMENT,
                 "")
 
-        mailService.sendMail {
-            to order.ownerEmail
-            subject message(code: 'emailTemplates.approve_payment.subject')
-            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                    model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
+        if(grailsApplication.config.sendInvoiceWithApprove){
+            def os=new ByteArrayOutputStream()
+            pdfService.generateInvoice(order, os, true)
+            mailService.sendMail {
+                multipart true
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.approve_payment.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
+                attachBytes "invoice.pdf", "application/pdf", os.toByteArray()
+            }
+        }else {
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.approve_payment.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
+            }
         }
 
         messageService.sendMessage(
@@ -543,6 +556,7 @@ class OrderAdministrationController {
         if (!order)
             order = Order.findByTrackingCode(params.id)
         response.setHeader("Content-Disposition", "attachment; filename=\"Invoice.pdf\"");
-        pdfService.generateInvoice(order, response.outputStream, false)
+        response.setContentType('application/pdf')
+        pdfService.generateInvoice(order, response.outputStream, params.boolean('bg')?:false)
     }
 }
