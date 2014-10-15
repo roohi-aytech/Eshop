@@ -38,6 +38,7 @@ class OrderTrackingService {
                 property('id')
                 maxResults(500)
             }
+            order('id', 'desc')
         })
     }
 
