@@ -14,12 +14,15 @@
     <rg:grid domainClass="${AddedValue}"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToAddedValueGrid", icon: "plus"]]}"
-             commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#", saveAction: "${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteAddedValue(#id#)", icon: "application_delete"]]}">
+             commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#", saveAction: "${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteAddedValue(#id#)", icon: "application_delete"],[handler: "edit_photoes_addedValue(#id#)", icon: "application_add"]]}">
         <rg:criteria>
             <rg:isNull name="baseProduct"/>
         </rg:criteria>
     </rg:grid>
-    </div>
+
+    <rg:dialog id="edit_photoes_addedValue">
+
+    </rg:dialog>
     <script language="javascript" type="text/javascript">
         function deleteAddedValue(id) {
             if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {
@@ -42,6 +45,9 @@
             loadOverlay('<g:createLink action="form"/>', '<g:createLink action="save" />', function () {
                 $("#AddedValueGrid").trigger("reloadGrid")
             });
+        }
+        function edit_photoes_addedValue(id){
+            $('#edit_photoes_addedValue').load('<g:createLink controller="addedValue" action="addedValueImages" />/'+id).dialog('open')
         }
     </script>
 </div>
