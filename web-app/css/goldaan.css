@@ -18966,7 +18966,7 @@ h3,h1,h2,h4,h5,h6{
 
 .mostvisited-nav{
     margin-top:20px;
-    max-height:520px;
+    max-height:510px;
     overflow:hidden;
     margin-bottom:20px;
 }
@@ -20141,4 +20141,82 @@ html,body,#main-container{
 }
 .smaller{
     font-size:60%;
+}
+/*order tracking*/
+.orderTrackingDetails {
+    width: 100%;
+}
+
+.orderTrackingDetails a {
+    text-decoration: none;
+}
+
+.orderTrackingDetails td {
+    vertical-align: top;
+    padding-left: 8px;
+    padding-right: 0;
+}
+
+.orderTrackingDetails td + td {
+    padding-right: 7px;
+    padding-left: 0;
+}
+
+.orderTrackingDetails h3 {
+    border-bottom: 1px solid #C2C2C2;
+    font-size: 22px;
+    line-height: 30px;
+    margin-top: 20px;
+}
+
+.orderTrackingDetails .history li {
+    border-bottom: 1px dashed #C2C2C2;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    line-height: 18px;
+}
+
+.orderTrackingDetails .products li {
+    border-bottom: 1px dashed #C2C2C2;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    line-height: 18px;
+}
+
+.orderTrackingDetails .products li {
+    border-bottom: 1px dashed #C2C2C2;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    line-height: 18px;
+}
+
+.orderTrackingDetails .products hr {
+    display: none;
+}
+
+.orderTrackingDetails .products img {
+    display: block;
+    float: right;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+}
+
+.orderTrackingDetails .products div {
+    background: #EEEEEE;
+    padding: 5px;
+    padding-bottom: 0;
+}
+
+.orderTrackingDetails .products div + div {
+    padding-bottom: 5px;
+    padding-top: 0;
+}
+
+.orderTrackingDetails .products li div {
+    background: #ffffff;
+    padding: 0;
+}
+.orderTrackingDetails div{
+    padding-top:5px;
 }

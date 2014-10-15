@@ -9,7 +9,7 @@
 
         <g:if test="${productModel}">
             <g:render template="/site/${grailsApplication.config.eShop.instance}/templates/productThumbnail"
-                      model="[product: productModel.product]"/>
+                      model="[product: productModel.product,model:productModel]"/>
         </g:if>
         %{--<g:if test="${i % 3 == 2 || i == productIds.size() - 1}">--}%
             %{--</div>--}%

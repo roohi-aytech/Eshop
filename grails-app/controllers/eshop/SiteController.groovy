@@ -1477,6 +1477,50 @@ class SiteController {
         redirect(uri: '/contactUs')
     }
 
+    def contactUsNewProducts() {
+        render view: "/site/${grailsApplication.config.eShop.instance}/statics/contact_us_new_product"
+    }
+
+    def sendMailNewProducts() {
+
+        if (!simpleCaptchaService.validateCaptcha(params.captcha)) {
+
+            flash.message = message(code: 'contactUs.email.invalidCaptcha')
+            redirect(uri: '/contactUsNewProducts')
+            return
+        }
+
+        mailService.sendMail {
+            to grailsApplication.config.contactUsNewProductEmail
+            subject "${message(code: 'contactUsNewProduct.email.subject')}"
+            html(view: "/messageTemplates/mail/contactus",
+                    model: [
+                            firstName: params.firstName,
+                            lastName : params.lastName,
+                            email    : params.email,
+                            phone    : params.phone,
+                            body     : params.body
+                    ])
+        }
+
+
+        mailService.sendMail {
+            to params.email
+            subject message(code: 'contactUsNewProduct.email.subject')
+            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                    model: [message: g.render(template: '/messageTemplates/mail/contact_us', model: [parameters: params]).toString()])
+        }
+
+        if (params.phone)
+            messageService.sendMessage(
+                    params.phone,
+                    g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
+
+
+        flash.message = message(code: 'contactUs.email.successMessage')
+        redirect(uri: '/contactUsNewProducts')
+    }
+
     def termsAndConditions() {
         render view: "/site/${grailsApplication.config.eShop.instance}/statics/rights_and_laws"
     }

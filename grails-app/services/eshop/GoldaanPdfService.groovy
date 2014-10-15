@@ -40,7 +40,7 @@ class GoldaanPdfService {
 
         //background
         if (useBackground) {
-            Image img = Image.getInstance(grailsApplication.mainContext.getResource('/images/felfel/A4-Invoice.jpg').getFile().path);
+            Image img = Image.getInstance(grailsApplication.mainContext.getResource('/images/goldaan/A4-Invoice.jpg').getFile().path);
             img.setAlignment(Image.MIDDLE | Image.UNDERLYING);
             img.setBorder(Image.BOX);
             img.setBorderWidth(0);
@@ -361,7 +361,7 @@ class GoldaanPdfService {
 
         //background
         if (useBackground) {
-            Image img = Image.getInstance(grailsApplication.mainContext.getResource('/images/felfel/A4-Invoice.jpg').getFile().path);
+            Image img = Image.getInstance(grailsApplication.mainContext.getResource('/images/goldaan/A4-Invoice.jpg').getFile().path);
             img.setAlignment(Image.MIDDLE | Image.UNDERLYING);
             img.setBorder(Image.BOX);
             img.setBorderWidth(0);

@@ -43,7 +43,7 @@ class OrderAdministrationController {
 
     def list() {
         def orderList = orderTrackingService.filterOrderListForUser(springSecurityService.currentUser, params.status)
-                //orderTrackingService.filterOrderListForUser(params.status == 'All' ? Order.findAll() : Order.findAllByStatus(params.status), springSecurityService.currentUser)
+        //orderTrackingService.filterOrderListForUser(params.status == 'All' ? Order.findAll() : Order.findAllByStatus(params.status), springSecurityService.currentUser)
         render view: '/orderAdministration/list', model: [orderList: orderList.size() > 0 ? orderList : [0]]
     }
 
@@ -65,10 +65,10 @@ class OrderAdministrationController {
                 availableActions = [OrderHelper.ACTION_MARK_AS_INCORRECT, OrderHelper.ACTION_APPROVE]
                 break
             case OrderHelper.STATUS_UPDATING:
-                if(grailsApplication.config.payOnCheckout)
+                if (grailsApplication.config.payOnCheckout)
                     availableActions = [OrderHelper.ACTION_APPROVE_PAYMENT, OrderHelper.ACTION_MARK_AS_NOT_EXIST]
                 else
-                availableActions = [OrderHelper.ACTION_INQUIRY, OrderHelper.ACTION_MARK_AS_NOT_EXIST]
+                    availableActions = [OrderHelper.ACTION_INQUIRY, OrderHelper.ACTION_MARK_AS_NOT_EXIST]
                 break
             case OrderHelper.STATUS_NOT_EXIST:
                 availableActions = [OrderHelper.ACTION_RE_APPROVE]
@@ -84,33 +84,52 @@ class OrderAdministrationController {
                 break
         }
 
-        model: [
-                order: order,
-                actions: availableActions,
+        model:
+        [
+                order   : order,
+                actions : availableActions,
                 modified: modified
         ]
     }
 
     def updatePrice() {
+        if (grailsApplication.config.onlyUpdateInFactor) {
+            def orderItem=OrderItem.get(params.orderItem.id)
 
-        //save new price
-        def priceInstance = new Price(params)
-        priceInstance.productModel = ProductModel.get(params.productModel.id)
-        def lastPrice = Price.findByProductModelAndEndDateIsNull(priceInstance.productModel)
-        if (lastPrice) {
-            lastPrice.endDate = new Date()
-            lastPrice.save()
+            orderItem.unitPrice=params.int('price')
+            orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
+            orderItem.save()
+            def order=orderItem.order
+            if (grailsApplication.config.disableRoundingPrices) {
+                order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
+                    it.totalPrice
+                }) as Integer) + order.deliveryPrice))
+            } else {
+                order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
+                    it.totalPrice
+                }) as Integer) + order.deliveryPrice) / 1000) * 1000
+            }
+            order.totalPayablePrice = order.totalPrice - order.usedAccountValue
+            order.save()
+        } else {
+            //save new price
+            def priceInstance = new Price(params)
+            priceInstance.productModel = ProductModel.get(params.productModel.id)
+            def lastPrice = Price.findByProductModelAndEndDateIsNull(priceInstance.productModel)
+            if (lastPrice) {
+                lastPrice.endDate = new Date()
+                lastPrice.save()
+            }
+
+            priceInstance.startDate = new Date()
+            priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
+            priceInstance.save()
+            priceInstance.productModel.product.isSynchronized = false
+            priceInstance.productModel.product.save()
+
+            //update order
+            priceService.updateOrderPrice(OrderItem.get(params.orderItem.id).order)
         }
-
-        priceInstance.startDate = new Date()
-        priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
-        priceInstance.save()
-        priceInstance.productModel.product.isSynchronized = false
-        priceInstance.productModel.product.save()
-
-        //update order
-        priceService.updateOrderPrice(OrderItem.get(params.orderItem.id).order)
-
         redirect(action: 'act', params: [id: params.order.id])
     }
 
@@ -170,9 +189,15 @@ class OrderAdministrationController {
         trackingLog.description = """
                 ${params.description}
                 ${message(code: 'payment.type')}: ${message(code: 'payment.types.bankReceipt')}
-                ${message(code: 'order.usedAccountValue')}: ${formatNumber(number: order.usedAccountValue, type: 'number')} ${eshop.currencyLabel()}
-                ${message(code: 'order.payment.bank')}: ${message(code: "account.${paymentRequest.account.bankName}.${paymentRequest.account.type}")}
-                ${message(code: 'order.payment.value')}: ${formatNumber(number: paymentRequest.value, type: 'number')} ${eshop.currencyLabel()}
+                ${message(code: 'order.usedAccountValue')}: ${
+            formatNumber(number: order.usedAccountValue, type: 'number')
+        } ${eshop.currencyLabel()}
+                ${message(code: 'order.payment.bank')}: ${
+            message(code: "account.${paymentRequest.account.bankName}.${paymentRequest.account.type}")
+        }
+                ${message(code: 'order.payment.value')}: ${
+            formatNumber(number: paymentRequest.value, type: 'number')
+        } ${eshop.currencyLabel()}
                 ${message(code: 'order.payment.trackingCode')}: ${paymentRequest.trackingCode}
                 ${message(code: 'order.payment.date')}: ${rg.formatJalaliDate(date: paymentRequest.creationDate)}
 """
@@ -214,7 +239,9 @@ class OrderAdministrationController {
     def act_inquiry() {
 
         def order = Order.get(params.id)
-        OrderItem.findAllByOrderAndDeleted(order, false).findAll { it.orderCount < 1 || it.productModel.status != 'exists' }.each {
+        OrderItem.findAllByOrderAndDeleted(order, false).findAll {
+            it.orderCount < 1 || it.productModel.status != 'exists'
+        }.each {
             it.deleted = true
             it.save()
         }
@@ -322,7 +349,7 @@ class OrderAdministrationController {
             case 'online':
 
                 def payment = OnlinePayment.findAllByOrder(order)?.sort { -it.id }?.find()
-                if(payment) {
+                if (payment) {
                     paymentAmount += payment.amount
 
                     //add customer transaction
@@ -397,8 +424,8 @@ class OrderAdministrationController {
         transaction.creator = order.customer
         transaction.save()
 
-        def bonDiscount = priceService.findDiscounts("Bon", order.totalPrice, order.items.sum {it.orderCount})
-        if(bonDiscount){
+        def bonDiscount = priceService.findDiscounts("Bon", order.totalPrice, order.items.sum { it.orderCount })
+        if (bonDiscount) {
             def boncustomerTransaction = new CustomerTransaction()
             boncustomerTransaction.account = request.account
             boncustomerTransaction.value = bonDiscount
@@ -423,11 +450,24 @@ class OrderAdministrationController {
                 OrderHelper.ACTION_APPROVE_PAYMENT,
                 "")
 
-        mailService.sendMail {
-            to order.ownerEmail
-            subject message(code: 'emailTemplates.approve_payment.subject')
-            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                    model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
+        if(grailsApplication.config.sendInvoiceWithApprove){
+            def os=new ByteArrayOutputStream()
+            pdfService.generateInvoice(order, os, true)
+            mailService.sendMail {
+                multipart true
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.approve_payment.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
+                attachBytes "invoice.pdf", "application/pdf", os.toByteArray()
+            }
+        }else {
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.approve_payment.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
+            }
         }
 
         messageService.sendMessage(
@@ -466,6 +506,9 @@ class OrderAdministrationController {
 
         def order = Order.get(params.id)
         order.deliveryTrackingCode = params.deliveryTrackingCode
+        order.buyerName = params.buyerName
+        order.buyerAmount = params.buyerAmount
+
         order.save()
 
         actOnOrder(
@@ -510,9 +553,10 @@ class OrderAdministrationController {
 
     def printInvoice() {
         def order = Order.get(params.id)
-        if(!order)
-            order=Order.findByTrackingCode(params.id)
+        if (!order)
+            order = Order.findByTrackingCode(params.id)
         response.setHeader("Content-Disposition", "attachment; filename=\"Invoice.pdf\"");
-        pdfService.generateInvoice(order, response.outputStream, false)
+        response.setContentType('application/pdf')
+        pdfService.generateInvoice(order, response.outputStream, params.boolean('bg')?:false)
     }
 }

@@ -73,7 +73,8 @@
         <g:message code="delivery-alert"/>
     </div>
     <g:set var="loggedIn" value="${false}"/>
-    <g:set var="submitForm" value="finalizeBasket(this);"/>
+    <g:set var="submitForm" value=""/>
+    <g:set var="nextStep" value="${message(code:'next-step')}"/>
     <sec:ifLoggedIn>
         <g:set var="loggedIn" value="${true}"/>
         <g:set var="submitForm" value="finalizeBasket(this);"/>

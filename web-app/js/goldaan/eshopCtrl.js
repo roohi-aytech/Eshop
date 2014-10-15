@@ -431,6 +431,7 @@ function updateDescriptionAndDeliverMethod() {
         $('.step-content.selected').removeClass('selected');
         $('.steps .step2').addClass('selected');
         $('.step-content.step2').addClass('selected');
+        return true;
     }
     else{
         showAlert('.delivery-methods span:first','لطفا روش ارسال را انتخاب فرمایید')
@@ -455,6 +456,7 @@ function updateBuyerAndPaymentTypeAndSendFactor() {
         $('.step-content.selected').removeClass('selected');
         $('.steps .step3').addClass('selected');
         $('.step-content.step3').addClass('selected');
+        return true;
     }
     else{
         showAlert('#buyerName','لطفا نام خریدار را وارد فرمایید')
