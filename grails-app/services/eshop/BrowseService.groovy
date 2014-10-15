@@ -349,7 +349,8 @@ class BrowseService {
                 selecteds["b"] = (selecteds["b"] ?: []) + brandId
 
                 if (lastbc == "b")
-                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1].linkTitle} + ${Brand.get(brandId).name}"]
+
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1]?.linkTitle?:''} + ${Brand.get(brandId)?.name?:''}"]
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: Brand.get(brandId).name]
                 lastbc = "b"
