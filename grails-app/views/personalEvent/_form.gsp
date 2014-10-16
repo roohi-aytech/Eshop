@@ -132,7 +132,9 @@
         </td>
         <td>
             %{--<g:datePicker name="date" precision="day" value="${personalEventInstance?.date}"/>--}%
-            <rg:datePicker name="date" value="${personalEventInstance?.date}" style="width:120px"/>
+            %{--<rg:datePicker name="date" value="${personalEventInstance?.date}" style="width:120px"/>--}%
+            <g:select style="width: 60px;display:inline-block !important;" name="day" from="${(1..31)}" value="${day}"/>
+            <g:select style="width: 80px;display:inline-block !important;" name="month" from="${(1..12).collect {[key:it,value:message(code:'month.'+it)]}}" optionKey="key" optionValue="value" value="${month}"/>
         </td>
     </tr>
     <g:if test="${!grailsApplication.config.profileSimplePersonalEvents}">

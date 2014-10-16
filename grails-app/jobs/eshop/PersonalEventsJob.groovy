@@ -4,15 +4,18 @@ import grails.gsp.PageRenderer
 
 
 class PersonalEventsJob {
+
     def mailService
     def messageService
     def messageSource
     PageRenderer groovyPageRenderer
     static triggers = {
         cron name: 'myTrigger', cronExpression: "0 0 9 * * ?"
+//        simple repeatInterval: 60000
     }
 
     def execute() {
+        println 'Personal Event Scheduler'
         def now = new Date()
         def cal = Calendar.instance
         cal.set(Calendar.HOUR_OF_DAY, 0)
@@ -30,6 +33,13 @@ class PersonalEventsJob {
         PersonalEvent.findAllByDateInList(dates).each { personalEvent ->
             def productType = ProductType.findByName(personalEvent.title)
             def dayRemaining = personalEvent.date.minus(now)
+            if(dayRemaining==2){
+                def c=Calendar.instance
+                c.time=personalEvent.date
+                c.add(Calendar.YEAR,1)
+                personalEvent.date=c.time
+                personalEvent.save()
+            }
             if (personalEvent.emailNotification && personalEvent.customer.email) {
                 mailService.sendMail {
                     to personalEvent.customer.email
