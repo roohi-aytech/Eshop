@@ -8,7 +8,7 @@ function Stack() {
     }
 }
 
-$(document).ready(function () {
+function setupTumbnails(){
 
     $(".thumbnailGrid .thumbnail").hoverIntent(function () {
 
@@ -77,6 +77,11 @@ $(document).ready(function () {
             'opacity': '0'
         });
     });
+}
+
+$(document).ready(function () {
+
+    setupTumbnails();
 
     $(window).resize(function () {
 

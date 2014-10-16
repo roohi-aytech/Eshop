@@ -43,6 +43,8 @@ function ajaxFilter(url, dontModifyHistory) {
         setupAjaxFilter();
         if (typeof resizeThumbnails == 'function')
             resizeThumbnails();
+        if (typeof setupTumbnails == 'function')
+            setupTumbnails();
         $('#filterBar, #graphicalFilter, #breadcrumb').css('opacity', 1);
         if (!dontModifyHistory) {
             var realUrl = url.replace('/ajaxFilter?', '/filter?').replace('/ajaxSearch?', '/search?');
