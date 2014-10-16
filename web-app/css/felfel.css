@@ -4263,6 +4263,7 @@ h2.check-out-price span {
 .statusFilter{
     float: left;
     margin-top:-32px;
+    white-space: nowrap;
 }
 
 .statusFilter span{

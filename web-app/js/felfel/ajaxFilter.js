@@ -18,7 +18,7 @@ function setupAjaxFilter() {
     $('#products').append("<div class='ajaxLoading'><div>در حال بارگذاری...</div></div>");
     $("a[data-ajax='true'], .breadcrumb a, .pagination a").each(function () {
         var href = $(this).attr('href');
-        if (!href.contains('javascript:') && !href.contains('/browse')) {
+        if (href.indexOf('javascript:') == -1 && href.indexOf('/browse') == -1) {
             href = href.replace('/filter?', '/ajaxFilter?');
             href = href.replace('/search?', '/ajaxSearch?');
             $(this).attr('href', 'javascript:ajaxFilter("' + href + '");');

@@ -4790,6 +4790,7 @@ ul.article-list li span {
     float: left;
     margin-left: 10px;
     margin-top: 5px;
+    white-space: nowrap;
 }
 
 .statusFilter span {
