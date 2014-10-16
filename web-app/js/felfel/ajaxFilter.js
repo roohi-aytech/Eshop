@@ -44,6 +44,9 @@ function ajaxFilter(url, dontModifyHistory) {
         $('#pagination').html(response.pagination);
         $('#secondPagination').html(response.pagination);
         setupAjaxFilter();
+        $('#products').find('a[ng-click]').each(function(){
+            $(this).attr('onClick', "angular.element(document.getElementById('main-container')).scope()." + $(this).attr('ng-click'));
+        });
         if (typeof initializeLazyLoad == 'function')
             initializeLazyLoad();
         $('#filterBar, #graphicalFilter, #breadcrumb, #title ,#pagination ,#secondPagination').css('opacity', 1);

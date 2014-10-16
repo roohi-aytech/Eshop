@@ -45,6 +45,11 @@ function ajaxFilter(url, dontModifyHistory) {
             resizeThumbnails();
         if (typeof setupTumbnails == 'function')
             setupTumbnails();
+
+        $('#products').find('a[ng-click]').each(function(){
+            $(this).attr('onClick', "angular.element(document.getElementById('main-container')).scope()." + $(this).attr('ng-click'));
+        });
+
         $('#filterBar, #graphicalFilter, #breadcrumb').css('opacity', 1);
         if (!dontModifyHistory) {
             var realUrl = url.replace('/ajaxFilter?', '/filter?').replace('/ajaxSearch?', '/search?');
