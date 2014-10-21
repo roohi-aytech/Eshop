@@ -6,7 +6,7 @@ class AppController {
 
     def mostVisited() {
         def productType = ProductType.get(params.ptId)
-        def offset = params.int('offset') ?: 0
+        int offset = params.int('offset') ?: 0
         def products = Product.createCriteria().listDistinct {
             models {
                 eq('status', 'exists')
