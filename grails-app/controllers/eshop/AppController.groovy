@@ -21,10 +21,10 @@ class AppController {
                 }
             }
             maxResults(20)
-            offset(offset)
+            firstResult(offset)
             order("visitCount", "desc")
-        }.collect {
-            [id: it.id, title: "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}"]
+        }.collect { product ->
+            [id: product.id, title: "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}"]
         }
         render products as JSON
     }
