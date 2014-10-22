@@ -29,9 +29,20 @@ class AppController {
                     id         : product.id,
                     title      : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
                     price      : formatNumber(number: priceService.calcProductPrice(product.id), type: 'number'),
-                    description: product.description
+                    description: product.description,
+                    modelCount : product?.models?.findAll { it.status == 'exists' }.size()
             ]
         }
         render products as JSON
+    }
+
+    def productTypes() {
+        def pts = ProductType.findAllByDeleted(false).collect {
+            [
+                    id   : it.id,
+                    title: it.name
+            ]
+        }
+        render pts as JSON
     }
 }
