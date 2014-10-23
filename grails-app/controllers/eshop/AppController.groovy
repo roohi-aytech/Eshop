@@ -8,32 +8,35 @@ class AppController {
     def mostVisited() {
         def productType = ProductType.get(params.ptId)
         int offset = params.int('offset') ?: 0
-        def products = Product.createCriteria().listDistinct {
-            models {
-                eq('status', 'exists')
+        def products = ProductModel.createCriteria().list(max:20,offset: offset){
+            projections {
+                distinct('product')
             }
-            or {
-                isNull('isVisible')
-                eq('isVisible', true)
-            }
-            if (productType) {
-                productTypes {
-                    'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+
+            eq('status', 'exists')
+            product {
+                or {
+                    isNull('isVisible')
+                    eq('isVisible', true)
                 }
+                if (productType) {
+                    productTypes {
+                        'in'('id', productType?.allChildren?.collect { it.id } + [productType.id])
+                    }
+                }
+                order("visitCount", "desc")
             }
-            maxResults(20)
-            firstResult(offset)
-            order("visitCount", "desc")
-        }.collect { product ->
+        }.collect { Product product ->
             [
-                    id         : product.id,
-                    title      : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
-                    price      : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
+                    id    : product.id,
+                    title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
+                    price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
 //                    description: product.description,
-                    models : product?.models?.findAll { it.status == 'exists' }.collect {
+                    models: product?.models?.findAll { it.status == 'exists' }.sort { it.name }.collect {
                         [
-                                id:it.id,
-                                title: it.name
+                                id   : it.id,
+                                title: it.name,
+                                price:formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
                         ]
                     }
             ]
@@ -50,4 +53,5 @@ class AppController {
         }
         render pts as JSON
     }
+
 }
