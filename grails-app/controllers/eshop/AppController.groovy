@@ -30,7 +30,7 @@ class AppController {
                     title      : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
                     price      : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
 //                    description: product.description,
-                    modelCount : product?.models?.findAll { it.status == 'exists' }.collect {
+                    models : product?.models?.findAll { it.status == 'exists' }.collect {
                         [
                                 id:it.id,
                                 title: it.name
