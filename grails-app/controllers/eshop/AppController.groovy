@@ -1,6 +1,8 @@
 package eshop
 
 import grails.converters.JSON
+import org.apache.lucene.search.BooleanQuery
+import search.FarsiNormalizationFilter
 
 class AppController {
     def priceService
@@ -93,6 +95,38 @@ class AppController {
                 [title: 'باکس گل']
         ]
         render pts as JSON
+    }
+
+    def search() {
+        def query = params.id.toString().trim()
+        query = FarsiNormalizationFilter.normalize(query.toCharArray(), query.length())
+        while (query.contains('  '))
+            query = query.replace('  ', ' ')
+        query = "*${query.replace(' ', '* *')}*"
+        BooleanQuery.setMaxClauseCount(10000);
+        def products = Product.search({
+            queryString(query)
+        }, [reload: false, max: 1000]).results.collect { product ->
+            try {
+                product.refresh()
+
+                [
+                        id    : product.id,
+                        title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
+                        price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
+                        models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
+                            [
+                                    id   : it.id,
+                                    title: it.name,
+                                    price: formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
+                            ]
+                        }
+                ]
+            } catch (x) {
+
+            }
+        }
+        render products.findAll() as JSON
     }
 
 }
