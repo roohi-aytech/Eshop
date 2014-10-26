@@ -60,6 +60,7 @@ class AppController {
             if (product) {
                 [
                         id    : product.id,
+                        brand : product?.brand?.name,
                         title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
                         price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
 //                    description: product.description,
@@ -88,7 +89,7 @@ class AppController {
                 [title: 'کیک'],
                 [title: 'شکلات و گل'],
                 [title: 'روز عشاق'],
-                [title: 'سبد گل'],
+                [title: 'گل کاغذی'],
                 [title: '>200', value: '200000-'],
                 [title: 'دسر'],
                 [title: 'بن سای'],
@@ -112,6 +113,7 @@ class AppController {
 
                 [
                         id    : product.id,
+                        brand : product?.brand?.name,
                         title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
                         price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
                         models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
@@ -127,6 +129,15 @@ class AppController {
             }
         }
         render products.findAll() as JSON
+    }
+
+    def banners() {
+        def bns = Banner.findAllByDeleted(false).collect {
+            [
+                    id: it.id
+            ]
+        }
+        render bns as JSON
     }
 
 }
