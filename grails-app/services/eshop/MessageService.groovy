@@ -54,4 +54,25 @@ class MessageService {
         }
         return result
     }
+    def getInfo() {
+        def result
+
+        try {
+            if(grailsApplication.config.eShop.instance=='goldaan'){
+                def messageService = new eshop.sms.rahyab.SmsLocator().getsmsSoap()
+                result = messageService.doGetInfo(
+                        parameters[grailsApplication.config.eShop.instance].userName,
+                        parameters[grailsApplication.config.eShop.instance].userPassword)
+            }else {
+                def messageService = new SmsLocator().getsmsSoap()
+
+                result = messageService.getInfo(
+                        parameters[grailsApplication.config.eShop.instance].userName,
+                        parameters[grailsApplication.config.eShop.instance].userPassword)
+            }
+        } catch (x) {
+            x.printStackTrace()
+        }
+        return result
+    }
 }
