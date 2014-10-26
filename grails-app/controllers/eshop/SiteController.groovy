@@ -329,8 +329,6 @@ class SiteController {
             maxResults(20)
             order("visitCount", "desc")
         }
-        println "${grailsApplication.config.eShop.instance}"
-        println model
 
         render(model: model, view: "${grailsApplication.config.eShop.instance}/filter")
     }
