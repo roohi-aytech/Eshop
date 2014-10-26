@@ -54,10 +54,10 @@ class ImageController {
                 if (!content || content?.size() == 0) {
                     if (params.name)
                         content = product.images.find { it.name == params.name }?.fileContent
-                    else if (product.mainImage)
-                        content = product.mainImage?.fileContent
+                    else if (product?.mainImage)
+                        content = product?.mainImage?.fileContent
                     else
-                        content = product.images.find()?.fileContent
+                        content = product?.images.find()?.fileContent
                 }
                 break;
             case 'productModel':
