@@ -21,7 +21,7 @@ grails {
     mongo {
         host = "127.0.0.1"
         username = "root"
-        password = "jzfP7C4T85SxgtJj"
+        password = "Salam123"
     }
 }
 
@@ -62,7 +62,7 @@ environments {
             dbCreate = "update"
             url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
-            password = "Salam123"
+            password = "jzfP7C4T85SxgtJj"
             pooled = true
             logSql = false
             driverClassName = "com.mysql.jdbc.Driver"
