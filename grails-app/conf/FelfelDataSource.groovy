@@ -21,7 +21,7 @@ grails {
     mongo {
         host = "127.0.0.1"
         username = "root"
-        password = "Salam123"
+        password = "jzfP7C4T85SxgtJj"
     }
 }
 
