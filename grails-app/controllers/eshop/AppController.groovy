@@ -58,23 +58,18 @@ class AppController {
                 .productIds.collect { pt ->
             def product = ProductModel.get(pt.modelId)?.product
             if (product) {
-                [
-                        id    : product.id,
-                        brand : product?.brand?.name,
-                        title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
-                        price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
-//                    description: product.description,
-                        models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
-                            [
-                                    id   : it.id,
-                                    title: it.name,
-                                    price: formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
-                            ]
-                        }
-                ]
+                productCollector(product)
             }
         }
         render products.findAll() as JSON
+    }
+
+    def get() {
+        def product = Product.get(params.id)
+        def p
+        if (product)
+            p = productCollector(product)
+        render p as JSON
     }
 
     def productTypes() {
@@ -109,21 +104,10 @@ class AppController {
             queryString(query)
         }, [reload: false, max: 1000]).results.collect { product ->
             try {
-                product.refresh()
-
-                [
-                        id    : product.id,
-                        brand : product?.brand?.name,
-                        title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
-                        price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
-                        models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
-                            [
-                                    id   : it.id,
-                                    title: it.name,
-                                    price: formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
-                            ]
-                        }
-                ]
+                if (product) {
+                    product.refresh()
+                    productCollector(product)
+                }
             } catch (x) {
 
             }
@@ -138,6 +122,21 @@ class AppController {
             ]
         }
         render bns as JSON
+    }
+    private def productCollector = { product ->
+        [
+                id    : product.id,
+                brand : product?.brand?.name,
+                title : "${product?.manualTitle ? product?.pageTitle : "${product?.productTypes?.find { true }?.name ?: ""} ${product?.type?.title ?: ""} ${product?.brand?.name ?: ""} ${product?.name ?: ""}"}",
+                price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
+                models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
+                    [
+                            id   : it.id,
+                            title: it.name,
+                            price: formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
+                    ]
+                }
+        ]
     }
 
 }
