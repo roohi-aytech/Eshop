@@ -38,10 +38,12 @@ class ImageController {
             response.outputStream.flush()
             return
         }
-        params.id?.split('_')?.each {
-            def ps = it.split('-')
-            if (ps.size() > 1)
-                params[ps[0]] = ps[1]
+        if(params.id?.toString().startsWith('KR')) {
+            params.id?.split('_')?.each {
+                def ps = it.split('-')
+                if (ps.size() > 1)
+                    params[ps[0]] = ps[1]
+            }
         }
         if (!params.type)
             params.type = 'product'
