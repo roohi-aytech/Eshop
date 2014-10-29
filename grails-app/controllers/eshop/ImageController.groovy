@@ -15,7 +15,7 @@ class ImageController {
     def get() {
         def path = params.path
         def content = fileService.getFileContent(path)
-        response.contentType = 'image/png'
+        response.contentType = 'image/jpeg'
         response.outputStream << content
         response.outputStream.flush()
     }
@@ -32,13 +32,17 @@ class ImageController {
             cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
-            response.contentType = 'image/png'
+            response.contentType = 'image/jpeg'
             response.setStatus(200)
             response.outputStream << new byte[0]
             response.outputStream.flush()
             return
         }
-
+        params.id?.split('_')?.each {
+            def ps = it.split('-')
+            if (ps.size() > 1)
+                params[ps[0]] = ps[1]
+        }
         if (!params.type)
             params.type = 'product'
         def content = []
@@ -205,7 +209,7 @@ class ImageController {
             cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
-            response.contentType = 'image/png'
+            response.contentType = 'image/jpeg'
             response.setStatus(200)
             response.outputStream << content
             response.outputStream.flush()
@@ -218,7 +222,7 @@ class ImageController {
             cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
-            response.contentType = 'image/png'
+            response.contentType = 'image/jpeg'
             response.setStatus(200)
             response.outputStream << new byte[1]
             response.outputStream.flush()
