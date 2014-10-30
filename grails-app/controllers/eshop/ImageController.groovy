@@ -15,7 +15,7 @@ class ImageController {
     def get() {
         def path = params.path
         def content = fileService.getFileContent(path)
-        response.contentType = 'image/png'
+        response.contentType = 'image/jpeg'
         response.outputStream << content
         response.outputStream.flush()
     }
@@ -32,13 +32,19 @@ class ImageController {
             cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
-            response.contentType = 'image/png'
+            response.contentType = 'image/jpeg'
             response.setStatus(200)
             response.outputStream << new byte[0]
             response.outputStream.flush()
             return
         }
-
+        if(params.id?.toString()?.startsWith('KR')) {
+            params.id?.split('_')?.each {
+                def ps = it.split('-')
+                if (ps.size() > 1)
+                    params[ps[0]] = ps[1]
+            }
+        }
         if (!params.type)
             params.type = 'product'
         def content = []
@@ -54,10 +60,10 @@ class ImageController {
                 if (!content || content?.size() == 0) {
                     if (params.name)
                         content = product.images.find { it.name == params.name }?.fileContent
-                    else if (product.mainImage)
-                        content = product.mainImage?.fileContent
+                    else if (product?.mainImage)
+                        content = product?.mainImage?.fileContent
                     else
-                        content = product.images.find()?.fileContent
+                        content = product?.images.find()?.fileContent
                 }
                 break;
             case 'productModel':
@@ -212,7 +218,7 @@ class ImageController {
             cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
-            response.contentType = 'image/png'
+            response.contentType = 'image/jpeg'
             response.setStatus(200)
             response.outputStream << content
             response.outputStream.flush()
@@ -225,7 +231,7 @@ class ImageController {
             cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", httpDateFormat.format(cal.getTime()));
-            response.contentType = 'image/png'
+            response.contentType = 'image/jpeg'
             response.setStatus(200)
             response.outputStream << new byte[1]
             response.outputStream.flush()
