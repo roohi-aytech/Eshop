@@ -14,7 +14,7 @@ class Banner {
 
     static constraints = {
         gridSortIndex()
-        position(inList: ['right', 'left'])
+        position(inList: ['right', 'left', 'mobile'])
         sortIndex()
         name()
         url(nullable: true)

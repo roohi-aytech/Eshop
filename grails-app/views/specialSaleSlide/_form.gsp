@@ -104,6 +104,15 @@
          style="max-width: 100px"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: specialSaleSlideInstance, field: 'mobileImage', 'error')} required">
+    <label for="image">
+        <g:message code="slide.mobileImage.label" default="mobileImage"/>
+    </label>
+    <input type="file" id="mobileImage" name="mobileImage"/>
+    <img src="<g:createLink controller="image" action="index" params="${[id: specialSaleSlideInstance?.id, type: 'specialSale', role: 'mobile']}"/>"
+         style="max-width: 100px"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: specialSaleSlideInstance, field: 'extraImage1', 'error')} required">
     <label for="extraImage1">
         <g:message code="slide.extraImage1.label" default="extraImage1"/>

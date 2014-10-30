@@ -10,12 +10,12 @@
 <html>
 <head>
     <meta name="layout" content="site"/>
-    <title><g:message code="orders"/> <g:message code="order.status.${status}"/></title>
+    <title><g:message code="orders"/> ${status ? message(code:"order.status.${status}") : ''}</title>
 </head>
 
 <body>
 <div class="control-panel">
-    <h2><g:message code="orders"/> <g:message code="order.status.${status}"/></h2>
+    <h2><g:message code="orders"/> ${status ? message(code:"order.status.${status}") : ''}</h2>
     <g:if test="${orderList.empty}">
         <div class="info">
             <div><g:message code="list.empty.message"></g:message></div>

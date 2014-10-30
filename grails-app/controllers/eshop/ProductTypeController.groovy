@@ -338,10 +338,12 @@ class ProductTypeController {
         try {
             def image
             def menuImage
+            def mobileBanner
             if (params.id) {
                 productType = ProductType.get(params.id)
                 image = productType.image
                 menuImage = productType.menuImage
+                mobileBanner = productType.mobileBanner
                 productType.properties = params
                 productType.seoFriendlyName = params.seoFriendlyName
             } else {
@@ -350,6 +352,7 @@ class ProductTypeController {
 
             productType.image = null
             productType.menuImage = null
+            productType.mobileBanner = null
             productType.rootProductType = productType.parentProduct ? productType.parentProduct.rootProductType : productType
 //            productType = productType.save()
             if (!params.imagedeleted) {
@@ -363,6 +366,12 @@ class ProductTypeController {
                     productType.menuImage = params.menuImage.bytes
                 else if (menuImage)
                     productType.menuImage = menuImage
+            }
+            if (!params.mobileBannerDeleted) {
+                if (params.mobileBanner)
+                    productType.mobileBanner = params.mobileBanner.bytes
+                else if (mobileBanner)
+                    productType.mobileBanner = mobileBanner
             }
             productType.searchKeys = params.searchKeys
             productType.save(flush:true)

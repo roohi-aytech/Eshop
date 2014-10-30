@@ -9,6 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <g:if test="${session.mobile}">
+        <meta name='layout' content='mobile'/>
+    </g:if>
     <title>
         10 روز تضمین طلایی تعویض ویژه مشتریان زنبیل
     </title>

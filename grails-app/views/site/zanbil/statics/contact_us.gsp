@@ -9,6 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    <g:if test="${session.mobile}">
+        <meta name='layout' content='mobile'/>
+    </g:if>
     <title><g:message code="contact.label"/></title>
     <script language="javascript" type="text/javascript">
         function validateForm() {

@@ -115,6 +115,10 @@ class ImageController {
                     }
                 }
                 break;
+            case 'productTypeMobileBanner':
+                def productType = ProductType.get(params.id)
+                content = productType.mobileBanner
+                break;
             case 'productTypeType':
                 def productTypeType = ProductTypeType.get(params.id)
                 if (productTypeType) {
@@ -164,6 +168,9 @@ class ImageController {
                             break
                         case 'e3':
                             content = specialSaleSlide.extraImage3
+                            break
+                        case 'mobile':
+                            content = specialSaleSlide.mobileImage
                             break
                         default:
                             content = specialSaleSlide.image

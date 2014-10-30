@@ -8,6 +8,7 @@ events.url='http://www.felfel.ir:82'
 admin.theme='cobalt'
 browse.view.root='browse-root'
 page.size=81
+page.mobile.size=24
 testimonials=true
 backgrounds=true
 showProductStatus=true
@@ -18,6 +19,7 @@ hideCustomerReviewTitle=false
 customCustomerReviewTemplate=false
 filterPriceOnChange=true
 ajaxFilter = true
+
 ckeditor {
     upload {
         basedir = "/home/uploads"

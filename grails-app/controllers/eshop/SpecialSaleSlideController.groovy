@@ -30,6 +30,7 @@ class SpecialSaleSlideController {
             def extraImage1 = slideSaleInstance.extraImage1
             def extraImage2 = slideSaleInstance.extraImage2
             def extraImage3 = slideSaleInstance.extraImage3
+            def mobileImage = slideSaleInstance.mobileImage
             slideSaleInstance.properties = params
             if (!params.image)
                 slideSaleInstance.image = image
@@ -39,6 +40,8 @@ class SpecialSaleSlideController {
                 slideSaleInstance.extraImage2 = extraImage2
             if (!params.extraImage3)
                 slideSaleInstance.extraImage3 = extraImage3
+            if (!params.mobileImage)
+                slideSaleInstance.mobileImage = mobileImage
         } else {
             slideSaleInstance = new SpecialSaleSlide(params)
         }

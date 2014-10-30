@@ -1,6 +1,7 @@
 package eshop
 
 import grails.plugin.cache.Cacheable
+import org.codehaus.groovy.grails.web.util.WebUtils
 import org.springframework.web.context.request.RequestContextHolder
 
 import java.text.NumberFormat
@@ -230,6 +231,9 @@ class BrowseService {
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findProductTypeFilters(ProductType productType, page, cacheKey) {
+
+        def pageSize = WebUtils.retrieveGrailsWebRequest().getSession().mobile ? grailsApplication.config.page.mobile.size : grailsApplication.config.page.size
+
         def match = productType ? ['productTypes.id': productType.id] : [:]
         def brandsCountMap = countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll {
             it._id.name != null
@@ -244,17 +248,20 @@ class BrowseService {
             attributesCountMap = attributesCountMap + countAttributes(pt, match)
             pt = pt.parentProduct
         }
-        def start = Integer.parseInt(page.toString()) * grailsApplication.config.page.size
+        def start = Integer.parseInt(page.toString()) * pageSize
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_browse_${productType}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
 //        println match
-        def products = listProducts(match: match, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, start: start, pageSize: pageSize, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), products: products]
     }
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findFilteredPageFilters(f, sort, dir, page, cacheKey) {
+
+        def pageSize = WebUtils.retrieveGrailsWebRequest().getSession().mobile ? grailsApplication.config.page.mobile.size : grailsApplication.config.page.size
+
         def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
         def productType
         def breadcrumb = []
@@ -482,11 +489,11 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def start = Integer.parseInt(page.toString()) * grailsApplication.config.page.size
+        def start = Integer.parseInt(page.toString()) * pageSize
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_filter_${f}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, sort: sort, dir: dir, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, sort: sort, dir: dir, start: start, pageSize: pageSize, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }
@@ -627,6 +634,9 @@ class BrowseService {
 
 //    @Cacheable(value='service', key='#cacheKey.toString()')
     def findSearchPageFilters(productIdList, f, sort, dir, page, cacheKey) {
+
+        def pageSize = WebUtils.retrieveGrailsWebRequest().getSession().mobile ? grailsApplication.config.page.mobile.size : grailsApplication.config.page.size
+
         def e = grailsApplication.mainContext.getBean('eshop.PriceTagLib');
         def productType
         def breadcrumb = []
@@ -859,11 +869,11 @@ class BrowseService {
             pt = pt.parentProduct
         }
 
-        def start = Integer.parseInt(page.toString()) * grailsApplication.config.page.size
+        def start = Integer.parseInt(page.toString()) * pageSize
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def pageListSessionKey = "pageList_search_${f}"
         def resetPagesCountMap = (start == 0) || !(session[pageListSessionKey])
-        def products = listProducts(match: match, sort: sort, dir: dir, start: start, pageSize: grailsApplication.config.page.size, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
+        def products = listProducts(match: match, sort: sort, dir: dir, start: start, pageSize: pageSize, pageListSessionKey: pageListSessionKey, resetPagesCountMap: resetPagesCountMap)
 
         [brands: brandsCountMap, types: typesCountMap, priceRange: priceRange(match), attributes: attributesCountMap, variations: countVariations(match), productTypes: productTypesCountMap, breadcrumb: breadcrumb, selecteds: selecteds, products: products]
     }

@@ -89,6 +89,24 @@
         }
     </script>
 </div>
+<div class="fieldcontain ${hasErrors(bean: productTypeInstance, field: 'mobileBanner', 'error')} ">
+    <label for="menuImage">
+        <g:message code="productType.mobileBanner.label" default="Mobile Banner" />
+
+    </label>
+    <input type="file" id="mobileBanner" name="menuImage" />
+    <input type="hidden" id="mobileBanner${productTypeInstance?.id}deleted" name="mobileBannerDeleted" value="" />
+    <img id="mobileBnnr" width="100px"/>
+    <input type="button" value="<g:message code="delete" />" onclick="deleteMobileBanner()">
+    <script type="text/javascript">
+        function deleteMenuImage(){
+            if(confirm('<g:message code="default.button.delete.confirm.message" />')){
+                $("#mobileBanner").attr('src','')
+                $("mobileBanner${productTypeInstance?.id}deleted").val("true")
+            }
+        }
+    </script>
+</div>
 
 %{--<g:hiddenField name="parentProduct.id" value="${parentProduct?.id}" />--}%
 

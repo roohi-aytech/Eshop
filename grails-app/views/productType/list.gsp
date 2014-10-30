@@ -245,6 +245,7 @@
                     $("#edit-form-productType [name=seoFriendlyName]").val(row.seoFriendlyName)
                     $("#edit-form-productType #img").attr("src",'<g:createLink controller="image"/>?id='+id+'&type=productType&wh=100x100')
                     $("#edit-form-productType #menuImg").attr("src",'<g:createLink controller="image"/>?id='+id+'&type=productTypeMenu')
+                    $("#edit-form-productType #mobileBnnr").attr("src",'<g:createLink controller="image"/>?id='+id+'&type=productTypeMobileBanner')
                     $("#edit-form-productType").attr("url", url)
                     $("#edit-form-productType").dialog("open")
                     $(".count-words").keypress()

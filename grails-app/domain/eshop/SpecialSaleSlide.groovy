@@ -10,6 +10,7 @@ class SpecialSaleSlide {
     int remainingCount
     int price
     byte[] image
+    byte[] mobileImage
     byte[] extraImage1
     byte[] extraImage2
     byte[] extraImage3
@@ -27,6 +28,7 @@ class SpecialSaleSlide {
         totalCount(nullable:false)
         remainingCount(nullable:false)
         image(maxSize: 20000000)
+        mobileImage(nullable: true, maxSize: 20000000)
         extraImage1(maxSize: 20000000)
         extraImage2(maxSize: 20000000)
         extraImage3(maxSize: 20000000)

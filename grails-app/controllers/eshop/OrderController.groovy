@@ -37,7 +37,12 @@ class OrderController {
     def list() {
 
         def status = params.status
-        def orderList = Order.findAllByStatusAndCustomer(status, springSecurityService.currentUser)
+        def orderList
+        if (status)
+            orderList = Order.findAllByStatusAndCustomer(status, springSecurityService.currentUser as Customer)
+        else
+            orderList = Order.findAllByCustomer(springSecurityService.currentUser as Customer)
+
         def actions = []
         def suggestedActions = []
 
@@ -114,7 +119,7 @@ class OrderController {
         address.telephone = session['deliveryPhone']
         address.city = City.get(session['deliveryCity'])
         address.title = session['deliveryName']
-        if(!address.save())
+        if (!address.save())
             println(address.errors.allErrors)
 
 

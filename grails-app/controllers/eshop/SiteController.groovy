@@ -179,7 +179,7 @@ class SiteController {
         if (productType.parentProduct)
             view = 'browse'
 
-        render(model: model, view: "/site/${grailsApplication.config.eShop.instance}/${view}");
+        render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/${view}");
     }
 
     def filter() {
@@ -330,7 +330,7 @@ class SiteController {
             order("visitCount", "desc")
         }
 
-        render(model: model, view: "${grailsApplication.config.eShop.instance}/filter")
+        render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/filter")
     }
 
     def ajaxFilter() {
@@ -490,7 +490,7 @@ class SiteController {
         result.breadCrumb = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/breadCrumb", model: model).toString()
         result.pagination = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxFilter/pagination", model: model).toString()
 
-        render (result as JSON)
+        render(result as JSON)
     }
 
     def sidebar() {
@@ -586,7 +586,7 @@ class SiteController {
             order("visitCount", "desc")
         }
 
-        render(model: model, view: "${grailsApplication.config.eShop.instance}/index")
+        render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/index")
     }
 
     def category() {
@@ -620,7 +620,7 @@ class SiteController {
 
         def productModel = params.model ? ProductModel.get(params.model) : ProductModel.findByProductAndIsDefaultModel(product, true)
 
-        render template: '/site/felfel/templates/productQuickView', model: [product: product, productModel: productModel, rate: rate, quickView: true]
+        render template: "/${session.mobile ? 'mobile' : 'site'}/felfel/templates/productQuickView", model: [product: product, productModel: productModel, rate: rate, quickView: true]
     }
 
     def productModelImages() {
@@ -650,7 +650,11 @@ class SiteController {
             if (selected)
                 productModel = model
         }
-        render template: "/site/${grailsApplication.config.eShop.instance}/templates/product/zoom", model: [product: product, productModel: productModel]
+
+        if (session.mobile)
+            render template: "/mobile/common/product/images", model: [product: product, productModel: productModel, lazyLoad:true]
+        else
+            render template: "/site/${grailsApplication.config.eShop.instance}/templates/product/zoom", model: [product: product, productModel: productModel]
     }
 
     def product() {
@@ -676,7 +680,7 @@ class SiteController {
         model.rate = customerReviews.count { it } == 0 ? 0 : Math.round(customerReviews.sum(0, {
             it.rate
         }) / customerReviews.count { it })
-        model.rateCount=customerReviews.count { it }
+        model.rateCount = customerReviews.count { it }
         model.commonLink = createLink(uri: '/browse')
 
         def productTypeChain = []
@@ -788,7 +792,7 @@ class SiteController {
         model.description = message(code: 'site.product.page.description', args: [title])
         model.showHistogram = true
 
-        render(model: model, view: "${grailsApplication.config.eShop.instance}/product")
+        render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/product")
     }
 
     def productCard() {
@@ -830,7 +834,10 @@ class SiteController {
             it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
         }
 
-        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, showHistogram: true])
+        if (session.mobile)
+            render(template: "/mobile/common/product/actions", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, showHistogram: true])
+        else
+            render(template: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/templates/product/card", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues, showHistogram: true])
     }
 
     def productShoppingPanel() {
@@ -874,7 +881,7 @@ class SiteController {
             it.processTime == 'mandetory' || params.selectedAddedValues?.toString()?.split(',')?.contains(it.id.toString())
         }
 
-        render(template: "/site/${grailsApplication.config.eShop.instance}/templates/product/shoppingPanel", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
+        render(template: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/templates/product/shoppingPanel", model: [product: product, productModel: productModel, addedValues: addedValues, selectedAddedValues: selectedAddedValues])
     }
 
     def productAdditives() {
@@ -983,7 +990,10 @@ class SiteController {
                 productModel = model
         }
 
-        render(template: 'product/price', model: [product: product, productModel: productModel])
+        if (session.mobile)
+            render(template: '/mobile/common/product/card', model: [product: product, productModel: productModel])
+        else
+            render(template: 'product/price', model: [product: product, productModel: productModel])
     }
 
     def productImage() {
@@ -1169,7 +1179,7 @@ class SiteController {
         model.productTypeId = productType?.id
         model.productTypeName = productType?.name
 
-        render(view: "${grailsApplication.config.eShop.instance}/search", model: model)
+        render(view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/search", model: model)
     }
 
     def ajaxSearch() {
@@ -1293,7 +1303,7 @@ class SiteController {
         result.breadCrumb = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/breadCrumb", model: model).toString()
         result.pagination = g.render(template: "${grailsApplication.config.eShop.instance}/ajaxSearch/pagination", model: model).toString()
 
-        render (result as JSON)
+        render(result as JSON)
     }
 
     def searchAutoComplete() {
@@ -1409,7 +1419,7 @@ class SiteController {
             model.subProductTypeLinks << [name: it.name, href: base + it.urlName, id: it.id]
         }
 
-        render(model: model, view: "${grailsApplication.config.eShop.instance}/article")
+        render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/article")
     }
 
     def articleList() {
@@ -1430,11 +1440,11 @@ class SiteController {
                 'in'('baseProduct.id', ProductType.get(params.id).allChildren.collect { it.id } + [params.id.toLong()])
         }.toDouble() / 10
 
-        render(model: model, view: "${grailsApplication.config.eShop.instance}/articleList")
+        render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/articleList")
     }
 
     def contactUs() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/contact_us"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/contact_us"
     }
 
     def sendMail() {
@@ -1478,7 +1488,7 @@ class SiteController {
     }
 
     def contactUsNewProducts() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/contact_us_new_product"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/contact_us_new_product"
     }
 
     def sendMailNewProducts() {
@@ -1522,68 +1532,68 @@ class SiteController {
     }
 
     def termsAndConditions() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/rights_and_laws"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/rights_and_laws"
     }
 
     def aboutUs() {
 
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/about_us"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/about_us"
     }
 
     def moneyBackConditions() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/money_back_conditions"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/money_back_conditions"
     }
 
     def guarantee() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/guarantee"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/guarantee"
     }
 
     def addedValue() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/added_value"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/added_value"
     }
 
     def deliveryPrice() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/delivery_price"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/delivery_price"
     }
 
     def trust() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/trust"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/trust"
     }
 
     def shoppingRules() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/shoppingRules"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/shoppingRules"
     }
 
     def customerRights() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/customerRights"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/customerRights"
     }
 
     def shoppingSteps() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/shoppingSteps"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/shoppingSteps"
     }
 
     def paymentAndDelivery() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/paymentAndDelivery"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/paymentAndDelivery"
     }
 
     def deliveryTips() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/deliveryTips"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/deliveryTips"
     }
 
     def paymentMethods() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/paymentMethods"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/paymentMethods"
     }
 
     def suppliers() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/suppliers"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/suppliers"
     }
 
     def goldenGuarantee() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/goldenGuarantee"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/goldenGuarantee"
     }
 
     def personalEvent_help() {
-        render view: "/site/${grailsApplication.config.eShop.instance}/statics/personalEventHelp"
+        render view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/statics/personalEventHelp"
     }
 
     def synchMongoItem() {

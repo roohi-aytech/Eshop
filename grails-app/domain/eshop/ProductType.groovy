@@ -15,6 +15,7 @@ class ProductType extends BaseProduct {
     Boolean deleted = false
     byte[] image
     byte[] menuImage
+    byte[] mobileBanner
     String searchKeys
 
     transient Integer getChildrenCount() {
@@ -71,6 +72,7 @@ class ProductType extends BaseProduct {
         seoFriendlyName(nullable: true)
         image(nullable: true, maxSize: 1000000000)
         menuImage(nullable: true, maxSize: 1000000000)
+        mobileBanner(nullable: true, maxSize: 1000000000)
         deleted(nullable: true)
         searchKeys(nullable: true)
     }

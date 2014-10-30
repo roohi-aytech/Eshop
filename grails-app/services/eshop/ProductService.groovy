@@ -67,7 +67,7 @@ class ProductService {
     }
 
     def findRootProductTypes() {
-        def result = ProductType.findAllByParentProductIsNullAndDeleted(false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
+        def result = ProductType.findAllByParentProductIsNullAndDeleted(false).collect { [id: it.id, name: it.name, urlName: it.urlName, description: it.description] }
         result.each { rootItem ->
             findChildProductTypes(rootItem)
         }

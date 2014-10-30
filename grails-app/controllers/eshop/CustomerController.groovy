@@ -60,7 +60,7 @@ class CustomerController {
         if (params.forwardUri)
             session.forwardUri = params.forwardUri
 
-        ['customerInstance': new Customer()]
+        render view: session.mobile ? 'mobileRegister' : 'register', model: ['customerInstance': new Customer()]
     }
 
     def checkUserNameIsRepetitive() {
@@ -120,7 +120,7 @@ class CustomerController {
 
             redirect(action: 'checkForActivationMail')
         } else {
-            render(view: 'register', model: ['customerInstance': customerInstance])
+            render(view: session.mobile ? 'mobileRegister' : 'register', model: ['customerInstance': customerInstance])
         }
     }
 
@@ -280,7 +280,7 @@ class CustomerController {
     }
 
     def forgetPassword() {
-
+        render(view: session.mobile ? 'mobileForgetPassword' : 'forgetPassword')
     }
 
     def sendPasswordResetMail() {
@@ -307,7 +307,7 @@ class CustomerController {
             flash.message = g.message(code: 'forgetPassword.wrongUsername')
         }
 
-        render view: 'forgetPassword', model: [user: user]
+        render view: session.mobile ? 'mobileForgetPassword' : 'forgetPassword', model: [user: user]
     }
 
     def resetPassword() {

@@ -97,6 +97,18 @@ class EshopTagLib {
         out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
+    def filterStartMobile = { attrs, body ->
+        def f = "p${attrs.productType.id},${attrs.attribute}|${attrs.value}"
+        def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: attrs.attribute])
+        def id = UUID.randomUUID().toString()
+        out << """
+            <input type="checkbox" id="chk-${id}" class="customCheckbox filterCheckbox" value="${
+            attrs.value
+        }" data-url="${link}">
+            <label for="chk-${id}"><span></span>${attrs.value} <span class='count'>(${attrs.count})</span></label>
+"""
+    }
+
     def filterStartBrand = { attrs, body ->
         def f = attrs.productType?.id ? "p${attrs.productType.id},b${attrs.brandId}" : "b${attrs.brandId}"
         def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'b'])
@@ -107,9 +119,37 @@ class EshopTagLib {
             out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
+    def filterStartBrandMobile = { attrs, body ->
+        def f = attrs.productType?.id ? "p${attrs.productType.id},b${attrs.brandId}" : "b${attrs.brandId}"
+        def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'b'])
+        out << """
+            <input type="checkbox" id="chk-brandsname-${attrs.brandId}" class="customCheckbox filterCheckbox" value="${
+            attrs.brandName
+        }"
+                data-url="${link}">
+            <label for="chk-brandsname-${attrs.brandId}"><span></span>${attrs.brandName} <span class='count'>(${
+            attrs.count
+        })</span></label>
+
+"""
+    }
+
     def filterStartVariation = { attrs, body ->
         def f = "p${attrs.productType.id},v${attrs.variation}|${attrs.value}"
         def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'v' + attrs.variation])
+        out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+    }
+
+    def filterStartVariationMobile = { attrs, body ->
+        def f = "p${attrs.productType.id},v${attrs.variation}|${attrs.value}"
+        def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'v' + attrs.variation])
+
+        def id = UUID.randomUUID().toString()
+        out << """
+            <input type="checkbox" id="chk-${id}" class="customCheckbox" value="${attrs.value}" data-url="${link}"/>
+            <label for="chk-${id}"><span></span>${attrs.value} <span class='count'>(${attrs.count})</span></label>
+"""
+
         out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
@@ -135,6 +175,25 @@ class EshopTagLib {
             out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span></a>"
     }
 
+    def filterAddBrandMobile = { attrs, body ->
+        def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
+        def f
+        if (remove) {
+            def fItems = attrs.f.split(',')
+            fItems = fItems.findAll { it != "b${attrs.id}" }
+            f = fItems.join(',')
+        } else
+            f = "${attrs.f},b${attrs.id}"
+        def link = (f == '' ? g.createLink(uri: '/') : g.createLink(action: params.action, params: params + [f: f, o: 'b']))
+
+        out << """
+            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${attrs.name}"
+                data-url="${link}" ${remove ? 'checked="checked"' : ''}>
+            <label for="chk-brandsname-${attrs.id}"><span></span>${attrs.name} <span class='count'>(${attrs.count})</span></label>
+
+"""
+    }
+
     def filterAddVariation = { attrs, body ->
         def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
         def f
@@ -147,6 +206,24 @@ class EshopTagLib {
         out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
+    def filterAddVariationMobile = { attrs, body ->
+        def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
+        def f
+        if (remove) {
+            f = attrs.f.replace(",v${attrs.id}|${attrs.value}", "")
+            f = f.replaceFirst(/,/ + attrs.id + /\|/ + attrs.value + /$/, "")
+        } else
+            f = "${attrs.f},${attrs.id}|${attrs.value}"
+        def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
+
+        out << """
+            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${attrs.value}"
+                data-url="${link}" ${remove ? 'checked="checked"' : ''}>
+            <label for="chk-brandsname-${attrs.id}"><span></span>${attrs.name} <span class='count'>(${attrs.count})</span></label>
+"""
+
+    }
+
     def filterAddAttribute = { attrs, body ->
         def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
         def f
@@ -157,6 +234,23 @@ class EshopTagLib {
             f = "${attrs.f},${attrs.id}|${attrs.value}"
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
         out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.value} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+    }
+
+    def filterAddAttributeMobile = { attrs, body ->
+        def remove = TaglibHelper.getBooleanAttribute(attrs, "remove", false)
+        def f
+        if (remove) {
+            f = attrs.f.replace(",${attrs.id}|${attrs.value},", ",")
+            f = f.replaceFirst(/,/ + attrs.id + /\|/ + attrs.value + /$/, "")
+        } else
+            f = "${attrs.f},${attrs.id}|${attrs.value}"
+        def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
+
+        out << """
+            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${attrs.value}"
+                data-url="${link}" ${remove ? 'checked="checked"' : ''}>
+            <label for="chk-brandsname-${attrs.id}"><span></span>${attrs.value} <span class='count'>(${attrs.count})</span></label>
+"""
     }
 
     def filter = { attrs, body ->
@@ -206,11 +300,23 @@ class EshopTagLib {
                 if (price) {
                     if (attrs.image)
                         out << """
-                            <a href="javascript://" type="basket" original-title="${message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}" class="has-tipsy" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString().encodeAsHTML()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
+                            <a href="javascript://" type="basket" original-title="${
+                            message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
+                        }" class="has-tipsy ${attrs.class}" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${
+                            defaultModel.id
+                        }, '${defaultModel.toBasketItemString().encodeAsHTML()}', '${price}', [], 1, '', ${
+                            attrs.prodcutId
+                        }, '${attrs.animate}');"><img src='${resource(dir: 'images/menu', file: 'basket_new.png')}' /></a>
                             """
                     else
                         out << """
-                            <a href="javascript://" class="btn-buy addToBasket" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${defaultModel.id}, '${defaultModel.toBasketItemString().encodeAsHTML()}', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")}</span></a>
+                            <a href="javascript://" class="btn-buy addToBasket ${attrs.class}" ${
+                            attrs.angular == "false" ? "on" : "ng-"
+                        }click="addToBasket(${defaultModel.id}, '${
+                            defaultModel.toBasketItemString().encodeAsHTML()
+                        }', '${price}', [], 1, '', ${attrs.prodcutId}, '${attrs.animate}');"><span>${
+                            g.message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
+                        }</span></a>
                             """
                 } else if (!attrs.buttonOnly) {
                     out << (attrs.image ? '' : g.message(code: 'product.price.inquiryRequired'))
@@ -310,7 +416,10 @@ class EshopTagLib {
     def selectedProductsList = { attrs, body ->
         def productType = ProductType.get(attrs.productTypeId.toLong())
         ProductType.findAllByParentProductAndDeleted(productType, false).each {
-            out << selectedProducts(productTypeId: it.id)
+            if (session.mobile)
+                out << selectedProductsForMobile(productTypeId: it.id)
+            else
+                out << selectedProducts(productTypeId: it.id)
         }
     }
 
@@ -336,6 +445,53 @@ class EshopTagLib {
                 }
             }
             out << "</div>"
+        }
+    }
+
+    def selectedProductsForMobile = { attrs, body ->
+        def productType = ProductType.get(attrs.productTypeId.toLong())
+        def products = browseService.findProductTypeSampleProducts(productType, 3)
+        if (products && products?.productIds && products?.productIds?.size() > 0) {
+            out << """
+                <div class="selected_items_wrapper clearfix">
+                    <div class="p_heading m_bottom15">
+                        <h2><span class="red">${message(code: 'select')}</span> ${productType}</h2>
+                        <a class="p_seemore" href="${createLink(uri: "/browse/${productType.seoFriendlyName}")}">
+                            ${message(code: 'category.view.all', args: [productType.name])}
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="items_list_wrapper">
+                    <ul>
+"""
+            def counter = 0
+            products.productIds.each {
+                def productModel = ProductModel.get(it.modelId)
+                if (productModel) {
+                    counter++
+                    out << """
+                        <li>
+                            <a href="${
+                        createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")
+                    }">
+                                <img alt="" src="${resource(dir: '/images/felfel', file: 'grey.gif')}" data-src="${
+                        createLink(controller: 'image', params: [id: productModel?.id, wh: '300x300', type: 'productModel'])
+                    }" class="lazy" style="display: inline-block;" id="lazy-${productModel?.id}"/>
+                                <h2 class="p_product_name">${productModel}</h2>
+                                <span class="p_product_cost">"""
+                    out << thumbnailPrice(productModelId: productModel.id)
+                    out <<
+                            """</span>
+                            </a>
+                        </li>
+"""
+                }
+            }
+            out << """
+                    </ul>
+                </div>
+            </div>
+            """
         }
     }
 

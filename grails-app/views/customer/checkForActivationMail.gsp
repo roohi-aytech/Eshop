@@ -9,14 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name='layout' content='site'/>
-  <title><g:message code="springSecurity.checkForActivationMail.title"></g:message></title>
+    <meta name='layout' content='${session.mobile?'mobile':'site'}'/>
+  <title><g:message code="springSecurity.checkForActivationMail.title"/></title>
 </head>
 <body>
     <div class="control-panel">
     <div class="info">
         <div>
-            <g:message code="springSecurity.checkForActivationMail.description"></g:message>
+            <g:message code="springSecurity.checkForActivationMail.description"/>
         </div>
     </div>
     </div>

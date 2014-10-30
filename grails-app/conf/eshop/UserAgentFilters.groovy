@@ -7,6 +7,9 @@ class UserAgentFilters {
     def filters = {
         all(controller: '*', action: '*') {
             before = {
+
+                session["mobile"] = userAgentIdentService.isMobile()
+
                 def userAgent = userAgentIdentService.userAgentString.toLowerCase()
                 if (userAgentIdentService.browser.toLowerCase().contains('robot') &&
                         !userAgent.contains('googlebot') &&
