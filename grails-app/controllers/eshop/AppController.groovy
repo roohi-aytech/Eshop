@@ -7,6 +7,8 @@ import search.FarsiNormalizationFilter
 class AppController {
     def priceService
     def browseService
+    def springSecurityService
+    def mailService
 
     def mostVisited() {
         def match = [:]
@@ -137,6 +139,80 @@ class AppController {
                     ]
                 }
         ]
+    }
+
+    def login() {
+        def user = User.findByUsername(params.username)
+        if (user) {
+            if (user.password == springSecurityService.encodePassword(params.password)) {
+                def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code, user: user)
+                if (device.user?.username == params.username) {
+                    return render([res: true] as JSON)
+                }
+                device.user = user
+                device.save()
+                return render([res: true] as JSON)
+            }
+        }
+        return render([res: false] as JSON)
+    }
+
+    def logout() {
+        def device = MobileDevice.findByDeviceCode(params.code)
+        device?.delete()
+        render([res: true] as JSON)
+
+    }
+
+    def activate() {
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device?.user?.id?.encodeAsSHA256()?.substring(0, 6).equalsIgnoreCase(params.acode)) {
+            device?.user?.enabled = true
+            device?.user?.save()
+            return render([res: true] as JSON)
+        }
+        render([res: false] as JSON)
+    }
+
+    def register() {
+        def customerInstance = new Customer()
+
+        customerInstance.firstName = params.firstName
+        customerInstance.lastName = params.lastName
+        customerInstance.sex = params.sex
+        customerInstance.username = params.username
+        customerInstance.password = params.password
+        customerInstance.email = params.username
+        customerInstance.mobile = params.mobile
+        customerInstance.registrationLevel = 'basic'
+        customerInstance.enabled = false
+
+        if (customerInstance.validate() && customerInstance.save()) {
+            def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
+            UserRole.create customerInstance, customerRole
+            def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code)
+            device.user = customerInstance
+            device.save()
+
+
+            if (customerInstance.mobile) {
+                def code = customerInstance.id.encodeAsSHA256().substring(0, 6).toUpperCase()
+
+                messageService.sendMessage(
+                        customerInstance.mobile,
+                        g.render(template: '/messageTemplates/sms/mobile_verification', model: [customer: customerInstance, code: code]).toString())
+            }
+            mailService.sendMail {
+                to customerInstance.email
+                subject message(code: 'emailTemplates.email_verification.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance]).toString()])
+            }
+
+            render([res: true] as JSON)
+        } else {
+            render([res: false] as JSON)
+        }
     }
 
 }
