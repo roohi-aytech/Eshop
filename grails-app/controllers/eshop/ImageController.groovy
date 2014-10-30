@@ -38,7 +38,7 @@ class ImageController {
             response.outputStream.flush()
             return
         }
-        if(params.id?.toString().startsWith('KR')) {
+        if(params.id?.toString()?.startsWith('KR')) {
             params.id?.split('_')?.each {
                 def ps = it.split('-')
                 if (ps.size() > 1)
