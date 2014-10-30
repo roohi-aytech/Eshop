@@ -144,7 +144,7 @@ class AppController {
     def login() {
         def params = request.JSON
 
-        def user = User.findByUsername(p.username)
+        def user = User.findByUsername(params.username)
         if (user) {
             if (user.password == springSecurityService.encodePassword(params.password)) {
                 def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code, user: user)
