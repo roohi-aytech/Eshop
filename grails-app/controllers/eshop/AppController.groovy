@@ -142,7 +142,9 @@ class AppController {
     }
 
     def login() {
-        def user = User.findByUsername(params.username)
+        def params = request.JSON
+
+        def user = User.findByUsername(p.username)
         if (user) {
             if (user.password == springSecurityService.encodePassword(params.password)) {
                 def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code, user: user)
@@ -158,13 +160,14 @@ class AppController {
     }
 
     def logout() {
+        def params = request.JSON
         def device = MobileDevice.findByDeviceCode(params.code)
         device?.delete()
         render([res: true] as JSON)
-
     }
 
     def activate() {
+        def params = request.JSON
         def device = MobileDevice.findByDeviceCode(params.code)
         if (device?.user?.id?.encodeAsSHA256()?.substring(0, 6).equalsIgnoreCase(params.acode)) {
             device?.user?.enabled = true
@@ -175,6 +178,7 @@ class AppController {
     }
 
     def register() {
+        def params = request.JSON
         def customerInstance = new Customer()
 
         customerInstance.firstName = params.firstName
