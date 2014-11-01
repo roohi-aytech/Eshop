@@ -220,4 +220,25 @@ class AppController {
         }
     }
 
+    def resendActivation() {
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            if (device.user.mobile) {
+                def code = device.user.id.encodeAsSHA256().substring(0, 6).toUpperCase()
+
+                messageService.sendMessage(
+                        device.user.mobile,
+                        g.render(template: '/messageTemplates/sms/mobile_verification', model: [customer: device.user, code: code]).toString())
+            }
+            mailService.sendMail {
+                to device.user.email
+                subject message(code: 'emailTemplates.email_verification.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: device.user]).toString()])
+            }
+            return render([res: true] as JSON)
+        }
+        return render([res: false] as JSON)
+    }
+
 }
