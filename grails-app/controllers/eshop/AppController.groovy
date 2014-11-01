@@ -248,17 +248,25 @@ class AppController {
         def device = MobileDevice.findByDeviceCode(params.code)
         if (device) {
             def customer = device.user
+            def bd
+            if (customer.birthDate) {
+                def c = Calendar.instance
+                c.time = customer.birthDate
+                def jc = new JalaliCalendar(c)
+                bd = "${jc.year}/${jc.month}/${jc.day}"
+            }
             return render([
-                    firstName   : customer.name ?: '',
-                    lastName    : customer.family ?: '',
+                    firstName   : customer.firstName ?: '',
+                    lastName    : customer.lastName ?: '',
                     sex         : customer.sex ?: '',
                     mobile      : customer.mobile ?: '',
-                    birthDate   : customer.birthDate ?: '',
+                    birthDate   : bd ?: '',
                     addressLine1: customer.address?.addressLine1 ?: '',
-                    melliCode   : customer.melliCode ?: '',
+                    melliCode   : customer.nationalCode ?: '',
+                    res         : true
             ] as JSON)
         }
-        render([res: false] as JSON)
+        return render([res: false] as JSON)
     }
 
     def savePersonalInfo() {
@@ -268,7 +276,7 @@ class AppController {
             def customer = device.user
             customer.properties = params
             try {
-                def jc = new JalaliCalendar(params.birthDate.split['/'][0] as int, params.birthDate.split['/'][1] as int, params.birthDate.split['/'][2] as int)
+                def jc = new JalaliCalendar(params.birthDate.split('/')[0] as int, params.birthDate.split('/')[1] as int, params.birthDate.split('/')[2] as int)
                 customer.birthDate = jc.toJavaUtilGregorianCalendar().time
             } catch (x) {
                 return render([res: false] as JSON)
@@ -292,6 +300,96 @@ class AppController {
             return render([res: true] as JSON)
         }
         return render([res: false] as JSON)
+    }
+
+    def personalEvents() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+            def events = customer.personalEvents.collect {
+                def month
+                def date
+                if (customer.birthDate) {
+                    def c = Calendar.instance
+                    c.time = it.date
+                    def jc = new JalaliCalendar(c)
+                    month = jc.month
+                    date = jc.day
+                }
+                [
+                        id            : it.id,
+                        title         : it.title,
+                        fullName      : it.fullName,
+                        month         : month,
+                        date          : date,
+                        sex           : it.sex,
+                        relationshipId: it.relationship?.id,
+                        relationship  : it.relationship?.title,
+                        email         : it.emailNotification,
+                        sms           : it.smsNotification
+
+
+                ]
+            }
+            return render(events as JSON)
+        }
+        return render([res: false] as JSON)
+    }
+
+    def savePersonalEvent() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+            def personalEvent = PersonalEvent.get(params.id) ?: new PersonalEvent()
+            personalEvent.customer = customer
+            personalEvent.emailNotification = params.email
+            personalEvent.smsNotification = params.sms
+            def jc = new JalaliCalendar()
+            jc.set(jc.year, (params.month as int) , params.date as int)
+            def cal = jc.toJavaUtilGregorianCalendar()
+            if (cal.time.before(new Date()))
+                cal.add(Calendar.YEAR, 1)
+            personalEvent.date = cal.time
+            personalEvent.fullName = params.fullName
+            personalEvent.relationship = Relationship.get(params.relationshipId)
+            personalEvent.sex = params.sex
+            personalEvent.title = params.title
+            if (personalEvent.save())
+                return render([res: true] as JSON)
+        }
+        return render([res: false] as JSON)
+    }
+
+    def deletePersonalEvent() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+            def pe = PersonalEvent.findByCustomerAndId(customer, params.id)
+            if (pe) {
+                pe.delete()
+                return render([res: true] as JSON)
+            }
+        }
+        return render([res: false] as JSON)
+    }
+
+    def relationships() {
+        render(Relationship.findAllByDeleted(false).sort { it.id }.collect { [id: it.id, title: it.title] } as JSON)
+    }
+
+    def events() {
+        if (grailsApplication.config.profilePersonalEventDefaultProductType)
+            render(ProductType.findByName(grailsApplication.config.profilePersonalEventDefaultProductType)
+                    .children
+                    .findAll { !it.deleted }
+                    .sort { it.id }
+                    .collect { [id: it.id, title: it.name] } as JSON)
+        else
+            render(CultureEvent.list().sort { it.id }.collect { [id: it.id, title: it.title] } as JSON)
+
     }
 
 }
