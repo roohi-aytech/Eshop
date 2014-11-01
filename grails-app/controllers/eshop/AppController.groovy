@@ -9,6 +9,7 @@ class AppController {
     def browseService
     def springSecurityService
     def mailService
+    def messageService
 
     def mostVisited() {
         def match = [:]
