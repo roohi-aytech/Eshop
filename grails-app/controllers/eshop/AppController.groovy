@@ -1,5 +1,6 @@
 package eshop
 
+import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.converters.JSON
 import org.apache.lucene.search.BooleanQuery
 import search.FarsiNormalizationFilter
@@ -236,6 +237,57 @@ class AppController {
                 subject message(code: 'emailTemplates.email_verification.subject')
                 html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: device.user]).toString()])
+            }
+            return render([res: true] as JSON)
+        }
+        return render([res: false] as JSON)
+    }
+
+    def personalInfo() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+            return render([
+                    firstName   : customer.name ?: '',
+                    lastName    : customer.family ?: '',
+                    sex         : customer.sex ?: '',
+                    mobile      : customer.mobile ?: '',
+                    birthDate   : customer.birthDate ?: '',
+                    addressLine1: customer.address?.addressLine1 ?: '',
+                    melliCode   : customer.melliCode ?: '',
+            ] as JSON)
+        }
+        render([res: false] as JSON)
+    }
+
+    def savePersonalInfo() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+            customer.properties = params
+            try {
+                def jc = new JalaliCalendar(params.birthDate.split['/'][0] as int, params.birthDate.split['/'][1] as int, params.birthDate.split['/'][2] as int)
+                customer.birthDate = jc.toJavaUtilGregorianCalendar().time
+            } catch (x) {
+                return render([res: false] as JSON)
+            }
+            customer.profilePersonalInfoFilled = true
+            customer.registrationLevel = 'profile'
+            customer.save()
+
+            Address address = customer.address
+            if (!address)
+                address = new Address()
+            address.addressLine1 = params.addressLine1
+            address.postalCode = params.postalCode
+            address.telephone = params.telephone
+            address.city = City.get(params.city)
+
+            if (address.validate() && address.save()) {
+                customer.address = address
+                customer.save()
             }
             return render([res: true] as JSON)
         }
