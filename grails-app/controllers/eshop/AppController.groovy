@@ -221,6 +221,7 @@ class AppController {
     }
 
     def resendActivation() {
+        def params = request.JSON
         def device = MobileDevice.findByDeviceCode(params.code)
         if (device) {
             if (device.user.mobile) {
