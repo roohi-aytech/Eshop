@@ -135,9 +135,10 @@ class AppController {
                 price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
                 models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
                     [
-                            id   : it.id,
-                            title: it.name,
-                            price: formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
+                            id     : it.id,
+                            title  : it.name,
+                            isDefault: it.isDefaultModel,
+                            price  : formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
                     ]
                 }
         ]
