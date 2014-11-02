@@ -347,7 +347,7 @@ class AppController {
             personalEvent.emailNotification = params.email
             personalEvent.smsNotification = params.sms
             def jc = new JalaliCalendar()
-            jc.set(jc.year, (params.month as int) , params.date as int)
+            jc.set(jc.year, (params.month as int), params.date as int)
             def cal = jc.toJavaUtilGregorianCalendar()
             if (cal.time.before(new Date()))
                 cal.add(Calendar.YEAR, 1)
@@ -390,6 +390,37 @@ class AppController {
         else
             render(CultureEvent.list().sort { it.id }.collect { [id: it.id, title: it.title] } as JSON)
 
+    }
+
+    def feedback() {
+        def params = request.JSON
+        def user = MobileDevice.findByDeviceCode(params.code)?.user
+        mailService.sendMail {
+            to params.department
+            subject "${message(code: 'contactUs.email.subject')}"
+            html(view: "/messageTemplates/mail/contactus",
+                    model: [
+                            firstName: user?.firstName ?: params.firstName,
+                            lastName : user?.lastName ?: params.lastName,
+                            email    : user?.email ?: params.email,
+                            phone    : user?.mobile ?: params.phone,
+                            body     : params.body
+                    ])
+            mailService.sendMail {
+                to user?.email ?: params.email
+                subject message(code: 'emailTemplates.contact_us.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/contact_us', model: [parameters: params]).toString()])
+            }
+
+            if (user?.mobile ?: params.phone)
+                messageService.sendMessage(
+                        user?.mobile ?: params.phone,
+                        g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
+
+
+        }
+        render([res: true] as JSON)
     }
 
 }
