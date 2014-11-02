@@ -11,6 +11,7 @@ class AppController {
     def springSecurityService
     def mailService
     def messageService
+    def deliveryService
 
     def mostVisited() {
         def match = [:]
@@ -135,10 +136,10 @@ class AppController {
                 price : formatNumber(number: priceService.calcProductPrice(product.id).showVal, type: 'number'),
                 models: product?.models?.findAll { it.status == 'exists' }?.sort { it.name }?.collect {
                     [
-                            id     : it.id,
-                            title  : it.name,
+                            id       : it.id,
+                            title    : it.name,
                             isDefault: it.isDefaultModel,
-                            price  : formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
+                            price    : formatNumber(number: priceService.calcProductModelPrice(it.id).showVal, type: 'number')
                     ]
                 }
         ]
@@ -422,6 +423,40 @@ class AppController {
 
         }
         render([res: true] as JSON)
+    }
+
+    def basketPreInfo() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+
+            def model = ProductModel.get(params.modelId)
+            if (model) {
+                def prevAddresses = Order.findAllByCustomer(customer)?.collect { it.sendingAddress }?.findAll {
+                    it.title?.trim()
+                }?.groupBy {
+                    it.title
+                }?.collect {
+                    def address = it.value.find()
+                    return [name: address.title, phone: address.telephone, address: address.addressLine1]
+                }
+                def price = priceService.calcProductModelPrice(model.id).showVal
+                def items = [[
+                                     count : 1,
+                                     weight: model?.weight ?: model?.product?.weight ?: 1,
+                                     width : model?.width ?: model?.product?.width ?: 1,
+                                     height: model?.height ?: model?.product?.height ?: 1,
+                                     length: model?.product?.length ?: 1,
+                                     price : price
+                             ]]
+                def deliveries = deliveryService.findAllDeliveryMethodsWithBasket(items).collect {
+                    [id: it.id, name: it.name, description: it.description, price: it.price]
+                }
+                return render([addresses: prevAddresses, deliveryMethods: deliveries, res: true] as JSON)
+            }
+        }
+        return render([res: false] as JSON)
     }
 
 }
