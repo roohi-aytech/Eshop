@@ -12,6 +12,7 @@ class AppController {
     def mailService
     def messageService
     def deliveryService
+    def accountingService
 
     def mostVisited() {
         def match = [:]
@@ -451,9 +452,10 @@ class AppController {
                                      price : price
                              ]]
                 def deliveries = deliveryService.findAllDeliveryMethodsWithBasket(items).collect {
-                    [id: it.id, name: it.name, description: it.description, price: it.price]
+                    [id: it.id, name: it.name, description: it.description, price: formatNumber(number: it.price, type: 'number')]
                 }
-                return render([addresses: prevAddresses, deliveryMethods: deliveries, res: true] as JSON)
+                def accountValue = customer ? accountingService.calculateCustomerAccountValue(customer) : 0
+                return render([addresses: prevAddresses, deliveryMethods: deliveries, bon: formatNumber(number: accountValue, type: 'number'), res: true] as JSON)
             }
         }
         return render([res: false] as JSON)
