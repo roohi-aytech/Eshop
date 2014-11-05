@@ -1,5 +1,8 @@
 package eshop
 
+import eshop.accounting.Account
+import eshop.accounting.OnlinePayment
+import eshop.delivery.DeliveryMethod
 import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.converters.JSON
 import org.apache.lucene.search.BooleanQuery
@@ -457,6 +460,132 @@ class AppController {
                 def accountValue = customer ? accountingService.calculateCustomerAccountValue(customer) : 0
                 return render([addresses: prevAddresses, deliveryMethods: deliveries, bon: formatNumber(number: accountValue, type: 'number'), res: true] as JSON)
             }
+        }
+        return render([res: false] as JSON)
+    }
+
+    def finalizeOrder() {
+        def params = request.JSON
+        def device = MobileDevice.findByDeviceCode(params.code)
+        if (device) {
+            def customer = device.user
+            Order order = new Order()
+            order.ownerName = "${customer.firstName} ${customer.lastName}"
+            order.ownerEmail = customer.email
+            order.ownerMobile = customer.mobile
+            order.ownerTelephone = customer.telephone
+            order.customer = customer
+            Address address = new Address()
+            address.addressLine1 = params.address.address
+            address.telephone = params.address.phone
+            address.title = params.address.name
+            if (!address.save())
+                println(address.errors.allErrors)
+
+
+            order.sendingAddress = address
+            order.billingAddress = address
+            order.paymentType = params.paymentType
+            order.sendFactorWith = Boolean.parseBoolean(params.sendFactor?.toString() ?: 'false')
+
+            def model = ProductModel.get(params.modelId)
+            def price = priceService.calcProductModelPrice(model.id).showVal
+            def items = [[
+                                 count : 1,
+                                 weight: model?.weight ?: model?.product?.weight ?: 1,
+                                 width : model?.width ?: model?.product?.width ?: 1,
+                                 height: model?.height ?: model?.product?.height ?: 1,
+                                 length: model?.product?.length ?: 1,
+                                 price : price
+                         ]]
+            def deliveryMethod = DeliveryMethod.get(params.deliveryMethodId)
+            order.deliveryPrice = deliveryService.calculateDeliveryMethodPriceWithBasket(items, deliveryMethod).price
+            order.callBeforeSend = params.callBefore
+            order.deliverySourceStation = eshop.delivery.DeliveryMethod.get(params.deliveryMethodId)?.sourceStations?.find()
+            order.deliveryTime = "${params.deliveryTime.hour}:${params.deliveryTime.minute} ${params.deliveryTime.month}/${params.deliveryTime.day}"
+            order.status = OrderHelper.STATUS_CREATED
+            order.save()
+
+            def cal = Calendar.getInstance()
+            cal.setTime(new Date())
+            def jc = new JalaliCalendar(cal)
+            order.trackingCode = String.format(
+                    "%02d%02d%02d%01d%03d",
+                    jc.getYear() % 100,
+                    jc.getMonth(),
+                    jc.getDay(),
+                    0, //customer type flag
+                    order.id % 1000
+            )
+
+            def orderItem = new OrderItem()
+            orderItem.productModel = model
+            orderItem.order = order
+            orderItem.description = ''
+            orderItem.orderCount = 1
+            orderItem.unitPrice = price
+            orderItem.save()
+            if (params.useGolbon && customer) {
+                def acctValue = accountingService.calculateCustomerAccountValue(customer)
+                order.usedAccountValue = acctValue
+            }
+            priceService.updateOrderPrice(order);
+
+            def trackingLog = new OrderTrackingLog()
+            trackingLog.action = OrderHelper.ACTION_CREATION
+            trackingLog.date = new Date()
+            trackingLog.order = order
+            trackingLog.user = springSecurityService.currentUser as User
+            trackingLog.title = "order.actions.${OrderHelper.ACTION_CREATION}"
+            if (!trackingLog.validate() || !trackingLog.save()) {
+                return render([res: true] as JSON)
+            }
+            event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.order_created.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+            }
+            def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
+            def mobile = order.ownerMobile
+            Thread.start {
+                messageService.sendMessage(
+                        mobile,
+                        messageText)
+            }
+            if (grailsApplication.config.orderCreateNotifiers) {
+                def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order]).toString()
+                def adminNotifiers = grailsApplication.config.orderCreateNotifiers
+                Thread.start {
+                    adminNotifiers.split(',').each {
+                        messageService.sendMessage(
+                                it,
+                                adminText)
+                    }
+                }
+            }
+            def res = [res: true, trackingCode: order.trackingCode]
+            if (order.paymentType == 'online') {
+                Account account=Account.findAllByBankNameAndHasOnlinePayment('saman',true).find();
+
+
+                def onlinePayment = new OnlinePayment()
+                onlinePayment.account = account
+                onlinePayment.amount = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
+                onlinePayment.customer = order.customer
+                onlinePayment.date = new Date()
+                onlinePayment.order = order
+                onlinePayment.usingCustomerAccountValueAllowed = params.useGolbon ?: order.customer ? true : false
+                onlinePayment.save()
+
+                res.amount = onlinePayment.amount
+                res.reservationNumber = onlinePayment.id
+                def onlinePaymentConfiguration = new XmlParser().parseText(onlinePayment.account.onlinePaymentConfiguration)
+                res.merchantId = onlinePaymentConfiguration.userName.text()
+
+            }
+            return render(res as JSON)
         }
         return render([res: false] as JSON)
     }
