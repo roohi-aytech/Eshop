@@ -1,4 +1,4 @@
-<script src="http://j1.pepperfry.com/js/m/checkout.js?v=0.759" type="text/javascript"></script>
+<script src="${resource(dir: 'js/mobile', file: 'checkout.js')}" type="text/javascript"></script>
 <link type="text/css" href="${resource(dir: 'css/mobile', file: 'checkout.css')}" rel="stylesheet"/>
 
 <div id="mcart" class="main-width">
@@ -16,7 +16,7 @@
 
             <div id="update_cart_ctas_top" class="update_cart_ctas">
                 <div class="proceed_btn_box right">
-                    <a href="https://www.pepperfry.com/checkout/address" data-q="filters"
+                    <a href="${createLink(controller: 'basket', action: 'checkout')}" data-q="filters"
                        class="right  grn-btn icon-lock bbq">
                         <h3><g:message code="alerts.basket.button.checkOut"/></h3>
                     </a>
@@ -47,14 +47,19 @@
                         </h4>
 
                         <div class="total">
-                            <h4><span class="price">{{basketItem.realPrice | number:0}}</span> <eshop:currencyLabel/> </h4> X
+                            <h4><span class="price">{{basketItem.realPrice | number:0}}</span> <eshop:currencyLabel/>
+                            </h4> X
                             <span>
-                                <span ng-class="{dec:true , active: basketItem.count > 1 , inactive: basketItem.count <= 1}" ng-click="decreaseCount(basketItem.id)">-</span>
-                                <input type="text" class="value" value="{{basketItem.count}}" onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)">
+                                <span ng-class="{dec:true , active: basketItem.count > 1 , inactive: basketItem.count <= 1}"
+                                      ng-click="decreaseCount(basketItem.id)">-</span>
+                                <input type="text" class="value" value="{{basketItem.count}}"
+                                       onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value)">
                                 <span class="inc active" ng-click="increaseCount(basketItem.id)">+</span>
                             </span>
-                             =
-                            <h3 class="net"><span class="netTotal">{{basketItem.realPrice * basketItem.count | number:0}}</span> <eshop:currencyLabel/></h3>
+                            =
+                            <h3 class="net"><span
+                                    class="netTotal">{{basketItem.realPrice * basketItem.count | number:0}}</span> <eshop:currencyLabel/>
+                            </h3>
 
                             <h3>
                             </h3></div>

@@ -9,6 +9,7 @@ import eshop.accounting.Transaction
 import eshop.delivery.DeliverySourceStation
 import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.plugins.springsecurity.Secured
+import org.omg.CORBA.Environment
 
 class OrderController {
 
@@ -36,6 +37,11 @@ class OrderController {
 
     def list() {
 
+        if (!springSecurityService.loggedIn) {
+            redirect(controller: 'login')
+            return
+        }
+
         def status = params.status
         def orderList
         if (status)
@@ -49,7 +55,7 @@ class OrderController {
         if (status == OrderHelper.STATUS_INQUIRED)
             suggestedActions = ['completion']
 
-        render view: '/order/list', model: [
+        render view: "/order/${session.mobile ? 'listMobile' : 'list'}", model: [
                 orderList       : orderList.sort { -it.id },
                 status          : status,
                 suggestedActions: suggestedActions,
@@ -60,15 +66,19 @@ class OrderController {
     def track() {
         def customer = springSecurityService.currentUser
 
-        if (!params.trackingCode)
-            return [order: null, customer: customer]
+        if (!params.trackingCode) {
+            render view: session.mobile ? 'trackMobile' : 'track', model: [order: null, customer: customer, search: false]
+            return
+        }
 
         def order = Order.findByTrackingCode(params.trackingCode)
         def actions = []
         def suggestedActions = []
 
-        if (!order)
-            return [order: null, customer: customer]
+        if (!order) {
+            render view: session.mobile ? 'trackMobile' : 'track', model: [order: null, customer: customer, search: true]
+            return
+        }
 
         if (order.status == OrderHelper.STATUS_INQUIRED)
             suggestedActions = [OrderHelper.ACTION_COMPLETION]
@@ -90,13 +100,14 @@ class OrderController {
                 break
         }
 
-        [
+        render view: session.mobile ? 'trackMobile' : 'track', model: [
                 order           : order,
                 customer        : customer,
                 actions         : actions,
                 suggestedActions: suggestedActions,
                 payment         : payment,
-                invoiceTitle    : invoiceTitle
+                invoiceTitle    : invoiceTitle,
+                search          : true
         ]
     }
 
@@ -242,7 +253,6 @@ class OrderController {
     }
 
     def create() {
-
         //save order
         def order = session.getAttribute("order") as Order
 
@@ -322,19 +332,22 @@ class OrderController {
         session.removeAttribute("checkout_address")
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
+        session.removeAttribute("maxReachedStep")
 
         event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
 
-        mailService.sendMail {
-            to order.ownerEmail
-            subject message(code: 'emailTemplates.order_created.subject')
-            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                    model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
-        }
+        if (grails.util.Environment.current != grails.util.Environment.DEVELOPMENT) {
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.order_created.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+            }
 
-        messageService.sendMessage(
-                order.ownerMobile,
-                g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString())
+            messageService.sendMessage(
+                    order.ownerMobile,
+                    g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString())
+        }
 
         [trackingCode: order.trackingCode]
 //        flash.message = message(code: 'order.creation.success.message')
@@ -368,7 +381,7 @@ class OrderController {
         }
         def customerAccountValue = customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0
         if (customerAccountValue > 0)
-            render view: 'payment', model: [
+            render view: session.mobile ? 'paymentMobile' : 'payment', model: [
                     order               : order,
                     orderPrice          : order.totalPrice,
                     customerAccountValue: customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0,
@@ -438,7 +451,7 @@ class OrderController {
 
         def customer = springSecurityService.currentUser as Customer
 
-        [
+        render view: session.mobile ? 'remainingPaymentMobile' : 'remainingPayment', model: [
                 order                   : order,
                 orderPrice              : order.totalPayablePrice,
                 accountsForOnlinePayment: accountsForOnlinePayment,
@@ -490,7 +503,7 @@ class OrderController {
             order.paymentType = 'online'
             order.save()
 
-            model
+            render view: session.mobile ? 'onlinePaymentMobile' : 'onlinePayment', model: model
         }
     }
 
@@ -518,7 +531,7 @@ class OrderController {
             }
         }
 
-        render view: 'onlinePaymentResult', model: model
+        render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
     }
 
     def onlinePaymentResultSaman() {
@@ -547,7 +560,7 @@ class OrderController {
             payOrder(onlinePayment, model)
         }
 
-        render view: 'onlinePaymentResult', model: model
+        render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
     }
 
     def payOrder(OnlinePayment payment, model) {
@@ -810,12 +823,12 @@ class OrderController {
         def order = Order.get(params.id)
         if (order.customer) {
             def customer = springSecurityService.currentUser as Customer
-            if (customer && customer?.id != order.customer?.id) {
+            if (customer?.id != order.customer?.id) {
                 redirect(uri: '/notFound')
                 return
             }
         }
-        [order: order]
+        render view: session.mobile ? 'completionMobile' : 'completion', model: [order: order]
     }
 
     //<editor-fold desc="invoice">

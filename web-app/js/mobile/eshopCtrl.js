@@ -3,6 +3,8 @@ var eshop = angular.module('eshop', []);
 eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.basketCounter = basketCounter;
     $scope.basket = basket;
+    $scope.wishListCounter = wishListCounter;
+    $scope.wishList = wishList;
     $scope.deliveryPrice = -1;
     $scope.contextRoot = contextRoot;
 
@@ -263,6 +265,22 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
                     callback();
                 }
             });
+    };
+
+    $scope.removeFromWishList = function (id) {
+        var found = false;
+        for (var i = 0; i < $scope.wishList.length; i++) {
+            if ($scope.wishList[i].id == id) {
+                $scope.wishListCounter -= 1;
+                $scope.wishList.splice(i, 1);
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            $http.post(contextRoot + "wishList/remove/" + id).success(function (response) {
+            });
+        }
     };
 
 //    common functions

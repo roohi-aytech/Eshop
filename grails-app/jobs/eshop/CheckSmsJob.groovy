@@ -1,5 +1,7 @@
 package eshop
 
+import grails.util.Environment
+
 
 class CheckSmsJob {
     def messageService
@@ -10,6 +12,9 @@ class CheckSmsJob {
     }
 
     def execute() {
+        if(Environment.current == Environment.DEVELOPMENT)
+            return
+
         println 'checking remaining sms: '
         def res = grailsApplication.config.instance + " " + messageService.info
         println res
