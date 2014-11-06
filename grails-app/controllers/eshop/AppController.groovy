@@ -505,7 +505,7 @@ class AppController {
             order.deliveryTime = "${params.deliveryTime.hour}:${params.deliveryTime.minute} ${params.deliveryTime.month}/${params.deliveryTime.day}"
             order.status = OrderHelper.STATUS_CREATED
             order.save()
-
+            println order.errors.allErrors
             def cal = Calendar.getInstance()
             cal.setTime(new Date())
             def jc = new JalaliCalendar(cal)
