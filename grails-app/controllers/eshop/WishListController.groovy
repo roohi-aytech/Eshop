@@ -30,7 +30,7 @@ class WishListController {
     }
 
     def remove() {
-        def id = params.id
+        def id = params.id as Long
 
         def user = springSecurityService.currentUser
         if (!(user && user instanceof Customer)){
@@ -52,6 +52,9 @@ class WishListController {
     }
 
     def show(){
-
+        if(session.mobile)
+            render view: 'showMobile'
+        else
+            render view: 'show'
     }
 }

@@ -12,7 +12,7 @@
     <meta name="layout" content="site"/>
     <title>
         <g:if test="${bankName == 'mellat'}">
-            <g:message code="order.payment.mellat.title"></g:message>
+            <g:message code="order.payment.mellat.title"/>
         </g:if>
     </title>
     <g:if test="${bankName == 'mellat'}">

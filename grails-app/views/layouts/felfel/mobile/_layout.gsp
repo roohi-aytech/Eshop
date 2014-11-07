@@ -33,6 +33,16 @@
     <script type="text/javascript">
         var basketCounter = ${session.getAttribute("basketCounter") ?: 0};
         var basket = ${(session.getAttribute("basket")?: []) as JSON};
+        <sec:ifLoggedIn>
+        <% def priceService = grailsApplication.classLoader.loadClass('eshop.PriceService').newInstance() %>
+        <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username())?.wishList?.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).showVal]}?:[]}"/>
+        var wishListCounter = ${wishList? wishList.count {it}: 0};
+        var wishList = ${(wishList?: []) as JSON};
+        </sec:ifLoggedIn>
+        <sec:ifNotLoggedIn>
+        var wishListCounter = 0;
+        var wishList = ${[] as JSON};
+        </sec:ifNotLoggedIn>
         var contextRoot = "${createLink(uri: '/')}";
     </script>
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/mobile', file: 'style.css')}">

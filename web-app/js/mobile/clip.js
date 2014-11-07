@@ -31,7 +31,7 @@ $(document).ready(function(){
 		closeFilterPanel();
 	});
 	
-	$('#filter_slide_panel').on('click','.toggle-head', function(event){
+	$('#filter_slide_panel, .tabs').on('click','.toggle-head', function(event){
 		event.preventDefault();
 		var curr_id = $(this).prop('id'); 
 		var tmp = curr_id.split('-');

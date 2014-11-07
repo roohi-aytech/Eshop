@@ -84,10 +84,10 @@
                     <a href="${createLink(controller: 'customer', action: 'panel')}"><img
                             src="${resource(dir: 'images/mobile', file: 'panel-mini.png')}" align="absmiddle"
                             width="40"
-                            border="0"><span><g:message code="customer.panel.link"/></span></a>
+                            border="0"><span><g:message code="customer.panel.link"/> (<g:message code="commingSoon"/>)</span></a>
                     <a href="#"><img
                             src="${resource(dir: 'images/mobile', file: 'help-mini.png')}" align="absmiddle" width="40"
-                            border="0"><span><g:message code="help.link"/></span></a>
+                            border="0"><span><g:message code="help.link"/> (<g:message code="commingSoon"/>)</span></a>
 
                 </li>
             </ul>
@@ -104,12 +104,12 @@
 
                 <a href="${createLink(controller: 'order', action: 'list')}">
                     <div class="acnt-btn">
-                        <h3><g:message code="orders"/><span class="icon-arrowRight"></span></h3>
+                        <h3><g:message code="yourOrders"/><span class="icon-arrowRight"></span></h3>
                     </div>
                 </a>
                 <a href="${createLink(controller: 'wishList', action: 'show')}">
                     <div class="acnt-btn">
-                        <h3><g:message code="wishList"/><span class="icon-arrowRight"></span></h3>
+                        <h3><g:message code="wishList.mobile.button"/><span class="icon-arrowRight"></span></h3>
                     </div>
                 </a>
 

@@ -85,6 +85,10 @@ a, img, button, input {
     outline: none;
 }
 
+img {
+    vertical-align: middle;
+}
+
 body {
     font-family: sans-serif;
 }
@@ -329,7 +333,7 @@ h2#user-not {
 }
 
 select {
-    background: #ffffff url(../../images/mobile/down-arrow1.png) no-repeat 10%;
+    background: #ffffff url(../../images/mobile/down-arrow1.png) no-repeat 10px;
     background-size: 14px;
     border: 1px solid #e9e9e9;
     padding: 8px;
@@ -5041,7 +5045,7 @@ ul.orderslisting .go-back h4 {
 }
 
 .variation-value-color:first-of-type {
-    padding-top:10px;
+    padding-top: 10px;
 }
 
 .variation-value-color span {
@@ -5057,5 +5061,26 @@ ul.orderslisting .go-back h4 {
 .variation-value-color.selected span {
     background: url("../../images/mobile/check_radio_sheet.png") no-repeat scroll -19px top rgba(0, 0, 0, 0);
 }
+
+#listing-container .close {
+    border: 1px solid #e8e8e8;
+    border-radius: 1px;
+    color: #989898;
+    cursor: pointer;
+    font-size: 18px;
+    height: 26px;
+    left: 10px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 10px;
+    width: 26px;
+}
+
+.red {
+    color: #ec1e20;
+}
+
+
 
 

@@ -335,7 +335,7 @@ h6.delivery {
 
 #order-summ .total, #order-summ .total h4 > span {
     color: #898989;
-    margin-top:5px;
+    margin-top: 5px;
 }
 
 #order-summ .total .dec.inactive, #order-summ .total .inc.inactive {
@@ -474,7 +474,7 @@ a.ship-address {
 }
 
 /*Sign-in*/
-#sign-in input {
+#sign-in input, #no-sign-in input, #no-sign-in textarea, #no-sign-in select {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -483,14 +483,18 @@ a.ship-address {
     border: 1px solid #cecece;
 }
 
-#sign-in label {
+#no-sign-in textarea {
+    font-size: 13px;
+}
+
+#sign-in label, #no-sign-in label {
     font-size: 14px;
     color: #898989;
     padding: 15px 0 8px;
     display: inline-block;
 }
 
-#sign-in input[type="submit"] {
+#sign-in input[type="submit"], #no-sign-in input[type="submit"] {
     border: 0;
     padding: 12px;
     margin: 18px 0;
@@ -717,7 +721,7 @@ a.ship-address {
     margin-bottom: 15px;
 }
 
-#checkout #sign-in h2 {
+#checkout #sign-in h2, #checkout #no-sign-in h2 {
     margin-bottom: 0px;
 }
 
@@ -1353,10 +1357,11 @@ a.ship h3 {
 }
 
 .steps {
-    float: right;
-    width: 231px;
-    margin-right: 2%;
+    float: left;
+    width: 330px;
+    /*margin-right: 2%;*/
     padding-top: 8px;
+    height:50px;
 }
 
 .steps ul {
@@ -1366,20 +1371,20 @@ a.ship h3 {
 }
 
 .steps ul li {
-    width: 18%;
+    width: 42px;
     float: left;
     position: relative;
     margin-right: 53px;
 }
 
 .steps ul li.last {
-    float: right;
+    float: left;
     margin-right: 0px;
 }
 
 .steps ul li .step_count {
     float: left;
-    width: 100%;
+    width: 42px;
     padding-top: 48%;
     line-height: 1em;
     font-size: 22px;
@@ -1391,7 +1396,7 @@ a.ship h3 {
 .steps ul li:after {
     content: "";
     display: block;
-    width: 100%;
+    width: 42px;
     height: 0;
     padding-bottom: 100%;
     -moz-border-radius: 50%;
@@ -1399,8 +1404,25 @@ a.ship h3 {
     border-radius: 50%;
 }
 
+.steps ul li:after {
+    background-color: #ffffff !important;
+    border-color: #b2cb3d !important;
+    border-width: 1px;
+    border-style: solid !important;
+}
+
+.steps ul li.active:after {
+    background-color: #b2cb3d !important;
+    border-color: #b2cb3d !important;
+}
+
+.steps ul li.inactive:after {
+    background-color: #f4f4f4 !important;
+    border-color: transparent !important;
+}
+
 .steps ul li.cart_step:after {
-    background: #f4f4f4 url(../../images/mobile/order_summary_step.png) no-repeat 4px 6px;
+    background: #ffffff url(../../images/mobile/order_summary_step.png) no-repeat 4px 6px;
     background-size: 34px;
 }
 
@@ -1418,7 +1440,31 @@ a.ship h3 {
 .steps ul li.shipsto_step.active:after {
     background: #b8d046 url(../../images/mobile/shipsto_icon.png) no-repeat 8px -19px;
     background-size: 28px;
-    border: none;
+    /*border: none;*/
+}
+
+.steps ul li.address_step:after {
+    background: #ffffff url(../../images/mobile/order_address_step.png) no-repeat 8px 10px;
+    border: 1px solid #b8d046;
+    background-size: 28px;
+}
+
+.steps ul li.address_step.active:after {
+    background: #b8d046 url(../../images/mobile/order_address_step.png) no-repeat 8px -19px;
+    background-size: 28px;
+    /*border: none;*/
+}
+
+.steps ul li.invoice_step:after {
+    background: #ffffff url(../../images/mobile/order_invoice_step.png) no-repeat 8px 10px;
+    border: 1px solid #b8d046;
+    background-size: 28px;
+}
+
+.steps ul li.invoice_step.active:after {
+    background: #b8d046 url(../../images/mobile/order_invoice_step.png) no-repeat 8px -19px;
+    background-size: 28px;
+    /*border: none;*/
 }
 
 .steps ul li.shipsto_step.inactive:after {
@@ -1744,58 +1790,67 @@ a.ship h3 {
 
 @media screen and (max-width: 340px) {
     .steps {
-        width: 150px;
+        width: 320px;
+        overflow: hidden;
         padding-top: 12px;
     }
 
     .steps ul li {
-        width: 24%;
-        margin-right: 20px;
+        margin-right: 40px;
+    }
+    .steps ul a {
+        /*width: 42px;*/
+        margin-left: -15px;
+        display: block;
+    }
+    .steps ul a:first-of-type {
+        margin-left:10px;
     }
 
     .steps ul {
         margin-bottom: -32px;
-        height: 50px;
-        background: url(../../images/mobile/steps_bg_320.png) no-repeat;
+        height: 42px;
+        background: url(../../images/mobile/steps_bg.png) no-repeat;
+        background-size: 100%;
     }
 
-    .steps ul li.shipsto_step.inactive:after {
-        background: #f4f4f4 url(../../images/mobile/steps_icon.png) no-repeat -57px -51px;
-    }
+    /*.steps ul li.shipsto_step.inactive:after {*/
+        /*background: #f4f4f4 url(../../images/mobile/steps_icon.png) no-repeat -57px -51px;*/
+    /*}*/
 
-    .steps ul li.cart_step.active:after {
-        background: #b2cb3d url(../../images/mobile/steps_icon.png) no-repeat -9px -49px;
-    }
+    /*.steps ul li.cart_step.active:after {*/
+        /*background: #b2cb3d url(../../images/mobile/steps_icon.png) no-repeat -9px -49px;*/
+    /*}*/
 
-    .steps ul li.cart_step:after {
-        background: #f4f4f4 url(../../images/mobile/steps_icon.png) no-repeat -8px -5px;
-    }
+    /*.steps ul li.cart_step:after {*/
+        /*background: #f4f4f4 url(../../images/mobile/steps_icon.png) no-repeat -8px -5px;*/
+    /*}*/
 
-    .steps ul li.payment_step.active:after {
-        background: #b8d046 url(../../images/mobile/steps_icon.png) no-repeat -123px -54px;
-        border: none;
-    }
+    /*.steps ul li.payment_step.active:after {*/
+        /*background: #b8d046 url(../../images/mobile/steps_icon.png) no-repeat -123px -54px;*/
+        /*border: none;*/
+    /*}*/
 
-    .steps ul li.payment_step:after {
-        background: #ffffff url(../../images/mobile/steps_icon.png) no-repeat -123px -5px;
-        border: 1px solid #b8d046;
-    }
+    /*.steps ul li.payment_step:after {*/
+        /*background: #ffffff url(../../images/mobile/steps_icon.png) no-repeat -123px -5px;*/
+        /*border: 1px solid #b8d046;*/
+    /*}*/
 
-    .steps ul li.shipsto_step:after {
-        background: #b8d046 url(../../images/mobile/steps_icon.png) no-repeat -57px -5px;
-    }
+    /*.steps ul li.shipsto_step:after {*/
+        /*background: #b8d046 url(../../images/mobile/steps_icon.png) no-repeat -57px -5px;*/
+    /*}*/
 
-    .steps ul li.payment_step.inactive:after {
-        background: #f4f4f4 url(../../images/mobile/payment_steps_icon.png) no-repeat 2px 5px;
-        background-size: 32px;
-        border: none;
-    }
+    /*.steps ul li.payment_step.inactive:after {*/
+        /*background: #f4f4f4 url(../../images/mobile/payment_steps_icon.png) no-repeat 2px 5px;*/
+        /*background-size: 32px;*/
+        /*border: none;*/
+    /*}*/
 
-    .steps ul li.shipsto_step.active:after {
-        background: #b8d046 url(../../images/mobile/shipsto_icon.png) no-repeat 6px -21px;
-        background-size: 28px;
-        border: none;
-    }
+    /*.steps ul li.shipsto_step.active:after {*/
+        /*background: #b8d046 url(../../images/mobile/shipsto_icon.png) no-repeat 6px -21px;*/
+        /*background-size: 28px;*/
+        /*border: none;*/
+    /*}*/
 }
 
 @media screen and (max-width: 320px) {
@@ -2300,4 +2355,37 @@ div.static_form ul li .radio-box {
     font-size: 16px;
     padding: 7px !important;
 }
+
+.validationError {
+    color: #ca0801;
+    font-size: 14px;
+}
+
+.addressFilter {
+    float: left;
+    width: 50px;
+}
+
+.deliveryMethodList li {
+    border-right: 5px solid transparent;
+    margin: 5px 5px 10px;
+}
+
+.deliveryMethodList li:last-of-type {
+    margin-bottom: 0;
+}
+
+.deliveryMethodList li input[type=radio] {
+    display: none;
+}
+
+.deliveryMethodList li.selected {
+    border-right: 5px solid #ca0801;
+    background: #f4f4f4;
+}
+
+.deliveryMethodList li label {
+    padding: 5px !important;
+}
+
 

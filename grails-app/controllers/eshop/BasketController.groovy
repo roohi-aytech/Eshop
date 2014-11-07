@@ -101,6 +101,7 @@ class BasketController {
     }
 
     def checkout() {
+
         if (grailsApplication.config.customCheckout) {
             def customer = springSecurityService.currentUser as Customer
             def view = "/site/${grailsApplication.config.eShop.instance}/checkout"
@@ -144,8 +145,12 @@ class BasketController {
 
             def currentStep = 1
 
-            if (customer || session.checkout_customerInformation)
-                currentStep = 2
+            if (customer || session.checkout_customerInformation) {
+                if (session.mobile) {
+                    currentStep = 1.5
+                } else
+                    currentStep = 2
+            }
 
             if (session.checkout_address)
                 currentStep = 3
@@ -208,6 +213,18 @@ class BasketController {
                 deliveryMethods = deliveryService.findAllDeliveryMethods(order)
             }
             def view = 'checkout'
+            if (session.mobile) {
+                view = '/basket/checkoutMobile'
+            }
+
+            if (params.currentStep) {
+                def cp = params.currentStep as Float
+//                if(cp <= currentStep)
+                currentStep = cp
+            }
+
+            if(!session.maxReachedStep || currentStep > session.maxReachedStep)
+                session.maxReachedStep = currentStep
 
             render(model: [
                     basket                  : session.getAttribute("basket"),
@@ -218,10 +235,6 @@ class BasketController {
                     deliveryMethods         : deliveryMethods
             ], view: view)
         }
-    }
-
-    def mobileContent() {
-        render template: 'mobileContent', model: [basket: session.getAttribute("basket")]
     }
 
     def deliveryMethods() {
@@ -376,7 +389,7 @@ class BasketController {
         customerInformation.mobile = params.mobile
         customerInformation.telephone = params.telephone
         session.checkout_customerInformation = customerInformation
-        redirect(action: 'checkout')
+        redirect(action: 'checkout', params: [currentStep: 1.5])
     }
 
     def checkoutAddress() {
@@ -384,7 +397,10 @@ class BasketController {
         if (params.addressIsSameAsProfile?.toBoolean()) {
             model.address = (springSecurityService.currentUser as Customer).address
         }
-        render template: 'checkout/address', model: model
+        def view = 'checkout/address'
+        if (session.mobile)
+            view = 'checkout/mobile/address'
+        render template: view, model: model
     }
 
     def storeShippingAddress() {
@@ -394,7 +410,7 @@ class BasketController {
         address.telephone = params.telephone
         address.addressLine1 = params.addressLine
         session.checkout_address = address
-        redirect(action: 'checkout')
+        redirect(action: 'checkout', params: [currentStep: 3])
     }
 
     def storeCustomInvoiceInformation() {
@@ -408,7 +424,7 @@ class BasketController {
         customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : (customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode)
         customInvoiceInformation.ownerMobile = customInvoiceInformation.customInvoiceInfo ? params.ownerMobile : (customer ? customer.mobile : session.checkout_customerInformation.mobile)
         session.checkout_customInvoiceInformation = customInvoiceInformation
-        redirect(action: 'checkout')
+        redirect(action: 'checkout', params: [currentStep: 4])
     }
 
     def shop() {
