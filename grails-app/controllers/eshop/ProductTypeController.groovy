@@ -305,7 +305,8 @@ class ProductTypeController {
                     if (it instanceof Product) try {
                         it.isSynchronized = false
                         it.save()
-                    } catch (x) {}
+                    } catch (x) {
+                    }
                 }
             }
 
@@ -374,28 +375,35 @@ class ProductTypeController {
                     productType.mobileBanner = mobileBanner
             }
             productType.searchKeys = params.searchKeys
-            productType.save(flush:true)
-        } catch (x) {
-
-        }
-
-        if (productType) {
-            def productTypeIds = getChildProductTypes(productType).collect { it.id }
-            Product.createCriteria().list {
-                or {
-                    isNull('deleted')
-                    eq('deleted', false)
-                }
-                productTypes {
-                    'in'('id', productTypeIds)
-                }
-            }.each {
-                if (it instanceof Product) try {
-                    it.isSynchronized = false
-                    it.save()
-                } catch (x) {}
+            productType.save(flush: true)
+            if (productType.errors.allErrors) {
+                println productType.errors.allErrors
             }
+            else {
+                if (productType) {
+                    def productTypeIds = getChildProductTypes(productType).collect { it.id }
+                    Product.createCriteria().list {
+                        or {
+                            isNull('deleted')
+                            eq('deleted', false)
+                        }
+                        productTypes {
+                            'in'('id', productTypeIds)
+                        }
+                    }.each {
+                        if (it instanceof Product) try {
+                            it.isSynchronized = false
+                            it.save()
+                        } catch (x) {
+                        }
+                    }
+                }
+            }
+
+        } catch (x) {
+            x.printStackTrace()
         }
+
 
         render 0;
     }
@@ -508,7 +516,9 @@ class ProductTypeController {
             attributeType.properties = params;
         } else {
             attributeType = new AttributeType(params);
-            attributeType.sortIndex = (attributeType.productType.attributeTypes.max { it.sortIndex }?.sortIndex ?: 0) + 1
+            attributeType.sortIndex = (attributeType.productType.attributeTypes.max {
+                it.sortIndex
+            }?.sortIndex ?: 0) + 1
         }
 //        if (params.values_old && attributeType.id) {
 //            params.values_old.eachWithIndex {oldVal, idx ->
@@ -646,7 +656,9 @@ class ProductTypeController {
 
     def saveGodFathers() {
         def productType = ProductType.get(params.id)
-        productType.godFathers = productType.godFathers.findAll { params.godFathers.split(",").contains(it.id.toString()) }
+        productType.godFathers = productType.godFathers.findAll {
+            params.godFathers.split(",").contains(it.id.toString())
+        }
         params.godFathers.split(",").each {
             if (it) {
                 productType.godFathers.add(ProductType.get(it))
@@ -669,7 +681,8 @@ class ProductTypeController {
                 if (it instanceof Product) try {
                     it.isSynchronized = false
                     it.save()
-                } catch (x) {}
+                } catch (x) {
+                }
             }
         }
 
@@ -814,14 +827,16 @@ class ProductTypeController {
             giftInformation.properties = params
         } else
             giftInformation = new GiftInformation(params)
-        giftInformation.cultureEvents = request.getParameterValues('cultureEvents').collect { CultureEvent.findById(it.toLong()) }
+        giftInformation.cultureEvents = request.getParameterValues('cultureEvents').collect {
+            CultureEvent.findById(it.toLong())
+        }
         giftInformation.save()
         redirect(action: "details", id: giftInformation.productType?.id)
     }
 
-    def getChildProductTypesIdList(){
+    def getChildProductTypesIdList() {
         def productType = ProductType.get(params.id)
-        render (getChildProductTypes(productType).collect{it.id}.join(','))
+        render(getChildProductTypes(productType).collect { it.id }.join(','))
     }
 
 }
