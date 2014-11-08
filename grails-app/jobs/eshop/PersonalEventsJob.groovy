@@ -9,6 +9,7 @@ class PersonalEventsJob {
     def messageService
     def messageSource
     PageRenderer groovyPageRenderer
+    def grailsApplication
     static triggers = {
         cron name: 'myTrigger', cronExpression: "0 0 9 * * ?"
 //        simple repeatInterval: 60000
@@ -40,11 +41,12 @@ class PersonalEventsJob {
                 personalEvent.date=c.time
                 personalEvent.save()
             }
+            def instance=grailsApplication.config.eShop.instance
             if (personalEvent.emailNotification && personalEvent.customer.email) {
                 mailService.sendMail {
                     to personalEvent.customer.email
                     subject(messageSource.getMessage('emailTemplates.notification.subject', new Object[0], "", null))
-                    html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                    html(view: "/messageTemplates/${instance}_email_template",
                             model: [message: groovyPageRenderer.render(template: '/messageTemplates/mail/personal_event', model: [personalEvent: personalEvent, productType: productType, dayRemaining: dayRemaining]).toString()])
                 }
             }
