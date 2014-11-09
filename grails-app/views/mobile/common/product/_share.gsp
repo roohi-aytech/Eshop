@@ -14,7 +14,7 @@
         </li>
         <li class="twt">
             <a target="_blank"
-               href="http://twitter.com/home?status=${productModel} ${createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}", absolute: true)} @felfel.ir"><img
+               href="http://twitter.com/home?status=${productModel} ${createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}", absolute: true)} @${grailsApplication.config.eShop.instance}.ir"><img
                     width="55" border="0" src="${resource(dir:'images/mobile', file: 'twt.png')}"></a></li>
         <li class="pin">
             <!-- Place this tag in your head or just before your close body tag. -->
