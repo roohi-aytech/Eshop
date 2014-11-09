@@ -11,7 +11,7 @@
 <head>
     <meta name='layout' content='mobile'/>
     <title>
-        <g:message code="footerItems.returnRules"/>
+        10 روز تضمین طلایی تعویض ویژه مشتریان زنبیل
     </title>
 </head>
 
