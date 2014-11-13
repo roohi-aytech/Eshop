@@ -521,7 +521,7 @@ class SiteController {
 
         //product type
         def productType = [
-                children: ProductType.findAllByParentProductIsNull()
+                children: ProductType.findAllByParentProductIsNullAndDeleted(false)
         ]
 
         def model = [productType: productType]

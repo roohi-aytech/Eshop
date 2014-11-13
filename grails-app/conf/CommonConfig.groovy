@@ -200,7 +200,8 @@ uiperformance.continueAfterMinifyJsError = true
 uiperformance.keepOriginals = true
 uiperformance.exclusions = [
         "**/plugins/ckeditor*/**",
-        "**/angular.js"
+        "**/angular.js"  ,
+        "**/font/**"
 ]
 
 grails.rest.injectInto = ["Controller", "Service", "Routes", "Job"]
