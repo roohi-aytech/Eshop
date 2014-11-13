@@ -983,7 +983,7 @@ class SiteController {
                     selected = false
             }
 
-            if (model.guarantee.id.toLong() != params.guarantee.toLong())
+            if (model?.guarantee?.id?.toLong() != params?.guarantee?.toLong())
                 selected = false
 
             if (selected)

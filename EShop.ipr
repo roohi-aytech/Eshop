@@ -192,8 +192,9 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/EShop.iml" filepath="$PROJECT_DIR$/EShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EShop-grailsPlugins.iml" filepath="$PROJECT_DIR$/EShop-grailsPlugins.iml" />
       <module fileurl="file://$PROJECT_DIR$/../RapidGrails/RapidGrails.iml" filepath="$PROJECT_DIR$/../RapidGrails/RapidGrails.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../RapidGrails/RapidGrails-grailsPlugins.iml" filepath="$PROJECT_DIR$/../RapidGrails/RapidGrails-grailsPlugins.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -206,6 +207,7 @@
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../RapidGrails" vcs="Git" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />

@@ -119,6 +119,11 @@ class Product extends BaseProduct implements Comparable{
 
     @Override
     String toString() {
-        "${productTypes?.find {true}?.name?:""} ${type?.title?:""} ${brand?.name?:""}${name?" مدل ${name}":""}"?.trim()
+        if (domainClass.grailsApplication.config.eShop.instance == 'goldaan') {
+            return manualTitle ? pageTitle : "<span>${productTypes?.find { true }?.name ?: ""} ${type?.title ?: ""} ${brand?.name ?: ""}</span><br/> ${name ?: ""}"
+        }
+        else {
+            return "${productTypes?.find { true }?.name ?: ""} ${type?.title ?: ""} ${brand?.name ?: ""}${name ? " مدل ${name}" : ""}"?.trim()
+        }
     }
 }
