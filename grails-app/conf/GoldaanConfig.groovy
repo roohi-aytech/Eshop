@@ -7,6 +7,7 @@ locale.country='IR'
 events.url='http://www.goldaan.ir/'
 admin.theme='cobalt'
 browse.view.root='browse'
+browse.view.mobile='browse-root'
 page.size=81
 page.mobile.size=24
 testimonials=true

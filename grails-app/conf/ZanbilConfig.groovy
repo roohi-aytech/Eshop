@@ -7,6 +7,7 @@ locale.country='IR'
 events.url='http://www.zanbil.ir:82'
 admin.theme='cobalt'
 browse.view.root='browse'
+browse.view.mobile='browse-root'
 page.size=12
 page.mobile.size=24
 testimonials=false

@@ -7,6 +7,7 @@ locale.country = 'IR'
 events.url = 'http://localhost:8080/eshop'
 admin.theme = 'cobalt'
 browse.view.root = 'browse'
+browse.view.mobile='browse-root'
 page.size = 12
 page.mobile.size=24
 testimonials = true

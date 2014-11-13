@@ -178,6 +178,8 @@ class SiteController {
         def view = grailsApplication.config.browse.view.root
         if (productType.parentProduct)
             view = 'browse'
+        else if (session.mobile)
+            view = grailsApplication.config.browse.view.mobile
 
         render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/${view}");
     }
