@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'eYekan';
-    src: url('../../font/eYekan/font.eot');
-    src: url('../../font/eYekan/font.eot#iefix') format('embedded-opentype'), url('../../font/eYekan/font.woff') format('woff'), url('../../font/eYekan/font.ttf') format('truetype'), url('../../font/eYekan/font.svg#CartoGothicStdBook') format('svg');
+    src: url('/font/eYekan/font.eot');
+    src: url('/font/eYekan/font.eot#iefix') format('embedded-opentype'), url('/font/eYekan/font.woff') format('woff'), url('/font/eYekan/font.ttf') format('truetype'), url('/font/eYekan/font.svg#CartoGothicStdBook') format('svg');
     font-weight: normal;
     font-style: normal;
 }
