@@ -7,7 +7,7 @@
         <div class="right logo">
             <a href="${createLink(uri: '/')}" id="toggle" class="menuexpand" data-ref="toggle-categories">
                 <img src="${resource(dir: 'images/mobile', file: "logo-${grailsApplication.config.eShop.instance}.png")}"
-                     class="logo-img" width="47" border="0"/>
+                     class="logo-img" width="70" style="margin-top:10px;" border="0"/>
             </a>
 
         </div>
