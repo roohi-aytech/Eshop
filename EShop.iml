@@ -117,6 +117,7 @@
     <orderEntry type="module" module-name="RapidGrails-inplacePlugin" exported="" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
     <orderEntry type="library" name="grails-2.0.4" level="application" />
+    <orderEntry type="library" name="grails-2.0.4" level="application" />
   </component>
 </module>
 

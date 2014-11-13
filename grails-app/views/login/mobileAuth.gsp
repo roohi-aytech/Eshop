@@ -2,7 +2,6 @@
 <head>
     <meta name='layout' content='mobile'/>
     <title><g:message code="springSecurity.login.title"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css/mobile', file: 'checkout.css')}"/>
 </head>
 
 <body>

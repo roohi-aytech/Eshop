@@ -10,7 +10,6 @@
 <head>
     <meta name='layout' content='mobile'/>
     <title><g:message code="enquiry.request"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css/mobile', file: 'checkout.css')}"/>
     <script language="javascript" type="text/javascript">
         var addressRequest;
     </script>

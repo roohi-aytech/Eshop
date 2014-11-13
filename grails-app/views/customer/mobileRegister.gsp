@@ -85,7 +85,6 @@
             return false;
         }
     </script>
-    <link rel="stylesheet" href="${resource(dir: 'css/mobile', file: 'checkout.css')}"/>
 </head>
 
 <body>

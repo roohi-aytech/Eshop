@@ -1,0 +1,154 @@
+
+.form_error_main {
+    border-color: #ec8d1e;
+    color: #ec8d1e !important;
+}
+
+.user-info .cart.current_menu_item {
+    border-bottom-color:#ec8d1e;
+}
+
+.user-info ul li .serach-icon.current_menu_item, .user-info ul li .current_menu_item.user {
+    border-bottom-color: #ec8d1e;
+}
+
+.red {
+    color: #ec8d1e;
+}
+
+.product-price.auctions .bid_details .price {
+    color: #ec8d1e;
+}
+
+.pay-price .limited-coupon {
+    background: #ec8d1e;
+}
+
+.big-sale .offer_details .offer_details_title {
+    color: #ec8d1e;
+}
+
+.filter-products ul.product-list li .product-info h5.listing_coupon {
+    color: #ec8d1e;
+}
+
+.del-icon {
+    background: #ec8d1e;
+}
+
+.navigation a.pagination_btn.selected {
+    border-color: #ec8d1e;
+}
+
+.filter-selected .delete-icon {
+    background: #ec8d1e;
+}
+
+.triangle-right:after {
+    border-right-color: #ec8d1e;
+}
+
+.triangle-top:after {
+    border-right-color: #ec8d1e;
+}
+
+.p_heading h2 a {
+    color: #ec8d1e;
+}
+
+.p_seemore {
+    background: #ec8d1e;
+}
+
+.inputerror {
+    border-color: #ec8d1e;
+    color: #ec8d1e !important;
+}
+
+.inputerror::-webkit-input-placeholder {
+    color: #ec8d1e !important;
+}
+
+.inputerror::-moz-input-placeholder {
+    color: #ec8d1e !important;
+}
+
+.validation_errors_block span {
+    color: #ec8d1e;
+}
+
+.form_error_main {
+    border-color: #ec8d1e;
+    color: #ec8d1e !important;
+}
+
+.swatches::-webkit-scrollbar-thumb, .product_images::-webkit-scrollbar-thumb {
+    background-color: #ec8d1e;
+}
+
+.swatches::-webkit-scrollbar-thumb:hover, .product_images::-webkit-scrollbar-thumb:hover {
+    background-color: #ec8d1e;
+}
+
+.swatches::-webkit-scrollbar-thumb:active, .product_images::-webkit-scrollbar-thumb:active {
+    background-color: #ec8d1e;
+}
+
+.swatches .swatchslide a.active {
+    border-color: #ec8d1e;
+}
+
+.swatches_header .color_nm2 {
+    color: #ec8d1e;
+}
+
+.product_slides a.active {
+    border-color: #ec8d1e;
+}
+
+.vip_oos {
+    border-color: #ec8d1e;
+}
+
+#payment_option .tableTags {
+    color: #ec8d1e;
+}
+
+.payment_error_msg {
+    border-color: #ec8d1e;
+    color: #ec8d1e;
+}
+
+@media screen and (max-width: 510px) {
+
+    .triangle-right:after {
+        border-bottom-color: #ec8d1e;
+    }
+}
+@media screen and (max-width: 320px) {
+
+    .triangle-right:after {
+        border-bottom-color: #ec8d1e;
+    }
+}
+
+h2 > span, h3 > span, h4 > span, h5 > span, h6 > span {
+    color: #ec8d1e;
+}
+
+.form_error_main {
+    border-color: #ec8d1e;
+    color: #ec8d1e !important;
+}
+
+#coupon .clearcoupon {
+    background: #ec8d1e;
+}
+
+#coupon .coupon_error {
+    color: #ec8d1e;
+}
+
+.pin-error > div {
+    border-color: #ec8d1e;
+}

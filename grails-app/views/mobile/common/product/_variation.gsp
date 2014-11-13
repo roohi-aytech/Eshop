@@ -46,8 +46,8 @@
                     <g:set var="curVariation"
                            value="${productModel?.variationValues?.find { value -> value?.variationGroup?.id == it?.variationGroup?.id }}"/>
                     <div ${curVariation?.variationGroup?.representationType == 'Color' ? 'itemprop="color"' : ''}
-                            class="cur-variation"
-                            id="cur-variation-${it.id}">${curVariation}</div>
+                            class="cur-variation red"
+                            id="cur-variation-${it.id}" ${it.variationValues.count { it } == 1 ? "style='display:inline-block !important'":""}>${curVariation}</div>
 
                     <div class="hover-variation"></div>
                     <g:hiddenField id="variation${it.id}" name="variation${it.id}" value="${curVariation?.id}"/>
@@ -73,13 +73,14 @@
                 </g:if>
             </g:each>
         %{--guarantee select--}%
+            <g:set var="gList" value="${ProductModel.findAllByProduct(product).collect { it.guarantee }.toSet()}"/>
             <g:if test="${productModel?.guarantee}">
                 <div class="variation-title">
                     ${message(code: 'guarantee')}
                     <g:set var="curVariation"
                            value="${productModel?.guarantee?.name}"/>
-                    <div class="cur-variation"
-                         id="cur-variation-0">${productModel?.guarantee?.name}</div>
+                    <div class="cur-variation red"
+                         id="cur-variation-0" ${gList.count { it } == 1 ? "style='display:inline-block !important'":""}>${productModel?.guarantee?.name}</div>
 
                     <div class="hover-variation"></div>
                     <g:hiddenField id="variation0" name="guarantee" value="${productModel?.guarantee?.id}"/>

@@ -1,5 +1,6 @@
+<g:if test="${product?.description}">
+    <div class="testimonial">
 
-<div class="testimonial">
-
-    <h4>${product?.description}</h4>
-</div>
+        <h4>${product?.description}</h4>
+    </div>
+</g:if>

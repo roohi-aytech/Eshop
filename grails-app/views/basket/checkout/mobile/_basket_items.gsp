@@ -1,5 +1,4 @@
 <script src="${resource(dir: 'js/mobile', file: 'checkout.js')}" type="text/javascript"></script>
-<link type="text/css" href="${resource(dir: 'css/mobile', file: 'checkout.css')}" rel="stylesheet"/>
 
 <div class="clear"></div>
 
