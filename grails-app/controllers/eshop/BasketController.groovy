@@ -215,15 +215,15 @@ class BasketController {
             def view = 'checkout'
             if (session.mobile) {
                 view = '/basket/checkoutMobile'
-            }
 
-            if (params.currentStep) {
-                def cp = params.currentStep as Float
+                if (params.currentStep) {
+                    def cp = params.currentStep as Float
 //                if(cp <= currentStep)
-                currentStep = cp
+                    currentStep = cp
+                }
             }
 
-            if(!session.maxReachedStep || currentStep > session.maxReachedStep)
+            if (!session.maxReachedStep || currentStep > session.maxReachedStep)
                 session.maxReachedStep = currentStep
 
             render(model: [
