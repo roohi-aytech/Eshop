@@ -14,7 +14,7 @@ class BasketController {
     def index() {
         session['currentStep'] = 1
         def customer = springSecurityService.currentUser as Customer
-        def accountValue = customer ? accountingService.calculateCustomerAccountValue(customer) : 0
+        def accountValue = customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0
         session['payFromAccount'] = accountValue > 0
         redirect(action: 'checkout')
     }

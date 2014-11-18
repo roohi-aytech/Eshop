@@ -32,6 +32,7 @@ class Order {
     Boolean optionalInsurance = false
     Boolean sendFactorWith = false
     Boolean callBeforeSend = false
+    Boolean paymentDone = false
 
     String status
     String trackingCode
@@ -103,8 +104,9 @@ class Order {
 
         serialNumber nullable: true
         deliveryTime(nullable: true)
-        buyerName(nullable:true)
-        buyerAmount(nullable:true)
+        buyerName(nullable: true)
+        buyerAmount(nullable: true)
+        paymentDone(nullable: true)
     }
 
     static mapping = {

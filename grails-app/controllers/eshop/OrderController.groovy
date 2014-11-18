@@ -181,11 +181,11 @@ class OrderController {
             orderItem.save()
         }
         if (session['payFromAccount'] && customer) {
-            def acctValue = accountingService.calculateCustomerAccountValue(customer)
+            def acctValue = accountingService.calculateCustomerAccountValue(customer)/priceService.getDisplayCurrencyExchangeRate()
             order.usedAccountValue = acctValue
         }
         priceService.updateOrderPrice(order);
-
+        println order.usedAccountValue
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = OrderHelper.ACTION_CREATION
         trackingLog.date = new Date()
@@ -246,9 +246,26 @@ class OrderController {
         session.removeAttribute("checkout_address")
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
-        if (order.paymentType == 'online')
+        if (order.paymentType == 'online') {
+//            def customerTransaction = new CustomerTransaction()
+//            customerTransaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
+//            customerTransaction.date = new Date()
+//            customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+//            customerTransaction.order = order
+//            customerTransaction.creator = order.customer
+//            customerTransaction.save()
+//
+//            //save withdrawal transaction
+//            def transaction = new Transaction()
+//            transaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
+//            transaction.date = new Date()
+//            transaction.type = AccountingHelper.TRANSACTION_TYPE_WITHDRAWAL
+//            transaction.order = order
+//            transaction.creator = order.customer
+//            transaction.save()
+
             redirect(controller: 'order', action: 'remainingPayment', id: order.id)
-        else
+        } else
             render(view: 'create', model: [trackingCode: order.trackingCode])
     }
 
@@ -596,6 +613,7 @@ class OrderController {
                 //set order status
                 if (!grailsApplication.config.payOnCheckout)
                     payment.order.status = OrderHelper.STATUS_PAID
+                payment.order.paymentDone = true
                 payment.order.paymentType = 'online'
                 payment.order.save()
 

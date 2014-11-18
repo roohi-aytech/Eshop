@@ -11,7 +11,7 @@ eshop.controller('eshopCtrl', function ($scope, $http) {
     $scope.deliveryTitle  = '';
     $scope.sendFactor = sendFactor;
     $scope.customerAccountValue = customerAccountValue;
-    $scope.useGolBon = customerAccountValue>0;
+    $scope.useGolBon = false;//customerAccountValue>0;
     $scope.golbonDiscount = golbonDiscount;
     $scope.deliveryMethod = deliveryMethod;
     $scope.deliveryMethodInfo = deliveryMethodInfo;

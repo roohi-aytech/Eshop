@@ -238,8 +238,18 @@
         </span>
 
     </li>
+    <g:if test="${orderInstance?.paymentType=='online'}">
+        <li class="fieldcontain">
+            <span id="paymentDone-label" class="property-label"><g:message code="payment.done"/></span>
+
+            <span class="property-value" aria-labelledby="totalPrice-label">
+                <g:message code="payment.done.${orderInstance?.paymentDone}"/>
+            </span>
+
+        </li>
+    </g:if>
     <g:if test="${orderInstance}">
-        <g:set var="payments" value="${OnlinePayment.findAllByOrderAndTransactionReferenceCodeIsNotNull(orderInstance)}"/>
+        <g:set var="payments" value="${OnlinePayment.findAllByOrderAndTransactionReferenceCodeIsNotNullAndResultCodeGreaterThan(orderInstance,0)}"/>
         <g:if test="${payments}">
             <g:each in="${payments}">
                 <li class="fieldcontain">
