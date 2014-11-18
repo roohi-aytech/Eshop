@@ -2,7 +2,7 @@
     <a href="${createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")}">
         <div class="product-info">
             <img border="0"
-                 src="${resource(dir: '/images/felfel', file: 'grey.gif')}"
+                 src="${grailsApplication.config.eShop.instance=='goldaan'?resource(dir: '/images/goldaan', file: 'loadinfo.net.gif'):resource(dir: '/images/felfel', file: 'loading1.gif')}"
                  data-src="${createLink(controller: 'image', params: [id: productModel?.id, wh: '300x300', type: 'productModel'])}"
                  class="lazy" id="lazy-${productModel?.id}" style="display: inline-block;">
 

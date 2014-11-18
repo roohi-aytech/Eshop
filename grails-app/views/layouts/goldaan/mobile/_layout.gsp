@@ -69,7 +69,7 @@
 
 <div class="main-width">
     <g:layoutBody/>
-    <g:render template="/layouts/felfel/mobile/footer"/>
+    <g:render template="/layouts/goldaan/mobile/footer"/>
 </div>
 
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>

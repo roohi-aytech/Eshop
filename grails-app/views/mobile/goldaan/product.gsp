@@ -33,11 +33,12 @@
     <g:render template="/mobile/common/product/images"/>
 </div>
 <g:render template="/mobile/common/product/variation"/>
-<div id="product-card">
+<div id="product-card" class="acnt-btn">
     <g:render template="/mobile/common/product/actions"/>
 </div>
-<g:render template="/mobile/common/product/description"/>
-
+<div >
+    <g:render template="/mobile/common/product/description"/>
+</div>
 <div class="product-detail                                                                                                                                                                                                                                                          ">
     <p class="sku-no"><g:message code="invoice.productCode"/> : ${product.id}</p>
 </div>

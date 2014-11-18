@@ -105,6 +105,9 @@ class BasketController {
         if (grailsApplication.config.customCheckout) {
             def customer = springSecurityService.currentUser as Customer
             def view = "/site/${grailsApplication.config.eShop.instance}/checkout"
+            if (session.mobile) {
+                view = '/basket/checkoutMobile'
+            }
             def currentStep = session['currentStep'] ?: 1
 
             def customInvoiceInformation = [:]
