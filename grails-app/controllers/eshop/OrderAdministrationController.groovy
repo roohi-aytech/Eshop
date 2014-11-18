@@ -211,7 +211,7 @@ class OrderAdministrationController {
         order.status = newStatus
         order.save()
         if (grailsApplication.config.payOnCheckout && order.paymentType == 'online' && order.paymentDone) {
-            if (newStatus in [OrderHelper.STATUS_NOT_EXIST, OrderHelper.STATUS_INCOMPLETE, OrderHelper.STATUS_INCORRECT]) {
+            if (newStatus in [OrderHelper.STATUS_NOT_EXIST, OrderHelper.STATUS_INCORRECT]) {
                 def customerTransaction = new CustomerTransaction()
                 customerTransaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
                 customerTransaction.date = new Date()

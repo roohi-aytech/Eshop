@@ -146,6 +146,8 @@ class OrderController {
         order.deliveryTime = "${session['deliveryDate_hour']}:${session['deliveryDate_minute']} ${session['deliveryDate']}"
         order.status = OrderHelper.STATUS_CREATED
         order.save()
+        if(order.errors.allErrors)
+            println order.errors.allErrors
 
         def cal = Calendar.getInstance()
         cal.setTime(new Date())
@@ -181,11 +183,12 @@ class OrderController {
             orderItem.save()
         }
         if (session['payFromAccount'] && customer) {
-            def acctValue = accountingService.calculateCustomerAccountValue(customer)/priceService.getDisplayCurrencyExchangeRate()
+            def acctValue = accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()
             order.usedAccountValue = acctValue
         }
+//        println session['payFromAccount']
         priceService.updateOrderPrice(order);
-        println order.usedAccountValue
+//        println order.usedAccountValue
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = OrderHelper.ACTION_CREATION
         trackingLog.date = new Date()
@@ -241,12 +244,13 @@ class OrderController {
         session.removeAttribute('deliveryDate_minute')
         session.removeAttribute('deliveryDate')
         session.removeAttribute('payFromAccount')
+        session['payFromAccount'] = false
         session.removeAttribute("billingAddress")
         session.removeAttribute("checkout_customerInformation")
         session.removeAttribute("checkout_address")
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
-        if (order.paymentType == 'online') {
+        if (order.paymentType == 'online' && order.totalPayablePrice>0) {
 //            def customerTransaction = new CustomerTransaction()
 //            customerTransaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
 //            customerTransaction.date = new Date()
