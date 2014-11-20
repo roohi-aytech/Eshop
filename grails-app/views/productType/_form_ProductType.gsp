@@ -94,7 +94,7 @@
         <g:message code="productType.mobileBanner.label" default="Mobile Banner" />
 
     </label>
-    <input type="file" id="mobileBanner" name="menuImage" />
+    <input type="file" id="mobileBanner" name="mobileBanner" />
     <input type="hidden" id="mobileBanner${productTypeInstance?.id}deleted" name="mobileBannerDeleted" value="" />
     <img id="mobileBnnr" width="100px"/>
     <input type="button" value="<g:message code="delete" />" onclick="deleteMobileBanner()">

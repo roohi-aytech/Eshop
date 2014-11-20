@@ -363,16 +363,24 @@ class ProductTypeController {
                     productType.image = image
             }
             if (!params.menuImageDeleted) {
-                if (params.menuImage)
-                    productType.menuImage = params.menuImage.bytes
-                else if (menuImage)
-                    productType.menuImage = menuImage
+                try {
+                    if (params.menuImage)
+                        productType.menuImage = params.menuImage.bytes
+                    else if (menuImage)
+                        productType.menuImage = menuImage
+                }catch (e){
+                    e.printStackTrace()
+                }
             }
             if (!params.mobileBannerDeleted) {
-                if (params.mobileBanner)
-                    productType.mobileBanner = params.mobileBanner.bytes
-                else if (mobileBanner)
-                    productType.mobileBanner = mobileBanner
+                try {
+                    if (params.mobileBanner)
+                        productType.mobileBanner = params.mobileBanner.bytes
+                    else if (mobileBanner)
+                        productType.mobileBanner = mobileBanner
+                }catch (e){
+                    e.printStackTrace()
+                }
             }
             productType.searchKeys = params.searchKeys
             productType.save(flush: true)

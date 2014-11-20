@@ -94,12 +94,12 @@ class OrderAdministrationController {
 
     def updatePrice() {
         if (grailsApplication.config.onlyUpdateInFactor) {
-            def orderItem=OrderItem.get(params.orderItem.id)
+            def orderItem = OrderItem.get(params.orderItem.id)
 
-            orderItem.unitPrice=params.int('price')
+            orderItem.unitPrice = params.int('price')
             orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
             orderItem.save()
-            def order=orderItem.order
+            def order = orderItem.order
             if (grailsApplication.config.disableRoundingPrices) {
                 order.totalPrice = Math.round(((OrderItem.findAllByOrderAndDeleted(order, false).sum(0, {
                     it.totalPrice
@@ -210,7 +210,26 @@ class OrderAdministrationController {
         def order = Order.get(params.id)
         order.status = newStatus
         order.save()
+        if (grailsApplication.config.payOnCheckout && order.paymentType == 'online' && order.paymentDone) {
+            if (newStatus in [OrderHelper.STATUS_NOT_EXIST, OrderHelper.STATUS_INCORRECT]) {
+                def customerTransaction = new CustomerTransaction()
+                customerTransaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
+                customerTransaction.date = new Date()
+                customerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+                customerTransaction.order = order
+                customerTransaction.creator = order.customer
+                customerTransaction.save()
 
+                //save withdrawal transaction
+                def transaction = new Transaction()
+                transaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
+                transaction.date = new Date()
+                transaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+                transaction.order = order
+                transaction.creator = order.customer
+                transaction.save()
+            }
+        }
         def trackingLog = new OrderTrackingLog()
         trackingLog.action = action
         trackingLog.date = new Date()
@@ -424,13 +443,15 @@ class OrderAdministrationController {
         transaction.creator = order.customer
         transaction.save()
 
-        def bonDiscount = priceService.findDiscounts("Bon", order.totalPrice, order.items.sum { it.orderCount })
+        def bonDiscount = priceService.findDiscounts("Bon", order.totalPrice, order.items.sum {
+            it.orderCount
+        }) * priceService.getDisplayCurrencyExchangeRate()
         if (bonDiscount) {
             def boncustomerTransaction = new CustomerTransaction()
             boncustomerTransaction.account = request.account
             boncustomerTransaction.value = bonDiscount
             boncustomerTransaction.date = new Date()
-            boncustomerTransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+            boncustomerTransaction.type = AccountingHelper.TRANSACTION_TYPE_BON
             boncustomerTransaction.order = order
             boncustomerTransaction.creator = order.customer
             boncustomerTransaction.save()
@@ -439,7 +460,7 @@ class OrderAdministrationController {
             def bontransaction = new Transaction()
             bontransaction.account = request.account
             bontransaction.value = bonDiscount
-            bontransaction.type = AccountingHelper.TRANSACTION_TYPE_DEPOSIT
+            bontransaction.type = AccountingHelper.TRANSACTION_TYPE_BON
             bontransaction.order = order
             bontransaction.creator = order.customer
             bontransaction.save()
@@ -450,8 +471,8 @@ class OrderAdministrationController {
                 OrderHelper.ACTION_APPROVE_PAYMENT,
                 "")
 
-        if(grailsApplication.config.sendInvoiceWithApprove){
-            def os=new ByteArrayOutputStream()
+        if (grailsApplication.config.sendInvoiceWithApprove) {
+            def os = new ByteArrayOutputStream()
             pdfService.generateInvoice(order, os, true)
             mailService.sendMail {
                 multipart true
@@ -461,7 +482,7 @@ class OrderAdministrationController {
                         model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
                 attachBytes "invoice.pdf", "application/pdf", os.toByteArray()
             }
-        }else {
+        } else {
             mailService.sendMail {
                 to order.ownerEmail
                 subject message(code: 'emailTemplates.approve_payment.subject')
@@ -557,6 +578,6 @@ class OrderAdministrationController {
             order = Order.findByTrackingCode(params.id)
         response.setHeader("Content-Disposition", "attachment; filename=\"Invoice.pdf\"");
         response.setContentType('application/pdf')
-        pdfService.generateInvoice(order, response.outputStream, params.boolean('bg')?:false)
+        pdfService.generateInvoice(order, response.outputStream, params.boolean('bg') ?: false)
     }
 }

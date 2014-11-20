@@ -755,13 +755,17 @@ class SiteController {
 
         //fill zoomable property of images
         if (product.mainImage) {
-            imageService.getImageSize(product.mainImage, product)
-            product.mainImage.dynamicProperties.zoomable = product.mainImage.dynamicProperties.width >= 700 || product.mainImage.dynamicProperties.height >= 700
+            try {
+                imageService.getImageSize(product.mainImage, product)
+                product.mainImage.dynamicProperties.zoomable = product.mainImage.dynamicProperties.width >= 700 || product.mainImage.dynamicProperties.height >= 700
+            }catch(e){}
         }
 
         product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
-            imageService.getImageSize(it, product)
-            it.dynamicProperties.zoomable = it.dynamicProperties.width >= 700 || it.dynamicProperties.height >= 700
+            try {
+                imageService.getImageSize(it, product)
+                it.dynamicProperties.zoomable = it.dynamicProperties.width >= 700 || it.dynamicProperties.height >= 700
+            }catch (e){}
         }
 
         //update last visited products

@@ -107,11 +107,11 @@
                         <h3><g:message code="yourOrders"/><span class="icon-arrowRight"></span></h3>
                     </div>
                 </a>
-                <a href="${createLink(controller: 'wishList', action: 'show')}">
-                    <div class="acnt-btn">
-                        <h3><g:message code="wishList.mobile.button"/><span class="icon-arrowRight"></span></h3>
-                    </div>
-                </a>
+                %{--<a href="${createLink(controller: 'wishList', action: 'show')}">--}%
+                    %{--<div class="acnt-btn">--}%
+                        %{--<h3><g:message code="wishList.mobile.button"/><span class="icon-arrowRight"></span></h3>--}%
+                    %{--</div>--}%
+                %{--</a>--}%
 
                 <a href="${createLink(controller: 'logout')}">
                     <div class="logout-btn">
@@ -149,23 +149,23 @@
         </form>
 
 
-        <div class="tags_wrapper_menu">
-            <div class="wrapper_heading_container"><div class="wrapper_heading"><g:message
-                    code="search.sample.title"/></div></div>
+        %{--<div class="tags_wrapper_menu">--}%
+            %{--<div class="wrapper_heading_container"><div class="wrapper_heading"><g:message--}%
+                    %{--code="search.sample.title"/></div></div>--}%
 
-            <div class="tag_container">
+            %{--<div class="tag_container">--}%
 
-                <a class="p_btn"
-                   href="${createLink(uri: "/search?phrase=${message(code: 'search.sample.1')}&f=p0")}"><g:message
-                        code="search.sample.1"/></a>
-                <a class="p_btn"
-                   href="${createLink(uri: "/search?phrase=${message(code: 'search.sample.2')}&f=p0")}"><g:message
-                        code="search.sample.2"/></a>
-                <a class="p_btn"
-                   href="${createLink(uri: "/search?phrase=${message(code: 'search.sample.3')}&f=p0")}"><g:message
-                        code="search.sample.3"/></a>
-            </div>
-        </div>
+                %{--<a class="p_btn"--}%
+                   %{--href="${createLink(uri: "/search?phrase=${message(code: 'search.sample.1')}&f=p0")}"><g:message--}%
+                        %{--code="search.sample.1"/></a>--}%
+                %{--<a class="p_btn"--}%
+                   %{--href="${createLink(uri: "/search?phrase=${message(code: 'search.sample.2')}&f=p0")}"><g:message--}%
+                        %{--code="search.sample.2"/></a>--}%
+                %{--<a class="p_btn"--}%
+                   %{--href="${createLink(uri: "/search?phrase=${message(code: 'search.sample.3')}&f=p0")}"><g:message--}%
+                        %{--code="search.sample.3"/></a>--}%
+            %{--</div>--}%
+        %{--</div>--}%
 
     </div>
 

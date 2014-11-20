@@ -11,7 +11,7 @@
                                    params="[id: product?.id, name: mainImage?.name, wh: 'max']"/>" class="item bbq"
                data-q="filters" rel="popup" data-relid="${imageIndex}">
                 <span>
-                    <img class="lazy" src="${resource(dir: 'images/mobile', file: 'grey.gif')}"
+                    <img class="lazy" src="${grailsApplication.config.eShop.instance=='goldaan'?resource(dir: '/images/goldaan', file: 'loadinfo.net.gif'):resource(dir: '/images/felfel', file: 'loading1.gif')}"
                          data-src="<g:createLink controller="image"
                                                  params="[id: product?.id, name: mainImage?.name, wh: '400x400']"/>"/>
                 </span>

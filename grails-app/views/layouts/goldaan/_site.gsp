@@ -124,7 +124,7 @@
         <% def accountingService = grailsApplication.classLoader.loadClass('eshop.AccountingService').newInstance() %>
         <g:set var="wishList" value="${eshop.Customer.findByUsername(sec.username())?.wishList?.collect{[id:it.id, title: it.toString(), price: priceService.calcProductPrice(it.id).showVal]}?:[]}"/>
         var buyerName='${session.getAttribute("buyerName")?:"${eshop.Customer.findByUsername(sec.username())?.toString()}"}'
-        var customerAccountValue=${accountingService.calculateCustomerAccountValue(eshop.Customer.findByUsername(sec.username()))};
+        var customerAccountValue=${accountingService.calculateCustomerAccountValue(eshop.Customer.findByUsername(sec.username()))/priceService.getDisplayCurrencyExchangeRate()};
         var wishListCounter = ${wishList? wishList.count {it}: 0};
         var wishList = ${(wishList?: []) as grails.converters.JSON};
         var wishListEnabled = true;

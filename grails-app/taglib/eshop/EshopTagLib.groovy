@@ -474,12 +474,12 @@ class EshopTagLib {
                             <a href="${
                         createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")
                     }">
-                                <img alt="" src="${resource(dir: '/images/felfel', file: 'grey.gif')}" data-src="${
+                                <img alt="" src="${grailsApplication.config.eShop.instance=='goldaan'?resource(dir: '/images/goldaan', file: 'loadinfo.net.gif'):resource(dir: '/images/felfel', file: 'loading1.gif')}" data-src="${
                         createLink(controller: 'image', params: [id: productModel?.id, wh: '300x300', type: 'productModel'])
                     }" class="lazy" style="display: inline-block;" id="lazy-${productModel?.id}"/>
                                 <h2 class="p_product_name">${productModel}</h2>
                                 <span class="p_product_cost">"""
-                    out << thumbnailPrice(productModelId: productModel.id)
+                    out << thumbnailPrice(productModelId: productModel.id,hideLastUpdate:true)
                     out <<
                             """</span>
                             </a>

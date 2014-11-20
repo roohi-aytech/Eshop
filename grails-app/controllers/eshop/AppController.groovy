@@ -93,7 +93,7 @@ class AppController {
                 [title: 'کیک'],
                 [title: 'شکلات و گل'],
                 [title: 'روز عشاق'],
-                [title: 'گل کاغذی'],
+                [title: 'گلدان کاغذی'],
                 [title: '>200', value: '200000-'],
                 [title: 'دسر'],
                 [title: 'بن سای'],

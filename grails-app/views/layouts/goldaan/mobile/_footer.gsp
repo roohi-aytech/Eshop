@@ -7,13 +7,13 @@
 <div class="new_footer">
     <sec:ifLoggedIn>
         <a href="${createLink(controller: 'basket', action: 'checkout')}" id="a-footer-cart">
-            <div class="btn_grad"><h3><span
+            <div class="btn_grad center"><h3><span
                     class="black"><g:message
                         code="basket"/> ({{basketCounter}})</span></h3></div></a>
     </sec:ifLoggedIn>
     <sec:ifNotLoggedIn>
-        <a href="${createLink(controller: 'login', action: 'auth')}"><div class="btn_grad"><h3><span
-                class="black"><g:message code="login"/> / <g:message code="register.link"/></span></h3></div></a>
+        <a href="${createLink(controller: 'login', action: 'auth')}"><div class="btn_grad center"><h3><span
+                class="black"><g:message code="login/register"/></span></h3></div></a>
     </sec:ifNotLoggedIn>
     <footer>
         <ul class="footer-nav">
@@ -25,14 +25,6 @@
             <li>
                 <a href="${createLink(controller: 'site', action: 'paymentMethods')}"><g:message
                         code="help.payment"/></a>
-            </li>
-            <li>
-                <a href="${createLink(controller: 'site', action: 'paymentAndDelivery')}"><g:message
-                        code="help.paymentAndDelivery"/></a>
-            </li>
-            <li>
-                <a href="${createLink(controller: 'site', action: 'deliveryTips')}"><g:message
-                        code="help.deliveryTips"/></a>
             </li>
             <li>
                 <a href="${createLink(controller: 'site', action: 'shoppingRules')}"><g:message
