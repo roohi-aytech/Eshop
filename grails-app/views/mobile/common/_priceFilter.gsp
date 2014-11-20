@@ -77,8 +77,8 @@
 
     $('#min-range').val(addCommasOnKeyPress('${(params.f?.split(',')?.find {
         it?.toString()?.startsWith('rf')
-    }?.replace('rf', '') ?: filters?.priceRange?.min ?: 0) as Integer}'));
+    }?.replace('rf', '') ?: filters?.priceRange? filters?.priceRange?.min : 0) as Integer}'));
     $('#max-range').val(addCommasOnKeyPress('${(params.f?.split(',')?.find {
         it?.toString()?.startsWith('rt')
-    }?.replace('rt', '') ?: filters?.priceRange?.max ?: 1000000000) as Integer}'));
+    }?.replace('rt', '') ?: filters?.priceRange? filters?.priceRange?.max : 1000000000) as Integer}'));
 </script>
