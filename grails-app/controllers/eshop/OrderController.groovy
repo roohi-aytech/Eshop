@@ -140,13 +140,13 @@ class OrderController {
         order.sendFactorWith = Boolean.parseBoolean(session['sendFactor'] ?: 'false')
 
 
-        order.deliveryPrice = (session['deliveryPrice'] ?: '0') as double
+        order.deliveryPrice = (session['deliveryPrice'] ?: params.price ?: '0') as double
         order.callBeforeSend = session['callBeforeSend']
-        order.deliverySourceStation = eshop.delivery.DeliveryMethod.get(session['deliveryMethod'])?.sourceStations?.find()
+        order.deliverySourceStation = session['deliveryMethod'] ? (eshop.delivery.DeliveryMethod.get(session['deliveryMethod'])?.sourceStations?.find()) : DeliverySourceStation.get(params.deliverySourceStation)
         order.deliveryTime = "${session['deliveryDate_hour']}:${session['deliveryDate_minute']} ${session['deliveryDate']}"
         order.status = OrderHelper.STATUS_CREATED
         order.save()
-        if(order.errors.allErrors)
+        if (order.errors.allErrors)
             println order.errors.allErrors
 
         def cal = Calendar.getInstance()
@@ -182,7 +182,7 @@ class OrderController {
             }
             orderItem.save()
         }
-        if (session['payFromAccount'] && customer) {
+        if ((session['payFromAccount'] || params.boolean('useBon')) && customer) {
             def acctValue = accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()
             order.usedAccountValue = acctValue
         }
@@ -243,6 +243,10 @@ class OrderController {
         session.removeAttribute('deliveryDate_hour')
         session.removeAttribute('deliveryDate_minute')
         session.removeAttribute('deliveryDate')
+        session.removeAttribute('deliveryDate_month')
+        session.removeAttribute('deliveryDate_day')
+        session.removeAttribute('deliveryDate_hour')
+        session.removeAttribute('deliveryDate_minute')
         session.removeAttribute('payFromAccount')
         session['payFromAccount'] = false
         session.removeAttribute("billingAddress")
@@ -250,7 +254,17 @@ class OrderController {
         session.removeAttribute("checkout_address")
         session.removeAttribute("checkout_customInvoiceInformation")
         session.removeAttribute("forwardUri")
-        if (order.paymentType == 'online' && order.totalPayablePrice>0) {
+        session.setAttribute("basket", [])
+        session.setAttribute("basketCounter", 0)
+        session.removeAttribute("order")
+        session.removeAttribute("sendingAddress")
+        session.removeAttribute("billingAddress")
+        session.removeAttribute("checkout_customerInformation")
+        session.removeAttribute("checkout_address")
+        session.removeAttribute("checkout_customInvoiceInformation")
+        session.removeAttribute("forwardUri")
+        session.removeAttribute("maxReachedStep")
+        if (order.paymentType == 'online' && order.totalPayablePrice > 0) {
 //            def customerTransaction = new CustomerTransaction()
 //            customerTransaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
 //            customerTransaction.date = new Date()

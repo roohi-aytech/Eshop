@@ -81,7 +81,8 @@
                     <a href="${createLink(controller: 'order', action: 'track')}"><img
                             src="${resource(dir: 'images/mobile', file: 'track-mini.png')}" align="absmiddle" width="40"
                             border="0"><span><g:message code="order.tracking.link"/></span></a>
-                    <a href="${createLink(controller: 'customer', action: 'panel')}"><img
+                    %{--<a href="${createLink(controller: 'customer', action: 'panel')}"><img--}%
+                    <a href="#"><img
                             src="${resource(dir: 'images/mobile', file: 'panel-mini.png')}" align="absmiddle"
                             width="40"
                             border="0"><span><g:message code="customer.panel.link"/> (<g:message code="commingSoon"/>)</span></a>
@@ -107,6 +108,11 @@
                         <h3><g:message code="yourOrders"/><span class="icon-arrowRight"></span></h3>
                     </div>
                 </a>
+                <g:if test="${grailsApplication.config.customCheckout}">
+                    <div class="acnt-btn">
+                        <h3><g:message code="golbon-value" args="${[eshop.accountValue()]}"/></h3>
+                    </div>
+                </g:if>
                 %{--<a href="${createLink(controller: 'wishList', action: 'show')}">--}%
                     %{--<div class="acnt-btn">--}%
                         %{--<h3><g:message code="wishList.mobile.button"/><span class="icon-arrowRight"></span></h3>--}%

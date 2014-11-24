@@ -1,3 +1,4 @@
+<eshop:resolveLocale locale="${locale}"/>
 مشتری گرامی ${personalEvent.customer} <br/>
 
 <g:link uri="/" absolute="true">فروشگاه اینترنتی  <g:message code="name"/></g:link>مناسبت زیر را به شما یادآوری می نماید

@@ -157,9 +157,9 @@ class DeliveryService {
                     result.sourceStation = sourceStation
                     result.price = price
                     result.hidePrice = deliveryMethod.hidePrice ?: false
-                    result.name=deliveryMethod.name
-                    result.description=deliveryMethod.description
-                    result.id=deliveryMethod.id
+                    result.name = deliveryMethod.name
+                    result.description = deliveryMethod.description
+                    result.id = deliveryMethod.id
                     if (deliveryMethod.insurancePercent)
                         result.priceWithInsurance = price + ((totalPrice * deliveryMethod.insurancePercent) / 100)
 
@@ -172,6 +172,7 @@ class DeliveryService {
         //round price
         result.price = Math.floor(result.price / (1000 * priceService.getDisplayCurrencyExchangeRate())) * 1000
         result.priceWithInsurance = Math.floor(result.priceWithInsurance / (1000 * priceService.getDisplayCurrencyExchangeRate())) * 1000
+        result.logo = deliveryMethod.logo ? true : false
 
         result
     }

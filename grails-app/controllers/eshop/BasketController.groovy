@@ -105,17 +105,32 @@ class BasketController {
         if (grailsApplication.config.customCheckout) {
             def customer = springSecurityService.currentUser as Customer
             def view = "/site/${grailsApplication.config.eShop.instance}/checkout"
+            def currentStep = session['currentStep'] ?: 1
             if (session.mobile) {
+                if (!customer && !session.checkout_customerInformation && session.getAttribute("basket")?.size() > 0)
+                    session.forwardUri = createLink(controller: 'basket', action: 'checkout')
+                else
+                    session.forwardUri = null
+
+                if (customer || session.checkout_customerInformation) {
+                    currentStep = 1.5
+                }
+                if (params.currentStep) {
+                    def cp = params.currentStep as Float
+//                if(cp <= currentStep)
+                    currentStep = cp
+                }
                 view = '/basket/checkoutMobile'
             }
-            def currentStep = session['currentStep'] ?: 1
 
-            def customInvoiceInformation = [:]
-            customInvoiceInformation.ownerName = message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' +
-                    (customer ? customer.toString() : session.checkout_customerInformation?.lastName)
-            customInvoiceInformation.ownerCode = customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode
-            customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
-
+            def customInvoiceInformation = session.checkout_customInvoiceInformation
+            if (!customInvoiceInformation) {
+                customInvoiceInformation = [:]
+                customInvoiceInformation.ownerName = message(code: "customer.title.${customer ? customer.sex : session.checkout_customerInformation?.sex}") + ' ' +
+                        (customer ? customer.toString() : session.checkout_customerInformation?.lastName)
+                customInvoiceInformation.ownerCode = customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode
+                customInvoiceInformation.ownerMobile = customer ? customer.mobile : session.checkout_customerInformation?.mobile
+            }
 //            def deliveryMethods = DeliveryMethod.list().sort { it.name }
             def deliveryMethods = deliveryService.findAllDeliveryMethodsWithBasket(session.getAttribute("basket")).sort {
                 it.name
@@ -129,6 +144,7 @@ class BasketController {
                     it.title
                 }?.collect { it.value.find() }
             session['currentStep'] = currentStep
+            def accountValue = customer ? (accountingService.calculateCustomerAccountValue(customer) / priceService.getDisplayCurrencyExchangeRate()) : 0
             render(model: [
                     basket                  : session.getAttribute("basket"),
                     customer                : customer,
@@ -137,6 +153,9 @@ class BasketController {
                     customInvoiceInformation: customInvoiceInformation,
 //                    addedValueTypes         : addedValueTypes,
                     prevAddresses           : prevAddresses,
+                    useBon                  : session.useBon,
+                    bonDiscount             : session.bonDiscount,
+                    accountValue            : accountValue,
                     deliveryMethods         : deliveryMethods
             ], view: view)
         } else {
@@ -412,7 +431,19 @@ class BasketController {
         address.postalCode = params.postalCode
         address.telephone = params.telephone
         address.addressLine1 = params.addressLine
+        address.title = params.title
         session.checkout_address = address
+        if (grailsApplication.config.customCheckout) {
+            session['deliveryName'] = params.title
+            session['deliveryPhone'] = params.telephone
+            session['deliveryAddressLine'] = params.addressLine
+            session['callBeforeSend'] = params.boolean('callBeforeSend')
+            session['deliveryDate'] = params.deliveryMonth + '/' + params.deliveryDate
+            session['deliveryDate_month'] = params.deliveryMonth
+            session['deliveryDate_day'] = params.deliveryDate
+            session['deliveryDate_hour'] = params.deliveryHour
+            session['deliveryDate_minute'] = params.deliveryMinute
+        }
         redirect(action: 'checkout', params: [currentStep: 3])
     }
 
@@ -425,7 +456,18 @@ class BasketController {
                 (customer ? message(code: "customer.title.${customer.sex}") + " " + customer.toString() :
                         message(code: "customer.title.${session.checkout_customerInformation.sex}") + " " + session.checkout_customerInformation.lastName)
         customInvoiceInformation.ownerCode = customInvoiceInformation.customInvoiceInfo ? params.ownerCode : (customer ? customer.nationalCode : session.checkout_customerInformation?.ownerCode)
-        customInvoiceInformation.ownerMobile = customInvoiceInformation.customInvoiceInfo ? params.ownerMobile : (customer ? customer.mobile : session.checkout_customerInformation.mobile)
+        customInvoiceInformation.ownerMobile = (customInvoiceInformation.customInvoiceInfo ? params.ownerMobile:'')?: (customer ? customer.mobile : session.checkout_customerInformation.mobile)
+        customInvoiceInformation.ownerEmail = (customInvoiceInformation.customInvoiceInfo ? params.ownerEmail:'') ?: (customer ? customer.email : session.checkout_customerInformation.email)
+        if (grailsApplication.config.customCheckout) {
+            customInvoiceInformation.sendFactorWith = params.sendFactorWith ?: customInvoiceInformation.sendFactorWith
+            customInvoiceInformation.paymentType = params.paymentType ?: customInvoiceInformation.paymentType ?: 'online'
+            session.setAttribute('paymentType', customInvoiceInformation.paymentType)
+            session.setAttribute('buyerName', customInvoiceInformation.ownerName)
+            session.setAttribute('buyerEmail', customInvoiceInformation.ownerEmail)
+            session.setAttribute('buyerPhone', customInvoiceInformation.ownerMobile)
+
+            session.setAttribute('sendFactor', customInvoiceInformation.sendFactorWith)
+        }
         session.checkout_customInvoiceInformation = customInvoiceInformation
         redirect(action: 'checkout', params: [currentStep: 4])
     }

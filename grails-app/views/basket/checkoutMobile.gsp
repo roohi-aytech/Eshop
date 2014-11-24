@@ -44,71 +44,83 @@
 </g:if>
 
 <g:if test="${currentStep == 2}">
-    <g:if test="${customer && !session.checkout_address}">
-        <form id="addressSelectionForm" style="margin-bottom: 0;border-bottom:1px dashed #dddddd;padding-bottom:10px;">
-            <div style="padding-bottom:10px;padding-top:10px;">
-                <label style="display: inline-block;margin-left:20px;line-height: 18px;"><g:message
-                        code="enquiry.request.shopping.addressIsSameAsProfile"/></label>
-            </div>
+    <g:if test="${grailsApplication.config.customCheckout}">
+        <g:render template="checkout/mobile/address_custom"/>
+    </g:if>
+    <g:else>
+        <g:if test="${customer && !session.checkout_address}">
+
+            <form id="addressSelectionForm" style="margin-bottom: 0;border-bottom:1px dashed #dddddd;padding-bottom:10px;">
+                <div style="padding-bottom:10px;padding-top:10px;">
+                    <label style="display: inline-block;margin-left:20px;line-height: 18px;"><g:message
+                            code="enquiry.request.shopping.addressIsSameAsProfile"/></label>
+                </div>
 
 
-            <div class="addressFilter">
-                <div class="toggle-light"></div>
-            </div>
+                <div class="addressFilter">
+                    <div class="toggle-light"></div>
+                </div>
 
-            <div class="clear"></div>
-            <script language="javascript" type="text/javascript">
-                $('.toggle-light').toggles({
-                    drag: true, // allow dragging the toggle between positions
-                    click: true, // allow clicking on the toggle
-                    text: {
-                        on: '${message(code:'true')}', // text for the ON position
-                        off: '${message(code:'false')}' // and off
-                    },
-                    on: false, // is the toggle ON on init
-                    animate: 250, // animation time
-                    transition: 'swing', // animation transition,
-                    checkbox: null, // the checkbox to toggle (for use in forms)
-                    clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
-                    width: 50, // width used if not set in css
-                    height: 20, // height if not set in css
-                    type: 'compact' // if this is set to 'select' then the select style toggle will be used
-                }).on('toggle', function (e, active) {
-                    $('#addressLoadingPane').stop().fadeOut(200, function () {
-                        $('#addressLoadingBar').stop().fadeIn(200, function () {
-                            if (addressRequest)
-                                addressRequest.abort();
-                            addressRequest = $.ajax({
-                                url: '${createLink(action: 'checkoutAddress')}',
-                                type: 'post',
-                                data: {addressIsSameAsProfile: active}
-                            }).success(function (response) {
-                                $('#addressLoadingBar').stop().fadeOut(200, function () {
-                                    $('#addressLoadingPane').html(response).stop().fadeIn(500);
+                <div class="clear"></div>
+                <script language="javascript" type="text/javascript">
+                    $('.toggle-light').toggles({
+                        drag: true, // allow dragging the toggle between positions
+                        click: true, // allow clicking on the toggle
+                        text: {
+                            on: '${message(code:'true')}', // text for the ON position
+                            off: '${message(code:'false')}' // and off
+                        },
+                        on: false, // is the toggle ON on init
+                        animate: 250, // animation time
+                        transition: 'swing', // animation transition,
+                        checkbox: null, // the checkbox to toggle (for use in forms)
+                        clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
+                        width: 50, // width used if not set in css
+                        height: 20, // height if not set in css
+                        type: 'compact' // if this is set to 'select' then the select style toggle will be used
+                    }).on('toggle', function (e, active) {
+                        $('#addressLoadingPane').stop().fadeOut(200, function () {
+                            $('#addressLoadingBar').stop().fadeIn(200, function () {
+                                if (addressRequest)
+                                    addressRequest.abort();
+                                addressRequest = $.ajax({
+                                    url: '${createLink(action: 'checkoutAddress')}',
+                                    type: 'post',
+                                    data: {addressIsSameAsProfile: active}
+                                }).success(function (response) {
+                                    $('#addressLoadingBar').stop().fadeOut(200, function () {
+                                        $('#addressLoadingPane').html(response).stop().fadeIn(500);
+                                    });
                                 });
                             });
                         });
                     });
-                });
-            </script>
+                </script>
 
-        </form>
+            </form>
 
-        <div id="addressLoadingBar" style="display: none;margin:10px;">
-            <g:message code="waiting"/>
-        </div>
+            <div id="addressLoadingBar" style="display: none;margin:10px;">
+                <g:message code="waiting"/>
+            </div>
 
-        <div id="addressLoadingPane" style="margin-top:10px;">
+            <div id="addressLoadingPane" style="margin-top:10px;">
+                <g:render template="checkout/mobile/address"/>
+            </div>
+
+        </g:if>
+        <g:else>
             <g:render template="checkout/mobile/address"/>
-        </div>
-    </g:if>
-    <g:else>
-        <g:render template="checkout/mobile/address"/>
+        </g:else>
     </g:else>
 </g:if>
 
 <g:if test="${currentStep == 3}">
-    <g:render template="checkout/mobile/invoice_info"/>
+    <g:if test="${grailsApplication.config.customCheckout}">
+        <g:render template="checkout/mobile/invoice_info_custom"/>
+    </g:if>
+    <g:else>
+        <g:render template="checkout/mobile/invoice_info"/>
+    </g:else>
 </g:if>
 
 <g:if test="${currentStep == 4}">

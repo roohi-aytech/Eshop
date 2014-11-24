@@ -1,9 +1,14 @@
 package eshop
 
 import grails.gsp.PageRenderer
+import org.codehaus.groovy.grails.web.util.WebUtils
 import org.springframework.context.i18n.LocaleContextHolder
+import org.springframework.web.servlet.LocaleResolver
 import org.springframework.web.servlet.i18n.SessionLocaleResolver
 import org.springframework.web.servlet.support.RequestContextUtils
+
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 
 class PersonalEventsJob {
@@ -21,7 +26,7 @@ class PersonalEventsJob {
 
     def execute() {
         println 'Personal Event Scheduler'
-        LocaleContextHolder.setLocale(new Locale(grailsApplication.config.locale.language, grailsApplication.config.locale.country))
+        def locale = new Locale(grailsApplication.config.locale.language)
 
         def now = new Date()
         def cal = Calendar.instance
@@ -36,8 +41,8 @@ class PersonalEventsJob {
         dates.add(cal.time)
         cal.add(Calendar.DATE, 3)
         dates.add(cal.time)
-
         PersonalEvent.findAllByDateInList(dates).each { personalEvent ->
+//        PersonalEvent.findAll().each { personalEvent ->
             def productType = ProductType.findByName(personalEvent.title)
             def dayRemaining = personalEvent.date.minus(now)
             if (dayRemaining == 2) {
@@ -51,15 +56,15 @@ class PersonalEventsJob {
             if (personalEvent.emailNotification && personalEvent.customer.email) {
                 mailService.sendMail {
                     to personalEvent.customer.email
-                    subject(messageSource.getMessage('emailTemplates.notification.subject', new Object[0], "", null))
+                    subject(messageSource.getMessage('emailTemplates.notification.subject', new Object[0], "", locale))
                     html(view: "/messageTemplates/${instance}_email_template",
-                            model: [message: groovyPageRenderer.render(template: '/messageTemplates/mail/personal_event', model: [personalEvent: personalEvent, productType: productType, dayRemaining: dayRemaining]).toString()])
+                            model: [message: groovyPageRenderer.render(template: '/messageTemplates/mail/personal_event', model: [personalEvent: personalEvent, productType: productType, dayRemaining: dayRemaining, locale: locale]).toString()])
                 }
             }
             if (personalEvent.smsNotification && personalEvent.customer.mobile) {
                 messageService.sendMessage(
                         personalEvent.customer.mobile,
-                        groovyPageRenderer.render(template: '/messageTemplates/sms/personal_event', model: [personalEvent: personalEvent, dayRemaining: dayRemaining]).toString())
+                        groovyPageRenderer.render(template: '/messageTemplates/sms/personal_event', model: [personalEvent: personalEvent, dayRemaining: dayRemaining, locale: locale]).toString())
             }
         }
 

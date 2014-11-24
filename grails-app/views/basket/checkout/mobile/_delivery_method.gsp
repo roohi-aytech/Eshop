@@ -52,7 +52,7 @@
 <div style="padding-bottom: 10px;margin-bottom: 10px;border-bottom: 1px dashed #dddddd;padding-top:10px;">
 <g:message code="deliveryMethod.help"/>
 </div>
-<g:form controller="order" action="create" style="margin-bottom:0;">
+<g:form controller="order" action="${grailsApplication.config.customCheckout?'finalizeOrder':'create'}" style="margin-bottom:0;">
     <div id="no-sign-in">
         <g:hiddenField id="price" name="price"/>
         <ul class="deliveryMethodList">
@@ -63,6 +63,9 @@
                     </script>
                 </g:if>
                 <li>
+                    <g:if test="${deliveryMethod.logo}">
+                        <img style="padding-right: 3px;" src="${createLink(controller: 'image',id:deliveryMethod.id,params: [type:'deliveryMethod'] )}">
+                    </g:if>
                     <input type="radio" id="deliverySourceStation${deliveryMethod.sourceStation?.id}"
                            name="deliverySourceStation" ${indexer == 0 ? 'checked' : ''}
                            value="${deliveryMethod.sourceStation?.id}"
@@ -72,6 +75,9 @@
                     %{--</label>--}%
                     <label for="deliverySourceStation${deliveryMethod.sourceStation?.id}" style="color:black;">
                         <b ${indexer == 0 ? 'class="selected"' : ''}>${deliveryMethod.deliveryMethod}</b>
+                        <g:if test="${deliveryMethod?.deliveryMethod?.description}">
+                            <span>(${deliveryMethod?.deliveryMethod?.description})</span>
+                        </g:if>
                     </label>
                     <br/>
                     <g:if test="${!deliveryMethod.deliveryMethod.insuranceIsRequired && deliveryMethod.deliveryMethod.insurancePercent > 0}">
@@ -101,6 +107,18 @@
                 <g:message code="noDeliveryMethod"/>
             </g:if>
         </ul>
+        <g:if test="${accountValue>0}">
+            <div style="padding-bottom: 10px;margin-bottom: 10px;border-bottom: 1px dashed #dddddd;padding-top:10px;">
+                <g:message code="you-can-pay-from-golbon" />
+            </div>
+            <input type='checkbox' class='customCheckbox' name='useBon' id='useBon'
+                   value="true" ${useBon}/>
+            <label for='useBon'>
+                <span></span>
+                <g:message code="basket.paycurgolbol"/> (<g:formatNumber number="${accountValue}" type="number"/> <eshop:currencyLabel/>)
+            </label>
+            <br/>
+        </g:if>
         <g:if test="${deliveryMethods.size > 0}">
             <input type="submit" class="grn-btn"
                    value="<g:message code="enquiry.request.shopping.finalize"/>"/>

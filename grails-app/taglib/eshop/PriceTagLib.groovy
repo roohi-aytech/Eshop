@@ -3,7 +3,7 @@ package eshop
 class PriceTagLib {
     static namespace = "eshop"
     def priceService
-
+    def accountingService
     def showPrice = { attrs, body ->
         out << render(template: "/site/price", model: priceService.calcProductPrice(attrs.productId))
     }
@@ -14,12 +14,12 @@ class PriceTagLib {
             price = priceService.calcProductModelPrice(attrs.productModelId)
             if (price.status != 'exists' && session['status_filter']) {
                 def productModel = ProductModel.get(attrs.productModelId)
-                out << eshop.synchronizeProduct(productId:[id: productModel?.product?.id, modelId: attrs.productModelId])
+                out << eshop.synchronizeProduct(productId: [id: productModel?.product?.id, modelId: attrs.productModelId])
             }
         } else {
             price = priceService.calcProductPrice(attrs.productId)
             if (price.status != 'exists' && session['status_filter']) {
-                out << eshop.synchronizeProduct(productId:[id: attrs.productId])
+                out << eshop.synchronizeProduct(productId: [id: attrs.productId])
             }
         }
 
@@ -59,5 +59,9 @@ class PriceTagLib {
             out << currency?.name
         else
             out << message(code: 'rial')
+    }
+
+    def accountValue = { attrs, body ->
+        out << "${g.formatNumber(number: accountingService.calculateCustomerAccountValue(Customer.findByUsername(sec.username())) / priceService.getDisplayCurrencyExchangeRate(), type: 'number')} ${eshop.currencyLabel()}"
     }
 }
