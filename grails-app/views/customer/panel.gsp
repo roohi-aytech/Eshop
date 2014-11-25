@@ -7,6 +7,7 @@
 </head>
 
 <body>
+<g:javascript src="jquery.maskinput.js"/>
 <div class="control-panel">
     <h2><g:message code="controlPanel.title" default="Control Panel"/></h2>
     <g:render template="inquired_payments"/>
@@ -110,6 +111,7 @@
                     <ul class="master">
                         <li><g:link controller="customer" action="invite"><g:message
                                 code="controlPanel.points.invite.label"></g:message></g:link></li>
+
                     </ul>
                 </div>
 
@@ -117,6 +119,13 @@
                     <h4><g:message
                             code="controlPanel.points.reports.label"></g:message></h4>
                     <ul class="slave">
+                        <g:if test="${grailsApplication.config.customCheckout}">
+                            <li>
+                                <h3>
+                                    <g:message code="golbon-value" args="${[eshop.accountValue()]}"/>
+                                </h3>
+                            </li>
+                        </g:if>
                     </ul>
                 </div>
 

@@ -11,11 +11,12 @@ class InvitationTagLib {
         if (!attrs.provider) {
             throwTagError("Tag [invitationLink] is missing required attribute [provider]")
         }
-        def action = (attrs.boolean('pick') ? 'pick' : 'invite')
-        def linkAttrs = [ controller : 'invitation', action: action, params: [provider: attrs.provider ] ]
+        if(grailsApplication.config.grails.plugin.invitation[attrs.provider]?.enabled) {
+            def action = (attrs.boolean('pick') ? 'pick' : 'invite')
+            def linkAttrs = [controller: 'invitation', action: action, params: [provider: attrs.provider]]
 
-        out << link( linkAttrs, body )
-
+            out << link(linkAttrs, body)
+        }
     }
 
     def messageForm = { attrs ->

@@ -3,7 +3,11 @@
 <div class="clear"></div>
 
 <div id="checkout">
-
+    <g:if test="${grailsApplication.config.customCheckout && bonDiscount}">
+        <div style="padding-bottom: 10px;margin-bottom: 10px;border-bottom: 1px dashed #dddddd;padding-top:10px;">
+            <g:message code="with-this-buy-get-golbon" args="${["${g.formatNumber(number:bonDiscount,type:'number')} ${eshop.currencyLabel()}"]}"/>
+        </div>
+    </g:if>
     <div class="cart_cta">
         <div class="right">
             <h2>
@@ -78,6 +82,7 @@
             <td class="you-pay"><g:message code="basket.items.price"/></td>
             <td class="pay-price"><b>{{calculateBasketTotalPrice() | number:0}} <eshop:currencyLabel/></b></td>
         </tr>
+
         </tbody></table>
 
     <div class="update_cart_ctas">

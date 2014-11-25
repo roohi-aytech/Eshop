@@ -1,6 +1,12 @@
 package eshop
 
+import org.codehaus.groovy.grails.web.util.WebUtils
+import org.springframework.web.servlet.LocaleResolver
+import org.springframework.web.servlet.support.RequestContextUtils
 import rapidgrails.TaglibHelper
+
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 class EshopTagLib {
     static namespace = "eshop"
@@ -187,7 +193,9 @@ class EshopTagLib {
         def link = (f == '' ? g.createLink(uri: '/') : g.createLink(action: params.action, params: params + [f: f, o: 'b']))
 
         out << """
-            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${attrs.name}"
+            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${
+            attrs.name
+        }"
                 data-url="${link}" ${remove ? 'checked="checked"' : ''}>
             <label for="chk-brandsname-${attrs.id}"><span></span>${attrs.name} <span class='count'>(${attrs.count})</span></label>
 
@@ -217,7 +225,9 @@ class EshopTagLib {
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
 
         out << """
-            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${attrs.value}"
+            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${
+            attrs.value
+        }"
                 data-url="${link}" ${remove ? 'checked="checked"' : ''}>
             <label for="chk-brandsname-${attrs.id}"><span></span>${attrs.name} <span class='count'>(${attrs.count})</span></label>
 """
@@ -247,7 +257,9 @@ class EshopTagLib {
         def link = g.createLink(action: params.action, params: params + [f: f, o: attrs.id])
 
         out << """
-            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${attrs.value}"
+            <input type="checkbox" id="chk-brandsname-${attrs.id}" class="customCheckbox filterCheckbox" value="${
+            attrs.value
+        }"
                 data-url="${link}" ${remove ? 'checked="checked"' : ''}>
             <label for="chk-brandsname-${attrs.id}"><span></span>${attrs.value} <span class='count'>(${attrs.count})</span></label>
 """
@@ -302,7 +314,9 @@ class EshopTagLib {
                         out << """
                             <a href="javascript://" type="basket" original-title="${
                             message(code: attrs.useLongText ? "add-to-basket.long" : "add-to-basket")
-                        }" class="has-tipsy ${attrs.class}" ${attrs.angular == "false" ? "on" : "ng-"}click="addToBasket(${
+                        }" class="has-tipsy ${attrs.class}" ${
+                            attrs.angular == "false" ? "on" : "ng-"
+                        }click="addToBasket(${
                             defaultModel.id
                         }, '${defaultModel.toBasketItemString().encodeAsHTML()}', '${price}', [], 1, '', ${
                             attrs.prodcutId
@@ -474,12 +488,14 @@ class EshopTagLib {
                             <a href="${
                         createLink(uri: "/product/${productModel?.product?.id}?model=${productModel?.id}")
                     }">
-                                <img alt="" src="${grailsApplication.config.eShop.instance=='goldaan'?resource(dir: '/images/goldaan', file: 'loadinfo.net.gif'):resource(dir: '/images/felfel', file: 'loading1.gif')}" data-src="${
+                                <img alt="" src="${
+                        grailsApplication.config.eShop.instance == 'goldaan' ? resource(dir: '/images/goldaan', file: 'loadinfo.net.gif') : resource(dir: '/images/felfel', file: 'loading1.gif')
+                    }" data-src="${
                         createLink(controller: 'image', params: [id: productModel?.id, wh: '300x300', type: 'productModel'])
                     }" class="lazy" style="display: inline-block;" id="lazy-${productModel?.id}"/>
                                 <h2 class="p_product_name">${productModel}</h2>
                                 <span class="p_product_cost">"""
-                    out << thumbnailPrice(productModelId: productModel.id,hideLastUpdate:true)
+                    out << thumbnailPrice(productModelId: productModel.id, hideLastUpdate: true)
                     out <<
                             """</span>
                             </a>
@@ -634,5 +650,26 @@ class EshopTagLib {
             </span>
 """
         }
+    }
+    def resolveLocale = { attrs, body ->
+        def grailsWebRequest = WebUtils.retrieveGrailsWebRequest()
+        def request = grailsWebRequest.request
+        def response = grailsWebRequest.response
+        def localeResolver = RequestContextUtils.getLocaleResolver(request)
+        if (localeResolver == null) {
+            localeResolver = new LocaleResolver() {
+                Locale locale
+
+                Locale resolveLocale(HttpServletRequest req) {
+                    return locale
+                }
+
+                void setLocale(HttpServletRequest req, HttpServletResponse httpServletRequest, Locale loc) {
+                    locale = loc
+                }
+            }
+            request.setAttribute("org.springframework.web.servlet.DispatcherServlet.LOCALE_RESOLVER", localeResolver)
+        }
+        localeResolver.setLocale(request, response, attrs.locale)
     }
 }
