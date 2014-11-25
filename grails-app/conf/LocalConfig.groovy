@@ -20,6 +20,7 @@ hideCustomerReviewTitle = false
 customCustomerReviewTemplate = false
 filterPriceOnChange = true
 ajaxFilter = true
+priceUpdateLinks=true
 ckeditor {
     upload {
         basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
