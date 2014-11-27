@@ -194,7 +194,7 @@ class AppController {
     def register() {
         def params = request.JSON
         if (params.code) {
-            def customerInstance = new Customer()
+            def customerInstance = Customer.findByUsername(params.username) ?: new Customer()
 
             customerInstance.firstName = params.firstName
             customerInstance.lastName = params.lastName
