@@ -1,5 +1,6 @@
 package eshop
-class Product extends BaseProduct implements Comparable{
+
+class Product extends BaseProduct implements Comparable {
     static auditable = true
     String name
     ProductTypeType type
@@ -20,7 +21,7 @@ class Product extends BaseProduct implements Comparable{
     Integer visitCount = 0
     Integer saleCount = 0
     Boolean isVisible = true
-    Boolean deleted =false
+    Boolean deleted = false
     Boolean isSynchronized = false
 //    Long assetId
 //    Long dlFolderId
@@ -64,10 +65,10 @@ class Product extends BaseProduct implements Comparable{
     static searchable = {
         root true
         only = ['title', 'breadCrumb', 'description', 'details', 'variations', 'attributes', 'customerReviews', 'models', 'searchString']
-        variations reference:[lazy:true]
-        attributes reference:[lazy:true]
-        customerReviews reference:[lazy:true]
-        models reference:[lazy:true]
+        variations reference: [lazy: true]
+        attributes reference: [lazy: true]
+        customerReviews reference: [lazy: true]
+        models reference: [lazy: true]
     }
 
     static mapping = {
@@ -81,7 +82,7 @@ class Product extends BaseProduct implements Comparable{
     static constraints = {
         name(nullable: true)
         type(nullable: true)
-        description(nullable: true,maxSize: 1000)
+        description(nullable: true, maxSize: 1000)
         brand(nullable: true)
         manufactureCountry(nullable: true)
         manufactureDate(nullable: true)
@@ -95,11 +96,11 @@ class Product extends BaseProduct implements Comparable{
         mainImage(nullable: true)
         iranCode(nullable: true)
         shabnamCode(nullable: true)
-        manualTitle(nullable:true)
+        manualTitle(nullable: true)
         length nullable: true
         width nullable: true
         height nullable: true
-        visitCount(nullable:true)
+        visitCount(nullable: true)
         isVisible(nullable: true)
         deleted(nullable: true)
         searchKeys(nullable: true)
@@ -108,21 +109,20 @@ class Product extends BaseProduct implements Comparable{
 //        igFolderId(nullable: true)
     }
 
-    String getSearchString(){
-        "${name} ${type} ${description} ${brand?.searchKeys} ${manufactureCountry} ${details} ${keywords} ${pageTitle} ${manualTitle} ${guaranteeList?.collect {it?.searchKeys?:''}?.join(' ')} ${productTypes?.collect {it?.searchKeys?:''}?.join(' ')} ${searchKeys}"
+    String getSearchString() {
+        "${name} ${type} ${description} ${brand?.searchKeys} ${manufactureCountry} ${details} ${keywords} ${pageTitle} ${manualTitle} ${guaranteeList?.collect { it?.searchKeys ?: '' }?.join(' ')} ${productTypes?.collect { it?.searchKeys ?: '' }?.join(' ')} ${searchKeys}"
     }
 
     @Override
     int compareTo(def t) {
-        name <=>t?.name
+        name <=> t?.name
     }
 
     @Override
     String toString() {
         if (domainClass.grailsApplication.config.eShop.instance == 'goldaan') {
             return manualTitle ? pageTitle : "<span>${productTypes?.find { true }?.name ?: ""} ${type?.title ?: ""} ${brand?.name ?: ""}</span><br/> ${name ?: ""}"
-        }
-        else {
+        } else {
             return "${productTypes?.find { true }?.name ?: ""} ${type?.title ?: ""} ${brand?.name ?: ""}${name ? " مدل ${name}" : ""}"?.trim()
         }
     }

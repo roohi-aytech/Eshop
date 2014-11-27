@@ -18,6 +18,14 @@
     function productTypeGridComplete() {
         setTimeout(productTypeLoadComplete, 400)
     }
+    function updateProductPrice(id) {
+        form = document.createElement("form");
+        form.method = "GET";
+        form.action = '<g:createLink action="productDetails" controller="product"/>?id=' + id + "&ptid=" + curSelectedProductType;
+        form.target = "_blank";
+        document.body.appendChild(form);
+        form.submit();
+    }
     function editProduct(id) {
         window.location = '<g:createLink action="productDetails" controller="product"/>?id=' + id + "&ptid=" + curSelectedProductType
     }
@@ -214,6 +222,9 @@
             <g:set var="productActions"
                    value="${[[controller: 'product', action: 'productDetails', param: 'pid=#id#', icon: "application_form"], [handler: "deleteProduct(#id#)", icon: "application_delete"]]}"/>
         </sec:ifAllGranted>
+        <g:if test="${grailsApplication.config.priceUpdateLinks}">
+            <g:set var="productActions" value="${productActions + [[controller: 'product', action: 'updatePrice', param: 'id=#id#', icon: "coins"]]}"/>
+        </g:if>
         <rg:grid domainClass="${eshop.Product}"
                  maxColumns="4"
                  showCommand="false"

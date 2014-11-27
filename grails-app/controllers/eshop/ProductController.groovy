@@ -771,5 +771,47 @@ class ProductController {
         render 0
     }
 
+    def updatePrice() {
+        def product = Product.get(params.id)
+        [
+                product: product,
+                models : ProductModel.findAllByProduct(product),
+                links  : PricingLink.findAllByProduct(product)
+        ]
+    }
+
+    def bulkUpdate() {
+        def product = Product.get(params.id)
+        ProductModel.findAllByProduct(product).each { model ->
+            if (params."price_${model.id}") {
+                def priceInstance
+                def newPriceValue = params."price_${model.id}".toString().replace(',', '').toDouble()
+                def lastPrice = Price.findByProductModelAndEndDateIsNull(model)
+                if (!lastPrice || lastPrice.price != newPriceValue || lastPrice?.currency?.id != params."currency_${model.id}") {
+                    priceInstance = new Price()
+                    priceInstance.productModel = model
+                    priceInstance.price = newPriceValue
+                    priceInstance.currency = Currency.get(params."currency_${model.id}")
+                    priceInstance.startDate = new Date()
+
+                    if(lastPrice) {
+                        lastPrice.endDate = new Date()
+                        lastPrice.save()
+                    }
+                    priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
+                    priceInstance.save()
+
+                }
+                if (params."status_${model.id}") {
+                    model.status = params."status_${model.id}"
+                    model.save()
+                }
+            }
+        }
+        product.isSynchronized = false
+        product.save()
+
+        redirect(action: 'list')
+    }
 
 }

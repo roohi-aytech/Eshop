@@ -4,7 +4,7 @@
 <head>
     <r:require modules="bootstrap-file-upload"/>
     <meta name="layout" content="main">
-    <title>${productInstance?.name?productInstance:message(code:'product.new.title')}</title>
+    <title>${productInstance?.name ? productInstance : message(code: 'product.new.title')}</title>
 
 </head>
 
@@ -24,6 +24,9 @@
         <li><a href="#product_proOpinions"><g:message code="product.proOpinions"/></a></li>
         <li><a href="#images"><g:message code="images"/></a></li>
         <li><a href="#videos"><g:message code="videos"/></a></li>
+        <g:if test="${grailsApplication.config.priceUpdateLinks}">
+            <li><a href="#priceUpdateLinks"><g:message code="priceUpdateLinks"/></a></li>
+        </g:if>
 
     </ul>
 
@@ -42,7 +45,8 @@
         <div id="productModels" style="width: 98%">
             <g:render template="../productModel/list"/>
 
-            <input type="button" value="${message(code:'specialSaleSlide')}" onclick="window.location.href='${createLink(controller: 'specialSaleSlide', action: 'list', params:[id:productInstance.id, detail:params.id])}';">
+            <input type="button" value="${message(code: 'specialSaleSlide')}"
+                   onclick="window.location.href = '${createLink(controller: 'specialSaleSlide', action: 'list', params:[id:productInstance.id, detail:params.id])}';">
         </div>
 
         <div id="addedValue" style="width: 98%">
@@ -52,6 +56,7 @@
     <div id="product_description">
         <g:render template="description"/>
     </div>
+
     <div id="product_proOpinions">
         <g:render template="details"/>
     </div>
@@ -64,15 +69,19 @@
         <g:render template="videos"/>
     </div>
 
-
+    <g:if test="${grailsApplication.config.priceUpdateLinks}">
+        <div id="priceUpdateLinks">
+            <g:render template="priceUpdateLinks"/>
+        </div>
+    </g:if>
 
 </div>
 <script language="javascript" type="text/javascript">
-    $(function() {
-        $( "#details-tabs" ).tabs({
+    $(function () {
+        $("#details-tabs").tabs({
             selected:${curtab ?: 0}
-    ${productInstance.id ? "" : ",disabled:[1,2,3,4,5,6,7,8]"}
-    });
+            ${productInstance.id ? "" : ",disabled:[1,2,3,4,5,6,7,8]"}
+        });
     });
 </script>
 
