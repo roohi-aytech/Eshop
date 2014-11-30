@@ -61,6 +61,7 @@
 </head>
 
 <body ng-controller="eshopCtrl">
+<g:render template="/layouts/${grailsApplication.config.eShop.instance}/alexa"/>
 
 <div id="p_main_wrapper">
     <g:render template="/layouts/${grailsApplication.config.eShop.instance}/mobile/header"/>

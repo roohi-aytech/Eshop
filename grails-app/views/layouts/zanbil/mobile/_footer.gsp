@@ -46,3 +46,6 @@
         </ul>
     </footer>
 </div>
+<g:if test="${grailsApplication.config.instance != 'Local'}">
+    <g:render template="/layouts/zanbil/google_analytics"/>
+</g:if>
