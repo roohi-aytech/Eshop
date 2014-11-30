@@ -194,7 +194,7 @@ class AppController {
     def register() {
         def params = request.JSON
         if (params.code) {
-            def customerInstance = new Customer()
+            def customerInstance = Customer.findByUsername(params.username) ?: new Customer()
 
             customerInstance.firstName = params.firstName
             customerInstance.lastName = params.lastName
@@ -208,7 +208,8 @@ class AppController {
 
             if (customerInstance.validate() && customerInstance.save()) {
                 def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
-                UserRole.create customerInstance, customerRole
+                if(!UserRole.countByRoleAndUser(customerRole,customerInstance))
+                    UserRole.create customerInstance, customerRole
                 def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code)
                 device.user = customerInstance
                 device.save()
