@@ -16,6 +16,17 @@
             return true;
         }
     </script>
+    <style>
+        .open-link{
+            font-family: tahoma;
+            font-size:12px;
+            direction: rtl;
+        }
+        .open-link span{
+            color:#4169e1;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,6 +39,7 @@
             type: "POST",
             url: "${link.url}"
         }).done(function (response) {
+            window.alert(response)
             var data = response
             data = replace_all_rel_by_abs(data);
 
@@ -48,6 +60,13 @@
             %{--if (href.startsWith('/'))--}%
             %{--$(this).attr('src', '${domain}' + href);--}%
             %{--})--}%
+        }).error(function () {
+            window.open('${link.url}', '_blank');
+            $('#linkContainer${link?.id}').html('<div class="open-link">${message(code:'pricingLink.newTab.message')} (<span>${message(code:'pricingLink.newTab.open')}</span>)</div>')
+                    .find('span')
+                    .click(function () {
+                        window.open('${link.url}', '_blank');
+                    });
         });
     });
 

@@ -21,6 +21,7 @@ class PricingLinkController {
             link = new PricingLink()
         link.name = params.name
         link.url = params.url
+        link.showType = params.showType
         link.product = Product.get(params.productId)
         if (link.validate() && link.save(flush:true)) {
 

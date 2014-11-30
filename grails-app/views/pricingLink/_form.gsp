@@ -1,4 +1,4 @@
-<%@ page import="org.springframework.validation.FieldError; org.grails.plugin.resource.ResourceProcessor; eshop.AddedValue" %>
+<%@ page import="eshop.PricingLink; org.springframework.validation.FieldError; org.grails.plugin.resource.ResourceProcessor; eshop.AddedValue" %>
 
 <g:hasErrors bean="${link}">
     <ul class="errors" role="alert">
@@ -27,4 +27,13 @@
 
     </label>
     <g:textField name="url" value="${link?.url}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: link, field: 'position', 'error')} ">
+    <label for="showType">
+        <g:message code="pricingLink.showType.label" default="showType"/>
+
+    </label>
+    <g:select name="showType" value="${link?.showType}"
+              valueMessagePrefix="pricingLink.showType" from="${PricingLink.constraints?.showType?.inList}"/>
 </div>
