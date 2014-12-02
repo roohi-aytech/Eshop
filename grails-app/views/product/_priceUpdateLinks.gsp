@@ -6,7 +6,7 @@
            value="${[[loadOverlay: "${g.createLink(action: "form", controller: "pricingLink")}/#id#?productId=${baseProductInstance?.id}", saveAction: "${g.createLink(action: "save", controller: "pricingLink")}", icon: "application_edit"], [handler: "deleteLink(#id#)", icon: "application_delete"]]}"/>
     <rg:grid domainClass="${PricingLink}"
              showCommand="false"
-             maxColumns="2"
+             maxColumns="3"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToLinksGrid", icon: "plus"]]}"
              commands="${actions}">
         <rg:criteria>

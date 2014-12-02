@@ -77,5 +77,8 @@
 <script language="javascript" src="${resource(dir: 'js', file: 'jquery.lazyLoad.js')}" type="text/javascript"></script>
 <script type="text/javascript" src="${resource(dir: 'js/mobile', file: 'common.js')}"></script>
 <r:layoutResources/>
+<g:if test="${grailsApplication.config.instance != 'Local'}">
+    <g:render template="/layouts/felfel/google_analytics"/>
+</g:if>
 </body>
 </html>

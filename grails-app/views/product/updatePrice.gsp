@@ -10,6 +10,17 @@
 <head>
     <meta name="layout" content="main">
     <title><g:message code="updatePrice.title"/> ${product}</title>
+    <style>
+    .open-link{
+        font-family: tahoma;
+        font-size:12px;
+        direction: rtl;
+    }
+    .open-link span{
+        color:#4169e1;
+        cursor: pointer;
+    }
+    </style>
 </head>
 
 <body>
@@ -83,8 +94,25 @@
         <g:each in="${links}" var="link">
             <div id="link${link.id}">
                 <div>
-                    <iframe src="${createLink(controller: 'pricingLink', action: 'load', id: link.id)}"
-                            style="width:100%;min-height: 600px;" frameborder="0"></iframe>
+                    <g:if test="${link.showType == 'window'}">
+                        <div id="linkContainer${link?.id}"></div>
+                        <script language="javascript" type="text/javascript">
+                            window.open('${link.url}', '_blank');
+                            $('#linkContainer${link?.id}').html('<div class="open-link">${message(code:'pricingLink.newTab.message')} (<span>${message(code:'pricingLink.newTab.open')}</span>)</div>')
+                                    .find('span')
+                                    .click(function () {
+                                        window.open('${link.url}', '_blank');
+                                    });
+                        </script>
+                    </g:if>
+                    <g:elseif test="${link.showType == 'inline'}">
+                        <iframe src="${createLink(controller: 'pricingLink', action: 'load', id: link.id)}"
+                                style="width:100%;min-height: 600px;" frameborder="0"></iframe>
+                    </g:elseif>
+                    <g:else>
+                        <iframe src="${link?.url}"
+                                style="width:100%;min-height: 600px;" frameborder="0"></iframe>
+                    </g:else>
                 </div>
             </div>
         </g:each>
