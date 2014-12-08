@@ -51,11 +51,15 @@
                     </b>
                 </div>
                 <g:if test="${grailsApplication.config.payOnCheckout}">
-                    <div class='info'><div><g:message code="order.creation.success.message"/>
-                        <h2 style="font-size: 16px !important;margin-bottom:0;">
-                            <g:message code="order.trackingCode.label"/>: <b>${onlinePayment?.order?.trackingCode}</b>
-                        </h2>
-                    </div></div>
+                    <div class='info'>
+                        <div>
+                            <g:message code="order.creation.success.message"/>
+                            <h2 style="font-size: 16px !important;margin-bottom:0;">
+                                <g:message code="order.trackingCode.label"/>: <b>${onlinePayment?.order?.trackingCode}</b>
+                            </h2>
+                        </div>
+
+                    </div>
                 </g:if>
             </g:if>
         </div>
@@ -68,10 +72,20 @@
                     <br/>code: <b>${onlinePayment?.resultCode}</b>
                 </g:if>
                 <div style="display: none">${verificationResult}</div>
+
             </div>
         </div>
     </g:else>
-
+    <g:if test="${appURL}">
+        <div id="return-app-btn" class="grn-btn icon-lock left" onclick="returnToMobileApp()"><h3><g:message
+            code="return"/></h3></div>
+        <script language="JavaScript">
+            function returnToMobileApp(){
+                window.history.go(-2);
+//                window.location='index.html'
+            }
+        </script>
+    </g:if>
 </div>
 </body>
 </html>

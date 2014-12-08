@@ -575,7 +575,7 @@ class OrderController {
         def reservationNumber = params.ResNum?.toLong();
         def status = params.State.toString();
         def referenceNumber = params.RefNum ? params.RefNum.toString() : '';
-
+        model.appURL=params.appURL
         def onlinePayment = OnlinePayment.get(reservationNumber)
         model.onlinePayment = onlinePayment
 
