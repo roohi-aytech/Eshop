@@ -31,7 +31,8 @@ class DeliveryMethodController {
         } else {
             deliveryMethodInstance = new DeliveryMethod(params)
         }
-        deliveryMethodInstance.minIntervalFromOrder=params.int('minIntervalFromOrder')
+	if(params.minIntervalFromOrder)
+        	deliveryMethodInstance.minIntervalFromOrder=params.int('minIntervalFromOrder')
         if (deliveryMethodInstance.validate() && deliveryMethodInstance.save()) {
             render deliveryMethodInstance as JSON
         } else
