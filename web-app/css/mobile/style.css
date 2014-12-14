@@ -2061,6 +2061,7 @@ footer ul.footer-nav li a {
 
 .filter-products ul.product-list li img {
     width: 100%;
+    /*max-height: 180px;*/
 }
 
 .search-form {

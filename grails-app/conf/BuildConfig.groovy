@@ -99,7 +99,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.2.RC2"
         compile ":rendering:0.4.4"
 
-        runtime ":cors:1.1.4"
+        runtime ":cors:1.1.6"
 
         compile ":jxl:0.54"
         compile ":pretty-time:2.1.3.Final-1.0.1"
