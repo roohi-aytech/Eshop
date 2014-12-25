@@ -211,6 +211,9 @@ class OrderAdministrationController {
         order.status = newStatus
         order.save()
         if (grailsApplication.config.payOnCheckout && order.paymentType == 'online' && order.paymentDone) {
+
+
+            //poolo bargardoon be golbon
             if (newStatus in [OrderHelper.STATUS_NOT_EXIST, OrderHelper.STATUS_INCORRECT]) {
                 def customerTransaction = new CustomerTransaction()
                 customerTransaction.value = order.totalPayablePrice * priceService.getDisplayCurrencyExchangeRate()
@@ -362,7 +365,7 @@ class OrderAdministrationController {
     def act_approvePayment() {
 
         def order = Order.get(params.id)
-        def paymentAmount = order.usedAccountValue
+        def paymentAmount = order.usedAccountValue *  priceService.getDisplayCurrencyExchangeRate()
 
         switch (order.paymentType) {
             case 'online':

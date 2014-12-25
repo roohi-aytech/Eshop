@@ -45,7 +45,7 @@ function equalHeight(group) {
     group.css('height', 'auto');
     tallest = 0;
     group.each(function () {
-        thisHeight = $(this).height();
+        thisHeight = $(this).outerHeight();
         if (thisHeight > tallest) {
             tallest = thisHeight;
         }

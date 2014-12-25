@@ -84,7 +84,7 @@ class Product extends BaseProduct implements Comparable {
     static constraints = {
         name(nullable: true)
         type(nullable: true)
-        description(nullable: true, maxSize: 1000)
+        description(nullable: true, maxSize: 10000)
         brand(nullable: true)
         manufactureCountry(nullable: true)
         manufactureDate(nullable: true)

@@ -493,6 +493,7 @@ class AppController {
     }
 
     def finalizeOrder() {
+
         def params = request.JSON
         if (params.code) {
             def device = MobileDevice.findByDeviceCode(params.code)
@@ -570,11 +571,15 @@ class AppController {
                     return render([res: true] as JSON)
                 }
                 event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
-                mailService.sendMail {
-                    to order.ownerEmail
-                    subject message(code: 'emailTemplates.order_created.subject')
-                    html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                            model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+                try {
+                    mailService.sendMail {
+                        to order.ownerEmail
+                        subject message(code: 'emailTemplates.order_created.subject')
+                        html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                                model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+                    }
+                }catch (x){
+                    x.printStackTrace()
                 }
                 def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
                 def mobile = order.ownerMobile
