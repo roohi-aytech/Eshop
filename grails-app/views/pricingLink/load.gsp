@@ -39,7 +39,7 @@
             type: "POST",
             url: "${link.url}"
         }).done(function (response) {
-            window.alert(response)
+//            window.alert(response)
             var data = response
             data = replace_all_rel_by_abs(data);
 

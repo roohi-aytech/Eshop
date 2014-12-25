@@ -21,8 +21,9 @@ customCustomerReviewTemplate = false
 filterPriceOnChange = true
 ajaxFilter = true
 priceUpdateLinks=true
+copyProduct = true
 ckeditor {
     upload {
-        basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
+        basedir = "D:\\DevDesk\\Eshop-Images\\"
     }
 }

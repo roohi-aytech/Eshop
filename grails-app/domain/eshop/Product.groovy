@@ -33,6 +33,8 @@ class Product extends BaseProduct implements Comparable {
 
     String searchKeys
 
+    Product copySource
+
     String getTitle() {
         toString()
     }
@@ -104,6 +106,7 @@ class Product extends BaseProduct implements Comparable {
         isVisible(nullable: true)
         deleted(nullable: true)
         searchKeys(nullable: true)
+        copySource(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)

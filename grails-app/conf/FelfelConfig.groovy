@@ -15,12 +15,10 @@ backgrounds=true
 showProductStatus=true
 variationValueImage=true
 addedValueImage=true
-modelHasWidthAndHeight=false
-hideCustomerReviewTitle=false
-customCustomerReviewTemplate=false
 filterPriceOnChange=true
 ajaxFilter = true
 priceUpdateLinks=true
+copyProduct = true
 
 ckeditor {
     upload {
