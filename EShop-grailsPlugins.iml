@@ -335,7 +335,6 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails.plugins/events-push/zips/events-push-1.0.M7.zip!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails.plugins/quartz/zips/quartz-1.0.2.zip!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails.plugins/tomcat/zips/tomcat-2.0.4.zip!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails.plugins/cors/zips/cors-1.1.6.zip!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails/grails-datastore-gorm-test/jars/grails-datastore-gorm-test-1.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.4.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.4.jar!/" />
@@ -354,4 +353,3 @@
     </orderEntry>
   </component>
 </module>
-
