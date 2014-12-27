@@ -39,7 +39,7 @@ class BrowseService {
         ).results()
         countMap
     }
-
+    @Cacheable(value = 'bpservice', key = '#params.toString()')
     def countProductsWithUnwind(params) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
@@ -896,7 +896,7 @@ class BrowseService {
         def match = productTypeId ? ['productTypes.id': productTypeId] : [:]
         countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
     }
-
+    @Cacheable(value = 'bprservice', key = '#match.toString()')
     def priceRange(Map match) {
         def criteria = match
         criteria.displayInList = true
