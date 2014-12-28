@@ -18966,7 +18966,7 @@ h3,h1,h2,h4,h5,h6{
 
 .mostvisited-nav{
     margin-top:20px;
-    max-height:510px;
+    max-height:255px;
     overflow:hidden;
     margin-bottom:20px;
 }
