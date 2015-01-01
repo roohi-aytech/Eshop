@@ -584,9 +584,10 @@ class SiteController {
                 eq('isVisible', true)
                 eq('deleted', false)
             }
-            maxResults(40)
+            maxResults(20)
             order("visitCount", "desc")
         }
+
 
         render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/index")
     }

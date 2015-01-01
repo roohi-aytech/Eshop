@@ -43,6 +43,13 @@
                               model="${[product: product, size: '200x200']}"/>
                 </g:each>
             </div>
+            <div class="mostvisited-nav">
+                <eshop:randomProduct>
+
+                    <g:render template="goldaan/templates/productThumbnail"
+                              model="${[product: product, size: '200x200']}"/>
+                </eshop:randomProduct>
+            </div>
         </td>
     </tr>
     %{--<tr class="table-row">--}%

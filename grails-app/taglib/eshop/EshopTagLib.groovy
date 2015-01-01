@@ -672,4 +672,21 @@ class EshopTagLib {
         }
         localeResolver.setLocale(request, response, attrs.locale)
     }
+    def randomProduct={attrs,body->
+        Product.createCriteria().listDistinct {
+            models {
+                eq('status', 'exists')
+            }
+            or {
+                isNull('isVisible')
+                eq('isVisible', true)
+                eq('deleted', false)
+            }
+            maxResults(20)
+            sqlRestriction " 1=1 order by rand()"
+        }.each{
+            g.set(var:'product',value:it)
+            out<<body()
+        }
+    }
 }
