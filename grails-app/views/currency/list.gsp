@@ -12,7 +12,7 @@
 
 <div class="content scaffold-list" role="main">
     <rg:grid domainClass="${Currency}"
-             maxColumns="3"
+             maxColumns="4"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToCurrencyGrid", icon: "plus"]]}"
              commands="${[[loadOverlay: "${g.createLink(action: "form")}/#id#",saveAction:"${g.createLink(action: "save")}", icon: "application_edit"], [handler: "deleteCurrency(#id#)", icon: "application_delete"]]}"

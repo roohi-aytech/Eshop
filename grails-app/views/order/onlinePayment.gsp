@@ -83,6 +83,62 @@
             </script>
         </g:if>
     </g:elseif>
+    <g:elseif test="${bankName == 'ogone'}">
+        <g:if test="${!flash.message}">
+            <script language="javascript" type="text/javascript">
+                function addField(form,name,value){
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("name", name);
+                    hiddenField.setAttribute("value", value);
+                    form.appendChild(hiddenField);
+                }
+                function postRefId() {
+                    var form = document.createElement("form");
+                    form.setAttribute("method", "POST");
+                    form.setAttribute("name", "form1");
+                    form.setAttribute("id", "form1");
+                    form.setAttribute("action", "https://secure.ogone.com/ncol/test/orderstandard.asp");
+                    form.setAttribute("target", "_self");
+                    <g:set var="baseUrl" value="${createLink(uri: '/order/onlinePaymentResultOgone', absolute: true)}"/>
+                    <g:if test="${grails.util.Environment.current == Environment.DEVELOPMENT}">
+                        <g:set var="baseUrl" value="http://localhost:8080/order/onlinePaymentResultOgone"/>
+                    </g:if>
+                    <g:set var="parameters" value="${[
+                        PSPID:merchantId,
+                        ORDERID:reservationNumber,
+                        AMOUNT:formatNumber(number:amount*100),
+                        CURRENCY:currency,
+                        LANGUAGE:'en_US',
+                        ACCEPTURL:"${baseUrl}/accept",
+                        DECLINEURL:"${baseUrl}/decline",
+                        EXCEPTIONURL:"${baseUrl}/exception",
+                        CANCELURL:"${baseUrl}/cancel",
+                        BACKURL:"${baseUrl}/back",
+                        CN:customerName,
+                        EMAIL:customerEmail,
+                        TITLE:"Goldaan Shopping Store"
+//                        LOGO:'http://www.goldaan.ir/images/goldaan/logo.png'
+
+                    ]}"/>
+                    <%
+                    parameters.SHASIGN=parameters.keySet().sort().collect {"${it}=${parameters[it]}${shaPassword}"}.join('').encodeAsSHA1()
+                    %>
+
+                    <g:each in="${parameters}">
+                        addField(form,'${it.key}','${it.value}');
+                    </g:each>
+
+                    document.body.appendChild(form);
+                    form.submit();
+                    document.body.removeChild(form);
+                }
+
+                $(document).ready(function () {
+                    postRefId();
+                });
+            </script>
+        </g:if>
+    </g:elseif>
 </head>
 
 <body>
@@ -107,6 +163,20 @@
         <g:if test="${!flash.message}">
             <div class="info">
                 <div><g:message code="order.payment.saman.waitingMessage"/></div>
+            </div>
+        </g:if>
+        <g:else>
+            <div class="error">
+                <div><g:message code="order.payment.error"/>: <b>${flash.message}</b></div>
+            </div>
+        </g:else>
+    </g:if>
+    <g:if test="${bankName == 'ogone'}">
+        <h2><g:message code="order.payment.bank.ogone.label"/></h2>
+
+        <g:if test="${!flash.message}">
+            <div class="info">
+                <div><g:message code="order.payment.ogone.waitingMessage"/></div>
             </div>
         </g:if>
         <g:else>

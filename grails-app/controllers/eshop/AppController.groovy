@@ -589,7 +589,7 @@ class AppController {
                             messageText)
                 }
                 if (grailsApplication.config.orderCreateNotifiers) {
-                    def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order]).toString()
+                    def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order.refresh()]).toString()
                     def adminNotifiers = grailsApplication.config.orderCreateNotifiers
                     Thread.start {
                         adminNotifiers.split(',').each {

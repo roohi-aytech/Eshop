@@ -1,1 +1,1 @@
-سفارش شماره ${order.trackingCode} برای ${order.ownerName} در سامانه ثبت شد.
+سفارش شماره ${order.trackingCode} برای ${order.ownerName}: ${order.items}, ${order.deliveryTime}, ${order.sendingAddress}

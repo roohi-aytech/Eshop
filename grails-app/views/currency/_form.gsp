@@ -18,6 +18,13 @@
 	</label>
 	<g:textField name="name" value="${currencyInstance?.name}"/>
 </div>
+<div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'code', 'error')} ">
+	<label for="code">
+		<g:message code="currency.code.label" default="Code" />
+        <span class="required-indicator">*</span>
+	</label>
+	<g:textField name="code" value="${currencyInstance?.code}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: currencyInstance, field: 'exchangeRate', 'error')} required">
 	<label for="exchangeRate">
