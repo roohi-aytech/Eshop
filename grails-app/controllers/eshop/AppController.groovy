@@ -208,7 +208,7 @@ class AppController {
 
             if (customerInstance.validate() && customerInstance.save()) {
                 def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
-                if(!UserRole.countByRoleAndUser(customerRole,customerInstance))
+                if (!UserRole.countByRoleAndUser(customerRole, customerInstance))
                     UserRole.create customerInstance, customerRole
                 def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code)
                 device.user = customerInstance
@@ -437,21 +437,24 @@ class AppController {
                                 phone    : user?.mobile ?: params.phone,
                                 body     : params.body
                         ])
+            }
+            if(user?.email ?: params.email) {
                 mailService.sendMail {
                     to user?.email ?: params.email
                     subject message(code: 'emailTemplates.contact_us.subject')
                     html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                             model: [message: g.render(template: '/messageTemplates/mail/contact_us', model: [parameters: params]).toString()])
                 }
-
-                if (user?.mobile ?: params.phone)
-                    messageService.sendMessage(
-                            user?.mobile ?: params.phone,
-                            g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
-
-
             }
+
+            if (user?.mobile ?: params.phone)
+                messageService.sendMessage(
+                        user?.mobile ?: params.phone,
+                        g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
+
+
         }
+
         render([res: true] as JSON)
     }
 
@@ -578,7 +581,7 @@ class AppController {
                         html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                                 model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
                     }
-                }catch (x){
+                } catch (x) {
                     x.printStackTrace()
                 }
                 def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
