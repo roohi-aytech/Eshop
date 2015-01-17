@@ -37,7 +37,7 @@ class OrderAdministrationController {
 
 
     def correctOrderActionDays() {
-        return Order.list().each { order ->
+        return Order.findAllByIdGreaterThan(11700).each { order ->
             order.lastActionDate = OrderTrackingLog.findAllByOrder(order)?.sort { -it.id }?.find()?.date
             println order.save(flush: true)
         }
