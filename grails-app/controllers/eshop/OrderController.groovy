@@ -214,7 +214,7 @@ class OrderController {
                     messageText)
         }
         if (grailsApplication.config.orderCreateNotifiers) {
-            def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order]).toString()
+            def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order.refresh()]).toString()
             def adminNotifiers = grailsApplication.config.orderCreateNotifiers
             Thread.start {
                 adminNotifiers.split(',').each {
@@ -526,6 +526,17 @@ class OrderController {
                     onlinePayment.save()
 
                     break
+                case 'ogone':
+                    model.currency='USD'
+                    model.amount = onlinePayment.amount / (Currency.findByCode(model.currency)?.exchangeRate?:1)
+                    model.reservationNumber = onlinePayment.id
+                    def onlinePaymentConfiguration = new XmlParser().parseText(onlinePayment.account.onlinePaymentConfiguration)
+                    model.merchantId = onlinePaymentConfiguration.userName.text()
+                    model.shaPassword = onlinePaymentConfiguration.shaPassword.text()
+                    model.customerName=order.ownerName
+                    model.customerEmail=order.ownerEmail
+                    model.productTitle=order.items.collect {"${it.productModel.product?.manualTitle ? it.productModel.product?.pageTitle : it.productModel.product?.title} ${it.productModel.name} ${it.productModel.product?.brand?.name ?: ""}"}.join(', ')
+                    break
                 case 'saman':
 
                     model.amount = onlinePayment.amount
@@ -568,7 +579,28 @@ class OrderController {
 
         render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
     }
+    def onlinePaymentResultOgone(){
+        println params
+        def model = [:]
+        def reservationNumber = params.orderID?.toLong();
+        def status = params.STATUS.toString();
+        def referenceNumber = params.PAYID ? params.PAYID.toString() : '';
+        model.appURL=params.appURL
+        def onlinePayment = OnlinePayment.get(reservationNumber)
+        model.onlinePayment = onlinePayment
 
+
+        onlinePayment.resultCode = status
+        onlinePayment.transactionReferenceCode = referenceNumber
+        onlinePayment.save()
+        model.verificationResult = params.id
+        if (params.id=='accept' ) {
+            model.verificationResult = 0
+            payOrder(onlinePayment, model)
+        }
+
+        render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
+    }
     def onlinePaymentResultSaman() {
 
         def model = [:]

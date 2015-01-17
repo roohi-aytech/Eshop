@@ -27,7 +27,8 @@ class MessageService {
 
     def sendMessage(String cellphones, String message) {
         def result
-
+//        if(true)
+//            return
         try {
             if(grailsApplication.config.eShop.instance=='goldaan'){
                 def messageService = new eshop.sms.rahyab.SmsLocator().getsmsSoap()

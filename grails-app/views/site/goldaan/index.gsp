@@ -4,7 +4,7 @@
 <head>
     <title><g:message code="site.mainPage.title-goldaan"/></title>
     <!-- E7zma1ATwR6TvWerhh0l7txRVh0 -->
-    <meta name="description" content="${message(code: 'site.mainPage.description')}">
+    <meta name="description" content="${message(code: 'site.mainPage.description-goldaan')}">
     <meta name="keywords" content="${message(code: 'site.mainPage.keywords-goldaan')}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
