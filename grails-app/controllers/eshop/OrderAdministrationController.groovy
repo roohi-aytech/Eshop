@@ -36,6 +36,13 @@ class OrderAdministrationController {
     }
 
 
+    def correctOrderActionDays() {
+        return Order.list().each { order ->
+            order.lastActionDate = OrderTrackingLog.findAllByOrder(order)?.sort { -it.id }?.find()?.date
+            println order.save(flush: true)
+        }
+    }
+
     @Secured([RoleHelper.ROLE_VENDOR])
     def console() {
 
@@ -212,7 +219,6 @@ class OrderAdministrationController {
         order.save()
         if (grailsApplication.config.payOnCheckout && order.paymentType == 'online' && order.paymentDone) {
 
-
             //poolo bargardoon be golbon
             if (newStatus in [OrderHelper.STATUS_NOT_EXIST, OrderHelper.STATUS_INCORRECT]) {
                 def customerTransaction = new CustomerTransaction()
@@ -365,7 +371,7 @@ class OrderAdministrationController {
     def act_approvePayment() {
 
         def order = Order.get(params.id)
-        def paymentAmount = order.usedAccountValue *  priceService.getDisplayCurrencyExchangeRate()
+        def paymentAmount = order.usedAccountValue * priceService.getDisplayCurrencyExchangeRate()
 
         switch (order.paymentType) {
             case 'online':

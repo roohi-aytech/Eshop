@@ -40,14 +40,15 @@
         $(".criteria-div #status").parent().css('display', 'none');
     </script>
     <rg:grid domainClass="${Order}"
-             sortname="id"
+             sortname="lastActionDate"
              sortorder="desc"
              showCommand="false"
-             columns="[[name: 'trackingCode'],[name: 'ownerName'],[name: 'productsName', width: '300px'],[name: 'ownerMobile'],[name: 'deliveryMethodName'],[name: 'deliveryCityName'],[name: 'status'],[name: 'lastActionDate', expression: 'rg.formatJalaliDate(date:  obj[\\\'lastActionDate\\\'], hm:\\\'true\\\' )']]"
+             columns="[[name: 'trackingCode'], [name: 'ownerName'], [name: 'productsName', width: '300px'], [name: 'ownerMobile'], [name: 'deliveryMethodName'], [name: 'deliveryCityName'], [name: 'status'], [name: 'lastActionDate', expression: 'rg.formatJalaliDate(date:  obj[\\\'lastActionDate\\\'], hm:\\\'true\\\' )']]"
              commands="${[[handler: "viewOrder(#id#)", icon: "application_form"]]}">
-        <rg:criteria>
-            <rg:inCrit name="id" value="${orderList}"/>
-        </rg:criteria>
+             %{--source="${[service: "orderTracking", method: "filterOrderListForUser", params: [user: user, status: status]]}">--}%
+    <rg:criteria>
+    <rg:inCrit name="id" value="${orderList}"/>
+    </rg:criteria>
     </rg:grid>
 </div>
 </body>

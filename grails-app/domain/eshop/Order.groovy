@@ -46,12 +46,7 @@ class Order {
     String buyerName
     String buyerAmount
 
-
-    transient Date getLastActionDate() {
-        if (this.id)
-            return OrderTrackingLog.findAllByOrder(this)?.sort { -it.id }?.find()?.date
-        return null
-    }
+    Date lastActionDate
 
     transient String getDeliveryMethodName() {
         deliverySourceStation?.method?.name
@@ -76,7 +71,7 @@ class Order {
         ownerTelephone(nullable: true)
         ownerCode(nullable: true)
         paymentTimeout nullable: true
-        lastActionDate()
+        lastActionDate nullable: true
 
         ownerSex(nullable: true, inList: ['male', 'female'])
         useAlternateInformation(nullable: true)
