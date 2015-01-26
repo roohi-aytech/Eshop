@@ -1091,7 +1091,7 @@ class SiteController {
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
-            BooleanQuery.setMaxClauseCount(10000);
+            BooleanQuery.setMaxClauseCount(100000);
             productIdList = Product.search({
                 queryString(query)
             },

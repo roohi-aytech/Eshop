@@ -108,7 +108,7 @@ class AppController {
         while (query.contains('  '))
             query = query.replace('  ', ' ')
         query = "*${query.replace(' ', '* *')}*"
-        BooleanQuery.setMaxClauseCount(10000);
+        BooleanQuery.setMaxClauseCount(100000);
         def products = Product.search({
             queryString(query)
         }, [reload: false, max: 1000]).results.collect { product ->
