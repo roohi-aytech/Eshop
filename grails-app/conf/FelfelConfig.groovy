@@ -22,6 +22,6 @@ copyProduct = true
 
 ckeditor {
     upload {
-        basedir = "/home/uploads"
+        basedir = "/home/stocks/felfel/uploads"
     }
 }

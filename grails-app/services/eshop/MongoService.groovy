@@ -6,14 +6,18 @@ class MongoService {
 
     def priceService
     def mongo
+    def grailsApplication
 
     def storeProduct(Product product) {
         storeProductInternal(product, 0)
     }
 
     def clear() {
-
-        def db = mongo.getDB("EShop")
+        def db
+        if(grailsApplication.config.eShop.instance=='felfel')
+            db = mongo.getDB("FelFel")
+        else
+            db = mongo.getDB("EShop")
         db.dropDatabase()
         return 100
 

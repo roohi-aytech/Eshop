@@ -17,7 +17,10 @@ class BrowseService {
 
     def getProducts() {
         if (!products) {
-            db = mongo.getDB("EShop")
+            if(grailsApplication.config.eShop.instance=='felfel')
+                db = mongo.getDB("FelFel")
+            else
+                db = mongo.getDB("EShop")
             products = db.getCollection("mongoProduct")
         }
         return products
