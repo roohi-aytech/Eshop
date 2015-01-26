@@ -22,6 +22,7 @@ grails {
         host = "127.0.0.1"
         username = "root"
         password = "Salam123"
+        databaseName='felfel'
     }
 }
 
