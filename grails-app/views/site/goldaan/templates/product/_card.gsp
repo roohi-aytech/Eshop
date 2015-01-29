@@ -101,10 +101,11 @@
     </g:if>
 
     <div class="buttons">
-        <eshop:addToBasket prodcutModelId="${productModel.id}"
-            productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
-            useLongText="${true}"/>
-
+        <g:if test="${productModel?.status=='exists'}">
+            <eshop:addToBasket prodcutModelId="${productModel.id}"
+                productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
+                useLongText="${true}"/>
+        </g:if>
         <a id="productThumbnail_${product.id}" class="btn-email" href="javascript:suggestFriend(${product.id})">
             <span><g:message code="email-to-firend-goldaan" /></span>
         </a>
