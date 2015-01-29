@@ -37,10 +37,12 @@ class OrderAdministrationController {
 
 
     def correctOrderActionDays() {
+        println 'salam'
         return Order.list().each { order ->
             order.lastActionDate = OrderTrackingLog.findAllByOrder(order)?.sort { -it.id }?.find()?.date
             println order.save(flush: true)
         }
+        render 0
     }
 
     @Secured([RoleHelper.ROLE_VENDOR])
