@@ -20,6 +20,7 @@ class AppController {
     def mostVisited() {
         def match = [:]
         def productType
+        def sort='modelId'
         if (params.p)
             productType = ProductType.createCriteria().list {
                 or {
@@ -32,8 +33,10 @@ class AppController {
                     isNull('deleted')
                 }
             }.find()
-        if (productType)
+        if (productType) {
             match['productTypes.id'] = productType.id
+            sort='visitCount'
+        }
         if (params.p) {
             def prices = params.p.split('-')
             def ps = [:]
@@ -63,7 +66,7 @@ class AppController {
 //                }
 //                order("visitCount", "desc")
 //            }
-        def products = browseService.listProducts(sort: 'visitCount', dir: -1, match: match, pageSize: 20, start: offset)
+        def products = browseService.listProducts(sort: sort, dir: -1, match: match, pageSize: 20, start: offset)
                 .productIds.collect { pt ->
             def product = ProductModel.get(pt.modelId)?.product
             if (product) {

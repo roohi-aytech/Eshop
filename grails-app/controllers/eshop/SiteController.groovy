@@ -748,12 +748,14 @@ class SiteController {
         }
 
         //update product visit count
-        if (!product.visitCount)
-            product.visitCount = 0;
-        product.visitCount++;
-//        product.isSynchronized = false
-        product.save()
 
+        try {
+            if (!product.visitCount)
+                product.visitCount = 0;
+            product.visitCount++;
+            product.isSynchronized = false
+            product.save()
+        }catch (x){x.printStackTrace()}
         //fill zoomable property of images
         if (product.mainImage) {
             try {
