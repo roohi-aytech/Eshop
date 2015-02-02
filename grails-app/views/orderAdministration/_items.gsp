@@ -18,6 +18,7 @@
             <td>
                 <g:if test="${grailsApplication.config.eShop.instance == 'goldaan'}">
                     ${orderItem?.productModel?.product?.pageTitle ?: ""} ${orderItem?.productModel?.product?.type?.title ?: ""} ${orderItem?.productModel?.product?.brand?.name ?: ""} ${orderItem?.productModel?.variationValues?.find { it?.variationGroup?.representationType == 'Color' } ?: ""} ${orderItem?.productModel?.name ? "مدل ${orderItem?.productModel?.name}" : ""}
+                    ${orderItem?.externalDiscount?.externalDiscountDifinition?.type}${orderItem?.externalDiscount?' (code:'+orderItem?.externalDiscount?.code:''}${orderItem?.externalDiscount?' serial:'+orderItem?.externalDiscount?.serial+')':''}
                 </g:if>
                 <g:else>
                     ${orderItem.productModel}

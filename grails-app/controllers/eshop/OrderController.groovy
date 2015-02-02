@@ -7,6 +7,7 @@ import eshop.accounting.OnlinePayment
 import eshop.accounting.PaymentRequest
 import eshop.accounting.Transaction
 import eshop.delivery.DeliverySourceStation
+import eshop.discout.ExternalDiscount
 import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.plugins.springsecurity.Secured
 import org.omg.CORBA.Environment
@@ -169,7 +170,11 @@ class OrderController {
             orderItem.description = basketItem.description
             orderItem.orderCount = basketItem.count
             orderItem.unitPrice = basketItem.realPrice
-
+            if(basketItem.externalDiscount){
+                orderItem.externalDiscount=ExternalDiscount.get(basketItem.externalDiscount)
+                orderItem.externalDiscount.purchaseDate=new Date()
+                orderItem.externalDiscount.save()
+            }
             orderItem.description = basketItem.description
             basketItem.selectedAddedValueInstances?.each {
                 orderItem.addToAddedValueInstances(new AddedValueInstance(
@@ -200,11 +205,15 @@ class OrderController {
             return
         }
         event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
-        mailService.sendMail {
-            to order.ownerEmail
-            subject message(code: 'emailTemplates.order_created.subject')
-            html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                    model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+        try {
+            mailService.sendMail {
+                to order.ownerEmail
+                subject message(code: 'emailTemplates.order_created.subject')
+                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                        model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+            }
+        }catch (x){
+            x.printStackTrace()
         }
         def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
         def mobile = order.ownerMobile

@@ -20375,3 +20375,7 @@ html,body,#main-container{
     background-color: #ffffff;
     margin-left: 10px;
 }
+::-webkit-input-placeholder { letter-spacing:0px; }
+::-moz-placeholder { letter-spacing:0px; } /* firefox 19+ */
+:-ms-input-placeholder { letter-spacing:0px; } /* ie */
+input:-moz-placeholder { letter-spacing:0px; }

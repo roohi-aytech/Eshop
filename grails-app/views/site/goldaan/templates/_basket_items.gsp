@@ -82,7 +82,8 @@
                 <table>
                     <tr>
                         <td class="small"><span class="price"><b>{{basketItem.realPrice | number:0}}</b> </span></td>
-                        <td class="small"><span class="count"><input type="text" value="{{basketItem.count}}" onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value, updateDeliveryMethods)"/></span></td>
+                        <td class="small"><span class="count" ng-show="!basketItem.externalDiscount"><input type="text" value="{{basketItem.count}}" onkeyup="updateBasketItemCount('{{basketItem.id}}', this.value, updateDeliveryMethods)"/></span>
+                            <span class="count" ng-show="basketItem.externalDiscount">{{basketItem.count}}</span></td>
                         <td class="small"><span class="price"><b>{{basketItem.realPrice * basketItem.count | number:0}}</b></span></td>
                         <td class="small"><span class="delete"><a type="button" onclick="removeFromBasket('{{basketItem.id}}', updateDeliveryMethods)"><g:img dir="/images/" file="remove-basket-item.png"/></a></span></td>
                     </tr>

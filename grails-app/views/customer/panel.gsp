@@ -37,49 +37,66 @@
 
                 <div class="column1 items">
                     <h4><g:message code="controlPanel.orders.yourOrders.label"></g:message></h4>
+
                     <ul class="master">
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_CREATED]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_CREATED}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_INCORRECT]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_INCORRECT}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_UPDATING]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_UPDATING}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_INQUIRED]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_INQUIRED}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_PAID]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_PAID}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_PAYMENT_APPROVED]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_PAYMENT_APPROVED}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_INCOMPLETE]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_INCOMPLETE}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_TRANSMITTED]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_TRANSMITTED}"/></g:link></li>
-                        <li><g:link controller="order" action="list"
-                                    params="${[status: OrderHelper.STATUS_DELIVERED]}"><g:message
-                                    code="orders"/> <g:message
-                                    code="order.status.${OrderHelper.STATUS_DELIVERED}"/></g:link></li>
+                        <g:if test="${grailsApplication.config.eShop.instance=='goldaan'}">
+                            <li><g:link controller="order" action="list"><g:message
+                                        code="order.status.All"/></g:link></li>
+                        </g:if>
+                        <g:else>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_CREATED]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_CREATED}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_INCORRECT]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_INCORRECT}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_UPDATING]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_UPDATING}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_INQUIRED]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_INQUIRED}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_PAID]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_PAID}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_PAYMENT_APPROVED]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_PAYMENT_APPROVED}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_INCOMPLETE]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_INCOMPLETE}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_TRANSMITTED]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_TRANSMITTED}"/></g:link></li>
+                            <li><g:link controller="order" action="list"
+                                        params="${[status: OrderHelper.STATUS_DELIVERED]}"><g:message
+                                        code="orders"/> <g:message
+                                        code="order.status.${OrderHelper.STATUS_DELIVERED}"/></g:link></li>
+                        </g:else>
                     </ul>
                 </div>
 
                 <div class="column2 items">
+                    <g:if test="${grailsApplication.config.eShop.instance=='goldaan'}">
+                        <h4><g:message code="order.takhfifyab"></g:message></h4>
+                        <div class="orderTracking">
+                            <g:form method="post" controller="basket" action="takhfifyab">
+                                <g:textField name="discountCode" id="discountCode" placeholder="${message(code:'dicountCode')}"/>
+                                <g:textField name="discountSerial" id="discountSerial" placeholder="${message(code:'dicountSerial')}"/>
+                                <g:submitButton name="submit" class="btn btn-primary"
+                                                value="${message(code: 'submit')}"/>
+                            </g:form>
+                        </div>
+                    </g:if>
                     <h4><g:message code="order.tracking"></g:message></h4>
-
                     <div class="orderTracking">
                         <g:form method="post" controller="order" action="track">
                             <g:textField name="trackingCode" id="trackingCodePanel" place-holder="test"/>

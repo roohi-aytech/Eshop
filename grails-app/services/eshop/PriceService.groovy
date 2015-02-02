@@ -160,12 +160,23 @@ class PriceService {
                 addedValues.addAll(orderItem.addedValueInstances?.collect { it.addedValue.id })
             def price = calcProductModelPrice(orderItem.productModel.id, addedValues)
             if (price.status == 'exists') {
-                orderItem.baseUnitPrice = price.showVal ?: 0
-                orderItem.addedValuesPrice = price.addedVal ?: 0
-                orderItem.unitPrice = orderItem.baseUnitPrice + orderItem.addedValuesPrice
-                orderItem.discount = 0
-                orderItem.tax = 0
-                orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
+                if(orderItem.externalDiscount){
+                    orderItem.baseUnitPrice = 0
+                    orderItem.addedValuesPrice = price.addedVal ?: 0
+                    orderItem.unitPrice = orderItem.baseUnitPrice + orderItem.addedValuesPrice
+                    orderItem.discount = 0
+                    orderItem.tax = 0
+                    orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
+                }
+                else {
+
+                    orderItem.baseUnitPrice = price.showVal ?: 0
+                    orderItem.addedValuesPrice = price.addedVal ?: 0
+                    orderItem.unitPrice = orderItem.baseUnitPrice + orderItem.addedValuesPrice
+                    orderItem.discount = 0
+                    orderItem.tax = 0
+                    orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
+                }
 
             } else
                 orderItem.deleted = true

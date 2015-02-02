@@ -94,9 +94,11 @@
                             </g:if>
                             <g:if test="${grailsApplication.config.payOnCheckout}">
                                 <g:if test="${!payment?.transactionReferenceCode || payment?.amount<order?.totalPayablePrice}">
-                                    <g:link class="btn btn-success" controller="order" action="remainingPayment" id="${order?.id}">
-                                        <g:message code="controlPanel.orders.actions.payment.label"/>
-                                    </g:link>
+                                    <g:if test="${order?.totalPayablePrice}">
+                                        <g:link class="btn btn-success" controller="order" action="remainingPayment" id="${order?.id}">
+                                            <g:message code="controlPanel.orders.actions.payment.label"/>
+                                        </g:link>
+                                    </g:if>
                                 </g:if>
                             </g:if>
                             <g:if  test="${grailsApplication.config.getInvoiceOnTracking}">

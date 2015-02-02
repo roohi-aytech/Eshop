@@ -237,19 +237,29 @@
                        value="${customerInstance.lastName}"/>
             </p>
 
-            <p>
-                <label for='sex'><g:message code="springSecurity.register.sex.label"/>:</label>
-                <span class="requiredFlag">*</span>
-                <span id="sexValidationMessage"></span>
-                <select name="sex" id="sex" style="display: block">
-                    <option value="no"><g:message
-                            code="profile.sex.empty"></g:message></option>
-                    <option value="female" ${customerInstance.sex == 'female' ? 'selected' : ''}><g:message
-                            code="sex.female"></g:message></option>
-                    <option value="male" ${customerInstance.sex == 'male' ? 'selected' : ''}><g:message
-                            code="sex.male"></g:message></option>
-                </select>
-            </p>
+                <p>
+                    <label for='sex'><g:message code="springSecurity.register.sex.label"/>:</label>
+                    <span class="requiredFlag">*</span>
+                    <span id="sexValidationMessage"></span>
+                    <select name="sex" id="sex" style="display: block">
+                        <option value="no"><g:message
+                                code="profile.sex.empty"></g:message></option>
+                        <option value="female" ${customerInstance.sex == 'female' ? 'selected' : ''}><g:message
+                                code="sex.female"></g:message></option>
+                        <option value="male" ${customerInstance.sex == 'male' ? 'selected' : ''}><g:message
+                                code="sex.male"></g:message></option>
+                    </select>
+                </p>
+            <g:if test="${grailsApplication.config.eShop.instance=='goldaan'}">
+                <p>
+                    <label for='wayOfKnowing'><g:message
+                            code="customer.wayOfKnowing.label"/>:</label> *
+                    <span id="wayOfKnowingValidationMessage"></span>
+                    <g:select name="wayOfKnowing" id="wayOfKnowing" from="${customerInstance?.constraints?.wayOfKnowing?.inList}"
+                              value="${customerInstance?.wayOfKnowing}"
+                              valueMessagePrefix="customer.wayOfKnowing" noSelection="['': '']"/>
+                </p>
+            </g:if>
 
             <p>
                 <label for='mobileField'><g:message code="springSecurity.register.mobile.label"/>:</label>

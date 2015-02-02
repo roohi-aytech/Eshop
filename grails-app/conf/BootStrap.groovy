@@ -1,3 +1,4 @@
+import eshop.discout.ExternalDiscountDifinition
 import grails.util.GrailsUtil
 import eshop.*
 
@@ -106,8 +107,11 @@ class BootStrap {
 //        def city = new City(title: "Tehran", province: province)
 //        province.addToCities(city)
 //        province.save()
+        if(grailsApplication.config.eShop.instance=='goldaan') {
+            def eddgol = ExternalDiscountDifinition.findByTypeAndExternalId('takhfifyab','1105')?:new  ExternalDiscountDifinition(type: 'takhfifyab',externalId: '1105',model:ProductModel.get(381)).save()
+            def eddbonsai = ExternalDiscountDifinition.findByTypeAndExternalId('takhfifyab','1106')?:new  ExternalDiscountDifinition(type: 'takhfifyab',externalId: '1106',model:ProductModel.get(105)).save()
 
-
+        }
         if (false && GrailsUtil.environment == "development") {
             def validationTagLib = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib')
             Closure messageClosure = { vals ->
