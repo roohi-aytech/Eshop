@@ -101,15 +101,15 @@ class BasketController {
         render "1"
     }
     def takhfifyab(){
-        def discount=ExternalDiscount.findByCodeAndSerial(params.discountCode,params.discountSerial)
+        def discount=ExternalDiscount.findBySerial(params.discountSerial)
         if(discount){
             if(discount.purchaseDate){
                 flash.message=message(code:'discount.code.used')
                 return redirect(controller: 'customer',action:'panel')
             }
             def productModel = discount.externalDiscountDifinition.model
-
-
+            discount.code=params.discountCode
+            discount.save()
 
             def basket = [];
 

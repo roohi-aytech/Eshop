@@ -89,8 +89,8 @@
                         <h4><g:message code="order.takhfifyab"></g:message></h4>
                         <div class="orderTracking">
                             <g:form method="post" controller="basket" action="takhfifyab">
-                                <g:textField name="discountCode" id="discountCode" placeholder="${message(code:'dicountCode')}"/>
                                 <g:textField name="discountSerial" id="discountSerial" placeholder="${message(code:'dicountSerial')}"/>
+                                <g:textField name="discountCode" id="discountCode" placeholder="${message(code:'dicountCode')}"/>
                                 <g:submitButton name="submit" class="btn btn-primary"
                                                 value="${message(code: 'submit')}"/>
                             </g:form>
@@ -106,6 +106,8 @@
                     </div>
                     <script type="text/javascript" language="javascript">
                         $('#trackingCodePanel').maskInput('9999999999');
+                        $('#discountSerial').maskInput('999999999');
+                        $('#discountCode').maskInput('********');
                     </script>
                 </div>
 

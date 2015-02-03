@@ -173,6 +173,7 @@ class OrderController {
             if(basketItem.externalDiscount){
                 orderItem.externalDiscount=ExternalDiscount.get(basketItem.externalDiscount)
                 orderItem.externalDiscount.purchaseDate=new Date()
+                orderItem.externalDiscount.user=customer
                 orderItem.externalDiscount.save()
             }
             orderItem.description = basketItem.description
