@@ -89,13 +89,24 @@
                         <h4><g:message code="order.takhfifyab"></g:message></h4>
                         <div class="orderTracking">
                             <g:form method="post" controller="basket" action="takhfifyab">
-                                <g:textField name="discountSerial" id="discountSerial" placeholder="${message(code:'dicountSerial')}"/>
-                                <g:textField name="discountCode" id="discountCode" placeholder="${message(code:'dicountCode')}"/>
-                                <g:submitButton name="submit" class="btn btn-primary"
+                                <div style="float: right">
+                                    ${message(code:'dicountSerial')}<br>
+                                    <g:textField name="discountSerial" id="discountSerial" placeholder="${message(code:'dicountSerial')}"/>
+                                </div>
+                                <div style="float: right">
+                                    ${message(code:'dicountCode')}<br>
+                                    <g:textField name="discountCode" id="discountCode" placeholder="${message(code:'dicountCode')}"/>
+                                    <g:submitButton name="submit" class="btn btn-primary"
                                                 value="${message(code: 'submit')}"/>
+                                </div>
+
+                                <div style="clear: both"></div>
                             </g:form>
                         </div>
+                        <br/>
+                        <br/>
                     </g:if>
+
                     <h4><g:message code="order.tracking"></g:message></h4>
                     <div class="orderTracking">
                         <g:form method="post" controller="order" action="track">
