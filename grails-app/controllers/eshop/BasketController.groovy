@@ -107,6 +107,12 @@ class BasketController {
                 flash.message=message(code:'discount.code.used')
                 return redirect(controller: 'customer',action:'panel')
             }
+            def tkhf=new Takhfifyab()
+            if(!tkhf.submitDeal(params.discountSerial,params.discountCode)){
+                flash.message=message(code:'discount.code.invalid')
+                return redirect(controller: 'customer',action:'panel')
+            }
+
             def productModel = discount.externalDiscountDifinition.model
             discount.code=params.discountCode
             discount.save()
