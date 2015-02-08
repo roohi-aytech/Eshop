@@ -16,6 +16,7 @@ grails.war.resources = { stagingDir ->
     delete(file: "${stagingDir}/WEB-INF/lib/portal-impl.jar")
     delete(file: "${stagingDir}/WEB-INF/lib/portal-kernel.jar")
     delete(file: "${stagingDir}/WEB-INF/lib/util-java.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/commons-collections-3.0.jar")
 }
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -78,7 +79,7 @@ grails.project.dependency.resolution = {
         compile ":ws-client:1.0"
 
         runtime ":database-migration:1.1"
-
+        compile ":dynamic-jasper:0.6"
         compile ':cache:1.1.1'
         compile ":cache-ehcache:1.0.0"
         compile ":ckeditor:3.6.2.2"
