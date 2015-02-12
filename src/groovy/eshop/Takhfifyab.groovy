@@ -41,8 +41,15 @@ class Takhfifyab {
                 return false
             }
             response.'406' = { resp,data ->
-                println data.message
-                return false
+                if(data.message=='already used'){
+                    println 'used'
+                    return true
+                }
+                else{
+                    println data.message
+                    return false
+                }
+
             }
         }
         return false

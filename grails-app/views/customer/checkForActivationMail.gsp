@@ -19,6 +19,11 @@
             <g:message code="springSecurity.checkForActivationMail.description"/>
         </div>
     </div>
+        <g:if test="${session['RegBon']}">
+        <div class="info">
+            <g:message code="regBon.msg" args="[formatNumber(number:session['RegBon'],type:'number')]"/>
+        </div>
+        </g:if>
     </div>
 </body>
 </html>

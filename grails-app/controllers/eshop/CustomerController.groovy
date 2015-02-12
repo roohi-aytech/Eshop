@@ -1,5 +1,8 @@
 package eshop
 
+import eshop.accounting.CustomerTransaction
+import eshop.accounting.Transaction
+import eshop.discout.Discount
 import grails.plugins.springsecurity.Secured
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -12,6 +15,7 @@ class CustomerController {
     def mailService
     def messageService
     def grailsApplication
+    def priceService
 
     def index() {}
 
@@ -105,20 +109,42 @@ class CustomerController {
             def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
             UserRole.create customerInstance, customerRole
 
+            def discounts=Discount.findAllByUsageTypeAndFromDateLessThanEqualsAndToDateGreaterThanEqualsAndType('RegBon',new Date(),new Date(),'Fixed')
+            def bonDiscount
+            if(discounts) {
+                def d=(discounts.sum {it.value}?:0)
+                bonDiscount =d * priceService.getDisplayCurrencyExchangeRate()
+                if (bonDiscount) {
+                    def boncustomerTransaction = new CustomerTransaction()
+                    boncustomerTransaction.value = bonDiscount
+                    boncustomerTransaction.date = new Date()
+                    boncustomerTransaction.type = AccountingHelper.TRANSACTION_TYPE_BON
+                    boncustomerTransaction.creator = customerInstance
+                    boncustomerTransaction.save()
 
-            mailService.sendMail {
-                to customerInstance.email
-                subject message(code: 'emailTemplates.email_verification.subject')
-                html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                        model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance]).toString()])
+                    //add transaction
+                    def bontransaction = new Transaction()
+                    bontransaction.value = bonDiscount
+                    bontransaction.type = AccountingHelper.TRANSACTION_TYPE_BON
+                    bontransaction.creator = customerInstance
+                    bontransaction.save()
+                }
             }
-
+            try {
+                mailService.sendMail {
+                    to customerInstance.email
+                    subject message(code: 'emailTemplates.email_verification.subject')
+                    html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                            model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance, bonDiscount: bonDiscount]).toString()])
+                }
+            }catch (x){x.printStackTrace()}
+        try {
             if (customerInstance.mobile)
                 messageService.sendMessage(
-                        customerInstance.mobile,
-                        g.render(template: '/messageTemplates/sms/email_verification', model: [customer: customerInstance]).toString())
-
-
+                customerInstance.mobile,
+                g.render(template: '/messageTemplates/sms/email_verification', model: [customer: customerInstance, bonDiscount: bonDiscount]).toString())
+        }catch (x){x.printStackTrace()}
+            session['RegBon']=bonDiscount
             redirect(action: 'checkForActivationMail')
         } else {
             render(view: session.mobile ? 'mobileRegister' : 'register', model: ['customerInstance': customerInstance])
