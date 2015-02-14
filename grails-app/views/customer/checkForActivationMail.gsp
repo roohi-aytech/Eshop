@@ -21,7 +21,7 @@
     </div>
         <g:if test="${session['RegBon']}">
         <div class="info">
-            <g:message code="regBon.msg" args="[formatNumber(number:session['RegBon'],type:'number')]"/>
+            <g:message code="regBon.msg" args="[formatNumber(number:session['RegBon'],type:'number'),session['RegBonTitle']]"/>
         </div>
         </g:if>
     </div>

@@ -111,8 +111,10 @@ class CustomerController {
 
             def discounts=Discount.findAllByUsageTypeAndFromDateLessThanEqualsAndToDateGreaterThanEqualsAndType('RegBon',new Date(),new Date(),'Fixed')
             def bonDiscount
+            def bonTitle
             if(discounts) {
                 def d=(discounts.sum {it.value}?:0)
+                bonTitle=discounts.find().code
                 bonDiscount =d * priceService.getDisplayCurrencyExchangeRate()
                 if (bonDiscount) {
                     def boncustomerTransaction = new CustomerTransaction()
@@ -135,16 +137,17 @@ class CustomerController {
                     to customerInstance.email
                     subject message(code: 'emailTemplates.email_verification.subject')
                     html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                            model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance, bonDiscount: bonDiscount]).toString()])
+                            model: [message: g.render(template: '/messageTemplates/mail/email_verification', model: [customer: customerInstance, bonDiscount: bonDiscount,bonTitle:bonTitle]).toString()])
                 }
             }catch (x){x.printStackTrace()}
         try {
             if (customerInstance.mobile)
                 messageService.sendMessage(
                 customerInstance.mobile,
-                g.render(template: '/messageTemplates/sms/email_verification', model: [customer: customerInstance, bonDiscount: bonDiscount]).toString())
+                g.render(template: '/messageTemplates/sms/email_verification', model: [customer: customerInstance, bonDiscount: bonDiscount,bonTitle:bonTitle]).toString())
         }catch (x){x.printStackTrace()}
             session['RegBon']=bonDiscount
+            session['RegBonTitle']=bonTitle
             redirect(action: 'checkForActivationMail')
         } else {
             render(view: session.mobile ? 'mobileRegister' : 'register', model: ['customerInstance': customerInstance])

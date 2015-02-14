@@ -8,7 +8,7 @@
 </a>
 <br/>
 <g:if test="${bonDiscount}">
-همچنین مبلغ <g:formatNumber number="${bonDiscount}" type="number"/> ریال گلبن به حساب کاربری شما اضافه شد
+همچنین مبلغ <g:formatNumber number="${bonDiscount}" type="number"/> ریال گلبن به مناسبت ${bonTitle} به حساب کاربری شما اضافه شد
     <br/>
 </g:if>
 در صورتیکه این درخواست عضویت از جانب شما نبوده، لطفا بدون انجام هیچ اقدامی از صفحه خارج شوید.
