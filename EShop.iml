@@ -16,6 +16,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="Gorm" />
+          <unit-entry name="sessionFactory" />
           <unit-entry name="src:templates:artifacts:hibernate.cfg.xml" />
         </datasource-map>
         <naming-strategy-map />
@@ -135,4 +136,3 @@
     <orderEntry type="library" name="grails-2.0.4" level="application" />
   </component>
 </module>
-
