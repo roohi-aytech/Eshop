@@ -106,6 +106,15 @@
                                 code="discount"
                                 default="Discount"/></span></g:link></li>
                 </sec:ifAllGranted>
+                <g:if test="${grailsApplication.config.eShop.instance=='goldaan'}">
+                <sec:ifAllGranted roles="${RoleHelper.ROLE_PRICE_ADMIN}">
+                    <li>
+                        <g:link controller="specialProducts" action="list"><img
+                                src="images/discount.png"/><span><g:message
+                                code="specialProducts"
+                                default="Special Products"/></span></g:link></li>
+                </sec:ifAllGranted>
+                </g:if>
                 <sec:ifAllGranted roles="${RoleHelper.ROLE_PRODUCT_ADMIN}">
                     <li>
                         <g:link controller="customerReview" action="list"><img

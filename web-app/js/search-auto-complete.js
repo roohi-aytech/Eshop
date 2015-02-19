@@ -7,7 +7,8 @@
  */
 $(document).ready(function () {
     $("#searchForm").attr('searchAutoCompleteUrl', searchAutoCompleteUrl);
-    setupSearchAutoComplete($("#searchForm"));
+    if($("#searchForm").length)
+        setupSearchAutoComplete($("#searchForm"));
 });
 
 function setupSearchAutoComplete(form){

@@ -280,8 +280,7 @@
     <tr>
         <td id="body-container">
             <g:render template="/layouts/${grailsApplication.config.eShop.instance}/header" key="${sec.username()}"/>
-            <div id="body-container-slider">
-            </div>
+
             <div id="body-container-inner">
                 <div id="body-size-watch">
                     <g:layoutBody/>

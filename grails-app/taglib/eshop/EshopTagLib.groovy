@@ -1,5 +1,7 @@
 package eshop
 
+import eshop.goldaan.SpecialProducts
+import groovy.xml.MarkupBuilder
 import org.codehaus.groovy.grails.web.util.WebUtils
 import org.springframework.web.servlet.LocaleResolver
 import org.springframework.web.servlet.support.RequestContextUtils
@@ -672,7 +674,7 @@ class EshopTagLib {
         }
         localeResolver.setLocale(request, response, attrs.locale)
     }
-    def randomProduct={attrs,body->
+    def randomProduct = { attrs, body ->
         Product.createCriteria().listDistinct {
             models {
                 eq('status', 'exists')
@@ -684,9 +686,46 @@ class EshopTagLib {
             }
             maxResults(20)
             sqlRestriction " 1=1 order by rand()"
-        }.each{
-            g.set(var:'product',value:it)
-            out<<body()
+        }.each {
+            g.set(var: 'product', value: it)
+            out << body()
         }
+    }
+    def productTypeLink = { attrs, body ->
+        def markup = new MarkupBuilder(out)
+        def pt = ProductType.get(attrs.id)
+        if (pt) {
+            markup.a(href: createLink(controller: 'site', action: 'browse', params: [productType: pt.seoFriendlyName])) {
+                mkp.yieldUnescaped(body())
+            }
+        }
+    }
+    def glSpecialOfferLink = { attrs, body ->
+        def markup = new MarkupBuilder(out)
+        def p = eshop.goldaan.SpecialProducts.findAllByType('specialOffer').find()
+        if (!p) {
+            def c = Product.countByDeleted(false)
+            def c1 = (int) (Math.random() * c)
+            p = Product.findAllByDeleted(false, [max: 1, offset: c1]).find()
+        }
+        if (p) {
+            markup.a(href: createLink(controller: 'site', action: 'product', id: p.id)) {
+                mkp.yieldUnescaped(body())
+            }
+        }
+    }
+    def glFirstPageProducts = { attrs, body ->
+        def pt = ProductType.get(attrs.productTypeId)
+        def fpps = SpecialProducts.executeQuery("select sp.product from SpecialProducts sp join sp.product.productTypes pts where sp.type=:type and pts=:pt", [type: 'firstPageProducts', pt: pt])
+        def ops = []
+        if (fpps.size() < 6) {
+            ops = OrderItem.executeQuery("select oi.productModel.product from OrderItem  oi join oi.productModel.product.productTypes pts where pts=:pt and oi.order.status=:status and oi.productModel.product not in :ots group by oi.productModel.product order by count(*) desc",
+                    [pt: pt, status: 'delivered',ots:fpps?:Product.findAllByDeleted(true,[max:1])], [max: 6 - fpps.size()])
+        }
+        (fpps + ops).each {
+            g.set(var: 'product', value: it)
+            out << body()
+        }
+
     }
 }

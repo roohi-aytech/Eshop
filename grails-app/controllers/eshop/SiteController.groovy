@@ -505,7 +505,6 @@ class SiteController {
     }
 
     def index() {
-
         if (session.forwardUri) {
 
             trackingService.trackSignIn()
