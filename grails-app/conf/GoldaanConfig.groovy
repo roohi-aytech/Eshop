@@ -46,7 +46,7 @@ orderCreateNotifiers='09121057012,09124022033,09128194077,09192681571,0912348233
 profilePersonalEventDefaultProductType='مناسبت'
 ckeditor {
     upload {
-//        basedir = "/home/uploads/"
-        basedir = "c:/uploads/"
+        basedir = "/home/uploads/"
+//        basedir = "c:/uploads/"
     }
 }
