@@ -702,7 +702,7 @@ class EshopTagLib {
     }
     def glSpecialOfferLink = { attrs, body ->
         def markup = new MarkupBuilder(out)
-        def p = eshop.goldaan.SpecialProducts.findAllByType('specialOffer').find()
+        def p = eshop.goldaan.SpecialProducts.findAllByType('specialOffer').find().product
         if (!p) {
             def c = Product.countByDeleted(false)
             def c1 = (int) (Math.random() * c)
