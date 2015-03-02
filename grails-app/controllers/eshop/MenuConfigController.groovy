@@ -53,7 +53,9 @@ class MenuConfigController {
                         if (ptj)
                             g.children.addAll()
                         menuConfig.column1 = g
+                        menuConfig.save()
                     }
+
                 }
                 catch (e) {
                     e.printStackTrace()
