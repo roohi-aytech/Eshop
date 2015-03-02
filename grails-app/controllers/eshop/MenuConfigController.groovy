@@ -39,20 +39,20 @@ class MenuConfigController {
             } else {
                 try {
                     it.children.findAll { pt ->
-                        !pt.deleted && (
-                        JSON.parse(menuConfig.column1).children.find { it.key.toString() == pt.id } ||
-                                JSON.parse(menuConfig.column2).children.find { it.key.toString() == pt.id } ||
-                                JSON.parse(menuConfig.column3).children.find { it.key.toString() == pt.id } ||
-                                JSON.parse(menuConfig.column4).children.find { it.key.toString() == pt.id } ||
-                                JSON.parse(menuConfig.column5).children.find { it.key.toString() == pt.id } ||
-                                JSON.parse(menuConfig.column6).children.find { it.key.toString() == pt.id }
+                        !(pt.deleted ||
+                                JSON.parse(menuConfig.column1)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column2)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column3)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column4)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column5)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column6)[0].children.find { it.key.toString() == pt.id.toString() }
                         )
                     }.each {
-                        def g = JSON.parse(menuConfig.column1)
+                        def g = new groovy.json.JsonSlurper().parseText(menuConfig.column1)
                         def ptj = productTypeJson(it)
                         if (ptj)
-                            g.children.addAll()
-                        menuConfig.column1 = g
+                            g[0].children.addAll(ptj)
+                        menuConfig.column1 = g as JSON
                         menuConfig.save()
                     }
 
