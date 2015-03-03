@@ -18,7 +18,7 @@
         </div>
 
         <div>
-            <input type="button" onclick="actOnOrder();"
+            <input type="button" onclick="histOnOrder();"
                    value='${message(code: "actionHistory.btn")}'/>
         </div>
     </form>

@@ -59,7 +59,7 @@
             );
         }
 
-        function actOnOrder(){
+        function histOnOrder(){
             requestUrl(
                     '${createLink(action: 'saveActionDescription')}',
                     $('#actionHistoryForm').serialize()
