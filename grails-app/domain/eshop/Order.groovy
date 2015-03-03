@@ -62,7 +62,7 @@ class Order {
     }
 
     transient String getProductsName() {
-        items?.collect { it?.productModel?.toString() }?.join(' - ')
+        items?.collect { it?.productModel?.toString() }?.join('<br/>')
     }
 
     static hasMany = [items: OrderItem, trackingLogs: OrderTrackingLog]
@@ -92,7 +92,7 @@ class Order {
         deliverySourceStation(nullable: true)
         deliveryPrice(nullable: true)
 
-        invoiceType nullable: true, inList: ['with_added_value', 'without_added_value']
+        invoiceType nullable: true, inList: [ 'without_added_value', 'with_added_value']
         customer(nullable: true)
 
         paymentType nullable: true, inList: ['online', 'bank-receipt', 'account-value', 'in-place']

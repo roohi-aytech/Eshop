@@ -11,16 +11,17 @@
 <head>
     <meta name="layout" content="site"/>
     <title><g:message code="order.tracking"/></title>
-    <script language="javascript" type="text/javascript">
-    function showPreInvoice() {
 
-        $("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');
-        $("#myModal").modal({
-                show: true
-                });
-        $("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: order?.id])}', function() {});
-    }
-    </script>
+    %{--<script language="javascript" type="text/javascript">--}%
+    %{--function showPreInvoice() {--}%
+
+        %{--$("#myModal .modal-body").html('<img class="loading" src="${resource(dir: 'images', file: 'loading.gif')}"/>');--}%
+        %{--$("#myModal").modal({--}%
+                %{--show: true--}%
+                %{--});--}%
+        %{--$("#myModal .modal-body").load('${createLink(controller: 'order', action: 'invoice', params: [id: order?.id])}', function() {});--}%
+    %{--}--}%
+    %{--</script>--}%
 </head>
 
 <body>
@@ -79,9 +80,9 @@
                         <div>
                             <g:if test="${!grailsApplication.config.disableTrackingActions}">
 
-                                    <input type="button" ordenclick="showPreInvoice();"
-                                           value="${invoiceTitle}" class="btn btn-success"
-                                           style="margin:10px;height:30px;"/>
+                                    %{--<input type="button" ordenclick="showPreInvoice();"--}%
+                                           %{--value="${invoiceTitle}" class="btn btn-success"--}%
+                                           %{--style="margin:10px;height:30px;"/>--}%
                                     <g:each in="${suggestedActions}" var="action">
                                             <g:link controller="order" action="${action}" params="${['id': order.id]}" class="btn btn-primary"><g:message
                                                     code="controlPanel.orders.actions.${action}.label"></g:message></g:link>

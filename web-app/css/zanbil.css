@@ -4718,7 +4718,7 @@ ul.article-list li span {
 }
 
 .invoice {
-    background-image: url(../images/zanbil/A4-Invoice.jpg);
+    /*background-image: url(../images/zanbil/A4-Invoice.jpg);*/
 }
 
 .invoice .basket-detail th {

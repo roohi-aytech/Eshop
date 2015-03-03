@@ -10,11 +10,10 @@ browse.view.root='browse'
 browse.view.mobile='browse-root'
 page.size=12
 page.mobile.size=24
-testimonials=false
-backgrounds=false
-showProductStatus=false
 filterPriceOnChange=true
 ajaxFilter = true
+priceUpdateLinks=true
+
 ckeditor {
     upload {
         basedir = "/home/uploads/"

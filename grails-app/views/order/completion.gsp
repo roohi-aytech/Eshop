@@ -19,12 +19,12 @@
     <h2><g:message code="order.actions.completion"/></h2>
 
     <g:if test="${order.paymentTimeout > new Date()}">
-        <div class="export-toolbar">
-            <a class="btn btn-success" href="${createLink(action: 'pdf', params: [id: params.id])}">
-                <img src="${resource(dir: 'images', file: 'pdf.png')}"/>
-                <g:message code="invoice.export.pdf"/>
-            </a>
-        </div>
+        %{--<div class="export-toolbar">--}%
+            %{--<a class="btn btn-success" href="${createLink(action: 'pdf', params: [id: params.id])}">--}%
+                %{--<img src="${resource(dir: 'images', file: 'pdf.png')}"/>--}%
+                %{--<g:message code="invoice.export.pdf"/>--}%
+            %{--</a>--}%
+        %{--</div>--}%
         <g:render template="invoice/container" model="${[order: order]}"/>
         <div>
             <a class="btn btn-primary" href="${createLink(action: 'payment', params: [id: params.id])}">

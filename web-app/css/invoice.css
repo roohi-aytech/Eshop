@@ -5,7 +5,7 @@
 }
 
 .page-shadow{
-    box-shadow: 0 0 10px grey;
+    /*box-shadow: 0 0 10px grey;*/
     display: inline-block;
 }
 
@@ -13,8 +13,8 @@
 }
 
 .a4{
-    width: 21cm;
-    height: 29.7cm;
+    /*width: 21cm;*/
+    /*height: 29.7cm;*/
 }
 
 .invoice {
@@ -27,14 +27,15 @@
 }
 
 .invoice-inner{
-    padding:2cm;
-    padding-left: 1.5cm;
-    padding-top:4cm;
+    /*padding:2cm;*/
+    /*padding-left: 1.5cm;*/
+    /*padding-top:4cm;*/
 }
 
 .invoice h2 {
     margin-bottom: 0;
     font-size:0.6cm;
+    display: none;
 }
 
 .invoice table {
@@ -86,10 +87,17 @@
     text-align: center;
 }
 
+
+.invoice .basket-detail + div {
+    display: none;
+}
+
 #invoice-date{
+    display: none;
 }
 
 #invoice-serial{
+    display: none;
     margin-bottom:1cm;
 }
 

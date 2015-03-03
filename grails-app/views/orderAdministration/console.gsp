@@ -59,6 +59,13 @@
             );
         }
 
+        function actOnOrder(){
+            requestUrl(
+                    '${createLink(action: 'saveActionDescription')}',
+                    $('#actionHistoryForm').serialize()
+            );
+        }
+
         function printInvoice(id){
             window.location.href = '${createLink(action: 'printInvoice')}/' + id;
         }

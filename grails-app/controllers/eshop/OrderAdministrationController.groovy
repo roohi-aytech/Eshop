@@ -206,6 +206,22 @@ class OrderAdministrationController {
         redirect(action: 'act', params: [id: params.order.id])
     }
 
+    def saveActionDescription()
+    {
+
+        def order = Order.get(params.order.id) //save order tracking log
+        def trackingLog = new OrderTrackingLog()
+        trackingLog.action = OrderHelper.ACTION_PAYMENT_CORRECTION
+        trackingLog.date = new Date()
+        trackingLog.order = order
+        trackingLog.user = springSecurityService.currentUser as User
+        trackingLog.title = "order.actions.custom"
+        trackingLog.description = params.description
+        trackingLog.save()
+
+        redirect(action: 'act', params: [id: params.order.id])
+    }
+
     def actOnOrder(oldStatus, newStatus, action, description) {
         def order = Order.get(params.id)
         order.status = newStatus
@@ -472,15 +488,15 @@ class OrderAdministrationController {
                 "")
 
         if (grailsApplication.config.sendInvoiceWithApprove) {
-            def os = new ByteArrayOutputStream()
-            pdfService.generateInvoice(order, os, true)
+//            def os = new ByteArrayOutputStream()
+//            pdfService.generateInvoice(order, os, true)
             mailService.sendMail {
-                multipart true
+//                multipart true
                 to order.ownerEmail
                 subject message(code: 'emailTemplates.approve_payment.subject')
                 html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/approve_payment', model: [order: order]).toString()])
-                attachBytes "invoice.pdf", "application/pdf", os.toByteArray()
+//                attachBytes "invoice.pdf", "application/pdf", os.toByteArray()
             }
         } else {
             mailService.sendMail {
