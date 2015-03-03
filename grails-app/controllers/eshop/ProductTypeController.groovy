@@ -256,6 +256,7 @@ class ProductTypeController {
                 productTypeInstance.rootProductType = productTypeInstance
             productTypeInstance.deleted = true
             productTypeInstance.save(flush: true)
+            MenuConfig.findByProductType(productTypeInstance).delete(flush: true)
             render 0;
         }
         catch (DataIntegrityViolationException e) {
@@ -368,7 +369,7 @@ class ProductTypeController {
                         productType.menuImage = params.menuImage.bytes
                     else if (menuImage)
                         productType.menuImage = menuImage
-                }catch (e){
+                } catch (e) {
                     e.printStackTrace()
                 }
             }
@@ -378,7 +379,7 @@ class ProductTypeController {
                         productType.mobileBanner = params.mobileBanner.bytes
                     else if (mobileBanner)
                         productType.mobileBanner = mobileBanner
-                }catch (e){
+                } catch (e) {
                     e.printStackTrace()
                 }
             }
@@ -386,8 +387,36 @@ class ProductTypeController {
             productType.save(flush: true)
             if (productType.errors.allErrors) {
                 println productType.errors.allErrors
-            }
-            else {
+            } else {
+                def menuConfig = MenuConfig.findByProductType(productType)
+                def columnData = { index ->
+                    [
+                            title   : message(code: "menuConfig.column${index}"),
+                            isFolder: true,
+                            key     : "c${index}",
+                            expand  : true,
+                            children: []
+                    ]
+                }
+                if (!menuConfig) {
+                    menuConfig = new MenuConfig()
+                    menuConfig.productType = productType
+                    def firstColumn = [[
+                                               title   : message(code: "menuConfig.column1"),
+                                               isFolder: true,
+                                               key     : "c1",
+                                               expand  : true,
+                                               children: []
+                                       ]]
+                    firstColumn[0].children.addAll(productTypeJson(productType).children)
+                    menuConfig.column1 = firstColumn as JSON
+                    menuConfig.column2 = columnData(2) as JSON
+                    menuConfig.column3 = columnData(3) as JSON
+                    menuConfig.column4 = columnData(4) as JSON
+                    menuConfig.column5 = columnData(5) as JSON
+                    menuConfig.column6 = columnData(6) as JSON
+                    menuConfig.save()
+                }
                 if (productType) {
                     def productTypeIds = getChildProductTypes(productType).collect { it.id }
                     Product.createCriteria().list {
@@ -414,6 +443,34 @@ class ProductTypeController {
 
 
         render 0;
+    }
+
+
+    private def productTypeJson(ProductType productType) {
+
+        def result = [
+                title   : productType.name,
+                isFolder: productType.children.size() > 0,
+                key     : productType.id,
+                expand  : true,
+                children: []
+        ]
+        productType.children.findAll { !it.deleted }.each {
+            def item = productTypeJson(it)
+            if (item)
+                result.children << item
+        }
+        ProductType.createCriteria().listDistinct {
+            godFathers {
+                eq('id', productType.id)
+            }
+            eq('deleted', false)
+        }.each {
+            result.children << productTypeJson(it)
+        }
+
+
+        result
     }
 
     def getChildProductTypes(ProductType productType) {

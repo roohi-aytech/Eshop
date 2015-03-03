@@ -66,7 +66,7 @@
             </div>
     </tr>
 </table>
-    <div class="payment-type">
+    <div class="payment-type" ng-show="calculateBasketPayablePrice()>0">
         <div>
             <div class="payment-type-title"><g:message code="payment.type" /></div>
             <span>

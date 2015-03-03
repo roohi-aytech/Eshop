@@ -11,10 +11,10 @@ class MenuConfigController {
             def menuConfig = MenuConfig.findByProductType(it)
             def columnData = { index ->
                 [
-                        title: message(code: "menuConfig.column${index}"),
+                        title   : message(code: "menuConfig.column${index}"),
                         isFolder: true,
-                        key: "c${index}",
-                        expand: true,
+                        key     : "c${index}",
+                        expand  : true,
                         children: []
                 ]
             }
@@ -22,12 +22,12 @@ class MenuConfigController {
                 menuConfig = new MenuConfig()
                 menuConfig.productType = it
                 def firstColumn = [[
-                        title: message(code: "menuConfig.column1"),
-                        isFolder: true,
-                        key: "c1",
-                        expand: true,
-                        children: []
-                ]]
+                                           title   : message(code: "menuConfig.column1"),
+                                           isFolder: true,
+                                           key     : "c1",
+                                           expand  : true,
+                                           children: []
+                                   ]]
                 firstColumn[0].children.addAll(productTypeJson(it).children)
                 menuConfig.column1 = firstColumn as JSON
                 menuConfig.column2 = columnData(2) as JSON
@@ -36,6 +36,30 @@ class MenuConfigController {
                 menuConfig.column5 = columnData(5) as JSON
                 menuConfig.column6 = columnData(6) as JSON
                 menuConfig.save()
+            } else {
+                try {
+                    it.children.findAll { pt ->
+                        !(pt.deleted ||
+                                JSON.parse(menuConfig.column1)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column2)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column3)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column4)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column5)[0].children.find { it.key.toString() == pt.id.toString() } ||
+                                JSON.parse(menuConfig.column6)[0].children.find { it.key.toString() == pt.id.toString() }
+                        )
+                    }.each {
+                        def g = new groovy.json.JsonSlurper().parseText(menuConfig.column1)
+                        def ptj = productTypeJson(it)
+                        if (ptj)
+                            g[0].children.addAll(ptj)
+                        menuConfig.column1 = g as JSON
+                        menuConfig.save()
+                    }
+
+                }
+                catch (e) {
+                    e.printStackTrace()
+                }
             }
         }
 
@@ -45,15 +69,15 @@ class MenuConfigController {
     private def productTypeJson(ProductType productType) {
 
         def result = [
-                title: productType.name,
+                title   : productType.name,
                 isFolder: productType.children.size() > 0,
-                key: productType.id,
-                expand: true,
+                key     : productType.id,
+                expand  : true,
                 children: []
         ]
         productType.children.findAll { !it.deleted }.each {
             def item = productTypeJson(it)
-            if(item)
+            if (item)
                 result.children << item
         }
         ProductType.createCriteria().listDistinct {
@@ -118,43 +142,37 @@ class MenuConfigController {
                     menuConfig.extraMenuImage1 = params["extraMenuImage1_${it.id}"].bytes
                 else if (extraMenuImage1)
                     menuConfig.extraMenuImage1 = extraMenuImage1
-            }
-            else menuConfig.extraMenuImage1 = null
+            } else menuConfig.extraMenuImage1 = null
 
             if (!params["extraMenuImage2Deleted_${it.id}"]) {
                 if (params["extraMenuImage2_${it.id}"].bytes.length > 0)
                     menuConfig.extraMenuImage2 = params["extraMenuImage2_${it.id}"].bytes
                 else if (extraMenuImage1)
                     menuConfig.extraMenuImage2 = extraMenuImage2
-            }
-            else menuConfig.extraMenuImage2 = null
+            } else menuConfig.extraMenuImage2 = null
 
             if (!params["extraMenuImage3Deleted_${it.id}"]) {
                 if (params["extraMenuImage3_${it.id}"].bytes.length > 0)
                     menuConfig.extraMenuImage3 = params["extraMenuImage3_${it.id}"].bytes
                 else if (extraMenuImage3)
                     menuConfig.extraMenuImage3 = extraMenuImage3
-            }
-            else menuConfig.extraMenuImage3 = null
+            } else menuConfig.extraMenuImage3 = null
 
             if (!params["extraMenuImage4Deleted_${it.id}"]) {
                 if (params["extraMenuImage4_${it.id}"].bytes.length > 0)
                     menuConfig.extraMenuImage4 = params["extraMenuImage4_${it.id}"].bytes
                 else if (extraMenuImage3)
                     menuConfig.extraMenuImage4 = extraMenuImage4
-            }
-            else menuConfig.extraMenuImage4 = null
+            } else menuConfig.extraMenuImage4 = null
 
             if (!params["extraMenuImage5Deleted_${it.id}"]) {
                 if (params["extraMenuImage5_${it.id}"].bytes.length > 0)
                     menuConfig.extraMenuImage5 = params["extraMenuImage5_${it.id}"].bytes
                 else if (extraMenuImage5)
                     menuConfig.extraMenuImage5 = extraMenuImage5
-            }
-            else menuConfig.extraMenuImage5 = null
+            } else menuConfig.extraMenuImage5 = null
 
-            if(!menuConfig.save(flush: true))
-            {
+            if (!menuConfig.save(flush: true)) {
                 flash.message = 'error<br/>' + menuConfig.errors?.allErrors?.toString()
                 redirect(action: 'index')
                 return;
@@ -165,7 +183,7 @@ class MenuConfigController {
         redirect(action: 'index')
     }
 
-    def clear(){
+    def clear() {
         MenuConfig.findAll().each { it.delete(flush: true) }
         redirect(action: 'index')
     }

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title><g:message code="enquiry.request"/></title>
+    <title><g:message code="site.title"/>: <g:message code="enquiry.request"/></title>
     <meta name="layout" content="site">
     <link href="${resource(dir: 'css', file: 'jquery.ui.accordion.css')}" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.ui.accordion.js')}"></script>

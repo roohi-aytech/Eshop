@@ -17,7 +17,10 @@ class BrowseService {
 
     def getProducts() {
         if (!products) {
-            db = mongo.getDB("EShop")
+            if(grailsApplication.config.eShop.instance=='felfel')
+                db = mongo.getDB("FelFel")
+            else
+                db = mongo.getDB("EShop")
             products = db.getCollection("mongoProduct")
         }
         return products
@@ -39,7 +42,7 @@ class BrowseService {
         ).results()
         countMap
     }
-
+    @Cacheable(value = 'bpservice', key = '#params.toString()')
     def countProductsWithUnwind(params) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
@@ -896,7 +899,7 @@ class BrowseService {
         def match = productTypeId ? ['productTypes.id': productTypeId] : [:]
         countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
     }
-
+    @Cacheable(value = 'bprservice', key = '#match.toString()')
     def priceRange(Map match) {
         def criteria = match
         criteria.displayInList = true

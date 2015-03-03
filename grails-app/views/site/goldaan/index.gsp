@@ -4,7 +4,7 @@
 <head>
     <title><g:message code="site.mainPage.title-goldaan"/></title>
     <!-- E7zma1ATwR6TvWerhh0l7txRVh0 -->
-    <meta name="description" content="${message(code: 'site.mainPage.description')}">
+    <meta name="description" content="${message(code: 'site.mainPage.description-goldaan')}">
     <meta name="keywords" content="${message(code: 'site.mainPage.keywords-goldaan')}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +15,7 @@
     %{--<!--[if lt IE 9]>--}%
     <!--<script src="http://html5shim.googlecode.com/svn/trunk/html5" type="text/javascript"/>-->
     %{--<![endif]-->--}%
-    <script language="JavaScript">
 
-    </script>
     %{--<!-- Start Alexa Certify Javascript -->--}%
     %{--<script type="text/javascript">--}%
     %{--_atrk_opts = { atrk_acct:"y2lmi1a8s700WQ", domain:"zanbil.ir",dynamic: true};--}%
@@ -32,16 +30,198 @@
 <table class="layout-container table-simulated">
     <tr class="table-row">
         <td colspan="2">
+            <div id="body-container-slider" style="width: 950px;display: inline-block">
+            </div>
             <ehcache:render template="common/slideshowMain_goldaan"/>
+            <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'easy-buy'),size:300]">
+                <div class="btn-slider">
+                    <eshop:productTypeLink id="${grailsApplication.config.flowersId}">
+                        <img src="<g:resource dir="images/goldaan" file="flower.png" />">
+                        <div><g:message code="buy-flower" /></div>
+                    </eshop:productTypeLink>
+                </div>
+                <div class="btn-slider">
+                    <eshop:productTypeLink id="${grailsApplication.config.pastriesId}">
+                        <img src="<g:resource dir="images/goldaan" file="pastry.png" />">
+                        <div><g:message code="buy-pastry" /></div>
+                    </eshop:productTypeLink>
+                </div>
+                <div class="btn-slider">
+                    <eshop:glSpecialOfferLink>
+                        <img src="<g:resource dir="images/goldaan" file="sale.png" />">
+                        <div><g:message code="weekly-offer" /></div>
+                    </eshop:glSpecialOfferLink>
+                </div>
+                <div class="btn-slider">
+                    <g:link controller="site" action="filter" params="[f:'rf0',sort:'modelId',dir:-1]">
+                        <img src="<g:resource dir="images/goldaan" file="gift.png" />">
+                        <div><g:message code="all-products" /></div>
+                    </g:link>
+                </div>
+            </g:render>
+        </td>
+    </tr>
+    <tr class="table-row ">
+        <td colspan="2" class="padtop10">
+            <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'etminandarkharid'),size:189]">
+                <ehcache:render template="/site/banners/enamad"/>
+            </g:render>
+            <sec:ifLoggedIn>
+                <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'logout'),size:189]">
+                    <a rel="nofollow" href="<g:createLink controller="logout" action="index" />">
+                        <div class="center">
+                            <img src="<g:resource dir="images/goldaan" file="logout.png" />">
+                        </div>
+                    </a>
+                </g:render>
+                <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'profile'),size:189]">
+                    <a rel="nofollow" href="<g:createLink controller="customer" action="panel" />">
+                        <div class="center">
+                            <img src="<g:resource dir="images/goldaan" file="home.png" />">
+                        </div>
+                    </a>
+                </g:render>
+            </sec:ifLoggedIn>
+            <sec:ifNotLoggedIn>
+                <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'ozviat'),size:189]">
+                    <a rel="nofollow" href="<g:createLink controller="customer" action="register" />">
+                        <div class="center">
+                            <img src="<g:resource dir="images/goldaan" file="register.png" />">
+                        </div>
+                    </a>
+                </g:render>
+                <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'vorood'),size:189]">
+                    <a rel="nofollow" href="<g:createLink controller="login" action="auth" />">
+                        <div class="center">
+                            <img src="<g:resource dir="images/goldaan" file="login.png" />">
+                        </div>
+                    </a>
+                </g:render>
+            </sec:ifNotLoggedIn>
+            <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'iphone'),size:189]">
+                <a rel="nofollow" href="https://itunes.apple.com/us/app/id944634618">
+                    <div class="center">
+                        <img src="<g:resource dir="images/goldaan" file="apple.jpg" />">
+                    </div>
+                </a>
+            </g:render>
+            <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'android'),size:189]">
+                <a rel="nofollow" href="https://play.google.com/store/apps/details?id=ir.agah.eshop.goldaan">
+                    <div class="center">
+                        <img src="<g:resource dir="images/goldaan" file="googleplay.jpg" />">
+                    </div>
+                </a>
+                <a rel="nofollow" href="http://cafebazaar.ir/app/ir.agah.eshop.goldaan/">
+                    <div class="center">
+                        <img src="<g:resource dir="images/goldaan" file="bazar.png" />">
+                    </div>
+                </a>
+            </g:render>
+            <g:render template="/layouts/goldaan/boxTemplate" model="[header:message(code:'social-network'),size:189]">
+                <div class="social-top" title="Facebook">
+                    <a href="http://www.facebook.com/Goldaan.ir" target="_blank">
+                        <img src="${resource(dir: 'images/goldaan', file: 'facebook.png')}"/>
+                    </a>
+                </div>
+
+                <div class="social-top" title="Twitter">
+                    <a href="http://twitter.com/goldaanir" target="_blank">
+                        <img src="${resource(dir: 'images/goldaan', file: 'twitter.png')}"/>
+                    </a>
+                </div>
+                <div class="social-top" title="LinkedIn">
+                    <a href="https://www.linkedin.com/company/goldaan" target="_blank">
+                        <img src="${resource(dir: 'images/goldaan', file: 'linkedin.png')}"/></a>
+                    </a>
+                </div>
+                <div class="social-top" title="Instagram">
+                    <a href="https://instagram.com/goldaan.ir" target="_blank">
+                        <img src="${resource(dir: 'images/goldaan', file: 'instagram.png')}"/></a>
+                </div>
+                <div class="social-top" title="${message(code:'goldaanmagazin')}">
+                    <a href="#" target="_blank">
+                        <img src="${resource(dir: 'images/goldaan', file: 'goldaanmagazin.png')}"/></a>
+                    </a>
+                </div>
+                <div class="social-top" title="Google+">
+                    <a href="https://plus.google.com/+GoldaanIr" target="_blank">
+                        <img src="${resource(dir: 'images/goldaan', file: 'googleplus.png')}"/>
+                    </a>
+                </div>
+                <script language="JavaScript">
+                    $('.social-top').each(function(){
+                        $(this).qtip({
+                            content: $(this).attr('title'),
+                            position: {
+                                my: 'top right',
+                                at: 'bottom center'
+                            }
+                    })});
+                </script>
+            </g:render>
+        </td>
+    </tr>
+    <tr class="table-row ">
+        <td colspan="2" class="padtop15 h300">
+            <link  href="${resource(dir: 'css', file: 'dock.css')}" rel="stylesheet" type="text/css"/>
+            <div class="dock">
+            <ul>
+                <li>
+                    <eshop:productTypeLink id="${grailsApplication.config.flowersId}">
+                        <img src='<g:resource dir="images/goldaan" file="gol.png" />'/>
+                        <div><h4><g:message code="flowers" /></h4></div>
+                    </eshop:productTypeLink>
+                </li>
+                <li>
+                    <eshop:productTypeLink id="${grailsApplication.config.pastriesId}">
+                        <img src="<g:resource dir="images/goldaan" file="cake.jpg" />">
+                        <div><h4><g:message code="pastries" /></h4></div>
+                    </eshop:productTypeLink>
+                </li>
+                <li>
+                    <eshop:productTypeLink id="${grailsApplication.config.plantsId}">
+                        <img src="<g:resource dir="images/goldaan" file="giah.png" />">
+                        <div><h4><g:message code="plants" /></h4></div>
+                    </eshop:productTypeLink>
+                </li>
+                <li>
+                    <eshop:productTypeLink id="${grailsApplication.config.giftsId}">
+                        <img src="<g:resource dir="images/goldaan" file="hadie.png" />">
+                        <div><h4><g:message code="gifts" /></h4></div>
+                    </eshop:productTypeLink>
+                </li>
+            </ul>
+            </div>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td colspan="2">
+            <div class="magazin-posts">
+                <div><img src="<g:resource dir="images/goldaan" file="golmag1.png" />" ></div>
+                <div style="width: 632px;"><g:message code="magazin-posts-here" /><div style="text-align: left;display: block"><span><g:message code="commingSoon" />...</span></div></div>
+                <div><img src="<g:resource dir="images/goldaan" file="golmag2.png" />" ></div>
+            </div>
         </td>
     </tr>
     <tr class="table-row">
         <td colspan="2">
             <div class="mostvisited-nav">
-                <g:each in="${mostVisitedProducts}" var="product">
+                <eshop:glFirstPageProducts productTypeId="${grailsApplication.config.flowersId}">
                     <g:render template="goldaan/templates/productThumbnail"
                               model="${[product: product, size: '200x200']}"/>
-                </g:each>
+                </eshop:glFirstPageProducts>
+            </div>
+            <div class="mostvisited-nav">
+                <eshop:glFirstPageProducts productTypeId="${grailsApplication.config.pastriesId}">
+                    <g:render template="goldaan/templates/productThumbnail"
+                              model="${[product: product, size: '200x200']}"/>
+                </eshop:glFirstPageProducts>
+            </div>
+            <div class="mostvisited-nav">
+                <eshop:glFirstPageProducts productTypeId="${grailsApplication.config.plantsId}">
+                    <g:render template="goldaan/templates/productThumbnail"
+                              model="${[product: product, size: '200x200']}"/>
+                </eshop:glFirstPageProducts>
             </div>
         </td>
     </tr>
@@ -75,9 +255,11 @@
         <td class="table-cell">
             <div class="stay-connected">
                 <div class="sign-up">
-                    <g:link controller="customer" action="register" class="signup-a"><g:message
-                            code="signup-in-goldaan"/></g:link>
-                    <div class="sign-up-help"><g:message code="signup-in-goldaan-help"/></div>
+                    <g:link uri="#">
+                        <img src="<g:resource dir="images/goldaan" file="mag-txt.png" />">
+                        %{--<g:message code="goldaanmagazin"/>--}%
+                    </g:link>
+                    <div class="sign-up-help"><g:message code="magazine-goldaan-help"/></div>
                 </div>
 
                 <div class="stconnected">
@@ -89,15 +271,15 @@
                     <div>
                         <div class="social-links">
 
-                            <div><a href="http://www.facebook.com/sharer.php?u=${createLink(uri: "/", absolute: true)}"
-                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'facebook.png')}"/>
+                            <span><a href="http://www.facebook.com/sharer.php?u=${createLink(uri: "/", absolute: true)}"
+                                    target="_blank"><img src="${resource(dir: 'images/goldaan', file: 'facebook.png')}"/>
                             </a>
-                            </div>
+                            </span>
 
-                            <div><a href="http://twitter.com/share?url=${createLink(uri: "/", absolute: true)}&text=${message(code: 'name')}"
-                                    target="_blank"><img src="${resource(dir: 'images/social', file: 'twitter.png')}"/>
+                            <span><a href="http://twitter.com/share?url=${createLink(uri: "/", absolute: true)}&text=${message(code: 'name')}"
+                                    target="_blank"><img src="${resource(dir: 'images/goldaan', file: 'twitter.png')}"/>
                             </a>
-                            </div>
+                            </span>
                             %{--<div><a href="mailto:?${product.manualTitle ? product.pageTitle : title}&Body=I%20saw%20this%20and%20thought%20of%20you!%20 ${createLink(uri: "/product/${params.id}", absolute: true)}"><img--}%
                             %{--src="${resource(dir: 'images/goldaan', file: 'email.png')}"/></a> </div>--}%
 
@@ -105,16 +287,25 @@
                                     %{--target="_blank"><img src="${resource(dir: 'images/social', file: 'google.png')}"/>--}%
                             %{--</a>--}%
                             %{--</div>--}%
-                            <div>
-                            <a href="https://plus.google.com/101996537594125028951" rel="publisher"><img src="${resource(dir: 'images/social', file: 'google.png')}"/></a>
-                            </div>
-                            <div><a href="https://instagram.com/goldaan.ir"
+                            <span>
+                            <a href="https://plus.google.com/101996537594125028951" rel="publisher"><img src="${resource(dir: 'images/goldaan', file: 'googleplus.png')}"/></a>
+                            </span>
+                            <span><a href="https://instagram.com/goldaan.ir"
                                     target="_blank"><img
-                                        src="${resource(dir: 'images/social', file: 'instagram.png')}"/>
-                            </a></div>
+                                        src="${resource(dir: 'images/goldaan', file: 'instagram.png')}"/>
+                            </a></span>
                         </div>
                     </div>
                 </div>
+                <div class="cooperation">
+                    <div>
+                        <g:message code="cooperation"/>
+                    </div>
+                    <div class="sign-up-help">
+                        <g:message code="cooperation-txt"/>
+                    </div>
+                </div>
+
             </div>
         </td>
     </tr>

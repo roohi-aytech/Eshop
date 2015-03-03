@@ -99,12 +99,32 @@
             </g:if>
         </table>
     </g:if>
-
+    <g:if test="${productModel?.status!='exists'}">
+        <table class="table-simulated price-table">
+            <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                <td>
+                    <g:message code="seller-goldaan"/>:
+                </td>
+                <td  itemprop="name">
+                    ${product?.brand?.name ?: ""}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <g:message code="productModel.status"/>:
+                </td>
+                <td >
+                    <g:message code="productModel.status.${productModel.status}"/>
+                </td>
+            </tr>
+        </table>
+    </g:if>
     <div class="buttons">
-        <eshop:addToBasket prodcutModelId="${productModel.id}"
-            productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
-            useLongText="${true}"/>
-
+        <g:if test="${productModel?.status=='exists'}">
+            <eshop:addToBasket prodcutModelId="${productModel.id}"
+                productModelTitle="${productModel}" angular="false" buttonOnly="${true}"
+                useLongText="${true}"/>
+        </g:if>
         <a id="productThumbnail_${product.id}" class="btn-email" href="javascript:suggestFriend(${product.id})">
             <span><g:message code="email-to-firend-goldaan" /></span>
         </a>

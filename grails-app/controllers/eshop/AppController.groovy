@@ -20,6 +20,7 @@ class AppController {
     def mostVisited() {
         def match = [:]
         def productType
+        def sort='modelId'
         if (params.p)
             productType = ProductType.createCriteria().list {
                 or {
@@ -32,8 +33,10 @@ class AppController {
                     isNull('deleted')
                 }
             }.find()
-        if (productType)
+        if (productType) {
             match['productTypes.id'] = productType.id
+            sort='visitCount'
+        }
         if (params.p) {
             def prices = params.p.split('-')
             def ps = [:]
@@ -63,7 +66,7 @@ class AppController {
 //                }
 //                order("visitCount", "desc")
 //            }
-        def products = browseService.listProducts(sort: 'visitCount', dir: -1, match: match, pageSize: 20, start: offset)
+        def products = browseService.listProducts(sort: sort, dir: -1, match: match, pageSize: 20, start: offset)
                 .productIds.collect { pt ->
             def product = ProductModel.get(pt.modelId)?.product
             if (product) {
@@ -108,7 +111,7 @@ class AppController {
         while (query.contains('  '))
             query = query.replace('  ', ' ')
         query = "*${query.replace(' ', '* *')}*"
-        BooleanQuery.setMaxClauseCount(10000);
+        BooleanQuery.setMaxClauseCount(100000);
         def products = Product.search({
             queryString(query)
         }, [reload: false, max: 1000]).results.collect { product ->
@@ -208,7 +211,7 @@ class AppController {
 
             if (customerInstance.validate() && customerInstance.save()) {
                 def customerRole = Role.findByAuthority(RoleHelper.ROLE_CUSTOMER)
-                if(!UserRole.countByRoleAndUser(customerRole,customerInstance))
+                if (!UserRole.countByRoleAndUser(customerRole, customerInstance))
                     UserRole.create customerInstance, customerRole
                 def device = MobileDevice.findByDeviceCode(params.code) ?: new MobileDevice(deviceCode: params.code)
                 device.user = customerInstance
@@ -437,21 +440,24 @@ class AppController {
                                 phone    : user?.mobile ?: params.phone,
                                 body     : params.body
                         ])
+            }
+            if(user?.email ?: params.email) {
                 mailService.sendMail {
                     to user?.email ?: params.email
                     subject message(code: 'emailTemplates.contact_us.subject')
                     html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                             model: [message: g.render(template: '/messageTemplates/mail/contact_us', model: [parameters: params]).toString()])
                 }
-
-                if (user?.mobile ?: params.phone)
-                    messageService.sendMessage(
-                            user?.mobile ?: params.phone,
-                            g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
-
-
             }
+
+            if (user?.mobile ?: params.phone)
+                messageService.sendMessage(
+                        user?.mobile ?: params.phone,
+                        g.render(template: '/messageTemplates/sms/contact_us', model: [parameters: params]).toString())
+
+
         }
+
         render([res: true] as JSON)
     }
 
@@ -493,6 +499,7 @@ class AppController {
     }
 
     def finalizeOrder() {
+
         def params = request.JSON
         if (params.code) {
             def device = MobileDevice.findByDeviceCode(params.code)
@@ -570,11 +577,15 @@ class AppController {
                     return render([res: true] as JSON)
                 }
                 event(topic: 'order_event', data: [id: order.id, status: OrderHelper.STATUS_CREATED], namespace: 'browser')
-                mailService.sendMail {
-                    to order.ownerEmail
-                    subject message(code: 'emailTemplates.order_created.subject')
-                    html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
-                            model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+                try {
+                    mailService.sendMail {
+                        to order.ownerEmail
+                        subject message(code: 'emailTemplates.order_created.subject')
+                        html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
+                                model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
+                    }
+                } catch (x) {
+                    x.printStackTrace()
                 }
                 def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
                 def mobile = order.ownerMobile
@@ -584,7 +595,7 @@ class AppController {
                             messageText)
                 }
                 if (grailsApplication.config.orderCreateNotifiers) {
-                    def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order]).toString()
+                    def adminText = g.render(template: '/messageTemplates/sms/orderCreatedAdminNotify', model: [order: order.refresh()]).toString()
                     def adminNotifiers = grailsApplication.config.orderCreateNotifiers
                     Thread.start {
                         adminNotifiers.split(',').each {

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>${article.name}</title>
+    <title><g:message code="site.title"/>: ${article.name}</title>
     <meta charset="utf-8">
     <meta name="description" content="${article.summary}">
     <meta name="keywords" content="${article.keywords}">

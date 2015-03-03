@@ -5,7 +5,7 @@ url.www = false
 locale.language = 'fa'
 locale.country = 'IR'
 events.url = 'http://localhost:8080/eshop'
-admin.theme = 'cobalt'
+admin.theme = 'ui-lightness'
 browse.view.root = 'browse'
 browse.view.mobile='browse'
 page.size = 12
@@ -21,8 +21,9 @@ customCustomerReviewTemplate = false
 filterPriceOnChange = true
 ajaxFilter = true
 priceUpdateLinks=true
+copyProduct = true
 ckeditor {
     upload {
-        basedir = "/Volumes/Macintosh HD/Personal/DevDesk/Eshop-Images/"
+        basedir = "D:\\DevDesk\\Eshop-Images\\"
     }
 }

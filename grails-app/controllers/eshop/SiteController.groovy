@@ -505,7 +505,6 @@ class SiteController {
     }
 
     def index() {
-
         if (session.forwardUri) {
 
             trackingService.trackSignIn()
@@ -584,9 +583,10 @@ class SiteController {
                 eq('isVisible', true)
                 eq('deleted', false)
             }
-            maxResults(40)
+            maxResults(20)
             order("visitCount", "desc")
         }
+
 
         render(model: model, view: "/${session.mobile ? 'mobile' : 'site'}/${grailsApplication.config.eShop.instance}/index")
     }
@@ -747,12 +747,14 @@ class SiteController {
         }
 
         //update product visit count
-        if (!product.visitCount)
-            product.visitCount = 0;
-        product.visitCount++;
-//        product.isSynchronized = false
-        product.save()
 
+        try {
+            if (!product.visitCount)
+                product.visitCount = 0;
+            product.visitCount++;
+            product.isSynchronized = false
+            product.save()
+        }catch (x){x.printStackTrace()}
         //fill zoomable property of images
         if (product.mainImage) {
             try {
@@ -1090,7 +1092,7 @@ class SiteController {
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
-            BooleanQuery.setMaxClauseCount(10000);
+            BooleanQuery.setMaxClauseCount(100000);
             productIdList = Product.search({
                 queryString(query)
             },

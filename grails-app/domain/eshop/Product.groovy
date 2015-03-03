@@ -33,6 +33,8 @@ class Product extends BaseProduct implements Comparable {
 
     String searchKeys
 
+    Product copySource
+
     String getTitle() {
         toString()
     }
@@ -82,7 +84,7 @@ class Product extends BaseProduct implements Comparable {
     static constraints = {
         name(nullable: true)
         type(nullable: true)
-        description(nullable: true, maxSize: 1000)
+        description(nullable: true, maxSize: 10000)
         brand(nullable: true)
         manufactureCountry(nullable: true)
         manufactureDate(nullable: true)
@@ -104,6 +106,7 @@ class Product extends BaseProduct implements Comparable {
         isVisible(nullable: true)
         deleted(nullable: true)
         searchKeys(nullable: true)
+        copySource(nullable: true)
 //        assetId(nullable: true)
 //        dlFolderId(nullable: true)
 //        igFolderId(nullable: true)

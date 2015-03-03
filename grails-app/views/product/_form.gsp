@@ -7,6 +7,13 @@
     <g:message code="product.baseProductId" default="Code"/>:
     <b>${productInstance?.id}</b>
 </g:if>
+<g:if test="${productInstance?.copySource}">
+    <div>
+        <g:message code="product.copySource" default="Copy Source"/>:
+        <a href="${createLink(action: 'productDetails', params: [pid: productInstance?.copySource?.id])}">${productInstance?.copySource}</a> [<g:message code="product.baseProductId"
+                                                      default="Code"/>: ${productInstance?.copySource?.id}]
+    </div>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'name', 'error')} ">
     <label for="name">
@@ -137,7 +144,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'searchKeys', 'error')} ">
     <label for="searchKeys">
-        <g:message code="product.searchKeys.label" default="searchKeys" />
+        <g:message code="product.searchKeys.label" default="searchKeys"/>
 
     </label>
     <g:textArea name="searchKeys" value="${productInstance?.searchKeys}" cols="50" rows="5" class="count-words"/>
@@ -181,10 +188,10 @@
             var inp = $(this)
             inp.parent().find(".word-counter").html(inp.val().length)
         }).each(function () {
-                    $("<span class='word-counter'></span>").insertAfter($(this))
-                    $(this).keypress()
+            $("<span class='word-counter'></span>").insertAfter($(this))
+            $(this).keypress()
 
-                })
+        })
     })
     jQuery("#manufactureCountry").autocomplete({
         source: '${g.createLink(controller:"product", action:"searchCountryValues")}',

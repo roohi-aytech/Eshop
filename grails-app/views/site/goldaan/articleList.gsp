@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title><g:message code="article.list.title" args="${[productType?.name?:'']}"/></title>
+    <title><g:message code="site.title"/>: <g:message code="article.list.title" args="${[productType?.name?:'']}"/></title>
 </head>
 
 <body>

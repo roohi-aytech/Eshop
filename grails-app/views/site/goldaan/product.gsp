@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>${product.manualTitle ? product.pageTitle : title}</title>
+    <title><g:message code="site.title"/>: ${product.manualTitle ? product.pageTitle : title}</title>
     <meta charset="utf-8">
     <meta name="description" content="${description}">
     <meta name="keywords" content="">

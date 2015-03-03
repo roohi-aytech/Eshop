@@ -1,5 +1,7 @@
 package eshop
 
+import eshop.discout.ExternalDiscount
+
 class OrderItem {
     static auditable = true
 
@@ -14,7 +16,7 @@ class OrderItem {
     int totalPrice = 0
     String description
     Boolean deleted = false
-
+    ExternalDiscount externalDiscount
     static belongsTo = [Order]
 
     static hasMany = [addedValues: AddedValue, addedValueInstances: AddedValueInstance]
@@ -31,6 +33,7 @@ class OrderItem {
         unitPrice nullable: true
         totalPrice nullable: true
         description nullable: true
+        externalDiscount(nullable:true)
     }
 
     String toString() {

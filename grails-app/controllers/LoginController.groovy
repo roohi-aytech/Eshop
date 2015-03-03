@@ -57,6 +57,9 @@ class LoginController {
         if(session.mobile){
             view = 'mobileAuth'
         }
+//        else if(grailsApplication.config.eShop.instance=='goldaan'){
+//            view="goldaanAuth"
+//        }
         String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
         render view: view, model: [postUrl: postUrl,
                 rememberMeParameter: config.rememberMe.parameter]

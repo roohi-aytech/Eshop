@@ -2,6 +2,7 @@ package eshop
 
 import eshop.delivery.DeliveryMethod
 import eshop.delivery.DeliverySourceStation
+import eshop.discout.ExternalDiscount
 import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.converters.JSON
 
@@ -99,7 +100,67 @@ class BasketController {
         session.setAttribute("basket", basket)
         render "1"
     }
+    def takhfifyab(){
+        def discount=ExternalDiscount.findBySerial(params.discountSerial)
+        if(discount){
+            if(discount.purchaseDate){
+                flash.message=message(code:'discount.code.used')
+                return redirect(controller: 'customer',action:'panel')
+            }
+            def tkhf=new Takhfifyab()
+            if(!tkhf.submitDeal(params.discountSerial,params.discountCode)){
+                flash.message=message(code:'discount.code.invalid')
+                return redirect(controller: 'customer',action:'panel')
+            }
 
+            def productModel = discount.externalDiscountDifinition.model
+            discount.code=params.discountCode
+            discount.save()
+
+            def basket = [];
+
+            def basketItem = [id: productModel.id.toString(), productId: productModel.product.id, name: productModel.toBasketItemString(), count: 1]
+            basket << basketItem
+            basketItem.width = productModel?.width ?: productModel?.product?.width ?: 1
+            basketItem.height = productModel?.height ?: productModel?.product?.height ?: 1
+            basketItem.length = productModel?.product?.length ?: 1
+            basketItem.weight = productModel?.weight ?: productModel?.product?.weight ?: 0
+
+
+            basketItem.selectedAddedValues = []
+            basketItem.selectedAddedValueNames = []
+
+            //def price = priceService.calcProductModelPrice(productModel.id, basketItem.selectedAddedValues)
+            basketItem.price = 0//price.showVal
+            basketItem.realPrice = 0//price.showVal + price.addedVal
+            basketItem.externalDiscount=discount.id
+
+            def pts = []
+            productModel?.product?.productTypes?.each { collectProductTypes(it, pts) }
+            def addedValueTypes = pts?.collect {
+                it.addedValueTypes
+            }.flatten().unique().collect { [id: it.id, title: it.title, description: it.description] }
+            basketItem.addedValueTypes = addedValueTypes
+
+
+            def basketCounter = 0
+            def basketPrice = 0
+            basket.each {
+                basketCounter += it.count
+                basketPrice += (it.realPrice * it.count)
+            }
+            def bonDiscount = priceService.findDiscounts("Bon", basketPrice, basketCounter)
+
+            session.setAttribute("bonDiscount", bonDiscount)
+            session.setAttribute("basketCounter", basketCounter)
+            session.setAttribute("basket", basket)
+            return redirect(action: 'checkout')
+
+        } else{
+            flash.message=message(code:'discount.code.error')
+            return redirect(controller: 'customer',action:'panel')
+        }
+    }
     def checkout() {
 
         if (grailsApplication.config.customCheckout) {
@@ -527,8 +588,14 @@ class BasketController {
                 def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect {
                     it.value.id
                 }, addedValueType?.defaultPrice ?: 0)
-                it.price = price.showVal
-                it.realPrice = price.showVal + price.addedVal
+                if(it.externalDiscount){
+                    it.price = 0
+                    it.realPrice = price.addedVal
+                }
+                else {
+                    it.price = price.showVal
+                    it.realPrice = price.showVal + price.addedVal
+                }
 
             }
         }
@@ -567,8 +634,15 @@ class BasketController {
                 def price = priceService.calcProductModelPrice(it.id, it.selectedAddedValueInstances.collect {
                     it.value.id
                 }, addedValueType?.defaultPrice ?: 0)
-                it.price = price.showVal
-                it.realPrice = price.showVal + price.addedVal
+                if(it.externalDiscount){
+                    it.price = 0
+                    it.realPrice = price.addedVal
+                }
+                else {
+                    it.price = price.showVal
+                    it.realPrice = price.showVal + price.addedVal
+                }
+
 
             }
         }

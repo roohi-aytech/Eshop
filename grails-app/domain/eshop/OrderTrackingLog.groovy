@@ -20,4 +20,18 @@ class OrderTrackingLog {
         title(nullable: false)
         description(nullable: true, maxSize: 2048)
     }
+
+    def afterInsert(){
+        def order = Order.get(orderId)
+        if(order.lastActionDate < date)
+            order.lastActionDate = date
+        order.save()
+    }
+
+    def afterUpdate(){
+        def order = Order.get(orderId)
+        if(order.lastActionDate < date)
+            order.lastActionDate = date
+        order.save()
+    }
 }

@@ -15,15 +15,13 @@ backgrounds=true
 showProductStatus=true
 variationValueImage=true
 addedValueImage=true
-modelHasWidthAndHeight=false
-hideCustomerReviewTitle=false
-customCustomerReviewTemplate=false
 filterPriceOnChange=true
 ajaxFilter = true
 priceUpdateLinks=true
+copyProduct = true
 
 ckeditor {
     upload {
-        basedir = "/home/uploads"
+        basedir = "/home/stocks/felfel/uploads"
     }
 }

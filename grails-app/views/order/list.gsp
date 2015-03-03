@@ -27,13 +27,16 @@
                 <img src="../../images/box.png">
 
                 <h3>${order.trackingCode ?: '#' + order.id}</h3>
-
+                <g:if test="${!status}">
+                    <div class="comment"><g:message code="order.status"></g:message>: <g:message code="order.status.${order.status}"/></div>
+                </g:if>
                 <div class="comment"><g:message code="order.totalPrice"></g:message>: <g:formatNumber
                         number="${order.totalPrice}"
                         type="number"></g:formatNumber></div>
 
-                <div class="comment"><g:message code="order.${status}.date"></g:message>: <rg:formatJalaliDate
+                <div class="comment"><g:message code="order.${order.status}.date"></g:message>: <rg:formatJalaliDate
                         date="${order.trackingLogs.sort { -it.id }.first().date}" hm="true"></rg:formatJalaliDate></div>
+
             </div>
 
             <div class="column1 items">

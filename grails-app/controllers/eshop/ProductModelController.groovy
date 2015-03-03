@@ -154,7 +154,7 @@ class ProductModelController {
         }
 
         def productModelDefault = ProductModel.findByProductAndIsDefaultModel(modelInstance.product, true)
-        
+
         if(modelInstance.getIsDefaultModel()){
            if (productModelDefault && productModelDefault.id != modelInstance.id){
                productModelDefault.isDefaultModel = false
@@ -164,7 +164,7 @@ class ProductModelController {
         else if(productModelDefault == null)
             modelInstance.isDefaultModel = true
 
-        if (modelInstance.validate() && modelInstance.save()) {
+        if (modelInstance.validate() && modelInstance.merge() && modelInstance.save()) {
             modelInstance.product.isSynchronized = false
             modelInstance.product.save(flush:true)
             render modelInstance as JSON

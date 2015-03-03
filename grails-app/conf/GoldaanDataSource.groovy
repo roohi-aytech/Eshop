@@ -30,9 +30,9 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/goldaan?useUnicode=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://localhost/eshop?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
-            password = ""
+            password = "Salam123"
             pooled = true
             logSql = false
             driverClassName = "com.mysql.jdbc.Driver"

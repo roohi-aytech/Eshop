@@ -37,11 +37,16 @@ showFactorAfterDelivery=true
 onlyUpdateInFactor=true
 buyerPersonInfo=true
 sendInvoiceWithApprove=true
+flowersId=13
+pastriesId=54
+plantsId=14
+giftsId=11
 contactUsNewProductEmail='info@goldaan.ir'
 orderCreateNotifiers='09121057012,09124022033,09128194077,09192681571,09123482334'
 profilePersonalEventDefaultProductType='مناسبت'
 ckeditor {
     upload {
         basedir = "/home/uploads/"
+//        basedir = "c:/uploads/"
     }
 }

@@ -1,7 +1,7 @@
 <g:if test="${slides && !slides.isEmpty()}">
     <link href="${resource(dir: 'css', file: 'responsive.slider.css')}" rel="stylesheet" type="text/css"/>
 
-    <ul class="responsive-slider" height="420">
+    <ul class="responsive-slider" height="300">
         <g:each in="${slides}" var="slide">
             <li>
                 <g:if test="${slide.url}">
@@ -28,7 +28,7 @@
             container.css('height', ul.attr('height'));
             ul.find('li img').each(function () {
                 var img = $(this);
-                var content = '<div class="slider-item" style="background-image: url(' + img.attr('src') + ');height:' + ul.attr('height') + 'px;"></div>';
+                var content = '<div class="slider-item" style="background-image: url(' + img.attr('src') + ');height:' + ul.attr('height') + 'px;background-size:cover"></div>';
                 if(img.parent().attr('href'))
                     content = '<a href="' + img.parent().attr('href') + '">' + content + '</a>';
                 container.append(content);

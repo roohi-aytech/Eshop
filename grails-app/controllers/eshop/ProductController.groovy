@@ -527,6 +527,100 @@ class ProductController {
         redirect(action: "productDetails")
     }
 
+    def saveProductAndCopy() {
+        def result = saveProduct(params)
+
+        def product = result.productInstance as Product
+        def newProduct = new Product()
+        newProduct.name = product.name
+        newProduct.pageTitle = product.pageTitle
+        newProduct.manufactureDate = product.manufactureDate
+        newProduct.iranCode = product.iranCode
+        newProduct.shabnamCode = product.shabnamCode
+        newProduct.weight = product.weight
+        newProduct.width = product.width
+        newProduct.length = product.length
+        newProduct.brand = product.brand
+        newProduct.isVisible = product.isVisible
+        newProduct.searchKeys = product.searchKeys
+        newProduct.description = product.description
+        newProduct.details = product.details
+        newProduct.save()
+
+        //product types
+        result.productTypeIds.each {
+            newProduct.addToProductTypes(ProductType.get(it as Long))
+        }
+        newProduct.save()
+
+        //attributes
+        newProduct.type = product.type
+        Attribute.findAllByProduct(product).each{attr ->
+            def attribute = new Attribute()
+            attribute.attributeType = attr.attributeType
+            attribute.attributeValue = attr.attributeValue
+            attribute.value = attr.value
+            attribute.product = newProduct
+
+            newProduct.addToAttributes(attribute)
+        }
+        newProduct.save()
+
+        //variations
+        Variation.findAllByBaseProduct(product).each {variate ->
+            def variation = new Variation()
+            variation.baseProduct = newProduct
+            variation.name = variate.name
+            variation.variationGroup = variate.variationGroup
+            variate.variationValues.each {variateValue ->
+                variation.addToVariationValues(variateValue)
+            }
+            variation.save()
+        }
+
+        //models
+        ProductModel.findAllByProduct(product).each {mod ->
+            def model = new ProductModel()
+            model.guarantee = mod.guarantee
+            model.isDefaultModel = mod.isDefaultModel
+            model.status = mod.status
+            model.searchKeys = mod.searchKeys
+            model.name = mod.name
+            model.product = newProduct
+            mod.variationValues.each {variateValue ->
+                model.addToVariationValues(variateValue)
+            }
+            model.save()
+        }
+
+        //images
+        new File("${grailsApplication.config.ckeditor.upload.basedir}image\\p${newProduct.id}").mkdir()
+        new AntBuilder().copy(todir: "${grailsApplication.config.ckeditor.upload.basedir}image\\p${newProduct.id}") {
+            fileset(dir: "${grailsApplication.config.ckeditor.upload.basedir}image\\p${product.id}")
+        }
+
+        product.images.each {img ->
+            def image = new Content()
+            image.contentType = img.contentType
+            image.dynamicProperties = img.dynamicProperties
+            image.fileContent = img.fileContent
+            image.name = img.name
+            img.variationValues.each {variateValue ->
+                image.addToVariationValues(variateValue)
+            }
+            image.save()
+            newProduct.addToImages(image)
+            if(product.mainImageId == img.id)
+                newProduct.mainImage = image
+        }
+
+        newProduct.copySource = product
+        newProduct.isSynchronized = false
+        newProduct.save(flush: true)
+
+        redirect(action: "productDetails", params:[pid: newProduct.id])
+    }
+
     private def saveProduct(params) {
         def productInstance
         if (params.id) {

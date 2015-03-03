@@ -38,7 +38,7 @@ class Customer extends User {
         profileReagentFilled(nullable: true)
         profileFavoritesFilled(nullable: true)
         profileNewsLettersFilled(nullable: true)
-        wayOfKnowing nullable: true, inList: ['friends', 'search-engines', 'websites', 'news', 'email', 'advertisements', 'other']
+        wayOfKnowing nullable: true, inList: ['friends', 'search-engines', 'websites', 'news', 'email', 'advertisements','instagram','facebook', 'other']
         reagent nullable:true
     }
 }
