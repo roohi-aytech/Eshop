@@ -2523,6 +2523,9 @@ h2.check-out-price span {
     line-height: 20px;
     padding: 10px;
 }
+.footer4 a {
+    color: #ffffff !important;
+}
 
 /*brand carousel*/
 .band-carousel-container-title {
@@ -4946,6 +4949,26 @@ ul.article-list li span {
     text-align: center;
     width: 150px;
     /*box-shadow: 0 0 2px darkgray;*/
+}
+
+#related-links-title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+#related-links-title span{
+    cursor: pointer;
+    display:inline-block;
+    padding-left:20px;
+    background:url(../images/expand-down.png) center left no-repeat;
+}
+#related-links-title[data-status=expanded] span {
+    background: url(../images/collapse-up.png) center left no-repeat;
+}
+
+#related-links{
+    text-align:center;
+    margin-bottom:20px;
 }
 
 

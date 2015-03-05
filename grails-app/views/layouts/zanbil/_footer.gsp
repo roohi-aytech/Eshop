@@ -148,6 +148,7 @@
 </div>
 
 <div class="footer4">
+    <g:render template="/layouts/zanbil/internalLinks"/>
     <g:message code="copyright"/>
 </div>
 
