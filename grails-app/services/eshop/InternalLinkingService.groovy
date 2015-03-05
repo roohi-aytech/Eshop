@@ -88,7 +88,7 @@ class InternalLinkingService {
             list?.addAll(children)
             children = ProductType.findAllByParentProductInListAndIdNotInList(list?.toList(), list?.collect { it?.id })
         }
-        list.toList()
+        list?.toList()
     }
 
     List<Brand> getProductTypeBrands(ProductType productType) {
@@ -101,6 +101,6 @@ class InternalLinkingService {
             projections {
                 property('brand')
             }
-        }
+        }?.collect { it } ?: []
     }
 }
