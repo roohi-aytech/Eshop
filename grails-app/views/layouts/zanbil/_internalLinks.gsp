@@ -1,6 +1,6 @@
 <% def internalLinkingService = grailsApplication.classLoader.loadClass('eshop.InternalLinkingService').newInstance() %>
 <g:set var="links" value="${internalLinkingService.renderLinks(params)}"/>
-<g:if test="${links && links.size()}">
+<g:if test="${links && links?.size()}">
     <div id="related-links-title" data-status="collapsed">
         <span><g:message code="relatedLinks.title"/></span>
     </div>
@@ -10,7 +10,7 @@
             <g:if test="${i > 0}">
                 -
             </g:if>
-            <a href="${link.url}">${link.title}</a>
+            <a href="${link?.url}">${link?.title}</a>
         </g:each>
     </div>
     <script language="javascript" type="text/javascript">
