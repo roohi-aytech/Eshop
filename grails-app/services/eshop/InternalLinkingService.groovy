@@ -95,12 +95,13 @@ class InternalLinkingService {
         Product.createCriteria().listDistinct {
             notEqual('deleted', true)
             eq('isVisible', true)
+            isNotNull('brand')
             productTypes {
                 inList('id', getChildProductTypes(productType)?.collect { it?.id })
             }
             projections {
                 property('brand')
             }
-        }?.collect { it } ?: []
+        }?.findAll { it && it.name } ?: []
     }
 }
