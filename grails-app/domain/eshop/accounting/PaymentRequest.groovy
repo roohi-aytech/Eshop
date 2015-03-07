@@ -29,7 +29,7 @@ class PaymentRequest {
     }
 
     static constraints = {
-        owner()
+        owner(nullable: true)
         account()
         value()
         trackingCode()
