@@ -170,10 +170,10 @@ class OrderController {
             orderItem.description = basketItem.description
             orderItem.orderCount = basketItem.count
             orderItem.unitPrice = basketItem.realPrice
-            if(basketItem.externalDiscount){
-                orderItem.externalDiscount=ExternalDiscount.get(basketItem.externalDiscount)
-                orderItem.externalDiscount.purchaseDate=new Date()
-                orderItem.externalDiscount.user=customer
+            if (basketItem.externalDiscount) {
+                orderItem.externalDiscount = ExternalDiscount.get(basketItem.externalDiscount)
+                orderItem.externalDiscount.purchaseDate = new Date()
+                orderItem.externalDiscount.user = customer
                 orderItem.externalDiscount.save()
             }
             orderItem.description = basketItem.description
@@ -213,7 +213,7 @@ class OrderController {
                 html(view: "/messageTemplates/${grailsApplication.config.eShop.instance}_email_template",
                         model: [message: g.render(template: '/messageTemplates/mail/order_created', model: [order: order]).toString()])
             }
-        }catch (x){
+        } catch (x) {
             x.printStackTrace()
         }
         def messageText = g.render(template: '/messageTemplates/sms/order_created', model: [order: order]).toString()
@@ -537,15 +537,17 @@ class OrderController {
 
                     break
                 case 'ogone':
-                    model.currency='USD'
-                    model.amount = onlinePayment.amount / (Currency.findByCode(model.currency)?.exchangeRate?:1)
+                    model.currency = 'USD'
+                    model.amount = onlinePayment.amount / (Currency.findByCode(model.currency)?.exchangeRate ?: 1)
                     model.reservationNumber = onlinePayment.id
                     def onlinePaymentConfiguration = new XmlParser().parseText(onlinePayment.account.onlinePaymentConfiguration)
                     model.merchantId = onlinePaymentConfiguration.userName.text()
                     model.shaPassword = onlinePaymentConfiguration.shaPassword.text()
-                    model.customerName=order.ownerName
-                    model.customerEmail=order.ownerEmail
-                    model.productTitle=order.items.collect {"${it.productModel.product?.manualTitle ? it.productModel.product?.pageTitle : it.productModel.product?.title} ${it.productModel.name} ${it.productModel.product?.brand?.name ?: ""}"}.join(', ')
+                    model.customerName = order.ownerName
+                    model.customerEmail = order.ownerEmail
+                    model.productTitle = order.items.collect {
+                        "${it.productModel.product?.manualTitle ? it.productModel.product?.pageTitle : it.productModel.product?.title} ${it.productModel.name} ${it.productModel.product?.brand?.name ?: ""}"
+                    }.join(', ')
                     break
                 case 'saman':
 
@@ -589,13 +591,14 @@ class OrderController {
 
         render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
     }
-    def onlinePaymentResultOgone(){
+
+    def onlinePaymentResultOgone() {
         println params
         def model = [:]
         def reservationNumber = params.orderID?.toLong();
         def status = params.STATUS.toString();
         def referenceNumber = params.PAYID ? params.PAYID.toString() : '';
-        model.appURL=params.appURL
+        model.appURL = params.appURL
         def onlinePayment = OnlinePayment.get(reservationNumber)
         model.onlinePayment = onlinePayment
 
@@ -604,20 +607,21 @@ class OrderController {
         onlinePayment.transactionReferenceCode = referenceNumber
         onlinePayment.save()
         model.verificationResult = params.id
-        if (params.id=='accept' ) {
+        if (params.id == 'accept') {
             model.verificationResult = 0
             payOrder(onlinePayment, model)
         }
 
         render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
     }
+
     def onlinePaymentResultSaman() {
 
         def model = [:]
         def reservationNumber = params.ResNum?.toLong();
         def status = params.State.toString();
         def referenceNumber = params.RefNum ? params.RefNum.toString() : '';
-        model.appURL=params.appURL
+        model.appURL = params.appURL
         def onlinePayment = OnlinePayment.get(reservationNumber)
         model.onlinePayment = onlinePayment
 
@@ -772,7 +776,7 @@ class OrderController {
         paymentRequest.owner = springSecurityService.currentUser as Customer
         paymentRequest.account = Account.get(params.account)
         paymentRequest.order = order
-        paymentRequest.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed
+        paymentRequest.usingCustomerAccountValueAllowed = params.usingCustomerAccountValueAllowed ?: false
 
         def orderPrice = order.totalPayablePrice
 //        def customerAccount = order.usedAccountValue // payment.customer ? accountingService.calculateCustomerAccountValue(payment.customer) : 0
