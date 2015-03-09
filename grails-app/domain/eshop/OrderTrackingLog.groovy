@@ -22,16 +22,20 @@ class OrderTrackingLog {
     }
 
     def afterInsert(){
-        def order = Order.get(orderId)
-        if(order.lastActionDate < date)
-            order.lastActionDate = date
-        order.save()
+        if(action != OrderHelper.ACTION_LOG) {
+            def order = Order.get(orderId)
+            if (order.lastActionDate < date)
+                order.lastActionDate = date
+            order.save()
+        }
     }
 
     def afterUpdate(){
-        def order = Order.get(orderId)
-        if(order.lastActionDate < date)
-            order.lastActionDate = date
-        order.save()
+        if(action != OrderHelper.ACTION_LOG) {
+            def order = Order.get(orderId)
+            if (order.lastActionDate < date)
+                order.lastActionDate = date
+            order.save()
+        }
     }
 }

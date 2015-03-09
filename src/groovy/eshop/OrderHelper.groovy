@@ -28,6 +28,7 @@ class OrderHelper {
     public static final String ACTION_INQUIRY = "inquiry";
     public static final String ACTION_COMPLETION = "completion";
     public static final String ACTION_PAYMENT_CORRECTION = "paymentCorrection";
+    public static final String ACTION_LOG = "log";
     public static final String ACTION_APPROVE_PAYMENT = "approvePayment";
     public static final String ACTION_DECLINE_PAYMENT = "declinePayment";
 //    public static final String ACTION_CANCELLATION = "cancellation";

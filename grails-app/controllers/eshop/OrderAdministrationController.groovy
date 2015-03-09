@@ -220,7 +220,7 @@ class OrderAdministrationController {
 
         def order = Order.get(params.order.id) //save order tracking log
         def trackingLog = new OrderTrackingLog()
-        trackingLog.action = OrderHelper.ACTION_PAYMENT_CORRECTION
+        trackingLog.action = OrderHelper.ACTION_LOG
         trackingLog.date = new Date()
         trackingLog.order = order
         trackingLog.user = springSecurityService.currentUser as User
