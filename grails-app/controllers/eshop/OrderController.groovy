@@ -635,7 +635,7 @@ class OrderController {
         double state = -100;
 
         if (status.equals("OK")) {
-            TrustManager[] trustAllCerts = new TrustManager[] {
+            TrustManager[] trustAllCerts = [
                 new X509TrustManager() {
                     public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                         return new X509Certificate[0];
@@ -647,7 +647,7 @@ class OrderController {
                             java.security.cert.X509Certificate[] certs, String authType) {
                     }
                 }
-            };
+            ].toArray(new TrustManager[0]);
 
 // Install the all-trusting trust manager
             try {
