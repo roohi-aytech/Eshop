@@ -34,7 +34,7 @@ class PriceService {
         def now = new Date()
         if(productModel.lastcalcDate && productModel.lastcalcPrice&& productModel.lastpriceUpdate) {
             def cal = Calendar.instance
-            cal.add(Calendar.MINUTE, -5)
+            cal.add(Calendar.MINUTE, -10)
             if (cal.time.before(productModel.lastcalcDate)) {
                 return [showVal:productModel.lastcalcPrice, lastUpdate:productModel.lastpriceUpdate, status:productModel.status]
             }
@@ -53,10 +53,13 @@ class PriceService {
                         priceVal += addedValue.value
                 }
             }
-        productModel.lastcalcPrice=priceVal
-        productModel.lastcalcDate=new Date()
-        productModel.lastpriceUpdate=price.startDate
-        productModel.save()
+        try {
+            productModel.refresh()
+            productModel.lastcalcPrice = priceVal
+            productModel.lastcalcDate = new Date()
+            productModel.lastpriceUpdate = price.startDate
+            productModel.save(flush: true)
+        }catch (x){}
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
