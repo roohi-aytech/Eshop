@@ -36,7 +36,7 @@ class PriceService {
             def cal = Calendar.instance
             cal.add(Calendar.MINUTE, -5)
             if (cal.time.before(productModel.lastcalcDate)) {
-                return [productModel.lastcalcPrice, productModel.lastpriceUpdate, productModel.status]
+                return [showVal:productModel.lastcalcPrice, lastUpdate:productModel.lastpriceUpdate, status:productModel.status]
             }
         }
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
