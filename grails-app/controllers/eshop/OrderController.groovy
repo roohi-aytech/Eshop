@@ -12,13 +12,6 @@ import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.plugins.springsecurity.Secured
 import org.omg.CORBA.Environment
 
-import javax.net.ssl.HttpsURLConnection
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
-import java.security.GeneralSecurityException
-import java.security.cert.X509Certificate
-
 class OrderController {
 
     def springSecurityService
@@ -633,29 +626,7 @@ class OrderController {
         model.onlinePayment = onlinePayment
 
         double state = -100;
-
         if (status.equals("OK")) {
-            TrustManager[] trustAllCerts = [
-                new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return new X509Certificate[0];
-                    }
-                    public void checkClientTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                    public void checkServerTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                }
-            ].toArray(new TrustManager[0]);
-
-// Install the all-trusting trust manager
-            try {
-                SSLContext sc = SSLContext.getInstance("SSL");
-                sc.init(null, trustAllCerts, new java.security.SecureRandom());
-                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            } catch (GeneralSecurityException e) {
-            }
             state = samanService.verifyPayment(onlinePayment.account, referenceNumber)
         }
         model.verificationResult = state.toInteger()

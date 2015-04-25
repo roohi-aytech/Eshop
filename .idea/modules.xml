@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EShop.iml" filepath="$PROJECT_DIR$/EShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EShop-grailsPlugins.iml" filepath="$PROJECT_DIR$/EShop-grailsPlugins.iml" />
       <module fileurl="file://$PROJECT_DIR$/RapidGrails-inplacePlugin.iml" filepath="$PROJECT_DIR$/RapidGrails-inplacePlugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RapidGrails-inplacePlugin-grailsPlugins.iml" filepath="$PROJECT_DIR$/RapidGrails-inplacePlugin-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
-

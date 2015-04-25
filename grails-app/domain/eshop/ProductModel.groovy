@@ -13,6 +13,9 @@ class ProductModel {
     Integer weight
     Content mainImage
     String searchKeys
+    Double lastcalcPrice
+    Date lastcalcDate
+    Date lastpriceUpdate
 
     static searchable = {
 //        root true
@@ -41,6 +44,9 @@ class ProductModel {
         weight(nullable: true)
         mainImage(nullable: true)
         searchKeys(nullable:true)
+        lastcalcPrice(nullable: true)
+        lastcalcDate(nullable: true)
+        lastpriceUpdate(nullable: true)
     }
 
     transient String getGuaranteeInfo() {

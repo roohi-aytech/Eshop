@@ -6,8 +6,8 @@ class Currency {
     String code
     double exchangeRate
     boolean display
-
     static mapping = {
+        cache true
         sort 'name'
     }
     static constraints = {
