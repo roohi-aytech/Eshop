@@ -32,10 +32,12 @@ class PriceService {
         if (!productModel)
             return [showVal: 0D, status: 'not-exists']
         def now = new Date()
-        def cal=Calendar.instance
-        cal.add(Calendar.MINUTE,-5)
-        if(cal.time.before(productModel.lastcalcDate)){
-            return [productModel.lastcalcPrice,productModel.lastpriceUpdate,productModel.status]
+        if(productModel.lastcalcDate && productModel.lastcalcPrice&& productModel.lastpriceUpdate) {
+            def cal = Calendar.instance
+            cal.add(Calendar.MINUTE, -5)
+            if (cal.time.before(productModel.lastcalcDate)) {
+                return [productModel.lastcalcPrice, productModel.lastpriceUpdate, productModel.status]
+            }
         }
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
         if (!price)
