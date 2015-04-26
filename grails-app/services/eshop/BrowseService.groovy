@@ -207,18 +207,27 @@ class BrowseService {
                 sortExpression = ["${params.sort}": (params.dir == 'sortDirection' ? -1 : params.dir?.toInteger() ?: -1), status: 1, sortOrder: 1]
         }
 
-        def modelList = products.aggregate(
-                [$match: params.match],
-                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId']]]
-        ).results()
-                .collect {it.modelId}
+//        def modelList = products.aggregate(
+//                [$match: params.match],
+//                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId']]]
+//        ).results()
+//                .collect {it.modelId}
+//        def productIds = products.aggregate(
+//                [$match: [modelId: [$in: modelList]]],
+//                [$sort: sortExpression],
+//                [$skip: params.start],
+//                [$limit: params.pageSize]
+//        ).results()
+//                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
         def productIds = products.aggregate(
-                [$match: [modelId: [$in: modelList]]],
+                [$match: params.match],
                 [$sort: sortExpression],
+                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId']]],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results()
                 .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
+
 
         [totalPages: totalPages, productIds: productIds]
     }
