@@ -32,11 +32,11 @@ class PriceService {
         if (!productModel)
             return [showVal: 0D, status: 'not-exists']
         def now = new Date()
-        if(productModel.lastcalcDate && productModel.lastcalcPrice&& productModel.lastpriceUpdate) {
+        if (productModel.lastcalcDate && productModel.lastcalcPrice && productModel.lastpriceUpdate) {
             def cal = Calendar.instance
             cal.add(Calendar.MINUTE, -10)
             if (cal.time.before(productModel.lastcalcDate)) {
-                return [showVal:productModel.lastcalcPrice, lastUpdate:productModel.lastpriceUpdate, status:productModel.status]
+                return [showVal: productModel.lastcalcPrice, lastUpdate: productModel.lastpriceUpdate, status: productModel.status]
             }
         }
         def price = Price.findByProductModelAndStartDateLessThanEqualsAndEndDateIsNull(productModel, now)
@@ -59,7 +59,9 @@ class PriceService {
             productModel.lastcalcDate = new Date()
             productModel.lastpriceUpdate = price.startDate
             productModel.save(flush: true)
-        }catch (x){}
+        } catch (x) {
+            productModel.refresh()
+        }
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
 
@@ -173,15 +175,14 @@ class PriceService {
                 addedValues.addAll(orderItem.addedValueInstances?.collect { it.addedValue.id })
             def price = calcProductModelPrice(orderItem.productModel.id, addedValues)
             if (price.status == 'exists') {
-                if(orderItem.externalDiscount){
+                if (orderItem.externalDiscount) {
                     orderItem.baseUnitPrice = 0
                     orderItem.addedValuesPrice = price.addedVal ?: 0
                     orderItem.unitPrice = orderItem.baseUnitPrice + orderItem.addedValuesPrice
                     orderItem.discount = 0
                     orderItem.tax = 0
                     orderItem.totalPrice = orderItem.orderCount * (orderItem.unitPrice - orderItem.discount + orderItem.tax)
-                }
-                else {
+                } else {
 
                     orderItem.baseUnitPrice = price.showVal ?: 0
                     orderItem.addedValuesPrice = price.addedVal ?: 0

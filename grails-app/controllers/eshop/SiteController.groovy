@@ -654,7 +654,7 @@ class SiteController {
         }
 
         if (session.mobile)
-            render template: "/mobile/common/product/images", model: [product: product, productModel: productModel, lazyLoad:true]
+            render template: "/mobile/common/product/images", model: [product: product, productModel: productModel, lazyLoad: true]
         else
             render template: "/site/${grailsApplication.config.eShop.instance}/templates/product/zoom", model: [product: product, productModel: productModel]
     }
@@ -754,20 +754,24 @@ class SiteController {
             product.visitCount++;
             product.isSynchronized = false
             product.save()
-        }catch (x){x.printStackTrace()}
+        } catch (x) {
+            x.printStackTrace()
+        }
         //fill zoomable property of images
         if (product.mainImage) {
             try {
                 imageService.getImageSize(product.mainImage, product)
                 product.mainImage.dynamicProperties.zoomable = product.mainImage.dynamicProperties.width >= 700 || product.mainImage.dynamicProperties.height >= 700
-            }catch(e){}
+            } catch (e) {
+            }
         }
 
         product?.images?.findAll { it?.id != product?.mainImage?.id }?.each {
             try {
                 imageService.getImageSize(it, product)
                 it.dynamicProperties.zoomable = it.dynamicProperties.width >= 700 || it.dynamicProperties.height >= 700
-            }catch (e){}
+            } catch (e) {
+            }
         }
 
         //update last visited products
@@ -1330,15 +1334,17 @@ class SiteController {
             while (query.contains('  '))
                 query = query.replace('  ', ' ')
             query = "*${query.replace(' ', '* *')}*"
-            BooleanQuery.setMaxClauseCount(10000);
-            productIdList = Product.search({
-                queryString(query)
-            },
-                    [reload: false, max: 1000])
-            productModelIdList = ProductModel.search({
-                queryString(query)
-            },
-                    [reload: false, max: 1000])
+            try {
+                BooleanQuery.setMaxClauseCount(10000);
+                productIdList = Product.search({
+                    queryString(query)
+                },
+                        [reload: false, max: 1000])
+                productModelIdList = ProductModel.search({
+                    queryString(query)
+                },
+                        [reload: false, max: 1000])
+            }catch (e){}
         }
         if (!params.f)
             params.f = 'p0'

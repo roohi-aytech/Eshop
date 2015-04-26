@@ -51,19 +51,21 @@ class ImageController {
 
         switch (params.type) {
             case 'product':
-                def product = Product.get(params.id)
+                if(params.id.isNumber()) {
+                    def product = Product.get(params.id)
 //                if (!product)
 //                    product = ProductModel.get(params.id)?.product
-                if (product) {
-                    content = getProdcutImage(product)
-                }
-                if (!content || content?.size() == 0) {
-                    if (params.name)
-                        content = product.images.find { it.name == params.name }?.fileContent
-                    else if (product?.mainImage)
-                        content = product?.mainImage?.fileContent
-                    else
-                        content = product?.images.find()?.fileContent
+                    if (product) {
+                        content = getProdcutImage(product)
+                    }
+                    if (!content || content?.size() == 0) {
+                        if (params.name)
+                            content = product.images.find { it.name == params.name }?.fileContent
+                        else if (product?.mainImage)
+                            content = product?.mainImage?.fileContent
+                        else
+                            content = product?.images.find()?.fileContent
+                    }
                 }
                 break;
             case 'productModel':
