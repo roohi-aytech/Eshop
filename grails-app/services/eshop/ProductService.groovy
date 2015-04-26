@@ -67,22 +67,23 @@ class ProductService {
         }
     }
 
+    @Cacheable(value = 'rpts')
     def findRootProductTypes() {
-        def result=ProductTypeHolder.getInstance().findRootProductTypes()
-        if(!result) {
-            result = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
-                [id: it.id, name: it.name, urlName: it.urlName, description: it.description]
-            }
-            result.each { rootItem ->
-                findChildProductTypes(rootItem)
-            }
+
+        def result = ProductType.findAllByParentProductIsNullAndDeleted(false).collect {
+            [id: it.id, name: it.name, urlName: it.urlName, description: it.description]
         }
+//        result.each { rootItem ->
+//            findChildProductTypes(rootItem)
+//        }
         result
     }
 
     @Cacheable(value = 'fcptypes', key = '#parentProductType.id.toString()')
-    def findChildProductTypes(parentProductType){
-        parentProductType.children = ProductType.findAllByParentProductAndDeleted(ProductType.get(parentProductType.id), false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
+    def findChildProductTypes(parentProductType) {
+        parentProductType.children = ProductType.findAllByParentProductAndDeleted(ProductType.get(parentProductType.id), false).collect {
+            [id: it.id, name: it.name, urlName: it.urlName]
+        }
         ProductType.createCriteria().listDistinct {
             godFathers {
                 eq('id', parentProductType.id)
@@ -92,7 +93,7 @@ class ProductService {
             parentProductType.children << [id: it.id, name: it.name, urlName: it.urlName]
         }
 
-        parentProductType.children.each{
+        parentProductType.children.each {
             findChildProductTypes(it)
         }
     }

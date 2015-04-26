@@ -30,7 +30,7 @@ class BrowseService {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def products = getProducts()
         params.match["displayInList"] = true
-        if (session["status_filter"])
+        if (session["status_filter"] != false)
             params.match['status'] = 0
         def countMap = products.aggregate(
                 [$match: params.match],
