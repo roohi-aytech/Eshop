@@ -910,7 +910,7 @@ class BrowseService {
     }
 
     def minPrice(Long productTypeId) {
-        (getProducts().aggregate([$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]],[$unwind: '$productTypes'], [$match: ['productTypes.id': productTypeId]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
+        (getProducts().aggregate([$match: [displayInList: true, 'price': [$gt: 0]]],[$unwind: '$productTypes'], [$match: ['productTypes.id': productTypeId]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
             it.minPrice
         }.find() ?: 0)
     }
