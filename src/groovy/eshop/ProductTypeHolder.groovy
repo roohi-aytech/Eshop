@@ -47,8 +47,9 @@ class ProductTypeHolder {
                         }
                     }
                 }
-                println ptm
+
             }
+            println ptm
             return ptm
         }catch (e){
             e.printStackTrace()
