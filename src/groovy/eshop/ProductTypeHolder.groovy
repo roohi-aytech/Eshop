@@ -30,18 +30,18 @@ class ProductTypeHolder {
                 ptm = []
                 def pts = ProductType.findAllByDeleted(false)
                         .collectEntries {
-                    [it.id, [id: it.id, name: it.name, urlName: it.urlName, description: it.description, parent: it.parentProduct?.id, godFathers: it.godFathers?.collect {
+                    ["${it.id}", [id: it.id, name: it.name, urlName: it.urlName, description: it.description, parent: it.parentProduct?.id, godFathers: it.godFathers?.collect {
                         it.id
                     }, children: []]]
                 }
                 pts.each { pt ->
                     if (pt.value.parent)
-                        pts[pt.value.parent].children << pt
+                        pts["${pt.value.parent}"].children << pt.value
                     else
-                        ptm << pt
+                        ptm << pt.value
                     if (pt.value.godFathers) {
                         pt.value.godFathers.each {
-                            pts[it].children << pt
+                            pts["${it}"].children << pt.value
                         }
                     }
                 }
