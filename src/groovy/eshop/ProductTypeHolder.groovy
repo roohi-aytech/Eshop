@@ -47,6 +47,7 @@ class ProductTypeHolder {
                         }
                     }
                 }
+                println ptm
             }
             return ptm
         }catch (e){
