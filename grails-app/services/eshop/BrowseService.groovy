@@ -207,6 +207,16 @@ class BrowseService {
             else
                 sortExpression = ["${params.sort}": (params.dir == 'sortDirection' ? -1 : params.dir?.toInteger() ?: -1), status: 1, sortOrder: 1]
         }
+        def extraCols=[:]
+        sortExpression.each {
+            if(it.key!='sortOrder'){
+                if(it.value*sortExpression.sortOrder==1)
+                    extraCols[it.key]=[$min:"\$${it.key}"]
+                if(it.value*sortExpression.sortOrder==-1)
+                    extraCols[it.key]=[$max:"\$${it.key}"]
+            }
+
+        }
 
 //        def modelList = products.aggregate(
 //                [$match: params.match],
@@ -222,8 +232,7 @@ class BrowseService {
 //                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: sortExpression],
-                [$group: [_id: '$baseProductId', modelId: [$min: '$modelId']]],
+                [$group: ([_id: '$baseProductId', modelId: [$min: '$modelId']]+extraCols)],
                 [$sort: sortExpression],
                 [$skip: params.start],
                 [$limit: params.pageSize]

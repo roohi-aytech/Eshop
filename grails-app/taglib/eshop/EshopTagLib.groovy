@@ -385,26 +385,28 @@ class EshopTagLib {
     }
 
     def addToCompareList = { attrs, body ->
-        def product = Product.get attrs.prodcutId
-        def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
-        if (defaultModel?.prices?.count { it } == 0)
-            defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
-        def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger() : ''
+        try {
+            def product = Product.get attrs.prodcutId
+            def defaultModel = ProductModel.findByProductAndIsDefaultModel(product, true)
+            if (defaultModel?.prices?.count { it } == 0)
+                defaultModel = ProductModel.findAllByProduct(product).find { it?.prices?.count { it } > 0 }
+            def price = defaultModel ? priceService.calcProductModelPrice(defaultModel.id)?.showVal?.toInteger() : ''
 
-        if (attrs.image)
-            out << """
+            if (attrs.image)
+                out << """
                 <a type="compare" original-title="${
-                message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")
-            }" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${
-                price
-            }')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
+                    message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")
+                }" class="has-tipsy" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${
+                    price
+                }')"><img src='${resource(dir: 'images/menu', file: 'compare_new.png')}' /></a>
                 """
-        else
-            out << """
+            else
+                out << """
                 <a class="btn-compare" ng-click="addToCompareList(${attrs.prodcutId}, '${product.toString()}', '${
-                price
-            }')"><span>${g.message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")}</span></a>
+                    price
+                }')"><span>${g.message(code: attrs.useLongText ? "add-to-compareList.long" : "add-to-compareList")}</span></a>
                 """
+        }catch (x){}
     }
 
     def basketItem = { attrs, body ->
