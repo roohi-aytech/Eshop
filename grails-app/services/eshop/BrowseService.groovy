@@ -904,13 +904,13 @@ class BrowseService {
         def criteria = match
         criteria.displayInList = true
         criteria.price = [$gt: 0]
-        (getProducts().aggregate([$unwind: '$productTypes'], [$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
+        (getProducts().aggregate([$match: criteria],[$unwind: '$productTypes'], [$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
             [min: it.minPrice, max: it.maxPrice]
         }.find() ?: 0)
     }
 
     def minPrice(Long productTypeId) {
-        (getProducts().aggregate([$unwind: '$productTypes'], [$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
+        (getProducts().aggregate([$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]],[$unwind: '$productTypes'], [$match: ['productTypes.id': productTypeId]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
             it.minPrice
         }.find() ?: 0)
     }
