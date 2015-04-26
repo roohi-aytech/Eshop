@@ -17,7 +17,7 @@ class BrowseService {
 
     def getProducts() {
         if (!products) {
-            if(grailsApplication.config.eShop.instance=='felfel')
+            if (grailsApplication.config.eShop.instance == 'felfel')
                 db = mongo.getDB("FelFel")
             else
                 db = mongo.getDB("EShop")
@@ -42,6 +42,7 @@ class BrowseService {
         ).results()
         countMap
     }
+
     @Cacheable(value = 'bpservice', key = '#params.toString()')
     def countProductsWithUnwind(params) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
@@ -369,7 +370,7 @@ class BrowseService {
 
                 if (lastbc == "b")
 
-                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1]?.linkTitle?:''} + ${Brand.get(brandId)?.name?:''}"]
+                    breadcrumb[-1] = [linkTail: "filter?f=${growingFilter}", linkTitle: "${breadcrumb[-1]?.linkTitle ?: ''} + ${Brand.get(brandId)?.name ?: ''}"]
                 else
                     breadcrumb << [linkTail: "filter?f=${growingFilter}", linkTitle: Brand.get(brandId)?.name]
                 lastbc = "b"
@@ -582,7 +583,7 @@ class BrowseService {
         }
 
         def products = getProducts()
-        params.match["displayInList"] = true
+        match["displayInList"] = true
         def brands = products.aggregate(
                 [$match: match],
                 [$group: [_id: '$brand.id', count: [$sum: 1]]],
@@ -590,9 +591,9 @@ class BrowseService {
         ).results().collect { it._id }
 
         def productTypes = products.aggregate(
-                [$match: match],
-                [$unwind: '$productTypes'],
-                [$match: ['productTypes.parentId': productTypeId]],
+                [$match: ['productTypes.parentId': productTypeId,'brand.id':brandId,displayInList:true]],
+//                [$unwind: '$productTypes'],
+//                [$match: ['productTypes.parentId': productTypeId]],
                 [$group: [_id: '$productTypes.id', count: [$sum: 1]]],
                 [$sort: [count: -1]]
         ).results().collect { it._id }
@@ -908,25 +909,19 @@ class BrowseService {
         def match = productTypeId ? ['productTypes.id': productTypeId] : [:]
         countProducts(group: [id: '$brand.id', name: '$brand.name'], match: match).findAll { it._id.name != null }
     }
+
     @Cacheable(value = 'bprservice', key = '#match.toString()')
     def priceRange(Map match) {
         def criteria = match
         criteria.displayInList = true
         criteria.price = [$gt: 0]
-        if(criteria['productTypes.id']) {
-            (getProducts().aggregate([$match: criteria], [$unwind: '$productTypes'], [$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
-                [min: it.minPrice, max: it.maxPrice]
-            }.find() ?: 0)
-        }
-        else{
-            (getProducts().aggregate([$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
-                [min: it.minPrice, max: it.maxPrice]
-            }.find() ?: 0)
-        }
+        (getProducts().aggregate([$match: criteria], [$group: [_id: null, minPrice: [$min: '$price'], maxPrice: [$max: '$price']]]).results().collect {
+            [min: it.minPrice, max: it.maxPrice]
+        }.find() ?: 0)
     }
 
     def minPrice(Long productTypeId) {
-        (getProducts().aggregate([$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]],[$unwind: '$productTypes'], [$match: ['productTypes.id': productTypeId]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
+        (getProducts().aggregate([$match: [displayInList: true, 'productTypes.id': productTypeId, 'price': [$gt: 0]]], [$group: [_id: null, minPrice: [$min: '$price']]]).results().collect {
             it.minPrice
         }.find() ?: 0)
     }
