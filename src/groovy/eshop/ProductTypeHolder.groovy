@@ -35,9 +35,10 @@ class ProductTypeHolder {
                     }, children: []]]
                 }
                 pts.each { pt ->
-                    if (pt.value.parent)
-                        if(pts["${pt.value.parent}"])
+                    if (pt.value.parent) {
+                        if (pts["${pt.value.parent}"])
                             pts["${pt.value.parent}"].children << pt.value
+                    }
                     else
                         ptm << pt.value
                     if (pt.value.godFathers) {
