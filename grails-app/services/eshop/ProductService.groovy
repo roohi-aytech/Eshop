@@ -1,5 +1,6 @@
 package eshop
 
+import grails.plugin.cache.Cacheable
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.context.request.RequestContextHolder
 
@@ -74,6 +75,7 @@ class ProductService {
         result
     }
 
+    @Cacheable(value = 'fcptypes', key = '#parentProductType.id.toString()')
     def findChildProductTypes(parentProductType){
         parentProductType.children = ProductType.findAllByParentProductAndDeleted(ProductType.get(parentProductType.id), false).collect { [id: it.id, name: it.name, urlName: it.urlName] }
         ProductType.createCriteria().listDistinct {
