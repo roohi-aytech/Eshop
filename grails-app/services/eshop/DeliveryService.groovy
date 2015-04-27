@@ -16,8 +16,11 @@ class DeliveryService {
             def methods = DeliveryMethod.createCriteria().list {
                 eq('deleted', false)
                 sourceStations {
+                    eq('deleted', false)
                     targetZones {
+                        eq('deleted', false)
                         cities {
+                            eq('deleted', false)
                             eq('id', targetCity.id)
                         }
                     }
