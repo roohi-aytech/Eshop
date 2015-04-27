@@ -20,7 +20,6 @@ class DeliveryService {
                     targetZones {
                         eq('deleted', false)
                         cities {
-                            eq('deleted', false)
                             eq('id', targetCity.id)
                         }
                     }
