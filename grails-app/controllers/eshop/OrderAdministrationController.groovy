@@ -133,6 +133,8 @@ class OrderAdministrationController {
             priceInstance.startDate = new Date()
             priceInstance.rialPrice = priceInstance.currency ? priceInstance.price * priceInstance.currency.exchangeRate : priceInstance.price
             priceInstance.save()
+            priceInstance.productModel.lastcalcDate=null
+            priceInstance.productModel.save()
             priceInstance.productModel.product.isSynchronized = false
             priceInstance.productModel.product.save()
 
