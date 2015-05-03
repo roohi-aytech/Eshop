@@ -3,7 +3,7 @@
 <g:set var="rootProductTypes" value="${productService.findRootProductTypes()}"/>
 <g:set var="productTypes" value="${ProductType.findAllByDeletedNotEqual(true)}"/>
 
-<ul class="btn-group pull-right">
+<ul class="btn-group pull-right menu-full">
     <g:each in="${rootProductTypes}" var="rpt">
         <g:set var="pt" value="${ProductType.get(rpt.id)}"/>
         <li class="root">

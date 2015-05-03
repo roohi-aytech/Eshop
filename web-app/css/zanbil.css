@@ -780,6 +780,12 @@ ul.thumbnailGrid {
     margin-top: 0 !important;
 }
 
+.header-menu-row td ul li.root {
+    float: right;
+}
+.menu-full{
+    width: 850px;
+}
 .header-menu-row td ul li {
     border-left: 1px solid #FFFFFF;
     display: inline-block;
@@ -4300,7 +4306,7 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 
 .top-menu {
     position: fixed;
-    top: 100px;
+    top: 110px;
     padding: 0 !important;
     margin: 0 !important;
     border-radius: 0 !important;
