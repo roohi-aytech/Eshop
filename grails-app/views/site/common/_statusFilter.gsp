@@ -1,6 +1,7 @@
 <div class="statusFilter">
-    <div class="toggle-soft"></div>
     <span><g:message code="statusFilter.label"/></span>
+    <br/>
+    <div class="toggle-soft"></div>
 </div>
 <script language="javascript" type="text/javascript">
     $('.toggle-soft').toggles({
