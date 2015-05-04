@@ -5,6 +5,7 @@
     <div class="right-side-banners banners">
 
         <g:if test="${grailsApplication.config.eShop.instance == 'zanbil'}">
+            <g:render template="/site/common/statusFilter"/>
             <div class="orderTracking">
                 <h4><g:message code="order.tracking"/></h4>
                 <g:form method="post" controller="order" action="track">

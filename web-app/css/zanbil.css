@@ -686,6 +686,7 @@ ul.thumbnailGrid {
 
 .logo-cell {
     width: 150px;
+    background-color: #ffc30e;
 }
 
 #logo {
@@ -4306,7 +4307,7 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 
 .top-menu {
     position: fixed;
-    top: 108px;
+    top: 100px;
     padding: 0 !important;
     margin: 0 !important;
     border-radius: 0 !important;
@@ -4796,21 +4797,24 @@ ul.article-list li span {
 }
 
 .statusFilter {
-    float: left;
-    margin-left: 10px;
-    margin-top: 5px;
+    /*float: left;*/
+    /*margin-left: 10px;*/
+    /*margin-top: 5px;*/
     white-space: nowrap;
+    text-align: left;
+    background-color: lightslategray;
 }
 
 .statusFilter span {
     display: block;
-    float: left;
+    /*float: left;*/
     padding-left: 10px;
     color: #ffffff;
 }
 
 .statusFilter .toggle-soft {
-    float: left;
+    /*float: left;*/
+    margin-left: 10px;
 }
 
 .statusFilter .toggle-soft .toggle-slide {

@@ -5,7 +5,7 @@ import grails.plugin.cache.CacheEvict
 
 class CacheCleanerJob {
     static triggers = {
-        simple repeatInterval: 300000 // execute job once in 2 minutes
+        simple repeatInterval: 600000 // execute job once in 2 minutes
     }
 
     @CacheEvict(value = ['service', 'imageindex', 'feedatricles', 'feedposts',
