@@ -13,7 +13,7 @@ import grails.util.Environment
 class FeedService {
 
     //yek dafe dige cache mano pak koni ,,, midam vakil zade sob ta shab bahat harf bezane ,,, ye hafteye kaamel
-//    @Cacheable(value='feednews')
+    @Cacheable(value='feednews')
     def readNews() {
         def list = []
         if(Environment.current == Environment.DEVELOPMENT)
