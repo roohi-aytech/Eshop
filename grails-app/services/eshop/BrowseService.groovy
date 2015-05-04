@@ -252,7 +252,7 @@ class BrowseService {
         tempArray
     }
 
-    @Cacheable(value='service', key='#cacheKey.toString().concat(productType.toString())')
+    @Cacheable(value='service', key='#cacheKey.toString()')
     def findProductTypeFilters(ProductType productType, page, cacheKey) {
 
         def pageSize = WebUtils.retrieveGrailsWebRequest().getSession().mobile ? grailsApplication.config.page.mobile.size : grailsApplication.config.page.size
