@@ -41,7 +41,9 @@
                         </td>
                         <script>
                             $(function(){
-                                $('#enamad-cell').load('<g:createLink controller="site" action="enamad" />')
+                                setTimeout(function() {
+                                    $('#enamad-cell').load('<g:createLink controller="site" action="enamad" />')
+                                },1000);
                             })
                         </script>
                     </tr>

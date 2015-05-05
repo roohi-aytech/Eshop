@@ -156,6 +156,8 @@
 </div>
 <script>
     $(function(){
-        $('#alexaGoogleAnalitic').load('<g:createLink controller="site" action="alexaGooleAnalitic" />')
+        setTimeout(function(){
+            $('#alexaGoogleAnalitic').load('<g:createLink controller="site" action="alexaGooleAnalitic" />')
+        },1000);
     })
 </script>
