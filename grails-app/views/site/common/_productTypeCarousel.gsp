@@ -22,7 +22,7 @@
                             <li class="sb-showcase-skin">
                                 <g:if test="${type == 'filter'}">
                                     <a href="${createLink(controller: "site", action: "filter", params: params + [f: "${params.f},p${productTypeLink._id.id}"])}">
-                                        <img src="${createLink(controller: 'image', params: [type: 'productType', id: productTypeLink._id.id, wh: '100x100'])}"
+                                        <img src="${createLink(controller: 'image', params: [type: 'productType', id: productTypeLink._id.id, wh: '100x100'])}" width="100" height="100"
                                              alt="${productTypeLink._id.name}">
 
                                         <div>${productTypeLink._id.name}</div>
@@ -30,7 +30,7 @@
                                 </g:if>
                                 <g:else>
                                     <a href="${productTypeLink.href}">
-                                        <img src="${createLink(controller: 'image', params: [type: 'productType', id: productTypeLink.id, wh: '100x100'])}"
+                                        <img src="${createLink(controller: 'image', params: [type: 'productType', id: productTypeLink.id, wh: '100x100'])}" width="100" height="100"
                                              alt="${productTypeLink.name}">
 
                                         <div>${productTypeLink.name}</div>

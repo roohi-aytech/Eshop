@@ -29,7 +29,7 @@
 <h3><g:message code="order.specifications"/></h3>
 <g:if test="${productModel}">
 
-    <img src="${createLink(controller: 'image', params: [type: 'product', id: productModel?.product?.id, wh: '50x50'])}"/>
+    <img src="${createLink(controller: 'image', params: [type: 'product', id: productModel?.product?.id, wh: '50x50'])}" width="50" height="50"/>
 
     <h4>${product?.type?.title ?: (productModel?.product?.productTypes?.find { true }?.name ?: "")} ${product?.brand?.name ?: ""}</h4>
     <h5>${productModel?.name ?: ""}</h5>

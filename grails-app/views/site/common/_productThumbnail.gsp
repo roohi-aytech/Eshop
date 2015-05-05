@@ -2,7 +2,7 @@
 
 <div class="thumbnail mediaholder">
     <a href="<g:createLink uri="/product/${productModel?.product?.id}?model=${productModel?.id}"/>">
-        <img src="${createLink(controller: 'image', params: [id: productModel?.id, wh: '150x150', type: 'productModel'])}"/>
+        <img src="${createLink(controller: 'image', params: [id: productModel?.id, wh: '150x150', type: 'productModel'])}" width="150" height="150"/>
 
         <div class="title">
             <h4>${productModel?.product?.manualTitle ? productModel?.product?.pageTitle :

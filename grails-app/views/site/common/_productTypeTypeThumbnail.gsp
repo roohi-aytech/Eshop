@@ -6,7 +6,7 @@
                 <span class="image">
                     <span>
                         <span>
-                            <img alt="${link.name}" src="${createLink(controller: 'image', params: [type:'productTypeType', id:link.id, wh:'100x100'])}"/>
+                            <img alt="${link.name}" src="${createLink(controller: 'image', params: [type:'productTypeType', id:link.id, wh:'100x100'])}"  width="100" height="100"/>
                         </span>
                     </span>
                 </span>
