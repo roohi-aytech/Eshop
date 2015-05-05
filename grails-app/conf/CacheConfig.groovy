@@ -48,6 +48,8 @@ grails.cache.config = {
     cache {
         name 'grailsBlocksTemporaryCache'
         eternal false
+        timeToIdleSeconds 600
+        timeToLiveSeconds 600
         overflowToDisk true
         maxElementsInMemory 1000000
         maxElementsOnDisk 10000000
@@ -56,6 +58,8 @@ grails.cache.config = {
     cache {
         name 'layout'
         eternal false
+        timeToIdleSeconds 600
+        timeToLiveSeconds 600
         overflowToDisk true
         maxElementsInMemory 1000000
         maxElementsOnDisk 10000000

@@ -9,6 +9,7 @@
         <h1 id="logo"><a href="${createLink(uri: '/')}"><g:message code="title"/></a></h1>
     </td>
     <td class="link-list" colspan="2">
+        <cache:block>
         <ul>
             <li><g:link uri="/"><g:message code="home"/></g:link></li>
             <li id="link-compare">
@@ -31,6 +32,7 @@
                     code="support.label"/></a></li>
             <li><g:link uri="/contactUs"><g:message code="contact.label"/></g:link></li>
         </ul>
+        </cache:block>
         <span class="user-links">
             <sec:ifLoggedIn>
                 <g:set var="currentUser" value="${User.findByUsername(sec.username())}"/>
@@ -57,19 +59,21 @@
         </span>
     </td>
 </tr>
-<tr class="header-box-row">
-    <td>
-        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/search"/>
-    </td>
-    <td class="basket-cell">
-        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/shoppingBasket"/>
-    </td>
-</tr>
-<tr class="header-menu-row">
-    <td colspan="2">
-        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
-    </td>
-</tr>
+<cache:block>
+    <tr class="header-box-row">
+        <td>
+            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/search"/>
+        </td>
+        <td class="basket-cell">
+            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/shoppingBasket"/>
+        </td>
+    </tr>
+    <tr class="header-menu-row">
+        <td colspan="2">
+            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+        </td>
+    </tr>
+</cache:block>
 </table>
 </div>
 </div>

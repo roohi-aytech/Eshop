@@ -13,8 +13,8 @@
         <meta name="keywords" content="${keywords}">
     </g:if>
 
-    <g:render template="common/productGridMeta"
-              model="${[productIds: filters.products.productIds]}"/>
+    <ehcache:render template="common/productGridMeta"
+              model="${[productIds: filters.products.productIds]}" key="${productTypeId}"/>
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -44,8 +44,8 @@
             <table class="table-simulated">
                 <tr class="table-row">
                     <td class="table-cell">
-                        <g:render template="common/slideshowSpecialSales"
-                                  model="[specialSaleSlides: specialSaleSlides]"/>
+                        <ehcache:render template="common/slideshowSpecialSales"
+                                  model="[specialSaleSlides: specialSaleSlides]" key="${productTypeId}"/>
                         <div id="breadcrumb">
                             <ul class="breadcrumb">
                                 <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -67,11 +67,11 @@
                             </ul>
                         </div>
 
-                        <ehcache:render template="common/browsingGraphicalMenu" key="${params.productType}"/>
+                        <ehcache:render template="common/browsingGraphicalMenu" key="${productTypeId}"/>
 
                         <div id="products">
-                            <g:render template="common/productGrid"
-                                      model="${[productIds: filters.products.productIds]}"/>
+                            <ehcache:render template="common/productGrid"
+                                      model="${[productIds: filters.products.productIds]}" key="${filters.products.productIds?.toString()}"/>
                         </div>
 
                     </td>
@@ -81,7 +81,7 @@
     </tr>
     <tr class="table-row">
         <td class="table-cell" colspan="2">
-            <g:render template="common/productCarousel"
+            <ehcache:render template="common/productCarousel"
                       key="${productTypeId}"
                       model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName]), productList: mostVisitedProducts]}"/>
         </td>
@@ -99,7 +99,7 @@
     </tr>
     <tr class="table-row">
         <td class="table-cell" colspan="2">
-            <g:render template="news/window" model="${[productTypeId: productTypeId]}"/>
+            <ehcache:render template="news/window" model="${[productTypeId: productTypeId]}" key="${productTypeId}"/>
         </td>
     </tr>
 </table>

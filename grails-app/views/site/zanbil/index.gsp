@@ -21,6 +21,7 @@
 </head>
 
 <body>
+<cache:block>
 <table class="layout-container table-simulated">
     <tr class="table-row">
         <td colspan="2">
@@ -33,7 +34,7 @@
                 <table class="table-simulated">
                     <tr>
                         <td class="specialSales-cell">
-                            <g:render template="common/slideshowSpecialSales"
+                            <ehcache:render template="common/slideshowSpecialSales"
                                       model="[specialSaleSlides: specialSaleSlides]"/>
                         </td>
                         <td class="namad-cell" id="enamad-cell">
@@ -60,13 +61,13 @@
 
             <ehcache:render template="common/browsingGraphicalMenu"/>
 
-            <g:render template="common/productGrid"
+            <ehcache:render template="common/productGrid"
                       model="${[productIds: filters.products.productIds]}"/>
         </td>
         %{--</tr>--}%
     <tr class="table-row">
         <td class="table-cell" colspan="2">
-            <g:render template="common/productCarousel"
+            <ehcache:render template="common/productCarousel"
                       key="${productTypeId}"
                       model="${[title: message(code: 'product.mostVisited.list', args: ['']), productList: mostVisitedProducts]}"/>
         </td>
@@ -77,14 +78,14 @@
             <g:set var="lastVisitedProducts"
                    value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>
             <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
-                <g:render template="/site/common/productCarousel"
+                <ehcache:render template="/site/common/productCarousel"
                           model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>
             </g:if>
         </td>
     </tr>
     <tr class="table-row">
         <td class="table-cell" colspan="2">
-            <g:render template="news/window" model="${[productTypeId: productTypeId]}"/>
+            <ehcache:render template="news/window" model="${[productTypeId: productTypeId]}" key="${productTypeId}"/>
         </td>
     </tr>
 </table>
@@ -95,5 +96,6 @@
         $('.row-fluid ul.thumbnails li.span3:nth-child(4n + 5)').css('margin-right', '0px');
     })(jQuery);
 </script>
+</cache:block>
 </body>
 </html>

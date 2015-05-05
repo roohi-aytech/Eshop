@@ -118,7 +118,7 @@
     </tr>
     <tr>
         <td class="totalFooter">
-            <g:render template="/layouts/${grailsApplication.config.eShop.instance}/footer"/>
+            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/footer"/>
         </td>
     </tr>
 </table>
