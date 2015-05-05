@@ -102,7 +102,6 @@
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
-<g:render template="/layouts/${grailsApplication.config.eShop.instance}/alexa"/>
 <g:render template="/layouts/${grailsApplication.config.eShop.instance}/header" key="${sec.username()}"/>
 <table id="main-container" class="table-simulated">
     <tr>

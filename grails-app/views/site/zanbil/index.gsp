@@ -50,9 +50,14 @@
                             <g:render template="common/slideshowSpecialSales"
                                       model="[specialSaleSlides: specialSaleSlides]"/>
                         </td>
-                        <td class="namad-cell">
-                            <ehcache:render template="banners/enamad"/>
+                        <td class="namad-cell" id="enamad-cell">
+                            %{--<ehcache:render template="banners/enamad"/>--}%
                         </td>
+                        <script>
+                            $(function(){
+                                $('#namad-cell').load('<g:createLink controller="site" action="enamad" />')
+                            })
+                        </script>
                     </tr>
                 </table>
             </td>

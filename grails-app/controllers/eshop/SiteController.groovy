@@ -1626,5 +1626,10 @@ class SiteController {
         session['status_filter'] = params.value == 'on'
         render ''
     }
-
+    def alexaGooleAnalitic(){
+        render template: "/layouts/${grailsApplication.config.eShop.instance}/alexaGooleAnalitic"
+    }
+    def enamad(){
+        render template: "banners/enamad"
+    }
 }
