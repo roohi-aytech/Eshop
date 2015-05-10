@@ -12,7 +12,7 @@ class MongoJob {
     static concurrent = false
 
     static triggers = {
-        simple repeatInterval: 4000, startDelay: 60000 // execute job once in 2 minutes
+        simple repeatInterval: 500, startDelay: 60000 // execute job once in 2 minutes
     }
 
     def execute() {
