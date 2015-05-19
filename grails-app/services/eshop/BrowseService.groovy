@@ -232,11 +232,11 @@ class BrowseService {
 //                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$group: ([_id: '$baseProductId', modelId: [$min: '$modelId']]+extraCols)],
                 [$sort: sortExpression],
-                [$limit: 1000000],
+                [$group: ([_id: '$baseProductId', modelId: [$min: '$modelId']]+extraCols)],
                 [$skip: params.start],
-                [$limit: params.pageSize]
+                [$limit: params.pageSize],
+                [$sort: sortExpression],
         ).results()
                 .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
 
