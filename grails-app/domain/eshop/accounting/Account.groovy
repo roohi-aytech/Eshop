@@ -17,7 +17,7 @@ class Account {
     String onlinePaymentConfiguration
 
     static constraints = {
-        bankName inList: ['mellat', 'saman', 'ogone']
+        bankName inList: ['mellat', 'saman', 'ogone','meb']
         type(inList: ['legal', 'real'])
         branchName(nullable: true)
         ownerName(nullable: true)

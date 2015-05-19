@@ -38,7 +38,7 @@
             </script>
         </g:if>
     </g:if>
-    <g:elseif test="${bankName == 'saman'}">
+    <g:elseif test="${bankName == 'saman' || bankName == 'meb'}">
         <g:if test="${!flash.message}">
             <script language="javascript" type="text/javascript">
                 function postRefId() {

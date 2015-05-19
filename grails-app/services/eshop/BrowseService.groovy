@@ -234,6 +234,7 @@ class BrowseService {
                 [$match: params.match],
                 [$group: ([_id: '$baseProductId', modelId: [$min: '$modelId']]+extraCols)],
                 [$sort: sortExpression],
+                [$limit: 1000000],
                 [$skip: params.start],
                 [$limit: params.pageSize]
         ).results()

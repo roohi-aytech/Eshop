@@ -556,6 +556,13 @@ class OrderController {
                     def onlinePaymentConfiguration = new XmlParser().parseText(onlinePayment.account.onlinePaymentConfiguration)
                     model.merchantId = onlinePaymentConfiguration.userName.text()
                     break
+                case 'meb':
+
+                    model.amount = onlinePayment.amount
+                    model.reservationNumber = onlinePayment.id
+                    def onlinePaymentConfiguration = new XmlParser().parseText(onlinePayment.account.onlinePaymentConfiguration)
+                    model.merchantId = onlinePaymentConfiguration.userName.text()
+                    break
             }
 
             order.paymentType = 'online'
@@ -616,6 +623,34 @@ class OrderController {
     }
 
     def onlinePaymentResultSaman() {
+
+        def model = [:]
+        def reservationNumber = params.ResNum?.toLong();
+        def status = params.State.toString();
+        def referenceNumber = params.RefNum ? params.RefNum.toString() : '';
+        model.appURL = params.appURL
+        def onlinePayment = OnlinePayment.get(reservationNumber)
+        model.onlinePayment = onlinePayment
+
+        double state = -100;
+        if (status.equals("OK")) {
+            state = samanService.verifyPayment(onlinePayment.account, referenceNumber)
+        }
+        model.verificationResult = state.toInteger()
+        if (state.toInteger() > 0)
+            onlinePayment.amount = state.toInteger()
+        onlinePayment.resultCode = state.toString()
+        onlinePayment.transactionReferenceCode = referenceNumber //params.MID
+        onlinePayment.save()
+
+        if (state.toInteger() > 0) {
+            model.verificationResult = 0
+            payOrder(onlinePayment, model)
+        }
+
+        render view: session.mobile ? 'onlinePaymentResultMobile' : 'onlinePaymentResult', model: model
+    }
+    def onlinePaymentResultMeb() {
 
         def model = [:]
         def reservationNumber = params.ResNum?.toLong();
