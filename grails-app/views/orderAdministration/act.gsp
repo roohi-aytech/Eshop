@@ -180,10 +180,10 @@
                                    value='${message(code: "order.actions.${action}")}'/>
                         </g:each>
                     </g:if>
-                %{--<g:if test="${order.status == eshop.OrderHelper.STATUS_PAYMENT_APPROVED || (grailsApplication.config.showFactorAfterDelivery && order.status in [eshop.OrderHelper.STATUS_PAYMENT_APPROVED, eshop.OrderHelper.STATUS_TRANSMITTED, eshop.OrderHelper.STATUS_DELIVERED])}">--}%
-                %{--<input type="button" onclick="printInvoice(${order.id});"--}%
-                %{--value='${message(code: "invoice.export.pdf.admin")}'/>--}%
-                %{--</g:if>--}%
+                <g:if test="${grailsApplication.config.eShop.instance=='goldaan'}">
+                <input type="button" onclick="printInvoice(${order.id});"
+                value='${message(code: "invoice.export.pdf.admin")}'/>
+                </g:if>
                 </div>
 
             </form>
