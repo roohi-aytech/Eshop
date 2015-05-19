@@ -229,17 +229,17 @@ class BrowseService {
 //                [$skip: params.start],
 //                [$limit: params.pageSize]
 //        ).results()
-//                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
         def productIds = products.aggregate(
                 [$match: params.match],
-                [$sort: sortExpression],
                 [$group: ([_id: '$baseProductId', modelId: [$min: '$modelId']]+extraCols)],
                 [$sort: sortExpression],
+                [$group: ([_id: '$_id', modelId: [$min: '$modelId']]+extraCols)],
+                [$sort: sortExpression],
                 [$skip: params.start],
-                [$limit: params.pageSize],
-                [$sort: sortExpression]
+                [$limit: params.pageSize]
         ).results()
                 .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
+//                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
 
 
         [totalPages: totalPages, productIds: productIds]
