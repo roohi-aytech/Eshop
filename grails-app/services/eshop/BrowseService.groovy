@@ -235,7 +235,8 @@ class BrowseService {
                 [$sort: sortExpression]
 //                [$skip: params.start],
 //                [$limit: params.pageSize]
-        ).results().findAll().subList(params.start,params.start*params.pageSize)
+        ).results().findAll()
+        productIds = productIds.subList(Math.min(params.start,productIds.size()),Math.min(params.start+params.pageSize,productIds.size()))
                 .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
 //                .collect { [id: it._id, modelId: it.modelId, modelCount: it.modelCount] }
 
