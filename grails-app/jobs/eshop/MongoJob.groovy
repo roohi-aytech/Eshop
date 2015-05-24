@@ -40,8 +40,8 @@ class MongoJob {
                 println("Synchronizing: ${product.first()}, result: ${result}")
             }
             catch (ex) {
-                ex.printStackTrace()
-                println("Synchronizing: ${product.first()}, result: -2")
+                //ex.printStackTrace()
+                println("Synchronizing: ${product.first()}, result: ERROR ${ex.message}")
             }
 //            }
         } else {

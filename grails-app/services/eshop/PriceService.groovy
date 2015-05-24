@@ -54,13 +54,21 @@ class PriceService {
                 }
             }
         try {
-            productModel.refresh()
-            productModel.lastcalcPrice = priceVal
-            productModel.lastcalcDate = new Date()
-            productModel.lastpriceUpdate = price.startDate
-            productModel.save(flush: true)
+            Thread.start {
+                ProductModel.withTransaction {
+                    try {
+                        def pm = ProductModel.get(productModelId)
+                        pm.lastcalcPrice = priceVal
+                        pm.lastcalcDate = new Date()
+                        pm.lastpriceUpdate = price.startDate
+                        pm.save()
+                    }catch (x){
+                        println "ERROR Updating price for cache${productModel.id}"
+                    }
+                }
+            }
+
         } catch (x) {
-            productModel.refresh()
         }
         [showVal: priceVal, lastUpdate: price.startDate, status: productModel.status]
     }
