@@ -54,7 +54,7 @@ class PriceService {
                 }
             }
         try {
-            Thread.start {
+            Thread.startDaemon {
                 try {
                     synchronized (productModelId) {
                         ProductModel.withTransaction {
