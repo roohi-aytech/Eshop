@@ -31,7 +31,6 @@ class MongoJob {
         }
         if (product.size() > 0) {
             def url="${(grailsApplication.config.grails.serverURL ?: 'http://localhost:8080/EShop')}/site/synchMongoItem/${product.first()}"
-            println url
             def http = new HTTPBuilder(url)
             try {
                 def result = http.get([:]).toString().trim()

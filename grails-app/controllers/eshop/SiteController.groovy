@@ -1612,7 +1612,7 @@ class SiteController {
 
     def synchMongoItem() {
         try {
-            println('synchronizing request received for ' + params.id)
+//            println('synchronizing request received for ' + params.id)
             mongoService.storeProduct(Product.get(params.id))
             render "0"
         }
