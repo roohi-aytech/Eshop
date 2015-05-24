@@ -22,8 +22,11 @@ class OrderAdministrationController {
 
     def orderNotification() {
         def order = Order.get(params.id)
-        def user = User.findByUsername(params.userName)
-        if (orderTrackingService.checkIfOrderIsVisibleToUser(order, user)) {
+        def user
+        if(params.userName)
+            user = User.findByUsername(params.userName)
+
+        if (order && user && orderTrackingService.checkIfOrderIsVisibleToUser(order, user)) {
             String result = ""
             order.items.findAll { !it.deleted }.each {
                 result += it.productModel.toString()
