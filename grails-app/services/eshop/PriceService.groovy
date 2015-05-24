@@ -64,7 +64,7 @@ class PriceService {
                             pm.lastpriceUpdate = price.startDate
                             pm.save()
                         }
-                        println "Success Updating price for cache ${productModel.id}"
+//                        println "Success Updating price for cache ${productModel.id}"
                     }
                 } catch (x) {
                     println "ERROR Updating price for cache ${productModel.id}"

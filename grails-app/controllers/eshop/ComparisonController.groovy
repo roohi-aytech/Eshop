@@ -115,7 +115,7 @@ class ComparisonController {
                 }
                 eq('isVisible', true)
                 eq('deleted', false)
-            }.collect { it.brand }.unique { it.id }.sort { it.name };
+            }.collect { it.brand }.findAll().unique { it?.id }.sort { it?.name };
         }
 
         model
