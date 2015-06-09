@@ -42,6 +42,7 @@ class MongoJob {
                 //ex.printStackTrace()
                 println("Synchronizing: ${product.first()}, result: ERROR ${ex.message}")
             }
+
 //            }
         } else {
 //            println('No Product to Synchronize')

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<cache:block>
+%{--<cache:block>--}%
 <table class="layout-container table-simulated">
     <tr class="table-row">
         <td colspan="2">
@@ -59,7 +59,7 @@
 
         <td class="table-cell">
 
-            <ehcache:render template="common/browsingGraphicalMenu"/>
+            <ehcache:render template="common/browsingGraphicalMenuNew"/>
 
             <ehcache:render template="common/productGrid"
                       model="${[productIds: filters.products.productIds]}"/>
@@ -96,6 +96,6 @@
         $('.row-fluid ul.thumbnails li.span3:nth-child(4n + 5)').css('margin-right', '0px');
     })(jQuery);
 </script>
-</cache:block>
+%{--</cache:block>--}%
 </body>
 </html>

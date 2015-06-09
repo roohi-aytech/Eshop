@@ -10,6 +10,7 @@ class Slide {
     Boolean visibleOnFirstPage = false
     Boolean showAsBackground = false
     Boolean deleted = false
+    Integer indx=0
 
     static hasMany = [productTypes: ProductType]
 
@@ -20,5 +21,6 @@ class Slide {
         visibleOnFirstPage(nullable: true)
         showAsBackground(nullable: true)
         image(nullable: true, maxSize: 20000000)
+        indx(nullable: true)
     }
 }

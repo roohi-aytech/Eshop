@@ -11,11 +11,28 @@
 <h2><g:message code="default.manage.label" args="[entityName]"/></h2>
 
 <div class="content scaffold-list" role="main">
+    <rg:criteria inline="true">
+        <rg:ilike name="name" label="${message(code: 'slide.name.label')}"/>
+        <rg:eq name="visibleOnFirstPage" label="${message(code: 'slide.visibleOnFirstPage.label')}" from="[[id:true,title:message(code:'true')],[id:false,title:message(code:'false')]]" optionKey="id" optionValue="title" noSelection="['':'']"/>
+        %{--<rg:eq name="showAsBackground" label="${message(code: 'slide.showAsBackground.label')}" from="[[id:true,title:message(code:'true')],[id:false,title:message(code:'false')]]" optionKey="id" optionValue="title" noSelection="['':'']"/>--}%
+        <rg:nest name="productTypes">
+            <rg:ilike name="name" label="${message(code: 'slide.productTypes.label')}"/>
+        </rg:nest>
+        <rg:filterGrid grid="SlideGrid"/>
+    </rg:criteria>
     <rg:grid domainClass="${Slide}"
-             maxColumns="3"
+             maxColumns="6"
              showCommand="false"
              toolbarCommands="${[[caption: message(code: "add"), function: "addToSlideGrid", icon: "plus"]]}"
-             commands="${[[handler: "addToSlideGrid(#id#)", icon: "application_edit"], [handler: "deleteSlide(#id#)", icon: "application_delete"]]}"/>
+             commands="${[[handler: "addToSlideGrid(#id#)", icon: "application_edit"], [handler: "deleteSlide(#id#)", icon: "application_delete"]]}">
+        <rg:columns>
+            <rg:column name="indx"/>
+            <rg:column name="name"/>
+            <rg:column name="description"/>
+            <rg:column name="url"/>
+            <rg:column name="visibleOnFirstPage"/>
+        </rg:columns>
+        </rg:grid>
     <script language="javascript" type="text/javascript">
         function deleteSlide(id){
              if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) {

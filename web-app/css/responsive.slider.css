@@ -33,7 +33,7 @@
     height: 32px;
     position: absolute;
     right: 15px;
-    top: 200px;
+    top: 150px;
     width: 32px;
     background: url("../images/arrow-right.png") no-repeat;
 }
@@ -44,7 +44,7 @@
     height: 32px;
     position: absolute;
     left: 15px;
-    top: 200px;
+    top: 150px;
     width: 32px;
 }
 
@@ -65,7 +65,7 @@
     display: inline-block;
     position: absolute;
     left: 20px;
-    top: 395px;
+    top: 275px;
 }
 
 .slider-thumbnail{

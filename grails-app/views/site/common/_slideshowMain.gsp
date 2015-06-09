@@ -1,7 +1,7 @@
 <g:if test="${slides && !slides.isEmpty()}">
     <link href="${resource(dir: 'css', file: 'responsive.slider.css')}" rel="stylesheet" type="text/css"/>
 
-    <ul class="responsive-slider" height="420">
+    <ul class="responsive-slider" height="300">
         <g:each in="${slides}" var="slide">
             <li>
                 <g:if test="${slide.url}">

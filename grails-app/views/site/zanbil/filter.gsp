@@ -75,7 +75,7 @@
                             </ul>
                         </div>
 
-                        <ehcache:render template="common/filteringGraphicalMenu" key="${params.f}"/>
+                        <ehcache:render template="common/filteringGraphicalMenuNew" key="${params.f}"/>
 
 
                         <div id="products">

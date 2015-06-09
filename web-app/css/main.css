@@ -1135,3 +1135,6 @@ pre.stack {
 .import-report tr.edited td span{
     color: white !important;
 }
+.form.inline .fieldcontain{
+    display: inline-block;
+}

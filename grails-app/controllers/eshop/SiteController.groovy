@@ -123,6 +123,7 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+            order('indx','asc')
         }
 
         model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
@@ -148,6 +149,7 @@ class SiteController {
             }
             eq('showAsBackground', true)
             eq('deleted', false)
+            order('indx','asc')
         }?.find()
 
         model.pageContext = [:]
@@ -234,6 +236,7 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+            order('indx','asc')
         }
 
         model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
@@ -259,6 +262,7 @@ class SiteController {
             }
             eq('showAsBackground', true)
             eq('deleted', false)
+            order('indx','asc')
         }?.find()
 
         trackingService.trackExplore(productType, brandList)
@@ -385,6 +389,7 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+            order('indx','asc')
         }
 
         model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
@@ -410,6 +415,7 @@ class SiteController {
             }
             eq('showAsBackground', true)
             eq('deleted', false)
+            order('indx','asc')
         }?.find()
 
         trackingService.trackExplore(productType, brandList)
@@ -559,6 +565,7 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+            order('indx','asc')
         }
 
         model.specialSaleSlides = SpecialSaleSlide.createCriteria().list {
@@ -572,6 +579,7 @@ class SiteController {
             eq('visibleOnFirstPage', true)
             eq('showAsBackground', true)
             eq('deleted', false)
+            order('indx','asc')
         }?.find()
 
         model.mostVisitedProducts = Product.createCriteria().listDistinct {
@@ -1157,6 +1165,7 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+            order('indx','asc')
         }
 
         model.background = Slide.createCriteria().list {
@@ -1169,6 +1178,7 @@ class SiteController {
             }
             eq('showAsBackground', true)
             eq('deleted', false)
+            order('indx','asc')
         }?.find()
 
         trackingService.trackSearch(productType, brandList, params.phrase)
@@ -1271,6 +1281,7 @@ class SiteController {
                 isNull('showAsBackground')
             }
             eq('deleted', false)
+            order('indx','asc')
         }
 
         model.background = Slide.createCriteria().list {
@@ -1283,6 +1294,7 @@ class SiteController {
             }
             eq('showAsBackground', true)
             eq('deleted', false)
+            order('indx','asc')
         }?.find()
 
         trackingService.trackSearch(productType, brandList, params.phrase)

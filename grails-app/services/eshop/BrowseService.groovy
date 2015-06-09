@@ -53,7 +53,7 @@ class BrowseService {
         def countMap = products.aggregate(
                 [$match: params.match],
                 [$unwind: params.unwind],
-                [$group: [_id: '$baseProductId', count: [$sum: 1]]],
+//                [$group: [_id: '$baseProductId', count: [$sum: 1]]],
                 [$group: [_id: params.group, count: [$sum: 1]]],
                 [$match: [count: [$gt: 0], _id: [$ne: null]]],
                 [$sort: [count: -1]]

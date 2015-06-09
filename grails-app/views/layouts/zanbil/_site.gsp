@@ -102,27 +102,28 @@
 </head>
 
 <body class="main" ng-controller="eshopCtrl">
-<g:render template="/layouts/${grailsApplication.config.eShop.instance}/header" key="${sec.username()}"/>
-<table id="main-container" class="table-simulated">
-    <tr>
-        <td id="body-container">
-            <div id="body-container-inner">
-                <div id="body-size-watch">
-                    <g:layoutBody/>
-                </div>
-            </div>
+    <div class="mainfchild">
+        <g:render template="/layouts/${grailsApplication.config.eShop.instance}/header" key="${sec.username()}"/>
+        <table id="main-container" class="table-simulated">
+            <tr>
+                <td id="body-container">
+                    <div id="body-container-inner">
+                        <div id="body-size-watch">
+                            <g:layoutBody/>
+                        </div>
+                    </div>
 
-            <g:render template="/inquired_payments"/>
-            <r:layoutResources/>
-        </td>
-    </tr>
-    <tr>
-        <td class="totalFooter">
-            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/footer"/>
-        </td>
-    </tr>
-</table>
-<script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
-
+                    <g:render template="/inquired_payments"/>
+                    <r:layoutResources/>
+                </td>
+            </tr>
+            <tr>
+                <td class="totalFooter">
+                    <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/footer"/>
+                </td>
+            </tr>
+        </table>
+        <script src="${resource(dir: 'bootstrap/js', file: 'bootstrap.min.js', plugin: 'rapid-grails')}"></script>
+    </div>
 </body>
 </html>

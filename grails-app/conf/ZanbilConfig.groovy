@@ -10,6 +10,7 @@ browse.view.root='browse'
 browse.view.mobile='browse-root'
 page.size=12
 page.mobile.size=24
+menu.twoLevel=true
 filterPriceOnChange=true
 ajaxFilter = true
 priceUpdateLinks=true

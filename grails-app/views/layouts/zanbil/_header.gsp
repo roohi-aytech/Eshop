@@ -1,7 +1,7 @@
 <%@ page import="eshop.Order; eshop.OrderHelper; eshop.RoleHelper; eshop.Customer; eshop.User; eshop.ProductType" %>
 
 
-<div class="navbar navbar-fixed-top header">
+<div class="navbar header">
 <div class="navbar-inner">
 <table class="table-simulated" id="header">
 <tr class="table-row header-links-row">
@@ -59,7 +59,7 @@
         </span>
     </td>
 </tr>
-<cache:block>
+%{--<cache:block>--}%
     <tr class="header-box-row">
         <td>
             <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/search"/>
@@ -70,10 +70,15 @@
     </tr>
     <tr class="header-menu-row">
         <td colspan="2">
-            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
+            <g:if test="${grailsApplication.config.menu.twoLevel}">
+                <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menuTwoLevel"/>
+            </g:if>
+            <g:else>
+                %{--<ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>--}%
+            </g:else>
         </td>
     </tr>
-</cache:block>
+%{--</cache:block>--}%
 </table>
 </div>
 </div>

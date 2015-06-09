@@ -34,6 +34,13 @@
 <g:hiddenField name="id" value="${slideInstance?.id}"/>
 <g:hiddenField name="version" value="${slideInstance?.version}"/>
 
+<div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'indx', 'error')} ">
+    <label for="indx">
+        <g:message code="slide.indx.label" default="indx"/>
+
+    </label>
+    <g:textField name="indx" value="${slideInstance?.indx}"/>
+</div>
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'name', 'error')} ">
     <label for="name">
         <g:message code="slide.name.label" default="Name"/>
@@ -67,7 +74,7 @@
     </label>
 
     <rg:tree bean="${slideInstance}" field="productTypes" relationField="parentProduct" width="340px"
-             cascadeCheck="false"></rg:tree>
+             cascadeCheck="true"></rg:tree>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: slideInstance, field: 'visibleOnFirstPage', 'error')} ">

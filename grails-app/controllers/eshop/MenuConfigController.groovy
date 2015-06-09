@@ -7,6 +7,9 @@ class MenuConfigController {
 
     def index() {
         def productTypes = ProductType.findAllByParentProductIsNullAndDeletedNotEqual(true)
+        if(grailsApplication.config.menu.twoLevel){
+            productTypes=productTypes.collect {it.children?.findAll {!it.deleted}}.flatten()
+        }
         productTypes.each {
             def menuConfig = MenuConfig.findByProductType(it)
             def columnData = { index ->
@@ -120,8 +123,11 @@ class MenuConfigController {
     }
 
     def save() {
-
-        ProductType.findAllByParentProductIsNullAndDeletedNotEqual(true).each {
+        def productTypes = ProductType.findAllByParentProductIsNullAndDeletedNotEqual(true)
+        if(grailsApplication.config.menu.twoLevel){
+            productTypes=productTypes.collect {it.children?.findAll {!it.deleted}}.flatten()
+        }
+        productTypes.each {
             def menuConfig = MenuConfig.findByProductType(it)
             menuConfig.column1 = params["column_${it.id}_1"]
             menuConfig.column2 = params["column_${it.id}_2"]

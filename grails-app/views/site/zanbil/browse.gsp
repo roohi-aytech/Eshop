@@ -67,7 +67,7 @@
                             </ul>
                         </div>
 
-                        <ehcache:render template="common/browsingGraphicalMenu" key="${productTypeId}"/>
+                        <ehcache:render template="common/browsingGraphicalMenuNew" key="${productTypeId}"/>
 
                         <div id="products">
                             <ehcache:render template="common/productGrid"

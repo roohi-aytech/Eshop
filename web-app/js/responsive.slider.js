@@ -2,7 +2,7 @@ $('.responsive-slider').each(function () {
 
     //build items
     var ul = $(this);
-    $('body').prepend('<div class="slider-container"></div>');
+    $('<div class="slider-container"></div>').insertAfter($('.navbar.header'));
     var container = $('body .slider-container').first();
     $('#body-container').css('padding-top', '5px');
     container.css('height', ul.attr('height'));
