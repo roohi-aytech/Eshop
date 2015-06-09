@@ -71,10 +71,10 @@
     <tr class="header-menu-row">
         <td colspan="2">
             <g:if test="${grailsApplication.config.menu.twoLevel}">
-                <g:render template="/layouts/${grailsApplication.config.eShop.instance}/menuTwoLevel"/>
+                <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menuTwoLevel"/>
             </g:if>
             <g:else>
-                %{--<ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>--}%
+                <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/menu"/>
             </g:else>
         </td>
     </tr>
