@@ -13,7 +13,7 @@
                 %{--<div class="inner"--}%
                      %{--style="background-image: url(${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu'])});">--}%
                     <ul class="btn-group pull-right menu-full">
-                        <g:each in="${pt.children}" var="rpti">
+                        <g:each in="${pt.children.findAll {!it.deleted}}" var="rpti">
                             <g:set var="pt" value="${ProductType.get(rpti.id)}"/>
                             <li class="root">
                                 <a  href="${createLink(uri:"/browse/${pt.seoFriendlyName}")}"><span>${rpti.name}</span></a>
