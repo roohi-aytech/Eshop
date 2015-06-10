@@ -419,24 +419,27 @@ class ProductTypeController {
                 }
                 if (productType) {
                     def productTypeIds = getChildProductTypes(productType).collect { it.id }
-                    Product.createCriteria().list {
-                        or {
-                            isNull('deleted')
-                            eq('deleted', false)
-                        }
-                        productTypes {
-                            'in'('id', productTypeIds)
-                        }
-                    }.each {
-                        if (it instanceof Product) try {
-                            it.isSynchronized = false
-                            it.save()
-                        } catch (x) {
+                    Thread.startDaemon {
+                        Product.withTransaction{
+                            Product.createCriteria().list {
+                                or {
+                                    isNull('deleted')
+                                    eq('deleted', false)
+                                }
+                                productTypes {
+                                    'in'('id', productTypeIds)
+                                }
+                            }.each {
+                                if (it instanceof Product) try {
+                                    it.isSynchronized = false
+                                    it.save()
+                                } catch (x) {
+                                }
+                            }
                         }
                     }
                 }
             }
-
         } catch (x) {
             x.printStackTrace()
         }
