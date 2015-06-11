@@ -13,9 +13,9 @@
     <meta property="og:type"               content="website" />
     <meta property="og:title"              content="${message(code: 'site.mainPage.title-goldaan')}" />
     <meta property="og:description"        content="${message(code: 'site.mainPage.description-goldaan')}" />
-    <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'logo-bg.png')}" />
+    <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'logo-bg.png',absolute: true)}" />
     <g:each in="${slides}" var="slide">
-        <meta property="og:image"          content="${createLink(controller: "image", action: "index")}/${slide.id}?type=mainSlide" />
+        <meta property="og:image"          content="${createLink(controller: "image", action: "index",absolute: true)}/${slide.id}?type=mainSlide" />
     </g:each>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
