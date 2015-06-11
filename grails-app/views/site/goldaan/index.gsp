@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <meta property="og:url"                content="http://www.goldaan.ir/" />
     <meta property="og:type"               content="website" />
-    <meta property="og:title"              content="<g:message code="site.mainPage.title-goldaan"/>" />
+    <meta property="og:title"              content="${message(code: 'site.mainPage.title-goldaan')}" />
     <meta property="og:description"        content="${message(code: 'site.mainPage.description-goldaan')}" />
     <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'logo-bg.png')}" />
     <g:each in="${slides}" var="slide">
