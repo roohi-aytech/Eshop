@@ -1,9 +1,6 @@
 <%@ page import="eshop.ProductType" %>
 %{--product types--}%
-<g:if test="${filters.productTypes}">
-    <g:render template="common/productTypeCarouselNew"
-              model="${[type: 'filter', subProductTypeLinks: filters?.productTypes]}"/>
-</g:if>
+
 %{--product types--}%
 %{--<g:if test="${filters.productTypes}">--}%
 %{--<h3 class="productType-container-title">--}%
@@ -15,6 +12,10 @@
 %{--</g:if>--}%
 %{--Brands Filters--}%
 <div id="graphicalFilter">
+    <g:if test="${filters.productTypes}">
+        <g:render template="common/productTypeCarouselNew"
+                  model="${[type: 'filter', subProductTypeLinks: filters?.productTypes]}"/>
+    </g:if>
     <g:if test="${filters?.brands}">
         <g:render template="common/brandCarouselNew" model="${[
                 title         : message(code: 'site.selectBrand'),
