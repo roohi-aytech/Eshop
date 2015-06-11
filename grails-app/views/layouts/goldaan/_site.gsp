@@ -8,6 +8,17 @@
 <head>
     <title><g:layoutTitle/></title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta property="og:url"                content="http://www.goldaan.ir/" />
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="${message(code: 'site.mainPage.title-goldaan')}" />
+    <meta property="og:description"        content="${message(code: 'site.mainPage.description-goldaan')}" />
+    <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'logo-large.png',absolute: true)}" />
+    <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'goldaan.jpg',absolute: true)}" />
+    <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'goldan.png',absolute: true)}" />
+    <g:each in="${slides}" var="slide">
+        <meta property="og:image"          content="${createLink(controller: "image", action: "index",absolute: true)}/${slide.id}?type=mainSlide" />
+    </g:each>
+
     <canonical:show/>
     <meta name="robots" content="index, follow"/>
     <meta name="viewport" content="width=device-width, user-scalable=yes">

@@ -9,14 +9,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="">
-    <meta property="og:url"                content="http://www.goldaan.ir/" />
-    <meta property="og:type"               content="website" />
-    <meta property="og:title"              content="${message(code: 'site.mainPage.title-goldaan')}" />
-    <meta property="og:description"        content="${message(code: 'site.mainPage.description-goldaan')}" />
-    <meta property="og:image"              content="${resource(dir: 'images/goldaan',file: 'logo-bg.png',absolute: true)}" />
-    <g:each in="${slides}" var="slide">
-        <meta property="og:image"          content="${createLink(controller: "image", action: "index",absolute: true)}/${slide.id}?type=mainSlide" />
-    </g:each>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     %{--<!--[if lt IE 9]>--}%
