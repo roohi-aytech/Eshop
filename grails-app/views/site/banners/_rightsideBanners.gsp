@@ -67,8 +67,8 @@
             var container = $('td.banners');
             var banners = $('div.right-side-banners');
             container.css('paddingBottom', banners.height());
-            var position = $(window).scrollTop() - container.position().top - $('.quick-access').height() - $('.accordion').height() - $('.slider-container').height() + 90;
-            var maxPosition = container.outerHeight() - banners.height() - $('.quick-access').height() - $('.accordion').height() - 40;
+            var position = $(window).scrollTop() - container.position().top - $('.quick-access').height()- $('#filterBar').height() - $('.accordion').height() - $('.slider-container').height()- $('.specialSales-cell').height()- $('#header').height() + 220;
+            var maxPosition = container.outerHeight() - banners.height() - $('.quick-access').height()- $('.accordion').height()  - 40;
             var minPosition = 0;
             if (position > maxPosition)
                 position = maxPosition;

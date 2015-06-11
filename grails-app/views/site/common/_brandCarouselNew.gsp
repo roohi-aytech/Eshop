@@ -27,7 +27,7 @@
                                 <g:if test="${type == 'filter'}">
                                     <eshop:filterAddBrand id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
                                                           remove="${(selectedBrands?.contains(brand._id?.id)).toString()}"
-                                                          type="icon" class="grayscale grayscale-fade"/>
+                                                          type="icon" class="${(selectedBrands?.contains(brand._id?.id) ? '' : 'grayscale grayscale-fade')}"/>
 
                                 </g:if>
                                 <g:else>
@@ -52,7 +52,8 @@
         </td>
     </tr>
 </table>
-
+<div class="producttype-carosel-header">
+</div>
 <div class="sb-clear"></div>
 
 <script type="text/javascript">
@@ -81,6 +82,7 @@
             if ($(this).attr('src') != $(this).attr('data-src'))
                 $(this).attr('src', $(this).attr('data-src'));
         });
+
     });
 
 </script>

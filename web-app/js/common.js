@@ -160,7 +160,7 @@ $(document).ready(function () {
 
 function setProductCartPosition() {
     var position = $(window).scrollTop();
-    var maxPosition = $('.totalFooter').position().top - $('.product-card').height() - 115;
+    var maxPosition = $('.totalFooter').position().top - $('.product-card').height() - 215;
     if (position > maxPosition)
         position = maxPosition;
     $('.product-card').first().stop().animate({
@@ -188,7 +188,7 @@ function setProductMenuPosition() {
             opacity:0
         });
     }
-    var position = $(window).scrollTop() + 120;
+    var position = $(window).scrollTop() + 220;
     var maxPosition = $('.totalFooter').position().top - $('.product-details .tabs.rotate').height() - 95;
     if (position > maxPosition)
         position = maxPosition;

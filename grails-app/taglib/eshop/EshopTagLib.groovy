@@ -122,9 +122,9 @@ class EshopTagLib {
         def link = g.createLink(controller: 'site', action: "filter", params: [f: f, o: 'b'])
         def brand = Brand.get(attrs.brandId)
         if (attrs.type == 'icon')
-            out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img class='lazy ${attrs.class}' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img class='lazy ${attrs.class}' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span><span class='hovertip'>${attrs.brandName}</span></a>"
         else
-            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
+            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}<span class='hovertip'>${attrs.brandName}</span></a>"
     }
 
     def filterStartBrandMobile = { attrs, body ->
@@ -178,9 +178,9 @@ class EshopTagLib {
             f = "${attrs.f},b${attrs.id}"
         def link = (f == '' ? g.createLink(uri: '/') : g.createLink(action: params.action, params: params + [f: f, o: 'b']))
         if (attrs.type == 'icon')
-            out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img alt='${attrs.name}' class='${attrs.class}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span></a>"
+            out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img alt='${attrs.name}' class='${attrs.class}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span><span class='hovertip'>${attrs.name}</span></a>"
         else
-            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span></a>"
+            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span><span class='hovertip'>${attrs.name}</span></a>"
     }
 
     def filterAddBrandMobile = { attrs, body ->
