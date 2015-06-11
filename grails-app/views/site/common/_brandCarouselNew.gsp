@@ -52,7 +52,7 @@
         </td>
     </tr>
 </table>
-<div class="producttype-carosel-header">
+<div class="producttype-carosel-header-nomargin">
 </div>
 <div class="sb-clear"></div>
 
