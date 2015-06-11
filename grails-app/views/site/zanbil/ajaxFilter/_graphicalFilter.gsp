@@ -1,5 +1,6 @@
-<g:if test="${productType.children}">
-    <g:render template="common/productTypeCarouselNew"/>
+<g:if test="${filters.productTypes}">
+    <g:render template="common/productTypeCarouselNew"
+              model="${[type: 'filter', subProductTypeLinks: filters?.productTypes]}"/>
 </g:if>
 <g:if test="${filters?.brands}">
     <g:render template="common/brandCarouselNew" model="${[

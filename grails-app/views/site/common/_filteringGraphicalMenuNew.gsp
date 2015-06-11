@@ -2,7 +2,7 @@
 %{--product types--}%
 <g:if test="${filters.productTypes}">
     <g:render template="common/productTypeCarouselNew"
-              model="${[type: 'filter', subProductTypeLinks: filters.productTypes]}"/>
+              model="${[type: 'filter', subProductTypeLinks: filters?.productTypes]}"/>
 </g:if>
 %{--product types--}%
 %{--<g:if test="${filters.productTypes}">--}%

@@ -2771,7 +2771,7 @@ li.sb-showcase-skin.checkable.active a:hover .tick-grey {
 
 .static-productType-carousel {
     margin-right: 0;
-    margin-bottom: 35px;
+    /*margin-bottom: 35px;*/
     margin-top: 15px;
     list-style: none;
     /*border: 1px solid #eeeeee;*/
@@ -5079,6 +5079,7 @@ ul.article-list li span {
     background: #ffc20e none repeat scroll 0 0;
     text-align: center;
     height:3px;
+    margin-top:35px;
 
 }
 .producttype-carosel-header h3.showbiz-header{

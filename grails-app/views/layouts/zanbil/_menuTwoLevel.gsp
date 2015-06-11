@@ -74,10 +74,10 @@
 //            if (this != hoveredItem)
 //                $(this).removeClass('open');
 //        });
-        $('.header-menu-row li.root .top-menu').addClass('hidden')
+        $(this).parent().find('li.root .top-menu').addClass('hidden')
         $(this).find('.top-menu:first').removeClass('hidden')
         $(this).parents('.top-menu').removeClass('hidden')
     },function(){
-        $('.header-menu-row li.root .top-menu').addClass('hidden')
+        $(this).find('.top-menu').addClass('hidden')
     });
 </script>

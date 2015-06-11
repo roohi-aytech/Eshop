@@ -66,14 +66,17 @@
         function setBannersPosition() {
             var container = $('td.banners');
             var banners = $('div.right-side-banners');
-            container.css('paddingBottom', banners.height());
-            var position = $(window).scrollTop() - container.position().top - $('.quick-access').height()- $('#filterBar').height() - $('.accordion').height() - $('.slider-container').height()- $('.specialSales-cell').height()- $('#header').height() + 220;
-            var maxPosition = container.outerHeight() - banners.height() - $('.quick-access').height()- $('.accordion').height()  - 40;
-            var minPosition = 0;
-            if (position > maxPosition)
-                position = maxPosition;
-            if (position < minPosition)
-                position = minPosition;
+//            container.css('paddingBottom', banners.height());
+//            var position = $(window).scrollTop() - container.position().top - $('.quick-access').height()- $('#filterBar').height() - $('.accordion').height() - $('.slider-container').height()- $('.specialSales-cell').height()- $('#header').height() + 220;
+//            var maxPosition = container.outerHeight() - banners.height() - $('.quick-access').height()- $('.accordion').height()  - 40;
+//            var minPosition = 0;
+//            if (position > maxPosition)
+//                position = maxPosition;
+//            if (position < minPosition)
+//                position = minPosition;
+            var position=Math.max(container.offset().top, $(window).scrollTop())-container.offset().top;
+            if(container.height() < position+banners.height())
+                position=container.height()+container.offset().top-banners.height()-container.offset().top;
             banners.first().stop().animate({
                 'top': position + "px"
             }, 200);
