@@ -78,7 +78,7 @@
             <g:set var="lastVisitedProducts"
                    value="${productService.findLastVisitedProducts(cookie(name: 'lastVisitedProducts'))}"/>
             <g:if test="${lastVisitedProducts && !lastVisitedProducts.isEmpty()}">
-                <ehcache:render template="/site/common/productCarousel"
+                <g:render template="/site/common/productCarousel"
                           model="${[title: message(code: 'product.lastVisited.list'), productList: lastVisitedProducts, mode: 'large']}"/>
             </g:if>
         </td>
