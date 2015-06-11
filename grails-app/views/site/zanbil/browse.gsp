@@ -83,7 +83,7 @@
         <td class="table-cell" colspan="2">
             <ehcache:render template="common/productCarousel"
                       key="${productTypeId}"
-                      model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName]), productList: mostVisitedProducts]}"/>
+                      model="${[title: message(code: 'product.mostVisited.list', args: [productTypeName?:'']), productList: mostVisitedProducts]}"/>
         </td>
     </tr>
     <tr class="table-row">
