@@ -1,9 +1,10 @@
+<div id="graphicalFilter">
 %{--product types--}%
 <g:if test="${productType.children}">
     <g:render template="common/productTypeCarouselNew"/>
 </g:if>
 %{--Brands Filters--}%
-<div id="graphicalFilter">
+
     <g:if test="${filters?.brands}">
         <g:render template="common/brandCarouselNew" model="${[
                 title      : message(code: 'site.selectBrand'),

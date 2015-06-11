@@ -124,7 +124,7 @@ class EshopTagLib {
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img class='lazy ${attrs.class}' data-src='${createLink(controller: 'image', params: [id: attrs.brandId, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span><span class='hovertip'>${attrs.brandName}</span></a>"
         else
-            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}<span class='hovertip'>${attrs.brandName}</span></a>"
+            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.brandName} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span>" : ''}</a>"
     }
 
     def filterStartBrandMobile = { attrs, body ->
@@ -180,7 +180,7 @@ class EshopTagLib {
         if (attrs.type == 'icon')
             out << "<a class='brand-filter' href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'><img alt='${attrs.name}' class='${attrs.class}' src='${createLink(controller: 'image', params: [id: attrs.id, type: 'brand'])}'/><span class='tick'></span><span class='tick-grey'></span><span class='hovertip'>${attrs.name}</span></a>"
         else
-            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span><span class='hovertip'>${attrs.name}</span></a>"
+            out << "<a href='${link}' data-ajax='${grailsApplication.config.ajaxFilter}'>${attrs.name} ${attrs.showCount ? "<span class='count'>(${attrs.count})</span)" : ''}</span></a>"
     }
 
     def filterAddBrandMobile = { attrs, body ->

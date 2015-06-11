@@ -1,6 +1,8 @@
-
+<g:if test="${productType.children}">
+    <g:render template="common/productTypeCarouselNew"/>
+</g:if>
 <g:if test="${filters?.brands}">
-    <g:render template="common/brandCarousel" model="${[
+    <g:render template="common/brandCarouselNew" model="${[
             title         : message(code: 'site.selectBrand'),
             brands        : filters.brands,
             selectedBrands: filters.selecteds["b"],
