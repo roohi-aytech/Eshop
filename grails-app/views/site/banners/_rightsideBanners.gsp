@@ -77,7 +77,7 @@
 //                position = minPosition;
             var position=Math.max(container.offset().top+bth, $(window).scrollTop())-(container.offset().top+bth);
             if(container.height() < position+banners.height()+bth)
-                position=container.height()-banners.height();
+                position=container.height()-banners.height()-bth;
             banners.first().stop().animate({
                 'top': position + "px"
             }, 200);
