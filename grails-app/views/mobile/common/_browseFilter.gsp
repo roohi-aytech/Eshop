@@ -26,11 +26,11 @@
 
                     <form class="checked-products" id="frm-brandsname">
 
-                        <g:each in="${filters.brands?.sort { -it.count }}" var="brand">
+                        <g:each in="${filters.brands?.sort { -it?.count }}" var="brand">
                             <div class="checkbox-group">
                                 <eshop:filterStartBrandMobile productType="${productType}" brandId="${brand?._id?.id}"
                                                               brandName="${brand?._id?.name}" showCount="true"
-                                                              count="${brand.count}"/>
+                                                              count="${brand?.count}"/>
                             </div>
                         </g:each>
                     </form>
@@ -43,7 +43,7 @@
         <g:if test="${filters?.attributes}">
 
         %{--attribute categories--}%
-            <g:each in="${filters.attributes.findAll { it.value.type == 'ac' && it.value.countsByValue.size() > 0 }}"
+            <g:each in="${filters.attributes.findAll { it.value.type == 'ac' && it.value?.countsByValue.size() > 0 }}"
                     var="attribute" status="indexer">
 
                 <div class="by-brand" id="ac-${attribute.value.type.replace("a", "") + attribute.key}">
@@ -54,12 +54,12 @@
                     <div id="toggled-${attribute.value.type.replace("a", "") + attribute.key}" class="toggle-brand">
                         <form class="checked-products"
                               id="frm-${attribute.value.type.replace("a", "") + attribute.key}">
-                            <g:each in="${attribute.value.countsByValue.sort { -it.count }}" var="attributeValueCount">
+                            <g:each in="${attribute.value?.countsByValue.sort { -it?.count }}" var="attributeValueCount">
                                 <div class="checkbox-group">
                                     <eshop:filterStartMobile productType="${productType}"
                                                              attribute="${attribute.value.type.replace("a", "") + attribute.key}"
                                                              value="${attributeValueCount?._id}" showCount="true"
-                                                             count="${attributeValueCount.count}"/>
+                                                             count="${attributeValueCount?.count}"/>
                                 </div>
                             </g:each>
                         </form>
@@ -67,7 +67,7 @@
                 </div>
             </g:each>
         %{--attributes--}%
-            <g:each in="${filters.attributes.findAll { it.value.type == 'a' && it.value.countsByValue.size() > 0 }}"
+            <g:each in="${filters.attributes.findAll { it.value.type == 'a' && it.value?.countsByValue.size() > 0 }}"
                     var="attribute" status="indexer">
                 <div class="by-brand" id="a-${attribute.value.type.replace("a", "") + attribute.key}">
                     <h2 id="toggle-${attribute.value.type.replace("a", "") + attribute.key}"
@@ -77,12 +77,12 @@
                     <div id="toggled-${attribute.value.type.replace("a", "") + attribute.key}" class="toggle-brand">
                         <form class="checked-products"
                               id="frm-${attribute.value.type.replace("a", "") + attribute.key}">
-                            <g:each in="${attribute.value.countsByValue.sort { -it.count }}" var="attributeValueCount">
+                            <g:each in="${attribute.value?.countsByValue.sort { -it?.count }}" var="attributeValueCount">
                                 <div class="checkbox-group">
                                     <eshop:filterStartMobile productType="${productType}"
                                                              attribute="${attribute.value.type.replace("a", "") + attribute.key}"
                                                              value="${attributeValueCount?._id}" showCount="true"
-                                                             count="${attributeValueCount.count}"/>
+                                                             count="${attributeValueCount?.count}"/>
                                 </div>
                             </g:each>
                         </form>
@@ -92,10 +92,10 @@
         </g:if>
 
     %{--Variation Filters--}%
-        <g:if test="${productType.children.count { it } == 0}">
+        <g:if test="${productType.children?.count { it } == 0}">
             <g:if test="${filters?.variations}">
                 <g:each in="${filters.variations}" var="variationGroup" status="indexer">
-                    <g:if test="${variationGroup.value.countsByValue.count { it } > 0}">
+                    <g:if test="${variationGroup.value?.countsByValue?.count { it } > 0}">
                         <div class="by-brand" id="v-${variationGroup.value.type.replace('v', '') + variationGroup.key}">
                             <h2 id="toggle-v-${variationGroup.value.type.replace('v', '') + variationGroup.key}" class="toggle-head dummy_toggler">${variationGroup.value.name}<span
                                     class="grey"></span><span
@@ -107,7 +107,7 @@
                                         <eshop:filterStartVariationMobile productType="${productType}"
                                                                     variation="${variationGroup.value.type.replace('v', '') + variationGroup.key}"
                                                                     value="${variationValueCount?._id}" showCount="true"
-                                                                    count="${variationValueCount.count}"/>
+                                                                    count="${variationValueCount?.count}"/>
                                     </div>
                                 </form>
                             </div>

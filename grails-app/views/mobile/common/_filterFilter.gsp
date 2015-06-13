@@ -26,10 +26,10 @@
 
                     <form class="checked-products" id="frm-brandsname">
 
-                        <g:each in="${filters.brands?.sort { -it.count }}" var="brand">
+                        <g:each in="${filters.brands?.sort { -it?.count }}" var="brand">
                             <div class="checkbox-group">
                                 <eshop:filterAddBrandMobile id="${brand?._id.id}" name="${brand?._id.name}" f="${params.f}"
-                                                      remove="${filters.selecteds["b"]?.contains(brand?._id?.id).toString()}" showCount="true" count="${brand.count}"/>
+                                                      remove="${filters.selecteds["b"]?.contains(brand?._id?.id).toString()}" showCount="true" count="${brand?.count}"/>
                             </div>
                         </g:each>
                     </form>
@@ -42,7 +42,7 @@
         <g:if test="${filters?.attributes}">
 
         %{--attributes--}%
-            <g:each in="${filters.attributes.findAll { it.value.type == 'a' && it.value.countsByValue.size() > 0 }}"
+            <g:each in="${filters.attributes.findAll { it.value.type == 'a' && it.value?.countsByValue.size() > 0 }}"
                     var="attribute" status="indexer">
                 <div class="by-brand" id="a-${attribute.value.type.replace("a", "") + attribute.key}">
                     <h2 id="toggle-${attribute.value.type.replace("a", "") + attribute.key}"
@@ -52,10 +52,10 @@
                     <div id="toggled-${attribute.value.type.replace("a", "") + attribute.key}" class="toggle-brand">
                         <form class="checked-products"
                               id="frm-${attribute.value.type.replace("a", "") + attribute.key}">
-                            <g:each in="${attribute.value.countsByValue.sort { -it.count }}" var="attributeValueCount">
+                            <g:each in="${attribute.value?.countsByValue.sort { -it?.count }}" var="attributeValueCount">
                                 <div class="checkbox-group">
                                     <eshop:filterAddAttributeMobile id="${attribute.value.type.replace("a", "") + attribute.key}"
-                                                              value="${attributeValueCount?._id}" f="${params.f}" count="${attributeValueCount.count}"
+                                                              value="${attributeValueCount?._id}" f="${params.f}" count="${attributeValueCount?.count}"
                                                               remove="${filters.selecteds[attribute.key]?.contains(attributeValueCount?._id)?.toString()}"/>
                                 </div>
                             </g:each>
@@ -66,10 +66,10 @@
         </g:if>
 
     %{--Variation Filters--}%
-        <g:if test="${filters.productTypes.count { it } == 0}">
+        <g:if test="${filters.productTypes?.count { it } == 0}">
             <g:if test="${filters?.variations}">
                 <g:each in="${filters.variations}" var="variationGroup" status="indexer">
-                    <g:if test="${variationGroup.value.countsByValue.count { it } > 0}">
+                    <g:if test="${variationGroup.value?.countsByValue?.count { it } > 0}">
                         <div class="by-brand" id="v-${variationGroup.value.type.replace('v', '') + variationGroup.key}">
                             <h2 id="toggle-v-${variationGroup.value.type.replace('v', '') + variationGroup.key}" class="toggle-head dummy_toggler">${variationGroup.value.name}<span
                                     class="grey"></span><span
@@ -81,7 +81,7 @@
                                         <eshop:filterAddVariationMobile
                                                 id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
                                                 value="${variationValueCount?._id}" f="${params.f}"
-                                                remove="${filters.selecteds[variationGroup.key]?.contains(variationValueCount?._id).toString()}" showCount="true" count="${variationValueCount.count}"/>
+                                                remove="${filters.selecteds[variationGroup.key]?.contains(variationValueCount?._id).toString()}" showCount="true" count="${variationValueCount?.count}"/>
                                     </div>
                                 </form>
                             </div>
