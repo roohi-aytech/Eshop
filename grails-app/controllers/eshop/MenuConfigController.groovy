@@ -43,12 +43,12 @@ class MenuConfigController {
                 try {
                     it.children.findAll { pt ->
                         !(pt.deleted ||
-                                JSON.parse(menuConfig.column1)[0].children.find { it.key.toString() == pt.id.toString() } ||
-                                JSON.parse(menuConfig.column2)[0].children.find { it.key.toString() == pt.id.toString() } ||
-                                JSON.parse(menuConfig.column3)[0].children.find { it.key.toString() == pt.id.toString() } ||
-                                JSON.parse(menuConfig.column4)[0].children.find { it.key.toString() == pt.id.toString() } ||
-                                JSON.parse(menuConfig.column5)[0].children.find { it.key.toString() == pt.id.toString() } ||
-                                JSON.parse(menuConfig.column6)[0].children.find { it.key.toString() == pt.id.toString() }
+                                JSON.parse(menuConfig.column1).find{ (it.key.toString() == pt.id.toString() )|| it.children.find { it.key.toString() == pt.id.toString() }} ||
+                                JSON.parse(menuConfig.column2).find{ (it.key.toString() == pt.id.toString() )|| it.children.find { it.key.toString() == pt.id.toString() }} ||
+                                JSON.parse(menuConfig.column3).find{ (it.key.toString() == pt.id.toString() )|| it.children.find { it.key.toString() == pt.id.toString() }} ||
+                                JSON.parse(menuConfig.column4).find{ (it.key.toString() == pt.id.toString() )|| it.children.find { it.key.toString() == pt.id.toString() }} ||
+                                JSON.parse(menuConfig.column5).find{ (it.key.toString() == pt.id.toString() )|| it.children.find { it.key.toString() == pt.id.toString() }} ||
+                                JSON.parse(menuConfig.column6).find{ (it.key.toString() == pt.id.toString() )|| it.children.find { it.key.toString() == pt.id.toString() }}
                         )
                     }.each {
                         def g = new groovy.json.JsonSlurper().parseText(menuConfig.column1)

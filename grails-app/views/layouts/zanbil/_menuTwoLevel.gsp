@@ -13,12 +13,12 @@
                 %{--<div class="inner"--}%
                      %{--style="background-image: url(${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu'])});">--}%
                     <ul class="btn-group pull-right menu-full">
-                        <g:each in="${pt.children.findAll {!it.deleted}}" var="rpti">
+                        <g:each in="${pt.children.findAll {!it.deleted}.sort()}" var="rpti">
                             <g:set var="pt" value="${ProductType.get(rpti.id)}"/>
                             <li class="root">
                                 <a  href="${createLink(uri:"/browse/${pt.seoFriendlyName}")}"><span>${rpti.name}</span></a>
                                 <g:set var="menuConfig" value="${MenuConfig.findByProductType(pt)}"/>
-                                <g:if test="${menuConfig}">
+                                <g:if test="${menuConfig && pt.children?.findAll {!it.deleted}}">
                                 <div class="top-menu noright content hidden" id="top-menu${pt.id}">
                                     <div class="inner"
                                          style="background-image: url(${createLink(controller: 'image', params: [id: pt.id, type: 'productTypeMenu'])});">
