@@ -28,8 +28,8 @@
 
                         <g:each in="${filters.brands?.sort { -it.count }}" var="brand">
                             <div class="checkbox-group">
-                                <eshop:filterStartBrandMobile productType="${productType}" brandId="${brand._id?.id}"
-                                                              brandName="${brand._id?.name}" showCount="true"
+                                <eshop:filterStartBrandMobile productType="${productType}" brandId="${brand?._id?.id}"
+                                                              brandName="${brand?._id?.name}" showCount="true"
                                                               count="${brand.count}"/>
                             </div>
                         </g:each>
@@ -58,7 +58,7 @@
                                 <div class="checkbox-group">
                                     <eshop:filterStartMobile productType="${productType}"
                                                              attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                                             value="${attributeValueCount._id}" showCount="true"
+                                                             value="${attributeValueCount?._id}" showCount="true"
                                                              count="${attributeValueCount.count}"/>
                                 </div>
                             </g:each>
@@ -81,7 +81,7 @@
                                 <div class="checkbox-group">
                                     <eshop:filterStartMobile productType="${productType}"
                                                              attribute="${attribute.value.type.replace("a", "") + attribute.key}"
-                                                             value="${attributeValueCount._id}" showCount="true"
+                                                             value="${attributeValueCount?._id}" showCount="true"
                                                              count="${attributeValueCount.count}"/>
                                 </div>
                             </g:each>
@@ -106,7 +106,7 @@
                                     <div class="checkbox-group">
                                         <eshop:filterStartVariationMobile productType="${productType}"
                                                                     variation="${variationGroup.value.type.replace('v', '') + variationGroup.key}"
-                                                                    value="${variationValueCount._id}" showCount="true"
+                                                                    value="${variationValueCount?._id}" showCount="true"
                                                                     count="${variationValueCount.count}"/>
                                     </div>
                                 </form>

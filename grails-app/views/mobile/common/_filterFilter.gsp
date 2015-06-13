@@ -28,8 +28,8 @@
 
                         <g:each in="${filters.brands?.sort { -it.count }}" var="brand">
                             <div class="checkbox-group">
-                                <eshop:filterAddBrandMobile id="${brand._id.id}" name="${brand._id.name}" f="${params.f}"
-                                                      remove="${filters.selecteds["b"]?.contains(brand._id?.id).toString()}" showCount="true" count="${brand.count}"/>
+                                <eshop:filterAddBrandMobile id="${brand?._id.id}" name="${brand?._id.name}" f="${params.f}"
+                                                      remove="${filters.selecteds["b"]?.contains(brand?._id?.id).toString()}" showCount="true" count="${brand.count}"/>
                             </div>
                         </g:each>
                     </form>
@@ -55,8 +55,8 @@
                             <g:each in="${attribute.value.countsByValue.sort { -it.count }}" var="attributeValueCount">
                                 <div class="checkbox-group">
                                     <eshop:filterAddAttributeMobile id="${attribute.value.type.replace("a", "") + attribute.key}"
-                                                              value="${attributeValueCount._id}" f="${params.f}" count="${attributeValueCount.count}"
-                                                              remove="${filters.selecteds[attribute.key]?.contains(attributeValueCount._id)?.toString()}"/>
+                                                              value="${attributeValueCount?._id}" f="${params.f}" count="${attributeValueCount.count}"
+                                                              remove="${filters.selecteds[attribute.key]?.contains(attributeValueCount?._id)?.toString()}"/>
                                 </div>
                             </g:each>
                         </form>
@@ -80,8 +80,8 @@
                                     <div class="checkbox-group">
                                         <eshop:filterAddVariationMobile
                                                 id="${variationGroup.value.type.replace("v", "") + variationGroup.key}"
-                                                value="${variationValueCount._id}" f="${params.f}"
-                                                remove="${filters.selecteds[variationGroup.key]?.contains(variationValueCount._id).toString()}" showCount="true" count="${variationValueCount.count}"/>
+                                                value="${variationValueCount?._id}" f="${params.f}"
+                                                remove="${filters.selecteds[variationGroup.key]?.contains(variationValueCount?._id).toString()}" showCount="true" count="${variationValueCount.count}"/>
                                     </div>
                                 </form>
                             </div>
