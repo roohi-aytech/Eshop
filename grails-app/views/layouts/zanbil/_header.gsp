@@ -62,7 +62,7 @@
 %{--<cache:block>--}%
     <tr class="header-box-row">
         <td>
-            <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/search"/>
+            <g:render template="/layouts/${grailsApplication.config.eShop.instance}/search"/>
         </td>
         <td class="basket-cell">
             <ehcache:render template="/layouts/${grailsApplication.config.eShop.instance}/shoppingBasket"/>
