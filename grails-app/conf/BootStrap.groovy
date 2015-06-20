@@ -21,8 +21,8 @@ class BootStrap {
     def roles = RoleHelper.visibleRoles
 
     def init = { servletContext ->
-        searchableService.unindexAll()
-        searchableService.reindexAll()
+//        searchableService.unindexAll()
+//        searchableService.reindexAll()
         JSON.registerObjectMarshaller(VariationGroup) {
             def returnArray = [:]
             returnArray['name'] = it.name
